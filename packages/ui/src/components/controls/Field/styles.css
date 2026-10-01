@@ -1,4 +1,4 @@
 /* Styles owned by Field. */
-.ad-field{display:flex;flex-direction:column;gap:7px;min-width:0;}
-.ad-field>label{font-size:13px;display:flex;align-items:center;gap:8px;color:#e7dfe9;}
-.ad-field>small{font-size:11px;color:var(--ad-muted);line-height:1.5;}
+.ad-field{display:flex;flex-direction:column;gap:0.4375rem;min-width:0;}
+.ad-field>label{font-size:0.8125rem;display:flex;align-items:center;gap:0.5rem;color:#e7dfe9;}
+.ad-field>small{font-size:0.6875rem;color:var(--ad-muted);line-height:1.5;}

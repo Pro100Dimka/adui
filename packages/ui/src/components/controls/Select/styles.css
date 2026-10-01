@@ -1,3 +1,3 @@
 /* Styles owned by Select. */
-.ad-select select{appearance:none;flex:1;min-width:0;width:100%;height:100%;border:0;background:transparent;outline:none;font-size:13px;padding:0 20px 0 3px;}
+.ad-select select{appearance:none;flex:1;min-width:0;width:100%;height:100%;border:0;background:transparent;outline:none;font-size:0.8125rem;padding:0 1.25rem 0 0.1875rem;}
 .ad-select option{background:#110b13;color:#fff;}

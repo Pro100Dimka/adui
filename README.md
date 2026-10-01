@@ -142,3 +142,38 @@ npm run check:structure
 
 ## Всё по месту
 См. `АРХИТЕКТУРА_ПО_МЕСТУ.md`.
+
+## Typography
+
+Единая типографика находится в `packages/ui/src/components/foundation/Typography/`.
+Шкала размеров, весов и line-height хранится централизованно в `packages/ui/src/theme/tokens.css`.
+В React используйте `Typography`; старый `Text` оставлен для совместимости и теперь тоже использует те же typography-токены.
+
+```tsx
+<Typography variant="h1">Настройки</Typography>
+<Typography variant="body" tone="muted">Описание раздела</Typography>
+```
+
+
+## Stack / Grid
+
+Layout-примитивы `Stack` и `Grid` находятся в `packages/ui/src/components/layout/` и доступны из `@ad-voice/ui`. Оба поддерживают responsive props (`base`, `sm`, `md`, `lg`, `xl`) и используют общую spacing-шкалу темы.
+
+## Responsive units
+
+UI geometry no longer uses fixed CSS pixel lengths. Components use relative/fluid units (`rem`, `%`, `vw`, `vh`, `dvw`, `dvh`) and `clamp()`/`min()`/`max()` where scaling should follow the viewport. Typography and spacing tokens are fluid.
+
+Run `npm run check:units` to prevent fixed pixel lengths from being added again.
+
+## Adaptive sizing rule
+
+The UI keeps meaningful component geometry instead of deleting widths/heights blindly.
+Use bounded adaptive sizes (`clamp`, `%`, `dvw/dvh`, flex/grid, `aspect-ratio`) for containers.
+Small internal geometry may stay in `rem`; the playground root font size scales gently with the viewport,
+so those values adapt together and preserve proportions. Scroll containers (`ScrollArea`, screen stage,
+legacy screen body, dialogs/code viewers) keep `overflow:auto` and must not be replaced by `overflow:hidden`.
+Run `npm run check:layout` to verify these contracts.
+
+## Adaptive geometry and animated borders
+
+Relative dimensions such as `width: 100%` and `height: 100%` are intentionally allowed. The animated-border SVG always follows its host at `100% x 100%`; `ResizeObserver` recalculates only its path geometry. Run `npm run check:motion` to protect this behavior during refactors.

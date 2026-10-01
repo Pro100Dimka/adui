@@ -1,2 +1,2 @@
 /* Styles owned by Sparkline. */
-.ad-sparkline{display:block;width:240px;height:70px;}
+.ad-sparkline{display:block;width:clamp(10rem,22vw,15rem);aspect-ratio:24/7;height:auto;}

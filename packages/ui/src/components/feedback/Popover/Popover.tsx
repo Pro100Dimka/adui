@@ -1,6 +1,6 @@
 import React, { useEffect, useId, useLayoutEffect, useRef, useState } from "react";
 import type { ReactNode, RefObject } from "react";
-import { clamp, copyText, define, mark, useControllable, type CommonProps, type Tone } from "../../../core/base";
+import { clamp, copyText, cssRem, define, mark, useControllable, type CommonProps, type Tone } from "../../../core/base";
 import { Button } from "../../controls/Button/Button";
 import { IconButton } from "../../controls/IconButton/IconButton";
 import { Card } from "../../layout/Card/Card";
@@ -35,8 +35,8 @@ export const Popover = define<PopoverProps>("Popover", p => {
     const position = () => {
       const target = p.anchorRef?.current?.getBoundingClientRect();
       const r = node.getBoundingClientRect();
-      node.style.left = `${Math.max(8, Math.min(innerWidth - r.width - 8, (target?.right ?? innerWidth / 2) - r.width))}px`;
-      node.style.top = `${Math.max(8, Math.min(innerHeight - r.height - 8, (target?.bottom ?? innerHeight / 2) + 8))}px`;
+      node.style.left = cssRem(Math.max(8, Math.min(innerWidth - r.width - 8, (target?.right ?? innerWidth / 2) - r.width)));
+      node.style.top = cssRem(Math.max(8, Math.min(innerHeight - r.height - 8, (target?.bottom ?? innerHeight / 2) + 8)));
     };
     const supports = typeof node.showPopover === "function";
     if (supports) node.showPopover();

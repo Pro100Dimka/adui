@@ -1,3 +1,3 @@
 /* Styles owned by ProgressBar. */
-.ad-progress-bar{height:9px;border:1px solid #685365;border-radius:8px;background:linear-gradient(#05070c,#0c0b14);position:relative;width:100%;}
-.ad-progress-bar>span{position:absolute;left:-1px;top:-1px;bottom:-1px;max-width:calc(100% + 2px);border-radius:inherit;background:linear-gradient(90deg,#ff2457,#ff7194);box-shadow:inset 0 1px 1px #ffb4c477,0 0 8px #ff2b5330;}
+.ad-progress-bar{height:0.5625rem;border:0.0625rem solid #685365;border-radius:0.5rem;background:linear-gradient(#05070c,#0c0b14);position:relative;width:100%;}
+.ad-progress-bar>span{position:absolute;left:-0.0625rem;top:-0.0625rem;bottom:-0.0625rem;max-width:calc(100% + 0.125rem);border-radius:inherit;background:linear-gradient(90deg,#ff2457,#ff7194);box-shadow:inset 0 0.0625rem 0.0625rem #ffb4c477,0 0 0.5rem #ff2b5330;}

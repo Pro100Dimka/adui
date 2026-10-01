@@ -1,3 +1,6 @@
-/* Styles owned by Text. */
-.ad-text[data-ad-variant="muted"]{color:var(--ad-muted);font-size:13px;}
-.ad-text[data-ad-variant="eyebrow"]{color:var(--ad-muted);font-size:12px;letter-spacing:.06em;}
+/* Legacy lightweight text component. Typography is the full type system. */
+.ad-text{font-family:var(--ad-font-family-sans);font-size:var(--ad-font-size-body);line-height:var(--ad-line-height-body);color:var(--ad-text);}
+.ad-text[data-ad-variant="body"]{font-size:var(--ad-font-size-body);line-height:var(--ad-line-height-body);}
+.ad-text[data-ad-variant="title"]{font-size:var(--ad-font-size-title);font-weight:var(--ad-font-weight-semibold);line-height:var(--ad-line-height-title);letter-spacing:var(--ad-letter-spacing-title);}
+.ad-text[data-ad-variant="muted"]{color:var(--ad-muted);font-size:var(--ad-font-size-body-sm);}
+.ad-text[data-ad-variant="eyebrow"]{color:var(--ad-muted);font-size:var(--ad-font-size-caption);font-weight:var(--ad-font-weight-bold);line-height:var(--ad-line-height-compact);letter-spacing:var(--ad-letter-spacing-eyebrow);text-transform:uppercase;}

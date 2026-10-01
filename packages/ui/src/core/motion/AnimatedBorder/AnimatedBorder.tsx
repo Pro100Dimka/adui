@@ -16,7 +16,7 @@ export const AnimatedBorder = define<AnimatedBorderProps>("AnimatedBorder", p =>
     <div
       {...mark("AnimatedBorder", p, "card", "ad-surface")}
       ref={ref}
-      style={{ padding: 28, position: "relative", ...p.style }}
+      style={{ padding: "clamp(1rem, 2.2vw, 1.75rem)", position: "relative", ...p.style }}
     >
       {p.children ?? "Свет движется по контуру"}
     </div>

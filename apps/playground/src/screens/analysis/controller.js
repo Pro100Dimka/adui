@@ -1,3 +1,4 @@
+const cssRem = value => `${value / (parseFloat(getComputedStyle(document.documentElement).fontSize) || 16)}rem`;
 /* Screen-specific interaction controller. Common rendering and border motion live in ADUI. */
 export default function initialize(context) {
   const {document,window,requestAnimationFrame,cancelAnimationFrame,ResizeObserver,MutationObserver,
@@ -29,8 +30,8 @@ export default function initialize(context) {
   function fit() {
     const scale = Math.min(1, document.documentElement.clientWidth / 1280, context.height / 1069);
     scene.style.setProperty("--pa-scale", String(scale));
-    $("#pa-viewport").style.width = `${1280 * scale}px`;
-    $("#pa-viewport").style.height = `${1069 * scale}px`;
+    $("#pa-viewport").style.width = cssRem(1280 * scale);
+    $("#pa-viewport").style.height = cssRem(1069 * scale);
   }
   addEventListener("resize", fit, { passive: true });
   fit();

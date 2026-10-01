@@ -8,8 +8,8 @@ export default defineConfig({
   resolve: {
     alias: [
       { find: /^@ad-voice\/ui\/components\.css$/, replacement: ui("components.css") },
-      { find: /^@ad-voice\/ui\/styles\.css$/, replacement: ui("styles.css") },
-      { find: /^@ad-voice\/ui\/tokens\.css$/, replacement: ui("tokens.css") },
+      { find: /^@ad-voice\/ui\/styles\.css(?=\?|$)/, replacement: ui("styles.css") },
+      { find: /^@ad-voice\/ui\/tokens\.css(?=\?|$)/, replacement: ui("tokens.css") },
       { find: /^@ad-voice\/ui\/core$/, replacement: ui("core.ts") },
       { find: /^@ad-voice\/ui\/editor$/, replacement: ui("editor.ts") },
       { find: /^@ad-voice\/ui\/composites$/, replacement: ui("composites.ts") },

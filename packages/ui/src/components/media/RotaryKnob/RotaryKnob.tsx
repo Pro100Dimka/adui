@@ -255,11 +255,11 @@ export const RotaryKnob = define<RotaryKnobProps>("RotaryKnob", p => {
       ctx.fillStyle = glow;
       ctx.beginPath(); ctx.arc(0, 0, 0.896, 0, TAU); ctx.arc(0, 0, 0.809, TAU, 0, true); ctx.fill("evenodd");
       for (const angle of [-Math.PI / 2, Math.PI / 2, Math.PI, 0]) {
-        const px = Math.cos(angle) * r;
+        const pointX = Math.cos(angle) * r;
         const py = Math.sin(angle) * r;
-        const halo = ctx.createRadialGradient(px, py, 0, px, py, 0.055);
+        const halo = ctx.createRadialGradient(pointX, py, 0, pointX, py, 0.055);
         halo.addColorStop(0, "#fff1f1b8"); halo.addColorStop(0.20, "#ff315b72"); halo.addColorStop(1, "#ff001800");
-        ctx.fillStyle = halo; ctx.beginPath(); ctx.arc(px, py, 0.055, 0, TAU); ctx.fill();
+        ctx.fillStyle = halo; ctx.beginPath(); ctx.arc(pointX, py, 0.055, 0, TAU); ctx.fill();
       }
     }
 
@@ -480,7 +480,7 @@ export const RotaryKnob = define<RotaryKnobProps>("RotaryKnob", p => {
   }, [p.value]);
 
   const rootProps = mark("RotaryKnob", p, undefined, "knob");
-  return <div {...rootProps} ref={rootRef} data-value={initial} data-disabled={p.disabled || undefined} data-readonly={p.readOnly || undefined} style={{ ...p.style, "--size": `${diameter}px`, "--angle": `${-135 + initial * 2.7}deg`, "--rotation": "0deg" } as React.CSSProperties}>
+  return <div {...rootProps} ref={rootRef} data-value={initial} data-disabled={p.disabled || undefined} data-readonly={p.readOnly || undefined} style={{ ...p.style, "--size": `${diameter / 16}rem`, "--angle": `${-135 + initial * 2.7}deg`, "--rotation": "0deg" } as React.CSSProperties}>
     <canvas className="knob__surface knob__base" aria-hidden="true" ref={baseRef} />
     <canvas className="knob__surface knob__feedback" aria-hidden="true" ref={feedbackRef} />
     <canvas className="knob__surface knob__rotor" aria-hidden="true" ref={rotorRef} />

@@ -1,3 +1,4 @@
+const cssRem = value => `${value / (parseFloat(getComputedStyle(document.documentElement).fontSize) || 16)}rem`;
 /* Screen-specific interaction controller. Common rendering and border motion live in ADUI. */
 export default function initialize(context) {
   const {document,window,requestAnimationFrame,cancelAnimationFrame,ResizeObserver,MutationObserver,
@@ -283,8 +284,8 @@ export default function initialize(context) {
   function fit() {
     const scale = Math.min(1, context.width / 1280, context.height / 1221);
     scene.style.setProperty("--pf-scale", String(scale));
-    $("#pf-viewport").style.width = `${1280 * scale}px`;
-    $("#pf-viewport").style.height = `${1221 * scale}px`;
+    $("#pf-viewport").style.width = cssRem(1280 * scale);
+    $("#pf-viewport").style.height = cssRem(1221 * scale);
     hideMenu();
   }
   addEventListener("resize", fit, {passive: true});
@@ -470,8 +471,8 @@ export default function initialize(context) {
     let left = (box.right - parent.left) / scale - menu.offsetWidth;
     let top = (box.bottom - parent.top) / scale + 8;
     if (top + menu.offsetHeight > modal.clientHeight - 14) top = (box.top - parent.top) / scale - menu.offsetHeight - 8;
-    menu.style.left = `${clamp(left, 10, modal.clientWidth - menu.offsetWidth - 10)}px`;
-    menu.style.top = `${Math.max(10, top)}px`;
+    menu.style.left = cssRem(clamp(left, 10, modal.clientWidth - menu.offsetWidth - 10));
+    menu.style.top = cssRem(Math.max(10, top));
     $("button", menu)?.focus();
   }
   document.addEventListener("pointerdown", event => {

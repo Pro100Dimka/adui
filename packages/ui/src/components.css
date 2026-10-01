@@ -1,5 +1,6 @@
 /* GENERATED ENTRY. Edit local styles.css beside a component. */
 @import "./theme/base.css";
+@import "./components/foundation/Typography/styles.css";
 @import "./components/layout/shared.css";
 @import "./components/controls/shared.css";
 @import "./components/feedback/shared.css";
@@ -75,6 +76,8 @@
 @import "./components/layout/ScrollArea/styles.css";
 @import "./components/layout/SectionHeader/styles.css";
 @import "./components/layout/Surface/styles.css";
+@import "./components/layout/Stack/styles.css";
+@import "./components/layout/Grid/styles.css";
 @import "./components/layout/TabPanel/styles.css";
 @import "./components/layout/Text/styles.css";
 @import "./components/layout/Toolbar/styles.css";

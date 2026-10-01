@@ -1,3 +1,4 @@
+const cssRem = value => `${value / (parseFloat(getComputedStyle(document.documentElement).fontSize) || 16)}rem`;
 /* Screen-specific interaction controller. Common rendering and border motion live in ADUI. */
 export default function initialize(context) {
   const {document,window,requestAnimationFrame,cancelAnimationFrame,ResizeObserver,MutationObserver,
@@ -38,8 +39,8 @@ export default function initialize(context) {
   function fit() {
     const scale = Math.min(1, context.width / 1064, context.height / 1280);
     scene.style.setProperty("--q-scale", String(scale));
-    $("#q-viewport").style.width = `${1064 * scale}px`;
-    $("#q-viewport").style.height = `${1280 * scale}px`;
+    $("#q-viewport").style.width = cssRem(1064 * scale);
+    $("#q-viewport").style.height = cssRem(1280 * scale);
   }
   addEventListener("resize", fit, {passive: true});
   fit();
@@ -277,8 +278,8 @@ export default function initialize(context) {
     const left = (a.right-b.left)/scale-menu.offsetWidth;
     let top = (a.bottom-b.top)/scale+7;
     if (top+menu.offsetHeight>modal.clientHeight-15) top = (a.top-b.top)/scale-menu.offsetHeight-7;
-    menu.style.left = `${clamp(left,12,modal.clientWidth-menu.offsetWidth-12)}px`;
-    menu.style.top = `${clamp(top,12,modal.clientHeight-menu.offsetHeight-12)}px`;
+    menu.style.left = cssRem(clamp(left,12,modal.clientWidth-menu.offsetWidth-12));
+    menu.style.top = cssRem(clamp(top,12,modal.clientHeight-menu.offsetHeight-12));
     $("button",menu).focus({preventScroll:true});
   }
   document.addEventListener("pointerdown", event => {if (!$("#q-menu").hidden && !event.target.closest('#q-menu,[data-action="menu"]')) hideMenu(false);});
@@ -295,8 +296,8 @@ export default function initialize(context) {
   }
   function updateScrollbar() {
     const m = scrollMetrics();
-    thumb.style.height = `${m.length}px`;
-    thumb.style.top = `${1+(m.max?list.scrollTop/m.max*m.travel:0)}px`;
+    thumb.style.height = cssRem(m.length);
+    thumb.style.top = cssRem(1+(m.max?list.scrollTop/m.max*m.travel:0));
     rail.setAttribute("aria-valuenow",String(Math.round(m.max?list.scrollTop/m.max*100:0)));
     rail.setAttribute("aria-disabled",String(m.max===0));
     rail.style.opacity = m.max ? "1" : ".25";

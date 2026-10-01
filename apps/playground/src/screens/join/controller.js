@@ -1,8 +1,9 @@
+const cssRem = value => `${value / (parseFloat(getComputedStyle(document.documentElement).fontSize) || 16)}rem`;
 /** Original geometry with a scoped room controller. No server request is made. */
 export default function initialize(context) {
   const {document,window,addEventListener}=context;
   const scene=document.querySelector('#scene'), vp=document.querySelector('#vp'), modal=document.querySelector('.modal');
-  const fit=()=>{const s=Math.min(1,context.width/1280,context.height/1067);scene.style.setProperty('--s',s);vp.style.width=1280*s+'px';vp.style.height=1067*s+'px';};
+  const fit=()=>{const s=Math.min(1,context.width/1280,context.height/1067);scene.style.setProperty('--s',s);vp.style.width=cssRem(1280*s);vp.style.height=cssRem(1067*s);};
   addEventListener('resize',fit);fit();
   const wave=document.querySelector('#waves');
   const paths=Array.from({length:24},(_,j)=>{const p=document.createElementNS('http://www.w3.org/2000/svg','path');p.setAttribute('fill','none');p.setAttribute('stroke','#ff315b');p.setAttribute('stroke-width',j%7===0?'1.1':'.65');p.setAttribute('opacity','.35');wave.append(p);return p;});

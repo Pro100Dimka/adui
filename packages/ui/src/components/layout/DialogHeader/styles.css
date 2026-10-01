@@ -1,3 +1,3 @@
 /* Styles owned by DialogHeader. */
-.ad-dialog-header{display:flex;align-items:center;justify-content:space-between;gap:15px;}
-.ad-dialog-header h2{font-size:23px;margin:0;}
+.ad-dialog-header{display:flex;align-items:center;justify-content:space-between;gap:0.9375rem;}
+.ad-dialog-header h2{font-size:1.4375rem;margin:0;}

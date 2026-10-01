@@ -1,3 +1,3 @@
 /* Styles owned by IconButton. */
 .ad-icon-button{width:var(--ad-control-height);padding:0;flex:none;}
-.ad-icon-button[data-ad-size="small"]{width:31px;padding:0;}
+.ad-icon-button[data-ad-size="small"]{width:1.9375rem;padding:0;}

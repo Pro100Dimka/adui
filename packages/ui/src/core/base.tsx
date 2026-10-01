@@ -108,11 +108,12 @@ export function assignRef<T>(ref: Ref<T> | undefined, value: T | null) {
   else if (ref) (ref as { current: T | null }).current = value;
 }
 export const clamp = (v: number, min = 0, max = 100) => Math.max(min, Math.min(max, Number.isFinite(v) ? v : min));
+export const cssRem = (value: number) => `${value / (parseFloat(getComputedStyle(document.documentElement).fontSize) || 16)}rem`;
 export const timeText = (value: number) => `${Math.floor(Math.max(0, value) / 60)}:${String(Math.floor(Math.max(0, value)) % 60).padStart(2, "0")}`;
 export async function copyText(text: string): Promise<boolean> {
   try { await navigator.clipboard.writeText(text); return true; } catch {
     const field = document.createElement("textarea"); field.value = text;
-    field.style.cssText = "position:fixed;left:-9999px;top:0";
+    field.style.cssText = "position:fixed;left:-100vw;top:0";
     const focus = document.activeElement as HTMLElement | null;
     document.body.append(field); field.select();
     try { return document.execCommand("copy"); } catch { return false; }

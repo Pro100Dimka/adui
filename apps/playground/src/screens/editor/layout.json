@@ -1287,7 +1287,7 @@
                             "data-pitch": "83",
                             "type": "button",
                             "aria-label": "B5",
-                            "style": "top:0.00px;height:8.90px",
+                            "style": "top:0;height:0.55625rem",
                             "className": "me-key me-key--white"
                           }
                         },
@@ -1298,7 +1298,7 @@
                             "data-pitch": "81",
                             "type": "button",
                             "aria-label": "A5",
-                            "style": "top:8.90px;height:17.60px",
+                            "style": "top:0.55625rem;height:1.1rem",
                             "className": "me-key me-key--white"
                           }
                         },
@@ -1309,7 +1309,7 @@
                             "data-pitch": "79",
                             "type": "button",
                             "aria-label": "G5",
-                            "style": "top:26.50px;height:17.60px",
+                            "style": "top:1.65625rem;height:1.1rem",
                             "className": "me-key me-key--white"
                           }
                         },
@@ -1320,7 +1320,7 @@
                             "data-pitch": "77",
                             "type": "button",
                             "aria-label": "F5",
-                            "style": "top:44.10px;height:13.20px",
+                            "style": "top:2.75625rem;height:0.825rem",
                             "className": "me-key me-key--white"
                           }
                         },
@@ -1331,7 +1331,7 @@
                             "data-pitch": "76",
                             "type": "button",
                             "aria-label": "E5",
-                            "style": "top:57.30px;height:13.20px",
+                            "style": "top:3.58125rem;height:0.825rem",
                             "className": "me-key me-key--white"
                           }
                         },
@@ -1342,7 +1342,7 @@
                             "data-pitch": "74",
                             "type": "button",
                             "aria-label": "D5",
-                            "style": "top:70.50px;height:17.60px",
+                            "style": "top:4.40625rem;height:1.1rem",
                             "className": "me-key me-key--white"
                           }
                         },
@@ -1353,7 +1353,7 @@
                             "data-pitch": "72",
                             "type": "button",
                             "aria-label": "C5",
-                            "style": "top:88.10px;height:13.20px",
+                            "style": "top:5.50625rem;height:0.825rem",
                             "className": "me-key me-key--white"
                           },
                           "children": [
@@ -1372,7 +1372,7 @@
                             "data-pitch": "71",
                             "type": "button",
                             "aria-label": "B4",
-                            "style": "top:101.30px;height:13.20px",
+                            "style": "top:6.33125rem;height:0.825rem",
                             "className": "me-key me-key--white"
                           }
                         },
@@ -1383,7 +1383,7 @@
                             "data-pitch": "69",
                             "type": "button",
                             "aria-label": "A4",
-                            "style": "top:114.50px;height:17.60px",
+                            "style": "top:7.15625rem;height:1.1rem",
                             "className": "me-key me-key--white"
                           }
                         },
@@ -1394,7 +1394,7 @@
                             "data-pitch": "67",
                             "type": "button",
                             "aria-label": "G4",
-                            "style": "top:132.10px;height:17.60px",
+                            "style": "top:8.25625rem;height:1.1rem",
                             "className": "me-key me-key--white"
                           }
                         },
@@ -1405,7 +1405,7 @@
                             "data-pitch": "65",
                             "type": "button",
                             "aria-label": "F4",
-                            "style": "top:149.70px;height:13.20px",
+                            "style": "top:9.35625rem;height:0.825rem",
                             "className": "me-key me-key--white"
                           }
                         },
@@ -1416,7 +1416,7 @@
                             "data-pitch": "64",
                             "type": "button",
                             "aria-label": "E4",
-                            "style": "top:162.90px;height:13.20px",
+                            "style": "top:10.18125rem;height:0.825rem",
                             "className": "me-key me-key--white"
                           }
                         },
@@ -1427,7 +1427,7 @@
                             "data-pitch": "62",
                             "type": "button",
                             "aria-label": "D4",
-                            "style": "top:176.10px;height:17.60px",
+                            "style": "top:11.00625rem;height:1.1rem",
                             "className": "me-key me-key--white"
                           }
                         },
@@ -1438,7 +1438,7 @@
                             "data-pitch": "60",
                             "type": "button",
                             "aria-label": "C4",
-                            "style": "top:193.70px;height:13.20px",
+                            "style": "top:12.10625rem;height:0.825rem",
                             "className": "me-key me-key--white"
                           },
                           "children": [
@@ -1457,7 +1457,7 @@
                             "data-pitch": "59",
                             "type": "button",
                             "aria-label": "B3",
-                            "style": "top:206.90px;height:13.20px",
+                            "style": "top:12.93125rem;height:0.825rem",
                             "className": "me-key me-key--white"
                           }
                         },
@@ -1468,7 +1468,7 @@
                             "data-pitch": "57",
                             "type": "button",
                             "aria-label": "A3",
-                            "style": "top:220.10px;height:17.60px",
+                            "style": "top:13.75625rem;height:1.1rem",
                             "className": "me-key me-key--white"
                           }
                         },
@@ -1479,7 +1479,7 @@
                             "data-pitch": "55",
                             "type": "button",
                             "aria-label": "G3",
-                            "style": "top:237.70px;height:17.60px",
+                            "style": "top:14.85625rem;height:1.1rem",
                             "className": "me-key me-key--white"
                           }
                         },
@@ -1490,7 +1490,7 @@
                             "data-pitch": "53",
                             "type": "button",
                             "aria-label": "F3",
-                            "style": "top:255.30px;height:13.20px",
+                            "style": "top:15.95625rem;height:0.825rem",
                             "className": "me-key me-key--white"
                           }
                         },
@@ -1501,7 +1501,7 @@
                             "data-pitch": "52",
                             "type": "button",
                             "aria-label": "E3",
-                            "style": "top:268.50px;height:13.20px",
+                            "style": "top:16.78125rem;height:0.825rem",
                             "className": "me-key me-key--white"
                           }
                         },
@@ -1512,7 +1512,7 @@
                             "data-pitch": "50",
                             "type": "button",
                             "aria-label": "D3",
-                            "style": "top:281.70px;height:17.60px",
+                            "style": "top:17.60625rem;height:1.1rem",
                             "className": "me-key me-key--white"
                           }
                         },
@@ -1523,7 +1523,7 @@
                             "data-pitch": "48",
                             "type": "button",
                             "aria-label": "C3",
-                            "style": "top:299.30px;height:13.20px",
+                            "style": "top:18.70625rem;height:0.825rem",
                             "className": "me-key me-key--white"
                           },
                           "children": [
@@ -1542,7 +1542,7 @@
                             "data-pitch": "47",
                             "type": "button",
                             "aria-label": "B2",
-                            "style": "top:312.50px;height:13.20px",
+                            "style": "top:19.53125rem;height:0.825rem",
                             "className": "me-key me-key--white"
                           }
                         },
@@ -1553,7 +1553,7 @@
                             "data-pitch": "45",
                             "type": "button",
                             "aria-label": "A2",
-                            "style": "top:325.70px;height:17.60px",
+                            "style": "top:20.35625rem;height:1.1rem",
                             "className": "me-key me-key--white"
                           }
                         },
@@ -1564,7 +1564,7 @@
                             "data-pitch": "43",
                             "type": "button",
                             "aria-label": "G2",
-                            "style": "top:343.30px;height:19.70px",
+                            "style": "top:21.45625rem;height:1.23125rem",
                             "className": "me-key me-key--white"
                           }
                         },
@@ -1575,7 +1575,7 @@
                             "data-pitch": "44",
                             "type": "button",
                             "aria-label": "MIDI 44",
-                            "style": "top:336.80px",
+                            "style": "top:21.05rem",
                             "className": "me-key me-key--black"
                           }
                         },
@@ -1586,7 +1586,7 @@
                             "data-pitch": "46",
                             "type": "button",
                             "aria-label": "MIDI 46",
-                            "style": "top:319.20px",
+                            "style": "top:19.95rem",
                             "className": "me-key me-key--black"
                           }
                         },
@@ -1597,7 +1597,7 @@
                             "data-pitch": "49",
                             "type": "button",
                             "aria-label": "MIDI 49",
-                            "style": "top:292.80px",
+                            "style": "top:18.3rem",
                             "className": "me-key me-key--black"
                           }
                         },
@@ -1608,7 +1608,7 @@
                             "data-pitch": "51",
                             "type": "button",
                             "aria-label": "MIDI 51",
-                            "style": "top:275.20px",
+                            "style": "top:17.2rem",
                             "className": "me-key me-key--black"
                           }
                         },
@@ -1619,7 +1619,7 @@
                             "data-pitch": "54",
                             "type": "button",
                             "aria-label": "MIDI 54",
-                            "style": "top:248.80px",
+                            "style": "top:15.55rem",
                             "className": "me-key me-key--black"
                           }
                         },
@@ -1630,7 +1630,7 @@
                             "data-pitch": "56",
                             "type": "button",
                             "aria-label": "MIDI 56",
-                            "style": "top:231.20px",
+                            "style": "top:14.45rem",
                             "className": "me-key me-key--black"
                           }
                         },
@@ -1641,7 +1641,7 @@
                             "data-pitch": "58",
                             "type": "button",
                             "aria-label": "MIDI 58",
-                            "style": "top:213.60px",
+                            "style": "top:13.35rem",
                             "className": "me-key me-key--black"
                           }
                         },
@@ -1652,7 +1652,7 @@
                             "data-pitch": "61",
                             "type": "button",
                             "aria-label": "MIDI 61",
-                            "style": "top:187.20px",
+                            "style": "top:11.7rem",
                             "className": "me-key me-key--black"
                           }
                         },
@@ -1663,7 +1663,7 @@
                             "data-pitch": "63",
                             "type": "button",
                             "aria-label": "MIDI 63",
-                            "style": "top:169.60px",
+                            "style": "top:10.6rem",
                             "className": "me-key me-key--black"
                           }
                         },
@@ -1674,7 +1674,7 @@
                             "data-pitch": "66",
                             "type": "button",
                             "aria-label": "MIDI 66",
-                            "style": "top:143.20px",
+                            "style": "top:8.95rem",
                             "className": "me-key me-key--black"
                           }
                         },
@@ -1685,7 +1685,7 @@
                             "data-pitch": "68",
                             "type": "button",
                             "aria-label": "MIDI 68",
-                            "style": "top:125.60px",
+                            "style": "top:7.85rem",
                             "className": "me-key me-key--black"
                           }
                         },
@@ -1696,7 +1696,7 @@
                             "data-pitch": "70",
                             "type": "button",
                             "aria-label": "MIDI 70",
-                            "style": "top:108.00px",
+                            "style": "top:6.75rem",
                             "className": "me-key me-key--black"
                           }
                         },
@@ -1707,7 +1707,7 @@
                             "data-pitch": "73",
                             "type": "button",
                             "aria-label": "MIDI 73",
-                            "style": "top:81.60px",
+                            "style": "top:5.1rem",
                             "className": "me-key me-key--black"
                           }
                         },
@@ -1718,7 +1718,7 @@
                             "data-pitch": "75",
                             "type": "button",
                             "aria-label": "MIDI 75",
-                            "style": "top:64.00px",
+                            "style": "top:4rem",
                             "className": "me-key me-key--black"
                           }
                         },
@@ -1729,7 +1729,7 @@
                             "data-pitch": "78",
                             "type": "button",
                             "aria-label": "MIDI 78",
-                            "style": "top:37.60px",
+                            "style": "top:2.35rem",
                             "className": "me-key me-key--black"
                           }
                         },
@@ -1740,7 +1740,7 @@
                             "data-pitch": "80",
                             "type": "button",
                             "aria-label": "MIDI 80",
-                            "style": "top:20.00px",
+                            "style": "top:1.25rem",
                             "className": "me-key me-key--black"
                           }
                         },
@@ -1751,7 +1751,7 @@
                             "data-pitch": "82",
                             "type": "button",
                             "aria-label": "MIDI 82",
-                            "style": "top:2.40px",
+                            "style": "top:0.15rem",
                             "className": "me-key me-key--black"
                           }
                         }
@@ -1792,7 +1792,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "0",
-                                    "style": "left:0.000px",
+                                    "style": "left:0",
                                     "title": "Такт 1",
                                     "className": "me-measure"
                                   },
@@ -1806,7 +1806,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "1",
-                                    "style": "left:82.759px",
+                                    "style": "left:5.172438rem",
                                     "title": "Такт 2",
                                     "className": "me-measure"
                                   },
@@ -1820,7 +1820,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "2",
-                                    "style": "left:165.517px",
+                                    "style": "left:10.344812rem",
                                     "title": "Такт 3",
                                     "className": "me-measure"
                                   },
@@ -1834,7 +1834,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "3",
-                                    "style": "left:248.276px",
+                                    "style": "left:15.51725rem",
                                     "title": "Такт 4",
                                     "className": "me-measure"
                                   },
@@ -1848,7 +1848,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "4",
-                                    "style": "left:331.034px",
+                                    "style": "left:20.689625rem",
                                     "title": "Такт 5",
                                     "className": "me-measure"
                                   },
@@ -1862,7 +1862,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "5",
-                                    "style": "left:413.793px",
+                                    "style": "left:25.862063rem",
                                     "title": "Такт 6",
                                     "className": "me-measure"
                                   },
@@ -1876,7 +1876,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "6",
-                                    "style": "left:496.552px",
+                                    "style": "left:31.0345rem",
                                     "title": "Такт 7",
                                     "className": "me-measure"
                                   },
@@ -1890,7 +1890,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "7",
-                                    "style": "left:579.310px",
+                                    "style": "left:36.206875rem",
                                     "title": "Такт 8",
                                     "className": "me-measure"
                                   },
@@ -1904,7 +1904,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "8",
-                                    "style": "left:662.069px",
+                                    "style": "left:41.379312rem",
                                     "title": "Такт 9",
                                     "className": "me-measure"
                                   },
@@ -1918,7 +1918,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "9",
-                                    "style": "left:744.828px",
+                                    "style": "left:46.55175rem",
                                     "title": "Такт 10",
                                     "className": "me-measure"
                                   },
@@ -1932,7 +1932,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "10",
-                                    "style": "left:827.586px",
+                                    "style": "left:51.724125rem",
                                     "title": "Такт 11",
                                     "className": "me-measure"
                                   },
@@ -1946,7 +1946,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "11",
-                                    "style": "left:910.345px",
+                                    "style": "left:56.896563rem",
                                     "title": "Такт 12",
                                     "className": "me-measure"
                                   },
@@ -1960,7 +1960,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "12",
-                                    "style": "left:993.103px",
+                                    "style": "left:62.068937rem",
                                     "title": "Такт 13",
                                     "className": "me-measure"
                                   },
@@ -1974,7 +1974,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "13",
-                                    "style": "left:1075.862px",
+                                    "style": "left:67.241375rem",
                                     "title": "Такт 14",
                                     "className": "me-measure"
                                   },
@@ -1988,7 +1988,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "14",
-                                    "style": "left:1158.621px",
+                                    "style": "left:72.413813rem",
                                     "title": "Такт 15",
                                     "className": "me-measure"
                                   },
@@ -2002,7 +2002,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "15",
-                                    "style": "left:1241.379px",
+                                    "style": "left:77.586187rem",
                                     "title": "Такт 16",
                                     "className": "me-measure"
                                   },
@@ -2016,7 +2016,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "16",
-                                    "style": "left:1324.138px",
+                                    "style": "left:82.758625rem",
                                     "title": "Такт 17",
                                     "className": "me-measure"
                                   },
@@ -2030,7 +2030,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "17",
-                                    "style": "left:1406.897px",
+                                    "style": "left:87.931062rem",
                                     "title": "Такт 18",
                                     "className": "me-measure"
                                   },
@@ -2044,7 +2044,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "18",
-                                    "style": "left:1489.655px",
+                                    "style": "left:93.103437rem",
                                     "title": "Такт 19",
                                     "className": "me-measure"
                                   },
@@ -2058,7 +2058,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "19",
-                                    "style": "left:1572.414px",
+                                    "style": "left:98.275875rem",
                                     "title": "Такт 20",
                                     "className": "me-measure"
                                   },
@@ -2072,7 +2072,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "20",
-                                    "style": "left:1655.172px",
+                                    "style": "left:103.44825rem",
                                     "title": "Такт 21",
                                     "className": "me-measure"
                                   },
@@ -2086,7 +2086,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "21",
-                                    "style": "left:1737.931px",
+                                    "style": "left:108.620688rem",
                                     "title": "Такт 22",
                                     "className": "me-measure"
                                   },
@@ -2100,7 +2100,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "22",
-                                    "style": "left:1820.690px",
+                                    "style": "left:113.793125rem",
                                     "title": "Такт 23",
                                     "className": "me-measure"
                                   },
@@ -2114,7 +2114,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "23",
-                                    "style": "left:1903.448px",
+                                    "style": "left:118.9655rem",
                                     "title": "Такт 24",
                                     "className": "me-measure"
                                   },
@@ -2128,7 +2128,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "24",
-                                    "style": "left:1986.207px",
+                                    "style": "left:124.137938rem",
                                     "title": "Такт 25",
                                     "className": "me-measure"
                                   },
@@ -2142,7 +2142,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "25",
-                                    "style": "left:2068.966px",
+                                    "style": "left:129.310375rem",
                                     "title": "Такт 26",
                                     "className": "me-measure"
                                   },
@@ -2156,7 +2156,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "26",
-                                    "style": "left:2151.724px",
+                                    "style": "left:134.48275rem",
                                     "title": "Такт 27",
                                     "className": "me-measure"
                                   },
@@ -2170,7 +2170,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "27",
-                                    "style": "left:2234.483px",
+                                    "style": "left:139.655188rem",
                                     "title": "Такт 28",
                                     "className": "me-measure"
                                   },
@@ -2184,7 +2184,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "28",
-                                    "style": "left:2317.241px",
+                                    "style": "left:144.827562rem",
                                     "title": "Такт 29",
                                     "className": "me-measure"
                                   },
@@ -2198,7 +2198,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "29",
-                                    "style": "left:2400.000px",
+                                    "style": "left:150rem",
                                     "title": "Такт 30",
                                     "className": "me-measure"
                                   },
@@ -2212,7 +2212,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "30",
-                                    "style": "left:2482.759px",
+                                    "style": "left:155.172438rem",
                                     "title": "Такт 31",
                                     "className": "me-measure"
                                   },
@@ -2226,7 +2226,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "31",
-                                    "style": "left:2565.517px",
+                                    "style": "left:160.344812rem",
                                     "title": "Такт 32",
                                     "className": "me-measure"
                                   },
@@ -2240,7 +2240,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "32",
-                                    "style": "left:2648.276px",
+                                    "style": "left:165.51725rem",
                                     "title": "Такт 33",
                                     "className": "me-measure"
                                   },
@@ -2254,7 +2254,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "33",
-                                    "style": "left:2731.034px",
+                                    "style": "left:170.689625rem",
                                     "title": "Такт 34",
                                     "className": "me-measure"
                                   },
@@ -2268,7 +2268,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "34",
-                                    "style": "left:2813.793px",
+                                    "style": "left:175.862063rem",
                                     "title": "Такт 35",
                                     "className": "me-measure"
                                   },
@@ -2282,7 +2282,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "35",
-                                    "style": "left:2896.552px",
+                                    "style": "left:181.0345rem",
                                     "title": "Такт 36",
                                     "className": "me-measure"
                                   },
@@ -2296,7 +2296,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "36",
-                                    "style": "left:2979.310px",
+                                    "style": "left:186.206875rem",
                                     "title": "Такт 37",
                                     "className": "me-measure"
                                   },
@@ -2310,7 +2310,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "37",
-                                    "style": "left:3062.069px",
+                                    "style": "left:191.379312rem",
                                     "title": "Такт 38",
                                     "className": "me-measure"
                                   },
@@ -2324,7 +2324,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "38",
-                                    "style": "left:3144.828px",
+                                    "style": "left:196.55175rem",
                                     "title": "Такт 39",
                                     "className": "me-measure"
                                   },
@@ -2338,7 +2338,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "39",
-                                    "style": "left:3227.586px",
+                                    "style": "left:201.724125rem",
                                     "title": "Такт 40",
                                     "className": "me-measure"
                                   },
@@ -2352,7 +2352,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "40",
-                                    "style": "left:3310.345px",
+                                    "style": "left:206.896562rem",
                                     "title": "Такт 41",
                                     "className": "me-measure"
                                   },
@@ -2366,7 +2366,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "41",
-                                    "style": "left:3393.103px",
+                                    "style": "left:212.068938rem",
                                     "title": "Такт 42",
                                     "className": "me-measure"
                                   },
@@ -2380,7 +2380,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "42",
-                                    "style": "left:3475.862px",
+                                    "style": "left:217.241375rem",
                                     "title": "Такт 43",
                                     "className": "me-measure"
                                   },
@@ -2394,7 +2394,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "43",
-                                    "style": "left:3558.621px",
+                                    "style": "left:222.413813rem",
                                     "title": "Такт 44",
                                     "className": "me-measure"
                                   },
@@ -2408,7 +2408,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "44",
-                                    "style": "left:3641.379px",
+                                    "style": "left:227.586187rem",
                                     "title": "Такт 45",
                                     "className": "me-measure"
                                   },
@@ -2422,7 +2422,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "45",
-                                    "style": "left:3724.138px",
+                                    "style": "left:232.758625rem",
                                     "title": "Такт 46",
                                     "className": "me-measure"
                                   },
@@ -2436,7 +2436,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "46",
-                                    "style": "left:3806.897px",
+                                    "style": "left:237.931062rem",
                                     "title": "Такт 47",
                                     "className": "me-measure"
                                   },
@@ -2450,7 +2450,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "47",
-                                    "style": "left:3889.655px",
+                                    "style": "left:243.103438rem",
                                     "title": "Такт 48",
                                     "className": "me-measure"
                                   },
@@ -2464,7 +2464,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "48",
-                                    "style": "left:3972.414px",
+                                    "style": "left:248.275875rem",
                                     "title": "Такт 49",
                                     "className": "me-measure"
                                   },
@@ -2478,7 +2478,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "49",
-                                    "style": "left:4055.172px",
+                                    "style": "left:253.44825rem",
                                     "title": "Такт 50",
                                     "className": "me-measure"
                                   },
@@ -2492,7 +2492,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "50",
-                                    "style": "left:4137.931px",
+                                    "style": "left:258.620687rem",
                                     "title": "Такт 51",
                                     "className": "me-measure"
                                   },
@@ -2506,7 +2506,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "51",
-                                    "style": "left:4220.690px",
+                                    "style": "left:263.793125rem",
                                     "title": "Такт 52",
                                     "className": "me-measure"
                                   },
@@ -2520,7 +2520,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "52",
-                                    "style": "left:4303.448px",
+                                    "style": "left:268.9655rem",
                                     "title": "Такт 53",
                                     "className": "me-measure"
                                   },
@@ -2534,7 +2534,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "53",
-                                    "style": "left:4386.207px",
+                                    "style": "left:274.137938rem",
                                     "title": "Такт 54",
                                     "className": "me-measure"
                                   },
@@ -2548,7 +2548,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "54",
-                                    "style": "left:4468.966px",
+                                    "style": "left:279.310375rem",
                                     "title": "Такт 55",
                                     "className": "me-measure"
                                   },
@@ -2562,7 +2562,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "55",
-                                    "style": "left:4551.724px",
+                                    "style": "left:284.48275rem",
                                     "title": "Такт 56",
                                     "className": "me-measure"
                                   },
@@ -2576,7 +2576,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "56",
-                                    "style": "left:4634.483px",
+                                    "style": "left:289.655188rem",
                                     "title": "Такт 57",
                                     "className": "me-measure"
                                   },
@@ -2590,7 +2590,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "57",
-                                    "style": "left:4717.241px",
+                                    "style": "left:294.827562rem",
                                     "title": "Такт 58",
                                     "className": "me-measure"
                                   },
@@ -2604,7 +2604,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "58",
-                                    "style": "left:4800.000px",
+                                    "style": "left:300rem",
                                     "title": "Такт 59",
                                     "className": "me-measure"
                                   },
@@ -2618,7 +2618,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "59",
-                                    "style": "left:4882.759px",
+                                    "style": "left:305.172438rem",
                                     "title": "Такт 60",
                                     "className": "me-measure"
                                   },
@@ -2632,7 +2632,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "60",
-                                    "style": "left:4965.517px",
+                                    "style": "left:310.344812rem",
                                     "title": "Такт 61",
                                     "className": "me-measure"
                                   },
@@ -2646,7 +2646,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "61",
-                                    "style": "left:5048.276px",
+                                    "style": "left:315.51725rem",
                                     "title": "Такт 62",
                                     "className": "me-measure"
                                   },
@@ -2660,7 +2660,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "62",
-                                    "style": "left:5131.034px",
+                                    "style": "left:320.689625rem",
                                     "title": "Такт 63",
                                     "className": "me-measure"
                                   },
@@ -2674,7 +2674,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "63",
-                                    "style": "left:5213.793px",
+                                    "style": "left:325.862062rem",
                                     "title": "Такт 64",
                                     "className": "me-measure"
                                   },
@@ -2688,7 +2688,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "64",
-                                    "style": "left:5296.552px",
+                                    "style": "left:331.0345rem",
                                     "title": "Такт 65",
                                     "className": "me-measure"
                                   },
@@ -2702,7 +2702,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "65",
-                                    "style": "left:5379.310px",
+                                    "style": "left:336.206875rem",
                                     "title": "Такт 66",
                                     "className": "me-measure"
                                   },
@@ -2716,7 +2716,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "66",
-                                    "style": "left:5462.069px",
+                                    "style": "left:341.379313rem",
                                     "title": "Такт 67",
                                     "className": "me-measure"
                                   },
@@ -2730,7 +2730,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "67",
-                                    "style": "left:5544.828px",
+                                    "style": "left:346.55175rem",
                                     "title": "Такт 68",
                                     "className": "me-measure"
                                   },
@@ -2744,7 +2744,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "68",
-                                    "style": "left:5627.586px",
+                                    "style": "left:351.724125rem",
                                     "title": "Такт 69",
                                     "className": "me-measure"
                                   },
@@ -2758,7 +2758,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "69",
-                                    "style": "left:5710.345px",
+                                    "style": "left:356.896563rem",
                                     "title": "Такт 70",
                                     "className": "me-measure"
                                   },
@@ -2772,7 +2772,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "70",
-                                    "style": "left:5793.103px",
+                                    "style": "left:362.068938rem",
                                     "title": "Такт 71",
                                     "className": "me-measure"
                                   },
@@ -2786,7 +2786,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "71",
-                                    "style": "left:5875.862px",
+                                    "style": "left:367.241375rem",
                                     "title": "Такт 72",
                                     "className": "me-measure"
                                   },
@@ -2800,7 +2800,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "72",
-                                    "style": "left:5958.621px",
+                                    "style": "left:372.413813rem",
                                     "title": "Такт 73",
                                     "className": "me-measure"
                                   },
@@ -2814,7 +2814,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "73",
-                                    "style": "left:6041.379px",
+                                    "style": "left:377.586187rem",
                                     "title": "Такт 74",
                                     "className": "me-measure"
                                   },
@@ -2828,7 +2828,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "74",
-                                    "style": "left:6124.138px",
+                                    "style": "left:382.758625rem",
                                     "title": "Такт 75",
                                     "className": "me-measure"
                                   },
@@ -2842,7 +2842,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "75",
-                                    "style": "left:6206.897px",
+                                    "style": "left:387.931062rem",
                                     "title": "Такт 76",
                                     "className": "me-measure"
                                   },
@@ -2856,7 +2856,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "76",
-                                    "style": "left:6289.655px",
+                                    "style": "left:393.103437rem",
                                     "title": "Такт 77",
                                     "className": "me-measure"
                                   },
@@ -2870,7 +2870,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "77",
-                                    "style": "left:6372.414px",
+                                    "style": "left:398.275875rem",
                                     "title": "Такт 78",
                                     "className": "me-measure"
                                   },
@@ -2884,7 +2884,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "78",
-                                    "style": "left:6455.172px",
+                                    "style": "left:403.44825rem",
                                     "title": "Такт 79",
                                     "className": "me-measure"
                                   },
@@ -2898,7 +2898,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "79",
-                                    "style": "left:6537.931px",
+                                    "style": "left:408.620687rem",
                                     "title": "Такт 80",
                                     "className": "me-measure"
                                   },
@@ -2912,7 +2912,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "80",
-                                    "style": "left:6620.690px",
+                                    "style": "left:413.793125rem",
                                     "title": "Такт 81",
                                     "className": "me-measure"
                                   },
@@ -2926,7 +2926,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "81",
-                                    "style": "left:6703.448px",
+                                    "style": "left:418.9655rem",
                                     "title": "Такт 82",
                                     "className": "me-measure"
                                   },
@@ -2940,7 +2940,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "82",
-                                    "style": "left:6786.207px",
+                                    "style": "left:424.137938rem",
                                     "title": "Такт 83",
                                     "className": "me-measure"
                                   },
@@ -2954,7 +2954,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "83",
-                                    "style": "left:6868.966px",
+                                    "style": "left:429.310375rem",
                                     "title": "Такт 84",
                                     "className": "me-measure"
                                   },
@@ -2968,7 +2968,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "84",
-                                    "style": "left:6951.724px",
+                                    "style": "left:434.48275rem",
                                     "title": "Такт 85",
                                     "className": "me-measure"
                                   },
@@ -2982,7 +2982,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "85",
-                                    "style": "left:7034.483px",
+                                    "style": "left:439.655188rem",
                                     "title": "Такт 86",
                                     "className": "me-measure"
                                   },
@@ -2996,7 +2996,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "86",
-                                    "style": "left:7117.241px",
+                                    "style": "left:444.827562rem",
                                     "title": "Такт 87",
                                     "className": "me-measure"
                                   },
@@ -3010,7 +3010,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "87",
-                                    "style": "left:7200.000px",
+                                    "style": "left:450rem",
                                     "title": "Такт 88",
                                     "className": "me-measure"
                                   },
@@ -3024,7 +3024,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "88",
-                                    "style": "left:7282.759px",
+                                    "style": "left:455.172438rem",
                                     "title": "Такт 89",
                                     "className": "me-measure"
                                   },
@@ -3038,7 +3038,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "89",
-                                    "style": "left:7365.517px",
+                                    "style": "left:460.344812rem",
                                     "title": "Такт 90",
                                     "className": "me-measure"
                                   },
@@ -3052,7 +3052,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "90",
-                                    "style": "left:7448.276px",
+                                    "style": "left:465.51725rem",
                                     "title": "Такт 91",
                                     "className": "me-measure"
                                   },
@@ -3066,7 +3066,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "91",
-                                    "style": "left:7531.034px",
+                                    "style": "left:470.689625rem",
                                     "title": "Такт 92",
                                     "className": "me-measure"
                                   },
@@ -3080,7 +3080,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "92",
-                                    "style": "left:7613.793px",
+                                    "style": "left:475.862062rem",
                                     "title": "Такт 93",
                                     "className": "me-measure"
                                   },
@@ -3094,7 +3094,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "93",
-                                    "style": "left:7696.552px",
+                                    "style": "left:481.0345rem",
                                     "title": "Такт 94",
                                     "className": "me-measure"
                                   },
@@ -3108,7 +3108,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "94",
-                                    "style": "left:7779.310px",
+                                    "style": "left:486.206875rem",
                                     "title": "Такт 95",
                                     "className": "me-measure"
                                   },
@@ -3122,7 +3122,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "95",
-                                    "style": "left:7862.069px",
+                                    "style": "left:491.379313rem",
                                     "title": "Такт 96",
                                     "className": "me-measure"
                                   },
@@ -3136,7 +3136,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "96",
-                                    "style": "left:7944.828px",
+                                    "style": "left:496.55175rem",
                                     "title": "Такт 97",
                                     "className": "me-measure"
                                   },
@@ -3150,7 +3150,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "97",
-                                    "style": "left:8027.586px",
+                                    "style": "left:501.724125rem",
                                     "title": "Такт 98",
                                     "className": "me-measure"
                                   },
@@ -3164,7 +3164,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "98",
-                                    "style": "left:8110.345px",
+                                    "style": "left:506.896563rem",
                                     "title": "Такт 99",
                                     "className": "me-measure"
                                   },
@@ -3178,7 +3178,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "99",
-                                    "style": "left:8193.103px",
+                                    "style": "left:512.068937rem",
                                     "title": "Такт 100",
                                     "className": "me-measure"
                                   },
@@ -3192,7 +3192,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "100",
-                                    "style": "left:8275.862px",
+                                    "style": "left:517.241375rem",
                                     "title": "Такт 101",
                                     "className": "me-measure"
                                   },
@@ -3206,7 +3206,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "101",
-                                    "style": "left:8358.621px",
+                                    "style": "left:522.413812rem",
                                     "title": "Такт 102",
                                     "className": "me-measure"
                                   },
@@ -3220,7 +3220,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "102",
-                                    "style": "left:8441.379px",
+                                    "style": "left:527.586188rem",
                                     "title": "Такт 103",
                                     "className": "me-measure"
                                   },
@@ -3234,7 +3234,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "103",
-                                    "style": "left:8524.138px",
+                                    "style": "left:532.758625rem",
                                     "title": "Такт 104",
                                     "className": "me-measure"
                                   },
@@ -3248,7 +3248,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "104",
-                                    "style": "left:8606.897px",
+                                    "style": "left:537.931063rem",
                                     "title": "Такт 105",
                                     "className": "me-measure"
                                   },
@@ -3262,7 +3262,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "105",
-                                    "style": "left:8689.655px",
+                                    "style": "left:543.103438rem",
                                     "title": "Такт 106",
                                     "className": "me-measure"
                                   },
@@ -3276,7 +3276,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "106",
-                                    "style": "left:8772.414px",
+                                    "style": "left:548.275875rem",
                                     "title": "Такт 107",
                                     "className": "me-measure"
                                   },
@@ -3290,7 +3290,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "107",
-                                    "style": "left:8855.172px",
+                                    "style": "left:553.44825rem",
                                     "title": "Такт 108",
                                     "className": "me-measure"
                                   },
@@ -3304,7 +3304,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "108",
-                                    "style": "left:8937.931px",
+                                    "style": "left:558.620688rem",
                                     "title": "Такт 109",
                                     "className": "me-measure"
                                   },
@@ -3318,7 +3318,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "109",
-                                    "style": "left:9020.690px",
+                                    "style": "left:563.793125rem",
                                     "title": "Такт 110",
                                     "className": "me-measure"
                                   },
@@ -3332,7 +3332,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "110",
-                                    "style": "left:9103.448px",
+                                    "style": "left:568.9655rem",
                                     "title": "Такт 111",
                                     "className": "me-measure"
                                   },
@@ -3346,7 +3346,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "111",
-                                    "style": "left:9186.207px",
+                                    "style": "left:574.137938rem",
                                     "title": "Такт 112",
                                     "className": "me-measure"
                                   },
@@ -3360,7 +3360,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-bar": "112",
-                                    "style": "left:9268.966px",
+                                    "style": "left:579.310375rem",
                                     "title": "Такт 113",
                                     "className": "me-measure"
                                   },
@@ -3384,7 +3384,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-word": "w1",
-                                    "style": "left:69.00px;width:64.00px",
+                                    "style": "left:4.3125rem;width:4rem",
                                     "title": "Двойной щелчок — изменить слово",
                                     "className": "me-word"
                                   },
@@ -3398,7 +3398,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-word": "w2",
-                                    "style": "left:136.00px;width:42.00px",
+                                    "style": "left:8.5rem;width:2.625rem",
                                     "title": "Двойной щелчок — изменить слово",
                                     "className": "me-word"
                                   },
@@ -3412,7 +3412,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-word": "w3",
-                                    "style": "left:180.00px;width:52.00px",
+                                    "style": "left:11.25rem;width:3.25rem",
                                     "title": "Двойной щелчок — изменить слово",
                                     "className": "me-word"
                                   },
@@ -3426,7 +3426,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-word": "w4",
-                                    "style": "left:235.00px;width:41.00px",
+                                    "style": "left:14.6875rem;width:2.5625rem",
                                     "title": "Двойной щелчок — изменить слово",
                                     "className": "me-word"
                                   },
@@ -3440,7 +3440,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-word": "w5",
-                                    "style": "left:279.00px;width:52.00px",
+                                    "style": "left:17.4375rem;width:3.25rem",
                                     "title": "Двойной щелчок — изменить слово",
                                     "className": "me-word"
                                   },
@@ -3454,7 +3454,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-word": "w6",
-                                    "style": "left:333.00px;width:38.00px",
+                                    "style": "left:20.8125rem;width:2.375rem",
                                     "title": "Двойной щелчок — изменить слово",
                                     "className": "me-word"
                                   },
@@ -3468,7 +3468,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-word": "w7",
-                                    "style": "left:373.00px;width:38.00px",
+                                    "style": "left:23.3125rem;width:2.375rem",
                                     "title": "Двойной щелчок — изменить слово",
                                     "className": "me-word"
                                   },
@@ -3482,7 +3482,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-word": "w8",
-                                    "style": "left:414.00px;width:79.00px",
+                                    "style": "left:25.875rem;width:4.9375rem",
                                     "title": "Двойной щелчок — изменить слово",
                                     "className": "me-word"
                                   },
@@ -3496,7 +3496,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-word": "w9",
-                                    "style": "left:497.00px;width:33.00px",
+                                    "style": "left:31.0625rem;width:2.0625rem",
                                     "title": "Двойной щелчок — изменить слово",
                                     "className": "me-word"
                                   },
@@ -3510,7 +3510,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-word": "w10",
-                                    "style": "left:533.00px;width:57.00px",
+                                    "style": "left:33.3125rem;width:3.5625rem",
                                     "title": "Двойной щелчок — изменить слово",
                                     "className": "me-word"
                                   },
@@ -3524,7 +3524,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-word": "w11",
-                                    "style": "left:593.00px;width:81.00px",
+                                    "style": "left:37.0625rem;width:5.0625rem",
                                     "title": "Двойной щелчок — изменить слово",
                                     "className": "me-word"
                                   },
@@ -3538,7 +3538,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-word": "w12",
-                                    "style": "left:678.00px;width:40.00px",
+                                    "style": "left:42.375rem;width:2.5rem",
                                     "title": "Двойной щелчок — изменить слово",
                                     "className": "me-word"
                                   },
@@ -3552,7 +3552,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-word": "w13",
-                                    "style": "left:720.00px;width:39.00px",
+                                    "style": "left:45rem;width:2.4375rem",
                                     "title": "Двойной щелчок — изменить слово",
                                     "className": "me-word"
                                   },
@@ -3566,7 +3566,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-word": "w14",
-                                    "style": "left:761.00px;width:43.00px",
+                                    "style": "left:47.5625rem;width:2.6875rem",
                                     "title": "Двойной щелчок — изменить слово",
                                     "className": "me-word"
                                   },
@@ -3580,7 +3580,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-word": "w15",
-                                    "style": "left:806.00px;width:62.00px",
+                                    "style": "left:50.375rem;width:3.875rem",
                                     "title": "Двойной щелчок — изменить слово",
                                     "className": "me-word"
                                   },
@@ -3594,7 +3594,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-word": "w16",
-                                    "style": "left:870.00px;width:65.00px",
+                                    "style": "left:54.375rem;width:4.0625rem",
                                     "title": "Двойной щелчок — изменить слово",
                                     "className": "me-word"
                                   },
@@ -3608,7 +3608,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-word": "w17",
-                                    "style": "left:938.00px;width:22.00px",
+                                    "style": "left:58.625rem;width:1.375rem",
                                     "title": "Двойной щелчок — изменить слово",
                                     "className": "me-word"
                                   },
@@ -3622,7 +3622,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-word": "w18",
-                                    "style": "left:963.00px;width:60.00px",
+                                    "style": "left:60.1875rem;width:3.75rem",
                                     "title": "Двойной щелчок — изменить слово",
                                     "className": "me-word"
                                   },
@@ -3636,7 +3636,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-word": "w19",
-                                    "style": "left:1026.00px;width:31.00px",
+                                    "style": "left:64.125rem;width:1.9375rem",
                                     "title": "Двойной щелчок — изменить слово",
                                     "className": "me-word"
                                   },
@@ -3650,7 +3650,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-word": "w20",
-                                    "style": "left:1060.00px;width:25.00px",
+                                    "style": "left:66.25rem;width:1.5625rem",
                                     "title": "Двойной щелчок — изменить слово",
                                     "className": "me-word"
                                   },
@@ -3664,7 +3664,7 @@
                                   "props": {
                                     "type": "button",
                                     "data-word": "w21",
-                                    "style": "left:1088.00px;width:97.00px",
+                                    "style": "left:68rem;width:6.0625rem",
                                     "title": "Двойной щелчок — изменить слово",
                                     "className": "me-word"
                                   },
@@ -3689,7 +3689,7 @@
                                     "data-id": "n1",
                                     "role": "button",
                                     "aria-label": "Нота MIDI 60, -0.30–0.12 с",
-                                    "style": "left:8.00px;top:222.00px;width:17.00px",
+                                    "style": "left:0.5rem;top:13.875rem;width:1.0625rem",
                                     "title": "Перетащите ноту. Край — длительность. Двойной щелчок — свойства.",
                                     "className": "me-note"
                                   },
@@ -3724,7 +3724,7 @@
                                     "data-id": "n2",
                                     "role": "button",
                                     "aria-label": "Нота MIDI 64, 0.07–0.42 с",
-                                    "style": "left:23.00px;top:186.80px;width:14.00px",
+                                    "style": "left:1.4375rem;top:11.675rem;width:0.875rem",
                                     "title": "Перетащите ноту. Край — длительность. Двойной щелчок — свойства.",
                                     "className": "me-note"
                                   },
@@ -3759,7 +3759,7 @@
                                     "data-id": "n3",
                                     "role": "button",
                                     "aria-label": "Нота MIDI 64, 0.47–0.68 с",
-                                    "style": "left:39.00px;top:186.80px;width:8.00px",
+                                    "style": "left:2.4375rem;top:11.675rem;width:0.5rem",
                                     "title": "Перетащите ноту. Край — длительность. Двойной щелчок — свойства.",
                                     "className": "me-note"
                                   },
@@ -3794,7 +3794,7 @@
                                     "data-id": "n4",
                                     "role": "button",
                                     "aria-label": "Нота MIDI 60, 0.57–1.15 с",
-                                    "style": "left:43.00px;top:222.00px;width:23.00px",
+                                    "style": "left:2.6875rem;top:13.875rem;width:1.4375rem",
                                     "title": "Перетащите ноту. Край — длительность. Двойной щелчок — свойства.",
                                     "className": "me-note"
                                   },
@@ -3829,7 +3829,7 @@
                                     "data-id": "n5",
                                     "role": "button",
                                     "aria-label": "Нота MIDI 60, 1.20–1.40 с",
-                                    "style": "left:68.00px;top:222.00px;width:8.00px",
+                                    "style": "left:4.25rem;top:13.875rem;width:0.5rem",
                                     "title": "Перетащите ноту. Край — длительность. Двойной щелчок — свойства.",
                                     "className": "me-note"
                                   },
@@ -3864,7 +3864,7 @@
                                     "data-id": "n6",
                                     "role": "button",
                                     "aria-label": "Нота MIDI 58, 1.20–2.67 с",
-                                    "style": "left:68.00px;top:239.60px;width:59.00px",
+                                    "style": "left:4.25rem;top:14.975rem;width:3.6875rem",
                                     "title": "Перетащите ноту. Край — длительность. Двойной щелчок — свойства.",
                                     "className": "me-note"
                                   },
@@ -3899,7 +3899,7 @@
                                     "data-id": "n7",
                                     "role": "button",
                                     "aria-label": "Нота MIDI 60, 2.75–2.95 с",
-                                    "style": "left:130.00px;top:222.00px;width:8.00px",
+                                    "style": "left:8.125rem;top:13.875rem;width:0.5rem",
                                     "title": "Перетащите ноту. Край — длительность. Двойной щелчок — свойства.",
                                     "className": "me-note"
                                   },
@@ -3934,7 +3934,7 @@
                                     "data-id": "n8",
                                     "role": "button",
                                     "aria-label": "Нота MIDI 58, 2.95–3.27 с",
-                                    "style": "left:138.00px;top:239.60px;width:13.00px",
+                                    "style": "left:8.625rem;top:14.975rem;width:0.8125rem",
                                     "title": "Перетащите ноту. Край — длительность. Двойной щелчок — свойства.",
                                     "className": "me-note"
                                   },
@@ -3969,7 +3969,7 @@
                                     "data-id": "n9",
                                     "role": "button",
                                     "aria-label": "Нота MIDI 60, 3.33–3.62 с",
-                                    "style": "left:153.00px;top:222.00px;width:12.00px",
+                                    "style": "left:9.5625rem;top:13.875rem;width:0.75rem",
                                     "title": "Перетащите ноту. Край — длительность. Двойной щелчок — свойства.",
                                     "className": "me-note"
                                   },
@@ -4004,7 +4004,7 @@
                                     "data-id": "n10",
                                     "role": "button",
                                     "aria-label": "Нота MIDI 58, 3.62–4.20 с",
-                                    "style": "left:165.00px;top:239.60px;width:23.00px",
+                                    "style": "left:10.3125rem;top:14.975rem;width:1.4375rem",
                                     "title": "Перетащите ноту. Край — длительность. Двойной щелчок — свойства.",
                                     "className": "me-note"
                                   },
@@ -4039,7 +4039,7 @@
                                     "data-id": "n11",
                                     "role": "button",
                                     "aria-label": "Нота MIDI 64, 5.40–5.97 с",
-                                    "style": "left:236.00px;top:186.80px;width:23.00px",
+                                    "style": "left:14.75rem;top:11.675rem;width:1.4375rem",
                                     "title": "Перетащите ноту. Край — длительность. Двойной щелчок — свойства.",
                                     "className": "me-note"
                                   },
@@ -4074,7 +4074,7 @@
                                     "data-id": "n12",
                                     "role": "button",
                                     "aria-label": "Нота MIDI 62, 6.30–6.50 с",
-                                    "style": "left:272.00px;top:204.40px;width:8.00px",
+                                    "style": "left:17rem;top:12.775rem;width:0.5rem",
                                     "title": "Перетащите ноту. Край — длительность. Двойной щелчок — свойства.",
                                     "className": "me-note"
                                   },
@@ -4109,7 +4109,7 @@
                                     "data-id": "n13",
                                     "role": "button",
                                     "aria-label": "Нота MIDI 60, 6.55–6.85 с",
-                                    "style": "left:282.00px;top:222.00px;width:12.00px",
+                                    "style": "left:17.625rem;top:13.875rem;width:0.75rem",
                                     "title": "Перетащите ноту. Край — длительность. Двойной щелчок — свойства.",
                                     "className": "me-note"
                                   },
@@ -4144,7 +4144,7 @@
                                     "data-id": "n14",
                                     "role": "button",
                                     "aria-label": "Нота MIDI 60, 6.92–7.75 с",
-                                    "style": "left:297.00px;top:222.00px;width:33.00px",
+                                    "style": "left:18.5625rem;top:13.875rem;width:2.0625rem",
                                     "title": "Перетащите ноту. Край — длительность. Двойной щелчок — свойства.",
                                     "className": "me-note"
                                   },
@@ -4179,7 +4179,7 @@
                                     "data-id": "n15",
                                     "role": "button",
                                     "aria-label": "Нота MIDI 58, 7.72–9.80 с",
-                                    "style": "left:329.00px;top:239.60px;width:83.00px",
+                                    "style": "left:20.5625rem;top:14.975rem;width:5.1875rem",
                                     "title": "Перетащите ноту. Край — длительность. Двойной щелчок — свойства.",
                                     "className": "me-note"
                                   },
@@ -4214,7 +4214,7 @@
                                     "data-id": "n16",
                                     "role": "button",
                                     "aria-label": "Нота MIDI 58, 9.95–10.35 с",
-                                    "style": "left:418.00px;top:239.60px;width:16.00px",
+                                    "style": "left:26.125rem;top:14.975rem;width:1rem",
                                     "title": "Перетащите ноту. Край — длительность. Двойной щелчок — свойства.",
                                     "className": "me-note"
                                   },
@@ -4249,7 +4249,7 @@
                                     "data-id": "n17",
                                     "role": "button",
                                     "aria-label": "Нота MIDI 60, 10.38–10.65 с",
-                                    "style": "left:435.00px;top:222.00px;width:11.00px",
+                                    "style": "left:27.1875rem;top:13.875rem;width:0.6875rem",
                                     "title": "Перетащите ноту. Край — длительность. Двойной щелчок — свойства.",
                                     "className": "me-note"
                                   },
@@ -4284,7 +4284,7 @@
                                     "data-id": "n18",
                                     "role": "button",
                                     "aria-label": "Нота MIDI 58, 10.70–11.80 с",
-                                    "style": "left:448.00px;top:239.60px;width:44.00px",
+                                    "style": "left:28rem;top:14.975rem;width:2.75rem",
                                     "title": "Перетащите ноту. Край — длительность. Двойной щелчок — свойства.",
                                     "className": "me-note"
                                   },
@@ -4319,7 +4319,7 @@
                                     "data-id": "n19",
                                     "role": "button",
                                     "aria-label": "Нота MIDI 58, 11.95–13.95 с",
-                                    "style": "left:498.00px;top:239.60px;width:80.00px",
+                                    "style": "left:31.125rem;top:14.975rem;width:5rem",
                                     "title": "Перетащите ноту. Край — длительность. Двойной щелчок — свойства.",
                                     "className": "me-note"
                                   },
@@ -4354,7 +4354,7 @@
                                     "data-id": "n20",
                                     "role": "button",
                                     "aria-label": "Нота MIDI 58, 14.05–14.62 с",
-                                    "style": "left:582.00px;top:239.60px;width:23.00px",
+                                    "style": "left:36.375rem;top:14.975rem;width:1.4375rem",
                                     "title": "Перетащите ноту. Край — длительность. Двойной щелчок — свойства.",
                                     "className": "me-note"
                                   },
@@ -4389,7 +4389,7 @@
                                     "data-id": "n21",
                                     "role": "button",
                                     "aria-label": "Нота MIDI 58, 15.03–15.43 с",
-                                    "style": "left:621.00px;top:239.60px;width:16.00px",
+                                    "style": "left:38.8125rem;top:14.975rem;width:1rem",
                                     "title": "Перетащите ноту. Край — длительность. Двойной щелчок — свойства.",
                                     "className": "me-note"
                                   },
@@ -4424,7 +4424,7 @@
                                     "data-id": "n22",
                                     "role": "button",
                                     "aria-label": "Нота MIDI 58, 15.53–16.00 с",
-                                    "style": "left:641.00px;top:239.60px;width:19.00px",
+                                    "style": "left:40.0625rem;top:14.975rem;width:1.1875rem",
                                     "title": "Перетащите ноту. Край — длительность. Двойной щелчок — свойства.",
                                     "className": "me-note"
                                   },
@@ -4459,7 +4459,7 @@
                                     "data-id": "n23",
                                     "role": "button",
                                     "aria-label": "Нота MIDI 58, 16.20–16.90 с",
-                                    "style": "left:668.00px;top:239.60px;width:28.00px",
+                                    "style": "left:41.75rem;top:14.975rem;width:1.75rem",
                                     "title": "Перетащите ноту. Край — длительность. Двойной щелчок — свойства.",
                                     "className": "me-note"
                                   },
@@ -4494,7 +4494,7 @@
                                     "data-id": "n24",
                                     "role": "button",
                                     "aria-label": "Нота MIDI 60, 16.98–17.30 с",
-                                    "style": "left:699.00px;top:222.00px;width:13.00px",
+                                    "style": "left:43.6875rem;top:13.875rem;width:0.8125rem",
                                     "title": "Перетащите ноту. Край — длительность. Двойной щелчок — свойства.",
                                     "className": "me-note"
                                   },
@@ -4529,7 +4529,7 @@
                                     "data-id": "n25",
                                     "role": "button",
                                     "aria-label": "Нота MIDI 58, 17.32–19.50 с",
-                                    "style": "left:713.00px;top:239.60px;width:87.00px",
+                                    "style": "left:44.5625rem;top:14.975rem;width:5.4375rem",
                                     "title": "Перетащите ноту. Край — длительность. Двойной щелчок — свойства.",
                                     "className": "me-note"
                                   },
@@ -4564,7 +4564,7 @@
                                     "data-id": "n26",
                                     "role": "button",
                                     "aria-label": "Нота MIDI 64, 20.98–21.30 с",
-                                    "style": "left:859.00px;top:186.80px;width:13.00px",
+                                    "style": "left:53.6875rem;top:11.675rem;width:0.8125rem",
                                     "title": "Перетащите ноту. Край — длительность. Двойной щелчок — свойства.",
                                     "className": "me-note"
                                   },
@@ -4599,7 +4599,7 @@
                                     "data-id": "n27",
                                     "role": "button",
                                     "aria-label": "Нота MIDI 64, 21.40–22.15 с",
-                                    "style": "left:876.00px;top:186.80px;width:30.00px",
+                                    "style": "left:54.75rem;top:11.675rem;width:1.875rem",
                                     "title": "Перетащите ноту. Край — длительность. Двойной щелчок — свойства.",
                                     "className": "me-note"
                                   },
@@ -4634,7 +4634,7 @@
                                     "data-id": "n28",
                                     "role": "button",
                                     "aria-label": "Нота MIDI 58, 22.10–22.30 с",
-                                    "style": "left:904.00px;top:239.60px;width:8.00px",
+                                    "style": "left:56.5rem;top:14.975rem;width:0.5rem",
                                     "title": "Перетащите ноту. Край — длительность. Двойной щелчок — свойства.",
                                     "className": "me-note"
                                   },
@@ -4669,7 +4669,7 @@
                                     "data-id": "n29",
                                     "role": "button",
                                     "aria-label": "Нота MIDI 62, 22.65–22.85 с",
-                                    "style": "left:926.00px;top:204.40px;width:8.00px",
+                                    "style": "left:57.875rem;top:12.775rem;width:0.5rem",
                                     "title": "Перетащите ноту. Край — длительность. Двойной щелчок — свойства.",
                                     "className": "me-note"
                                   },
@@ -4704,7 +4704,7 @@
                                     "data-id": "n30",
                                     "role": "button",
                                     "aria-label": "Нота MIDI 60, 22.90–23.48 с",
-                                    "style": "left:936.00px;top:222.00px;width:23.00px",
+                                    "style": "left:58.5rem;top:13.875rem;width:1.4375rem",
                                     "title": "Перетащите ноту. Край — длительность. Двойной щелчок — свойства.",
                                     "className": "me-note"
                                   },
@@ -4739,7 +4739,7 @@
                                     "data-id": "n31",
                                     "role": "button",
                                     "aria-label": "Нота MIDI 58, 23.50–23.80 с",
-                                    "style": "left:960.00px;top:239.60px;width:12.00px",
+                                    "style": "left:60rem;top:14.975rem;width:0.75rem",
                                     "title": "Перетащите ноту. Край — длительность. Двойной щелчок — свойства.",
                                     "className": "me-note"
                                   },
@@ -4774,7 +4774,7 @@
                                     "data-id": "n32",
                                     "role": "button",
                                     "aria-label": "Нота MIDI 56, 23.80–24.00 с",
-                                    "style": "left:972.00px;top:257.20px;width:8.00px",
+                                    "style": "left:60.75rem;top:16.075rem;width:0.5rem",
                                     "title": "Перетащите ноту. Край — длительность. Двойной щелчок — свойства.",
                                     "className": "me-note"
                                   },
@@ -4809,7 +4809,7 @@
                                     "data-id": "n33",
                                     "role": "button",
                                     "aria-label": "Нота MIDI 58, 24.02–24.25 с",
-                                    "style": "left:981.00px;top:239.60px;width:9.00px",
+                                    "style": "left:61.3125rem;top:14.975rem;width:0.5625rem",
                                     "title": "Перетащите ноту. Край — длительность. Двойной щелчок — свойства.",
                                     "className": "me-note"
                                   },
@@ -4844,7 +4844,7 @@
                                     "data-id": "n34",
                                     "role": "button",
                                     "aria-label": "Нота MIDI 60, 24.27–24.50 с",
-                                    "style": "left:991.00px;top:222.00px;width:9.00px",
+                                    "style": "left:61.9375rem;top:13.875rem;width:0.5625rem",
                                     "title": "Перетащите ноту. Край — длительность. Двойной щелчок — свойства.",
                                     "className": "me-note"
                                   },
@@ -4879,7 +4879,7 @@
                                     "data-id": "n35",
                                     "role": "button",
                                     "aria-label": "Нота MIDI 58, 24.55–25.88 с",
-                                    "style": "left:1002.00px;top:239.60px;width:53.00px",
+                                    "style": "left:62.625rem;top:14.975rem;width:3.3125rem",
                                     "title": "Перетащите ноту. Край — длительность. Двойной щелчок — свойства.",
                                     "className": "me-note"
                                   },
@@ -4914,7 +4914,7 @@
                                     "data-id": "n36",
                                     "role": "button",
                                     "aria-label": "Нота MIDI 65, 26.10–26.70 с",
-                                    "style": "left:1064.00px;top:178.00px;width:24.00px",
+                                    "style": "left:66.5rem;top:11.125rem;width:1.5rem",
                                     "title": "Перетащите ноту. Край — длительность. Двойной щелчок — свойства.",
                                     "className": "me-note"
                                   },
@@ -4949,7 +4949,7 @@
                                     "data-id": "n37",
                                     "role": "button",
                                     "aria-label": "Нота MIDI 60, 26.98–27.55 с",
-                                    "style": "left:1099.00px;top:222.00px;width:23.00px",
+                                    "style": "left:68.6875rem;top:13.875rem;width:1.4375rem",
                                     "title": "Перетащите ноту. Край — длительность. Двойной щелчок — свойства.",
                                     "className": "me-note"
                                   },
@@ -4984,7 +4984,7 @@
                                     "data-id": "n38",
                                     "role": "button",
                                     "aria-label": "Нота MIDI 58, 27.70–28.00 с",
-                                    "style": "left:1128.00px;top:239.60px;width:12.00px",
+                                    "style": "left:70.5rem;top:14.975rem;width:0.75rem",
                                     "title": "Перетащите ноту. Край — длительность. Двойной щелчок — свойства.",
                                     "className": "me-note"
                                   },
@@ -5019,7 +5019,7 @@
                                     "data-id": "n39",
                                     "role": "button",
                                     "aria-label": "Нота MIDI 60, 28.05–28.30 с",
-                                    "style": "left:1142.00px;top:222.00px;width:10.00px",
+                                    "style": "left:71.375rem;top:13.875rem;width:0.625rem",
                                     "title": "Перетащите ноту. Край — длительность. Двойной щелчок — свойства.",
                                     "className": "me-note"
                                   },
@@ -5054,7 +5054,7 @@
                                     "data-id": "n40",
                                     "role": "button",
                                     "aria-label": "Нота MIDI 58, 28.35–29.45 с",
-                                    "style": "left:1154.00px;top:239.60px;width:44.00px",
+                                    "style": "left:72.125rem;top:14.975rem;width:2.75rem",
                                     "title": "Перетащите ноту. Край — длительность. Двойной щелчок — свойства.",
                                     "className": "me-note"
                                   },
@@ -5097,7 +5097,7 @@
                               "component": "Playhead",
                               "props": {
                                 "id": "me-playhead",
-                                "style": "left:20px",
+                                "style": "left:1.25rem",
                                 "className": "me-playhead"
                               },
                               "children": [

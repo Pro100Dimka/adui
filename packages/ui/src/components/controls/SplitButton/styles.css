@@ -1,3 +1,3 @@
 /* Styles owned by SplitButton. */
-.ad-split-button{display:inline-flex;border-radius:13px;overflow:hidden;}
+.ad-split-button{display:inline-flex;border-radius:0.8125rem;overflow:hidden;}
 .ad-split-button>.ad{background:transparent;box-shadow:none;border:none;border-radius:0;}

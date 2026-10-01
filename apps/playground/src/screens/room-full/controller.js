@@ -1,3 +1,4 @@
+const cssRem = value => `${value / (parseFloat(getComputedStyle(document.documentElement).fontSize) || 16)}rem`;
 /* Screen-specific interaction controller. Common rendering and border motion live in ADUI. */
 export default function initialize(context) {
   const {document,window,requestAnimationFrame,cancelAnimationFrame,ResizeObserver,MutationObserver,
@@ -70,7 +71,7 @@ export default function initialize(context) {
           const field = document.createElement("textarea");
           field.value = state.roomId;
           field.setAttribute("readonly", "");
-          field.style.cssText = "position:fixed;left:-9999px;top:0";
+          field.style.cssText = "position:fixed;left:-624.9375rem;top:0";
           document.body.append(field);
           field.select();
           let copied = false;
@@ -193,8 +194,8 @@ export default function initialize(context) {
         settingsPerson = person;
         updateSettings();
         const popover = $("#participant-settings");
-        popover.style.left = "374px";
-        popover.style.top = person === "host" ? "351px" : "506px";
+        popover.style.left = "23.375rem";
+        popover.style.top = person === "host" ? "21.9375rem" : "31.625rem";
         popover.hidden = false;
         $(`[data-settings="${person}"]`).setAttribute("aria-expanded", "true");
         $("#settings-volume").focus({ preventScroll: true });
@@ -212,7 +213,7 @@ export default function initialize(context) {
           const isPeak = person === "host" && index === 7;
           const top = person === "guest" && index === 5 ? "#ffced8" : colors[index % colors.length];
           const bottom = index < 2 ? "#ff174b" : index < 7 ? "#ff527c" : "#e43d68";
-          bar.style.cssText = `--height:${isPeak ? 34 : 28}px;--bar-top:${top};--bar-bottom:${bottom};--duration:${1.1 + (index % 5) * 0.19}s;--delay:${0.6 + index * 0.045}s`;
+          bar.style.cssText = `--height:${(isPeak ? 34 : 28) / 16}rem;--bar-top:${top};--bar-bottom:${bottom};--duration:${1.1 + (index % 5) * 0.19}s;--delay:${0.6 + index * 0.045}s`;
           meter.append(bar);
           return bar;
         });

@@ -1,9 +1,9 @@
 /* Styles owned by RecordingCard. */
-.ad-recording-card{display:flex;align-items:center;gap:21px;padding:18px;}
+.ad-recording-card{display:flex;align-items:center;gap:1.3125rem;padding:1.125rem;}
 .ad-recording-content{flex:1;min-width:0;}
-.ad-recording-content h3{font-size:15px;margin:0 0 8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.ad-recording-actions{display:flex;gap:7px;}
-@media (max-width:740px){
+.ad-recording-content h3{font-size:0.9375rem;margin:0 0 0.5rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.ad-recording-actions{display:flex;gap:0.4375rem;}
+@media (max-width:46.25rem){
 .ad-recording-card{flex-wrap:wrap;}
 .ad-recording-actions{margin-left:auto;}
 }

@@ -4,7 +4,7 @@ import { Button, Card, Field, TextField, Switch, ProgressBar } from "@ad-voice/u
 import "@ad-voice/ui/styles.css";
 
 function App() {
-  return <div style={{ width: 760, margin: "60px auto" }}>
+  return <div style={{ width: 760, margin: "3.75rem auto" }}>
     <Card animatedBorder>
       <h2>A&D Voice UI</h2>
       <Field label="Имя в онлайн-комнате"><TextField defaultValue="BBB" clearable /></Field>

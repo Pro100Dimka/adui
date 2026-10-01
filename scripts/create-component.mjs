@@ -3,7 +3,7 @@ import path from "node:path";
 
 const [category, name, ...descriptionParts] = process.argv.slice(2);
 const description = descriptionParts.join(" ") || `${name} component`;
-const categories = new Set(["layout", "controls", "feedback", "media", "editor", "compositions"]);
+const categories = new Set(["foundation", "layout", "controls", "feedback", "media", "editor", "compositions"]);
 
 if (!category || !name || !categories.has(category) || !/^[A-Z][A-Za-z0-9]+$/.test(name)) {
   console.error('Usage: npm run create:component -- <category> <PascalName> "Описание"');

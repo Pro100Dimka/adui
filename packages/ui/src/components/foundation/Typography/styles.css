@@ -1,0 +1,38 @@
+/* Typography owns the complete A&D Voice type scale. */
+.ad-typography {
+  margin: 0;
+  color: var(--ad-text);
+  font-family: var(--ad-font-family-sans);
+  font-size: var(--ad-font-size-body);
+  font-weight: var(--ad-font-weight-regular);
+  line-height: var(--ad-line-height-body);
+}
+
+.ad-typography[data-ad-variant="display"] { font-size: var(--ad-font-size-display); font-weight: var(--ad-font-weight-bold); line-height: var(--ad-line-height-display); letter-spacing: var(--ad-letter-spacing-display); }
+.ad-typography[data-ad-variant="h1"] { font-size: var(--ad-font-size-h1); font-weight: var(--ad-font-weight-bold); line-height: var(--ad-line-height-heading); letter-spacing: var(--ad-letter-spacing-heading); }
+.ad-typography[data-ad-variant="h2"] { font-size: var(--ad-font-size-h2); font-weight: var(--ad-font-weight-semibold); line-height: var(--ad-line-height-heading); letter-spacing: var(--ad-letter-spacing-heading); }
+.ad-typography[data-ad-variant="h3"] { font-size: var(--ad-font-size-h3); font-weight: var(--ad-font-weight-semibold); line-height: var(--ad-line-height-title); letter-spacing: var(--ad-letter-spacing-title); }
+.ad-typography[data-ad-variant="title"] { font-size: var(--ad-font-size-title); font-weight: var(--ad-font-weight-semibold); line-height: var(--ad-line-height-title); letter-spacing: var(--ad-letter-spacing-title); }
+.ad-typography[data-ad-variant="subtitle"] { font-size: var(--ad-font-size-subtitle); font-weight: var(--ad-font-weight-medium); line-height: var(--ad-line-height-body); }
+.ad-typography[data-ad-variant="body"] { font-size: var(--ad-font-size-body); line-height: var(--ad-line-height-body); }
+.ad-typography[data-ad-variant="body-sm"] { font-size: var(--ad-font-size-body-sm); line-height: var(--ad-line-height-body); }
+.ad-typography[data-ad-variant="label"] { font-size: var(--ad-font-size-label); font-weight: var(--ad-font-weight-semibold); line-height: var(--ad-line-height-compact); letter-spacing: var(--ad-letter-spacing-label); }
+.ad-typography[data-ad-variant="caption"] { font-size: var(--ad-font-size-caption); line-height: var(--ad-line-height-compact); }
+.ad-typography[data-ad-variant="eyebrow"] { font-size: var(--ad-font-size-caption); font-weight: var(--ad-font-weight-bold); line-height: var(--ad-line-height-compact); letter-spacing: var(--ad-letter-spacing-eyebrow); text-transform: uppercase; }
+.ad-typography[data-ad-variant="mono"] { font-family: var(--ad-font-family-mono); font-size: var(--ad-font-size-body-sm); line-height: var(--ad-line-height-body); font-variant-numeric: tabular-nums; }
+
+.ad-typography[data-ad-tone="muted"] { color: var(--ad-muted); }
+.ad-typography[data-ad-tone="accent"] { color: var(--ad-pink); text-shadow: 0 0 0.875rem #ff31594d; }
+.ad-typography[data-ad-tone="success"] { color: var(--ad-success); }
+.ad-typography[data-ad-tone="warning"] { color: var(--ad-warning); }
+.ad-typography[data-ad-tone="danger"] { color: #ff6d8e; }
+
+.ad-typography[data-ad-weight="regular"] { font-weight: var(--ad-font-weight-regular); }
+.ad-typography[data-ad-weight="medium"] { font-weight: var(--ad-font-weight-medium); }
+.ad-typography[data-ad-weight="semibold"] { font-weight: var(--ad-font-weight-semibold); }
+.ad-typography[data-ad-weight="bold"] { font-weight: var(--ad-font-weight-bold); }
+.ad-typography[data-ad-truncate="true"] { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.ad-typography-demo { display: grid; gap: 1.125rem; width: 100%; }
+.ad-typography-demo-row { display: grid; grid-template-columns: 6.5625rem minmax(0, 1fr); gap: 1.125rem; align-items: baseline; }
+.ad-typography-demo-key { color: var(--ad-muted); font: 500 0.6875rem/1.2 var(--ad-font-family-mono); }

@@ -43,7 +43,7 @@ const seen=new WeakMap();
       seek(t) {this.time=Math.max(0,t);for(const [node,fn] of this.callbacks)if(node.isConnected)fn(this.time);},
       dispose(){if(this.disposed)return;this.disposed=true;if(--scopeCount===0){document.removeEventListener('visibilitychange',wake);if(raf!==null)cancelAnimationFrame(raf);raf=null;}running.delete(this);this.callbacks.clear();this.intersection?.disconnect();media.removeEventListener('change', this.onPreference);}
     };
-    scope.intersection = new IntersectionObserver(entries=>entries.forEach(e=>e.target._adInView=e.isIntersecting),{rootMargin:'100px'});
+    scope.intersection = new IntersectionObserver(entries=>entries.forEach(e=>e.target._adInView=e.isIntersecting),{rootMargin:'10%'});
     scope.onPreference=e=>{if(!scope.explicit)scope.set(!e.matches,false);};
     media.addEventListener('change',scope.onPreference);
     U.scopes.set(root,scope);scope.set(scope.enabled,false);return scope;
@@ -73,8 +73,16 @@ const seen=new WeakMap();
       const core=U.svg('path',{fill:'none',stroke:`url(#${id})`,'stroke-width':shell?1.9:1.35});overlay.append(aura,core);
       lights.push({gradient,red,blur,radius,phase:(k*.48+.535+index*.051)%1,speed:round?(k?25:36):(k?86:125),paths:[aura,core]});
     }
+    const computedPosition=getComputedStyle(element).position;
+    const patchedPosition=computedPosition==='static';
+    const previousInlinePosition=element.style.position;
+    if(patchedPosition)element.style.position='relative';
+    Object.assign(overlay.style,{inset:'0',width:'100%',height:'100%',overflow:'visible'});
+    overlay.setAttribute('width','100%');
+    overlay.setAttribute('height','100%');
+    overlay.setAttribute('preserveAspectRatio','none');
     element.append(overlay);
-    const item={element,overlay,path,lights,length:0};
+    const item={element,overlay,path,lights,length:0,patchedPosition,previousInlinePosition};
     item.paint = time => {
       if(!item.length)return;
       for(const light of lights){
@@ -87,14 +95,13 @@ const seen=new WeakMap();
       const w=element.offsetWidth,h=element.offsetHeight;if(!w||!h)return;
       const s=getComputedStyle(element), corner=s.borderTopLeftRadius;
       const r=corner.includes('%')?Math.min(w,h)*parseFloat(corner)/100:parseFloat(corner)||0;
-      Object.assign(overlay.style,{left:`-${parseFloat(s.borderLeftWidth)||0}px`,top:`-${parseFloat(s.borderTopWidth)||0}px`,width:w+'px',height:h+'px'});
       const d=U.roundedPath(w,h,r);overlay.setAttribute('viewBox',`0 0 ${w} ${h}`);path.setAttribute('d',d);
       for(const l of lights)for(const p of l.paths)p.setAttribute('d',d);
       item.length=path.getTotalLength();item.paint(scope?.time||0);
     };
     item.observer=new ResizeObserver(item.sync);item.observer.observe(element);item.sync();
     const unsubscribe=scope.add(element,item.paint);
-    item.destroy=()=>{unsubscribe();item.observer.disconnect();overlay.remove();borders.delete(element);};
+    item.destroy=()=>{unsubscribe();item.observer.disconnect();overlay.remove();if(item.patchedPosition)element.style.position=item.previousInlinePosition;borders.delete(element);};
     borders.set(element,item);return item;
   };
   U.attachTabShape=button=>{

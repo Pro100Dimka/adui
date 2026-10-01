@@ -6,7 +6,7 @@ import { domProps, type ReferenceProps, type VectorNode } from "@ad-voice/ui/cor
 import { createScreenContext } from "./context.js";
 import { screenRegistry } from "./registry";
 import type { ScreenHandle, ScreenId, LayoutNode } from "./types";
-import componentsCSS from "@ad-voice/ui/components.css?inline";
+import uiCSS from "@ad-voice/ui/styles.css?inline";
 
 const voidTags = new Set(["input", "br", "hr", "meta", "link", "source", "col", "wbr", "area", "embed", "param", "track"]);
 const components = UI as unknown as Record<string, React.ComponentType<ReferenceProps>>;
@@ -56,11 +56,12 @@ const ReferenceDocument = memo(function ReferenceDocument({ id, host, root, onRe
     return () => { disposed = true; clearTimeout(scheduled); context?.dispose(); onReady(null); };
   }, [id, host, root, item, onReady]);
   return <>
-    <style>{item.css + "\n" + componentsCSS + `
+    <style>{item.css + "\n" + uiCSS + `
       :host{display:block;width:100%;height:100%;position:relative;color:var(--ad-text);}
-      .ad-legacy-body{height:100%;width:100%;min-height:0;display:grid;place-items:center;position:relative;overflow:hidden;margin:0;background:transparent;}
+      .ad-legacy-body{height:100%;width:100%;min-height:0;min-width:0;display:grid;place-items:center;position:relative;overflow:auto;overscroll-behavior:contain;scrollbar-gutter:stable;margin:0;background:transparent;}
+      .ad-legacy-body::-webkit-scrollbar{width:clamp(.45rem,.3rem + .25vw,.7rem);height:clamp(.45rem,.3rem + .25vw,.7rem);}.ad-legacy-body::-webkit-scrollbar-thumb{background:#7e304a;border-radius:999rem;}.ad-legacy-body::-webkit-scrollbar-track{background:#100911;}
       :host([data-inactive]) *, :host([data-ad-motion="off"]) *{animation-play-state:paused!important;}
-      [data-inspect-hover]{outline:2px solid #4df6cf!important;outline-offset:3px;}
+      [data-inspect-hover]{outline:0.125rem solid #4df6cf!important;outline-offset:0.1875rem;}
       .ad-border{z-index:20;}
     `}</style>
     <div ref={bodyRef} className="ad-legacy-body">{nodes}</div>

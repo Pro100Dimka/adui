@@ -1,3 +1,4 @@
+const cssRem = value => `${value / (parseFloat(getComputedStyle(document.documentElement).fontSize) || 16)}rem`;
 /* Screen-specific interaction controller. Common rendering and border motion live in ADUI. */
 export default function initialize(context) {
   const {document,window,requestAnimationFrame,cancelAnimationFrame,ResizeObserver,MutationObserver,
@@ -24,9 +25,9 @@ export default function initialize(context) {
   let elapsed = 0, previous = null, lastPaint = -Infinity, frameId = null, toastTimer = null;
   const frames = new Map();
   const emit = (name, detail = {}) => window.dispatchEvent(new CustomEvent(`melody:${name}`, {detail, cancelable: true}));
-  const px = () => 40 * zoom;
-  const toX = value => (value + preRoll) * px();
-  const fromX = x => x / px() - preRoll;
+  const unitsPerSecond = () => 40 * zoom;
+  const toX = value => (value + preRoll) * unitsPerSecond();
+  const fromX = x => x / unitsPerSecond() - preRoll;
   const toY = pitch => c4Y + (60 - pitch) * pitchStep;
   const pitchAt = y => clamp(Math.round(60 + (c4Y - y) / pitchStep), 43, 83);
   const quantize = value => snap ? Math.round(value / snap) * snap : value;
@@ -92,7 +93,7 @@ export default function initialize(context) {
   function fit() {
     const scale = Math.min(1, context.width / 1280, context.height / 698);
     scene.style.setProperty("--me-scale", String(scale));
-    viewport.style.width = `${1280 * scale}px`; viewport.style.height = `${698 * scale}px`;
+    viewport.style.width = cssRem(1280 * scale); viewport.style.height = cssRem(698 * scale);
     closeMenu();
   }
   function notify(text) {
@@ -145,9 +146,9 @@ export default function initialize(context) {
   }
 
   function styleNote(element, note) {
-    element.style.left = `${toX(note.start)}px`;
-    element.style.top = `${toY(note.pitch) - 7.5}px`;
-    element.style.width = `${Math.max(4, (note.end - note.start) * px())}px`;
+    element.style.left = cssRem(toX(note.start));
+    element.style.top = cssRem(toY(note.pitch) - 7.5);
+    element.style.width = cssRem(Math.max(4, (note.end - note.start) * unitsPerSecond()));
     element.setAttribute("aria-label", `${pitchName(note.pitch)}, ${note.start.toFixed(2)}–${note.end.toFixed(2)} с`);
     element.classList.toggle("is-selected", selected.has(note.id));
     element.setAttribute("aria-pressed", String(selected.has(note.id)));
@@ -175,18 +176,18 @@ export default function initialize(context) {
     for (const word of project.words) {
       const button = document.createElement("button"); button.className = "me-word"; button.type = "button";
       button.dataset.word = word.id; button.textContent = word.text;
-      button.style.left = `${toX(word.start)}px`; button.style.width = `${Math.max(12, (word.end - word.start) * px())}px`;
+      button.style.left = cssRem(toX(word.start)); button.style.width = cssRem(Math.max(12, (word.end - word.start) * unitsPerSecond()));
       button.title = "Двойной щелчок — изменить слово"; fragment.append(button);
     }
     wordsRoot.replaceChildren(fragment);
   }
   function renderRuler() {
-    const measureWidth = px() * 240 / project.bpm;
+    const measureWidth = unitsPerSecond() * 240 / project.bpm;
     const fragment = document.createDocumentFragment();
     for (let i = 0; i <= Math.ceil(project.duration * project.bpm / 240); i++) {
       const button = document.createElement("button"); button.className = "me-measure"; button.type = "button";
       button.dataset.bar = String(i); button.textContent = String(i + 1); button.title = `Такт ${i + 1}`;
-      button.style.left = `${toX(i * 240 / project.bpm) - 16 * zoom}px`; fragment.append(button);
+      button.style.left = cssRem(toX(i * 240 / project.bpm) - 16 * zoom); fragment.append(button);
     }
     $("#me-ruler").replaceChildren(fragment);
     const pattern = $("#me-grid-pattern"); pattern.setAttribute("width", String(measureWidth));
@@ -195,8 +196,8 @@ export default function initialize(context) {
     paths[2].setAttribute("d", [1,2,3].map(i => `M${i * measureWidth / 4} 0V8.8`).join(""));
     pattern.setAttribute("x", String(toX(0)));
     const width = Math.max(scroll.clientWidth, toX(project.duration) + 60);
-    world.style.width = `${width}px`;
-    const grid = $("#me-grid-svg"); grid.style.width = `${width}px`; grid.setAttribute("viewBox", `0 0 ${width} 390`);
+    world.style.width = cssRem(width);
+    const grid = $("#me-grid-svg"); grid.style.width = cssRem(width); grid.setAttribute("viewBox", `0 0 ${width} 390`);
     $$("rect, path", grid).filter(node => !node.closest("defs")).forEach(node => {
       if (node.tagName === "rect") node.setAttribute("width", String(width));
       else { const m = node.getAttribute("d")?.match(/^M0 ([\d.-]+)H/); if (m) node.setAttribute("d", `M0 ${m[1]}H${width}`); }
@@ -214,7 +215,7 @@ export default function initialize(context) {
     const scale = project.mode === "major" ? [0,2,4,5,7,9,11] : [0,2,3,5,7,8,10];
     $$(".me-key", $("#me-piano")).forEach(key => {
       const on = project.mode !== "none" && scale.includes((Number(key.dataset.pitch) - root + 120) % 12);
-      key.style.boxShadow = on ? "inset -2px 0 #ff527a, inset 0 1px #ffc4d420" : "";
+      key.style.boxShadow = on ? "inset -0.125rem 0 #ff527a, inset 0 0.0625rem #ffc4d420" : "";
     });
   }
   function setZoom(value) {
@@ -293,7 +294,7 @@ export default function initialize(context) {
     g.moved = g.moved || Math.hypot(point.x - g.x, point.y - g.y) > 2;
     if (g.kind === "marquee") {
       const x = Math.min(g.x, point.x), y = Math.min(g.y, point.y), w = Math.abs(g.x - point.x), h = Math.abs(g.y - point.y);
-      const box = $("#me-marquee"); box.hidden = false; box.style.cssText = `left:${x}px;top:${y}px;width:${w}px;height:${h}px`;
+      const box = $("#me-marquee"); box.hidden = false; box.style.cssText = `left:${x / 16}rem;top:${y / 16}rem;width:${w / 16}rem;height:${h / 16}rem`;
       selected = new Set(g.base);
       for (const n of project.notes) if (toX(n.end) >= x && toX(n.start) <= x + w && toY(n.pitch) + 7.5 >= y && toY(n.pitch) - 7.5 <= y + h) selected.add(n.id);
       renderNotes(); return;
@@ -304,7 +305,7 @@ export default function initialize(context) {
       note.start = Math.min(end, g.origin); note.end = Math.max(g.origin + .06, end);
       renderNotes(); return;
     }
-    let dt = quantize((point.x - g.x) / px());
+    let dt = quantize((point.x - g.x) / unitsPerSecond());
     const dp = mode === "rhythm" ? 0 : Math.round((g.y - point.y) / pitchStep);
     if (g.kind === "move") dt = clamp(dt, -preRoll - Math.min(...g.bases.map(n => n.start)), project.duration - Math.max(...g.bases.map(n => n.end)));
     for (const base of g.bases) {
@@ -407,8 +408,8 @@ export default function initialize(context) {
     }
     popover.hidden=false;const a=anchor.getBoundingClientRect(),s=scene.getBoundingClientRect(),scale=s.width/1280;
     const width=popover.offsetWidth,height=popover.offsetHeight;
-    popover.style.left=`${clamp((a.right-s.left)/scale-width,12,1280-width-12)}px`;
-    const down=(a.bottom-s.top)/scale+7;popover.style.top=`${down+height<680?down:Math.max(8,(a.top-s.top)/scale-height-7)}px`;
+    popover.style.left=cssRem(clamp((a.right-s.left)/scale-width,12,1280-width-12));
+    const down=(a.bottom-s.top)/scale+7;popover.style.top=cssRem(down+height<680?down:Math.max(8,(a.top-s.top)/scale-height-7));
     popover.querySelector("button:not(:disabled)")?.focus({preventScroll:true});
   }
   document.addEventListener("pointerdown", event => {if(!event.target.closest(".me-popover")&&!menuAnchor?.contains(event.target))closeMenu();});
@@ -439,8 +440,8 @@ export default function initialize(context) {
   function setTime(value) {time=clamp(Number(value)||0,0,duration());if(audio)audio.currentTime=time;previewed.clear();paintTransport();}
   function paintTransport() {
     $("#me-time").textContent=fmt(time);$("#me-duration").textContent=fmt(duration());$("#me-seek").max=duration();$("#me-seek").value=String(time);
-    $("#me-wave-cursor").style.left=`${Math.min(652,time/Math.max(1,duration())*652*waveZoom)}px`;
-    $("#me-playhead").style.left=`${toX(time)}px`;
+    $("#me-wave-cursor").style.left=cssRem(Math.min(652,time/Math.max(1,duration())*652*waveZoom));
+    $("#me-playhead").style.left=cssRem(toX(time));
     $("#me-play").setAttribute("aria-pressed",String(playing));$("#me-play").setAttribute("aria-label",playing?"Пауза":"Воспроизвести");
     $("#me-play use").setAttribute("href",playing?"#me-i-pause":"#me-i-play");
     if(playing){const x=toX(time);if(x>scroll.scrollLeft+scroll.clientWidth-80||x<scroll.scrollLeft)scroll.scrollLeft=Math.max(0,x-90);}

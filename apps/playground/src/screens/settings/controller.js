@@ -1,3 +1,4 @@
+const cssRem = value => `${value / (parseFloat(getComputedStyle(document.documentElement).fontSize) || 16)}rem`;
 /* Screen-specific interaction controller. Common rendering and border motion live in ADUI. */
 export default function initialize(context) {
   const {document,window,requestAnimationFrame,cancelAnimationFrame,ResizeObserver,MutationObserver,
@@ -51,8 +52,8 @@ export default function initialize(context) {
       function resizeScene() {
         const scale = Math.min(1, context.width / 1404, context.height / 1120);
         scene.style.setProperty("--ui-scale", String(scale));
-        $("#viewport").style.width = `${1404 * scale}px`;
-        $("#viewport").style.height = `${1120 * scale}px`;
+        $("#viewport").style.width = cssRem(1404 * scale);
+        $("#viewport").style.height = cssRem(1120 * scale);
       }
       addEventListener("resize", resizeScene, { passive: true });
       resizeScene();
@@ -87,8 +88,8 @@ export default function initialize(context) {
         const canvas = $("#cosmos"), ctx = canvas.getContext("2d", { alpha: false });
         const low = document.createElement("canvas"); low.width=702; low.height=560;
         const lc=low.getContext("2d"), image=lc.createImageData(702,560);
-        for(let py=0;py<560;py++) for(let px=0;px<702;px++) {
-          const x=px*2,y=py*2;
+        for(let row=0;row<560;row++) for(let column=0;column<702;column++) {
+          const x=column*2,y=row*2;
           const warp=(fbm(x*.003,y*.003)-.48)*125;
           const n=fbm(x*.012+warp*.014,y*.012-warp*.012);
           const vein=1-Math.abs(2*fbm(x*.017+2*n,y*.017+3*n)-1);
@@ -99,7 +100,7 @@ export default function initialize(context) {
           const detail=fbm(x*.032+warp*.06,y*.032,4);
           const hot=Math.pow(clamp((detail-.37)*3,0,1),2.5)*thread;
           const lum=m*(5+135*Math.pow(n,2.5)+155*thread*Math.pow(n,1.5)+220*hot);
-          const idx=(py*702+px)*4;
+          const idx=(row*702+column)*4;
           image.data[idx]=5+lum; image.data[idx+1]=3+lum*.13; image.data[idx+2]=7+lum*.28; image.data[idx+3]=255;
         }
         lc.putImageData(image,0,0); ctx.drawImage(low,0,0,1404,1120);
@@ -319,8 +320,8 @@ export default function initialize(context) {
           return {h,max,thumbHeight,travel:Math.max(0,h-thumbHeight-2)};
         };
         const update=()=>{
-          const {max,thumbHeight,travel}=metrics();thumb.style.height=`${thumbHeight}px`;
-          thumb.style.transform=`translateY(${max?content.scrollTop/max*travel:0}px)`;
+          const {max,thumbHeight,travel}=metrics();thumb.style.height=cssRem(thumbHeight);
+          thumb.style.transform=`translateY(${(max?content.scrollTop/max*travel:0)/16}rem)`;
           rail.setAttribute("aria-valuenow",String(Math.round(max?content.scrollTop/max*100:0)));
           rail.setAttribute("aria-disabled",String(max===0));
         };
@@ -388,7 +389,7 @@ export default function initialize(context) {
       async function copyText(value) {
         try {if(!navigator.clipboard?.writeText)throw new Error("No clipboard API");await navigator.clipboard.writeText(value);return true;}
         catch {
-          const area=document.createElement("textarea");area.value=value;area.style.cssText="position:fixed;left:-9999px;top:0";document.body.append(area);area.select();let success=false;
+          const area=document.createElement("textarea");area.value=value;area.style.cssText="position:fixed;left:-624.9375rem;top:0";document.body.append(area);area.select();let success=false;
           try{success=document.execCommand("copy");}catch{}area.remove();return success;
         }
       }
@@ -530,8 +531,8 @@ export default function initialize(context) {
     const canvas=$("#profile-landscape"),ctx=canvas.getContext("2d");if(!ctx)return;
     const w=canvas.width,h=canvas.height,s=w/1220;
     const im=ctx.createImageData(w,h),cx=1129,cy=309,r=346;
-    for(let py=0;py<h;py++) for(let px=0;px<w;px++) {
-      const x=px/s,y=py/s;
+    for(let row=0;row<h;row++) for(let column=0;column<w;column++) {
+      const x=column/s,y=row/s;
       const n=fbm(x*.012,y*.013+20),warp=fbm(x*.004,y*.005)*70;
       const f=fbm(x*.025+warp*.03,y*.032+warp*.02),ridge=1-Math.abs(2*fbm(x*.026+n*5,y*.034+n*5,5)-1);
       const threads=Math.pow(clamp((ridge-.61)*2.7),4)*Math.pow(clamp((f-.33)*3),1.3);
@@ -556,7 +557,7 @@ export default function initialize(context) {
         const halo=Math.exp((e)/13)*sideLight;
         red+=halo*142;green+=halo*18;blue+=halo*34;
       }
-      const i=(py*w+px)*4;im.data[i]=red;im.data[i+1]=green;im.data[i+2]=blue;im.data[i+3]=255;
+      const i=(row*w+column)*4;im.data[i]=red;im.data[i+1]=green;im.data[i+2]=blue;im.data[i+3]=255;
     }
     ctx.putImageData(im,0,0);ctx.save();ctx.scale(s,s);
     const rgen=random(840);

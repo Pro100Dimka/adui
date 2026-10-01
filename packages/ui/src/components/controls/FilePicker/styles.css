@@ -1,3 +1,3 @@
 /* Styles owned by FilePicker. */
-.ad-file-picker{display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
-.ad-file-picker>small{font-size:11px;color:var(--ad-muted);max-width:210px;overflow:hidden;text-overflow:ellipsis;}
+.ad-file-picker{display:flex;align-items:center;gap:0.875rem;flex-wrap:wrap;}
+.ad-file-picker>small{font-size:0.6875rem;color:var(--ad-muted);max-width:13.125rem;overflow:hidden;text-overflow:ellipsis;}

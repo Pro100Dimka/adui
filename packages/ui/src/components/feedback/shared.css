@@ -1,4 +1,4 @@
 /* Shared only by sibling components. */
-.ad-steps .ad-status-indicator{font-size:10px;gap:5px;}
-.ad-steps .ad-status-dot{width:23px;height:23px;}
-.ad-popover,.ad-menu{position:fixed;inset:auto;margin:0;min-width:235px;max-width:350px;padding:8px;border:1px solid #ad436082!important;border-radius:13px;z-index:1000;color:var(--ad-text);}
+.ad-steps .ad-status-indicator{font-size:0.625rem;gap:0.3125rem;}
+.ad-steps .ad-status-dot{width:1.4375rem;height:1.4375rem;}
+.ad-popover,.ad-menu{position:fixed;inset:auto;margin:0;min-width:14.6875rem;max-width:21.875rem;padding:0.5rem;border:0.0625rem solid #ad436082!important;border-radius:0.8125rem;z-index:1000;color:var(--ad-text);}
