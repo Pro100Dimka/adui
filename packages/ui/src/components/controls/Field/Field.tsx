@@ -29,7 +29,7 @@ export const Field = define<FieldProps>("Field", p => {
   const [infoOpen, setInfoOpen] = useState(false);
   return <FieldContext.Provider value={{ id, required: p.required, error: !!p.error, describedBy: help ? `${id}-help` : undefined }}>
     <div {...mark("Field", { ...p, id: undefined })}>
-      <div className="ad-field-label"><label htmlFor={id}>{p.label ?? "Название поля"}{p.required ? " *" : ""}</label>{p.info && <IconButton variant="ghost" size="small" icon="info" label={p.info} onClick={() => setInfoOpen(true)} />}</div>
+      <div className="ad-field-label"><label htmlFor={id}>{p.label ?? "Название поля"}{p.required ? " *" : ""}</label>{p.info && <IconButton variant="ghost" size="sm" icon="info" label={p.info} onClick={() => setInfoOpen(true)} />}</div>
       {p.control ?? p.children}
       {help && <small id={`${id}-help`} className={p.error ? "ad-field-error" : undefined}>{help}</small>}
       {p.info && <Dialog open={infoOpen} onOpenChange={setInfoOpen} title="Информация" description={p.info} cancelLabel={false} />}

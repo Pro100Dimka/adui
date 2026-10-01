@@ -31,7 +31,7 @@ export function CatalogPage() {
           <header className="component-head"><div><h3>{item.name}</h3><p>{item.description}</p></div><span className="component-index">REACT</span></header>
           <div className="component-demo"><ExampleBoundary name={item.name}>{LiveExample ? <LiveExample /> : <div>Нет example.tsx</div>}</ExampleBoundary></div>
           <footer className="component-bottom"><code>{item.name}</code><span className="source-use">Код ниже соответствует текущему demo</span></footer>
-          <details className="component-code"><summary>Показать код текущего примера</summary><pre>{source}</pre><Button className="copy-code" variant="ghost" size="small" icon="copy" onClick={() => { void copyText(source); }}>Копировать весь пример</Button></details>
+          <details className="component-code"><summary>Показать код текущего примера</summary><pre>{source}</pre><Button className="copy-code" variant="ghost" size="sm" icon="copy" onClick={() => { void copyText(source); }}>Копировать весь пример</Button></details>
         </article>;
       })}</div></section> : null;
     })}

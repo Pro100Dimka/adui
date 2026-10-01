@@ -1,3 +1,5 @@
 /* Styles owned by SplitButton. */
-.ad-split-button{display:inline-flex;border-radius:0.8125rem;overflow:hidden;}
-.ad-split-button>.ad{background:transparent;box-shadow:none;border:none;border-radius:0;}
+.ad-split-button{display:inline-flex;align-items:stretch;border-radius:0.875rem;overflow:hidden;gap:0;}
+.ad-split-button>.ad{background:transparent;box-shadow:none;border-radius:0;}
+.ad-split-button>.ad-button{padding-inline:calc(var(--ad-size-pad-x) * 1.45);}
+.ad-split-button>.ad-icon-button{width:calc(var(--ad-size-h) * 0.96);}

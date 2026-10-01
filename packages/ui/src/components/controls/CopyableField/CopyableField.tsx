@@ -26,5 +26,5 @@ import { PathField } from "../PathField/PathField";
 
 export const CopyableField = define<TextFieldProps>("CopyableField", ({ value, defaultValue, onValueChange, ...p }) => {
   const [current, setCurrent] = useControllable(value, defaultValue ?? "AD-DEMO-ROOM-2026", onValueChange); const [copied, setCopied] = useState(false);
-  return <TextField {...p} value={current} onValueChange={v => { setCurrent(v); setCopied(false); }} className={`ad-copyable-field ${p.className ?? ""}`} end={<IconButton variant="ghost" icon={copied ? "check" : "copy"} label={copied ? "Скопировано" : "Копировать"} onClick={async () => setCopied(await copyText(current))} />} />;
+  return <TextField {...p} value={current} onValueChange={v => { setCurrent(v); setCopied(false); }} className={`ad-copyable-field ${p.className ?? ""}`} end={<IconButton size={p.size} variant="ghost" icon={copied ? "check" : "copy"} label={copied ? "Скопировано" : "Копировать"} onClick={async () => setCopied(await copyText(current))} />} />;
 });

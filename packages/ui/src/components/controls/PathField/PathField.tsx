@@ -26,6 +26,6 @@ import { CopyableField } from "../CopyableField/CopyableField";
 
 export const PathField = define<PathFieldProps>("PathField", ({ onFiles, accept, value, defaultValue, onValueChange, ...p }) => {
   const [current, setCurrent] = useControllable(value, defaultValue ?? "Папка данных приложения", onValueChange); const file = useRef<HTMLInputElement>(null);
-  return <><TextField {...p} className={`ad-path-field ${p.className ?? ""}`} value={current} readOnly icon="folder" end={<IconButton variant="ghost" icon="folder" label="Выбрать файл" onClick={() => file.current?.click()} />} />
+  return <><TextField {...p} className={`ad-path-field ${p.className ?? ""}`} value={current} readOnly icon="folder" end={<IconButton size={p.size} variant="ghost" icon="folder" label="Выбрать файл" onClick={() => file.current?.click()} />} />
     <input ref={file} type="file" accept={accept} hidden onChange={e => { const files = Array.from(e.currentTarget.files ?? []); if (files[0]) setCurrent(files[0].name); onFiles?.(files); e.currentTarget.value = ""; }} /></>;
 });

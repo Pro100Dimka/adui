@@ -1,7 +1,7 @@
 import React from "react";
-import { U, row, useExampleState } from "../../../dev/exampleHelpers";
+import { U, useExampleState } from "../../../dev/exampleHelpers";
 export default function SwitchExample() {
-  const {value,setValue,checked,setChecked,open,setOpen,text,setText,choice,setChoice,notice,setNotice,note,setNote,history,setHistory,cursor,setCursor,anchor,alert,items}=useExampleState();
-  const demo=row(<><U.Switch checked={checked} onValueChange={setChecked} label="Мониторинг входа" /><U.Switch label="Недоступно" disabled /></>);
+  const {checked,setChecked,notice,setNotice}=useExampleState();
+  const demo=<U.Stack gap={2}>{(["xs","sm","md","lg"] as const).map(size=><U.Switch key={size} size={size} checked={checked} onValueChange={setChecked} label={`Мониторинг · ${size}`} />)}</U.Stack>;
   return <>{demo}<U.Toast floating open={!!notice} message={notice} onClose={()=>setNotice("")} /></>;
 }

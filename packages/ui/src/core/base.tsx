@@ -3,7 +3,9 @@ import type { CSSProperties, ReactElement, ReactNode, Ref, ComponentType } from 
 
 export type Material = "shell" | "card" | "glass" | "ruby" | "tile" | "input" | "dialog" | "ghost" | "danger";
 export type Variant = "primary" | "secondary" | "ghost" | "danger";
-export type Size = "small" | "medium" | "large";
+export type ControlSize = "xs" | "sm" | "md" | "lg";
+export type LegacySize = "small" | "medium" | "large";
+export type Size = ControlSize | LegacySize;
 export type Tone = "success" | "warning" | "error" | "processing" | "pending" | "offline" | "info";
 export type TokenStyle = CSSProperties & { [key: `--${string}`]: string | number | undefined };
 export interface CommonProps {
@@ -21,6 +23,11 @@ export interface ReferenceOptions { tag: string; attrs: Record<string, unknown>;
 export interface ReferenceProps { __reference?: ReferenceOptions }
 
 export function classes(...values: (string | undefined | false)[]): string { return values.filter(Boolean).join(" "); }
+export function normalizeSize(size?: Size): ControlSize | undefined {
+  if (!size) return undefined;
+  return ({ small: "sm", medium: "md", large: "lg" } as const)[size as LegacySize] ?? size as ControlSize;
+}
+
 export function mark(name: string, p: CommonProps, material?: Material, extra?: string) {
   return {
     id: p.id,
@@ -28,7 +35,7 @@ export function mark(name: string, p: CommonProps, material?: Material, extra?: 
     style: p.style,
     "data-ad-component": name,
     "data-ad-material": p.material ?? material,
-    "data-ad-size": p.size,
+    "data-ad-size": normalizeSize(p.size),
     "data-ad-tone": p.tone
   };
 }

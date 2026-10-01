@@ -33,6 +33,6 @@ export const TextField = define<TextFieldProps>("TextField", p => {
     <input {...dom} id={p.id ?? field?.id} ref={n => { input.current = n; assignRef(ref, n); }} type={p.type ?? "text"} value={current}
       required={p.required ?? field?.required} aria-label={p["aria-label"] ?? label} aria-invalid={error || field?.error || undefined} aria-describedby={p["aria-describedby"] ?? field?.describedBy}
       onInput={onInput} onChange={e => { setCurrent(e.currentTarget.value); onChange?.(e); }} />
-    {clearable && <IconButton variant="ghost" size="small" icon="close" label="Очистить" disabled={p.disabled || p.readOnly} onClick={() => { setCurrent(""); input.current?.focus(); }} />}{end}
+    {clearable && <IconButton variant="ghost" size={p.size ?? "sm"} icon="close" label="Очистить" disabled={p.disabled || p.readOnly} onClick={() => { setCurrent(""); input.current?.focus(); }} />}{end}
   </div>;
 });

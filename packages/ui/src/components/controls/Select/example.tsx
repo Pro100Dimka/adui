@@ -1,7 +1,7 @@
 import React from "react";
-import { U, row, useExampleState } from "../../../dev/exampleHelpers";
+import { U, useExampleState } from "../../../dev/exampleHelpers";
 export default function SelectExample() {
-  const {value,setValue,checked,setChecked,open,setOpen,text,setText,choice,setChoice,notice,setNotice,note,setNote,history,setHistory,cursor,setCursor,anchor,alert,items}=useExampleState();
-  const demo=<U.Select label="Драйвер" options={["WASAPI Shared", "WASAPI Exclusive", "ASIO"]} />;
+  const {notice,setNotice}=useExampleState();
+  const demo=<U.Stack gap={2}>{(["xs","sm","md","lg"] as const).map(size=><U.Select key={size} size={size} label={`Драйвер · ${size}`} options={["WASAPI Shared", "WASAPI Exclusive", "ASIO"]} />)}</U.Stack>;
   return <>{demo}<U.Toast floating open={!!notice} message={notice} onClose={()=>setNotice("")} /></>;
 }

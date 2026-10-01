@@ -1,7 +1,7 @@
 import React from "react";
-import { U, row, useExampleState } from "../../../dev/exampleHelpers";
+import { U, useExampleState } from "../../../dev/exampleHelpers";
 export default function SliderExample() {
-  const {value,setValue,checked,setChecked,open,setOpen,text,setText,choice,setChoice,notice,setNotice,note,setNote,history,setHistory,cursor,setCursor,anchor,alert,items}=useExampleState();
-  const demo=<><U.Slider value={value} onValueChange={setValue} label="Громкость" /><U.Text>{value}%</U.Text></>;
+  const {value,setValue,notice,setNotice}=useExampleState();
+  const demo=<U.Stack gap={2}>{(["xs","sm","md","lg"] as const).map(size=><U.Stack key={size} direction="row" gap={2} align="center"><U.Typography variant="caption" tone="muted">{size.toUpperCase()}</U.Typography><U.Slider size={size} value={value} onValueChange={setValue} label={`Громкость ${size}`} /></U.Stack>)}</U.Stack>;
   return <>{demo}<U.Toast floating open={!!notice} message={notice} onClose={()=>setNotice("")} /></>;
 }

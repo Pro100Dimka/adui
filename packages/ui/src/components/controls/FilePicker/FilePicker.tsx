@@ -26,7 +26,7 @@ import { CopyableField } from "../CopyableField/CopyableField";
 
 export const FilePicker = define<FilePickerProps>("FilePicker", p => {
   const file = useRef<HTMLInputElement>(null); const [names, setNames] = useState("");
-  return <div {...mark("FilePicker", p)}><Button icon={p.icon ?? "folder"} onClick={() => file.current?.click()}>{p.label ?? "Выбрать файл"}</Button><small>{names || p.description || "Файл не выбран"}</small>
+  return <div {...mark("FilePicker", p)}><Button size={p.size} icon={p.icon ?? "folder"} onClick={() => file.current?.click()}>{p.label ?? "Выбрать файл"}</Button><small>{names || p.description || "Файл не выбран"}</small>
     <input type="file" ref={file} hidden accept={p.accept} multiple={p.multiple} onChange={e => { const files = Array.from(e.currentTarget.files ?? []); setNames(files.map(f => f.name).join(", ")); p.onFiles?.(files); e.currentTarget.value = ""; }} />
   </div>;
 });

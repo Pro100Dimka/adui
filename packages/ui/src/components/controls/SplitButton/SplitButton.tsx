@@ -27,8 +27,8 @@ import { CopyableField } from "../CopyableField/CopyableField";
 export const SplitButton = define<SplitButtonProps>("SplitButton", p => {
   const [open, setOpen] = useState(false); const anchor = useRef<HTMLButtonElement>(null);
   return <div {...mark("SplitButton", p, p.variant === "secondary" ? "glass" : "ruby")}>
-    <Button variant="ghost" icon={p.icon ?? "save"} onClick={p.onClick}>{p.children ?? p.label ?? "Сохранить"}</Button>
-    <IconButton ref={anchor} variant="ghost" icon="chevron" label="Другие действия" aria-haspopup="menu" aria-expanded={open} onClick={() => setOpen(v => !v)} />
+    <Button size={p.size} variant="ghost" icon={p.icon ?? "save"} onClick={p.onClick}>{p.children ?? p.label ?? "Сохранить"}</Button>
+    <IconButton size={p.size} ref={anchor} variant="ghost" icon="chevron" label="Другие действия" aria-haspopup="menu" aria-expanded={open} onClick={() => setOpen(v => !v)} />
     <Menu open={open} onOpenChange={setOpen} anchorRef={anchor} items={p.items ?? [{ label: "Экспортировать JSON", icon: "download" }]} />
   </div>;
 });
