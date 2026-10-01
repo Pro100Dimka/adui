@@ -46,13 +46,11 @@ export interface ToggleButtonProps extends ButtonProps { checked?: boolean; defa
 
 export interface SplitButtonProps extends CommonProps { variant?: Variant; icon?: string; label?: string; items?: MenuItemData[]; onClick?: () => void }
 
-export type TabAppearance = "settings" | "flush" | "premium";
-
-export interface TabProps extends ButtonProps { selected?: boolean; panelId?: string; appearance?: TabAppearance }
+export interface TabProps extends ButtonProps { selected?: boolean; panelId?: string }
 
 export interface TabItem { value: string; label: ReactNode; icon?: string; disabled?: boolean; panelId?: string; id?: string }
 
-export interface TabsProps extends CommonProps { items?: TabItem[]; value?: string; defaultValue?: string; onValueChange?: (value: string) => void; label?: string; appearance?: TabAppearance }
+export interface TabsProps extends CommonProps { items?: TabItem[]; value?: string; defaultValue?: string; onValueChange?: (value: string) => void; label?: string }
 
 export interface FieldContextValue { id: string; required?: boolean; error?: boolean; describedBy?: string }
 

@@ -1,5 +1,5 @@
-import React from "react";
-import { U, useExampleState } from "../../../dev/exampleHelpers";
+import React, { useState } from "react";
+import { U } from "../../../dev/exampleHelpers";
 
 const items = [
   { value: "appearance", label: "Внешний вид", icon: "palette" },
@@ -8,19 +8,21 @@ const items = [
 ];
 
 export default function TabsExample() {
-  const { choice, setChoice } = useExampleState();
-  return <U.Stack gap={4}>
-    <U.Stack gap={2}>
-      <U.Typography variant="label" tone="muted">SETTINGS · основной вариант</U.Typography>
-      <U.Tabs appearance="settings" value={choice} onValueChange={setChoice} items={items} />
+  const [value, setValue] = useState("appearance");
+
+  return (
+    <U.Stack gap={4}>
+      <U.Tabs value={value} onValueChange={setValue} items={items} />
+
+      <U.Stack direction="row" gap={2} wrap="wrap">
+        <U.Button size="small" onClick={() => setValue("appearance")}>Первая активная</U.Button>
+        <U.Button size="small" onClick={() => setValue("audio")}>Средняя активная</U.Button>
+        <U.Button size="small" onClick={() => setValue("env")}>Последняя активная</U.Button>
+      </U.Stack>
+
+      <U.Typography variant="caption" tone="muted">
+        Крайние активные вкладки повторяют внешний край контейнера, а внутренние сохраняют скосы с двух сторон.
+      </U.Typography>
     </U.Stack>
-    <U.Stack gap={2}>
-      <U.Typography variant="label" tone="muted">FLUSH · максимально заполняет ячейку</U.Typography>
-      <U.Tabs appearance="flush" defaultValue="appearance" items={items} />
-    </U.Stack>
-    <U.Stack gap={2}>
-      <U.Typography variant="label" tone="muted">PREMIUM · более объёмный свет</U.Typography>
-      <U.Tabs appearance="premium" defaultValue="appearance" items={items} />
-    </U.Stack>
-  </U.Stack>;
+  );
 }

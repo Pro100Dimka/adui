@@ -24,8 +24,8 @@ import { FilePicker } from "../FilePicker/FilePicker";
 import { PathField } from "../PathField/PathField";
 import { CopyableField } from "../CopyableField/CopyableField";
 
-export const Tab = define<TabProps>("Tab", ({ selected = false, panelId, appearance = "settings", ref: externalRef, ...p }) => {
+export const Tab = define<TabProps>("Tab", ({ selected = false, panelId, ref: externalRef, ...p }) => {
   const ref = useRef<HTMLButtonElement>(null); useTabShape(ref);
-  return buttonView({ ...p, className: `ad-button ad-tab ${p.className ?? ""}`, variant: "ghost", role: "tab", "aria-selected": selected, "aria-controls": panelId, "data-ad-tab-appearance": appearance, tabIndex: selected ? 0 : -1,
+  return buttonView({ ...p, className: `ad-button ad-tab ${p.className ?? ""}`, variant: "ghost", role: "tab", "aria-selected": selected, "aria-controls": panelId, tabIndex: selected ? 0 : -1,
     ref: n => { ref.current = n; assignRef(externalRef, n); } }, "Tab");
 });

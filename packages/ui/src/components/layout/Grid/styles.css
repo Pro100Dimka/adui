@@ -7,6 +7,10 @@
   column-gap: var(--ad-grid-column-gap, var(--ad-grid-gap, 0));
   align-items: var(--ad-grid-align, stretch);
   justify-items: var(--ad-grid-justify, stretch);
+}
+
+.ad-grid-item {
+  min-width: 0;
   grid-column-start: var(--ad-grid-column-start, auto);
   grid-column-end: var(--ad-grid-column-end, auto);
   grid-row-start: var(--ad-grid-row-start, auto);
@@ -14,7 +18,8 @@
 }
 
 .ad-grid--auto-fit {
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--ad-grid-min-child-width)), 1fr));
+  grid-template-columns: repeat(auto-fit,
+      minmax(min(100%, var(--ad-grid-min-child-width)), 1fr));
 }
 
 .ad-grid--dense {
@@ -22,13 +27,19 @@
 }
 
 @media (min-width: 40rem) {
-  .ad-grid {
+  .ad-grid:not(.ad-grid--auto-fit) {
     grid-template-columns: var(--ad-grid-columns-sm, var(--ad-grid-columns, repeat(12, minmax(0, 1fr))));
+  }
+
+  .ad-grid {
     gap: var(--ad-grid-gap-sm, var(--ad-grid-gap, 0));
     row-gap: var(--ad-grid-row-gap-sm, var(--ad-grid-row-gap, var(--ad-grid-gap-sm, var(--ad-grid-gap, 0))));
     column-gap: var(--ad-grid-column-gap-sm, var(--ad-grid-column-gap, var(--ad-grid-gap-sm, var(--ad-grid-gap, 0))));
     align-items: var(--ad-grid-align-sm, var(--ad-grid-align, stretch));
     justify-items: var(--ad-grid-justify-sm, var(--ad-grid-justify, stretch));
+  }
+
+  .ad-grid-item {
     grid-column-start: var(--ad-grid-column-start-sm, var(--ad-grid-column-start, auto));
     grid-column-end: var(--ad-grid-column-end-sm, var(--ad-grid-column-end, auto));
     grid-row-start: var(--ad-grid-row-start-sm, var(--ad-grid-row-start, auto));
@@ -37,13 +48,19 @@
 }
 
 @media (min-width: 56.25rem) {
-  .ad-grid {
+  .ad-grid:not(.ad-grid--auto-fit) {
     grid-template-columns: var(--ad-grid-columns-md, var(--ad-grid-columns-sm, var(--ad-grid-columns, repeat(12, minmax(0, 1fr)))));
+  }
+
+  .ad-grid {
     gap: var(--ad-grid-gap-md, var(--ad-grid-gap-sm, var(--ad-grid-gap, 0)));
     row-gap: var(--ad-grid-row-gap-md, var(--ad-grid-row-gap-sm, var(--ad-grid-row-gap, var(--ad-grid-gap-md, var(--ad-grid-gap-sm, var(--ad-grid-gap, 0))))));
     column-gap: var(--ad-grid-column-gap-md, var(--ad-grid-column-gap-sm, var(--ad-grid-column-gap, var(--ad-grid-gap-md, var(--ad-grid-gap-sm, var(--ad-grid-gap, 0))))));
     align-items: var(--ad-grid-align-md, var(--ad-grid-align-sm, var(--ad-grid-align, stretch)));
     justify-items: var(--ad-grid-justify-md, var(--ad-grid-justify-sm, var(--ad-grid-justify, stretch)));
+  }
+
+  .ad-grid-item {
     grid-column-start: var(--ad-grid-column-start-md, var(--ad-grid-column-start-sm, var(--ad-grid-column-start, auto)));
     grid-column-end: var(--ad-grid-column-end-md, var(--ad-grid-column-end-sm, var(--ad-grid-column-end, auto)));
     grid-row-start: var(--ad-grid-row-start-md, var(--ad-grid-row-start-sm, var(--ad-grid-row-start, auto)));
@@ -51,57 +68,44 @@
   }
 }
 
-@media (min-width: calc(var(--ad-fluid-unit) * 1536)) {
+@media (min-width: 75rem) {
+  .ad-grid:not(.ad-grid--auto-fit) {
+    grid-template-columns: var(--ad-grid-columns-lg, var(--ad-grid-columns-md, var(--ad-grid-columns-sm, var(--ad-grid-columns, repeat(12, minmax(0, 1fr))))));
+  }
+
   .ad-grid {
-    grid-template-columns: var(--ad-grid-columns-xl,
-        var(--ad-grid-columns-lg,
-          var(--ad-grid-columns-md,
-            var(--ad-grid-columns-sm,
-              var(--ad-grid-columns, repeat(12, minmax(0, 1fr)))))));
-    gap: var(--ad-grid-gap-xl,
-        var(--ad-grid-gap-lg,
-          var(--ad-grid-gap-md, var(--ad-grid-gap-sm, var(--ad-grid-gap, 0)))));
-    row-gap: var(--ad-grid-row-gap-xl,
-        var(--ad-grid-row-gap-lg,
-          var(--ad-grid-row-gap-md,
-            var(--ad-grid-row-gap-sm,
-              var(--ad-grid-row-gap,
-                var(--ad-grid-gap-xl,
-                  var(--ad-grid-gap-lg,
-                    var(--ad-grid-gap-md,
-                      var(--ad-grid-gap-sm, var(--ad-grid-gap, 0))))))))));
-    column-gap: var(--ad-grid-column-gap-xl,
-        var(--ad-grid-column-gap-lg,
-          var(--ad-grid-column-gap-md,
-            var(--ad-grid-column-gap-sm,
-              var(--ad-grid-column-gap,
-                var(--ad-grid-gap-xl,
-                  var(--ad-grid-gap-lg,
-                    var(--ad-grid-gap-md,
-                      var(--ad-grid-gap-sm, var(--ad-grid-gap, 0))))))))));
-    align-items: var(--ad-grid-align-xl,
-        var(--ad-grid-align-lg,
-          var(--ad-grid-align-md,
-            var(--ad-grid-align-sm, var(--ad-grid-align, stretch)))));
-    justify-items: var(--ad-grid-justify-xl,
-        var(--ad-grid-justify-lg,
-          var(--ad-grid-justify-md,
-            var(--ad-grid-justify-sm, var(--ad-grid-justify, stretch)))));
-    grid-column-start: var(--ad-grid-column-start-xl,
-        var(--ad-grid-column-start-lg,
-          var(--ad-grid-column-start-md,
-            var(--ad-grid-column-start-sm, var(--ad-grid-column-start, auto)))));
-    grid-column-end: var(--ad-grid-column-end-xl,
-        var(--ad-grid-column-end-lg,
-          var(--ad-grid-column-end-md,
-            var(--ad-grid-column-end-sm, var(--ad-grid-column-end, auto)))));
-    grid-row-start: var(--ad-grid-row-start-xl,
-        var(--ad-grid-row-start-lg,
-          var(--ad-grid-row-start-md,
-            var(--ad-grid-row-start-sm, var(--ad-grid-row-start, auto)))));
-    grid-row-end: var(--ad-grid-row-end-xl,
-        var(--ad-grid-row-end-lg,
-          var(--ad-grid-row-end-md,
-            var(--ad-grid-row-end-sm, var(--ad-grid-row-end, auto)))));
+    gap: var(--ad-grid-gap-lg, var(--ad-grid-gap-md, var(--ad-grid-gap-sm, var(--ad-grid-gap, 0))));
+    row-gap: var(--ad-grid-row-gap-lg, var(--ad-grid-row-gap-md, var(--ad-grid-row-gap-sm, var(--ad-grid-row-gap, var(--ad-grid-gap-lg, var(--ad-grid-gap-md, var(--ad-grid-gap-sm, var(--ad-grid-gap, 0))))))));
+    column-gap: var(--ad-grid-column-gap-lg, var(--ad-grid-column-gap-md, var(--ad-grid-column-gap-sm, var(--ad-grid-column-gap, var(--ad-grid-gap-lg, var(--ad-grid-gap-md, var(--ad-grid-gap-sm, var(--ad-grid-gap, 0))))))));
+    align-items: var(--ad-grid-align-lg, var(--ad-grid-align-md, var(--ad-grid-align-sm, var(--ad-grid-align, stretch))));
+    justify-items: var(--ad-grid-justify-lg, var(--ad-grid-justify-md, var(--ad-grid-justify-sm, var(--ad-grid-justify, stretch))));
+  }
+
+  .ad-grid-item {
+    grid-column-start: var(--ad-grid-column-start-lg, var(--ad-grid-column-start-md, var(--ad-grid-column-start-sm, var(--ad-grid-column-start, auto))));
+    grid-column-end: var(--ad-grid-column-end-lg, var(--ad-grid-column-end-md, var(--ad-grid-column-end-sm, var(--ad-grid-column-end, auto))));
+    grid-row-start: var(--ad-grid-row-start-lg, var(--ad-grid-row-start-md, var(--ad-grid-row-start-sm, var(--ad-grid-row-start, auto))));
+    grid-row-end: var(--ad-grid-row-end-lg, var(--ad-grid-row-end-md, var(--ad-grid-row-end-sm, var(--ad-grid-row-end, auto))));
+  }
+}
+
+@media (min-width: 96rem) {
+  .ad-grid:not(.ad-grid--auto-fit) {
+    grid-template-columns: var(--ad-grid-columns-xl, var(--ad-grid-columns-lg, var(--ad-grid-columns-md, var(--ad-grid-columns-sm, var(--ad-grid-columns, repeat(12, minmax(0, 1fr)))))));
+  }
+
+  .ad-grid {
+    gap: var(--ad-grid-gap-xl, var(--ad-grid-gap-lg, var(--ad-grid-gap-md, var(--ad-grid-gap-sm, var(--ad-grid-gap, 0)))));
+    row-gap: var(--ad-grid-row-gap-xl, var(--ad-grid-row-gap-lg, var(--ad-grid-row-gap-md, var(--ad-grid-row-gap-sm, var(--ad-grid-row-gap, var(--ad-grid-gap-xl, var(--ad-grid-gap-lg, var(--ad-grid-gap-md, var(--ad-grid-gap-sm, var(--ad-grid-gap, 0))))))))));
+    column-gap: var(--ad-grid-column-gap-xl, var(--ad-grid-column-gap-lg, var(--ad-grid-column-gap-md, var(--ad-grid-column-gap-sm, var(--ad-grid-column-gap, var(--ad-grid-gap-xl, var(--ad-grid-gap-lg, var(--ad-grid-gap-md, var(--ad-grid-gap-sm, var(--ad-grid-gap, 0))))))))));
+    align-items: var(--ad-grid-align-xl, var(--ad-grid-align-lg, var(--ad-grid-align-md, var(--ad-grid-align-sm, var(--ad-grid-align, stretch)))));
+    justify-items: var(--ad-grid-justify-xl, var(--ad-grid-justify-lg, var(--ad-grid-justify-md, var(--ad-grid-justify-sm, var(--ad-grid-justify, stretch)))));
+  }
+
+  .ad-grid-item {
+    grid-column-start: var(--ad-grid-column-start-xl, var(--ad-grid-column-start-lg, var(--ad-grid-column-start-md, var(--ad-grid-column-start-sm, var(--ad-grid-column-start, auto)))));
+    grid-column-end: var(--ad-grid-column-end-xl, var(--ad-grid-column-end-lg, var(--ad-grid-column-end-md, var(--ad-grid-column-end-sm, var(--ad-grid-column-end, auto)))));
+    grid-row-start: var(--ad-grid-row-start-xl, var(--ad-grid-row-start-lg, var(--ad-grid-row-start-md, var(--ad-grid-row-start-sm, var(--ad-grid-row-start, auto)))));
+    grid-row-end: var(--ad-grid-row-end-xl, var(--ad-grid-row-end-lg, var(--ad-grid-row-end-md, var(--ad-grid-row-end-sm, var(--ad-grid-row-end, auto)))));
   }
 }

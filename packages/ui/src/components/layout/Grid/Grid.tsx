@@ -68,7 +68,9 @@ function vars<T>(
   return result as CSSProperties;
 }
 
-const columnsValue = (value: number | string) => typeof value === "number" ? `repeat(${value}, minmax(0, 1fr))` : value;
+const columnsValue = (value: number | string) =>
+  typeof value === "number" ? `repeat(${value}, minmax(0, 1fr))` : value;
+
 function gridSpanVars(value: GridResponsive<number | "full"> | undefined): CSSProperties {
   const result: Record<string, string> = {};
   const values = responsive(value);
@@ -84,14 +86,14 @@ function gridSpanVars(value: GridResponsive<number | "full"> | undefined): CSSPr
 
 export function Grid({
   as: Component = "div",
-  columns = 12,
-  gap = 0,
+  columns,
+  gap,
   rowGap,
   columnGap,
   minChildWidth,
   dense = false,
-  align = "stretch",
-  justify = "stretch",
+  align,
+  justify,
   span,
   rowSpan,
   columnStart,
@@ -100,13 +102,17 @@ export function Grid({
   style,
   ...props
 }: GridProps) {
+  const hasPlacement = span != null || rowSpan != null || columnStart != null || rowStart != null;
+  const isItem = hasPlacement && columns == null && minChildWidth == null;
+  const effectiveColumns = isItem ? undefined : columns ?? 12;
+
   const layoutStyle: CSSProperties = {
-    ...vars("columns", columns, columnsValue),
-    ...vars("gap", gap, spacing),
-    ...vars("row-gap", rowGap, spacing),
-    ...vars("column-gap", columnGap, spacing),
-    ...vars("align", align, value => alignMap[value]),
-    ...vars("justify", justify, value => justifyMap[value]),
+    ...(effectiveColumns != null ? vars("columns", effectiveColumns, columnsValue) : {}),
+    ...(!isItem ? vars("gap", gap ?? 0, spacing) : {}),
+    ...(!isItem ? vars("row-gap", rowGap, spacing) : {}),
+    ...(!isItem ? vars("column-gap", columnGap, spacing) : {}),
+    ...(!isItem ? vars("align", align ?? "stretch", value => alignMap[value]) : {}),
+    ...(!isItem ? vars("justify", justify ?? "stretch", value => justifyMap[value]) : {}),
     ...gridSpanVars(span),
     ...vars("row-end", rowSpan, value => `span ${value}`),
     ...vars("column-start", columnStart),
@@ -118,7 +124,12 @@ export function Grid({
   return (
     <Component
       {...props}
-      className={["ad-grid", minChildWidth && "ad-grid--auto-fit", dense && "ad-grid--dense", className].filter(Boolean).join(" ")}
+      className={[
+        isItem ? "ad-grid-item" : "ad-grid",
+        !isItem && minChildWidth && "ad-grid--auto-fit",
+        !isItem && dense && "ad-grid--dense",
+        className
+      ].filter(Boolean).join(" ")}
       style={layoutStyle}
     />
   );

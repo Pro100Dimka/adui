@@ -23,6 +23,8 @@ call npm run check:layout
 if errorlevel 1 goto :error
 
 echo [6/6] TypeScript typecheck...
+call npm run check:grid
+if errorlevel 1 goto :error
 call npm run typecheck
 if errorlevel 1 goto :error
 
