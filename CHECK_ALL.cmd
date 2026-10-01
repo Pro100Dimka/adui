@@ -36,5 +36,6 @@ exit /b 0
 :error
 echo.
 echo CHECK FAILED.
+call npm run check:buttons || goto :error
 pause
 exit /b 1
