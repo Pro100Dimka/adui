@@ -121,7 +121,20 @@ During `npm run package`, only `packages/ui` is compiled and packed. The playgro
 
 `RotaryKnob` — премиальный процедурный регулятор без картинок. Поддерживает круговое и линейное перетаскивание, внешнюю шкалу, колесо, клавиатуру, точный режим с Shift и двойной щелчок для сброса. См. `packages/ui/docs/ROTARY_KNOB.md`.
 
+
 ## RotaryKnob source of truth
 
 `RotaryKnob` is a direct React port of `packages/ui/docs/premium-knob-interactive-neon.reference.html`.
 Do not replace it with the old CircularGauge arc implementation. `CircularGauge` is only the read-only variant of the same control.
+
+## Структура компонентов
+
+Библиотека теперь использует правило **один компонент = один файл** и barrel `index.ts` на каждом уровне.
+
+Подробно: `АРХИТЕКТУРА_КОМПОНЕНТОВ.md`.
+
+Проверка архитектуры:
+
+```bash
+npm run check:structure
+```

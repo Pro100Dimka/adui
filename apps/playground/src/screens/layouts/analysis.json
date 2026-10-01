@@ -4,25 +4,92 @@
   "width": 1280,
   "height": 1069,
   "source": "performance-analysis-verified.html",
-  "borderSelectors": [".pa-modal", ".pa-panel"],
+  "borderSelectors": [
+    ".pa-modal",
+    ".pa-panel"
+  ],
   "shellSelector": ".pa-modal",
   "rules": [
-    [".me-roll", "PianoRollGrid", null],
-    [".me-transport", "TransportBar", null],
-    ["[data-dial]", "RotaryKnob", null],
-    [".pf-card", "RecordingCard", null],
-    [".q-card", "ProcessingTaskCard", null],
-    [".participant", "ParticipantCard", null],
-    [".pa-master", "RecordingCard", null],
-    [".pa-original", "AudioPlayer", null],
-    [".pa-recommendation", "PerformanceSummary", null],
-    [".card.storage", "StorageSummary", null],
-    [".card.diagnostics", "DiagnosticsPanel", null],
-    [".profile.card", "ProfileCard", null],
-    [".ai-model", "ModelStatusCard", null],
-    [".pa-metric", "MetricCard", null],
-    [".audio-latency", "LatencyIndicator", null],
-    [".modal,.pa-modal,.pf-modal,.q-modal", "Dialog", null],
+    [
+      ".me-roll",
+      "PianoRollGrid",
+      null
+    ],
+    [
+      ".me-transport",
+      "TransportBar",
+      null
+    ],
+    [
+      "[data-dial]",
+      "RotaryKnob",
+      null
+    ],
+    [
+      ".pf-card",
+      "RecordingCard",
+      null
+    ],
+    [
+      ".q-card",
+      "ProcessingTaskCard",
+      null
+    ],
+    [
+      ".participant",
+      "ParticipantCard",
+      null
+    ],
+    [
+      ".pa-master",
+      "RecordingCard",
+      null
+    ],
+    [
+      ".pa-original",
+      "AudioPlayer",
+      null
+    ],
+    [
+      ".pa-recommendation",
+      "PerformanceSummary",
+      null
+    ],
+    [
+      ".card.storage",
+      "StorageSummary",
+      null
+    ],
+    [
+      ".card.diagnostics",
+      "DiagnosticsPanel",
+      null
+    ],
+    [
+      ".profile.card",
+      "ProfileCard",
+      null
+    ],
+    [
+      ".ai-model",
+      "ModelStatusCard",
+      null
+    ],
+    [
+      ".pa-metric",
+      "MetricCard",
+      null
+    ],
+    [
+      ".audio-latency",
+      "LatencyIndicator",
+      null
+    ],
+    [
+      ".modal,.pa-modal,.pf-modal,.q-modal",
+      "Dialog",
+      null
+    ],
     [
       ".dialog-box,.pa-dialog,.pf-dialog,.q-dialog,.me-dialog,dialog",
       "Dialog",
@@ -38,15 +105,51 @@
       "PageHeader",
       null
     ],
-    [".env-card-head,.ai-head", "SectionHeader", null],
-    [".card,.surface,.pa-panel,.me-panel", "Surface", null],
-    [".form", "RoomConnectionForm", null],
-    [".theme-picker,.themes", "ThemePicker", null],
-    [".theme-card", "Card", null],
-    [".pa-tile,.tile,.fi,.hero,.pf-header-tile", "IconTile", null],
-    [".avatar", "Avatar", null],
-    [".seal", "RoleEmblem", null],
-    [".signature,.pf-signature,.me-signature", "BrandMark", null],
+    [
+      ".env-card-head,.ai-head",
+      "SectionHeader",
+      null
+    ],
+    [
+      ".card,.surface,.pa-panel,.me-panel",
+      "Surface",
+      null
+    ],
+    [
+      ".form",
+      "RoomConnectionForm",
+      null
+    ],
+    [
+      ".theme-picker,.themes",
+      "ThemePicker",
+      null
+    ],
+    [
+      ".theme-card",
+      "Card",
+      null
+    ],
+    [
+      ".pa-tile,.tile,.fi,.hero,.pf-header-tile",
+      "IconTile",
+      null
+    ],
+    [
+      ".avatar",
+      "Avatar",
+      null
+    ],
+    [
+      ".seal",
+      "RoleEmblem",
+      null
+    ],
+    [
+      ".signature,.pf-signature,.me-signature",
+      "BrandMark",
+      null
+    ],
     [
       ".appearance-footer,.audio-footer,.pf-footer,.q-footer,.me-footer,.me-toolbar,.toolbar",
       "Toolbar",
@@ -57,61 +160,241 @@
       "ScrollArea",
       null
     ],
-    [".history-tabs,.tabs", "Tabs", null],
-    [".me-tools,.me-modes,.pf-view-switch", "SegmentedControl", null],
-    [".me-save-group,.pf-add", "SplitButton", null],
-    [".me-history", "UndoRedoControls", null],
-    [".me-zoom-step", "ZoomControl", null],
-    [".audio-gauge,.dial", "CircularGauge", null],
-    ["[data-dial]", "RotaryKnob", null],
-    [".volume-control,.me-volume", "VolumeControl", null],
-    [".meter,.audio-mini-wave", "LevelMeter", null],
-    [".pa-waveform,.pf-waveform,.me-waveform", "Waveform", null],
-    [".me-transport", "TransportBar", null],
-    [".me-piano", "PianoKeyboard", null],
-    [".me-roll", "PianoRollGrid", null],
-    [".me-ruler", "TimeRuler", null],
-    [".me-words", "LyricsLane", null],
-    [".me-note", "NoteBlock", null],
-    [".me-playhead,.me-wave-cursor", "Playhead", null],
-    [".me-marquee", "SelectionOverlay", null],
-    [".q-stages", "Steps", null],
-    [".q-error-message", "MessageBar", null],
-    [".q-status-icon,.status-light", "StatusIndicator", null],
+    [
+      ".history-tabs,.tabs",
+      "Tabs",
+      null
+    ],
+    [
+      ".me-tools,.me-modes,.pf-view-switch",
+      "SegmentedControl",
+      null
+    ],
+    [
+      ".me-save-group,.pf-add",
+      "SplitButton",
+      null
+    ],
+    [
+      ".me-history",
+      "UndoRedoControls",
+      null
+    ],
+    [
+      ".me-zoom-step",
+      "ZoomControl",
+      null
+    ],
+    [
+      ".audio-gauge,.dial",
+      "CircularGauge",
+      null
+    ],
+    [
+      "[data-dial]",
+      "RotaryKnob",
+      null
+    ],
+    [
+      ".volume-control,.me-volume",
+      "VolumeControl",
+      null
+    ],
+    [
+      ".meter,.audio-mini-wave",
+      "LevelMeter",
+      null
+    ],
+    [
+      ".pa-waveform,.pf-waveform,.me-waveform",
+      "Waveform",
+      null
+    ],
+    [
+      ".me-transport",
+      "TransportBar",
+      null
+    ],
+    [
+      ".me-piano",
+      "PianoKeyboard",
+      null
+    ],
+    [
+      ".me-roll",
+      "PianoRollGrid",
+      null
+    ],
+    [
+      ".me-ruler",
+      "TimeRuler",
+      null
+    ],
+    [
+      ".me-words",
+      "LyricsLane",
+      null
+    ],
+    [
+      ".me-note",
+      "NoteBlock",
+      null
+    ],
+    [
+      ".me-playhead,.me-wave-cursor",
+      "Playhead",
+      null
+    ],
+    [
+      ".me-marquee",
+      "SelectionOverlay",
+      null
+    ],
+    [
+      ".q-stages",
+      "Steps",
+      null
+    ],
+    [
+      ".q-error-message",
+      "MessageBar",
+      null
+    ],
+    [
+      ".q-status-icon,.status-light",
+      "StatusIndicator",
+      null
+    ],
     [
       ".q-track,.transfer-track,.storage-track,.pa-metric-bar",
       "ProgressBar",
       null
     ],
-    [".you-badge,.latency-quality,.env-gpu-badge", "Badge", null],
-    [".q-menu,.pf-popover,.me-popover,.popover", "Menu", null],
-    [".q-menu-item,.pf-menu-item,.me-menu-item", "MenuItem", null],
-    [".q-toast,.pf-toast,.me-toast,.pa-toast,.toast", "Toast", null],
-    [".q-empty,.pf-empty", "EmptyState", null],
-    ["table", "DataTable", null],
-    ["dl", "KeyValueList", null],
-    [".env-json-card", "CollapsibleSection", null],
-    [".env-json-code,pre", "CodeViewer", null],
-    [".pf-art-frame,.pa-cover,.cover,.me-cover,.q-cover", "ArtworkFrame", null],
+    [
+      ".you-badge,.latency-quality,.env-gpu-badge",
+      "Badge",
+      null
+    ],
+    [
+      ".q-menu,.pf-popover,.me-popover,.popover",
+      "Menu",
+      null
+    ],
+    [
+      ".q-menu-item,.pf-menu-item,.me-menu-item",
+      "MenuItem",
+      null
+    ],
+    [
+      ".q-toast,.pf-toast,.me-toast,.pa-toast,.toast",
+      "Toast",
+      null
+    ],
+    [
+      ".q-empty,.pf-empty",
+      "EmptyState",
+      null
+    ],
+    [
+      "table",
+      "DataTable",
+      null
+    ],
+    [
+      "dl",
+      "KeyValueList",
+      null
+    ],
+    [
+      ".env-json-card",
+      "CollapsibleSection",
+      null
+    ],
+    [
+      ".env-json-code,pre",
+      "CodeViewer",
+      null
+    ],
+    [
+      ".pf-art-frame,.pa-cover,.cover,.me-cover,.q-cover",
+      "ArtworkFrame",
+      null
+    ],
     [
       ".q-divider,.pf-divider,.pa-tool-divider,.divider,.storage-divider",
       "Divider",
       null
     ],
-    [".env-input-shell,.input-shell", "TextField", null],
-    [".select-shell,.me-select", "Select", null],
-    [".field,.ai-field,.env-field,.me-dialog-field", "Field", null],
-    [".toggle-field", "Switch", null],
-    ["[role=\"tab\"]", "Tab", null],
-    ["button[role=\"switch\"]", "Switch", null],
-    ["button[aria-pressed]", "ToggleButton", null],
-    ["input[type=\"range\"]", "Slider", null],
-    ["input[type=\"number\"]", "NumberField", null],
-    ["input[type=\"file\"]", "FilePicker", null],
-    ["input[type=\"checkbox\"]", "Checkbox", null],
-    ["input", "TextField", null],
-    ["select", "Select", null],
-    ["button", "Button", null]
+    [
+      ".env-input-shell,.input-shell",
+      "TextField",
+      null
+    ],
+    [
+      ".select-shell,.me-select",
+      "Select",
+      null
+    ],
+    [
+      ".field,.ai-field,.env-field,.me-dialog-field",
+      "Field",
+      null
+    ],
+    [
+      ".toggle-field",
+      "Switch",
+      null
+    ],
+    [
+      "[role=\"tab\"]",
+      "Tab",
+      null
+    ],
+    [
+      "button[role=\"switch\"]",
+      "Switch",
+      null
+    ],
+    [
+      "button[aria-pressed]",
+      "ToggleButton",
+      null
+    ],
+    [
+      "input[type=\"range\"]",
+      "Slider",
+      null
+    ],
+    [
+      "input[type=\"number\"]",
+      "NumberField",
+      null
+    ],
+    [
+      "input[type=\"file\"]",
+      "FilePicker",
+      null
+    ],
+    [
+      "input[type=\"checkbox\"]",
+      "Checkbox",
+      null
+    ],
+    [
+      "input",
+      "TextField",
+      null
+    ],
+    [
+      "select",
+      "Select",
+      null
+    ],
+    [
+      "button",
+      "Button",
+      null
+    ]
   ],
   "tree": [
     {
@@ -196,7 +479,9 @@
                       "props": {
                         "className": "pa-eyebrow"
                       },
-                      "children": ["Результат исполнения"]
+                      "children": [
+                        "Результат исполнения"
+                      ]
                     },
                     {
                       "tag": "h1",
@@ -204,7 +489,9 @@
                         "id": "pa-title",
                         "className": "pa-title"
                       },
-                      "children": ["Анализ исполнения"]
+                      "children": [
+                        "Анализ исполнения"
+                      ]
                     },
                     {
                       "tag": "p",
@@ -281,7 +568,9 @@
                             "datetime": "2026-09-29T12:05:08",
                             "className": "pa-nav-date"
                           },
-                          "children": ["29.09.2026, 12:05:08"]
+                          "children": [
+                            "29.09.2026, 12:05:08"
+                          ]
                         },
                         {
                           "tag": "div",
@@ -289,7 +578,9 @@
                             "id": "pa-record-index",
                             "className": "pa-nav-status"
                           },
-                          "children": ["Запись 4 из 35 · анализируется"]
+                          "children": [
+                            "Запись 4 из 35 · анализируется"
+                          ]
                         },
                         {
                           "tag": "button",
@@ -331,7 +622,9 @@
                             "id": "pa-original-title",
                             "className": "pa-section-label"
                           },
-                          "children": ["Исходная запись"]
+                          "children": [
+                            "Исходная запись"
+                          ]
                         },
                         {
                           "tag": "button",
@@ -388,7 +681,9 @@
                             "id": "pa-time-original",
                             "className": "pa-time"
                           },
-                          "children": ["0:00 / 0:51"]
+                          "children": [
+                            "0:00 / 0:51"
+                          ]
                         },
                         {
                           "tag": "button",
@@ -471,7 +766,9 @@
                             "id": "pa-master-title",
                             "className": "pa-master-title"
                           },
-                          "children": ["A&D Studio Master"]
+                          "children": [
+                            "A&D Studio Master"
+                          ]
                         },
                         {
                           "tag": "p",
@@ -537,7 +834,9 @@
                             "id": "pa-time-master",
                             "className": "pa-time"
                           },
-                          "children": ["0:00 / 3:51"]
+                          "children": [
+                            "0:00 / 3:51"
+                          ]
                         },
                         {
                           "tag": "button",
@@ -591,7 +890,9 @@
                             "id": "pa-studio-title",
                             "className": "pa-studio-title"
                           },
-                          "children": ["A&D Studio Master"]
+                          "children": [
+                            "A&D Studio Master"
+                          ]
                         },
                         {
                           "tag": "p",
@@ -666,7 +967,9 @@
                               "props": {
                                 "className": "pa-metric-title"
                               },
-                              "children": ["Высота"]
+                              "children": [
+                                "Высота"
+                              ]
                             },
                             {
                               "tag": "strong",
@@ -674,7 +977,9 @@
                                 "id": "pa-pitch-value",
                                 "className": "pa-metric-value"
                               },
-                              "children": ["49%"]
+                              "children": [
+                                "49%"
+                              ]
                             },
                             {
                               "tag": "div",
@@ -743,7 +1048,9 @@
                               "props": {
                                 "className": "pa-metric-title"
                               },
-                              "children": ["Ритм"]
+                              "children": [
+                                "Ритм"
+                              ]
                             },
                             {
                               "tag": "strong",
@@ -751,7 +1058,9 @@
                                 "id": "pa-rhythm-value",
                                 "className": "pa-metric-value"
                               },
-                              "children": ["0%"]
+                              "children": [
+                                "0%"
+                              ]
                             },
                             {
                               "tag": "div",
@@ -820,7 +1129,9 @@
                               "props": {
                                 "className": "pa-metric-title"
                               },
-                              "children": ["Стабильность"]
+                              "children": [
+                                "Стабильность"
+                              ]
                             },
                             {
                               "tag": "strong",
@@ -828,7 +1139,9 @@
                                 "id": "pa-stability-value",
                                 "className": "pa-metric-value"
                               },
-                              "children": ["0%"]
+                              "children": [
+                                "0%"
+                              ]
                             },
                             {
                               "tag": "div",
@@ -914,7 +1227,9 @@
                             "id": "pa-rec-title",
                             "className": "pa-rec-title"
                           },
-                          "children": ["Нужно потренироваться"]
+                          "children": [
+                            "Нужно потренироваться"
+                          ]
                         },
                         {
                           "tag": "div",
@@ -927,11 +1242,15 @@
                               "props": {
                                 "id": "pa-overall"
                               },
-                              "children": ["16"]
+                              "children": [
+                                "16"
+                              ]
                             },
                             {
                               "tag": "span",
-                              "children": ["общая оценка"]
+                              "children": [
+                                "общая оценка"
+                              ]
                             }
                           ]
                         },
@@ -940,7 +1259,9 @@
                           "props": {
                             "className": "pa-rec-label"
                           },
-                          "children": ["Рекомендация"]
+                          "children": [
+                            "Рекомендация"
+                          ]
                         },
                         {
                           "tag": "p",
@@ -969,7 +1290,9 @@
                         },
                         {
                           "tag": "span",
-                          "children": ["Готово"]
+                          "children": [
+                            "Готово"
+                          ]
                         }
                       ]
                     }
@@ -1021,7 +1344,9 @@
                                 "type": "button",
                                 "id": "pa-dialog-cancel"
                               },
-                              "children": ["Отмена"]
+                              "children": [
+                                "Отмена"
+                              ]
                             },
                             {
                               "tag": "button",
@@ -1031,7 +1356,9 @@
                                 "id": "pa-dialog-confirm",
                                 "className": "pa-confirm"
                               },
-                              "children": ["Подтвердить"]
+                              "children": [
+                                "Подтвердить"
+                              ]
                             }
                           ]
                         }
@@ -1061,7 +1388,9 @@
                 "hidden": true,
                 "className": "pa-reopen"
               },
-              "children": ["Открыть анализ исполнения"]
+              "children": [
+                "Открыть анализ исполнения"
+              ]
             }
           ]
         }

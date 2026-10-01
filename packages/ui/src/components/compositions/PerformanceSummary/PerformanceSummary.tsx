@@ -1,0 +1,21 @@
+import React, { useRef, useState } from "react";
+import { copyText, define, mark, useControllable, type CommonProps, type Tone } from "../../../core/base";
+import { SvgAsset } from "../../../core/artwork";
+import { useDecoration } from "../../../core/motion";
+import { ArtworkFrame, Avatar, ButtonGroup, Card, Icon, IconTile, SectionHeader, Text, illustrations } from "../../layout";
+import { Button, Field, FilePicker, IconButton, Tabs, TextField, ToggleButton } from "../../controls";
+import { Badge, Dialog, KeyValueList, Menu, MetricCard, ProgressBar, StatusIndicator, Steps, Toast, type MenuItemData } from "../../feedback";
+import { AudioPlayer, LevelMeter, RotaryKnob, VolumeControl } from "../../media";
+import { type RoleEmblemProps, type RecordingCardProps, type ProcessingTaskCardProps, type ParticipantCardProps, type ProfileCardProps, type ThemeName, type ThemePickerProps, type RoomConnection, type RoomConnectionFormProps, type ModelStatusCardProps, type StorageSummaryProps, type DiagnosticsPanelProps, type PerformanceSummaryProps } from "../shared";
+import { RoleEmblem } from "../RoleEmblem";
+import { RecordingCard } from "../RecordingCard";
+import { ProcessingTaskCard } from "../ProcessingTaskCard";
+import { ParticipantCard } from "../ParticipantCard";
+import { ProfileCard } from "../ProfileCard";
+import { ThemePicker } from "../ThemePicker";
+import { RoomConnectionForm } from "../RoomConnectionForm";
+import { ModelStatusCard } from "../ModelStatusCard";
+import { StorageSummary } from "../StorageSummary";
+import { DiagnosticsPanel } from "../DiagnosticsPanel";
+
+export const PerformanceSummary = define<PerformanceSummaryProps>("PerformanceSummary", p => <div {...mark("PerformanceSummary", p)}><div className="ad-metric-grid"><MetricCard value={p.pitch ?? 49} title="Высота" /><MetricCard value={p.rhythm ?? 0} title="Ритм" icon="wave" description="Точность начала нот" /><MetricCard value={p.stability ?? 0} title="Стабильность" icon="clock" description="Удержание высоты" /></div><Card title="Нужно потренироваться"><div className="ad-summary-score"><strong>{p.score ?? 16}</strong><span>общая оценка</span></div><p>{p.advice ?? "Потренируйте вступления: слушайте сильную долю и начинайте точно на ней."}</p></Card></div>);

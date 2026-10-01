@@ -1,0 +1,21 @@
+import React, { useRef, useState } from "react";
+import { copyText, define, mark, useControllable, type CommonProps, type Tone } from "../../../core/base";
+import { SvgAsset } from "../../../core/artwork";
+import { useDecoration } from "../../../core/motion";
+import { ArtworkFrame, Avatar, ButtonGroup, Card, Icon, IconTile, SectionHeader, Text, illustrations } from "../../layout";
+import { Button, Field, FilePicker, IconButton, Tabs, TextField, ToggleButton } from "../../controls";
+import { Badge, Dialog, KeyValueList, Menu, MetricCard, ProgressBar, StatusIndicator, Steps, Toast, type MenuItemData } from "../../feedback";
+import { AudioPlayer, LevelMeter, RotaryKnob, VolumeControl } from "../../media";
+import { type RoleEmblemProps, type RecordingCardProps, type ProcessingTaskCardProps, type ParticipantCardProps, type ProfileCardProps, type ThemeName, type ThemePickerProps, type RoomConnection, type RoomConnectionFormProps, type ModelStatusCardProps, type StorageSummaryProps, type DiagnosticsPanelProps, type PerformanceSummaryProps } from "../shared";
+import { RoleEmblem } from "../RoleEmblem";
+import { RecordingCard } from "../RecordingCard";
+import { ParticipantCard } from "../ParticipantCard";
+import { ProfileCard } from "../ProfileCard";
+import { ThemePicker } from "../ThemePicker";
+import { RoomConnectionForm } from "../RoomConnectionForm";
+import { ModelStatusCard } from "../ModelStatusCard";
+import { StorageSummary } from "../StorageSummary";
+import { DiagnosticsPanel } from "../DiagnosticsPanel";
+import { PerformanceSummary } from "../PerformanceSummary";
+
+export const ProcessingTaskCard = define<ProcessingTaskCardProps>("ProcessingTaskCard", p => <Card {...p} title={undefined} className={`ad-processing-task-card ${p.className ?? ""}`}><SectionHeader icon="chip" title={p.title ?? "Обработка песни"} description="Kaggle · демонстрационная задача" actions={<StatusIndicator status={p.status ?? "processing"} />} /><ProgressBar value={p.value ?? 56} /><div className="ad-task-meta"><Text>{p.value ?? 56}%</Text><Text variant="muted">0:54</Text></div><Steps current={3} /></Card>);

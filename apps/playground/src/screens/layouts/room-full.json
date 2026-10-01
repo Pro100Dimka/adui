@@ -4,25 +4,91 @@
   "width": 660,
   "height": 771,
   "source": "karaoke-room-neon-fixed.html",
-  "borderSelectors": [".surface"],
+  "borderSelectors": [
+    ".surface"
+  ],
   "shellSelector": "",
   "rules": [
-    [".me-roll", "PianoRollGrid", null],
-    [".me-transport", "TransportBar", null],
-    ["[data-dial]", "RotaryKnob", null],
-    [".pf-card", "RecordingCard", null],
-    [".q-card", "ProcessingTaskCard", null],
-    [".participant", "ParticipantCard", null],
-    [".pa-master", "RecordingCard", null],
-    [".pa-original", "AudioPlayer", null],
-    [".pa-recommendation", "PerformanceSummary", null],
-    [".card.storage", "StorageSummary", null],
-    [".card.diagnostics", "DiagnosticsPanel", null],
-    [".profile.card", "ProfileCard", null],
-    [".ai-model", "ModelStatusCard", null],
-    [".pa-metric", "MetricCard", null],
-    [".audio-latency", "LatencyIndicator", null],
-    [".modal,.pa-modal,.pf-modal,.q-modal", "Dialog", null],
+    [
+      ".me-roll",
+      "PianoRollGrid",
+      null
+    ],
+    [
+      ".me-transport",
+      "TransportBar",
+      null
+    ],
+    [
+      "[data-dial]",
+      "RotaryKnob",
+      null
+    ],
+    [
+      ".pf-card",
+      "RecordingCard",
+      null
+    ],
+    [
+      ".q-card",
+      "ProcessingTaskCard",
+      null
+    ],
+    [
+      ".participant",
+      "ParticipantCard",
+      null
+    ],
+    [
+      ".pa-master",
+      "RecordingCard",
+      null
+    ],
+    [
+      ".pa-original",
+      "AudioPlayer",
+      null
+    ],
+    [
+      ".pa-recommendation",
+      "PerformanceSummary",
+      null
+    ],
+    [
+      ".card.storage",
+      "StorageSummary",
+      null
+    ],
+    [
+      ".card.diagnostics",
+      "DiagnosticsPanel",
+      null
+    ],
+    [
+      ".profile.card",
+      "ProfileCard",
+      null
+    ],
+    [
+      ".ai-model",
+      "ModelStatusCard",
+      null
+    ],
+    [
+      ".pa-metric",
+      "MetricCard",
+      null
+    ],
+    [
+      ".audio-latency",
+      "LatencyIndicator",
+      null
+    ],
+    [
+      ".modal,.pa-modal,.pf-modal,.q-modal",
+      "Dialog",
+      null
+    ],
     [
       ".dialog-box,.pa-dialog,.pf-dialog,.q-dialog,.me-dialog,dialog",
       "Dialog",
@@ -38,15 +104,51 @@
       "PageHeader",
       null
     ],
-    [".env-card-head,.ai-head", "SectionHeader", null],
-    [".card,.surface,.pa-panel,.me-panel", "Surface", null],
-    [".form", "RoomConnectionForm", null],
-    [".theme-picker,.themes", "ThemePicker", null],
-    [".theme-card", "Card", null],
-    [".pa-tile,.tile,.fi,.hero,.pf-header-tile", "IconTile", null],
-    [".avatar", "Avatar", null],
-    [".seal", "RoleEmblem", null],
-    [".signature,.pf-signature,.me-signature", "BrandMark", null],
+    [
+      ".env-card-head,.ai-head",
+      "SectionHeader",
+      null
+    ],
+    [
+      ".card,.surface,.pa-panel,.me-panel",
+      "Surface",
+      null
+    ],
+    [
+      ".form",
+      "RoomConnectionForm",
+      null
+    ],
+    [
+      ".theme-picker,.themes",
+      "ThemePicker",
+      null
+    ],
+    [
+      ".theme-card",
+      "Card",
+      null
+    ],
+    [
+      ".pa-tile,.tile,.fi,.hero,.pf-header-tile",
+      "IconTile",
+      null
+    ],
+    [
+      ".avatar",
+      "Avatar",
+      null
+    ],
+    [
+      ".seal",
+      "RoleEmblem",
+      null
+    ],
+    [
+      ".signature,.pf-signature,.me-signature",
+      "BrandMark",
+      null
+    ],
     [
       ".appearance-footer,.audio-footer,.pf-footer,.q-footer,.me-footer,.me-toolbar,.toolbar",
       "Toolbar",
@@ -57,61 +159,241 @@
       "ScrollArea",
       null
     ],
-    [".history-tabs,.tabs", "Tabs", null],
-    [".me-tools,.me-modes,.pf-view-switch", "SegmentedControl", null],
-    [".me-save-group,.pf-add", "SplitButton", null],
-    [".me-history", "UndoRedoControls", null],
-    [".me-zoom-step", "ZoomControl", null],
-    [".audio-gauge,.dial", "CircularGauge", null],
-    ["[data-dial]", "RotaryKnob", null],
-    [".volume-control,.me-volume", "VolumeControl", null],
-    [".meter,.audio-mini-wave", "LevelMeter", null],
-    [".pa-waveform,.pf-waveform,.me-waveform", "Waveform", null],
-    [".me-transport", "TransportBar", null],
-    [".me-piano", "PianoKeyboard", null],
-    [".me-roll", "PianoRollGrid", null],
-    [".me-ruler", "TimeRuler", null],
-    [".me-words", "LyricsLane", null],
-    [".me-note", "NoteBlock", null],
-    [".me-playhead,.me-wave-cursor", "Playhead", null],
-    [".me-marquee", "SelectionOverlay", null],
-    [".q-stages", "Steps", null],
-    [".q-error-message", "MessageBar", null],
-    [".q-status-icon,.status-light", "StatusIndicator", null],
+    [
+      ".history-tabs,.tabs",
+      "Tabs",
+      null
+    ],
+    [
+      ".me-tools,.me-modes,.pf-view-switch",
+      "SegmentedControl",
+      null
+    ],
+    [
+      ".me-save-group,.pf-add",
+      "SplitButton",
+      null
+    ],
+    [
+      ".me-history",
+      "UndoRedoControls",
+      null
+    ],
+    [
+      ".me-zoom-step",
+      "ZoomControl",
+      null
+    ],
+    [
+      ".audio-gauge,.dial",
+      "CircularGauge",
+      null
+    ],
+    [
+      "[data-dial]",
+      "RotaryKnob",
+      null
+    ],
+    [
+      ".volume-control,.me-volume",
+      "VolumeControl",
+      null
+    ],
+    [
+      ".meter,.audio-mini-wave",
+      "LevelMeter",
+      null
+    ],
+    [
+      ".pa-waveform,.pf-waveform,.me-waveform",
+      "Waveform",
+      null
+    ],
+    [
+      ".me-transport",
+      "TransportBar",
+      null
+    ],
+    [
+      ".me-piano",
+      "PianoKeyboard",
+      null
+    ],
+    [
+      ".me-roll",
+      "PianoRollGrid",
+      null
+    ],
+    [
+      ".me-ruler",
+      "TimeRuler",
+      null
+    ],
+    [
+      ".me-words",
+      "LyricsLane",
+      null
+    ],
+    [
+      ".me-note",
+      "NoteBlock",
+      null
+    ],
+    [
+      ".me-playhead,.me-wave-cursor",
+      "Playhead",
+      null
+    ],
+    [
+      ".me-marquee",
+      "SelectionOverlay",
+      null
+    ],
+    [
+      ".q-stages",
+      "Steps",
+      null
+    ],
+    [
+      ".q-error-message",
+      "MessageBar",
+      null
+    ],
+    [
+      ".q-status-icon,.status-light",
+      "StatusIndicator",
+      null
+    ],
     [
       ".q-track,.transfer-track,.storage-track,.pa-metric-bar",
       "ProgressBar",
       null
     ],
-    [".you-badge,.latency-quality,.env-gpu-badge", "Badge", null],
-    [".q-menu,.pf-popover,.me-popover,.popover", "Menu", null],
-    [".q-menu-item,.pf-menu-item,.me-menu-item", "MenuItem", null],
-    [".q-toast,.pf-toast,.me-toast,.pa-toast,.toast", "Toast", null],
-    [".q-empty,.pf-empty", "EmptyState", null],
-    ["table", "DataTable", null],
-    ["dl", "KeyValueList", null],
-    [".env-json-card", "CollapsibleSection", null],
-    [".env-json-code,pre", "CodeViewer", null],
-    [".pf-art-frame,.pa-cover,.cover,.me-cover,.q-cover", "ArtworkFrame", null],
+    [
+      ".you-badge,.latency-quality,.env-gpu-badge",
+      "Badge",
+      null
+    ],
+    [
+      ".q-menu,.pf-popover,.me-popover,.popover",
+      "Menu",
+      null
+    ],
+    [
+      ".q-menu-item,.pf-menu-item,.me-menu-item",
+      "MenuItem",
+      null
+    ],
+    [
+      ".q-toast,.pf-toast,.me-toast,.pa-toast,.toast",
+      "Toast",
+      null
+    ],
+    [
+      ".q-empty,.pf-empty",
+      "EmptyState",
+      null
+    ],
+    [
+      "table",
+      "DataTable",
+      null
+    ],
+    [
+      "dl",
+      "KeyValueList",
+      null
+    ],
+    [
+      ".env-json-card",
+      "CollapsibleSection",
+      null
+    ],
+    [
+      ".env-json-code,pre",
+      "CodeViewer",
+      null
+    ],
+    [
+      ".pf-art-frame,.pa-cover,.cover,.me-cover,.q-cover",
+      "ArtworkFrame",
+      null
+    ],
     [
       ".q-divider,.pf-divider,.pa-tool-divider,.divider,.storage-divider",
       "Divider",
       null
     ],
-    [".env-input-shell,.input-shell", "TextField", null],
-    [".select-shell,.me-select", "Select", null],
-    [".field,.ai-field,.env-field,.me-dialog-field", "Field", null],
-    [".toggle-field", "Switch", null],
-    ["[role=\"tab\"]", "Tab", null],
-    ["button[role=\"switch\"]", "Switch", null],
-    ["button[aria-pressed]", "ToggleButton", null],
-    ["input[type=\"range\"]", "Slider", null],
-    ["input[type=\"number\"]", "NumberField", null],
-    ["input[type=\"file\"]", "FilePicker", null],
-    ["input[type=\"checkbox\"]", "Checkbox", null],
-    ["input", "TextField", null],
-    ["select", "Select", null],
-    ["button", "Button", null]
+    [
+      ".env-input-shell,.input-shell",
+      "TextField",
+      null
+    ],
+    [
+      ".select-shell,.me-select",
+      "Select",
+      null
+    ],
+    [
+      ".field,.ai-field,.env-field,.me-dialog-field",
+      "Field",
+      null
+    ],
+    [
+      ".toggle-field",
+      "Switch",
+      null
+    ],
+    [
+      "[role=\"tab\"]",
+      "Tab",
+      null
+    ],
+    [
+      "button[role=\"switch\"]",
+      "Switch",
+      null
+    ],
+    [
+      "button[aria-pressed]",
+      "ToggleButton",
+      null
+    ],
+    [
+      "input[type=\"range\"]",
+      "Slider",
+      null
+    ],
+    [
+      "input[type=\"number\"]",
+      "NumberField",
+      null
+    ],
+    [
+      "input[type=\"file\"]",
+      "FilePicker",
+      null
+    ],
+    [
+      "input[type=\"checkbox\"]",
+      "Checkbox",
+      null
+    ],
+    [
+      "input",
+      "TextField",
+      null
+    ],
+    [
+      "select",
+      "Select",
+      null
+    ],
+    [
+      "button",
+      "Button",
+      null
+    ]
   ],
   "tree": [
     {
@@ -190,7 +472,9 @@
                   "props": {
                     "className": "room-eyebrow"
                   },
-                  "children": ["КОМНАТА"]
+                  "children": [
+                    "КОМНАТА"
+                  ]
                 },
                 {
                   "tag": "h1",
@@ -198,7 +482,9 @@
                     "id": "room-id",
                     "className": "room-id"
                   },
-                  "children": ["a689365a-6315-4f8a-9080"]
+                  "children": [
+                    "a689365a-6315-4f8a-9080"
+                  ]
                 },
                 {
                   "tag": "button",
@@ -247,7 +533,9 @@
                     "id": "transfer-label",
                     "className": "transfer-label"
                   },
-                  "children": ["Передача проекта"]
+                  "children": [
+                    "Передача проекта"
+                  ]
                 },
                 {
                   "tag": "div",
@@ -277,7 +565,9 @@
                     "id": "transfer-percent",
                     "className": "transfer-percent"
                   },
-                  "children": ["70%"]
+                  "children": [
+                    "70%"
+                  ]
                 },
                 {
                   "tag": "span",
@@ -285,7 +575,9 @@
                     "id": "transfer-remaining",
                     "className": "transfer-remaining"
                   },
-                  "children": ["Осталось ~ 2 мин"]
+                  "children": [
+                    "Осталось ~ 2 мин"
+                  ]
                 }
               ]
             },
@@ -358,7 +650,9 @@
                       "props": {
                         "className": "seal-role"
                       },
-                      "children": ["HOST"]
+                      "children": [
+                        "HOST"
+                      ]
                     }
                   ]
                 },
@@ -368,7 +662,9 @@
                     "id": "host-name",
                     "className": "participant-name"
                   },
-                  "children": ["Release Host"]
+                  "children": [
+                    "Release Host"
+                  ]
                 },
                 {
                   "tag": "span",
@@ -376,7 +672,9 @@
                   "props": {
                     "className": "you-badge"
                   },
-                  "children": ["Вы"]
+                  "children": [
+                    "Вы"
+                  ]
                 },
                 {
                   "tag": "div",
@@ -397,7 +695,9 @@
                       "props": {
                         "className": "status-text"
                       },
-                      "children": ["Говорите..."]
+                      "children": [
+                        "Говорите..."
+                      ]
                     }
                   ]
                 },
@@ -450,7 +750,9 @@
                       "props": {
                         "className": "dial-value"
                       },
-                      "children": ["72%"]
+                      "children": [
+                        "72%"
+                      ]
                     }
                   ]
                 },
@@ -562,7 +864,9 @@
                       "props": {
                         "className": "seal-role"
                       },
-                      "children": ["GUEST"]
+                      "children": [
+                        "GUEST"
+                      ]
                     }
                   ]
                 },
@@ -572,7 +876,9 @@
                     "id": "guest-name",
                     "className": "participant-name"
                   },
-                  "children": ["Release Guest"]
+                  "children": [
+                    "Release Guest"
+                  ]
                 },
                 {
                   "tag": "div",
@@ -593,7 +899,9 @@
                       "props": {
                         "className": "status-text"
                       },
-                      "children": ["Слушает..."]
+                      "children": [
+                        "Слушает..."
+                      ]
                     }
                   ]
                 },
@@ -646,7 +954,9 @@
                       "props": {
                         "className": "dial-value"
                       },
-                      "children": ["100%"]
+                      "children": [
+                        "100%"
+                      ]
                     }
                   ]
                 },
@@ -740,7 +1050,9 @@
                   "props": {
                     "className": "latency-label"
                   },
-                  "children": ["Задержка"]
+                  "children": [
+                    "Задержка"
+                  ]
                 },
                 {
                   "tag": "span",
@@ -748,7 +1060,9 @@
                     "id": "latency-value",
                     "className": "latency-value"
                   },
-                  "children": ["68 мс"]
+                  "children": [
+                    "68 мс"
+                  ]
                 },
                 {
                   "tag": "span",
@@ -757,7 +1071,9 @@
                     "id": "latency-quality",
                     "className": "latency-quality"
                   },
-                  "children": ["Отлично"]
+                  "children": [
+                    "Отлично"
+                  ]
                 },
                 {
                   "tag": "span",
@@ -798,7 +1114,9 @@
                     "id": "monitor-label",
                     "className": "monitor-label"
                   },
-                  "children": ["Мониторинг"]
+                  "children": [
+                    "Мониторинг"
+                  ]
                 },
                 {
                   "tag": "button",
@@ -873,7 +1191,9 @@
                       "props": {
                         "className": "leave-label"
                       },
-                      "children": ["Выйти из комнаты"]
+                      "children": [
+                        "Выйти из комнаты"
+                      ]
                     },
                     {
                       "component": "Icon",
@@ -900,7 +1220,9 @@
                     "type": "button",
                     "className": "menu-item"
                   },
-                  "children": ["Скопировать ID комнаты"]
+                  "children": [
+                    "Скопировать ID комнаты"
+                  ]
                 },
                 {
                   "tag": "button",
@@ -910,7 +1232,9 @@
                     "type": "button",
                     "className": "menu-item"
                   },
-                  "children": ["Приостановить анимации"]
+                  "children": [
+                    "Приостановить анимации"
+                  ]
                 }
               ]
             },
@@ -930,7 +1254,9 @@
                     "id": "settings-title",
                     "className": "popover-title"
                   },
-                  "children": ["Настройки участника"]
+                  "children": [
+                    "Настройки участника"
+                  ]
                 },
                 {
                   "tag": "label",
@@ -946,7 +1272,9 @@
                         "for": "settings-volume",
                         "id": "settings-value"
                       },
-                      "children": ["72%"]
+                      "children": [
+                        "72%"
+                      ]
                     }
                   ]
                 },
@@ -971,7 +1299,9 @@
                     "type": "button",
                     "className": "setting-toggle"
                   },
-                  "children": ["Выключить микрофон"]
+                  "children": [
+                    "Выключить микрофон"
+                  ]
                 }
               ]
             },
@@ -1000,7 +1330,9 @@
                   "props": {
                     "id": "disconnected-title"
                   },
-                  "children": ["Вы вышли из комнаты"]
+                  "children": [
+                    "Вы вышли из комнаты"
+                  ]
                 },
                 {
                   "tag": "button",
@@ -1010,7 +1342,9 @@
                     "type": "button",
                     "className": "rejoin-button"
                   },
-                  "children": ["Вернуться в демо"]
+                  "children": [
+                    "Вернуться в демо"
+                  ]
                 }
               ]
             }
@@ -1033,7 +1367,9 @@
           "props": {
             "id": "leave-title"
           },
-          "children": ["Выйти из комнаты?"]
+          "children": [
+            "Выйти из комнаты?"
+          ]
         },
         {
           "tag": "p",
@@ -1058,7 +1394,9 @@
               "props": {
                 "value": "cancel"
               },
-              "children": ["Отмена"]
+              "children": [
+                "Отмена"
+              ]
             },
             {
               "tag": "button",
@@ -1067,7 +1405,9 @@
                 "value": "leave",
                 "className": "danger"
               },
-              "children": ["Выйти"]
+              "children": [
+                "Выйти"
+              ]
             }
           ]
         }

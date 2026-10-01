@@ -1,0 +1,30 @@
+import React, { createContext, useContext, useId, useRef, useState } from "react";
+import type { ButtonHTMLAttributes, InputHTMLAttributes, ReactNode, Ref } from "react";
+import { assignRef, clamp, copyText, define, mark, useControllable, type CommonProps, type Variant } from "../../../core/base";
+import { useTabShape } from "../../../core/motion";
+import { Icon } from "../../layout";
+import { Menu, Dialog, type MenuItemData } from "../../feedback";
+import { buttonView, FieldContext, BooleanControl, type ButtonProps, type IconButtonProps, type ToggleButtonProps, type SplitButtonProps, type TabProps, type TabItem, type TabsProps, type FieldContextValue, type FieldProps, type TextFieldProps, type NumberFieldProps, type SelectOption, type SelectProps, type BooleanProps, type SliderProps, type FilePickerProps, type PathFieldProps } from "../shared";
+import { Button } from "../Button";
+import { IconButton } from "../IconButton";
+import { ToggleButton } from "../ToggleButton";
+import { SplitButton } from "../SplitButton";
+import { Tab } from "../Tab";
+import { Tabs } from "../Tabs";
+import { SegmentedControl } from "../SegmentedControl";
+import { Field } from "../Field";
+import { TextField } from "../TextField";
+import { NumberField } from "../NumberField";
+import { Select } from "../Select";
+import { Switch } from "../Switch";
+import { Checkbox } from "../Checkbox";
+import { FilePicker } from "../FilePicker";
+import { PathField } from "../PathField";
+import { CopyableField } from "../CopyableField";
+
+export const Slider = define<SliderProps>("Slider", p => {
+  const field = useContext(FieldContext); const min = p.min ?? 0, max = Math.max(min, p.max ?? 100);
+  const [value, setValue] = useControllable(p.value, p.defaultValue ?? 35, p.onValueChange);
+  const current = clamp(value, min, max); const percent = max === min ? 0 : (current - min) / (max - min) * 100;
+  return <input {...mark("Slider", p)} ref={p.ref} id={p.id ?? field?.id} type="range" value={current} min={min} max={max} step={p.step ?? 1} disabled={p.disabled} aria-label={p.label ?? "Значение"} style={{ "--ad-level": `${percent}%`, ...p.style } as React.CSSProperties} onChange={e => setValue(Number(e.currentTarget.value))} />;
+});

@@ -4,25 +4,93 @@
   "width": 1280,
   "height": 1067,
   "source": "karaoke-online-room-shared-borders.html",
-  "borderSelectors": [".modal", ".tabs", ".form"],
+  "borderSelectors": [
+    ".modal",
+    ".tabs",
+    ".form"
+  ],
   "shellSelector": ".modal",
   "rules": [
-    [".me-roll", "PianoRollGrid", null],
-    [".me-transport", "TransportBar", null],
-    ["[data-dial]", "RotaryKnob", null],
-    [".pf-card", "RecordingCard", null],
-    [".q-card", "ProcessingTaskCard", null],
-    [".participant", "ParticipantCard", null],
-    [".pa-master", "RecordingCard", null],
-    [".pa-original", "AudioPlayer", null],
-    [".pa-recommendation", "PerformanceSummary", null],
-    [".card.storage", "StorageSummary", null],
-    [".card.diagnostics", "DiagnosticsPanel", null],
-    [".profile.card", "ProfileCard", null],
-    [".ai-model", "ModelStatusCard", null],
-    [".pa-metric", "MetricCard", null],
-    [".audio-latency", "LatencyIndicator", null],
-    [".modal,.pa-modal,.pf-modal,.q-modal", "Dialog", null],
+    [
+      ".me-roll",
+      "PianoRollGrid",
+      null
+    ],
+    [
+      ".me-transport",
+      "TransportBar",
+      null
+    ],
+    [
+      "[data-dial]",
+      "RotaryKnob",
+      null
+    ],
+    [
+      ".pf-card",
+      "RecordingCard",
+      null
+    ],
+    [
+      ".q-card",
+      "ProcessingTaskCard",
+      null
+    ],
+    [
+      ".participant",
+      "ParticipantCard",
+      null
+    ],
+    [
+      ".pa-master",
+      "RecordingCard",
+      null
+    ],
+    [
+      ".pa-original",
+      "AudioPlayer",
+      null
+    ],
+    [
+      ".pa-recommendation",
+      "PerformanceSummary",
+      null
+    ],
+    [
+      ".card.storage",
+      "StorageSummary",
+      null
+    ],
+    [
+      ".card.diagnostics",
+      "DiagnosticsPanel",
+      null
+    ],
+    [
+      ".profile.card",
+      "ProfileCard",
+      null
+    ],
+    [
+      ".ai-model",
+      "ModelStatusCard",
+      null
+    ],
+    [
+      ".pa-metric",
+      "MetricCard",
+      null
+    ],
+    [
+      ".audio-latency",
+      "LatencyIndicator",
+      null
+    ],
+    [
+      ".modal,.pa-modal,.pf-modal,.q-modal",
+      "Dialog",
+      null
+    ],
     [
       ".dialog-box,.pa-dialog,.pf-dialog,.q-dialog,.me-dialog,dialog",
       "Dialog",
@@ -38,15 +106,51 @@
       "PageHeader",
       null
     ],
-    [".env-card-head,.ai-head", "SectionHeader", null],
-    [".card,.surface,.pa-panel,.me-panel", "Surface", null],
-    [".form", "RoomConnectionForm", null],
-    [".theme-picker,.themes", "ThemePicker", null],
-    [".theme-card", "Card", null],
-    [".pa-tile,.tile,.fi,.hero,.pf-header-tile", "IconTile", null],
-    [".avatar", "Avatar", null],
-    [".seal", "RoleEmblem", null],
-    [".signature,.pf-signature,.me-signature", "BrandMark", null],
+    [
+      ".env-card-head,.ai-head",
+      "SectionHeader",
+      null
+    ],
+    [
+      ".card,.surface,.pa-panel,.me-panel",
+      "Surface",
+      null
+    ],
+    [
+      ".form",
+      "RoomConnectionForm",
+      null
+    ],
+    [
+      ".theme-picker,.themes",
+      "ThemePicker",
+      null
+    ],
+    [
+      ".theme-card",
+      "Card",
+      null
+    ],
+    [
+      ".pa-tile,.tile,.fi,.hero,.pf-header-tile",
+      "IconTile",
+      null
+    ],
+    [
+      ".avatar",
+      "Avatar",
+      null
+    ],
+    [
+      ".seal",
+      "RoleEmblem",
+      null
+    ],
+    [
+      ".signature,.pf-signature,.me-signature",
+      "BrandMark",
+      null
+    ],
     [
       ".appearance-footer,.audio-footer,.pf-footer,.q-footer,.me-footer,.me-toolbar,.toolbar",
       "Toolbar",
@@ -57,61 +161,241 @@
       "ScrollArea",
       null
     ],
-    [".history-tabs,.tabs", "Tabs", null],
-    [".me-tools,.me-modes,.pf-view-switch", "SegmentedControl", null],
-    [".me-save-group,.pf-add", "SplitButton", null],
-    [".me-history", "UndoRedoControls", null],
-    [".me-zoom-step", "ZoomControl", null],
-    [".audio-gauge,.dial", "CircularGauge", null],
-    ["[data-dial]", "RotaryKnob", null],
-    [".volume-control,.me-volume", "VolumeControl", null],
-    [".meter,.audio-mini-wave", "LevelMeter", null],
-    [".pa-waveform,.pf-waveform,.me-waveform", "Waveform", null],
-    [".me-transport", "TransportBar", null],
-    [".me-piano", "PianoKeyboard", null],
-    [".me-roll", "PianoRollGrid", null],
-    [".me-ruler", "TimeRuler", null],
-    [".me-words", "LyricsLane", null],
-    [".me-note", "NoteBlock", null],
-    [".me-playhead,.me-wave-cursor", "Playhead", null],
-    [".me-marquee", "SelectionOverlay", null],
-    [".q-stages", "Steps", null],
-    [".q-error-message", "MessageBar", null],
-    [".q-status-icon,.status-light", "StatusIndicator", null],
+    [
+      ".history-tabs,.tabs",
+      "Tabs",
+      null
+    ],
+    [
+      ".me-tools,.me-modes,.pf-view-switch",
+      "SegmentedControl",
+      null
+    ],
+    [
+      ".me-save-group,.pf-add",
+      "SplitButton",
+      null
+    ],
+    [
+      ".me-history",
+      "UndoRedoControls",
+      null
+    ],
+    [
+      ".me-zoom-step",
+      "ZoomControl",
+      null
+    ],
+    [
+      ".audio-gauge,.dial",
+      "CircularGauge",
+      null
+    ],
+    [
+      "[data-dial]",
+      "RotaryKnob",
+      null
+    ],
+    [
+      ".volume-control,.me-volume",
+      "VolumeControl",
+      null
+    ],
+    [
+      ".meter,.audio-mini-wave",
+      "LevelMeter",
+      null
+    ],
+    [
+      ".pa-waveform,.pf-waveform,.me-waveform",
+      "Waveform",
+      null
+    ],
+    [
+      ".me-transport",
+      "TransportBar",
+      null
+    ],
+    [
+      ".me-piano",
+      "PianoKeyboard",
+      null
+    ],
+    [
+      ".me-roll",
+      "PianoRollGrid",
+      null
+    ],
+    [
+      ".me-ruler",
+      "TimeRuler",
+      null
+    ],
+    [
+      ".me-words",
+      "LyricsLane",
+      null
+    ],
+    [
+      ".me-note",
+      "NoteBlock",
+      null
+    ],
+    [
+      ".me-playhead,.me-wave-cursor",
+      "Playhead",
+      null
+    ],
+    [
+      ".me-marquee",
+      "SelectionOverlay",
+      null
+    ],
+    [
+      ".q-stages",
+      "Steps",
+      null
+    ],
+    [
+      ".q-error-message",
+      "MessageBar",
+      null
+    ],
+    [
+      ".q-status-icon,.status-light",
+      "StatusIndicator",
+      null
+    ],
     [
       ".q-track,.transfer-track,.storage-track,.pa-metric-bar",
       "ProgressBar",
       null
     ],
-    [".you-badge,.latency-quality,.env-gpu-badge", "Badge", null],
-    [".q-menu,.pf-popover,.me-popover,.popover", "Menu", null],
-    [".q-menu-item,.pf-menu-item,.me-menu-item", "MenuItem", null],
-    [".q-toast,.pf-toast,.me-toast,.pa-toast,.toast", "Toast", null],
-    [".q-empty,.pf-empty", "EmptyState", null],
-    ["table", "DataTable", null],
-    ["dl", "KeyValueList", null],
-    [".env-json-card", "CollapsibleSection", null],
-    [".env-json-code,pre", "CodeViewer", null],
-    [".pf-art-frame,.pa-cover,.cover,.me-cover,.q-cover", "ArtworkFrame", null],
+    [
+      ".you-badge,.latency-quality,.env-gpu-badge",
+      "Badge",
+      null
+    ],
+    [
+      ".q-menu,.pf-popover,.me-popover,.popover",
+      "Menu",
+      null
+    ],
+    [
+      ".q-menu-item,.pf-menu-item,.me-menu-item",
+      "MenuItem",
+      null
+    ],
+    [
+      ".q-toast,.pf-toast,.me-toast,.pa-toast,.toast",
+      "Toast",
+      null
+    ],
+    [
+      ".q-empty,.pf-empty",
+      "EmptyState",
+      null
+    ],
+    [
+      "table",
+      "DataTable",
+      null
+    ],
+    [
+      "dl",
+      "KeyValueList",
+      null
+    ],
+    [
+      ".env-json-card",
+      "CollapsibleSection",
+      null
+    ],
+    [
+      ".env-json-code,pre",
+      "CodeViewer",
+      null
+    ],
+    [
+      ".pf-art-frame,.pa-cover,.cover,.me-cover,.q-cover",
+      "ArtworkFrame",
+      null
+    ],
     [
       ".q-divider,.pf-divider,.pa-tool-divider,.divider,.storage-divider",
       "Divider",
       null
     ],
-    [".env-input-shell,.input-shell", "TextField", null],
-    [".select-shell,.me-select", "Select", null],
-    [".field,.ai-field,.env-field,.me-dialog-field", "Field", null],
-    [".toggle-field", "Switch", null],
-    ["[role=\"tab\"]", "Tab", null],
-    ["button[role=\"switch\"]", "Switch", null],
-    ["button[aria-pressed]", "ToggleButton", null],
-    ["input[type=\"range\"]", "Slider", null],
-    ["input[type=\"number\"]", "NumberField", null],
-    ["input[type=\"file\"]", "FilePicker", null],
-    ["input[type=\"checkbox\"]", "Checkbox", null],
-    ["input", "TextField", null],
-    ["select", "Select", null],
-    ["button", "Button", null]
+    [
+      ".env-input-shell,.input-shell",
+      "TextField",
+      null
+    ],
+    [
+      ".select-shell,.me-select",
+      "Select",
+      null
+    ],
+    [
+      ".field,.ai-field,.env-field,.me-dialog-field",
+      "Field",
+      null
+    ],
+    [
+      ".toggle-field",
+      "Switch",
+      null
+    ],
+    [
+      "[role=\"tab\"]",
+      "Tab",
+      null
+    ],
+    [
+      "button[role=\"switch\"]",
+      "Switch",
+      null
+    ],
+    [
+      "button[aria-pressed]",
+      "ToggleButton",
+      null
+    ],
+    [
+      "input[type=\"range\"]",
+      "Slider",
+      null
+    ],
+    [
+      "input[type=\"number\"]",
+      "NumberField",
+      null
+    ],
+    [
+      "input[type=\"file\"]",
+      "FilePicker",
+      null
+    ],
+    [
+      "input[type=\"checkbox\"]",
+      "Checkbox",
+      null
+    ],
+    [
+      "input",
+      "TextField",
+      null
+    ],
+    [
+      "select",
+      "Select",
+      null
+    ],
+    [
+      "button",
+      "Button",
+      null
+    ]
   ],
   "tree": [
     {
@@ -170,21 +454,27 @@
                       "props": {
                         "className": "ey"
                       },
-                      "children": ["Онлайн-комната"]
+                      "children": [
+                        "Онлайн-комната"
+                      ]
                     },
                     {
                       "tag": "h1",
                       "props": {
                         "className": "title"
                       },
-                      "children": ["Пойте вместе"]
+                      "children": [
+                        "Пойте вместе"
+                      ]
                     },
                     {
                       "tag": "div",
                       "props": {
                         "className": "desc"
                       },
-                      "children": ["Создайте комнату или войдите по коду."]
+                      "children": [
+                        "Создайте комнату или войдите по коду."
+                      ]
                     }
                   ]
                 },
@@ -273,7 +563,9 @@
                               "props": {
                                 "className": "label"
                               },
-                              "children": ["Имя *"]
+                              "children": [
+                                "Имя *"
+                              ]
                             },
                             {
                               "tag": "div",
@@ -337,7 +629,9 @@
                               "props": {
                                 "className": "label"
                               },
-                              "children": ["Код комнаты *"]
+                              "children": [
+                                "Код комнаты *"
+                              ]
                             },
                             {
                               "tag": "div",
@@ -374,7 +668,9 @@
                       "props": {
                         "className": "btn"
                       },
-                      "children": ["Отмена"]
+                      "children": [
+                        "Отмена"
+                      ]
                     },
                     {
                       "tag": "button",
@@ -389,7 +685,9 @@
                         },
                         {
                           "tag": "span",
-                          "children": ["Войти в комнату"]
+                          "children": [
+                            "Войти в комнату"
+                          ]
                         }
                       ]
                     }
@@ -407,18 +705,24 @@
                     },
                     {
                       "tag": "strong",
-                      "children": ["Нет кода?"]
+                      "children": [
+                        "Нет кода?"
+                      ]
                     },
                     {
                       "tag": "span",
-                      "children": ["Создайте комнату и пригласите друзей."]
+                      "children": [
+                        "Создайте комнату и пригласите друзей."
+                      ]
                     },
                     {
                       "tag": "span",
                       "props": {
                         "className": "arrow"
                       },
-                      "children": ["›"]
+                      "children": [
+                        "›"
+                      ]
                     }
                   ]
                 }

@@ -1,0 +1,21 @@
+import React, { useRef, useState } from "react";
+import { copyText, define, mark, useControllable, type CommonProps, type Tone } from "../../../core/base";
+import { SvgAsset } from "../../../core/artwork";
+import { useDecoration } from "../../../core/motion";
+import { ArtworkFrame, Avatar, ButtonGroup, Card, Icon, IconTile, SectionHeader, Text, illustrations } from "../../layout";
+import { Button, Field, FilePicker, IconButton, Tabs, TextField, ToggleButton } from "../../controls";
+import { Badge, Dialog, KeyValueList, Menu, MetricCard, ProgressBar, StatusIndicator, Steps, Toast, type MenuItemData } from "../../feedback";
+import { AudioPlayer, LevelMeter, RotaryKnob, VolumeControl } from "../../media";
+import { type RoleEmblemProps, type RecordingCardProps, type ProcessingTaskCardProps, type ParticipantCardProps, type ProfileCardProps, type ThemeName, type ThemePickerProps, type RoomConnection, type RoomConnectionFormProps, type ModelStatusCardProps, type StorageSummaryProps, type DiagnosticsPanelProps, type PerformanceSummaryProps } from "../shared";
+import { RoleEmblem } from "../RoleEmblem";
+import { RecordingCard } from "../RecordingCard";
+import { ProcessingTaskCard } from "../ProcessingTaskCard";
+import { ParticipantCard } from "../ParticipantCard";
+import { ThemePicker } from "../ThemePicker";
+import { RoomConnectionForm } from "../RoomConnectionForm";
+import { ModelStatusCard } from "../ModelStatusCard";
+import { StorageSummary } from "../StorageSummary";
+import { DiagnosticsPanel } from "../DiagnosticsPanel";
+import { PerformanceSummary } from "../PerformanceSummary";
+
+export const ProfileCard = define<ProfileCardProps>("ProfileCard", p => <Card {...p} title="Профиль"><div className="ad-profile-line"><Avatar name={p.name ?? "Дмитрий"} /><div><p>Его видят друзья и участники комнаты</p><FilePicker label="Выбрать фото" icon="upload" accept="image/*" onFiles={files => { if (files[0]) p.onPhoto?.(files[0]); }} /></div></div></Card>);

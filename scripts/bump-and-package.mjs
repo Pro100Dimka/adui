@@ -2,25 +2,13 @@ import { readFile, writeFile } from "node:fs/promises";
 import { spawnSync } from "node:child_process";
 import { resolve } from "node:path";
 const kind = process.argv[2] ?? "patch";
-if (!["patch", "minor", "major"].includes(kind))
-  throw new Error("Use patch, minor or major");
-const root = resolve(import.meta.dirname, ".."),
-  file = resolve(root, "packages/ui/package.json");
-const pkg = JSON.parse(await readFile(file, "utf8"));
-let [a, b, c] = pkg.version.split(".").map(Number);
-if (kind === "major") {
-  a++;
-  b = 0;
-  c = 0;
-} else if (kind === "minor") {
-  b++;
-  c = 0;
-} else c++;
-pkg.version = `${a}.${b}.${c}`;
-await writeFile(file, JSON.stringify(pkg, null, 2) + "\n");
+if (!["patch","minor","major"].includes(kind)) throw new Error("Use patch, minor or major");
+const root=resolve(import.meta.dirname,".."), file=resolve(root,"packages/ui/package.json");
+const pkg=JSON.parse(await readFile(file,"utf8"));
+let [a,b,c]=pkg.version.split(".").map(Number);
+if(kind==="major"){a++;b=0;c=0}else if(kind==="minor"){b++;c=0}else c++;
+pkg.version=`${a}.${b}.${c}`;
+await writeFile(file,JSON.stringify(pkg,null,2)+"\n");
 console.log(`Version -> ${pkg.version}`);
-const r = spawnSync("node", [resolve(root, "scripts/create-package.mjs")], {
-  cwd: root,
-  stdio: "inherit",
-});
-process.exit(r.status ?? 0);
+const r=spawnSync("node",[resolve(root,"scripts/create-package.mjs")],{cwd:root,stdio:"inherit"});
+process.exit(r.status??0);

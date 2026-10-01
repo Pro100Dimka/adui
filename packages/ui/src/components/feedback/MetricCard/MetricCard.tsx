@@ -1,0 +1,23 @@
+import React, { useEffect, useId, useLayoutEffect, useRef, useState } from "react";
+import type { ReactNode, RefObject } from "react";
+import { clamp, copyText, define, mark, useControllable, type CommonProps, type Tone } from "../../../core/base";
+import { Button, IconButton } from "../../controls";
+import { Card, DialogHeader, DialogBody, DialogActions, Divider, Icon, IconTile, Text } from "../../layout";
+import { type DialogProps, type PopoverProps, type MenuItemData, type MenuItemProps, type MenuProps, type ToastProps, type BadgeProps, type StatusIndicatorProps, type ProgressBarProps, type StepsProps, type EmptyStateProps, type MetricCardProps, type KeyValueListProps, type DataTableProps, type CollapsibleSectionProps, type CodeViewerProps } from "../shared";
+import { Dialog } from "../Dialog";
+import { Popover } from "../Popover";
+import { MenuItem } from "../MenuItem";
+import { Menu } from "../Menu";
+import { Toast } from "../Toast";
+import { Badge } from "../Badge";
+import { StatusIndicator } from "../StatusIndicator";
+import { ProgressBar } from "../ProgressBar";
+import { Steps } from "../Steps";
+import { MessageBar } from "../MessageBar";
+import { EmptyState } from "../EmptyState";
+import { KeyValueList } from "../KeyValueList";
+import { DataTable } from "../DataTable";
+import { CollapsibleSection } from "../CollapsibleSection";
+import { CodeViewer } from "../CodeViewer";
+
+export const MetricCard = define<MetricCardProps>("MetricCard", p => <Card {...p} title={undefined} className={`ad-metric-card ${p.className ?? ""}`}><div className="ad-metric-heading"><IconTile icon={p.icon ?? "music"} /><div><Text variant="muted">{p.title ?? "Высота"}</Text><strong>{p.value ?? 49}{p.unit ?? "%"}</strong></div></div><ProgressBar value={p.value ?? 49} label={p.title} /><p>{p.description ?? "Доля нот, исполненных точно"}</p></Card>);

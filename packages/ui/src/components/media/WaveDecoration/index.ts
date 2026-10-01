@@ -1,0 +1,1 @@
+export { WaveDecoration } from "./WaveDecoration";

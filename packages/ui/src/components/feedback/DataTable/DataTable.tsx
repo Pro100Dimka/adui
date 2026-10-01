@@ -1,0 +1,23 @@
+import React, { useEffect, useId, useLayoutEffect, useRef, useState } from "react";
+import type { ReactNode, RefObject } from "react";
+import { clamp, copyText, define, mark, useControllable, type CommonProps, type Tone } from "../../../core/base";
+import { Button, IconButton } from "../../controls";
+import { Card, DialogHeader, DialogBody, DialogActions, Divider, Icon, IconTile, Text } from "../../layout";
+import { type DialogProps, type PopoverProps, type MenuItemData, type MenuItemProps, type MenuProps, type ToastProps, type BadgeProps, type StatusIndicatorProps, type ProgressBarProps, type StepsProps, type EmptyStateProps, type MetricCardProps, type KeyValueListProps, type DataTableProps, type CollapsibleSectionProps, type CodeViewerProps } from "../shared";
+import { Dialog } from "../Dialog";
+import { Popover } from "../Popover";
+import { MenuItem } from "../MenuItem";
+import { Menu } from "../Menu";
+import { Toast } from "../Toast";
+import { Badge } from "../Badge";
+import { StatusIndicator } from "../StatusIndicator";
+import { ProgressBar } from "../ProgressBar";
+import { Steps } from "../Steps";
+import { MessageBar } from "../MessageBar";
+import { EmptyState } from "../EmptyState";
+import { MetricCard } from "../MetricCard";
+import { KeyValueList } from "../KeyValueList";
+import { CollapsibleSection } from "../CollapsibleSection";
+import { CodeViewer } from "../CodeViewer";
+
+export const DataTable = define<DataTableProps>("DataTable", p => <table {...mark("DataTable", p)}>{p.caption && <caption>{p.caption}</caption>}<thead><tr>{(p.columns ?? ["Дата", "Событие", "Статус"]).map((name, i) => <th key={i} scope="col">{name}</th>)}</tr></thead><tbody>{(p.rows ?? [["30.09.2026, 13:24", "AnalysisCompleted", "Готово"], ["30.09.2026, 13:23", "RecordingRegistered", "Готово"]]).map((row, i) => <tr key={i}>{row.map((v, j) => <td key={j}>{v}</td>)}</tr>)}</tbody></table>);

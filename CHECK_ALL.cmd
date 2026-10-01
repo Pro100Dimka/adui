@@ -1,17 +1,26 @@
 @echo off
+setlocal
 cd /d "%~dp0"
-if not exist node_modules call npm install
+
+echo [1/3] Checking component structure...
+call npm run check:structure
 if errorlevel 1 goto :error
-call npm run check
+
+echo [2/3] Checking catalog examples...
+call npm run check:catalog
 if errorlevel 1 goto :error
-call npm run build
+
+echo [3/3] TypeScript typecheck...
+call npm run typecheck
 if errorlevel 1 goto :error
+
 echo.
-echo All checks passed.
+echo Everything is OK.
 pause
 exit /b 0
+
 :error
 echo.
-echo Check failed. See the error above.
+echo CHECK FAILED.
 pause
 exit /b 1

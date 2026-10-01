@@ -1,87 +1,47 @@
 /* Approved Advanced / ENV visual materials. Single source for both pages. */
-:root,
-:host,
-.ad-theme {
+:root, :host, .ad-theme {
+
   color-scheme: dark;
   font-family: "Segoe UI", Arial, sans-serif;
   --ad-red: #ff244c;
   --ad-pink: #ff7c97;
   --ad-text: #f7f5f8;
   --ad-muted: #bfc0d9;
-  --ad-surface-shell:
-    radial-gradient(ellipse 440px 110px at 37% 0, #460a1828, transparent)
-      padding-box,
-    radial-gradient(ellipse 150px 450px at 0 65%, #7b132018, transparent)
-      padding-box,
-    linear-gradient(110deg, #08060a, #050408 47%, #07050a) padding-box,
-    linear-gradient(
-        118deg,
-        #e0a4a5,
-        #aa304a 14%,
-        #771a35 40%,
-        #ff6d7f 75%,
-        #af304a
-      )
-      border-box;
-  --ad-shadow-shell:
-    0 0 6px #ff626a91, 0 0 19px #ff0d376e, 0 0 43px #ff153235,
-    0 25px 90px #000b, inset 0 0 3px #ff70713b, inset 0 0 22px #ff234323;
-  --ad-surface-card:
-    radial-gradient(ellipse 355px 155px at 43% -8%, #da44645d, transparent 78%)
-      padding-box,
-    radial-gradient(ellipse 700px 360px at 7% 0, #14101958, transparent)
-      padding-box,
-    linear-gradient(115deg, #09080d, #070609 61%, #08050a) padding-box,
-    linear-gradient(
-        145deg,
-        #ff426b,
-        #b01a3b 20%,
-        #92112d 54%,
-        #f7204c 82%,
-        #b80a31
-      )
-      border-box;
-  --ad-shadow-card:
-    inset 0 1px 1px #ffc8d31f, inset 0 0 14px #eb153511, 0 0 11px #ed13391a;
-  --ad-surface-glass:
-    radial-gradient(ellipse at 32% 0, #3c192031, transparent 62%) padding-box,
-    linear-gradient(135deg, #0d0b10, #06070a 60%, #101017) padding-box,
-    linear-gradient(125deg, #ff5a81, #714350 18%, #32262d 49%, #ad526a 100%)
-      border-box;
-  --ad-shadow-glass:
-    inset 0 1px 2px #ffe2ed2b, inset 0 0 8px #e6c3ff06, 0 3px 7px #0005;
+  --ad-surface-shell: radial-gradient(ellipse 440px 110px at 37% 0, #460a1828, transparent) padding-box,
+        radial-gradient(ellipse 150px 450px at 0 65%, #7b132018, transparent) padding-box,
+        linear-gradient(110deg, #08060a, #050408 47%, #07050a) padding-box,
+        linear-gradient(118deg, #e0a4a5, #aa304a 14%, #771a35 40%, #ff6d7f 75%, #af304a) border-box;
+  --ad-shadow-shell: 0 0 6px #ff626a91, 0 0 19px #ff0d376e, 0 0 43px #ff153235, 0 25px 90px #000b,
+        inset 0 0 3px #ff70713b, inset 0 0 22px #ff234323;
+  --ad-surface-card: radial-gradient(ellipse 355px 155px at 43% -8%, #da44645d, transparent 78%) padding-box,
+        radial-gradient(ellipse 700px 360px at 7% 0, #14101958, transparent) padding-box,
+        linear-gradient(115deg, #09080d, #070609 61%, #08050a) padding-box,
+        linear-gradient(145deg, #ff426b, #b01a3b 20%, #92112d 54%, #f7204c 82%, #b80a31) border-box;
+  --ad-shadow-card: inset 0 1px 1px #ffc8d31f, inset 0 0 14px #eb153511, 0 0 11px #ed13391a;
+  --ad-surface-glass: radial-gradient(ellipse at 32% 0, #3c192031, transparent 62%) padding-box,
+        linear-gradient(135deg, #0d0b10, #06070a 60%, #101017) padding-box,
+        linear-gradient(125deg, #ff5a81, #714350 18%, #32262d 49%, #ad526a 100%) border-box;
+  --ad-shadow-glass: inset 0 1px 2px #ffe2ed2b, inset 0 0 8px #e6c3ff06, 0 3px 7px #0005;
   --ad-shadow-glass-hover: 0 0 14px #ff254832, inset 0 1px 2px #ffd4e438;
-  --ad-surface-ruby:
-    radial-gradient(ellipse at 35% 0, #b8214540, transparent 70%) padding-box,
-    radial-gradient(ellipse at 100% 100%, #d4214845, transparent 68%)
-      padding-box,
-    linear-gradient(140deg, #780e2c, #370314 55%, #8a0c2b) padding-box,
-    linear-gradient(125deg, #ffb6c7, #db496b 22%, #962e4b 58%, #ff7294)
-      border-box;
-  --ad-shadow-ruby:
-    inset 0 1px 2px #ffe2ed75, inset 0 0 15px #ff1d4548, 0 0 5px #ff45634c,
-    0 0 19px #ff214b30;
-  --ad-surface-tile:
-    radial-gradient(ellipse at 52% 42%, #78022270, #1a031033 68%) padding-box,
-    linear-gradient(145deg, #240911, #110209 69%, #29040f) padding-box,
-    linear-gradient(135deg, #fd567d, #851b3b 22%, #c71140 68%, #852443)
-      border-box;
-  --ad-shadow-tile:
-    inset 0 0 9px #ec0c3b24, inset 0 1px 1px #ff70882b, 0 0 15px #ff164128;
-  --ad-surface-input:
-    radial-gradient(ellipse at 75% 0, #73213910, transparent 70%) padding-box,
+  --ad-surface-ruby: radial-gradient(ellipse at 35% 0,#b8214540,transparent 70%) padding-box,
+    radial-gradient(ellipse at 100% 100%,#d4214845,transparent 68%) padding-box,
+    linear-gradient(140deg,#780e2c,#370314 55%,#8a0c2b) padding-box,
+    linear-gradient(125deg,#ffb6c7,#db496b 22%,#962e4b 58%,#ff7294) border-box;
+  --ad-shadow-ruby: inset 0 1px 2px #ffe2ed75, inset 0 0 15px #ff1d4548, 0 0 5px #ff45634c, 0 0 19px #ff214b30;
+  --ad-surface-tile: radial-gradient(ellipse at 52% 42%, #78022270, #1a031033 68%) padding-box,
+        linear-gradient(145deg, #240911, #110209 69%, #29040f) padding-box,
+        linear-gradient(135deg, #fd567d, #851b3b 22%, #c71140 68%, #852443) border-box;
+  --ad-shadow-tile: inset 0 0 9px #ec0c3b24, inset 0 1px 1px #ff70882b, 0 0 15px #ff164128;
+  --ad-surface-input: radial-gradient(ellipse at 75% 0, #73213910, transparent 70%) padding-box,
     linear-gradient(135deg, #0d0b10, #06070a 60%, #101017) padding-box,
-    linear-gradient(125deg, #ef6385, #714350 18%, #4c2031 49%, #ce4165)
-      border-box;
-  --ad-shadow-input:
-    inset 0 1px 2px #ffe2ed22, inset 0 0 8px #e6c3ff06, 0 3px 7px #0005;
-  --ad-surface-dialog:
-    radial-gradient(ellipse at 80% 0, #670f2840, transparent 70%), #110b13;
+    linear-gradient(125deg, #ef6385, #714350 18%, #4c2031 49%, #ce4165) border-box;
+  --ad-shadow-input: inset 0 1px 2px #ffe2ed22, inset 0 0 8px #e6c3ff06, 0 3px 7px #0005;
+  --ad-surface-dialog: radial-gradient(ellipse at 80% 0, #670f2840, transparent 70%), #110b13;
   --ad-shadow-dialog: 0 0 28px #ff214b30, 0 35px 100px #000b;
 
-  --ad-radius: 13px;
-  --ad-control-height: 42px;
-  --ad-focus: #ffd0d9;
-  --ad-success: #11d6a4;
-  --ad-warning: #f0c16a;
+  --ad-radius:13px;
+  --ad-control-height:42px;
+  --ad-focus:#ffd0d9;
+  --ad-success:#11d6a4;
+  --ad-warning:#f0c16a;
 }
