@@ -1,7 +1,7 @@
-import React, { useRef, useState } from "react";
 import * as UI from "@ad-voice/ui";
-import * as Editor from "@ad-voice/ui/editor";
 import type { NoteGeometry } from "@ad-voice/ui/editor";
+import * as Editor from "@ad-voice/ui/editor";
+import React, { useRef, useState } from "react";
 
 // Catalogue convenience namespace. Heavy editor primitives intentionally live in
 // the separate @ad-voice/ui/editor entry point in the publishable package.
@@ -726,11 +726,16 @@ export function Example({ name }: { name: string }) {
       );
       break;
     case "CircularGauge":
-      demo = row(
+      demo = (
         <>
-          <U.CircularGauge value={72} label="Микрофон" icon="mic" />
-          <U.CircularGauge value={0} label="Шум" icon="wave" />
-        </>,
+          <div className="sample-row sample-knob-row">
+            <U.CircularGauge diameter={180} value={72} label="Микрофон" />
+          </div>
+          <span className="sample-note">
+            CircularGauge — read-only вариант того же точного регулятора: визуал
+            идентичен RotaryKnob, но пользователь не может менять значение.
+          </span>
+        </>
       );
       break;
     case "RotaryKnob":
@@ -738,18 +743,17 @@ export function Example({ name }: { name: string }) {
         <>
           <div className="sample-row sample-knob-row">
             <U.RotaryKnob
-              diameter={180}
+              diameter={300}
               value={value}
               onValueChange={setValue}
               onValueCommit={(v) => setNotice(`Громкость: ${v}%`)}
               label="Громкость"
-              icon="volume"
             />
           </div>
           <span className="sample-note">
-            RotaryKnob использует тот же визуальный язык, что CircularGauge, но
-            является интерактивным: drag по кругу, колесо, клавиатура и двойной
-            клик для сброса.
+            Это прямой React-порт premium-knob-interactive-neon(2).html:
+            круговой drag, линейный drag из центра, выбор по шкале, колесо,
+            клавиатура, Shift, Escape и double-click reset.
           </span>
         </>
       );

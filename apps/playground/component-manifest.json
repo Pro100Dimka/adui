@@ -311,12 +311,12 @@
   },
   {
     "name": "CircularGauge",
-    "description": "Круговой индикатор, только отображение",
+    "description": "Read-only вариант точного RotaryKnob с тем же визуалом.",
     "category": "audio"
   },
   {
     "name": "RotaryKnob",
-    "description": "Премиальная процедурная крутилка: круговое и линейное перетаскивание, колесо, клавиатура и сброс",
+    "description": "Точный интерактивный React-порт premium-knob-interactive-neon(2).html.",
     "category": "audio"
   },
   {

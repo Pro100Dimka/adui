@@ -1025,115 +1025,206 @@ button.ad:focus-visible {
   box-shadow: 0 0 5px #ff31564f;
 }
 .ad-circular-gauge {
-  width: 132px;
-  height: 152px;
+  display: inline-block;
   position: relative;
-  flex: none;
-  text-align: center;
+  vertical-align: middle;
 }
-.ad-circular-gauge > svg:first-child {
-  width: 120px;
-  height: 100px;
-}
-.ad-circular-gauge > .ad-icon {
-  position: absolute;
-  left: 51px;
-  top: 41px;
-}
-.ad-circular-gauge > strong {
+.ad-circular-gauge > .ad-rotary-knob {
   display: block;
-  font-size: 19px;
-  line-height: 23px;
-  margin-top: -3px;
-}
-.ad-circular-gauge > small {
-  display: block;
-  color: var(--ad-muted);
-  font-size: 12px;
-  margin-top: 3px;
 }
 
-/* RotaryKnob is the interactive variant of CircularGauge. */
-.ad-rotary-knob {
-  --ad-knob-diameter: 132px;
+/* Exact CSS geometry from premium-knob-interactive-neon(2).html, scoped to A&D UI. */
+.ad-rotary-knob.knob {
+  --size: 220px;
+  --angle: 45.9deg;
+  --rotation: 0deg;
   position: relative;
-  width: var(--ad-knob-diameter);
-  height: calc(var(--ad-knob-diameter) * 1.15);
+  width: var(--size);
+  aspect-ratio: 1;
   flex: none;
-  text-align: center;
-  cursor: grab;
-  touch-action: none;
-  user-select: none;
-  outline: none;
+  isolation: isolate;
+  -webkit-tap-highlight-color: transparent;
 }
-.ad-rotary-knob.is-dragging {
-  cursor: grabbing;
-}
-.ad-rotary-knob > svg:first-child {
-  width: calc(var(--ad-knob-diameter) * 0.91);
-  height: calc(var(--ad-knob-diameter) * 0.76);
-  overflow: visible;
-}
-.ad-rotary-knob > .ad-icon {
-  position: absolute;
-  left: 50%;
-  top: calc(var(--ad-knob-diameter) * 0.31);
-  transform: translateX(-50%);
-  width: calc(var(--ad-knob-diameter) * 0.23);
-  height: calc(var(--ad-knob-diameter) * 0.23);
-}
-.ad-rotary-knob > strong {
-  display: block;
-  font-size: calc(var(--ad-knob-diameter) * 0.144);
-  line-height: 1.2;
-  margin-top: calc(var(--ad-knob-diameter) * -0.023);
-  font-variant-numeric: tabular-nums;
-}
-.ad-rotary-knob > small {
-  display: block;
-  color: var(--ad-muted);
-  font-size: calc(var(--ad-knob-diameter) * 0.091);
-  margin-top: 3px;
-}
-.ad-rotary-knob:focus-visible::after {
+.ad-rotary-knob.knob::before {
   content: "";
   position: absolute;
-  inset: -3px;
-  border: 1px solid #ffd0d9;
-  border-radius: 18px;
-  box-shadow: 0 0 14px #ff315842;
+  inset: 3.8%;
+  border-radius: 50%;
   pointer-events: none;
+  background: radial-gradient(
+    circle at 50% 50%,
+    transparent 58%,
+    rgba(255, 21, 53, 0.055) 68%,
+    transparent 78%
+  );
+  box-shadow:
+    0 0 20px rgba(255, 18, 49, 0.18),
+    0 0 52px rgba(255, 7, 42, 0.12),
+    0 0 86px rgba(255, 5, 38, 0.06);
+  z-index: -1;
 }
-.ad-rotary-knob[data-disabled="true"],
-.ad-rotary-knob[aria-disabled="true"] {
-  opacity: 0.45;
-  filter: saturate(0.55);
-  cursor: default;
+.ad-rotary-knob.knob::after {
+  content: "";
+  position: absolute;
+  inset: 8.6%;
+  border-radius: 50%;
+  pointer-events: none;
+  border: 1px solid rgba(255, 72, 92, 0.16);
+  box-shadow:
+    inset 0 0 15px rgba(255, 17, 49, 0.12),
+    0 0 12px rgba(255, 17, 49, 0.1);
 }
-.ad-rotary-handle {
+.ad-rotary-knob .knob__surface {
+  display: block;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  filter: drop-shadow(0 0 7px rgba(255, 18, 48, 0.18))
+    drop-shadow(0 0 20px rgba(255, 10, 44, 0.1));
+}
+.ad-rotary-knob .knob__control {
+  position: absolute;
+  inset: 5.5%;
+  border-radius: 50%;
+  cursor: grab;
+  outline: none;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.ad-rotary-knob .knob__control:active,
+.ad-rotary-knob.is-dragging .knob__control {
+  cursor: grabbing;
+}
+.ad-rotary-knob.is-dragging .knob__surface,
+.ad-rotary-knob:hover .knob__surface {
+  filter: drop-shadow(0 0 10px rgba(255, 26, 56, 0.28))
+    drop-shadow(0 0 28px rgba(255, 8, 44, 0.16));
+}
+.ad-rotary-knob .knob__rotor {
+  transform: rotate(var(--rotation));
+  transform-origin: center;
+  will-change: transform;
+}
+.ad-rotary-knob .knob__value {
   position: absolute;
   left: 50%;
-  top: calc(var(--ad-knob-diameter) * 0.065);
-  width: 8px;
-  height: 8px;
+  bottom: -1%;
+  transform: translateX(-50%);
+  color: #ffe9e8;
+  font:
+    500 clamp(12px, 2.8vmin, 24px)/1.1 system-ui,
+    sans-serif;
+  font-variant-numeric: tabular-nums;
+  text-shadow:
+    0 0 5px #fff8f8,
+    0 0 14px #ff385d,
+    0 0 30px #ff173866;
+  opacity: 0;
+  pointer-events: none;
+  filter: drop-shadow(0 0 7px rgba(255, 18, 48, 0.18))
+    drop-shadow(0 0 20px rgba(255, 10, 44, 0.1));
+}
+.ad-rotary-knob:hover .knob__value,
+.ad-rotary-knob:focus-within .knob__value,
+.ad-rotary-knob.is-dragging .knob__value {
+  opacity: 1;
+}
+.ad-rotary-knob .knob__control:focus-visible::after {
+  content: "";
+  position: absolute;
+  inset: -2%;
+  border: 2px solid #ff626e;
+  border-radius: inherit;
+  box-shadow: 0 0 12px #ff173e44;
+  pointer-events: none;
+  filter: drop-shadow(0 0 7px rgba(255, 18, 48, 0.18))
+    drop-shadow(0 0 20px rgba(255, 10, 44, 0.1));
+}
+.ad-rotary-knob .knob__indicator {
+  position: absolute;
+  inset: 0;
   border-radius: 50%;
-  background: #fff3f5;
+  transform: rotate(var(--angle));
+  pointer-events: none;
+  will-change: transform;
+}
+.ad-rotary-knob .knob__slot {
+  position: absolute;
+  left: 48.4%;
+  top: 16.65%;
+  width: 3.2%;
+  height: 11.25%;
+  border-radius: 999px;
+  background: linear-gradient(
+    90deg,
+    #090203 0%,
+    #170102 25%,
+    #430508 66%,
+    #0e0102 100%
+  );
   box-shadow:
-    0 0 4px #fff,
-    0 0 10px #ff315b,
-    0 0 20px #ff214a;
-  transform-origin: 50% calc(var(--ad-knob-diameter) * 0.42);
-  transform: translateX(-50%) rotate(calc(-135deg + (var(--ad-value) * 2.7deg)));
+    0 0 0 1px #0e0000,
+    0 1px 1px 1px #ee7d7b80,
+    inset 1px 3px 5px #000,
+    0 0 10px 3px #ff001f60,
+    0 0 24px 6px #ff001f28;
+}
+.ad-rotary-knob .knob__slot::before {
+  content: "";
+  position: absolute;
+  inset: 9% 20%;
+  border-radius: inherit;
+  background: linear-gradient(
+    90deg,
+    #fe142a 0%,
+    #ff777a 17%,
+    #fff9ee 47%,
+    #fff 62%,
+    #ff898b 85%,
+    #ff142c 100%
+  );
+  box-shadow:
+    0 0 2px 1px #fff4ea,
+    0 0 5px 2px #ff2336,
+    0 0 14px 4px #ff001fd0,
+    0 0 30px 8px #ff001f60,
+    0 0 54px 12px #ed001a28;
+}
+.ad-rotary-knob .knob__slot::after {
+  content: "";
+  position: absolute;
+  inset: -7% -40%;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, #ff0c1714 20%, transparent 72%);
+}
+.ad-rotary-knob[data-disabled="true"] {
+  opacity: 0.45;
+  filter: saturate(0.55);
   pointer-events: none;
 }
-.ad-rotary-knob:hover .ad-rotary-handle,
-.ad-rotary-knob.is-dragging .ad-rotary-handle {
-  box-shadow:
-    0 0 5px #fff,
-    0 0 14px #ff315b,
-    0 0 28px #ff214a;
+.ad-rotary-knob[data-readonly="true"] .knob__control {
+  cursor: default;
 }
-
+.ad-sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip-path: inset(50%) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  .ad-rotary-knob .knob__indicator,
+  .ad-rotary-knob .knob__rotor {
+    will-change: auto;
+  }
+}
 .ad-sparkline {
   display: block;
   width: 240px;

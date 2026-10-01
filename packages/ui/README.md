@@ -102,20 +102,22 @@ Before publishing under `@ad-voice`, that npm scope must belong to your npm acco
 
 Application-specific names such as `SaveButton` or `JoinButton` should normally not become primitives. Use a shared `Button` variant and compose application-specific components from it. The same rule applies to fields, cards and dialogs.
 
-## CircularGauge и RotaryKnob
+## RotaryKnob и CircularGauge
 
-`CircularGauge` — read-only индикатор значения. `RotaryKnob` использует тот же визуальный face, но является интерактивным `role="slider"`.
+`RotaryKnob` — прямой React-порт присланного `premium-knob-interactive-neon(2).html`: тот же Canvas-металл, насечки, рубиновый канал, неподвижная внешняя шкала, вращающийся ротор и тот же interaction model.
+
+`CircularGauge` больше не имеет отдельного визуального дизайна: это read-only вариант **того же самого RotaryKnob**.
 
 ```tsx
-<CircularGauge value={72} label="Микрофон" icon="mic" />
-
 <RotaryKnob
+  diameter={300}
   value={volume}
   onValueChange={setVolume}
   onValueCommit={saveVolume}
   label="Громкость"
-  icon="volume"
 />
+
+<CircularGauge value={72} diameter={180} label="Микрофон" />
 ```
 
-`RotaryKnob` поддерживает drag по кругу, колесо мыши, стрелки, PageUp/PageDown, Home/End, Shift для точного шага и двойной клик для сброса.
+`RotaryKnob` поддерживает круговой drag, линейный drag из центра, прямой выбор по внешней шкале, колесо мыши, Arrow/Page/Home/End, Shift для точного шага, Escape для отмены текущего drag и двойной щелчок для сброса.

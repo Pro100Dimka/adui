@@ -1,8 +1,3 @@
-declare module "@ad-voice/ui/styles.css" {
-  const content: string;
-  export default content;
-}
-
 import React from "react";
 import { createRoot } from "react-dom/client";
 import {
