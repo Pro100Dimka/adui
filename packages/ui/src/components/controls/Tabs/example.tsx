@@ -1,7 +1,26 @@
 import React from "react";
-import { U, row, useExampleState } from "../../../dev/exampleHelpers";
+import { U, useExampleState } from "../../../dev/exampleHelpers";
+
+const items = [
+  { value: "appearance", label: "Внешний вид", icon: "palette" },
+  { value: "audio", label: "Аудио", icon: "audio" },
+  { value: "env", label: "Ключи ENV", icon: "key" }
+];
+
 export default function TabsExample() {
-  const {value,setValue,checked,setChecked,open,setOpen,text,setText,choice,setChoice,notice,setNotice,note,setNote,history,setHistory,cursor,setCursor,anchor,alert,items}=useExampleState();
-  const demo=<><U.Tabs value={choice} onValueChange={setChoice} items={[{ value: "one", label: "Внешний вид", icon: "palette", id: "demo-tab-one", panelId: "demo-panel" }, { value: "two", label: "Аудио", icon: "audio", id: "demo-tab-two", panelId: "demo-panel" }, { value: "three", label: "Ключи ENV", icon: "key", id: "demo-tab-three", panelId: "demo-panel" }]} /><U.TabPanel id="demo-panel" labelledBy={`demo-tab-${choice}`}>Выбрана вкладка: {choice}</U.TabPanel></>;
-  return <>{demo}<U.Toast floating open={!!notice} message={notice} onClose={()=>setNotice("")} /></>;
+  const { choice, setChoice } = useExampleState();
+  return <U.Stack gap={4}>
+    <U.Stack gap={2}>
+      <U.Typography variant="label" tone="muted">SETTINGS · основной вариант</U.Typography>
+      <U.Tabs appearance="settings" value={choice} onValueChange={setChoice} items={items} />
+    </U.Stack>
+    <U.Stack gap={2}>
+      <U.Typography variant="label" tone="muted">FLUSH · максимально заполняет ячейку</U.Typography>
+      <U.Tabs appearance="flush" defaultValue="appearance" items={items} />
+    </U.Stack>
+    <U.Stack gap={2}>
+      <U.Typography variant="label" tone="muted">PREMIUM · более объёмный свет</U.Typography>
+      <U.Tabs appearance="premium" defaultValue="appearance" items={items} />
+    </U.Stack>
+  </U.Stack>;
 }

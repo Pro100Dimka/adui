@@ -106,18 +106,56 @@ const seen=new WeakMap();
   };
   U.attachTabShape=button=>{
     if(seen.has(button))return seen.get(button);
-    const id=U.uid('ad-tab-fill'),shape=U.svg('svg',{class:'tab-shape ad-tab-shape','aria-hidden':'true',fill:'none'});
+    const id=U.uid('ad-tab-fill'),shape=U.svg('svg',{class:'tab-shape ad-tab-shape','aria-hidden':'true',fill:'none',preserveAspectRatio:'none'});
     const defs=U.svg('defs'),grad=U.svg('linearGradient',{id,x1:0,y1:0,x2:0,y2:1});
     [[0,'#7d0926',.77],[.38,'#370014',.86],[.76,'#130309',.94],[1,'#9b082d',.94]].forEach(([offset,color,opacity])=>grad.append(U.svg('stop',{offset,'stop-color':color,'stop-opacity':opacity})));
     defs.append(grad);shape.append(defs);
     const glow=U.svg('path',{class:'tab-shape__glow'}),edge=U.svg('path',{class:'tab-shape__edge',fill:`url(#${id})`}),glint=U.svg('path',{class:'tab-shape__glint',pathLength:100}),floor=U.svg('path',{class:'tab-shape__floor'});
     shape.append(glow,edge,glint,floor);button.prepend(shape);button.dataset.adShapeReady='';
-    const sync=()=>{const w=button.offsetWidth,h=button.offsetHeight;if(!w||!h)return;shape.setAttribute('viewBox',`0 0 ${w} ${h}`);
-      const edgeR=Math.min(38,w*.2),slope=Math.min(22,w*.12);
-      const d=`M5 ${h-3}Q10 ${h-5} 12 ${h-15}L${slope} 14Q${slope+3} 2 ${edgeR} 2H${w-edgeR}Q${w-slope-3} 2 ${w-slope} 14L${w-12} ${h-15}Q${w-10} ${h-5} ${w-5} ${h-3}H${w/2+6}L${w/2} ${h+1}L${w/2-6} ${h-3}Z`;
-      for(const p of [glow,edge,glint])p.setAttribute('d',d);floor.setAttribute('d',`M6 ${h-3}H${w/2-7}L${w/2} ${h+1}L${w/2+7} ${h-3}H${w-6}`);
+    const position=()=>{
+      const siblings=[...button.parentElement?.children||[]].filter(node=>node instanceof HTMLElement&&node.getAttribute('role')==='tab');
+      const index=siblings.indexOf(button);
+      return {first:index===0,last:index===siblings.length-1,single:siblings.length===1};
     };
-    const observer=new ResizeObserver(sync);observer.observe(button);sync();const item={observer,shape,sync,destroy(){observer.disconnect();shape.remove();button.removeAttribute("data-ad-shape-ready");seen.delete(button);}};seen.set(button,item);return item;
+    const sync=()=>{
+      const w=button.offsetWidth,h=button.offsetHeight;if(!w||!h)return;
+      shape.setAttribute('viewBox',`0 0 ${w} ${h}`);
+      const {first,last,single}=position();
+      const top=1.5,bottom=h-1.5,outer=1.2;
+      const shoulder=Math.min(24,w*.11),corner=Math.min(34,w*.19),sideLift=Math.min(13,h*.28);
+      const notchWidth=Math.min(10,w*.05),notchDepth=Math.min(3.5,h*.08);
+      const radius=Math.min(10,h*.22,w*.05);
+
+      const leftOuter=single||first;
+      const rightOuter=single||last;
+      let d=`M${w/2-notchWidth} ${bottom}`;
+
+      // bottom -> left edge
+      if(leftOuter){
+        d+=`H${outer+radius}Q${outer} ${bottom} ${outer} ${bottom-radius}V${top+radius}Q${outer} ${top} ${outer+radius} ${top}`;
+      }else{
+        d+=`H${outer+4.5}Q${outer+1.5} ${bottom-.3} ${outer+4.5} ${bottom-sideLift}L${shoulder} 13Q${shoulder+4} ${top} ${corner} ${top}`;
+      }
+
+      // top edge -> right edge
+      d+=`H${rightOuter?w-(outer+radius):w-corner}`;
+      if(rightOuter){
+        d+=`Q${w-outer} ${top} ${w-outer} ${top+radius}V${bottom-radius}Q${w-outer} ${bottom} ${w-(outer+radius)} ${bottom}`;
+      }else{
+        d+=`Q${w-shoulder-4} ${top} ${w-shoulder} 13L${w-(outer+4.5)} ${bottom-sideLift}Q${w-(outer+1.5)} ${bottom-.3} ${w-(outer+4.5)} ${bottom}`;
+      }
+
+      d+=`H${w/2+notchWidth}L${w/2} ${bottom+notchDepth}L${w/2-notchWidth} ${bottom}Z`;
+      for(const path of [glow,edge,glint])path.setAttribute('d',d);
+
+      const floorLeft=leftOuter?outer+radius:outer+5;
+      const floorRight=rightOuter?w-(outer+radius):w-(outer+5);
+      floor.setAttribute('d',`M${floorLeft} ${bottom}H${w/2-notchWidth-1}L${w/2} ${bottom+notchDepth}L${w/2+notchWidth+1} ${bottom}H${floorRight}`);
+      button.dataset.adTabEdge=single?'single':first?'first':last?'last':'middle';
+    };
+    const observer=new ResizeObserver(sync);observer.observe(button);if(button.parentElement)observer.observe(button.parentElement);sync();
+    const item={observer,shape,sync,destroy(){observer.disconnect();shape.remove();button.removeAttribute('data-ad-shape-ready');button.removeAttribute('data-ad-tab-edge');seen.delete(button);}};
+    seen.set(button,item);return item;
   };
 
 export const createMotion=U.createMotion;

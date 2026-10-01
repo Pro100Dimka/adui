@@ -35,5 +35,5 @@ export const Tabs = define<TabsProps>("Tabs", p => {
     e.preventDefault(); const current = available.findIndex(x => buttons.current[x.index] === document.activeElement);
     const next = e.key === "Home" ? 0 : e.key === "End" ? available.length - 1 : (current + (e.key === "ArrowRight" ? 1 : -1) + available.length) % available.length;
     setValue(available[next].item.value); buttons.current[available[next].index]?.focus();
-  }}>{items.map((item, index) => <Tab key={item.value} id={item.id} ref={n => { buttons.current[index] = n; }} icon={item.icon} panelId={item.panelId} disabled={item.disabled} selected={item.value === value} onClick={() => setValue(item.value)}>{item.label}</Tab>)}</nav>;
+  }}>{items.map((item, index) => <Tab key={item.value} id={item.id} ref={n => { buttons.current[index] = n; }} icon={item.icon} panelId={item.panelId} disabled={item.disabled} selected={item.value === value} appearance={p.appearance ?? "settings"} onClick={() => setValue(item.value)}>{item.label}</Tab>)}</nav>;
 });

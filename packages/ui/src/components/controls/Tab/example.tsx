@@ -1,7 +1,9 @@
 import React from "react";
-import { U, row, useExampleState } from "../../../dev/exampleHelpers";
+import { U } from "../../../dev/exampleHelpers";
 export default function TabExample() {
-  const {value,setValue,checked,setChecked,open,setOpen,text,setText,choice,setChoice,notice,setNotice,note,setNote,history,setHistory,cursor,setCursor,anchor,alert,items}=useExampleState();
-  const demo=<div role="tablist" style={{ maxWidth: 260 }}><U.Tab selected icon="audio">Аудио</U.Tab></div>;
-  return <>{demo}<U.Toast floating open={!!notice} message={notice} onClose={()=>setNotice("")} /></>;
+  return <U.Stack gap={3}>
+    <div role="tablist" style={{ width: "100%" }}><U.Tab appearance="settings" selected icon="palette">Внешний вид</U.Tab></div>
+    <div role="tablist" style={{ width: "100%" }}><U.Tab appearance="flush" selected icon="palette">Внешний вид</U.Tab></div>
+    <div role="tablist" style={{ width: "100%" }}><U.Tab appearance="premium" selected icon="palette">Внешний вид</U.Tab></div>
+  </U.Stack>;
 }
