@@ -16,14 +16,16 @@
     "build": "npm run build:ui && npm run build:playground",
     "preview": "npm run preview --workspace @ad-voice/playground",
     "package:check": "npm run build:ui && npm pack ./packages/ui --dry-run",
-    "package": "npm run check:structure && npm run check:catalog && node scripts/create-package.mjs",
-    "release:patch": "npm run check:structure && npm run check:catalog && node scripts/bump-and-package.mjs patch",
-    "release:minor": "npm run check:structure && npm run check:catalog && node scripts/bump-and-package.mjs minor",
-    "release:major": "npm run check:structure && npm run check:catalog && node scripts/bump-and-package.mjs major",
+    "package": "npm run check:structure && npm run check:colocation && node scripts/create-package.mjs",
+    "release:patch": "npm run check:structure && npm run check:colocation && npm run check:catalog && node scripts/bump-and-package.mjs patch",
+    "release:minor": "npm run check:structure && npm run check:colocation && npm run check:catalog && node scripts/bump-and-package.mjs minor",
+    "release:major": "npm run check:structure && npm run check:colocation && npm run check:catalog && node scripts/bump-and-package.mjs major",
     "clean": "node scripts/clean.mjs",
     "check:catalog": "node scripts/check-catalog-examples.mjs",
-    "check": "npm run check:structure && npm run check:catalog && npm run typecheck",
-    "check:structure": "node scripts/check-component-structure.mjs"
+    "check": "npm run check:structure && npm run check:colocation && npm run typecheck",
+    "check:structure": "node scripts/check-component-structure.mjs",
+    "check:colocation": "node scripts/check-colocation.mjs",
+    "create:component": "node scripts/create-component.mjs"
   },
   "engines": {
     "node": ">=20"

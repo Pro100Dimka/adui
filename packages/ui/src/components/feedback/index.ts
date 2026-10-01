@@ -14,4 +14,4 @@ export * from "./KeyValueList";
 export * from "./DataTable";
 export * from "./CollapsibleSection";
 export * from "./CodeViewer";
-export type { DialogProps, PopoverProps, MenuItemData, MenuItemProps, MenuProps, ToastProps, BadgeProps, StatusIndicatorProps, ProgressBarProps, StepsProps, EmptyStateProps, MetricCardProps, KeyValueListProps, DataTableProps, CollapsibleSectionProps, CodeViewerProps } from "./shared";
+export type { DialogProps, PopoverProps, MenuItemData, MenuItemProps, MenuProps, ToastProps, BadgeProps, StatusIndicatorProps, ProgressBarProps, StepsProps, EmptyStateProps, MetricCardProps, KeyValueListProps, DataTableProps, CollapsibleSectionProps, CodeViewerProps } from "./_shared";

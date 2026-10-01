@@ -1,2 +1,2 @@
 export { Checkbox } from "./Checkbox";
-export type { BooleanProps } from "../shared";
+export type { BooleanProps } from "../_shared";

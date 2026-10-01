@@ -1,0 +1,3 @@
+/* Styles owned by Text. */
+.ad-text[data-ad-variant="muted"]{color:var(--ad-muted);font-size:13px;}
+.ad-text[data-ad-variant="eyebrow"]{color:var(--ad-muted);font-size:12px;letter-spacing:.06em;}

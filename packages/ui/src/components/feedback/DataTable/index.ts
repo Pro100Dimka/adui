@@ -1,2 +1,2 @@
 export { DataTable } from "./DataTable";
-export type { DataTableProps } from "../shared";
+export type { DataTableProps } from "../_shared";

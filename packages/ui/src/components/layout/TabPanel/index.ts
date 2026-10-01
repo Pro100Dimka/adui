@@ -1,2 +1,2 @@
 export { TabPanel } from "./TabPanel";
-export type { TabPanelProps } from "../shared";
+export type { TabPanelProps } from "../_shared";

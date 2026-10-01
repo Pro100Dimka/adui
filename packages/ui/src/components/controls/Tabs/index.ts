@@ -1,2 +1,2 @@
 export { Tabs } from "./Tabs";
-export type { TabsProps } from "../shared";
+export type { TabsProps } from "../_shared";

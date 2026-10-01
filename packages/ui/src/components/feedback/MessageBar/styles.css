@@ -1,0 +1,2 @@
+/* Styles owned by MessageBar. */
+.ad-message-bar{display:flex;gap:11px;align-items:center;padding:12px 14px;font-size:12px;line-height:1.6;border:1px solid color-mix(in srgb,var(--ad-tone,#f0c16a) 35%,transparent);border-radius:10px;background:color-mix(in srgb,var(--ad-tone,#f0c16a) 8%,#09070c);}

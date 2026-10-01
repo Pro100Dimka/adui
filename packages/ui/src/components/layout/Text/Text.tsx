@@ -5,7 +5,7 @@ import { SvgAsset } from "../../../core/artwork";
 import { useBorder } from "../../../core/motion";
 import iconData from "../../../artwork/icons.json";
 import artworkData from "../../../artwork/illustrations.json";
-import { icons, illustrations, HeaderView, part, type IconName, type IconProps, type TextProps, type SurfaceProps, type HeaderProps, type CardProps, type IconTileProps, type AvatarProps, type TabPanelProps, type ScrollAreaProps, type DividerProps, type IllustrationProps } from "../shared";
+import { icons, illustrations, HeaderView, part, type IconName, type IconProps, type TextProps, type SurfaceProps, type HeaderProps, type CardProps, type IconTileProps, type AvatarProps, type TabPanelProps, type ScrollAreaProps, type DividerProps, type IllustrationProps } from "../_shared";
 import { Icon } from "../Icon";
 import { Surface } from "../Surface";
 import { PageHeader } from "../PageHeader";

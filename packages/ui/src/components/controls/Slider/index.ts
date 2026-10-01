@@ -1,2 +1,2 @@
 export { Slider } from "./Slider";
-export type { SliderProps } from "../shared";
+export type { SliderProps } from "../_shared";

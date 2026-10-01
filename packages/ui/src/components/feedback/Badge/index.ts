@@ -1,2 +1,2 @@
 export { Badge } from "./Badge";
-export type { BadgeProps } from "../shared";
+export type { BadgeProps } from "../_shared";

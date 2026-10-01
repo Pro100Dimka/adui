@@ -1,0 +1,5 @@
+/* Styles owned by MetricCard. */
+.ad-metric-card{padding:20px;}
+.ad-metric-heading{display:flex;gap:14px;align-items:center;margin-bottom:16px;}
+.ad-metric-heading strong{display:block;font-size:26px;margin-top:4px;}
+.ad-metric-card p{font-size:12px;color:var(--ad-muted);margin-bottom:0;}

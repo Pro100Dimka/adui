@@ -1,2 +1,2 @@
 export { UndoRedoControls } from "./UndoRedoControls";
-export type { UndoRedoControlsProps } from "../shared";
+export type { UndoRedoControlsProps } from "../_shared";

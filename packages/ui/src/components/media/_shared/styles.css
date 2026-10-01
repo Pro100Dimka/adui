@@ -1,0 +1,5 @@
+/* Shared only by sibling components. */
+.ad-wave-decoration,.ad-particle-layer{width:100%;height:130px;display:block;pointer-events:none;}
+.ad-transport-bar>.ad-audio-player{flex:1;}
+.ad-transport-bar>.ad-volume-control{width:205px;}
+.ad-circular-gauge>.ad-rotary-knob{display:block;}

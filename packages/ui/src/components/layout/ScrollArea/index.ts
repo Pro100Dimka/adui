@@ -1,2 +1,2 @@
 export { ScrollArea } from "./ScrollArea";
-export type { ScrollAreaProps } from "../shared";
+export type { ScrollAreaProps } from "../_shared";

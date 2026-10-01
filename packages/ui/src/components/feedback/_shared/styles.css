@@ -1,0 +1,4 @@
+/* Shared only by sibling components. */
+.ad-steps .ad-status-indicator{font-size:10px;gap:5px;}
+.ad-steps .ad-status-dot{width:23px;height:23px;}
+.ad-popover,.ad-menu{position:fixed;inset:auto;margin:0;min-width:235px;max-width:350px;padding:8px;border:1px solid #ad436082!important;border-radius:13px;z-index:1000;color:var(--ad-text);}

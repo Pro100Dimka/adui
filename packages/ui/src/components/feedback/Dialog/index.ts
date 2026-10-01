@@ -1,2 +1,2 @@
 export { Dialog } from "./Dialog";
-export type { DialogProps } from "../shared";
+export type { DialogProps } from "../_shared";

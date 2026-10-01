@@ -1,2 +1,2 @@
 export { ToggleButton } from "./ToggleButton";
-export type { ToggleButtonProps } from "../shared";
+export type { ToggleButtonProps } from "../_shared";

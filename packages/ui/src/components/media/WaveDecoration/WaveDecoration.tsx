@@ -4,7 +4,7 @@ import { useDecoration } from "../../../core/motion";
 import { Icon, Surface } from "../../layout";
 import { Badge, MessageBar } from "../../feedback";
 import { IconButton, Select, Slider, ToggleButton } from "../../controls";
-import { type WaveformProps, type VolumeControlProps, type AudioPlayerProps, type LevelMeterProps, type RotaryKnobProps, type RotaryKnobController, type CircularGaugeProps, type SparklineProps } from "../shared";
+import { type WaveformProps, type VolumeControlProps, type AudioPlayerProps, type LevelMeterProps, type RotaryKnobProps, type RotaryKnobController, type CircularGaugeProps, type SparklineProps } from "../_shared";
 import { ParticleLayer } from "../ParticleLayer";
 import { Waveform } from "../Waveform";
 import { VolumeControl } from "../VolumeControl";

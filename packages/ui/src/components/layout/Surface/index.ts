@@ -1,2 +1,2 @@
 export { Surface } from "./Surface";
-export type { SurfaceProps } from "../shared";
+export type { SurfaceProps } from "../_shared";

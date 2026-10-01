@@ -1,0 +1,3 @@
+/* Styles owned by Dialog. */
+.ad-dialog{position:fixed;margin:auto;width:520px;max-width:calc(100vw - 32px);max-height:calc(100vh - 32px);padding:28px;border:1px solid #ff608482!important;border-radius:23px;overflow:auto;color:var(--ad-text);}
+.ad-dialog::backdrop{background:#030208ab;backdrop-filter:blur(7px);}

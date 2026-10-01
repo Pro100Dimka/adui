@@ -1,0 +1,5 @@
+/* Styles owned by Checkbox. */
+.ad-checkbox .ad-toggle-track{width:21px;height:21px;border-radius:6px;}
+.ad-checkbox .ad-toggle-track i{display:none;}
+.ad-checkbox input:checked+.ad-toggle-track{background:#bc1b4c;border-color:#ff719c;}
+.ad-checkbox input:checked+.ad-toggle-track::after{content:"";position:absolute;left:5px;top:4px;width:8px;height:5px;border-left:2px solid white;border-bottom:2px solid white;transform:rotate(-45deg);}

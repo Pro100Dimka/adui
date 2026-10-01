@@ -1,2 +1,2 @@
 export { LevelMeter } from "./LevelMeter";
-export type { LevelMeterProps } from "../shared";
+export type { LevelMeterProps } from "../_shared";

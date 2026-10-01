@@ -7,4 +7,4 @@ export * from "./SelectionOverlay";
 export * from "./PianoRollGrid";
 export * from "./ZoomControl";
 export * from "./UndoRedoControls";
-export type { PianoKeyboardProps, TimeRulerProps, NoteGeometry, NoteBlockProps, LyricsLaneProps, PlayheadProps, SelectionOverlayProps, PianoRollGridProps, ZoomControlProps, UndoRedoControlsProps } from "./shared";
+export type { PianoKeyboardProps, TimeRulerProps, NoteGeometry, NoteBlockProps, LyricsLaneProps, PlayheadProps, SelectionOverlayProps, PianoRollGridProps, ZoomControlProps, UndoRedoControlsProps } from "./_shared";

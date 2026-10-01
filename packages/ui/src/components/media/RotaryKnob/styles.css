@@ -1,0 +1,127 @@
+/* Styles owned by RotaryKnob. */
+/* Exact CSS geometry from premium-knob-interactive-neon(2).html, scoped to A&D UI. */
+.ad-rotary-knob.knob{
+  --size:220px;
+  --angle:45.9deg;
+  --rotation:0deg;
+  position:relative;
+  width:var(--size);
+  aspect-ratio:1;
+  flex:none;
+  isolation:isolate;
+  -webkit-tap-highlight-color:transparent;
+}
+.ad-rotary-knob.knob::before{
+  content:"";
+  position:absolute;
+  inset:3.8%;
+  border-radius:50%;
+  pointer-events:none;
+  background:radial-gradient(circle at 50% 50%,transparent 58%,rgba(255,21,53,.055) 68%,transparent 78%);
+  box-shadow:0 0 20px rgba(255,18,49,.18),0 0 52px rgba(255,7,42,.12),0 0 86px rgba(255,5,38,.06);
+  z-index:-1;
+}
+.ad-rotary-knob.knob::after{
+  content:"";
+  position:absolute;
+  inset:8.6%;
+  border-radius:50%;
+  pointer-events:none;
+  border:1px solid rgba(255,72,92,.16);
+  box-shadow:inset 0 0 15px rgba(255,17,49,.12),0 0 12px rgba(255,17,49,.10);
+}
+.ad-rotary-knob .knob__surface{
+  display:block;
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  pointer-events:none;
+  filter:drop-shadow(0 0 7px rgba(255,18,48,.18)) drop-shadow(0 0 20px rgba(255,10,44,.10));
+}
+.ad-rotary-knob .knob__control{
+  position:absolute;
+  inset:5.5%;
+  border-radius:50%;
+  cursor:grab;
+  outline:none;
+  touch-action:none;
+  user-select:none;
+  -webkit-user-select:none;
+}
+.ad-rotary-knob .knob__control:active,
+.ad-rotary-knob.is-dragging .knob__control{cursor:grabbing;}
+.ad-rotary-knob.is-dragging .knob__surface,
+.ad-rotary-knob:hover .knob__surface{
+  filter:drop-shadow(0 0 10px rgba(255,26,56,.28)) drop-shadow(0 0 28px rgba(255,8,44,.16));
+}
+.ad-rotary-knob .knob__rotor{
+  transform:rotate(var(--rotation));
+  transform-origin:center;
+  will-change:transform;
+}
+.ad-rotary-knob .knob__value{
+  position:absolute;
+  left:50%;
+  bottom:-1%;
+  transform:translateX(-50%);
+  color:#ffe9e8;
+  font:500 clamp(12px,2.8vmin,24px)/1.1 system-ui,sans-serif;
+  font-variant-numeric:tabular-nums;
+  text-shadow:0 0 5px #fff8f8,0 0 14px #ff385d,0 0 30px #ff173866;
+  opacity:0;
+  pointer-events:none;
+  filter:drop-shadow(0 0 7px rgba(255,18,48,.18)) drop-shadow(0 0 20px rgba(255,10,44,.10));
+}
+.ad-rotary-knob:hover .knob__value,
+.ad-rotary-knob:focus-within .knob__value,
+.ad-rotary-knob.is-dragging .knob__value{opacity:1;}
+.ad-rotary-knob .knob__control:focus-visible::after{
+  content:"";
+  position:absolute;
+  inset:-2%;
+  border:2px solid #ff626e;
+  border-radius:inherit;
+  box-shadow:0 0 12px #ff173e44;
+  pointer-events:none;
+  filter:drop-shadow(0 0 7px rgba(255,18,48,.18)) drop-shadow(0 0 20px rgba(255,10,44,.10));
+}
+.ad-rotary-knob .knob__indicator{
+  position:absolute;
+  inset:0;
+  border-radius:50%;
+  transform:rotate(var(--angle));
+  pointer-events:none;
+  will-change:transform;
+}
+.ad-rotary-knob .knob__slot{
+  position:absolute;
+  left:48.4%;
+  top:16.65%;
+  width:3.2%;
+  height:11.25%;
+  border-radius:999px;
+  background:linear-gradient(90deg,#090203 0%,#170102 25%,#430508 66%,#0e0102 100%);
+  box-shadow:0 0 0 1px #0e0000,0 1px 1px 1px #ee7d7b80,inset 1px 3px 5px #000,0 0 10px 3px #ff001f60,0 0 24px 6px #ff001f28;
+}
+.ad-rotary-knob .knob__slot::before{
+  content:"";
+  position:absolute;
+  inset:9% 20%;
+  border-radius:inherit;
+  background:linear-gradient(90deg,#fe142a 0%,#ff777a 17%,#fff9ee 47%,#fff 62%,#ff898b 85%,#ff142c 100%);
+  box-shadow:0 0 2px 1px #fff4ea,0 0 5px 2px #ff2336,0 0 14px 4px #ff001fd0,0 0 30px 8px #ff001f60,0 0 54px 12px #ed001a28;
+}
+.ad-rotary-knob .knob__slot::after{
+  content:"";
+  position:absolute;
+  inset:-7% -40%;
+  border-radius:50%;
+  background:radial-gradient(ellipse,#ff0c1714 20%,transparent 72%);
+}
+.ad-rotary-knob[data-disabled="true"]{opacity:.45;filter:saturate(.55);pointer-events:none;}
+.ad-rotary-knob[data-readonly="true"] .knob__control{cursor:default;}
+.ad-sr-only{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip-path:inset(50%)!important;white-space:nowrap!important;border:0!important;}
+@media (prefers-reduced-motion:reduce){
+.ad-rotary-knob .knob__indicator,.ad-rotary-knob .knob__rotor{will-change:auto;}
+}

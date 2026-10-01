@@ -1,2 +1,2 @@
 export { VolumeControl } from "./VolumeControl";
-export type { VolumeControlProps } from "../shared";
+export type { VolumeControlProps } from "../_shared";

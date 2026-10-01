@@ -17,5 +17,5 @@ export * from "./Divider";
 export * from "./SceneIllustration";
 export * from "./ArtworkFrame";
 export * from "./BrandMark";
-export { illustrations } from "./shared";
-export type { IconName, IconProps, TextProps, SurfaceProps, HeaderProps, CardProps, IconTileProps, AvatarProps, TabPanelProps, ScrollAreaProps, DividerProps, IllustrationProps } from "./shared";
+export { illustrations } from "./_shared";
+export type { IconName, IconProps, TextProps, SurfaceProps, HeaderProps, CardProps, IconTileProps, AvatarProps, TabPanelProps, ScrollAreaProps, DividerProps, IllustrationProps } from "./_shared";

@@ -1,23 +1,4 @@
-import { readFile } from "node:fs/promises";
-import { resolve } from "node:path";
-
-const root = resolve(new URL("..", import.meta.url).pathname);
-const manifest = JSON.parse(await readFile(resolve(root, "apps/playground/component-manifest.json"), "utf8"));
-const source = await readFile(resolve(root, "apps/playground/src/catalog/examples.tsx"), "utf8");
-
-const failures = [];
-for (const item of manifest) {
-  const escaped = item.name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-  const match = source.match(new RegExp(`case\\s+"${escaped}"\\s*:\\s*demo\\s*=\\s*([\\s\\S]*?);\\s*break;`));
-  if (!match) {
-    failures.push(`${item.name}: отсутствует case в examples.tsx`);
-    continue;
-  }
-  if (!match[1].includes(`U.${item.name}`)) failures.push(`${item.name}: живой пример не использует U.${item.name}`);
-}
-
-if (failures.length) {
-  console.error("Проверка каталога не пройдена:\n" + failures.map(x => `- ${x}`).join("\n"));
-  process.exit(1);
-}
-console.log(`OK: ${manifest.length} компонентов имеют живой JSX-пример, из которого автоматически строится показанный код.`);
+import fs from "node:fs"; import path from "node:path";
+const roots=[path.resolve("packages/ui/src/components"),path.resolve("packages/ui/src/core")]; const failures=[]; let count=0;
+function walk(dir){for(const e of fs.readdirSync(dir,{withFileTypes:true})){const p=path.join(dir,e.name); if(e.isDirectory())walk(p); else if(e.name==="meta.ts"){const folder=path.dirname(p), name=path.basename(folder), ex=path.join(folder,"example.tsx"); count++; if(!fs.existsSync(ex)){failures.push(`${name}: отсутствует example.tsx`);continue;} const source=fs.readFileSync(ex,"utf8"); if(!source.includes(`U.${name}`)&&!source.includes(`<${name}`)) failures.push(`${name}: example.tsx не использует ${name}`);}}}
+for(const r of roots)if(fs.existsSync(r))walk(r); if(failures.length){console.error("Проверка каталога не пройдена:\n"+failures.map(x=>`- ${x}`).join("\n"));process.exit(1)}console.log(`OK: ${count} colocated examples.`);

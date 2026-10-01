@@ -1,0 +1,5 @@
+/* Shared only by sibling components. */
+.ad-piano-roll-grid>.ad-time-ruler{margin-left:54px;}
+.ad-piano-roll-grid>.ad-lyrics-lane{margin-left:54px;}
+.ad-piano-roll-grid>.ad-piano-keyboard{position:absolute;left:0;top:58px;}
+.ad-zoom-control,.ad-undo-redo-controls{display:flex;align-items:center;gap:7px;}

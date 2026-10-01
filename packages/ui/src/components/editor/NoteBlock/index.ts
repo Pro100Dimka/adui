@@ -1,2 +1,2 @@
 export { NoteBlock } from "./NoteBlock";
-export type { NoteBlockProps } from "../shared";
+export type { NoteBlockProps } from "../_shared";

@@ -9,4 +9,4 @@ export * from "./RotaryKnob";
 export * from "./CircularGauge";
 export * from "./Sparkline";
 export * from "./LatencyIndicator";
-export type { WaveformProps, VolumeControlProps, AudioPlayerProps, LevelMeterProps, RotaryKnobProps, CircularGaugeProps, SparklineProps } from "./shared";
+export type { WaveformProps, VolumeControlProps, AudioPlayerProps, LevelMeterProps, RotaryKnobProps, CircularGaugeProps, SparklineProps } from "./_shared";

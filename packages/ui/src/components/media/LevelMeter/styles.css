@@ -1,0 +1,4 @@
+/* Styles owned by LevelMeter. */
+.ad-level-meter{display:flex;gap:3px;align-items:end;height:35px;}
+.ad-level-meter i{display:block;flex:1;min-width:3px;max-width:6px;border-radius:3px;background:linear-gradient(#344251,#202a39);}
+.ad-level-meter i[data-lit="true"]{background:linear-gradient(#ff85a0,#ff255b);box-shadow:0 0 5px #ff31564f;}

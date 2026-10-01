@@ -1,0 +1,4 @@
+/* Styles owned by NoteBlock. */
+.ad-note-block{position:absolute;height:15px;border-radius:6px;background:linear-gradient(180deg,#ffd5e228,#fff0 49%,#8808172b),linear-gradient(90deg,#ff355d,#ff2b98 35%,#f243dd 69%,#eb96ff 94%,#ffe2ff);box-shadow:inset 0 1px 1px #ffcedd55,0 0 8px #ff2b7055;cursor:grab;touch-action:none;min-width:15px;}
+.ad-note-block.is-selected{outline:1px solid #ffe0f4;outline-offset:2px;}
+.ad-note-resize{position:absolute;right:-2px;top:-4px;bottom:-4px;width:7px;cursor:ew-resize;}

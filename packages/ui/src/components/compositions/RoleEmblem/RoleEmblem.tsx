@@ -6,7 +6,7 @@ import { ArtworkFrame, Avatar, ButtonGroup, Card, Icon, IconTile, SectionHeader,
 import { Button, Field, FilePicker, IconButton, Tabs, TextField, ToggleButton } from "../../controls";
 import { Badge, Dialog, KeyValueList, Menu, MetricCard, ProgressBar, StatusIndicator, Steps, Toast, type MenuItemData } from "../../feedback";
 import { AudioPlayer, LevelMeter, RotaryKnob, VolumeControl } from "../../media";
-import { type RoleEmblemProps, type RecordingCardProps, type ProcessingTaskCardProps, type ParticipantCardProps, type ProfileCardProps, type ThemeName, type ThemePickerProps, type RoomConnection, type RoomConnectionFormProps, type ModelStatusCardProps, type StorageSummaryProps, type DiagnosticsPanelProps, type PerformanceSummaryProps } from "../shared";
+import { type RoleEmblemProps, type RecordingCardProps, type ProcessingTaskCardProps, type ParticipantCardProps, type ProfileCardProps, type ThemeName, type ThemePickerProps, type RoomConnection, type RoomConnectionFormProps, type ModelStatusCardProps, type StorageSummaryProps, type DiagnosticsPanelProps, type PerformanceSummaryProps } from "../_shared";
 import { RecordingCard } from "../RecordingCard";
 import { ProcessingTaskCard } from "../ProcessingTaskCard";
 import { ParticipantCard } from "../ParticipantCard";

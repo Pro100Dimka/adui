@@ -1,2 +1,2 @@
 export { LyricsLane } from "./LyricsLane";
-export type { LyricsLaneProps } from "../shared";
+export type { LyricsLaneProps } from "../_shared";

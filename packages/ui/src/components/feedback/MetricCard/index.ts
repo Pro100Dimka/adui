@@ -1,2 +1,2 @@
 export { MetricCard } from "./MetricCard";
-export type { MetricCardProps } from "../shared";
+export type { MetricCardProps } from "../_shared";

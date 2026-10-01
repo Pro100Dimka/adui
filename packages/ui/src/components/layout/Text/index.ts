@@ -1,2 +1,2 @@
 export { Text } from "./Text";
-export type { TextProps } from "../shared";
+export type { TextProps } from "../_shared";

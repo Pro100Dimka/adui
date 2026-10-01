@@ -1,0 +1,25 @@
+/* Shared only by sibling components. */
+.ad{font-family:inherit;color:var(--ad-text);}
+[data-ad-material="shell"]{--ad-material-bg:var(--ad-surface-shell);--ad-material-shadow:var(--ad-shadow-shell);}
+[data-ad-material="card"]{--ad-material-bg:var(--ad-surface-card);--ad-material-shadow:var(--ad-shadow-card);}
+[data-ad-material="glass"]{--ad-material-bg:var(--ad-surface-glass);--ad-material-shadow:var(--ad-shadow-glass);}
+[data-ad-material="ruby"]{--ad-material-bg:var(--ad-surface-ruby);--ad-material-shadow:var(--ad-shadow-ruby);}
+[data-ad-material="tile"]{--ad-material-bg:var(--ad-surface-tile);--ad-material-shadow:var(--ad-shadow-tile);}
+[data-ad-material="input"]{--ad-material-bg:var(--ad-surface-input);--ad-material-shadow:var(--ad-shadow-input);}
+[data-ad-material="dialog"]{--ad-material-bg:var(--ad-surface-dialog);--ad-material-shadow:var(--ad-shadow-dialog);}
+.ad-surface,.ad-card{position:relative;border-radius:18px;isolation:isolate;}
+.ad-surface:not(.ad-card){padding:20px;}
+.ad-page-header,.ad-section-header{display:flex;gap:17px;align-items:center;position:relative;}
+.ad-header-copy{min-width:0;flex:1;}
+.ad-header-copy p{color:var(--ad-muted);font-size:13px;line-height:1.5;margin:5px 0 0;}
+.ad-header-actions{margin-left:auto;}
+.ad-card>.ad-section-header{margin-bottom:20px;}
+.ad-icon-tile>.ad-icon{color:#fff5f6;filter:drop-shadow(0 0 3px #ff829a) drop-shadow(0 0 9px #ff164f90);}
+.ad-toolbar,.ad-button-group{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.ad-collapsible-section summary>.ad-icon:last-child{margin-left:auto;transition:transform .2s;}
+.ad-collapsible-section[open] summary>.ad-icon:last-child{transform:rotate(180deg);}
+.ad-artwork-frame>.ad-scene-illustration{display:block;width:100%;height:100%;}
+.ad-brandmark{position:relative;width:240px;color:#f36784;text-align:center;}
+.ad-brandmark svg{width:100%;height:74px;filter:drop-shadow(0 0 5px #ff154833);}
+.ad-brandmark em{font:italic 27px cursive;}
+.ad-brandmark small{display:block;font-size:8px;letter-spacing:4.5px;color:#f1c9db;margin-top:-10px;}

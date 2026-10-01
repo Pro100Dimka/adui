@@ -1,2 +1,2 @@
 export { Steps } from "./Steps";
-export type { StepsProps } from "../shared";
+export type { StepsProps } from "../_shared";

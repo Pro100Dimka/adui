@@ -1,0 +1,5 @@
+/* Styles owned by CollapsibleSection. */
+.ad-collapsible-section{border-radius:15px;}
+.ad-collapsible-section summary{padding:18px 20px;display:flex;align-items:center;gap:14px;cursor:pointer;list-style:none;font-size:16px;font-weight:600;}
+.ad-collapsible-section summary::-webkit-details-marker{display:none;}
+.ad-collapse-content{padding:0 20px 20px;font-size:13px;color:var(--ad-muted);}

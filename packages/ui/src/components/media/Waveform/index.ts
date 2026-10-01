@@ -1,2 +1,2 @@
 export { Waveform } from "./Waveform";
-export type { WaveformProps } from "../shared";
+export type { WaveformProps } from "../_shared";

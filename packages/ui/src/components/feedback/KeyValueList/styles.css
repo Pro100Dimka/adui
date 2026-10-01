@@ -1,0 +1,5 @@
+/* Styles owned by KeyValueList. */
+.ad-key-value-list{display:grid;gap:10px;margin:0;font-size:13px;}
+.ad-key-value-list>div{display:grid;grid-template-columns:minmax(120px,1fr) 1.2fr;gap:18px;}
+.ad-key-value-list dt{color:var(--ad-muted);}
+.ad-key-value-list dd{margin:0;}

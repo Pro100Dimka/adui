@@ -1,2 +1,2 @@
 export { PathField } from "./PathField";
-export type { PathFieldProps } from "../shared";
+export type { PathFieldProps } from "../_shared";

@@ -1,0 +1,7 @@
+/* Styles owned by Steps. */
+.ad-steps{display:flex;align-items:center;justify-content:space-between;gap:6px;padding:0;margin:18px 0 0;list-style:none;}
+.ad-steps li{display:flex;gap:8px;align-items:center;}
+.ad-steps li[aria-current="step"]{padding:5px 8px;border-radius:10px;background:var(--ad-surface-ruby);box-shadow:var(--ad-shadow-ruby);border:1px solid #c6436650;}
+@media (max-width:740px){
+.ad-steps{flex-wrap:wrap;}
+}

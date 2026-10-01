@@ -3,7 +3,7 @@ import type { ReactNode, RefObject } from "react";
 import { clamp, copyText, define, mark, useControllable, type CommonProps, type Tone } from "../../../core/base";
 import { Button, IconButton } from "../../controls";
 import { Card, DialogHeader, DialogBody, DialogActions, Divider, Icon, IconTile, Text } from "../../layout";
-import { type DialogProps, type PopoverProps, type MenuItemData, type MenuItemProps, type MenuProps, type ToastProps, type BadgeProps, type StatusIndicatorProps, type ProgressBarProps, type StepsProps, type EmptyStateProps, type MetricCardProps, type KeyValueListProps, type DataTableProps, type CollapsibleSectionProps, type CodeViewerProps } from "../shared";
+import { type DialogProps, type PopoverProps, type MenuItemData, type MenuItemProps, type MenuProps, type ToastProps, type BadgeProps, type StatusIndicatorProps, type ProgressBarProps, type StepsProps, type EmptyStateProps, type MetricCardProps, type KeyValueListProps, type DataTableProps, type CollapsibleSectionProps, type CodeViewerProps } from "../_shared";
 import { Dialog } from "../Dialog";
 import { Popover } from "../Popover";
 import { Menu } from "../Menu";

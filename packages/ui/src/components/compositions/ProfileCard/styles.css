@@ -1,0 +1,3 @@
+/* Styles owned by ProfileCard. */
+.ad-profile-line{display:flex;gap:25px;align-items:center;}
+.ad-profile-line p{font-size:13px;color:var(--ad-muted);margin:0 0 12px;}

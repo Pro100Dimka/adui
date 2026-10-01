@@ -1,0 +1,7 @@
+/* Styles owned by Tab. */
+.ad-tab{flex:1;min-width:0;isolation:isolate;border:0;position:relative;border-radius:12px;background:transparent;box-shadow:none;}
+.ad-tab[aria-selected="true"]{color:#fff;font-weight:650;}
+.ad-tab[aria-selected="true"]::before{content:"";position:absolute;inset:0;border-radius:12px;z-index:-1;background:linear-gradient(180deg,#7d0926c4,#370014dd 38%,#130309ee 76%,#9b082df0);border:1px solid #ff759581;box-shadow:0 0 12px #ff16444f,inset 0 -2px 4px #ff3f69aa;clip-path:polygon(6% 0,94% 0,100% 100%,0 100%);}
+.ad-tab[aria-selected="true"]::after{content:"";position:absolute;bottom:0;left:30%;right:30%;height:2px;background:linear-gradient(90deg,transparent,#ffe3e8,transparent);box-shadow:0 0 9px 2px #ff215c;}
+.ad-tab[aria-selected="false"] .ad-tab-shape{display:none;}
+.ad-tab[data-ad-shape-ready]::before,.ad-tab[data-ad-shape-ready]::after{display:none;}

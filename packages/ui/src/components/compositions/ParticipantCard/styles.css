@@ -1,0 +1,7 @@
+/* Styles owned by ParticipantCard. */
+.ad-participant-card{display:flex;align-items:center;gap:15px;padding:17px;}
+.ad-participant-info{min-width:135px;flex:1;}
+.ad-participant-info h3{font-size:16px;margin:0 0 9px;}
+@media (max-width:740px){
+.ad-participant-card{flex-wrap:wrap;}
+}

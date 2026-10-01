@@ -1,2 +1,2 @@
 export { ArtworkFrame } from "./ArtworkFrame";
-export type { IllustrationProps } from "../shared";
+export type { IllustrationProps } from "../_shared";

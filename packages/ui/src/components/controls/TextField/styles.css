@@ -1,0 +1,3 @@
+/* Styles owned by TextField. */
+.ad-text-field[data-ad-invalid]{border-color:#ff6787;}
+.ad-text-field input::placeholder{color:#87768c;}

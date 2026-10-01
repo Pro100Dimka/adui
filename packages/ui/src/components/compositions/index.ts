@@ -9,4 +9,4 @@ export * from "./ModelStatusCard";
 export * from "./StorageSummary";
 export * from "./DiagnosticsPanel";
 export * from "./PerformanceSummary";
-export type { RoleEmblemProps, RecordingCardProps, ProcessingTaskCardProps, ParticipantCardProps, ProfileCardProps, ThemeName, ThemePickerProps, RoomConnection, RoomConnectionFormProps, ModelStatusCardProps, StorageSummaryProps, DiagnosticsPanelProps, PerformanceSummaryProps } from "./shared";
+export type { RoleEmblemProps, RecordingCardProps, ProcessingTaskCardProps, ParticipantCardProps, ProfileCardProps, ThemeName, ThemePickerProps, RoomConnection, RoomConnectionFormProps, ModelStatusCardProps, StorageSummaryProps, DiagnosticsPanelProps, PerformanceSummaryProps } from "./_shared";

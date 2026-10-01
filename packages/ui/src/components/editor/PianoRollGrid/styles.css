@@ -1,0 +1,3 @@
+/* Styles owned by PianoRollGrid. */
+.ad-piano-roll-grid{position:relative;height:310px;border:1px solid #7a263a;border-radius:10px;overflow:hidden;background:#08080e;}
+.ad-note-world{position:absolute;left:54px;right:0;top:58px;height:252px;background:repeating-linear-gradient(0deg,transparent 0 17px,#83394520 17px 18px),repeating-linear-gradient(90deg,transparent 0 49px,#94315040 49px 50px);}

@@ -1,2 +1,2 @@
 export { ZoomControl } from "./ZoomControl";
-export type { ZoomControlProps } from "../shared";
+export type { ZoomControlProps } from "../_shared";

@@ -1,2 +1,2 @@
 export { StatusIndicator } from "./StatusIndicator";
-export type { StatusIndicatorProps } from "../shared";
+export type { StatusIndicatorProps } from "../_shared";

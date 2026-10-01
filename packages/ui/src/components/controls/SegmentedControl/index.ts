@@ -1,2 +1,2 @@
 export { SegmentedControl } from "./SegmentedControl";
-export type { TabsProps } from "../shared";
+export type { TabsProps } from "../_shared";

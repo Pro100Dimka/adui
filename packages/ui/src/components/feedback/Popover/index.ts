@@ -1,2 +1,2 @@
 export { Popover } from "./Popover";
-export type { PopoverProps } from "../shared";
+export type { PopoverProps } from "../_shared";

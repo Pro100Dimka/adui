@@ -1,2 +1,2 @@
 export { FilePicker } from "./FilePicker";
-export type { FilePickerProps } from "../shared";
+export type { FilePickerProps } from "../_shared";

@@ -1,0 +1,8 @@
+/* Styles owned by PerformanceSummary. */
+.ad-metric-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:13px;}
+.ad-summary-score{display:flex;align-items:baseline;gap:12px;}
+.ad-summary-score strong{font-size:34px;text-shadow:0 0 15px #ff416a;}
+.ad-summary-score span{font-size:14px;color:var(--ad-muted);}
+@media (max-width:740px){
+.ad-metric-grid{grid-template-columns:1fr;}
+}

@@ -1,2 +1,2 @@
 export { SplitButton } from "./SplitButton";
-export type { SplitButtonProps } from "../shared";
+export type { SplitButtonProps } from "../_shared";

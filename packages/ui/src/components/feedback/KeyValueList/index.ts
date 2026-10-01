@@ -1,2 +1,2 @@
 export { KeyValueList } from "./KeyValueList";
-export type { KeyValueListProps } from "../shared";
+export type { KeyValueListProps } from "../_shared";

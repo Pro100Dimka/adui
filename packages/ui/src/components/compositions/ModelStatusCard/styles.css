@@ -1,0 +1,4 @@
+/* Styles owned by ModelStatusCard. */
+.ad-model-status-card{display:flex;gap:17px;align-items:center;padding:16px;}
+.ad-model-status-card>div:nth-child(2){flex:1;}
+.ad-model-status-card strong{display:block;font-size:14px;margin-bottom:8px;}

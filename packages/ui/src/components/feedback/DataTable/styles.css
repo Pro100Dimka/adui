@@ -1,0 +1,5 @@
+/* Styles owned by DataTable. */
+.ad-data-table{border-collapse:collapse;width:100%;font-size:12px;text-align:left;}
+.ad-data-table th{font-weight:500;color:#bdb4cb;background:#20101aa8;}
+.ad-data-table th,.ad-data-table td{padding:10px 12px;border-bottom:1px solid #7f334330;}
+.ad-data-table td{color:#d7c3d7;}

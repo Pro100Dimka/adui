@@ -1,2 +1,2 @@
 export { PerformanceSummary } from "./PerformanceSummary";
-export type { PerformanceSummaryProps } from "../shared";
+export type { PerformanceSummaryProps } from "../_shared";

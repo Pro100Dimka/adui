@@ -15,4 +15,4 @@ export * from "./Slider";
 export * from "./FilePicker";
 export * from "./PathField";
 export * from "./CopyableField";
-export type { ButtonProps, IconButtonProps, ToggleButtonProps, SplitButtonProps, TabProps, TabItem, TabsProps, FieldProps, TextFieldProps, NumberFieldProps, SelectOption, SelectProps, BooleanProps, SliderProps, FilePickerProps, PathFieldProps } from "./shared";
+export type { ButtonProps, IconButtonProps, ToggleButtonProps, SplitButtonProps, TabProps, TabItem, TabsProps, FieldProps, TextFieldProps, NumberFieldProps, SelectOption, SelectProps, BooleanProps, SliderProps, FilePickerProps, PathFieldProps } from "./_shared";

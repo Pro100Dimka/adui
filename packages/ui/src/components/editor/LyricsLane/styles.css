@@ -1,0 +1,3 @@
+/* Styles owned by LyricsLane. */
+.ad-lyrics-lane{display:flex;height:32px;gap:3px;}
+.ad-lyrics-lane button{flex:1;min-width:0;border:1px solid #4f34422b;border-radius:5px;background:linear-gradient(130deg,#1c203050,#0f141dbc);color:#ddd3df;font-size:10px;overflow:hidden;text-overflow:ellipsis;cursor:text;}

@@ -1,2 +1,2 @@
 export { Avatar } from "./Avatar";
-export type { AvatarProps } from "../shared";
+export type { AvatarProps } from "../_shared";

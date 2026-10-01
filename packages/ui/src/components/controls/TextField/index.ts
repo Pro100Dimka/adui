@@ -1,2 +1,2 @@
 export { TextField } from "./TextField";
-export type { TextFieldProps } from "../shared";
+export type { TextFieldProps } from "../_shared";

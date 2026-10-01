@@ -1,0 +1,2 @@
+/* Shared only by sibling components. */
+.ad-task-meta,.ad-storage-meta{display:flex;align-items:center;justify-content:space-between;font-size:12px;color:var(--ad-muted);margin:10px 0;}

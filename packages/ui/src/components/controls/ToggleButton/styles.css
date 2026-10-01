@@ -1,0 +1,2 @@
+/* Styles owned by ToggleButton. */
+.ad-toggle-button[aria-pressed="true"]{background:var(--ad-surface-ruby);box-shadow:var(--ad-shadow-ruby);border-color:#ff6b9155;}

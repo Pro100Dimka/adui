@@ -138,3 +138,7 @@ Do not replace it with the old CircularGauge arc implementation. `CircularGauge`
 ```bash
 npm run check:structure
 ```
+
+
+## Всё по месту
+См. `АРХИТЕКТУРА_ПО_МЕСТУ.md`.

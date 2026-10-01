@@ -1,2 +1,2 @@
 export { RoomConnectionForm } from "./RoomConnectionForm";
-export type { RoomConnectionFormProps } from "../shared";
+export type { RoomConnectionFormProps } from "../_shared";

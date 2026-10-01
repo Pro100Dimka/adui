@@ -1,2 +1,2 @@
 export { IconButton } from "./IconButton";
-export type { IconButtonProps } from "../shared";
+export type { IconButtonProps } from "../_shared";
