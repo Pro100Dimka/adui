@@ -1,1 +1,10 @@
-export * from "./components/editor";
+export { LyricsLane } from "./components/editor/LyricsLane/LyricsLane";
+export { NoteBlock } from "./components/editor/NoteBlock/NoteBlock";
+export { PianoKeyboard } from "./components/editor/PianoKeyboard/PianoKeyboard";
+export { PianoRollGrid } from "./components/editor/PianoRollGrid/PianoRollGrid";
+export { Playhead } from "./components/editor/Playhead/Playhead";
+export { SelectionOverlay } from "./components/editor/SelectionOverlay/SelectionOverlay";
+export { TimeRuler } from "./components/editor/TimeRuler/TimeRuler";
+export { UndoRedoControls } from "./components/editor/UndoRedoControls/UndoRedoControls";
+export { ZoomControl } from "./components/editor/ZoomControl/ZoomControl";
+export * from "./components/editor/shared";

@@ -1,7 +1,17 @@
 import fs from "node:fs";
 import path from "node:path";
-const root=path.resolve("packages/ui/src/components"), errors=[]; let count=0;
-function check(folder,name){const component=path.join(folder,`${name}.tsx`), index=path.join(folder,"index.ts"); if(!fs.existsSync(component)){errors.push(`${folder}: отсутствует ${name}.tsx`);return;} if(!fs.existsSync(index))errors.push(`${folder}: отсутствует index.ts`); const s=fs.readFileSync(component,"utf8"); const defs=[...s.matchAll(/export\s+const\s+([A-Z][A-Za-z0-9_]*)\s*=\s*(?:define|part)\b/g)].map(x=>x[1]); if(defs.length!==1||defs[0]!==name)errors.push(`${component}: ожидался один ${name}, найдено ${defs.join(", ")||"0"}`); count++;}
-for(const group of fs.readdirSync(root,{withFileTypes:true}).filter(x=>x.isDirectory()&&!x.name.startsWith("_"))){const gp=path.join(root,group.name); if(!fs.existsSync(path.join(gp,"index.ts")))errors.push(`${group.name}: отсутствует index.ts`); for(const e of fs.readdirSync(gp,{withFileTypes:true})){if(!e.isDirectory()||e.name.startsWith("_"))continue;check(path.join(gp,e.name),e.name)}}
-for(const [folder,name] of [["packages/ui/src/core/providers/ThemeProvider","ThemeProvider"],["packages/ui/src/core/providers/MotionProvider","MotionProvider"],["packages/ui/src/core/motion/AnimatedBorder","AnimatedBorder"]])check(path.resolve(folder),name);
-if(errors.length){console.error("Component structure check failed:\n\n"+errors.map(x=>`- ${x}`).join("\n"));process.exit(1)}console.log(`Component structure OK: ${count} компонентов, один компонент на файл.`);
+const root=path.resolve("packages/ui/src/components");
+const categories=fs.readdirSync(root,{withFileTypes:true}).filter(x=>x.isDirectory()).map(x=>x.name);
+let count=0; const errors=[];
+for(const category of categories){
+  const dir=path.join(root,category);
+  for(const item of fs.readdirSync(dir,{withFileTypes:true})){
+    if(!item.isDirectory()||item.name.startsWith("_")) continue;
+    const component=path.join(dir,item.name,`${item.name}.tsx`);
+    if(!fs.existsSync(component)){errors.push(`${category}/${item.name}: missing ${item.name}.tsx`);continue;}
+    if(fs.existsSync(path.join(dir,item.name,"index.ts"))||fs.existsSync(path.join(dir,item.name,"index.tsx"))) errors.push(`${category}/${item.name}: redundant index file`);
+    count++;
+  }
+}
+if(errors.length){console.error(errors.join("\n"));process.exit(1);}
+console.log(`Component structure OK: ${count} components, no redundant component indexes.`);

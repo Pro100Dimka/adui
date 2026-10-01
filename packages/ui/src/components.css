@@ -1,11 +1,11 @@
 /* GENERATED ENTRY. Edit local styles.css beside a component. */
 @import "./theme/base.css";
-@import "./components/layout/_shared/styles.css";
-@import "./components/controls/_shared/styles.css";
-@import "./components/feedback/_shared/styles.css";
-@import "./components/media/_shared/styles.css";
-@import "./components/compositions/_shared/styles.css";
-@import "./components/editor/_shared/styles.css";
+@import "./components/layout/shared.css";
+@import "./components/controls/shared.css";
+@import "./components/feedback/shared.css";
+@import "./components/media/shared.css";
+@import "./components/compositions/shared.css";
+@import "./components/editor/shared.css";
 @import "./components/compositions/DiagnosticsPanel/styles.css";
 @import "./components/compositions/ModelStatusCard/styles.css";
 @import "./components/compositions/ParticipantCard/styles.css";

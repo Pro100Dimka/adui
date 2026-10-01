@@ -1,6 +1,6 @@
 import React, { useLayoutEffect, useRef } from "react";
 import { attachBorder, attachTabShape, createMotion } from "../motion-engine.js";
-import { useMotion } from "../providers";
+import { useMotion } from "../providers/context";
 
 /** One scheduler in the engine; every observer and subscription is detached on unmount. */
 export function useDecoration(

@@ -1,17 +1,19 @@
 import React, { useRef, useState } from "react";
 import { clamp, define, mark, useControllable, type CommonProps } from "../../../core/base";
-import { ButtonGroup } from "../../layout";
-import { IconButton, Select, TextField } from "../../controls";
-import { Dialog } from "../../feedback";
-import { type PianoKeyboardProps, type TimeRulerProps, type NoteGeometry, type NoteBlockProps, type LyricsLaneProps, type PlayheadProps, type SelectionOverlayProps, type PianoRollGridProps, type ZoomControlProps, type UndoRedoControlsProps } from "../_shared";
-import { PianoKeyboard } from "../PianoKeyboard";
-import { TimeRuler } from "../TimeRuler";
-import { NoteBlock } from "../NoteBlock";
-import { Playhead } from "../Playhead";
-import { SelectionOverlay } from "../SelectionOverlay";
-import { PianoRollGrid } from "../PianoRollGrid";
-import { ZoomControl } from "../ZoomControl";
-import { UndoRedoControls } from "../UndoRedoControls";
+import { ButtonGroup } from "../../layout/ButtonGroup/ButtonGroup";
+import { IconButton } from "../../controls/IconButton/IconButton";
+import { Select } from "../../controls/Select/Select";
+import { TextField } from "../../controls/TextField/TextField";
+import { Dialog } from "../../feedback/Dialog/Dialog";
+import { type PianoKeyboardProps, type TimeRulerProps, type NoteGeometry, type NoteBlockProps, type LyricsLaneProps, type PlayheadProps, type SelectionOverlayProps, type PianoRollGridProps, type ZoomControlProps, type UndoRedoControlsProps } from "../shared";
+import { PianoKeyboard } from "../PianoKeyboard/PianoKeyboard";
+import { TimeRuler } from "../TimeRuler/TimeRuler";
+import { NoteBlock } from "../NoteBlock/NoteBlock";
+import { Playhead } from "../Playhead/Playhead";
+import { SelectionOverlay } from "../SelectionOverlay/SelectionOverlay";
+import { PianoRollGrid } from "../PianoRollGrid/PianoRollGrid";
+import { ZoomControl } from "../ZoomControl/ZoomControl";
+import { UndoRedoControls } from "../UndoRedoControls/UndoRedoControls";
 
 export const LyricsLane = define<LyricsLaneProps>("LyricsLane", p => {
   const [words, setWords] = useControllable(p.words, ["Первая", "фраза", "мелодии", "вторая", "фраза"], p.onChange);
