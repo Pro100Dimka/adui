@@ -101,3 +101,21 @@ Before publishing under `@ad-voice`, that npm scope must belong to your npm acco
 ## Design-system rule
 
 Application-specific names such as `SaveButton` or `JoinButton` should normally not become primitives. Use a shared `Button` variant and compose application-specific components from it. The same rule applies to fields, cards and dialogs.
+
+## CircularGauge и RotaryKnob
+
+`CircularGauge` — read-only индикатор значения. `RotaryKnob` использует тот же визуальный face, но является интерактивным `role="slider"`.
+
+```tsx
+<CircularGauge value={72} label="Микрофон" icon="mic" />
+
+<RotaryKnob
+  value={volume}
+  onValueChange={setVolume}
+  onValueCommit={saveVolume}
+  label="Громкость"
+  icon="volume"
+/>
+```
+
+`RotaryKnob` поддерживает drag по кругу, колесо мыши, стрелки, PageUp/PageDown, Home/End, Shift для точного шага и двойной клик для сброса.

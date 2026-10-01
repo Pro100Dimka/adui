@@ -108,3 +108,19 @@ ad-voice-ui-workspace/
 During `npm run dev`, Vite aliases `@ad-voice/ui` directly to `packages/ui/src`. That gives immediate HMR while developing the library.
 
 During `npm run package`, only `packages/ui` is compiled and packed. The playground/catalogue is **not** published to consumers of `@ad-voice/ui`.
+
+## Код примеров в каталоге
+
+Код под каждым live-примером теперь строится **автоматически из того же JSX**, который реально рендерит этот пример в `apps/playground/src/catalog/examples.tsx`. Поэтому после изменения примера документация не должна расходиться с тем, что видно сверху.
+
+Например, если `Surface` содержит заголовок и описание, каталог покажет `Surface` вместе с этими дочерними элементами, а не сокращённое `<Surface />`. Кнопка **«Копировать весь пример»** копирует полный пример с импортами и нужным React state.
+
+`npm run check:catalog` проверяет, что у всех 86 компонентов есть живой пример. `CHECK_ALL.cmd` запускает эту проверку автоматически. Классы `sample-*` относятся только к расположению элементов внутри playground и не являются частью `@ad-voice/ui`.
+
+### RotaryKnob
+
+`RotaryKnob` — премиальный процедурный регулятор без картинок. Поддерживает круговое и линейное перетаскивание, внешнюю шкалу, колесо, клавиатуру, точный режим с Shift и двойной щелчок для сброса. См. `packages/ui/docs/ROTARY_KNOB.md`.
+
+## RotaryKnob 0.1.2
+
+`RotaryKnob` is now a direct React port of the supplied `premium-knob-interactive-neon(1).html`; its visual geometry is not restyled by the library.

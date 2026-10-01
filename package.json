@@ -16,11 +16,14 @@
     "build": "npm run build:ui && npm run build:playground",
     "preview": "npm run preview --workspace @ad-voice/playground",
     "package:check": "npm run build:ui && npm pack ./packages/ui --dry-run",
-    "package": "node scripts/create-package.mjs",
-    "release:patch": "node scripts/bump-and-package.mjs patch",
-    "release:minor": "node scripts/bump-and-package.mjs minor",
-    "release:major": "node scripts/bump-and-package.mjs major",
-    "clean": "node scripts/clean.mjs"
+    "package": "npm run check:catalog && node scripts/create-package.mjs",
+    "release:patch": "npm run check:catalog && node scripts/bump-and-package.mjs patch",
+    "release:minor": "npm run check:catalog && node scripts/bump-and-package.mjs minor",
+    "release:major": "npm run check:catalog && node scripts/bump-and-package.mjs major",
+    "clean": "node scripts/clean.mjs",
+    "check:catalog": "node scripts/check-catalog-examples.mjs",
+    "check": "npm run check:catalog && npm run typecheck",
+    "prettier:fix": "prettier --write ."
   },
   "engines": {
     "node": ">=20"

@@ -10,7 +10,7 @@ import {
   Slider,
   Switch,
   TextField,
-  ThemeProvider
+  ThemeProvider,
 } from "@ad-voice/ui";
 import "@ad-voice/ui/styles.css";
 
@@ -37,7 +37,11 @@ export default function ControlledDemo() {
   return (
     <ThemeProvider>
       <MotionProvider enabled={motion}>
-        <Card title="Мои настройки" description="Пример управления через React state" border>
+        <Card
+          title="Мои настройки"
+          description="Пример управления через React state"
+          border
+        >
           <Field label="Имя в комнате" required>
             <TextField value={name} onValueChange={setName} clearable />
           </Field>
@@ -48,13 +52,21 @@ export default function ControlledDemo() {
           <FilePicker
             label="Выбрать свою запись"
             accept="audio/*"
-            onFiles={files => setFile(files[0] ?? null)}
+            onFiles={(files) => setFile(files[0] ?? null)}
           />
           <AudioPlayer src={source} volume={volume / 100} />
-          <Button variant="primary" icon="save" onClick={() => setConfirming(true)}>
+          <Button
+            variant="primary"
+            icon="save"
+            onClick={() => setConfirming(true)}
+          >
             Сохранить
           </Button>
-          {savedName && <p role="status">Сохранено локально в состоянии примера: {savedName}</p>}
+          {savedName && (
+            <p role="status">
+              Сохранено локально в состоянии примера: {savedName}
+            </p>
+          )}
         </Card>
         <Dialog
           open={confirming}

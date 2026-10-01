@@ -4,91 +4,25 @@
   "width": 1280,
   "height": 698,
   "source": "melody-editor-shared-style.html",
-  "borderSelectors": [
-    ".me-panel"
-  ],
+  "borderSelectors": [".me-panel"],
   "shellSelector": "",
   "rules": [
-    [
-      ".me-roll",
-      "PianoRollGrid",
-      null
-    ],
-    [
-      ".me-transport",
-      "TransportBar",
-      null
-    ],
-    [
-      "[data-dial]",
-      "RotaryKnob",
-      null
-    ],
-    [
-      ".pf-card",
-      "RecordingCard",
-      null
-    ],
-    [
-      ".q-card",
-      "ProcessingTaskCard",
-      null
-    ],
-    [
-      ".participant",
-      "ParticipantCard",
-      null
-    ],
-    [
-      ".pa-master",
-      "RecordingCard",
-      null
-    ],
-    [
-      ".pa-original",
-      "AudioPlayer",
-      null
-    ],
-    [
-      ".pa-recommendation",
-      "PerformanceSummary",
-      null
-    ],
-    [
-      ".card.storage",
-      "StorageSummary",
-      null
-    ],
-    [
-      ".card.diagnostics",
-      "DiagnosticsPanel",
-      null
-    ],
-    [
-      ".profile.card",
-      "ProfileCard",
-      null
-    ],
-    [
-      ".ai-model",
-      "ModelStatusCard",
-      null
-    ],
-    [
-      ".pa-metric",
-      "MetricCard",
-      null
-    ],
-    [
-      ".audio-latency",
-      "LatencyIndicator",
-      null
-    ],
-    [
-      ".modal,.pa-modal,.pf-modal,.q-modal",
-      "Dialog",
-      null
-    ],
+    [".me-roll", "PianoRollGrid", null],
+    [".me-transport", "TransportBar", null],
+    ["[data-dial]", "RotaryKnob", null],
+    [".pf-card", "RecordingCard", null],
+    [".q-card", "ProcessingTaskCard", null],
+    [".participant", "ParticipantCard", null],
+    [".pa-master", "RecordingCard", null],
+    [".pa-original", "AudioPlayer", null],
+    [".pa-recommendation", "PerformanceSummary", null],
+    [".card.storage", "StorageSummary", null],
+    [".card.diagnostics", "DiagnosticsPanel", null],
+    [".profile.card", "ProfileCard", null],
+    [".ai-model", "ModelStatusCard", null],
+    [".pa-metric", "MetricCard", null],
+    [".audio-latency", "LatencyIndicator", null],
+    [".modal,.pa-modal,.pf-modal,.q-modal", "Dialog", null],
     [
       ".dialog-box,.pa-dialog,.pf-dialog,.q-dialog,.me-dialog,dialog",
       "Dialog",
@@ -104,51 +38,15 @@
       "PageHeader",
       null
     ],
-    [
-      ".env-card-head,.ai-head",
-      "SectionHeader",
-      null
-    ],
-    [
-      ".card,.surface,.pa-panel,.me-panel",
-      "Surface",
-      null
-    ],
-    [
-      ".form",
-      "RoomConnectionForm",
-      null
-    ],
-    [
-      ".theme-picker,.themes",
-      "ThemePicker",
-      null
-    ],
-    [
-      ".theme-card",
-      "Card",
-      null
-    ],
-    [
-      ".pa-tile,.tile,.fi,.hero,.pf-header-tile",
-      "IconTile",
-      null
-    ],
-    [
-      ".avatar",
-      "Avatar",
-      null
-    ],
-    [
-      ".seal",
-      "RoleEmblem",
-      null
-    ],
-    [
-      ".signature,.pf-signature,.me-signature",
-      "BrandMark",
-      null
-    ],
+    [".env-card-head,.ai-head", "SectionHeader", null],
+    [".card,.surface,.pa-panel,.me-panel", "Surface", null],
+    [".form", "RoomConnectionForm", null],
+    [".theme-picker,.themes", "ThemePicker", null],
+    [".theme-card", "Card", null],
+    [".pa-tile,.tile,.fi,.hero,.pf-header-tile", "IconTile", null],
+    [".avatar", "Avatar", null],
+    [".seal", "RoleEmblem", null],
+    [".signature,.pf-signature,.me-signature", "BrandMark", null],
     [
       ".appearance-footer,.audio-footer,.pf-footer,.q-footer,.me-footer,.me-toolbar,.toolbar",
       "Toolbar",
@@ -159,241 +57,61 @@
       "ScrollArea",
       null
     ],
-    [
-      ".history-tabs,.tabs",
-      "Tabs",
-      null
-    ],
-    [
-      ".me-tools,.me-modes,.pf-view-switch",
-      "SegmentedControl",
-      null
-    ],
-    [
-      ".me-save-group,.pf-add",
-      "SplitButton",
-      null
-    ],
-    [
-      ".me-history",
-      "UndoRedoControls",
-      null
-    ],
-    [
-      ".me-zoom-step",
-      "ZoomControl",
-      null
-    ],
-    [
-      ".audio-gauge,.dial",
-      "CircularGauge",
-      null
-    ],
-    [
-      "[data-dial]",
-      "RotaryKnob",
-      null
-    ],
-    [
-      ".volume-control,.me-volume",
-      "VolumeControl",
-      null
-    ],
-    [
-      ".meter,.audio-mini-wave",
-      "LevelMeter",
-      null
-    ],
-    [
-      ".pa-waveform,.pf-waveform,.me-waveform",
-      "Waveform",
-      null
-    ],
-    [
-      ".me-transport",
-      "TransportBar",
-      null
-    ],
-    [
-      ".me-piano",
-      "PianoKeyboard",
-      null
-    ],
-    [
-      ".me-roll",
-      "PianoRollGrid",
-      null
-    ],
-    [
-      ".me-ruler",
-      "TimeRuler",
-      null
-    ],
-    [
-      ".me-words",
-      "LyricsLane",
-      null
-    ],
-    [
-      ".me-note",
-      "NoteBlock",
-      null
-    ],
-    [
-      ".me-playhead,.me-wave-cursor",
-      "Playhead",
-      null
-    ],
-    [
-      ".me-marquee",
-      "SelectionOverlay",
-      null
-    ],
-    [
-      ".q-stages",
-      "Steps",
-      null
-    ],
-    [
-      ".q-error-message",
-      "MessageBar",
-      null
-    ],
-    [
-      ".q-status-icon,.status-light",
-      "StatusIndicator",
-      null
-    ],
+    [".history-tabs,.tabs", "Tabs", null],
+    [".me-tools,.me-modes,.pf-view-switch", "SegmentedControl", null],
+    [".me-save-group,.pf-add", "SplitButton", null],
+    [".me-history", "UndoRedoControls", null],
+    [".me-zoom-step", "ZoomControl", null],
+    [".audio-gauge,.dial", "CircularGauge", null],
+    ["[data-dial]", "RotaryKnob", null],
+    [".volume-control,.me-volume", "VolumeControl", null],
+    [".meter,.audio-mini-wave", "LevelMeter", null],
+    [".pa-waveform,.pf-waveform,.me-waveform", "Waveform", null],
+    [".me-transport", "TransportBar", null],
+    [".me-piano", "PianoKeyboard", null],
+    [".me-roll", "PianoRollGrid", null],
+    [".me-ruler", "TimeRuler", null],
+    [".me-words", "LyricsLane", null],
+    [".me-note", "NoteBlock", null],
+    [".me-playhead,.me-wave-cursor", "Playhead", null],
+    [".me-marquee", "SelectionOverlay", null],
+    [".q-stages", "Steps", null],
+    [".q-error-message", "MessageBar", null],
+    [".q-status-icon,.status-light", "StatusIndicator", null],
     [
       ".q-track,.transfer-track,.storage-track,.pa-metric-bar",
       "ProgressBar",
       null
     ],
-    [
-      ".you-badge,.latency-quality,.env-gpu-badge",
-      "Badge",
-      null
-    ],
-    [
-      ".q-menu,.pf-popover,.me-popover,.popover",
-      "Menu",
-      null
-    ],
-    [
-      ".q-menu-item,.pf-menu-item,.me-menu-item",
-      "MenuItem",
-      null
-    ],
-    [
-      ".q-toast,.pf-toast,.me-toast,.pa-toast,.toast",
-      "Toast",
-      null
-    ],
-    [
-      ".q-empty,.pf-empty",
-      "EmptyState",
-      null
-    ],
-    [
-      "table",
-      "DataTable",
-      null
-    ],
-    [
-      "dl",
-      "KeyValueList",
-      null
-    ],
-    [
-      ".env-json-card",
-      "CollapsibleSection",
-      null
-    ],
-    [
-      ".env-json-code,pre",
-      "CodeViewer",
-      null
-    ],
-    [
-      ".pf-art-frame,.pa-cover,.cover,.me-cover,.q-cover",
-      "ArtworkFrame",
-      null
-    ],
+    [".you-badge,.latency-quality,.env-gpu-badge", "Badge", null],
+    [".q-menu,.pf-popover,.me-popover,.popover", "Menu", null],
+    [".q-menu-item,.pf-menu-item,.me-menu-item", "MenuItem", null],
+    [".q-toast,.pf-toast,.me-toast,.pa-toast,.toast", "Toast", null],
+    [".q-empty,.pf-empty", "EmptyState", null],
+    ["table", "DataTable", null],
+    ["dl", "KeyValueList", null],
+    [".env-json-card", "CollapsibleSection", null],
+    [".env-json-code,pre", "CodeViewer", null],
+    [".pf-art-frame,.pa-cover,.cover,.me-cover,.q-cover", "ArtworkFrame", null],
     [
       ".q-divider,.pf-divider,.pa-tool-divider,.divider,.storage-divider",
       "Divider",
       null
     ],
-    [
-      ".env-input-shell,.input-shell",
-      "TextField",
-      null
-    ],
-    [
-      ".select-shell,.me-select",
-      "Select",
-      null
-    ],
-    [
-      ".field,.ai-field,.env-field,.me-dialog-field",
-      "Field",
-      null
-    ],
-    [
-      ".toggle-field",
-      "Switch",
-      null
-    ],
-    [
-      "[role=\"tab\"]",
-      "Tab",
-      null
-    ],
-    [
-      "button[role=\"switch\"]",
-      "Switch",
-      null
-    ],
-    [
-      "button[aria-pressed]",
-      "ToggleButton",
-      null
-    ],
-    [
-      "input[type=\"range\"]",
-      "Slider",
-      null
-    ],
-    [
-      "input[type=\"number\"]",
-      "NumberField",
-      null
-    ],
-    [
-      "input[type=\"file\"]",
-      "FilePicker",
-      null
-    ],
-    [
-      "input[type=\"checkbox\"]",
-      "Checkbox",
-      null
-    ],
-    [
-      "input",
-      "TextField",
-      null
-    ],
-    [
-      "select",
-      "Select",
-      null
-    ],
-    [
-      "button",
-      "Button",
-      null
-    ]
+    [".env-input-shell,.input-shell", "TextField", null],
+    [".select-shell,.me-select", "Select", null],
+    [".field,.ai-field,.env-field,.me-dialog-field", "Field", null],
+    [".toggle-field", "Switch", null],
+    ["[role=\"tab\"]", "Tab", null],
+    ["button[role=\"switch\"]", "Switch", null],
+    ["button[aria-pressed]", "ToggleButton", null],
+    ["input[type=\"range\"]", "Slider", null],
+    ["input[type=\"number\"]", "NumberField", null],
+    ["input[type=\"file\"]", "FilePicker", null],
+    ["input[type=\"checkbox\"]", "Checkbox", null],
+    ["input", "TextField", null],
+    ["select", "Select", null],
+    ["button", "Button", null]
   ],
   "tree": [
     {
@@ -444,9 +162,7 @@
                     },
                     {
                       "tag": "span",
-                      "children": [
-                        "Назад"
-                      ]
+                      "children": ["Назад"]
                     }
                   ]
                 },
@@ -465,9 +181,7 @@
                 },
                 {
                   "tag": "h1",
-                  "children": [
-                    "Редактор мелодии"
-                  ]
+                  "children": ["Редактор мелодии"]
                 },
                 {
                   "tag": "p",
@@ -480,9 +194,7 @@
                       "props": {
                         "id": "me-project-name"
                       },
-                      "children": [
-                        "Счастье — Nervy"
-                      ]
+                      "children": ["Счастье — Nervy"]
                     },
                     " · Проект v2",
                     {
@@ -493,9 +205,7 @@
                         "title": "Несохранённые изменения",
                         "className": "me-dirty"
                       },
-                      "children": [
-                        "•"
-                      ]
+                      "children": ["•"]
                     }
                   ]
                 },
@@ -512,9 +222,7 @@
                     },
                     {
                       "tag": "span",
-                      "children": [
-                        "KARAOKE STUDIO"
-                      ]
+                      "children": ["KARAOKE STUDIO"]
                     }
                   ]
                 },
@@ -629,9 +337,7 @@
                     "id": "me-time",
                     "className": "me-current-time"
                   },
-                  "children": [
-                    "0:00.00"
-                  ]
+                  "children": ["0:00.00"]
                 },
                 {
                   "tag": "div",
@@ -674,9 +380,7 @@
                     "id": "me-duration",
                     "className": "me-total-time"
                   },
-                  "children": [
-                    "3:51.24"
-                  ]
+                  "children": ["3:51.24"]
                 },
                 {
                   "tag": "div",
@@ -743,18 +447,14 @@
                           "props": {
                             "value": "50"
                           },
-                          "children": [
-                            "50%"
-                          ]
+                          "children": ["50%"]
                         },
                         {
                           "tag": "option",
                           "props": {
                             "value": "75"
                           },
-                          "children": [
-                            "75%"
-                          ]
+                          "children": ["75%"]
                         },
                         {
                           "tag": "option",
@@ -762,27 +462,21 @@
                             "value": "100",
                             "selected": ""
                           },
-                          "children": [
-                            "100%"
-                          ]
+                          "children": ["100%"]
                         },
                         {
                           "tag": "option",
                           "props": {
                             "value": "150"
                           },
-                          "children": [
-                            "150%"
-                          ]
+                          "children": ["150%"]
                         },
                         {
                           "tag": "option",
                           "props": {
                             "value": "200"
                           },
-                          "children": [
-                            "200%"
-                          ]
+                          "children": ["200%"]
                         }
                       ]
                     },
@@ -850,9 +544,7 @@
                         },
                         {
                           "tag": "span",
-                          "children": [
-                            "Ноты"
-                          ]
+                          "children": ["Ноты"]
                         }
                       ]
                     },
@@ -875,9 +567,7 @@
                         },
                         {
                           "tag": "span",
-                          "children": [
-                            "Текст"
-                          ]
+                          "children": ["Текст"]
                         }
                       ]
                     },
@@ -900,9 +590,7 @@
                         },
                         {
                           "tag": "span",
-                          "children": [
-                            "Ритм"
-                          ]
+                          "children": ["Ритм"]
                         }
                       ]
                     },
@@ -925,9 +613,7 @@
                         },
                         {
                           "tag": "span",
-                          "children": [
-                            "Сетки"
-                          ]
+                          "children": ["Сетки"]
                         }
                       ]
                     }
@@ -1059,9 +745,7 @@
                           "props": {
                             "value": "C4"
                           },
-                          "children": [
-                            "C4"
-                          ]
+                          "children": ["C4"]
                         },
                         {
                           "tag": "option",
@@ -1069,99 +753,77 @@
                             "value": "C#4",
                             "selected": ""
                           },
-                          "children": [
-                            "C#4"
-                          ]
+                          "children": ["C#4"]
                         },
                         {
                           "tag": "option",
                           "props": {
                             "value": "D4"
                           },
-                          "children": [
-                            "D4"
-                          ]
+                          "children": ["D4"]
                         },
                         {
                           "tag": "option",
                           "props": {
                             "value": "D#4"
                           },
-                          "children": [
-                            "D#4"
-                          ]
+                          "children": ["D#4"]
                         },
                         {
                           "tag": "option",
                           "props": {
                             "value": "E4"
                           },
-                          "children": [
-                            "E4"
-                          ]
+                          "children": ["E4"]
                         },
                         {
                           "tag": "option",
                           "props": {
                             "value": "F4"
                           },
-                          "children": [
-                            "F4"
-                          ]
+                          "children": ["F4"]
                         },
                         {
                           "tag": "option",
                           "props": {
                             "value": "F#4"
                           },
-                          "children": [
-                            "F#4"
-                          ]
+                          "children": ["F#4"]
                         },
                         {
                           "tag": "option",
                           "props": {
                             "value": "G4"
                           },
-                          "children": [
-                            "G4"
-                          ]
+                          "children": ["G4"]
                         },
                         {
                           "tag": "option",
                           "props": {
                             "value": "G#4"
                           },
-                          "children": [
-                            "G#4"
-                          ]
+                          "children": ["G#4"]
                         },
                         {
                           "tag": "option",
                           "props": {
                             "value": "A4"
                           },
-                          "children": [
-                            "A4"
-                          ]
+                          "children": ["A4"]
                         },
                         {
                           "tag": "option",
                           "props": {
                             "value": "A#4"
                           },
-                          "children": [
-                            "A#4"
-                          ]
+                          "children": ["A#4"]
                         },
                         {
                           "tag": "option",
                           "props": {
                             "value": "B4"
                           },
-                          "children": [
-                            "B4"
-                          ]
+                          "children": ["B4"]
                         }
                       ]
                     },
@@ -1192,27 +854,21 @@
                             "value": "none",
                             "selected": ""
                           },
-                          "children": [
-                            "Лад"
-                          ]
+                          "children": ["Лад"]
                         },
                         {
                           "tag": "option",
                           "props": {
                             "value": "major"
                           },
-                          "children": [
-                            "Мажор"
-                          ]
+                          "children": ["Мажор"]
                         },
                         {
                           "tag": "option",
                           "props": {
                             "value": "minor"
                           },
-                          "children": [
-                            "Минор"
-                          ]
+                          "children": ["Минор"]
                         }
                       ]
                     },
@@ -1241,9 +897,7 @@
                     },
                     {
                       "tag": "span",
-                      "children": [
-                        "Ещё"
-                      ]
+                      "children": ["Ещё"]
                     }
                   ]
                 }
@@ -1359,9 +1013,7 @@
                           "children": [
                             {
                               "tag": "span",
-                              "children": [
-                                "C5"
-                              ]
+                              "children": ["C5"]
                             }
                           ]
                         },
@@ -1444,9 +1096,7 @@
                           "children": [
                             {
                               "tag": "span",
-                              "children": [
-                                "C4"
-                              ]
+                              "children": ["C4"]
                             }
                           ]
                         },
@@ -1529,9 +1179,7 @@
                           "children": [
                             {
                               "tag": "span",
-                              "children": [
-                                "C3"
-                              ]
+                              "children": ["C3"]
                             }
                           ]
                         },
@@ -1796,9 +1444,7 @@
                                     "title": "Такт 1",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "1"
-                                  ]
+                                  "children": ["1"]
                                 },
                                 {
                                   "tag": "button",
@@ -1810,9 +1456,7 @@
                                     "title": "Такт 2",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "2"
-                                  ]
+                                  "children": ["2"]
                                 },
                                 {
                                   "tag": "button",
@@ -1824,9 +1468,7 @@
                                     "title": "Такт 3",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "3"
-                                  ]
+                                  "children": ["3"]
                                 },
                                 {
                                   "tag": "button",
@@ -1838,9 +1480,7 @@
                                     "title": "Такт 4",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "4"
-                                  ]
+                                  "children": ["4"]
                                 },
                                 {
                                   "tag": "button",
@@ -1852,9 +1492,7 @@
                                     "title": "Такт 5",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "5"
-                                  ]
+                                  "children": ["5"]
                                 },
                                 {
                                   "tag": "button",
@@ -1866,9 +1504,7 @@
                                     "title": "Такт 6",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "6"
-                                  ]
+                                  "children": ["6"]
                                 },
                                 {
                                   "tag": "button",
@@ -1880,9 +1516,7 @@
                                     "title": "Такт 7",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "7"
-                                  ]
+                                  "children": ["7"]
                                 },
                                 {
                                   "tag": "button",
@@ -1894,9 +1528,7 @@
                                     "title": "Такт 8",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "8"
-                                  ]
+                                  "children": ["8"]
                                 },
                                 {
                                   "tag": "button",
@@ -1908,9 +1540,7 @@
                                     "title": "Такт 9",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "9"
-                                  ]
+                                  "children": ["9"]
                                 },
                                 {
                                   "tag": "button",
@@ -1922,9 +1552,7 @@
                                     "title": "Такт 10",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "10"
-                                  ]
+                                  "children": ["10"]
                                 },
                                 {
                                   "tag": "button",
@@ -1936,9 +1564,7 @@
                                     "title": "Такт 11",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "11"
-                                  ]
+                                  "children": ["11"]
                                 },
                                 {
                                   "tag": "button",
@@ -1950,9 +1576,7 @@
                                     "title": "Такт 12",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "12"
-                                  ]
+                                  "children": ["12"]
                                 },
                                 {
                                   "tag": "button",
@@ -1964,9 +1588,7 @@
                                     "title": "Такт 13",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "13"
-                                  ]
+                                  "children": ["13"]
                                 },
                                 {
                                   "tag": "button",
@@ -1978,9 +1600,7 @@
                                     "title": "Такт 14",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "14"
-                                  ]
+                                  "children": ["14"]
                                 },
                                 {
                                   "tag": "button",
@@ -1992,9 +1612,7 @@
                                     "title": "Такт 15",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "15"
-                                  ]
+                                  "children": ["15"]
                                 },
                                 {
                                   "tag": "button",
@@ -2006,9 +1624,7 @@
                                     "title": "Такт 16",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "16"
-                                  ]
+                                  "children": ["16"]
                                 },
                                 {
                                   "tag": "button",
@@ -2020,9 +1636,7 @@
                                     "title": "Такт 17",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "17"
-                                  ]
+                                  "children": ["17"]
                                 },
                                 {
                                   "tag": "button",
@@ -2034,9 +1648,7 @@
                                     "title": "Такт 18",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "18"
-                                  ]
+                                  "children": ["18"]
                                 },
                                 {
                                   "tag": "button",
@@ -2048,9 +1660,7 @@
                                     "title": "Такт 19",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "19"
-                                  ]
+                                  "children": ["19"]
                                 },
                                 {
                                   "tag": "button",
@@ -2062,9 +1672,7 @@
                                     "title": "Такт 20",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "20"
-                                  ]
+                                  "children": ["20"]
                                 },
                                 {
                                   "tag": "button",
@@ -2076,9 +1684,7 @@
                                     "title": "Такт 21",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "21"
-                                  ]
+                                  "children": ["21"]
                                 },
                                 {
                                   "tag": "button",
@@ -2090,9 +1696,7 @@
                                     "title": "Такт 22",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "22"
-                                  ]
+                                  "children": ["22"]
                                 },
                                 {
                                   "tag": "button",
@@ -2104,9 +1708,7 @@
                                     "title": "Такт 23",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "23"
-                                  ]
+                                  "children": ["23"]
                                 },
                                 {
                                   "tag": "button",
@@ -2118,9 +1720,7 @@
                                     "title": "Такт 24",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "24"
-                                  ]
+                                  "children": ["24"]
                                 },
                                 {
                                   "tag": "button",
@@ -2132,9 +1732,7 @@
                                     "title": "Такт 25",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "25"
-                                  ]
+                                  "children": ["25"]
                                 },
                                 {
                                   "tag": "button",
@@ -2146,9 +1744,7 @@
                                     "title": "Такт 26",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "26"
-                                  ]
+                                  "children": ["26"]
                                 },
                                 {
                                   "tag": "button",
@@ -2160,9 +1756,7 @@
                                     "title": "Такт 27",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "27"
-                                  ]
+                                  "children": ["27"]
                                 },
                                 {
                                   "tag": "button",
@@ -2174,9 +1768,7 @@
                                     "title": "Такт 28",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "28"
-                                  ]
+                                  "children": ["28"]
                                 },
                                 {
                                   "tag": "button",
@@ -2188,9 +1780,7 @@
                                     "title": "Такт 29",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "29"
-                                  ]
+                                  "children": ["29"]
                                 },
                                 {
                                   "tag": "button",
@@ -2202,9 +1792,7 @@
                                     "title": "Такт 30",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "30"
-                                  ]
+                                  "children": ["30"]
                                 },
                                 {
                                   "tag": "button",
@@ -2216,9 +1804,7 @@
                                     "title": "Такт 31",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "31"
-                                  ]
+                                  "children": ["31"]
                                 },
                                 {
                                   "tag": "button",
@@ -2230,9 +1816,7 @@
                                     "title": "Такт 32",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "32"
-                                  ]
+                                  "children": ["32"]
                                 },
                                 {
                                   "tag": "button",
@@ -2244,9 +1828,7 @@
                                     "title": "Такт 33",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "33"
-                                  ]
+                                  "children": ["33"]
                                 },
                                 {
                                   "tag": "button",
@@ -2258,9 +1840,7 @@
                                     "title": "Такт 34",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "34"
-                                  ]
+                                  "children": ["34"]
                                 },
                                 {
                                   "tag": "button",
@@ -2272,9 +1852,7 @@
                                     "title": "Такт 35",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "35"
-                                  ]
+                                  "children": ["35"]
                                 },
                                 {
                                   "tag": "button",
@@ -2286,9 +1864,7 @@
                                     "title": "Такт 36",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "36"
-                                  ]
+                                  "children": ["36"]
                                 },
                                 {
                                   "tag": "button",
@@ -2300,9 +1876,7 @@
                                     "title": "Такт 37",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "37"
-                                  ]
+                                  "children": ["37"]
                                 },
                                 {
                                   "tag": "button",
@@ -2314,9 +1888,7 @@
                                     "title": "Такт 38",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "38"
-                                  ]
+                                  "children": ["38"]
                                 },
                                 {
                                   "tag": "button",
@@ -2328,9 +1900,7 @@
                                     "title": "Такт 39",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "39"
-                                  ]
+                                  "children": ["39"]
                                 },
                                 {
                                   "tag": "button",
@@ -2342,9 +1912,7 @@
                                     "title": "Такт 40",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "40"
-                                  ]
+                                  "children": ["40"]
                                 },
                                 {
                                   "tag": "button",
@@ -2356,9 +1924,7 @@
                                     "title": "Такт 41",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "41"
-                                  ]
+                                  "children": ["41"]
                                 },
                                 {
                                   "tag": "button",
@@ -2370,9 +1936,7 @@
                                     "title": "Такт 42",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "42"
-                                  ]
+                                  "children": ["42"]
                                 },
                                 {
                                   "tag": "button",
@@ -2384,9 +1948,7 @@
                                     "title": "Такт 43",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "43"
-                                  ]
+                                  "children": ["43"]
                                 },
                                 {
                                   "tag": "button",
@@ -2398,9 +1960,7 @@
                                     "title": "Такт 44",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "44"
-                                  ]
+                                  "children": ["44"]
                                 },
                                 {
                                   "tag": "button",
@@ -2412,9 +1972,7 @@
                                     "title": "Такт 45",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "45"
-                                  ]
+                                  "children": ["45"]
                                 },
                                 {
                                   "tag": "button",
@@ -2426,9 +1984,7 @@
                                     "title": "Такт 46",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "46"
-                                  ]
+                                  "children": ["46"]
                                 },
                                 {
                                   "tag": "button",
@@ -2440,9 +1996,7 @@
                                     "title": "Такт 47",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "47"
-                                  ]
+                                  "children": ["47"]
                                 },
                                 {
                                   "tag": "button",
@@ -2454,9 +2008,7 @@
                                     "title": "Такт 48",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "48"
-                                  ]
+                                  "children": ["48"]
                                 },
                                 {
                                   "tag": "button",
@@ -2468,9 +2020,7 @@
                                     "title": "Такт 49",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "49"
-                                  ]
+                                  "children": ["49"]
                                 },
                                 {
                                   "tag": "button",
@@ -2482,9 +2032,7 @@
                                     "title": "Такт 50",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "50"
-                                  ]
+                                  "children": ["50"]
                                 },
                                 {
                                   "tag": "button",
@@ -2496,9 +2044,7 @@
                                     "title": "Такт 51",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "51"
-                                  ]
+                                  "children": ["51"]
                                 },
                                 {
                                   "tag": "button",
@@ -2510,9 +2056,7 @@
                                     "title": "Такт 52",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "52"
-                                  ]
+                                  "children": ["52"]
                                 },
                                 {
                                   "tag": "button",
@@ -2524,9 +2068,7 @@
                                     "title": "Такт 53",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "53"
-                                  ]
+                                  "children": ["53"]
                                 },
                                 {
                                   "tag": "button",
@@ -2538,9 +2080,7 @@
                                     "title": "Такт 54",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "54"
-                                  ]
+                                  "children": ["54"]
                                 },
                                 {
                                   "tag": "button",
@@ -2552,9 +2092,7 @@
                                     "title": "Такт 55",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "55"
-                                  ]
+                                  "children": ["55"]
                                 },
                                 {
                                   "tag": "button",
@@ -2566,9 +2104,7 @@
                                     "title": "Такт 56",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "56"
-                                  ]
+                                  "children": ["56"]
                                 },
                                 {
                                   "tag": "button",
@@ -2580,9 +2116,7 @@
                                     "title": "Такт 57",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "57"
-                                  ]
+                                  "children": ["57"]
                                 },
                                 {
                                   "tag": "button",
@@ -2594,9 +2128,7 @@
                                     "title": "Такт 58",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "58"
-                                  ]
+                                  "children": ["58"]
                                 },
                                 {
                                   "tag": "button",
@@ -2608,9 +2140,7 @@
                                     "title": "Такт 59",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "59"
-                                  ]
+                                  "children": ["59"]
                                 },
                                 {
                                   "tag": "button",
@@ -2622,9 +2152,7 @@
                                     "title": "Такт 60",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "60"
-                                  ]
+                                  "children": ["60"]
                                 },
                                 {
                                   "tag": "button",
@@ -2636,9 +2164,7 @@
                                     "title": "Такт 61",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "61"
-                                  ]
+                                  "children": ["61"]
                                 },
                                 {
                                   "tag": "button",
@@ -2650,9 +2176,7 @@
                                     "title": "Такт 62",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "62"
-                                  ]
+                                  "children": ["62"]
                                 },
                                 {
                                   "tag": "button",
@@ -2664,9 +2188,7 @@
                                     "title": "Такт 63",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "63"
-                                  ]
+                                  "children": ["63"]
                                 },
                                 {
                                   "tag": "button",
@@ -2678,9 +2200,7 @@
                                     "title": "Такт 64",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "64"
-                                  ]
+                                  "children": ["64"]
                                 },
                                 {
                                   "tag": "button",
@@ -2692,9 +2212,7 @@
                                     "title": "Такт 65",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "65"
-                                  ]
+                                  "children": ["65"]
                                 },
                                 {
                                   "tag": "button",
@@ -2706,9 +2224,7 @@
                                     "title": "Такт 66",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "66"
-                                  ]
+                                  "children": ["66"]
                                 },
                                 {
                                   "tag": "button",
@@ -2720,9 +2236,7 @@
                                     "title": "Такт 67",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "67"
-                                  ]
+                                  "children": ["67"]
                                 },
                                 {
                                   "tag": "button",
@@ -2734,9 +2248,7 @@
                                     "title": "Такт 68",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "68"
-                                  ]
+                                  "children": ["68"]
                                 },
                                 {
                                   "tag": "button",
@@ -2748,9 +2260,7 @@
                                     "title": "Такт 69",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "69"
-                                  ]
+                                  "children": ["69"]
                                 },
                                 {
                                   "tag": "button",
@@ -2762,9 +2272,7 @@
                                     "title": "Такт 70",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "70"
-                                  ]
+                                  "children": ["70"]
                                 },
                                 {
                                   "tag": "button",
@@ -2776,9 +2284,7 @@
                                     "title": "Такт 71",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "71"
-                                  ]
+                                  "children": ["71"]
                                 },
                                 {
                                   "tag": "button",
@@ -2790,9 +2296,7 @@
                                     "title": "Такт 72",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "72"
-                                  ]
+                                  "children": ["72"]
                                 },
                                 {
                                   "tag": "button",
@@ -2804,9 +2308,7 @@
                                     "title": "Такт 73",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "73"
-                                  ]
+                                  "children": ["73"]
                                 },
                                 {
                                   "tag": "button",
@@ -2818,9 +2320,7 @@
                                     "title": "Такт 74",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "74"
-                                  ]
+                                  "children": ["74"]
                                 },
                                 {
                                   "tag": "button",
@@ -2832,9 +2332,7 @@
                                     "title": "Такт 75",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "75"
-                                  ]
+                                  "children": ["75"]
                                 },
                                 {
                                   "tag": "button",
@@ -2846,9 +2344,7 @@
                                     "title": "Такт 76",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "76"
-                                  ]
+                                  "children": ["76"]
                                 },
                                 {
                                   "tag": "button",
@@ -2860,9 +2356,7 @@
                                     "title": "Такт 77",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "77"
-                                  ]
+                                  "children": ["77"]
                                 },
                                 {
                                   "tag": "button",
@@ -2874,9 +2368,7 @@
                                     "title": "Такт 78",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "78"
-                                  ]
+                                  "children": ["78"]
                                 },
                                 {
                                   "tag": "button",
@@ -2888,9 +2380,7 @@
                                     "title": "Такт 79",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "79"
-                                  ]
+                                  "children": ["79"]
                                 },
                                 {
                                   "tag": "button",
@@ -2902,9 +2392,7 @@
                                     "title": "Такт 80",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "80"
-                                  ]
+                                  "children": ["80"]
                                 },
                                 {
                                   "tag": "button",
@@ -2916,9 +2404,7 @@
                                     "title": "Такт 81",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "81"
-                                  ]
+                                  "children": ["81"]
                                 },
                                 {
                                   "tag": "button",
@@ -2930,9 +2416,7 @@
                                     "title": "Такт 82",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "82"
-                                  ]
+                                  "children": ["82"]
                                 },
                                 {
                                   "tag": "button",
@@ -2944,9 +2428,7 @@
                                     "title": "Такт 83",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "83"
-                                  ]
+                                  "children": ["83"]
                                 },
                                 {
                                   "tag": "button",
@@ -2958,9 +2440,7 @@
                                     "title": "Такт 84",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "84"
-                                  ]
+                                  "children": ["84"]
                                 },
                                 {
                                   "tag": "button",
@@ -2972,9 +2452,7 @@
                                     "title": "Такт 85",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "85"
-                                  ]
+                                  "children": ["85"]
                                 },
                                 {
                                   "tag": "button",
@@ -2986,9 +2464,7 @@
                                     "title": "Такт 86",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "86"
-                                  ]
+                                  "children": ["86"]
                                 },
                                 {
                                   "tag": "button",
@@ -3000,9 +2476,7 @@
                                     "title": "Такт 87",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "87"
-                                  ]
+                                  "children": ["87"]
                                 },
                                 {
                                   "tag": "button",
@@ -3014,9 +2488,7 @@
                                     "title": "Такт 88",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "88"
-                                  ]
+                                  "children": ["88"]
                                 },
                                 {
                                   "tag": "button",
@@ -3028,9 +2500,7 @@
                                     "title": "Такт 89",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "89"
-                                  ]
+                                  "children": ["89"]
                                 },
                                 {
                                   "tag": "button",
@@ -3042,9 +2512,7 @@
                                     "title": "Такт 90",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "90"
-                                  ]
+                                  "children": ["90"]
                                 },
                                 {
                                   "tag": "button",
@@ -3056,9 +2524,7 @@
                                     "title": "Такт 91",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "91"
-                                  ]
+                                  "children": ["91"]
                                 },
                                 {
                                   "tag": "button",
@@ -3070,9 +2536,7 @@
                                     "title": "Такт 92",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "92"
-                                  ]
+                                  "children": ["92"]
                                 },
                                 {
                                   "tag": "button",
@@ -3084,9 +2548,7 @@
                                     "title": "Такт 93",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "93"
-                                  ]
+                                  "children": ["93"]
                                 },
                                 {
                                   "tag": "button",
@@ -3098,9 +2560,7 @@
                                     "title": "Такт 94",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "94"
-                                  ]
+                                  "children": ["94"]
                                 },
                                 {
                                   "tag": "button",
@@ -3112,9 +2572,7 @@
                                     "title": "Такт 95",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "95"
-                                  ]
+                                  "children": ["95"]
                                 },
                                 {
                                   "tag": "button",
@@ -3126,9 +2584,7 @@
                                     "title": "Такт 96",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "96"
-                                  ]
+                                  "children": ["96"]
                                 },
                                 {
                                   "tag": "button",
@@ -3140,9 +2596,7 @@
                                     "title": "Такт 97",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "97"
-                                  ]
+                                  "children": ["97"]
                                 },
                                 {
                                   "tag": "button",
@@ -3154,9 +2608,7 @@
                                     "title": "Такт 98",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "98"
-                                  ]
+                                  "children": ["98"]
                                 },
                                 {
                                   "tag": "button",
@@ -3168,9 +2620,7 @@
                                     "title": "Такт 99",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "99"
-                                  ]
+                                  "children": ["99"]
                                 },
                                 {
                                   "tag": "button",
@@ -3182,9 +2632,7 @@
                                     "title": "Такт 100",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "100"
-                                  ]
+                                  "children": ["100"]
                                 },
                                 {
                                   "tag": "button",
@@ -3196,9 +2644,7 @@
                                     "title": "Такт 101",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "101"
-                                  ]
+                                  "children": ["101"]
                                 },
                                 {
                                   "tag": "button",
@@ -3210,9 +2656,7 @@
                                     "title": "Такт 102",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "102"
-                                  ]
+                                  "children": ["102"]
                                 },
                                 {
                                   "tag": "button",
@@ -3224,9 +2668,7 @@
                                     "title": "Такт 103",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "103"
-                                  ]
+                                  "children": ["103"]
                                 },
                                 {
                                   "tag": "button",
@@ -3238,9 +2680,7 @@
                                     "title": "Такт 104",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "104"
-                                  ]
+                                  "children": ["104"]
                                 },
                                 {
                                   "tag": "button",
@@ -3252,9 +2692,7 @@
                                     "title": "Такт 105",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "105"
-                                  ]
+                                  "children": ["105"]
                                 },
                                 {
                                   "tag": "button",
@@ -3266,9 +2704,7 @@
                                     "title": "Такт 106",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "106"
-                                  ]
+                                  "children": ["106"]
                                 },
                                 {
                                   "tag": "button",
@@ -3280,9 +2716,7 @@
                                     "title": "Такт 107",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "107"
-                                  ]
+                                  "children": ["107"]
                                 },
                                 {
                                   "tag": "button",
@@ -3294,9 +2728,7 @@
                                     "title": "Такт 108",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "108"
-                                  ]
+                                  "children": ["108"]
                                 },
                                 {
                                   "tag": "button",
@@ -3308,9 +2740,7 @@
                                     "title": "Такт 109",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "109"
-                                  ]
+                                  "children": ["109"]
                                 },
                                 {
                                   "tag": "button",
@@ -3322,9 +2752,7 @@
                                     "title": "Такт 110",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "110"
-                                  ]
+                                  "children": ["110"]
                                 },
                                 {
                                   "tag": "button",
@@ -3336,9 +2764,7 @@
                                     "title": "Такт 111",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "111"
-                                  ]
+                                  "children": ["111"]
                                 },
                                 {
                                   "tag": "button",
@@ -3350,9 +2776,7 @@
                                     "title": "Такт 112",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "112"
-                                  ]
+                                  "children": ["112"]
                                 },
                                 {
                                   "tag": "button",
@@ -3364,9 +2788,7 @@
                                     "title": "Такт 113",
                                     "className": "me-measure"
                                   },
-                                  "children": [
-                                    "113"
-                                  ]
+                                  "children": ["113"]
                                 }
                               ]
                             },
@@ -3388,9 +2810,7 @@
                                     "title": "Двойной щелчок — изменить слово",
                                     "className": "me-word"
                                   },
-                                  "children": [
-                                    "Нервовий"
-                                  ]
+                                  "children": ["Нервовий"]
                                 },
                                 {
                                   "tag": "button",
@@ -3402,9 +2822,7 @@
                                     "title": "Двойной щелчок — изменить слово",
                                     "className": "me-word"
                                   },
-                                  "children": [
-                                    "ритм"
-                                  ]
+                                  "children": ["ритм"]
                                 },
                                 {
                                   "tag": "button",
@@ -3416,9 +2834,7 @@
                                     "title": "Двойной щелчок — изменить слово",
                                     "className": "me-word"
                                   },
-                                  "children": [
-                                    "життя"
-                                  ]
+                                  "children": ["життя"]
                                 },
                                 {
                                   "tag": "button",
@@ -3430,9 +2846,7 @@
                                     "title": "Двойной щелчок — изменить слово",
                                     "className": "me-word"
                                   },
-                                  "children": [
-                                    "І"
-                                  ]
+                                  "children": ["І"]
                                 },
                                 {
                                   "tag": "button",
@@ -3444,9 +2858,7 @@
                                     "title": "Двойной щелчок — изменить слово",
                                     "className": "me-word"
                                   },
-                                  "children": [
-                                    "дивує"
-                                  ]
+                                  "children": ["дивує"]
                                 },
                                 {
                                   "tag": "button",
@@ -3458,9 +2870,7 @@
                                     "title": "Двойной щелчок — изменить слово",
                                     "className": "me-word"
                                   },
-                                  "children": [
-                                    "так"
-                                  ]
+                                  "children": ["так"]
                                 },
                                 {
                                   "tag": "button",
@@ -3472,9 +2882,7 @@
                                     "title": "Двойной щелчок — изменить слово",
                                     "className": "me-word"
                                   },
-                                  "children": [
-                                    "всіх"
-                                  ]
+                                  "children": ["всіх"]
                                 },
                                 {
                                   "tag": "button",
@@ -3486,9 +2894,7 @@
                                     "title": "Двойной щелчок — изменить слово",
                                     "className": "me-word"
                                   },
-                                  "children": [
-                                    "нас"
-                                  ]
+                                  "children": ["нас"]
                                 },
                                 {
                                   "tag": "button",
@@ -3500,9 +2906,7 @@
                                     "title": "Двойной щелчок — изменить слово",
                                     "className": "me-word"
                                   },
-                                  "children": [
-                                    "Чи"
-                                  ]
+                                  "children": ["Чи"]
                                 },
                                 {
                                   "tag": "button",
@@ -3514,9 +2918,7 @@
                                     "title": "Двойной щелчок — изменить слово",
                                     "className": "me-word"
                                   },
-                                  "children": [
-                                    "справді"
-                                  ]
+                                  "children": ["справді"]
                                 },
                                 {
                                   "tag": "button",
@@ -3528,9 +2930,7 @@
                                     "title": "Двойной щелчок — изменить слово",
                                     "className": "me-word"
                                   },
-                                  "children": [
-                                    "почуття?"
-                                  ]
+                                  "children": ["почуття?"]
                                 },
                                 {
                                   "tag": "button",
@@ -3542,9 +2942,7 @@
                                     "title": "Двойной щелчок — изменить слово",
                                     "className": "me-word"
                                   },
-                                  "children": [
-                                    "Знов"
-                                  ]
+                                  "children": ["Знов"]
                                 },
                                 {
                                   "tag": "button",
@@ -3556,9 +2954,7 @@
                                     "title": "Двойной щелчок — изменить слово",
                                     "className": "me-word"
                                   },
-                                  "children": [
-                                    "грав"
-                                  ]
+                                  "children": ["грав"]
                                 },
                                 {
                                   "tag": "button",
@@ -3570,9 +2966,7 @@
                                     "title": "Двойной щелчок — изменить слово",
                                     "className": "me-word"
                                   },
-                                  "children": [
-                                    "наш"
-                                  ]
+                                  "children": ["наш"]
                                 },
                                 {
                                   "tag": "button",
@@ -3584,9 +2978,7 @@
                                     "title": "Двойной щелчок — изменить слово",
                                     "className": "me-word"
                                   },
-                                  "children": [
-                                    "останній"
-                                  ]
+                                  "children": ["останній"]
                                 },
                                 {
                                   "tag": "button",
@@ -3598,9 +2990,7 @@
                                     "title": "Двойной щелчок — изменить слово",
                                     "className": "me-word"
                                   },
-                                  "children": [
-                                    "вальс"
-                                  ]
+                                  "children": ["вальс"]
                                 },
                                 {
                                   "tag": "button",
@@ -3612,9 +3002,7 @@
                                     "title": "Двойной щелчок — изменить слово",
                                     "className": "me-word"
                                   },
-                                  "children": [
-                                    "І"
-                                  ]
+                                  "children": ["І"]
                                 },
                                 {
                                   "tag": "button",
@@ -3626,9 +3014,7 @@
                                     "title": "Двойной щелчок — изменить слово",
                                     "className": "me-word"
                                   },
-                                  "children": [
-                                    "навколо"
-                                  ]
+                                  "children": ["навколо"]
                                 },
                                 {
                                   "tag": "button",
@@ -3640,9 +3026,7 @@
                                     "title": "Двойной щелчок — изменить слово",
                                     "className": "me-word"
                                   },
-                                  "children": [
-                                    "все"
-                                  ]
+                                  "children": ["все"]
                                 },
                                 {
                                   "tag": "button",
@@ -3654,9 +3038,7 @@
                                     "title": "Двойной щелчок — изменить слово",
                                     "className": "me-word"
                                   },
-                                  "children": [
-                                    "в"
-                                  ]
+                                  "children": ["в"]
                                 },
                                 {
                                   "tag": "button",
@@ -3668,9 +3050,7 @@
                                     "title": "Двойной щелчок — изменить слово",
                                     "className": "me-word"
                                   },
-                                  "children": [
-                                    "снігах"
-                                  ]
+                                  "children": ["снігах"]
                                 }
                               ]
                             },
@@ -5189,18 +4569,14 @@
                           "props": {
                             "value": "50"
                           },
-                          "children": [
-                            "50%"
-                          ]
+                          "children": ["50%"]
                         },
                         {
                           "tag": "option",
                           "props": {
                             "value": "75"
                           },
-                          "children": [
-                            "75%"
-                          ]
+                          "children": ["75%"]
                         },
                         {
                           "tag": "option",
@@ -5208,36 +4584,28 @@
                             "value": "100",
                             "selected": ""
                           },
-                          "children": [
-                            "100%"
-                          ]
+                          "children": ["100%"]
                         },
                         {
                           "tag": "option",
                           "props": {
                             "value": "125"
                           },
-                          "children": [
-                            "125%"
-                          ]
+                          "children": ["125%"]
                         },
                         {
                           "tag": "option",
                           "props": {
                             "value": "150"
                           },
-                          "children": [
-                            "150%"
-                          ]
+                          "children": ["150%"]
                         },
                         {
                           "tag": "option",
                           "props": {
                             "value": "200"
                           },
-                          "children": [
-                            "200%"
-                          ]
+                          "children": ["200%"]
                         }
                       ]
                     },
@@ -5372,9 +4740,7 @@
                         },
                         {
                           "tag": "span",
-                          "children": [
-                            "Сохранить"
-                          ]
+                          "children": ["Сохранить"]
                         }
                       ]
                     },
@@ -5489,9 +4855,7 @@
                                 },
                                 {
                                   "tag": "span",
-                                  "children": [
-                                    "Отмена"
-                                  ]
+                                  "children": ["Отмена"]
                                 }
                               ]
                             },
@@ -5512,9 +4876,7 @@
                                 },
                                 {
                                   "tag": "span",
-                                  "children": [
-                                    "Применить"
-                                  ]
+                                  "children": ["Применить"]
                                 }
                               ]
                             }
@@ -5551,9 +4913,7 @@
                     },
                     {
                       "tag": "span",
-                      "children": [
-                        "Открыть редактор"
-                      ]
+                      "children": ["Открыть редактор"]
                     }
                   ]
                 }

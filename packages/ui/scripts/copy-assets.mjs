@@ -7,7 +7,7 @@ const files = [
   ["src/tokens.css", "dist/tokens.css"],
   ["src/components.css", "dist/components.css"],
   ["src/artwork/icons.json", "dist/artwork/icons.json"],
-  ["src/artwork/illustrations.json", "dist/artwork/illustrations.json"]
+  ["src/artwork/illustrations.json", "dist/artwork/illustrations.json"],
 ];
 for (const [from, to] of files) {
   await mkdir(dirname(resolve(root, to)), { recursive: true });

@@ -1,6 +1,9 @@
 export interface MotionScope {
   root: Document | ShadowRoot | Element;
-  enabled: boolean; active: boolean; time: number; previous: number | null;
+  enabled: boolean;
+  active: boolean;
+  time: number;
+  previous: number | null;
   disposed?: boolean;
   callbacks: Map<Element, (time: number) => void>;
   add(node: Element, callback: (time: number) => void): () => void;
@@ -10,11 +13,36 @@ export interface MotionScope {
   dispose(): void;
 }
 export interface BorderEffect {
-  element: HTMLElement; overlay: SVGSVGElement; path: SVGPathElement;
-  length: number; observer: ResizeObserver;
-  sync(): void; paint(seconds: number): void; destroy(): void;
+  element: HTMLElement;
+  overlay: SVGSVGElement;
+  path: SVGPathElement;
+  length: number;
+  observer: ResizeObserver;
+  sync(): void;
+  paint(seconds: number): void;
+  destroy(): void;
 }
-export function createMotion(root?: Document | ShadowRoot | Element): MotionScope;
-export function attachBorder(element: HTMLElement, options: {shell?: boolean; round?: boolean; index?: number; scope: MotionScope}): BorderEffect;
-export function attachTabShape(element: HTMLButtonElement): {shape: SVGSVGElement; observer: ResizeObserver; sync(): void; destroy(): void};
-export function getMotionStats(): {scopes: number; running: number; scheduled: boolean; callbacks: number};
+export function createMotion(
+  root?: Document | ShadowRoot | Element,
+): MotionScope;
+export function attachBorder(
+  element: HTMLElement,
+  options: {
+    shell?: boolean;
+    round?: boolean;
+    index?: number;
+    scope: MotionScope;
+  },
+): BorderEffect;
+export function attachTabShape(element: HTMLButtonElement): {
+  shape: SVGSVGElement;
+  observer: ResizeObserver;
+  sync(): void;
+  destroy(): void;
+};
+export function getMotionStats(): {
+  scopes: number;
+  running: number;
+  scheduled: boolean;
+  callbacks: number;
+};

@@ -1,12 +1,30 @@
 @import "./tokens.css";
 @import "./components.css";
 /* React-specific semantic wrappers. Materials and measured effects are unchanged. */
-.ad-field-label { display:flex; align-items:center; gap:8px; font-size:13px; color:#e7dfe9; }
-.ad-field-label label { cursor:default; }
-.ad-dialog:not([open]) { display:none; }
-.ad-popover { z-index:100; }
-.ad-segmented-control > .ad-tabs { flex:1; }
-.ad-rotary-knob { touch-action:none; }
-.ad-rotary-knob .ad-knob-disc { z-index:1; }
-.ad-progress-bar[data-indeterminate] > span { animation:ad-progress-slide 2.4s ease-in-out infinite alternate; }
-@keyframes ad-progress-slide { to { margin-left:65%; } }
+.ad-field-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: #e7dfe9;
+}
+.ad-field-label label {
+  cursor: default;
+}
+.ad-dialog:not([open]) {
+  display: none;
+}
+.ad-popover {
+  z-index: 100;
+}
+.ad-segmented-control > .ad-tabs {
+  flex: 1;
+}
+.ad-progress-bar[data-indeterminate] > span {
+  animation: ad-progress-slide 2.4s ease-in-out infinite alternate;
+}
+@keyframes ad-progress-slide {
+  to {
+    margin-left: 65%;
+  }
+}

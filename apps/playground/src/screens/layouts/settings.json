@@ -4,91 +4,25 @@
   "width": 1404,
   "height": 1120,
   "source": "settings-ai-shared.html",
-  "borderSelectors": [
-    "[data-neon]"
-  ],
+  "borderSelectors": ["[data-neon]"],
   "shellSelector": ".modal",
   "rules": [
-    [
-      ".me-roll",
-      "PianoRollGrid",
-      null
-    ],
-    [
-      ".me-transport",
-      "TransportBar",
-      null
-    ],
-    [
-      "[data-dial]",
-      "RotaryKnob",
-      null
-    ],
-    [
-      ".pf-card",
-      "RecordingCard",
-      null
-    ],
-    [
-      ".q-card",
-      "ProcessingTaskCard",
-      null
-    ],
-    [
-      ".participant",
-      "ParticipantCard",
-      null
-    ],
-    [
-      ".pa-master",
-      "RecordingCard",
-      null
-    ],
-    [
-      ".pa-original",
-      "AudioPlayer",
-      null
-    ],
-    [
-      ".pa-recommendation",
-      "PerformanceSummary",
-      null
-    ],
-    [
-      ".card.storage",
-      "StorageSummary",
-      null
-    ],
-    [
-      ".card.diagnostics",
-      "DiagnosticsPanel",
-      null
-    ],
-    [
-      ".profile.card",
-      "ProfileCard",
-      null
-    ],
-    [
-      ".ai-model",
-      "ModelStatusCard",
-      null
-    ],
-    [
-      ".pa-metric",
-      "MetricCard",
-      null
-    ],
-    [
-      ".audio-latency",
-      "LatencyIndicator",
-      null
-    ],
-    [
-      ".modal,.pa-modal,.pf-modal,.q-modal",
-      "Dialog",
-      null
-    ],
+    [".me-roll", "PianoRollGrid", null],
+    [".me-transport", "TransportBar", null],
+    ["[data-dial]", "RotaryKnob", null],
+    [".pf-card", "RecordingCard", null],
+    [".q-card", "ProcessingTaskCard", null],
+    [".participant", "ParticipantCard", null],
+    [".pa-master", "RecordingCard", null],
+    [".pa-original", "AudioPlayer", null],
+    [".pa-recommendation", "PerformanceSummary", null],
+    [".card.storage", "StorageSummary", null],
+    [".card.diagnostics", "DiagnosticsPanel", null],
+    [".profile.card", "ProfileCard", null],
+    [".ai-model", "ModelStatusCard", null],
+    [".pa-metric", "MetricCard", null],
+    [".audio-latency", "LatencyIndicator", null],
+    [".modal,.pa-modal,.pf-modal,.q-modal", "Dialog", null],
     [
       ".dialog-box,.pa-dialog,.pf-dialog,.q-dialog,.me-dialog,dialog",
       "Dialog",
@@ -104,51 +38,15 @@
       "PageHeader",
       null
     ],
-    [
-      ".env-card-head,.ai-head",
-      "SectionHeader",
-      null
-    ],
-    [
-      ".card,.surface,.pa-panel,.me-panel",
-      "Surface",
-      null
-    ],
-    [
-      ".form",
-      "RoomConnectionForm",
-      null
-    ],
-    [
-      ".theme-picker,.themes",
-      "ThemePicker",
-      null
-    ],
-    [
-      ".theme-card",
-      "Card",
-      null
-    ],
-    [
-      ".pa-tile,.tile,.fi,.hero,.pf-header-tile",
-      "IconTile",
-      null
-    ],
-    [
-      ".avatar",
-      "Avatar",
-      null
-    ],
-    [
-      ".seal",
-      "RoleEmblem",
-      null
-    ],
-    [
-      ".signature,.pf-signature,.me-signature",
-      "BrandMark",
-      null
-    ],
+    [".env-card-head,.ai-head", "SectionHeader", null],
+    [".card,.surface,.pa-panel,.me-panel", "Surface", null],
+    [".form", "RoomConnectionForm", null],
+    [".theme-picker,.themes", "ThemePicker", null],
+    [".theme-card", "Card", null],
+    [".pa-tile,.tile,.fi,.hero,.pf-header-tile", "IconTile", null],
+    [".avatar", "Avatar", null],
+    [".seal", "RoleEmblem", null],
+    [".signature,.pf-signature,.me-signature", "BrandMark", null],
     [
       ".appearance-footer,.audio-footer,.pf-footer,.q-footer,.me-footer,.me-toolbar,.toolbar",
       "Toolbar",
@@ -159,241 +57,61 @@
       "ScrollArea",
       null
     ],
-    [
-      ".history-tabs,.tabs",
-      "Tabs",
-      null
-    ],
-    [
-      ".me-tools,.me-modes,.pf-view-switch",
-      "SegmentedControl",
-      null
-    ],
-    [
-      ".me-save-group,.pf-add",
-      "SplitButton",
-      null
-    ],
-    [
-      ".me-history",
-      "UndoRedoControls",
-      null
-    ],
-    [
-      ".me-zoom-step",
-      "ZoomControl",
-      null
-    ],
-    [
-      ".audio-gauge,.dial",
-      "CircularGauge",
-      null
-    ],
-    [
-      "[data-dial]",
-      "RotaryKnob",
-      null
-    ],
-    [
-      ".volume-control,.me-volume",
-      "VolumeControl",
-      null
-    ],
-    [
-      ".meter,.audio-mini-wave",
-      "LevelMeter",
-      null
-    ],
-    [
-      ".pa-waveform,.pf-waveform,.me-waveform",
-      "Waveform",
-      null
-    ],
-    [
-      ".me-transport",
-      "TransportBar",
-      null
-    ],
-    [
-      ".me-piano",
-      "PianoKeyboard",
-      null
-    ],
-    [
-      ".me-roll",
-      "PianoRollGrid",
-      null
-    ],
-    [
-      ".me-ruler",
-      "TimeRuler",
-      null
-    ],
-    [
-      ".me-words",
-      "LyricsLane",
-      null
-    ],
-    [
-      ".me-note",
-      "NoteBlock",
-      null
-    ],
-    [
-      ".me-playhead,.me-wave-cursor",
-      "Playhead",
-      null
-    ],
-    [
-      ".me-marquee",
-      "SelectionOverlay",
-      null
-    ],
-    [
-      ".q-stages",
-      "Steps",
-      null
-    ],
-    [
-      ".q-error-message",
-      "MessageBar",
-      null
-    ],
-    [
-      ".q-status-icon,.status-light",
-      "StatusIndicator",
-      null
-    ],
+    [".history-tabs,.tabs", "Tabs", null],
+    [".me-tools,.me-modes,.pf-view-switch", "SegmentedControl", null],
+    [".me-save-group,.pf-add", "SplitButton", null],
+    [".me-history", "UndoRedoControls", null],
+    [".me-zoom-step", "ZoomControl", null],
+    [".audio-gauge,.dial", "CircularGauge", null],
+    ["[data-dial]", "RotaryKnob", null],
+    [".volume-control,.me-volume", "VolumeControl", null],
+    [".meter,.audio-mini-wave", "LevelMeter", null],
+    [".pa-waveform,.pf-waveform,.me-waveform", "Waveform", null],
+    [".me-transport", "TransportBar", null],
+    [".me-piano", "PianoKeyboard", null],
+    [".me-roll", "PianoRollGrid", null],
+    [".me-ruler", "TimeRuler", null],
+    [".me-words", "LyricsLane", null],
+    [".me-note", "NoteBlock", null],
+    [".me-playhead,.me-wave-cursor", "Playhead", null],
+    [".me-marquee", "SelectionOverlay", null],
+    [".q-stages", "Steps", null],
+    [".q-error-message", "MessageBar", null],
+    [".q-status-icon,.status-light", "StatusIndicator", null],
     [
       ".q-track,.transfer-track,.storage-track,.pa-metric-bar",
       "ProgressBar",
       null
     ],
-    [
-      ".you-badge,.latency-quality,.env-gpu-badge",
-      "Badge",
-      null
-    ],
-    [
-      ".q-menu,.pf-popover,.me-popover,.popover",
-      "Menu",
-      null
-    ],
-    [
-      ".q-menu-item,.pf-menu-item,.me-menu-item",
-      "MenuItem",
-      null
-    ],
-    [
-      ".q-toast,.pf-toast,.me-toast,.pa-toast,.toast",
-      "Toast",
-      null
-    ],
-    [
-      ".q-empty,.pf-empty",
-      "EmptyState",
-      null
-    ],
-    [
-      "table",
-      "DataTable",
-      null
-    ],
-    [
-      "dl",
-      "KeyValueList",
-      null
-    ],
-    [
-      ".env-json-card",
-      "CollapsibleSection",
-      null
-    ],
-    [
-      ".env-json-code,pre",
-      "CodeViewer",
-      null
-    ],
-    [
-      ".pf-art-frame,.pa-cover,.cover,.me-cover,.q-cover",
-      "ArtworkFrame",
-      null
-    ],
+    [".you-badge,.latency-quality,.env-gpu-badge", "Badge", null],
+    [".q-menu,.pf-popover,.me-popover,.popover", "Menu", null],
+    [".q-menu-item,.pf-menu-item,.me-menu-item", "MenuItem", null],
+    [".q-toast,.pf-toast,.me-toast,.pa-toast,.toast", "Toast", null],
+    [".q-empty,.pf-empty", "EmptyState", null],
+    ["table", "DataTable", null],
+    ["dl", "KeyValueList", null],
+    [".env-json-card", "CollapsibleSection", null],
+    [".env-json-code,pre", "CodeViewer", null],
+    [".pf-art-frame,.pa-cover,.cover,.me-cover,.q-cover", "ArtworkFrame", null],
     [
       ".q-divider,.pf-divider,.pa-tool-divider,.divider,.storage-divider",
       "Divider",
       null
     ],
-    [
-      ".env-input-shell,.input-shell",
-      "TextField",
-      null
-    ],
-    [
-      ".select-shell,.me-select",
-      "Select",
-      null
-    ],
-    [
-      ".field,.ai-field,.env-field,.me-dialog-field",
-      "Field",
-      null
-    ],
-    [
-      ".toggle-field",
-      "Switch",
-      null
-    ],
-    [
-      "[role=\"tab\"]",
-      "Tab",
-      null
-    ],
-    [
-      "button[role=\"switch\"]",
-      "Switch",
-      null
-    ],
-    [
-      "button[aria-pressed]",
-      "ToggleButton",
-      null
-    ],
-    [
-      "input[type=\"range\"]",
-      "Slider",
-      null
-    ],
-    [
-      "input[type=\"number\"]",
-      "NumberField",
-      null
-    ],
-    [
-      "input[type=\"file\"]",
-      "FilePicker",
-      null
-    ],
-    [
-      "input[type=\"checkbox\"]",
-      "Checkbox",
-      null
-    ],
-    [
-      "input",
-      "TextField",
-      null
-    ],
-    [
-      "select",
-      "Select",
-      null
-    ],
-    [
-      "button",
-      "Button",
-      null
-    ]
+    [".env-input-shell,.input-shell", "TextField", null],
+    [".select-shell,.me-select", "Select", null],
+    [".field,.ai-field,.env-field,.me-dialog-field", "Field", null],
+    [".toggle-field", "Switch", null],
+    ["[role=\"tab\"]", "Tab", null],
+    ["button[role=\"switch\"]", "Switch", null],
+    ["button[aria-pressed]", "ToggleButton", null],
+    ["input[type=\"range\"]", "Slider", null],
+    ["input[type=\"number\"]", "NumberField", null],
+    ["input[type=\"file\"]", "FilePicker", null],
+    ["input[type=\"checkbox\"]", "Checkbox", null],
+    ["input", "TextField", null],
+    ["select", "Select", null],
+    ["button", "Button", null]
   ],
   "tree": [
     {
@@ -450,18 +168,14 @@
                   "props": {
                     "className": "ghost-app__title"
                   },
-                  "children": [
-                    "A&D Voice"
-                  ]
+                  "children": ["A&D Voice"]
                 },
                 {
                   "tag": "div",
                   "props": {
                     "className": "ghost-app__line"
                   },
-                  "children": [
-                    "Любимые песни. Твой голос."
-                  ]
+                  "children": ["Любимые песни. Твой голос."]
                 }
               ]
             },
@@ -513,9 +227,7 @@
                       "props": {
                         "id": "settings-title"
                       },
-                      "children": [
-                        "Настройки"
-                      ]
+                      "children": ["Настройки"]
                     },
                     {
                       "tag": "p",
@@ -542,9 +254,7 @@
                           "props": {
                             "className": "signature__subtitle"
                           },
-                          "children": [
-                            "KARAOKE STUDIO"
-                          ]
+                          "children": ["KARAOKE STUDIO"]
                         }
                       ]
                     },
@@ -597,9 +307,7 @@
                         },
                         {
                           "tag": "span",
-                          "children": [
-                            "Внешний вид"
-                          ]
+                          "children": ["Внешний вид"]
                         }
                       ]
                     },
@@ -624,9 +332,7 @@
                         },
                         {
                           "tag": "span",
-                          "children": [
-                            "Аудио"
-                          ]
+                          "children": ["Аудио"]
                         }
                       ]
                     },
@@ -651,9 +357,7 @@
                         },
                         {
                           "tag": "span",
-                          "children": [
-                            "AI / Обработка"
-                          ]
+                          "children": ["AI / Обработка"]
                         }
                       ]
                     },
@@ -678,9 +382,7 @@
                         },
                         {
                           "tag": "span",
-                          "children": [
-                            "Ключи ENV"
-                          ]
+                          "children": ["Ключи ENV"]
                         }
                       ]
                     },
@@ -705,9 +407,7 @@
                         },
                         {
                           "tag": "span",
-                          "children": [
-                            "Дополнительно"
-                          ]
+                          "children": ["Дополнительно"]
                         }
                       ]
                     }
@@ -760,9 +460,7 @@
                                 "id": "storage-title",
                                 "className": "card-title"
                               },
-                              "children": [
-                                "Память / хранилище"
-                              ]
+                              "children": ["Память / хранилище"]
                             },
                             {
                               "tag": "p",
@@ -794,9 +492,7 @@
                                           "props": {
                                             "id": "free-space"
                                           },
-                                          "children": [
-                                            "92.2 GB"
-                                          ]
+                                          "children": ["92.2 GB"]
                                         }
                                       ]
                                     },
@@ -809,9 +505,7 @@
                                           "props": {
                                             "id": "used-space"
                                           },
-                                          "children": [
-                                            "36.8 GB из 128 GB"
-                                          ]
+                                          "children": ["36.8 GB из 128 GB"]
                                         }
                                       ]
                                     }
@@ -862,9 +556,7 @@
                                     },
                                     {
                                       "tag": "span",
-                                      "children": [
-                                        "Очистить кэш"
-                                      ]
+                                      "children": ["Очистить кэш"]
                                     }
                                   ]
                                 },
@@ -883,9 +575,7 @@
                                     },
                                     {
                                       "tag": "span",
-                                      "children": [
-                                        "Удалить временные файлы"
-                                      ]
+                                      "children": ["Удалить временные файлы"]
                                     }
                                   ]
                                 }
@@ -918,15 +608,11 @@
                                     },
                                     {
                                       "tag": "dt",
-                                      "children": [
-                                        "Песни"
-                                      ]
+                                      "children": ["Песни"]
                                     },
                                     {
                                       "tag": "dd",
-                                      "children": [
-                                        "1.3 GB"
-                                      ]
+                                      "children": ["1.3 GB"]
                                     }
                                   ]
                                 },
@@ -942,15 +628,11 @@
                                     },
                                     {
                                       "tag": "dt",
-                                      "children": [
-                                        "Модели"
-                                      ]
+                                      "children": ["Модели"]
                                     },
                                     {
                                       "tag": "dd",
-                                      "children": [
-                                        "1.5 GB"
-                                      ]
+                                      "children": ["1.5 GB"]
                                     }
                                   ]
                                 },
@@ -966,18 +648,14 @@
                                     },
                                     {
                                       "tag": "dt",
-                                      "children": [
-                                        "Кэш"
-                                      ]
+                                      "children": ["Кэш"]
                                     },
                                     {
                                       "tag": "dd",
                                       "props": {
                                         "id": "cache-space"
                                       },
-                                      "children": [
-                                        "498 MB"
-                                      ]
+                                      "children": ["498 MB"]
                                     }
                                   ]
                                 },
@@ -993,15 +671,11 @@
                                     },
                                     {
                                       "tag": "dt",
-                                      "children": [
-                                        "Записи"
-                                      ]
+                                      "children": ["Записи"]
                                     },
                                     {
                                       "tag": "dd",
-                                      "children": [
-                                        "12 GB"
-                                      ]
+                                      "children": ["12 GB"]
                                     }
                                   ]
                                 },
@@ -1017,18 +691,14 @@
                                     },
                                     {
                                       "tag": "dt",
-                                      "children": [
-                                        "Временные файлы"
-                                      ]
+                                      "children": ["Временные файлы"]
                                     },
                                     {
                                       "tag": "dd",
                                       "props": {
                                         "id": "temporary-space"
                                       },
-                                      "children": [
-                                        "0 B"
-                                      ]
+                                      "children": ["0 B"]
                                     }
                                   ]
                                 }
@@ -1069,9 +739,7 @@
                                 "id": "history-title",
                                 "className": "card-title"
                               },
-                              "children": [
-                                "История"
-                              ]
+                              "children": ["История"]
                             },
                             {
                               "tag": "p",
@@ -1104,9 +772,7 @@
                                     "type": "button",
                                     "className": "history-tab"
                                   },
-                                  "children": [
-                                    "Выступления"
-                                  ]
+                                  "children": ["Выступления"]
                                 },
                                 {
                                   "tag": "button",
@@ -1122,9 +788,7 @@
                                     "type": "button",
                                     "className": "history-tab"
                                   },
-                                  "children": [
-                                    "Обработка"
-                                  ]
+                                  "children": ["Обработка"]
                                 }
                               ]
                             },
@@ -1183,27 +847,21 @@
                                                   "props": {
                                                     "scope": "col"
                                                   },
-                                                  "children": [
-                                                    "Дата и время"
-                                                  ]
+                                                  "children": ["Дата и время"]
                                                 },
                                                 {
                                                   "tag": "th",
                                                   "props": {
                                                     "scope": "col"
                                                   },
-                                                  "children": [
-                                                    "ID события"
-                                                  ]
+                                                  "children": ["ID события"]
                                                 },
                                                 {
                                                   "tag": "th",
                                                   "props": {
                                                     "scope": "col"
                                                   },
-                                                  "children": [
-                                                    "Тип"
-                                                  ]
+                                                  "children": ["Тип"]
                                                 }
                                               ]
                                             }
@@ -1287,9 +945,7 @@
                                 "id": "diagnostics-title",
                                 "className": "card-title"
                               },
-                              "children": [
-                                "Диагностика"
-                              ]
+                              "children": ["Диагностика"]
                             },
                             {
                               "tag": "p",
@@ -1333,9 +989,7 @@
                                     },
                                     {
                                       "tag": "span",
-                                      "children": [
-                                        "Копировать диагностику"
-                                      ]
+                                      "children": ["Копировать диагностику"]
                                     }
                                   ]
                                 },
@@ -1379,9 +1033,7 @@
                                     },
                                     {
                                       "tag": "span",
-                                      "children": [
-                                        "Обновить"
-                                      ]
+                                      "children": ["Обновить"]
                                     }
                                   ]
                                 }
@@ -1438,15 +1090,11 @@
                                   "children": [
                                     {
                                       "tag": "strong",
-                                      "children": [
-                                        "A&D Voice"
-                                      ]
+                                      "children": ["A&D Voice"]
                                     },
                                     {
                                       "tag": "small",
-                                      "children": [
-                                        "© A&D Voice"
-                                      ]
+                                      "children": ["© A&D Voice"]
                                     }
                                   ]
                                 }
@@ -1467,15 +1115,11 @@
                                   "children": [
                                     {
                                       "tag": "dt",
-                                      "children": [
-                                        "Версия frontend"
-                                      ]
+                                      "children": ["Версия frontend"]
                                     },
                                     {
                                       "tag": "dd",
-                                      "children": [
-                                        "1.0.0"
-                                      ]
+                                      "children": ["1.0.0"]
                                     }
                                   ]
                                 },
@@ -1487,15 +1131,11 @@
                                   "children": [
                                     {
                                       "tag": "dt",
-                                      "children": [
-                                        "Версия Python backend"
-                                      ]
+                                      "children": ["Версия Python backend"]
                                     },
                                     {
                                       "tag": "dd",
-                                      "children": [
-                                        "1.0.0 (API 1)"
-                                      ]
+                                      "children": ["1.0.0 (API 1)"]
                                     }
                                   ]
                                 },
@@ -1507,15 +1147,11 @@
                                   "children": [
                                     {
                                       "tag": "dt",
-                                      "children": [
-                                        "Версия AudioService"
-                                      ]
+                                      "children": ["Версия AudioService"]
                                     },
                                     {
                                       "tag": "dd",
-                                      "children": [
-                                        "1"
-                                      ]
+                                      "children": ["1"]
                                     }
                                   ]
                                 },
@@ -1527,15 +1163,11 @@
                                   "children": [
                                     {
                                       "tag": "dt",
-                                      "children": [
-                                        "AI / pipeline"
-                                      ]
+                                      "children": ["AI / pipeline"]
                                     },
                                     {
                                       "tag": "dd",
-                                      "children": [
-                                        "DB 4 · project format 2"
-                                      ]
+                                      "children": ["DB 4 · project format 2"]
                                     }
                                   ]
                                 }
@@ -1667,9 +1299,7 @@
                               "props": {
                                 "id": "profile-title"
                               },
-                              "children": [
-                                "Профиль"
-                              ]
+                              "children": ["Профиль"]
                             },
                             {
                               "tag": "div",
@@ -1684,9 +1314,7 @@
                                   "props": {
                                     "id": "avatar-letter"
                                   },
-                                  "children": [
-                                    "B"
-                                  ]
+                                  "children": ["B"]
                                 },
                                 {
                                   "tag": "canvas",
@@ -1724,9 +1352,7 @@
                                 },
                                 {
                                   "tag": "span",
-                                  "children": [
-                                    "Выбрать фото"
-                                  ]
+                                  "children": ["Выбрать фото"]
                                 }
                               ]
                             },
@@ -1759,9 +1385,7 @@
                                 },
                                 {
                                   "tag": "small",
-                                  "children": [
-                                    "MUSIC CONNECTS PEOPLE"
-                                  ]
+                                  "children": ["MUSIC CONNECTS PEOPLE"]
                                 }
                               ]
                             }
@@ -1781,9 +1405,7 @@
                               "props": {
                                 "id": "transfer-title"
                               },
-                              "children": [
-                                "Код переноса"
-                              ]
+                              "children": ["Код переноса"]
                             },
                             {
                               "tag": "p",
@@ -1806,9 +1428,7 @@
                                 },
                                 {
                                   "tag": "span",
-                                  "children": [
-                                    "Показать код"
-                                  ]
+                                  "children": ["Показать код"]
                                 }
                               ]
                             },
@@ -1855,9 +1475,7 @@
                                     },
                                     {
                                       "tag": "span",
-                                      "children": [
-                                        "Перенести аккаунт сюда"
-                                      ]
+                                      "children": ["Перенести аккаунт сюда"]
                                     }
                                   ]
                                 }
@@ -1887,9 +1505,7 @@
                                   "props": {
                                     "for": "display-name"
                                   },
-                                  "children": [
-                                    "Имя в онлайн-комнате"
-                                  ]
+                                  "children": ["Имя в онлайн-комнате"]
                                 },
                                 {
                                   "tag": "input",
@@ -1916,9 +1532,7 @@
                                   "props": {
                                     "for": "language"
                                   },
-                                  "children": [
-                                    "Язык"
-                                  ]
+                                  "children": ["Язык"]
                                 },
                                 {
                                   "tag": "div",
@@ -1939,27 +1553,21 @@
                                           "props": {
                                             "value": "ru"
                                           },
-                                          "children": [
-                                            "Русский"
-                                          ]
+                                          "children": ["Русский"]
                                         },
                                         {
                                           "tag": "option",
                                           "props": {
                                             "value": "uk"
                                           },
-                                          "children": [
-                                            "Українська"
-                                          ]
+                                          "children": ["Українська"]
                                         },
                                         {
                                           "tag": "option",
                                           "props": {
                                             "value": "en"
                                           },
-                                          "children": [
-                                            "English"
-                                          ]
+                                          "children": ["English"]
                                         }
                                       ]
                                     },
@@ -2001,9 +1609,7 @@
                                 },
                                 {
                                   "tag": "span",
-                                  "children": [
-                                    "Уменьшить анимации"
-                                  ]
+                                  "children": ["Уменьшить анимации"]
                                 }
                               ]
                             },
@@ -2019,9 +1625,7 @@
                                   "props": {
                                     "for": "station"
                                   },
-                                  "children": [
-                                    "Радиостанция"
-                                  ]
+                                  "children": ["Радиостанция"]
                                 },
                                 {
                                   "tag": "div",
@@ -2046,27 +1650,21 @@
                                           "props": {
                                             "value": "secret-agent"
                                           },
-                                          "children": [
-                                            "SomaFM - Secret Agent"
-                                          ]
+                                          "children": ["SomaFM - Secret Agent"]
                                         },
                                         {
                                           "tag": "option",
                                           "props": {
                                             "value": "groove-salad"
                                           },
-                                          "children": [
-                                            "SomaFM - Groove Salad"
-                                          ]
+                                          "children": ["SomaFM - Groove Salad"]
                                         },
                                         {
                                           "tag": "option",
                                           "props": {
                                             "value": "drone-zone"
                                           },
-                                          "children": [
-                                            "SomaFM - Drone Zone"
-                                          ]
+                                          "children": ["SomaFM - Drone Zone"]
                                         }
                                       ]
                                     },
@@ -2090,9 +1688,7 @@
                                   "props": {
                                     "for": "radio-volume"
                                   },
-                                  "children": [
-                                    "Громкость радио"
-                                  ]
+                                  "children": ["Громкость радио"]
                                 },
                                 {
                                   "tag": "div",
@@ -2124,9 +1720,7 @@
                                         "for": "radio-volume",
                                         "id": "volume-value"
                                       },
-                                      "children": [
-                                        "35"
-                                      ]
+                                      "children": ["35"]
                                     }
                                   ]
                                 }
@@ -2166,9 +1760,7 @@
                                   "props": {
                                     "id": "radio-label"
                                   },
-                                  "children": [
-                                    "Радио включено"
-                                  ]
+                                  "children": ["Радио включено"]
                                 }
                               ]
                             }
@@ -2194,9 +1786,7 @@
                                   "props": {
                                     "id": "theme-title"
                                   },
-                                  "children": [
-                                    "Тема"
-                                  ]
+                                  "children": ["Тема"]
                                 },
                                 {
                                   "tag": "p",
@@ -2247,15 +1837,11 @@
                                       "children": [
                                         {
                                           "tag": "strong",
-                                          "children": [
-                                            "Тёмная"
-                                          ]
+                                          "children": ["Тёмная"]
                                         },
                                         {
                                           "tag": "span",
-                                          "children": [
-                                            "Глубина и концентрация"
-                                          ]
+                                          "children": ["Глубина и концентрация"]
                                         }
                                       ]
                                     },
@@ -2306,15 +1892,11 @@
                                       "children": [
                                         {
                                           "tag": "strong",
-                                          "children": [
-                                            "Светлая"
-                                          ]
+                                          "children": ["Светлая"]
                                         },
                                         {
                                           "tag": "span",
-                                          "children": [
-                                            "Чистота и лёгкость"
-                                          ]
+                                          "children": ["Чистота и лёгкость"]
                                         }
                                       ]
                                     },
@@ -2365,15 +1947,11 @@
                                       "children": [
                                         {
                                           "tag": "strong",
-                                          "children": [
-                                            "Зелёная"
-                                          ]
+                                          "children": ["Зелёная"]
                                         },
                                         {
                                           "tag": "span",
-                                          "children": [
-                                            "Энергия и драйв"
-                                          ]
+                                          "children": ["Энергия и драйв"]
                                         }
                                       ]
                                     },
@@ -2424,15 +2002,11 @@
                                       "children": [
                                         {
                                           "tag": "strong",
-                                          "children": [
-                                            "Фиолетовая"
-                                          ]
+                                          "children": ["Фиолетовая"]
                                         },
                                         {
                                           "tag": "span",
-                                          "children": [
-                                            "Атмосфера и стиль"
-                                          ]
+                                          "children": ["Атмосфера и стиль"]
                                         }
                                       ]
                                     },
@@ -2483,15 +2057,11 @@
                           "children": [
                             {
                               "tag": "strong",
-                              "children": [
-                                "Сбросить настройки"
-                              ]
+                              "children": ["Сбросить настройки"]
                             },
                             {
                               "tag": "small",
-                              "children": [
-                                "Вернуть значения по умолчанию"
-                              ]
+                              "children": ["Вернуть значения по умолчанию"]
                             }
                           ]
                         }
@@ -2511,9 +2081,7 @@
                             "type": "button",
                             "className": "cancel-button glass-button"
                           },
-                          "children": [
-                            "Отмена"
-                          ]
+                          "children": ["Отмена"]
                         },
                         {
                           "tag": "button",
@@ -2530,9 +2098,7 @@
                             },
                             {
                               "tag": "span",
-                              "children": [
-                                "Сохранить"
-                              ]
+                              "children": ["Сохранить"]
                             }
                           ]
                         }
@@ -2638,9 +2204,7 @@
                                     "id": "audio-devices-title",
                                     "className": "card-title"
                                   },
-                                  "children": [
-                                    "Аудиоустройства и параметры"
-                                  ]
+                                  "children": ["Аудиоустройства и параметры"]
                                 },
                                 {
                                   "tag": "p",
@@ -2673,9 +2237,7 @@
                                           "props": {
                                             "for": "audio-driver"
                                           },
-                                          "children": [
-                                            "Драйвер"
-                                          ]
+                                          "children": ["Драйвер"]
                                         },
                                         {
                                           "tag": "button",
@@ -2715,9 +2277,7 @@
                                               "props": {
                                                 "value": "wasapi-shared"
                                               },
-                                              "children": [
-                                                "WASAPI Shared"
-                                              ]
+                                              "children": ["WASAPI Shared"]
                                             }
                                           ]
                                         },
@@ -2746,9 +2306,7 @@
                                           "props": {
                                             "for": "audio-rate"
                                           },
-                                          "children": [
-                                            "Частота дискретизации"
-                                          ]
+                                          "children": ["Частота дискретизации"]
                                         },
                                         {
                                           "tag": "button",
@@ -2788,9 +2346,7 @@
                                               "props": {
                                                 "value": "44100"
                                               },
-                                              "children": [
-                                                "44.1 кГц"
-                                              ]
+                                              "children": ["44.1 кГц"]
                                             }
                                           ]
                                         },
@@ -2819,9 +2375,7 @@
                                           "props": {
                                             "for": "audio-period"
                                           },
-                                          "children": [
-                                            "Период"
-                                          ]
+                                          "children": ["Период"]
                                         },
                                         {
                                           "tag": "button",
@@ -2861,9 +2415,7 @@
                                               "props": {
                                                 "value": "441"
                                               },
-                                              "children": [
-                                                "441 кадров"
-                                              ]
+                                              "children": ["441 кадров"]
                                             }
                                           ]
                                         },
@@ -2892,9 +2444,7 @@
                                           "props": {
                                             "for": "audio-input"
                                           },
-                                          "children": [
-                                            "Устройство ввода"
-                                          ]
+                                          "children": ["Устройство ввода"]
                                         }
                                       ]
                                     },
@@ -2948,9 +2498,7 @@
                                           "props": {
                                             "for": "audio-output"
                                           },
-                                          "children": [
-                                            "Устройство вывода"
-                                          ]
+                                          "children": ["Устройство вывода"]
                                         }
                                       ]
                                     },
@@ -3070,9 +2618,7 @@
                                     "id": "audio-monitoring-title",
                                     "className": "card-title"
                                   },
-                                  "children": [
-                                    "Мониторинг и уровень сигнала"
-                                  ]
+                                  "children": ["Мониторинг и уровень сигнала"]
                                 },
                                 {
                                   "tag": "p",
@@ -3121,9 +2667,7 @@
                                         },
                                         {
                                           "tag": "span",
-                                          "children": [
-                                            "Расчётная задержка"
-                                          ]
+                                          "children": ["Расчётная задержка"]
                                         },
                                         {
                                           "tag": "button",
@@ -3449,9 +2993,7 @@
                                               "props": {
                                                 "className": "unit"
                                               },
-                                              "children": [
-                                                "мс"
-                                              ]
+                                              "children": ["мс"]
                                             }
                                           ]
                                         },
@@ -3474,9 +3016,7 @@
                                               "props": {
                                                 "id": "audio-health-text"
                                               },
-                                              "children": [
-                                                "Исправно"
-                                              ]
+                                              "children": ["Исправно"]
                                             }
                                           ]
                                         }
@@ -3507,9 +3047,7 @@
                                         },
                                         {
                                           "tag": "span",
-                                          "children": [
-                                            "Измерить"
-                                          ]
+                                          "children": ["Измерить"]
                                         }
                                       ]
                                     }
@@ -3548,9 +3086,7 @@
                                         },
                                         {
                                           "tag": "span",
-                                          "children": [
-                                            "Уровни"
-                                          ]
+                                          "children": ["Уровни"]
                                         }
                                       ]
                                     },
@@ -3583,18 +3119,14 @@
                                                 "id": "audio-value-mic",
                                                 "className": "audio-gauge-value"
                                               },
-                                              "children": [
-                                                "100%"
-                                              ]
+                                              "children": ["100%"]
                                             },
                                             {
                                               "tag": "span",
                                               "props": {
                                                 "className": "audio-gauge-label"
                                               },
-                                              "children": [
-                                                "Микрофон"
-                                              ]
+                                              "children": ["Микрофон"]
                                             },
                                             {
                                               "tag": "div",
@@ -3661,18 +3193,14 @@
                                                 "id": "audio-value-noise",
                                                 "className": "audio-gauge-value"
                                               },
-                                              "children": [
-                                                "0%"
-                                              ]
+                                              "children": ["0%"]
                                             },
                                             {
                                               "tag": "span",
                                               "props": {
                                                 "className": "audio-gauge-label"
                                               },
-                                              "children": [
-                                                "Шум"
-                                              ]
+                                              "children": ["Шум"]
                                             },
                                             {
                                               "tag": "div",
@@ -3759,9 +3287,7 @@
                                         },
                                         {
                                           "tag": "span",
-                                          "children": [
-                                            "Мониторинг входа"
-                                          ]
+                                          "children": ["Мониторинг входа"]
                                         }
                                       ]
                                     },
@@ -3838,15 +3364,11 @@
                           "children": [
                             {
                               "tag": "strong",
-                              "children": [
-                                "Сбросить настройки"
-                              ]
+                              "children": ["Сбросить настройки"]
                             },
                             {
                               "tag": "small",
-                              "children": [
-                                "Вернуть значения по умолчанию"
-                              ]
+                              "children": ["Вернуть значения по умолчанию"]
                             }
                           ]
                         }
@@ -3866,9 +3388,7 @@
                             "type": "button",
                             "className": "cancel-button glass-button"
                           },
-                          "children": [
-                            "Отмена"
-                          ]
+                          "children": ["Отмена"]
                         },
                         {
                           "tag": "button",
@@ -3885,9 +3405,7 @@
                             },
                             {
                               "tag": "span",
-                              "children": [
-                                "Сохранить"
-                              ]
+                              "children": ["Сохранить"]
                             }
                           ]
                         }
@@ -3947,9 +3465,7 @@
                             },
                             {
                               "tag": "h2",
-                              "children": [
-                                "AI и обработка аудио"
-                              ]
+                              "children": ["AI и обработка аудио"]
                             },
                             {
                               "tag": "p",
@@ -4001,9 +3517,7 @@
                                       "props": {
                                         "className": "ai-info"
                                       },
-                                      "children": [
-                                        "i"
-                                      ]
+                                      "children": ["i"]
                                     }
                                   ]
                                 },
@@ -4055,9 +3569,7 @@
                                       "props": {
                                         "className": "ai-info"
                                       },
-                                      "children": [
-                                        "i"
-                                      ]
+                                      "children": ["i"]
                                     }
                                   ]
                                 },
@@ -4133,9 +3645,7 @@
                                     },
                                     {
                                       "tag": "strong",
-                                      "children": [
-                                        "ASR (whisper-base)"
-                                      ]
+                                      "children": ["ASR (whisper-base)"]
                                     },
                                     {
                                       "tag": "small",
@@ -4145,9 +3655,7 @@
                                           "props": {
                                             "className": "ai-ok"
                                           },
-                                          "children": [
-                                            "✓"
-                                          ]
+                                          "children": ["✓"]
                                         },
                                         "Готова"
                                       ]
@@ -4157,9 +3665,7 @@
                                       "props": {
                                         "className": "chev"
                                       },
-                                      "children": [
-                                        "›"
-                                      ]
+                                      "children": ["›"]
                                     }
                                   ]
                                 },
@@ -4177,9 +3683,7 @@
                                     },
                                     {
                                       "tag": "strong",
-                                      "children": [
-                                        "Alignment (mms-fn)"
-                                      ]
+                                      "children": ["Alignment (mms-fn)"]
                                     },
                                     {
                                       "tag": "small",
@@ -4189,9 +3693,7 @@
                                           "props": {
                                             "className": "ai-ok"
                                           },
-                                          "children": [
-                                            "✓"
-                                          ]
+                                          "children": ["✓"]
                                         },
                                         "Готово"
                                       ]
@@ -4201,9 +3703,7 @@
                                       "props": {
                                         "className": "chev"
                                       },
-                                      "children": [
-                                        "›"
-                                      ]
+                                      "children": ["›"]
                                     }
                                   ]
                                 },
@@ -4221,9 +3721,7 @@
                                     },
                                     {
                                       "tag": "strong",
-                                      "children": [
-                                        "Separation (htdemucs)"
-                                      ]
+                                      "children": ["Separation (htdemucs)"]
                                     },
                                     {
                                       "tag": "small",
@@ -4233,9 +3731,7 @@
                                           "props": {
                                             "className": "ai-ok"
                                           },
-                                          "children": [
-                                            "✓"
-                                          ]
+                                          "children": ["✓"]
                                         },
                                         "Готова"
                                       ]
@@ -4245,9 +3741,7 @@
                                       "props": {
                                         "className": "chev"
                                       },
-                                      "children": [
-                                        "›"
-                                      ]
+                                      "children": ["›"]
                                     }
                                   ]
                                 }
@@ -4332,9 +3826,7 @@
                                         "id": "env-kaggle-title",
                                         "className": "card-title"
                                       },
-                                      "children": [
-                                        "Kaggle GPU"
-                                      ]
+                                      "children": ["Kaggle GPU"]
                                     },
                                     {
                                       "tag": "p",
@@ -4502,9 +3994,7 @@
                                         },
                                         {
                                           "tag": "span",
-                                          "children": [
-                                            "Войти в Kaggle"
-                                          ]
+                                          "children": ["Войти в Kaggle"]
                                         }
                                       ]
                                     },
@@ -4523,9 +4013,7 @@
                                         },
                                         {
                                           "tag": "span",
-                                          "children": [
-                                            "Развернуть и запустить"
-                                          ]
+                                          "children": ["Развернуть и запустить"]
                                         }
                                       ]
                                     }
@@ -4586,9 +4074,7 @@
                                         "id": "env-server-title",
                                         "className": "card-title"
                                       },
-                                      "children": [
-                                        "Сервер комнат"
-                                      ]
+                                      "children": ["Сервер комнат"]
                                     },
                                     {
                                       "tag": "p",
@@ -4627,9 +4113,7 @@
                                               "props": {
                                                 "for": "env-server"
                                               },
-                                              "children": [
-                                                "Адрес сервера"
-                                              ]
+                                              "children": ["Адрес сервера"]
                                             },
                                             {
                                               "tag": "button",
@@ -4730,9 +4214,7 @@
                                                   "props": {
                                                     "for": "env-room-port"
                                                   },
-                                                  "children": [
-                                                    "Порт комнат"
-                                                  ]
+                                                  "children": ["Порт комнат"]
                                                 },
                                                 {
                                                   "tag": "button",
@@ -4971,9 +4453,7 @@
                                     "id": "env-recognition-title",
                                     "className": "card-title"
                                   },
-                                  "children": [
-                                    "Распознавание музыки"
-                                  ]
+                                  "children": ["Распознавание музыки"]
                                 },
                                 {
                                   "tag": "p",
@@ -5012,9 +4492,7 @@
                                           "props": {
                                             "for": "env-audd-token"
                                           },
-                                          "children": [
-                                            "Токен AudD"
-                                          ]
+                                          "children": ["Токен AudD"]
                                         },
                                         {
                                           "tag": "button",
@@ -5162,9 +4640,7 @@
                                     "id": "env-deploy-title",
                                     "className": "card-title"
                                   },
-                                  "children": [
-                                    "Обновление Room Server"
-                                  ]
+                                  "children": ["Обновление Room Server"]
                                 },
                                 {
                                   "tag": "p",
@@ -5203,9 +4679,7 @@
                                           "props": {
                                             "for": "env-ssh-key"
                                           },
-                                          "children": [
-                                            "Приватный SSH-ключ"
-                                          ]
+                                          "children": ["Приватный SSH-ключ"]
                                         },
                                         {
                                           "tag": "button",
@@ -5317,9 +4791,7 @@
                                           "props": {
                                             "for": "env-known-hosts"
                                           },
-                                          "children": [
-                                            "Файл known_hosts"
-                                          ]
+                                          "children": ["Файл known_hosts"]
                                         },
                                         {
                                           "tag": "button",
@@ -5431,9 +4903,7 @@
                                           "props": {
                                             "for": "env-ssh-user"
                                           },
-                                          "children": [
-                                            "SSH-пользователь"
-                                          ]
+                                          "children": ["SSH-пользователь"]
                                         },
                                         {
                                           "tag": "button",
@@ -5564,9 +5034,7 @@
                                       "props": {
                                         "id": "env-json-title"
                                       },
-                                      "children": [
-                                        "Технический JSON"
-                                      ]
+                                      "children": ["Технический JSON"]
                                     },
                                     {
                                       "tag": "small",
@@ -5617,9 +5085,7 @@
                                         },
                                         {
                                           "tag": "span",
-                                          "children": [
-                                            "Копировать JSON"
-                                          ]
+                                          "children": ["Копировать JSON"]
                                         }
                                       ]
                                     }
@@ -5681,9 +5147,7 @@
                             "hidden": true,
                             "id": "demo-code"
                           },
-                          "children": [
-                            "DEMO-VOICE-7F2A-9C81"
-                          ]
+                          "children": ["DEMO-VOICE-7F2A-9C81"]
                         },
                         {
                           "tag": "label",
@@ -5700,9 +5164,7 @@
                                 "id": "motion-switch",
                                 "type": "checkbox"
                               },
-                              "children": [
-                                "Анимации свечения и волн"
-                              ]
+                              "children": ["Анимации свечения и волн"]
                             }
                           ]
                         },
@@ -5721,9 +5183,7 @@
                                 "type": "button",
                                 "className": "glass-button"
                               },
-                              "children": [
-                                "Отмена"
-                              ]
+                              "children": ["Отмена"]
                             },
                             {
                               "tag": "button",
@@ -5733,9 +5193,7 @@
                                 "type": "button",
                                 "className": "glass-button danger"
                               },
-                              "children": [
-                                "Подтвердить"
-                              ]
+                              "children": ["Подтвердить"]
                             }
                           ]
                         }
@@ -5772,9 +5230,7 @@
                 },
                 {
                   "tag": "span",
-                  "children": [
-                    "Открыть настройки"
-                  ]
+                  "children": ["Открыть настройки"]
                 }
               ]
             }
