@@ -1,0 +1,1417 @@
+{
+  "id": "room-full",
+  "title": "Комната · полная",
+  "width": 660,
+  "height": 771,
+  "source": "karaoke-room-neon-fixed.html",
+  "borderSelectors": [
+    ".surface"
+  ],
+  "shellSelector": "",
+  "rules": [
+    [
+      ".me-roll",
+      "PianoRollGrid",
+      null
+    ],
+    [
+      ".me-transport",
+      "TransportBar",
+      null
+    ],
+    [
+      "[data-dial]",
+      "RotaryKnob",
+      null
+    ],
+    [
+      ".pf-card",
+      "RecordingCard",
+      null
+    ],
+    [
+      ".q-card",
+      "ProcessingTaskCard",
+      null
+    ],
+    [
+      ".participant",
+      "ParticipantCard",
+      null
+    ],
+    [
+      ".pa-master",
+      "RecordingCard",
+      null
+    ],
+    [
+      ".pa-original",
+      "AudioPlayer",
+      null
+    ],
+    [
+      ".pa-recommendation",
+      "PerformanceSummary",
+      null
+    ],
+    [
+      ".card.storage",
+      "StorageSummary",
+      null
+    ],
+    [
+      ".card.diagnostics",
+      "DiagnosticsPanel",
+      null
+    ],
+    [
+      ".profile.card",
+      "ProfileCard",
+      null
+    ],
+    [
+      ".ai-model",
+      "ModelStatusCard",
+      null
+    ],
+    [
+      ".pa-metric",
+      "MetricCard",
+      null
+    ],
+    [
+      ".audio-latency",
+      "LatencyIndicator",
+      null
+    ],
+    [
+      ".modal,.pa-modal,.pf-modal,.q-modal",
+      "Dialog",
+      null
+    ],
+    [
+      ".dialog-box,.pa-dialog,.pf-dialog,.q-dialog,.me-dialog,dialog",
+      "Dialog",
+      null
+    ],
+    [
+      ".dialog-actions,.pa-dialog-actions,.pf-dialog-actions,.q-dialog-actions,.me-dialog-actions",
+      "DialogActions",
+      null
+    ],
+    [
+      ".header,.pa-header,.pf-header,.q-header,.me-header,.head,.room-header",
+      "PageHeader",
+      null
+    ],
+    [
+      ".env-card-head,.ai-head",
+      "SectionHeader",
+      null
+    ],
+    [
+      ".card,.surface,.pa-panel,.me-panel",
+      "Surface",
+      null
+    ],
+    [
+      ".form",
+      "RoomConnectionForm",
+      null
+    ],
+    [
+      ".theme-picker,.themes",
+      "ThemePicker",
+      null
+    ],
+    [
+      ".theme-card",
+      "Card",
+      null
+    ],
+    [
+      ".pa-tile,.tile,.fi,.hero,.pf-header-tile",
+      "IconTile",
+      null
+    ],
+    [
+      ".avatar",
+      "Avatar",
+      null
+    ],
+    [
+      ".seal",
+      "RoleEmblem",
+      null
+    ],
+    [
+      ".signature,.pf-signature,.me-signature",
+      "BrandMark",
+      null
+    ],
+    [
+      ".appearance-footer,.audio-footer,.pf-footer,.q-footer,.me-footer,.me-toolbar,.toolbar",
+      "Toolbar",
+      null
+    ],
+    [
+      ".content-scroll,.pf-list,.q-list,.history-scroll,.me-grid-scroll",
+      "ScrollArea",
+      null
+    ],
+    [
+      ".history-tabs,.tabs",
+      "Tabs",
+      null
+    ],
+    [
+      ".me-tools,.me-modes,.pf-view-switch",
+      "SegmentedControl",
+      null
+    ],
+    [
+      ".me-save-group,.pf-add",
+      "SplitButton",
+      null
+    ],
+    [
+      ".me-history",
+      "UndoRedoControls",
+      null
+    ],
+    [
+      ".me-zoom-step",
+      "ZoomControl",
+      null
+    ],
+    [
+      ".audio-gauge,.dial",
+      "CircularGauge",
+      null
+    ],
+    [
+      "[data-dial]",
+      "RotaryKnob",
+      null
+    ],
+    [
+      ".volume-control,.me-volume",
+      "VolumeControl",
+      null
+    ],
+    [
+      ".meter,.audio-mini-wave",
+      "LevelMeter",
+      null
+    ],
+    [
+      ".pa-waveform,.pf-waveform,.me-waveform",
+      "Waveform",
+      null
+    ],
+    [
+      ".me-transport",
+      "TransportBar",
+      null
+    ],
+    [
+      ".me-piano",
+      "PianoKeyboard",
+      null
+    ],
+    [
+      ".me-roll",
+      "PianoRollGrid",
+      null
+    ],
+    [
+      ".me-ruler",
+      "TimeRuler",
+      null
+    ],
+    [
+      ".me-words",
+      "LyricsLane",
+      null
+    ],
+    [
+      ".me-note",
+      "NoteBlock",
+      null
+    ],
+    [
+      ".me-playhead,.me-wave-cursor",
+      "Playhead",
+      null
+    ],
+    [
+      ".me-marquee",
+      "SelectionOverlay",
+      null
+    ],
+    [
+      ".q-stages",
+      "Steps",
+      null
+    ],
+    [
+      ".q-error-message",
+      "MessageBar",
+      null
+    ],
+    [
+      ".q-status-icon,.status-light",
+      "StatusIndicator",
+      null
+    ],
+    [
+      ".q-track,.transfer-track,.storage-track,.pa-metric-bar",
+      "ProgressBar",
+      null
+    ],
+    [
+      ".you-badge,.latency-quality,.env-gpu-badge",
+      "Badge",
+      null
+    ],
+    [
+      ".q-menu,.pf-popover,.me-popover,.popover",
+      "Menu",
+      null
+    ],
+    [
+      ".q-menu-item,.pf-menu-item,.me-menu-item",
+      "MenuItem",
+      null
+    ],
+    [
+      ".q-toast,.pf-toast,.me-toast,.pa-toast,.toast",
+      "Toast",
+      null
+    ],
+    [
+      ".q-empty,.pf-empty",
+      "EmptyState",
+      null
+    ],
+    [
+      "table",
+      "DataTable",
+      null
+    ],
+    [
+      "dl",
+      "KeyValueList",
+      null
+    ],
+    [
+      ".env-json-card",
+      "CollapsibleSection",
+      null
+    ],
+    [
+      ".env-json-code,pre",
+      "CodeViewer",
+      null
+    ],
+    [
+      ".pf-art-frame,.pa-cover,.cover,.me-cover,.q-cover",
+      "ArtworkFrame",
+      null
+    ],
+    [
+      ".q-divider,.pf-divider,.pa-tool-divider,.divider,.storage-divider",
+      "Divider",
+      null
+    ],
+    [
+      ".env-input-shell,.input-shell",
+      "TextField",
+      null
+    ],
+    [
+      ".select-shell,.me-select",
+      "Select",
+      null
+    ],
+    [
+      ".field,.ai-field,.env-field,.me-dialog-field",
+      "Field",
+      null
+    ],
+    [
+      ".toggle-field",
+      "Switch",
+      null
+    ],
+    [
+      "[role=\"tab\"]",
+      "Tab",
+      null
+    ],
+    [
+      "button[role=\"switch\"]",
+      "Switch",
+      null
+    ],
+    [
+      "button[aria-pressed]",
+      "ToggleButton",
+      null
+    ],
+    [
+      "input[type=\"range\"]",
+      "Slider",
+      null
+    ],
+    [
+      "input[type=\"number\"]",
+      "NumberField",
+      null
+    ],
+    [
+      "input[type=\"file\"]",
+      "FilePicker",
+      null
+    ],
+    [
+      "input[type=\"checkbox\"]",
+      "Checkbox",
+      null
+    ],
+    [
+      "input",
+      "TextField",
+      null
+    ],
+    [
+      "select",
+      "Select",
+      null
+    ],
+    [
+      "button",
+      "Button",
+      null
+    ]
+  ],
+  "tree": [
+    {
+      "component": null,
+      "art": "f8a1a4cc38a4b8be"
+    },
+    {
+      "tag": "main",
+      "props": {
+        "aria-label": "Комната караоке",
+        "className": "viewport"
+      },
+      "children": [
+        {
+          "tag": "div",
+          "props": {
+            "id": "room",
+            "className": "room"
+          },
+          "children": [
+            {
+              "component": "SceneIllustration",
+              "art": "481401faf41df9ff"
+            },
+            {
+              "tag": "header",
+              "component": "PageHeader",
+              "props": {
+                "aria-labelledby": "room-id",
+                "className": "panel room-header"
+              },
+              "children": [
+                {
+                  "tag": "div",
+                  "component": "Surface",
+                  "props": {
+                    "aria-hidden": "true",
+                    "className": "surface surface--header"
+                  },
+                  "children": [
+                    {
+                      "tag": "div",
+                      "props": {
+                        "className": "surface-interior"
+                      },
+                      "children": [
+                        {
+                          "component": "SceneIllustration",
+                          "art": "2ceea9b6e265571b"
+                        },
+                        {
+                          "component": "SceneIllustration",
+                          "art": "1efe8943cb9eb01b"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "tag": "div",
+                  "component": "ArtworkFrame",
+                  "props": {
+                    "aria-label": "Векторная миниатюра: красная планета над горным озером",
+                    "role": "group",
+                    "className": "cover"
+                  },
+                  "children": [
+                    {
+                      "component": "SceneIllustration",
+                      "art": "aace9ce78bc1ec75"
+                    }
+                  ]
+                },
+                {
+                  "tag": "span",
+                  "props": {
+                    "className": "room-eyebrow"
+                  },
+                  "children": [
+                    "КОМНАТА"
+                  ]
+                },
+                {
+                  "tag": "h1",
+                  "props": {
+                    "id": "room-id",
+                    "className": "room-id"
+                  },
+                  "children": [
+                    "a689365a-6315-4f8a-9080"
+                  ]
+                },
+                {
+                  "tag": "button",
+                  "component": "IconButton",
+                  "props": {
+                    "id": "copy-room",
+                    "type": "button",
+                    "title": "Скопировать ID комнаты",
+                    "aria-label": "Скопировать ID комнаты",
+                    "className": "plain-button copy-button"
+                  },
+                  "children": [
+                    {
+                      "component": "Icon",
+                      "art": "c52c570a703b1007"
+                    }
+                  ]
+                },
+                {
+                  "tag": "button",
+                  "component": "IconButton",
+                  "props": {
+                    "id": "room-menu-button",
+                    "type": "button",
+                    "aria-label": "Меню комнаты",
+                    "aria-expanded": "false",
+                    "aria-controls": "room-menu",
+                    "title": "Меню комнаты",
+                    "className": "plain-button menu-button"
+                  },
+                  "children": [
+                    {
+                      "tag": "span"
+                    },
+                    {
+                      "tag": "span"
+                    },
+                    {
+                      "tag": "span"
+                    }
+                  ]
+                },
+                {
+                  "tag": "span",
+                  "props": {
+                    "id": "transfer-label",
+                    "className": "transfer-label"
+                  },
+                  "children": [
+                    "Передача проекта"
+                  ]
+                },
+                {
+                  "tag": "div",
+                  "component": "ProgressBar",
+                  "props": {
+                    "id": "transfer-track",
+                    "role": "progressbar",
+                    "aria-labelledby": "transfer-label",
+                    "aria-valuemin": "0",
+                    "aria-valuemax": "100",
+                    "aria-valuenow": "70",
+                    "className": "transfer-track"
+                  },
+                  "children": [
+                    {
+                      "tag": "span",
+                      "props": {
+                        "id": "transfer-fill",
+                        "className": "transfer-fill"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "tag": "span",
+                  "props": {
+                    "id": "transfer-percent",
+                    "className": "transfer-percent"
+                  },
+                  "children": [
+                    "70%"
+                  ]
+                },
+                {
+                  "tag": "span",
+                  "props": {
+                    "id": "transfer-remaining",
+                    "className": "transfer-remaining"
+                  },
+                  "children": [
+                    "Осталось ~ 2 мин"
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "section",
+              "component": "ParticipantCard",
+              "props": {
+                "id": "participant-host",
+                "data-person": "host",
+                "aria-labelledby": "host-name",
+                "className": "panel participant participant--host"
+              },
+              "children": [
+                {
+                  "tag": "div",
+                  "component": "Surface",
+                  "props": {
+                    "aria-hidden": "true",
+                    "className": "surface surface--host"
+                  },
+                  "children": [
+                    {
+                      "tag": "div",
+                      "props": {
+                        "className": "surface-interior"
+                      },
+                      "children": [
+                        {
+                          "component": "SceneIllustration",
+                          "art": "bb37b36d2ce069e3"
+                        },
+                        {
+                          "component": "SceneIllustration",
+                          "art": "1efe8943cb9eb01b"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "tag": "div",
+                  "component": "RoleEmblem",
+                  "props": {
+                    "aria-hidden": "true",
+                    "className": "seal seal--host"
+                  },
+                  "children": [
+                    {
+                      "tag": "span",
+                      "props": {
+                        "className": "seal-face"
+                      }
+                    },
+                    {
+                      "component": "SceneIllustration",
+                      "art": "118956ba1aa5c5ce"
+                    },
+                    {
+                      "tag": "span",
+                      "props": {
+                        "className": "seal-specular"
+                      }
+                    },
+                    {
+                      "component": "Icon",
+                      "art": "81022cdd3cd8b86e"
+                    },
+                    {
+                      "tag": "span",
+                      "props": {
+                        "className": "seal-role"
+                      },
+                      "children": [
+                        "HOST"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "tag": "h2",
+                  "props": {
+                    "id": "host-name",
+                    "className": "participant-name"
+                  },
+                  "children": [
+                    "Release Host"
+                  ]
+                },
+                {
+                  "tag": "span",
+                  "component": "Badge",
+                  "props": {
+                    "className": "you-badge"
+                  },
+                  "children": [
+                    "Вы"
+                  ]
+                },
+                {
+                  "tag": "div",
+                  "props": {
+                    "className": "participant-status"
+                  },
+                  "children": [
+                    {
+                      "tag": "span",
+                      "component": "StatusIndicator",
+                      "props": {
+                        "aria-hidden": "true",
+                        "className": "status-light"
+                      }
+                    },
+                    {
+                      "tag": "span",
+                      "props": {
+                        "className": "status-text"
+                      },
+                      "children": [
+                        "Говорите..."
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "tag": "div",
+                  "component": "LevelMeter",
+                  "props": {
+                    "data-meter": "host",
+                    "aria-hidden": "true",
+                    "className": "meter"
+                  }
+                },
+                {
+                  "tag": "div",
+                  "component": "RotaryKnob",
+                  "props": {
+                    "role": "slider",
+                    "tabindex": "0",
+                    "data-dial": "host",
+                    "aria-label": "Громкость Release Host",
+                    "aria-valuemin": "0",
+                    "aria-valuemax": "100",
+                    "aria-valuenow": "72",
+                    "aria-valuetext": "72%",
+                    "title": "Громкость: потяните вверх или вниз. Двойной щелчок — сброс.",
+                    "className": "dial"
+                  },
+                  "children": [
+                    {
+                      "component": "SceneIllustration",
+                      "art": "da3132ab2bcae0bb"
+                    },
+                    {
+                      "tag": "span",
+                      "props": {
+                        "aria-hidden": "true",
+                        "className": "dial-disc"
+                      },
+                      "children": [
+                        {
+                          "tag": "span",
+                          "props": {
+                            "className": "dial-brush"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "span",
+                      "props": {
+                        "className": "dial-value"
+                      },
+                      "children": [
+                        "72%"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "tag": "button",
+                  "component": "ToggleButton",
+                  "props": {
+                    "type": "button",
+                    "data-mute": "host",
+                    "aria-label": "Выключить микрофон Release Host",
+                    "aria-pressed": "false",
+                    "title": "Выключить микрофон",
+                    "className": "round-action mute-button"
+                  },
+                  "children": [
+                    {
+                      "component": "Icon",
+                      "art": "3a9f5c992f055758"
+                    }
+                  ]
+                },
+                {
+                  "tag": "button",
+                  "component": "IconButton",
+                  "props": {
+                    "type": "button",
+                    "data-settings": "host",
+                    "aria-label": "Настройки Release Host",
+                    "aria-expanded": "false",
+                    "aria-controls": "participant-settings",
+                    "title": "Настройки участника",
+                    "className": "round-action settings-button"
+                  },
+                  "children": [
+                    {
+                      "component": "Icon",
+                      "art": "10c76a769d4dc181"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "section",
+              "component": "ParticipantCard",
+              "props": {
+                "id": "participant-guest",
+                "data-person": "guest",
+                "aria-labelledby": "guest-name",
+                "className": "panel participant participant--guest"
+              },
+              "children": [
+                {
+                  "tag": "div",
+                  "component": "Surface",
+                  "props": {
+                    "aria-hidden": "true",
+                    "className": "surface surface--guest"
+                  },
+                  "children": [
+                    {
+                      "tag": "div",
+                      "props": {
+                        "className": "surface-interior"
+                      },
+                      "children": [
+                        {
+                          "component": "SceneIllustration",
+                          "art": "9920a75eb0802a4c"
+                        },
+                        {
+                          "component": "SceneIllustration",
+                          "art": "1efe8943cb9eb01b"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "tag": "div",
+                  "component": "RoleEmblem",
+                  "props": {
+                    "aria-hidden": "true",
+                    "className": "seal seal--guest"
+                  },
+                  "children": [
+                    {
+                      "tag": "span",
+                      "props": {
+                        "className": "seal-face"
+                      }
+                    },
+                    {
+                      "component": "SceneIllustration",
+                      "art": "14c02baf3e028417"
+                    },
+                    {
+                      "tag": "span",
+                      "props": {
+                        "className": "seal-specular"
+                      }
+                    },
+                    {
+                      "component": "Icon",
+                      "art": "3d6a0f9253d6f4f0"
+                    },
+                    {
+                      "tag": "span",
+                      "props": {
+                        "className": "seal-role"
+                      },
+                      "children": [
+                        "GUEST"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "tag": "h2",
+                  "props": {
+                    "id": "guest-name",
+                    "className": "participant-name"
+                  },
+                  "children": [
+                    "Release Guest"
+                  ]
+                },
+                {
+                  "tag": "div",
+                  "props": {
+                    "className": "participant-status"
+                  },
+                  "children": [
+                    {
+                      "tag": "span",
+                      "component": "StatusIndicator",
+                      "props": {
+                        "aria-hidden": "true",
+                        "className": "status-light"
+                      }
+                    },
+                    {
+                      "tag": "span",
+                      "props": {
+                        "className": "status-text"
+                      },
+                      "children": [
+                        "Слушает..."
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "tag": "div",
+                  "component": "LevelMeter",
+                  "props": {
+                    "data-meter": "guest",
+                    "aria-hidden": "true",
+                    "className": "meter"
+                  }
+                },
+                {
+                  "tag": "div",
+                  "component": "RotaryKnob",
+                  "props": {
+                    "role": "slider",
+                    "tabindex": "0",
+                    "data-dial": "guest",
+                    "aria-label": "Громкость Release Guest",
+                    "aria-valuemin": "0",
+                    "aria-valuemax": "100",
+                    "aria-valuenow": "100",
+                    "aria-valuetext": "100%",
+                    "title": "Громкость: потяните вверх или вниз. Двойной щелчок — сброс.",
+                    "className": "dial"
+                  },
+                  "children": [
+                    {
+                      "component": "SceneIllustration",
+                      "art": "76fb6249b10697b9"
+                    },
+                    {
+                      "tag": "span",
+                      "props": {
+                        "aria-hidden": "true",
+                        "className": "dial-disc"
+                      },
+                      "children": [
+                        {
+                          "tag": "span",
+                          "props": {
+                            "className": "dial-brush"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "span",
+                      "props": {
+                        "className": "dial-value"
+                      },
+                      "children": [
+                        "100%"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "tag": "button",
+                  "component": "ToggleButton",
+                  "props": {
+                    "type": "button",
+                    "data-mute": "guest",
+                    "aria-label": "Выключить микрофон Release Guest",
+                    "aria-pressed": "false",
+                    "title": "Выключить микрофон",
+                    "className": "round-action mute-button"
+                  },
+                  "children": [
+                    {
+                      "component": "Icon",
+                      "art": "3a9f5c992f055758"
+                    }
+                  ]
+                },
+                {
+                  "tag": "button",
+                  "component": "IconButton",
+                  "props": {
+                    "type": "button",
+                    "data-settings": "guest",
+                    "aria-label": "Настройки Release Guest",
+                    "aria-expanded": "false",
+                    "aria-controls": "participant-settings",
+                    "title": "Настройки участника",
+                    "className": "round-action settings-button"
+                  },
+                  "children": [
+                    {
+                      "component": "Icon",
+                      "art": "10c76a769d4dc181"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "section",
+              "props": {
+                "aria-label": "Соединение и мониторинг",
+                "className": "panel network"
+              },
+              "children": [
+                {
+                  "tag": "div",
+                  "component": "Surface",
+                  "props": {
+                    "aria-hidden": "true",
+                    "className": "surface surface--network"
+                  },
+                  "children": [
+                    {
+                      "tag": "div",
+                      "props": {
+                        "className": "surface-interior"
+                      },
+                      "children": [
+                        {
+                          "component": "SceneIllustration",
+                          "art": "f918ab520a8d597e"
+                        },
+                        {
+                          "component": "SceneIllustration",
+                          "art": "1efe8943cb9eb01b"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "tag": "div",
+                  "props": {
+                    "aria-hidden": "true",
+                    "className": "device-tile connection-icon"
+                  },
+                  "children": [
+                    {
+                      "component": "Icon",
+                      "art": "c2b398d87a577200"
+                    }
+                  ]
+                },
+                {
+                  "tag": "span",
+                  "props": {
+                    "className": "latency-label"
+                  },
+                  "children": [
+                    "Задержка"
+                  ]
+                },
+                {
+                  "tag": "span",
+                  "props": {
+                    "id": "latency-value",
+                    "className": "latency-value"
+                  },
+                  "children": [
+                    "68 мс"
+                  ]
+                },
+                {
+                  "tag": "span",
+                  "component": "Badge",
+                  "props": {
+                    "id": "latency-quality",
+                    "className": "latency-quality"
+                  },
+                  "children": [
+                    "Отлично"
+                  ]
+                },
+                {
+                  "tag": "span",
+                  "component": "Divider",
+                  "props": {
+                    "aria-hidden": "true",
+                    "className": "divider divider--left"
+                  }
+                },
+                {
+                  "tag": "span",
+                  "component": "Divider",
+                  "props": {
+                    "aria-hidden": "true",
+                    "className": "divider divider--right"
+                  }
+                },
+                {
+                  "component": "Sparkline",
+                  "art": "0b7f0796ecdd03d6"
+                },
+                {
+                  "tag": "div",
+                  "props": {
+                    "aria-hidden": "true",
+                    "className": "device-tile headphones-icon"
+                  },
+                  "children": [
+                    {
+                      "component": "Icon",
+                      "art": "8ffa14dbca9f2625"
+                    }
+                  ]
+                },
+                {
+                  "tag": "span",
+                  "props": {
+                    "id": "monitor-label",
+                    "className": "monitor-label"
+                  },
+                  "children": [
+                    "Мониторинг"
+                  ]
+                },
+                {
+                  "tag": "button",
+                  "component": "Switch",
+                  "props": {
+                    "id": "monitor-toggle",
+                    "type": "button",
+                    "role": "switch",
+                    "aria-checked": "true",
+                    "aria-labelledby": "monitor-label",
+                    "title": "Выключить мониторинг",
+                    "className": "monitor-toggle"
+                  },
+                  "children": [
+                    {
+                      "tag": "span",
+                      "props": {
+                        "className": "monitor-thumb"
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "footer",
+              "props": {
+                "className": "panel exit-panel"
+              },
+              "children": [
+                {
+                  "tag": "div",
+                  "component": "Surface",
+                  "props": {
+                    "aria-hidden": "true",
+                    "className": "surface surface--exit"
+                  },
+                  "children": [
+                    {
+                      "tag": "div",
+                      "props": {
+                        "className": "surface-interior"
+                      },
+                      "children": [
+                        {
+                          "component": "SceneIllustration",
+                          "art": "d89cf7a8a58434bd"
+                        },
+                        {
+                          "component": "SceneIllustration",
+                          "art": "1efe8943cb9eb01b"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "tag": "button",
+                  "component": "Button",
+                  "props": {
+                    "id": "leave-room",
+                    "type": "button",
+                    "className": "plain-button leave-button"
+                  },
+                  "children": [
+                    {
+                      "component": "Icon",
+                      "art": "23897befb3381670"
+                    },
+                    {
+                      "tag": "span",
+                      "props": {
+                        "className": "leave-label"
+                      },
+                      "children": [
+                        "Выйти из комнаты"
+                      ]
+                    },
+                    {
+                      "component": "Icon",
+                      "art": "92360c50b2ece6b3"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "div",
+              "component": "Menu",
+              "props": {
+                "hidden": true,
+                "id": "room-menu",
+                "className": "popover room-menu"
+              },
+              "children": [
+                {
+                  "tag": "button",
+                  "component": "Button",
+                  "props": {
+                    "id": "menu-copy",
+                    "type": "button",
+                    "className": "menu-item"
+                  },
+                  "children": [
+                    "Скопировать ID комнаты"
+                  ]
+                },
+                {
+                  "tag": "button",
+                  "component": "Button",
+                  "props": {
+                    "id": "toggle-motion",
+                    "type": "button",
+                    "className": "menu-item"
+                  },
+                  "children": [
+                    "Приостановить анимации"
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "section",
+              "component": "Menu",
+              "props": {
+                "aria-labelledby": "settings-title",
+                "hidden": true,
+                "id": "participant-settings",
+                "className": "popover"
+              },
+              "children": [
+                {
+                  "tag": "h2",
+                  "props": {
+                    "id": "settings-title",
+                    "className": "popover-title"
+                  },
+                  "children": [
+                    "Настройки участника"
+                  ]
+                },
+                {
+                  "tag": "label",
+                  "props": {
+                    "for": "settings-volume",
+                    "className": "setting-label"
+                  },
+                  "children": [
+                    "Громкость ",
+                    {
+                      "tag": "output",
+                      "props": {
+                        "for": "settings-volume",
+                        "id": "settings-value"
+                      },
+                      "children": [
+                        "72%"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "tag": "input",
+                  "component": "Slider",
+                  "props": {
+                    "id": "settings-volume",
+                    "max": "100",
+                    "min": "0",
+                    "step": "1",
+                    "type": "range",
+                    "value": "72",
+                    "className": "setting-range"
+                  }
+                },
+                {
+                  "tag": "button",
+                  "component": "Button",
+                  "props": {
+                    "id": "settings-mute",
+                    "type": "button",
+                    "className": "setting-toggle"
+                  },
+                  "children": [
+                    "Выключить микрофон"
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "div",
+              "component": "Toast",
+              "props": {
+                "aria-live": "polite",
+                "hidden": true,
+                "id": "toast",
+                "role": "status",
+                "className": "toast"
+              }
+            },
+            {
+              "tag": "section",
+              "props": {
+                "aria-labelledby": "disconnected-title",
+                "hidden": true,
+                "id": "disconnected",
+                "className": "disconnected"
+              },
+              "children": [
+                {
+                  "tag": "h2",
+                  "props": {
+                    "id": "disconnected-title"
+                  },
+                  "children": [
+                    "Вы вышли из комнаты"
+                  ]
+                },
+                {
+                  "tag": "button",
+                  "component": "Button",
+                  "props": {
+                    "id": "rejoin-room",
+                    "type": "button",
+                    "className": "rejoin-button"
+                  },
+                  "children": [
+                    "Вернуться в демо"
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tag": "dialog",
+      "component": "Dialog",
+      "props": {
+        "aria-describedby": "leave-description",
+        "aria-labelledby": "leave-title",
+        "id": "leave-dialog",
+        "className": "dialog"
+      },
+      "children": [
+        {
+          "tag": "h2",
+          "props": {
+            "id": "leave-title"
+          },
+          "children": [
+            "Выйти из комнаты?"
+          ]
+        },
+        {
+          "tag": "p",
+          "props": {
+            "id": "leave-description"
+          },
+          "children": [
+            "В этом HTML-макете выход завершит только демонстрацию комнаты."
+          ]
+        },
+        {
+          "tag": "form",
+          "component": "DialogActions",
+          "props": {
+            "method": "dialog",
+            "className": "dialog-actions"
+          },
+          "children": [
+            {
+              "tag": "button",
+              "component": "Button",
+              "props": {
+                "value": "cancel"
+              },
+              "children": [
+                "Отмена"
+              ]
+            },
+            {
+              "tag": "button",
+              "component": "Button",
+              "props": {
+                "value": "leave",
+                "className": "danger"
+              },
+              "children": [
+                "Выйти"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

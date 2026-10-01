@@ -1,0 +1,736 @@
+{
+  "id": "join",
+  "title": "Подключение к комнате",
+  "width": 1280,
+  "height": 1067,
+  "source": "karaoke-online-room-shared-borders.html",
+  "borderSelectors": [
+    ".modal",
+    ".tabs",
+    ".form"
+  ],
+  "shellSelector": ".modal",
+  "rules": [
+    [
+      ".me-roll",
+      "PianoRollGrid",
+      null
+    ],
+    [
+      ".me-transport",
+      "TransportBar",
+      null
+    ],
+    [
+      "[data-dial]",
+      "RotaryKnob",
+      null
+    ],
+    [
+      ".pf-card",
+      "RecordingCard",
+      null
+    ],
+    [
+      ".q-card",
+      "ProcessingTaskCard",
+      null
+    ],
+    [
+      ".participant",
+      "ParticipantCard",
+      null
+    ],
+    [
+      ".pa-master",
+      "RecordingCard",
+      null
+    ],
+    [
+      ".pa-original",
+      "AudioPlayer",
+      null
+    ],
+    [
+      ".pa-recommendation",
+      "PerformanceSummary",
+      null
+    ],
+    [
+      ".card.storage",
+      "StorageSummary",
+      null
+    ],
+    [
+      ".card.diagnostics",
+      "DiagnosticsPanel",
+      null
+    ],
+    [
+      ".profile.card",
+      "ProfileCard",
+      null
+    ],
+    [
+      ".ai-model",
+      "ModelStatusCard",
+      null
+    ],
+    [
+      ".pa-metric",
+      "MetricCard",
+      null
+    ],
+    [
+      ".audio-latency",
+      "LatencyIndicator",
+      null
+    ],
+    [
+      ".modal,.pa-modal,.pf-modal,.q-modal",
+      "Dialog",
+      null
+    ],
+    [
+      ".dialog-box,.pa-dialog,.pf-dialog,.q-dialog,.me-dialog,dialog",
+      "Dialog",
+      null
+    ],
+    [
+      ".dialog-actions,.pa-dialog-actions,.pf-dialog-actions,.q-dialog-actions,.me-dialog-actions",
+      "DialogActions",
+      null
+    ],
+    [
+      ".header,.pa-header,.pf-header,.q-header,.me-header,.head,.room-header",
+      "PageHeader",
+      null
+    ],
+    [
+      ".env-card-head,.ai-head",
+      "SectionHeader",
+      null
+    ],
+    [
+      ".card,.surface,.pa-panel,.me-panel",
+      "Surface",
+      null
+    ],
+    [
+      ".form",
+      "RoomConnectionForm",
+      null
+    ],
+    [
+      ".theme-picker,.themes",
+      "ThemePicker",
+      null
+    ],
+    [
+      ".theme-card",
+      "Card",
+      null
+    ],
+    [
+      ".pa-tile,.tile,.fi,.hero,.pf-header-tile",
+      "IconTile",
+      null
+    ],
+    [
+      ".avatar",
+      "Avatar",
+      null
+    ],
+    [
+      ".seal",
+      "RoleEmblem",
+      null
+    ],
+    [
+      ".signature,.pf-signature,.me-signature",
+      "BrandMark",
+      null
+    ],
+    [
+      ".appearance-footer,.audio-footer,.pf-footer,.q-footer,.me-footer,.me-toolbar,.toolbar",
+      "Toolbar",
+      null
+    ],
+    [
+      ".content-scroll,.pf-list,.q-list,.history-scroll,.me-grid-scroll",
+      "ScrollArea",
+      null
+    ],
+    [
+      ".history-tabs,.tabs",
+      "Tabs",
+      null
+    ],
+    [
+      ".me-tools,.me-modes,.pf-view-switch",
+      "SegmentedControl",
+      null
+    ],
+    [
+      ".me-save-group,.pf-add",
+      "SplitButton",
+      null
+    ],
+    [
+      ".me-history",
+      "UndoRedoControls",
+      null
+    ],
+    [
+      ".me-zoom-step",
+      "ZoomControl",
+      null
+    ],
+    [
+      ".audio-gauge,.dial",
+      "CircularGauge",
+      null
+    ],
+    [
+      "[data-dial]",
+      "RotaryKnob",
+      null
+    ],
+    [
+      ".volume-control,.me-volume",
+      "VolumeControl",
+      null
+    ],
+    [
+      ".meter,.audio-mini-wave",
+      "LevelMeter",
+      null
+    ],
+    [
+      ".pa-waveform,.pf-waveform,.me-waveform",
+      "Waveform",
+      null
+    ],
+    [
+      ".me-transport",
+      "TransportBar",
+      null
+    ],
+    [
+      ".me-piano",
+      "PianoKeyboard",
+      null
+    ],
+    [
+      ".me-roll",
+      "PianoRollGrid",
+      null
+    ],
+    [
+      ".me-ruler",
+      "TimeRuler",
+      null
+    ],
+    [
+      ".me-words",
+      "LyricsLane",
+      null
+    ],
+    [
+      ".me-note",
+      "NoteBlock",
+      null
+    ],
+    [
+      ".me-playhead,.me-wave-cursor",
+      "Playhead",
+      null
+    ],
+    [
+      ".me-marquee",
+      "SelectionOverlay",
+      null
+    ],
+    [
+      ".q-stages",
+      "Steps",
+      null
+    ],
+    [
+      ".q-error-message",
+      "MessageBar",
+      null
+    ],
+    [
+      ".q-status-icon,.status-light",
+      "StatusIndicator",
+      null
+    ],
+    [
+      ".q-track,.transfer-track,.storage-track,.pa-metric-bar",
+      "ProgressBar",
+      null
+    ],
+    [
+      ".you-badge,.latency-quality,.env-gpu-badge",
+      "Badge",
+      null
+    ],
+    [
+      ".q-menu,.pf-popover,.me-popover,.popover",
+      "Menu",
+      null
+    ],
+    [
+      ".q-menu-item,.pf-menu-item,.me-menu-item",
+      "MenuItem",
+      null
+    ],
+    [
+      ".q-toast,.pf-toast,.me-toast,.pa-toast,.toast",
+      "Toast",
+      null
+    ],
+    [
+      ".q-empty,.pf-empty",
+      "EmptyState",
+      null
+    ],
+    [
+      "table",
+      "DataTable",
+      null
+    ],
+    [
+      "dl",
+      "KeyValueList",
+      null
+    ],
+    [
+      ".env-json-card",
+      "CollapsibleSection",
+      null
+    ],
+    [
+      ".env-json-code,pre",
+      "CodeViewer",
+      null
+    ],
+    [
+      ".pf-art-frame,.pa-cover,.cover,.me-cover,.q-cover",
+      "ArtworkFrame",
+      null
+    ],
+    [
+      ".q-divider,.pf-divider,.pa-tool-divider,.divider,.storage-divider",
+      "Divider",
+      null
+    ],
+    [
+      ".env-input-shell,.input-shell",
+      "TextField",
+      null
+    ],
+    [
+      ".select-shell,.me-select",
+      "Select",
+      null
+    ],
+    [
+      ".field,.ai-field,.env-field,.me-dialog-field",
+      "Field",
+      null
+    ],
+    [
+      ".toggle-field",
+      "Switch",
+      null
+    ],
+    [
+      "[role=\"tab\"]",
+      "Tab",
+      null
+    ],
+    [
+      "button[role=\"switch\"]",
+      "Switch",
+      null
+    ],
+    [
+      "button[aria-pressed]",
+      "ToggleButton",
+      null
+    ],
+    [
+      "input[type=\"range\"]",
+      "Slider",
+      null
+    ],
+    [
+      "input[type=\"number\"]",
+      "NumberField",
+      null
+    ],
+    [
+      "input[type=\"file\"]",
+      "FilePicker",
+      null
+    ],
+    [
+      "input[type=\"checkbox\"]",
+      "Checkbox",
+      null
+    ],
+    [
+      "input",
+      "TextField",
+      null
+    ],
+    [
+      "select",
+      "Select",
+      null
+    ],
+    [
+      "button",
+      "Button",
+      null
+    ]
+  ],
+  "tree": [
+    {
+      "tag": "div",
+      "props": {
+        "id": "vp",
+        "className": "viewport"
+      },
+      "children": [
+        {
+          "tag": "main",
+          "props": {
+            "id": "scene",
+            "className": "scene"
+          },
+          "children": [
+            {
+              "tag": "div",
+              "props": {
+                "className": "bg"
+              }
+            },
+            {
+              "tag": "section",
+              "component": "Dialog",
+              "props": {
+                "className": "modal"
+              },
+              "children": [
+                {
+                  "tag": "header",
+                  "component": "PageHeader",
+                  "props": {
+                    "className": "head"
+                  },
+                  "children": [
+                    {
+                      "component": "WaveDecoration",
+                      "art": "2b9bf2beace0f3c3"
+                    },
+                    {
+                      "tag": "div",
+                      "component": "IconTile",
+                      "props": {
+                        "className": "hero"
+                      },
+                      "children": [
+                        {
+                          "component": "SceneIllustration",
+                          "art": "62e1a747b27656af"
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "div",
+                      "props": {
+                        "className": "ey"
+                      },
+                      "children": [
+                        "Онлайн-комната"
+                      ]
+                    },
+                    {
+                      "tag": "h1",
+                      "props": {
+                        "className": "title"
+                      },
+                      "children": [
+                        "Пойте вместе"
+                      ]
+                    },
+                    {
+                      "tag": "div",
+                      "props": {
+                        "className": "desc"
+                      },
+                      "children": [
+                        "Создайте комнату или войдите по коду."
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "tag": "button",
+                  "component": "IconButton",
+                  "props": {
+                    "className": "close"
+                  },
+                  "children": [
+                    {
+                      "component": "SceneIllustration",
+                      "art": "a3ded5b3579a8e80"
+                    }
+                  ]
+                },
+                {
+                  "tag": "nav",
+                  "component": "Tabs",
+                  "props": {
+                    "className": "tabs"
+                  },
+                  "children": [
+                    {
+                      "tag": "button",
+                      "component": "Button",
+                      "props": {
+                        "className": "tab active"
+                      },
+                      "children": [
+                        {
+                          "component": "SceneIllustration",
+                          "art": "b4a9cec1fd45d0e6"
+                        },
+                        "Войти по коду"
+                      ]
+                    },
+                    {
+                      "tag": "button",
+                      "component": "Button",
+                      "props": {
+                        "className": "tab"
+                      },
+                      "children": [
+                        {
+                          "component": "SceneIllustration",
+                          "art": "21f334215168a2d9"
+                        },
+                        "Создать комнату"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "tag": "div",
+                  "component": "RoomConnectionForm",
+                  "props": {
+                    "className": "form"
+                  },
+                  "children": [
+                    {
+                      "tag": "div",
+                      "component": "Field",
+                      "props": {
+                        "className": "field"
+                      },
+                      "children": [
+                        {
+                          "tag": "div",
+                          "component": "IconTile",
+                          "props": {
+                            "className": "fi"
+                          },
+                          "children": [
+                            {
+                              "component": "SceneIllustration",
+                              "art": "17a86c46bc360a95"
+                            }
+                          ]
+                        },
+                        {
+                          "tag": "div",
+                          "children": [
+                            {
+                              "tag": "div",
+                              "props": {
+                                "className": "label"
+                              },
+                              "children": [
+                                "Имя *"
+                              ]
+                            },
+                            {
+                              "tag": "div",
+                              "props": {
+                                "className": "iw"
+                              },
+                              "children": [
+                                {
+                                  "tag": "input",
+                                  "component": "TextField",
+                                  "props": {
+                                    "id": "name",
+                                    "value": "bbd",
+                                    "className": "input filled"
+                                  }
+                                },
+                                {
+                                  "tag": "button",
+                                  "component": "IconButton",
+                                  "props": {
+                                    "className": "clear"
+                                  },
+                                  "children": [
+                                    {
+                                      "component": "SceneIllustration",
+                                      "art": "542704330f61c5cd"
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "div",
+                      "component": "Field",
+                      "props": {
+                        "className": "field"
+                      },
+                      "children": [
+                        {
+                          "tag": "div",
+                          "component": "IconTile",
+                          "props": {
+                            "className": "fi"
+                          },
+                          "children": [
+                            {
+                              "component": "SceneIllustration",
+                              "art": "62f07e7bc93570e6"
+                            }
+                          ]
+                        },
+                        {
+                          "tag": "div",
+                          "children": [
+                            {
+                              "tag": "div",
+                              "props": {
+                                "className": "label"
+                              },
+                              "children": [
+                                "Код комнаты *"
+                              ]
+                            },
+                            {
+                              "tag": "div",
+                              "props": {
+                                "className": "iw"
+                              },
+                              "children": [
+                                {
+                                  "tag": "input",
+                                  "component": "TextField",
+                                  "props": {
+                                    "id": "code",
+                                    "placeholder": "Введите код комнаты",
+                                    "className": "input"
+                                  }
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "tag": "div",
+                  "props": {
+                    "className": "actions"
+                  },
+                  "children": [
+                    {
+                      "tag": "button",
+                      "component": "Button",
+                      "props": {
+                        "className": "btn"
+                      },
+                      "children": [
+                        "Отмена"
+                      ]
+                    },
+                    {
+                      "tag": "button",
+                      "component": "Button",
+                      "props": {
+                        "className": "btn join"
+                      },
+                      "children": [
+                        {
+                          "component": "SceneIllustration",
+                          "art": "b4a9cec1fd45d0e6"
+                        },
+                        {
+                          "tag": "span",
+                          "children": [
+                            "Войти в комнату"
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "tag": "div",
+                  "props": {
+                    "className": "bottom"
+                  },
+                  "children": [
+                    {
+                      "component": "SceneIllustration",
+                      "art": "dee0f0b27f686485"
+                    },
+                    {
+                      "tag": "strong",
+                      "children": [
+                        "Нет кода?"
+                      ]
+                    },
+                    {
+                      "tag": "span",
+                      "children": [
+                        "Создайте комнату и пригласите друзей."
+                      ]
+                    },
+                    {
+                      "tag": "span",
+                      "props": {
+                        "className": "arrow"
+                      },
+                      "children": [
+                        "›"
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

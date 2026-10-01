@@ -1,0 +1,28 @@
+{
+  "name": "ad-voice-ui-workspace",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace @ad-voice/playground",
+    "dev:host": "npm run dev:host --workspace @ad-voice/playground",
+    "typecheck": "npm run typecheck --workspace @ad-voice/ui && npm run typecheck --workspace @ad-voice/playground",
+    "build:ui": "npm run build --workspace @ad-voice/ui",
+    "build:playground": "npm run build --workspace @ad-voice/playground",
+    "build": "npm run build:ui && npm run build:playground",
+    "preview": "npm run preview --workspace @ad-voice/playground",
+    "package:check": "npm run build:ui && npm pack ./packages/ui --dry-run",
+    "package": "node scripts/create-package.mjs",
+    "release:patch": "node scripts/bump-and-package.mjs patch",
+    "release:minor": "node scripts/bump-and-package.mjs minor",
+    "release:major": "node scripts/bump-and-package.mjs major",
+    "clean": "node scripts/clean.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

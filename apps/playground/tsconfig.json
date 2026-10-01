@@ -1,0 +1,28 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "jsx": "react-jsx",
+    "strict": true,
+    "noEmit": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true,
+    "allowJs": true,
+    "checkJs": false,
+    "isolatedModules": true,
+    "forceConsistentCasingInFileNames": true,
+    "baseUrl": ".",
+    "paths": {
+      "@ad-voice/ui": ["../../packages/ui/src/index.ts"],
+      "@ad-voice/ui/core": ["../../packages/ui/src/core.ts"],
+      "@ad-voice/ui/editor": ["../../packages/ui/src/editor.ts"],
+      "@ad-voice/ui/composites": ["../../packages/ui/src/composites.ts"]
+    }
+  },
+  "include": ["src", "../../packages/ui/src"],
+  "exclude": ["node_modules", "dist"]
+}
