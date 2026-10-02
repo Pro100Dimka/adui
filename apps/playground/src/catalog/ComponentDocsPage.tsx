@@ -310,7 +310,11 @@ export function ComponentDocsPage({ item }: { item: CatalogMeta }) {
                 compact
                 eyebrow="02"
                 title="Использование"
-                description="Меняется вместе с настройками примера."
+                description={
+                  liveCode
+                    ? "Меняется вместе с настройками примера."
+                    : "Готовый код — копируйте и используйте."
+                }
               />
               <CodeBlock title="Example.tsx" code={usage} />
             </Stack>

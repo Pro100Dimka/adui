@@ -1,12 +1,19 @@
-/* Styles owned by Tabs. */
-/* Tabs keep their labels whole; when they do not fit, the row scrolls (like MUI "scrollable"). */
+/* Styles owned by Tabs: a track with one indicator that slides under the selected tab. */
 .ad-tabs {
+  position: relative;
+  display: flex;
+  gap: 0.125rem;
+  min-width: 0;
+  padding: 0.1875rem;
+  border: 0.0625rem solid #86445a3d;
+  border-radius: calc(var(--ad-size-radius) + 0.1875rem);
+  background: linear-gradient(180deg, #0b090e, #070609);
+  box-shadow: inset 0 0.0625rem 0.1875rem #000a;
+  isolation: isolate;
+  /* Tabs keep their labels whole; when they do not fit, the row scrolls (like MUI "scrollable"). */
   overflow-x: auto;
   overscroll-behavior-x: contain;
   scrollbar-width: none;
-  /* Room for the active tab glow, which overflow would otherwise clip. */
-  padding-block: 0.35rem;
-  margin-block: -0.35rem;
 }
 .ad-tabs::-webkit-scrollbar {
   display: none;
@@ -14,11 +21,33 @@
 .ad-tabs > .ad-tab {
   flex: 1 0 auto;
 }
-.ad-tabs > .ad-tab:first-child {
-  border-top-left-radius: inherit;
-  border-bottom-left-radius: inherit;
+.ad-tabs-indicator {
+  position: absolute;
+  z-index: -1;
+  top: 0.1875rem;
+  bottom: 0.1875rem;
+  left: 0;
+  width: var(--ad-tabs-w);
+  transform: translateX(var(--ad-tabs-x));
+  border-radius: var(--ad-size-radius);
+  border: 0.0625rem solid #ff7f9d8c;
+  background:
+    radial-gradient(90% 120% at 50% 120%, #ff2f6a66, transparent 70%),
+    linear-gradient(180deg, #a3123f, #5c0723 60%, #3a0516);
+  box-shadow:
+    inset 0 0.0625rem 0 #ffd3e070,
+    0 0 0.875rem #ff1f5a40;
+  transition:
+    transform 0.32s cubic-bezier(0.2, 0.8, 0.2, 1),
+    width 0.32s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
-.ad-tabs > .ad-tab:last-child {
-  border-top-right-radius: inherit;
-  border-bottom-right-radius: inherit;
+/* The tabs sit on the indicator, so a selected tab draws no fill of its own here. */
+.ad-tabs > .ad-tab[aria-selected="true"] {
+  background: transparent;
+  box-shadow: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .ad-tabs-indicator {
+    transition: none;
+  }
 }

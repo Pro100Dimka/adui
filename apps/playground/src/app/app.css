@@ -344,6 +344,7 @@ a {
 /* Example playground: one specimen, its props as controls, optional comparison. */
 .example-playground {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--ad-space-4);
   width: 100%;
   min-width: 0;
@@ -379,6 +380,9 @@ a {
   gap: var(--ad-space-2);
   min-width: 0;
   max-width: 100%;
+}
+.example-knob > .ad-segmented-control {
+  min-width: 0;
 }
 .example-knob > span {
   color: var(--ad-muted);

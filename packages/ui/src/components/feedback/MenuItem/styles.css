@@ -1,70 +1,53 @@
-/* Premium action row used inside Menu. */
+/* Menu row: plain icon and label, a soft highlight on hover or keyboard focus. */
 .ad-menu-item {
-  --ad-menu-item-tone: #f7edf3;
+  --ad-menu-item-tone: #eadde5;
   appearance: none;
   inline-size: 100%;
   min-inline-size: 0;
-  min-block-size: 3.2rem;
+  min-block-size: 2.5rem;
   display: grid;
   grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: center;
-  gap: 0.8rem;
-  padding: 0.42rem 0.58rem;
-  border: 0.0625rem solid transparent;
-  border-radius: 0.82rem;
+  gap: 0.7rem;
+  padding: 0.4rem 0.7rem;
+  border: 0;
+  border-radius: calc(var(--ad-radius) * 0.65);
   background: transparent;
   color: var(--ad-menu-item-tone);
   text-align: left;
-  font: 650 0.82rem/1.2 var(--ad-font-family, system-ui, sans-serif);
-  letter-spacing: 0.005em;
+  font-family: inherit;
+  font-size: var(--ad-font-size-body-sm);
+  font-weight: 600;
+  line-height: 1.2;
   cursor: pointer;
   transition:
-    background 0.16s,
-    border-color 0.16s,
-    box-shadow 0.16s,
-    transform 0.16s,
-    color 0.16s;
+    background 0.14s,
+    color 0.14s;
 }
 .ad-menu-item:hover:not(:disabled),
 .ad-menu-item:focus-visible {
   outline: 0;
-  transform: translateX(0.08rem);
-  border-color: #ff79953c;
-  background:
-    radial-gradient(90% 140% at 0 0, #ff6b8d20, transparent 62%),
-    linear-gradient(100deg, #5a23353d, #2d16233d 48%, #4b1d3030);
-  box-shadow:
-    inset 0 0.0625rem 0.1rem #ffe4ed1d,
-    0 0 0.85rem #ff31551c;
+  background: #ffffff10;
+  color: #fff;
 }
 .ad-menu-item:active:not(:disabled) {
-  transform: translateX(0.08rem) scale(0.992);
-  background: #3b17262d;
+  background: #ffffff1a;
 }
 .ad-menu-item:disabled {
   opacity: 0.38;
   cursor: not-allowed;
 }
-.ad-menu-item-icon {
-  inline-size: 2.3rem;
-  block-size: 2.3rem;
+.ad-menu-item-icon,
+.ad-menu-item-end {
   display: grid;
   place-items: center;
-  border: 0.0625rem solid #bb647e35;
-  border-radius: 0.68rem;
-  color: #fff5f8;
-  background:
-    linear-gradient(180deg, #ffffff14, #ffffff03 32%, transparent 55%),
-    radial-gradient(100% 120% at 30% 0, #a54a6630, transparent 70%),
-    linear-gradient(140deg, #2c1a27, #130f17);
-  box-shadow:
-    inset 0 0.0625rem 0.1rem #ffffff1f,
-    0 0.25rem 0.7rem #0006;
+  color: #b9a7b5;
 }
 .ad-menu-item-icon > .ad-icon {
-  inline-size: 1.25rem;
-  block-size: 1.25rem;
-  filter: drop-shadow(0 0 0.3rem #ff8ca36d);
+  --ad-icon-size: 1.15rem;
+}
+.ad-menu-item:hover:not(:disabled) .ad-menu-item-icon {
+  color: var(--ad-pink);
 }
 .ad-menu-item-label {
   min-inline-size: 0;
@@ -72,34 +55,17 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-.ad-menu-item-end {
-  display: grid;
-  place-items: center;
-  color: #f685a2;
-  opacity: 0.82;
-}
 .ad-menu-item-end > .ad-icon {
-  inline-size: 1.05rem;
-  block-size: 1.05rem;
+  --ad-icon-size: 1rem;
 }
 .ad-menu-item[data-ad-tone="error"] {
-  --ad-menu-item-tone: #ff91ab;
+  --ad-menu-item-tone: #ff8aa6;
 }
 .ad-menu-item[data-ad-tone="error"] .ad-menu-item-icon {
-  color: #ff88a5;
-  border-color: #ff557746;
-  background:
-    linear-gradient(180deg, #ff668026, #ff45610d 38%, transparent 65%),
-    linear-gradient(140deg, #3a1522, #160b10);
-  box-shadow:
-    inset 0 0.0625rem 0.1rem #ffd6e329,
-    0 0 0.72rem #ff24451c;
+  color: #ff8aa6;
 }
 .ad-menu-item[data-ad-tone="error"]:hover:not(:disabled),
 .ad-menu-item[data-ad-tone="error"]:focus-visible {
-  border-color: #ff607b52;
-  background: linear-gradient(100deg, #6f1a3038, #32101c3d 55%, #5b14282d);
-  box-shadow:
-    inset 0 0.0625rem 0.1rem #ffdbe62a,
-    0 0 1rem #ff21462a;
+  background: #ff3b6522;
+  color: #ffb3c4;
 }

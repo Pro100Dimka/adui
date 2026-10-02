@@ -1,17 +1,9 @@
-/* Styles owned by SegmentedControl. */
+/* Styles owned by SegmentedControl: Tabs sized to their content instead of the full row. */
 .ad-segmented-control {
   display: inline-flex;
   max-width: 100%;
-  padding: 0.15rem;
-  background: #09090d;
-  border: 0.0625rem solid #86445a3d;
-  border-radius: calc(var(--ad-size-radius) + 0.18rem);
-  box-shadow: inset 0 0.0625rem 0.125rem #fff1;
+  min-width: 0;
 }
 .ad-segmented-control > .ad-tabs {
   flex: 1;
-}
-/* Segments keep their labels whole; a segmented control is short by design. */
-.ad-segmented-control .ad-tab {
-  flex: 1 0 auto;
 }

@@ -1,30 +1,35 @@
-import { useRef } from "react";
-import { assignRef } from "../../../core/base";
-import { useTabShape } from "../../../core/motion/hooks";
-import { buttonView, type TabProps } from "../shared";
+import { mark } from "../../../core/base";
+import { Icon } from "../../layout/Icon/Icon";
+import type { TabProps } from "../shared";
 
 export const Tab = ({
   selected = false,
   panelId,
-  ref: externalRef,
+  icon,
+  endIcon,
+  label,
+  children,
+  ref,
+  variant: _variant,
+  loading: _loading,
+  round: _round,
+  size: _size,
+  tone: _tone,
+  material: _material,
   ...p
-}: TabProps) => {
-  const ref = useRef<HTMLButtonElement>(null);
-  useTabShape(ref);
-  return buttonView(
-    {
-      ...p,
-      className: `ad-button ad-tab ${p.className ?? ""}`,
-      variant: "ghost",
-      role: "tab",
-      "aria-selected": selected,
-      "aria-controls": panelId,
-      tabIndex: selected ? 0 : -1,
-      ref: (n) => {
-        ref.current = n;
-        assignRef(externalRef, n);
-      },
-    },
-    "Tab",
-  );
-};
+}: TabProps) => (
+  <button
+    {...p}
+    {...mark("Tab", { ...p, size: _size })}
+    ref={ref}
+    type="button"
+    role="tab"
+    aria-selected={selected}
+    aria-controls={panelId}
+    tabIndex={selected ? 0 : -1}
+  >
+    {icon && <Icon name={icon} />}
+    <span className="ad-tab-label">{children ?? label}</span>
+    {endIcon && <Icon name={endIcon} />}
+  </button>
+);

@@ -15,6 +15,7 @@
   .ad-slider,
   .ad-file-picker,
   .ad-tabs,
+  .ad-tab,
   .ad-segmented-control
 ) {
   --ad-size-h: var(--ad-control-height);
@@ -38,6 +39,7 @@
   .ad-slider,
   .ad-file-picker,
   .ad-tabs,
+  .ad-tab,
   .ad-segmented-control
 )[data-ad-size="xs"] {
   --ad-size-h: 1.8rem;
@@ -61,6 +63,7 @@
   .ad-slider,
   .ad-file-picker,
   .ad-tabs,
+  .ad-tab,
   .ad-segmented-control
 )[data-ad-size="sm"] {
   --ad-size-h: 2.15rem;
@@ -84,6 +87,7 @@
   .ad-slider,
   .ad-file-picker,
   .ad-tabs,
+  .ad-tab,
   .ad-segmented-control
 )[data-ad-size="md"] {
   --ad-size-h: 2.65rem;
@@ -107,6 +111,7 @@
   .ad-slider,
   .ad-file-picker,
   .ad-tabs,
+  .ad-tab,
   .ad-segmented-control
 )[data-ad-size="lg"] {
   --ad-size-h: 3.08rem;
@@ -419,20 +424,6 @@
   filter: drop-shadow(0 0 0.2rem #ffd8e67e);
 }
 
-.ad-tabs,
-.ad-segmented-control {
-  display: flex;
-  gap: 0;
-  position: relative;
-  border-radius: var(--ad-size-radius);
-  isolation: isolate;
-}
-.ad-field-error {
-  color: #ff88a8 !important;
-}
-.ad-select select {
-  font-size: inherit;
-}
 .ad-switch,
 .ad-checkbox {
   display: inline-flex;
@@ -527,4 +518,34 @@
     animation: none !important;
     display: none !important;
   }
+}
+
+/* Ghost is a subtle button (Fluent "subtle", MUI "text"): no surface until hovered. */
+:is(.ad-button, .ad-icon-button)[data-ad-variant="ghost"] {
+  border-color: transparent;
+  background: transparent;
+  box-shadow: none;
+  color: #cdbfca;
+  animation: none;
+}
+:is(.ad-button, .ad-icon-button)[data-ad-variant="ghost"]::before,
+:is(.ad-button, .ad-icon-button)[data-ad-variant="ghost"]::after {
+  display: none;
+}
+:is(.ad-button, .ad-icon-button)[data-ad-variant="ghost"] > .ad-icon {
+  filter: none;
+}
+:is(.ad-button, .ad-icon-button)[data-ad-variant="ghost"]:hover:not(:disabled) {
+  background: #ffffff10;
+  box-shadow: none;
+  color: #fff;
+  filter: none;
+  transform: none;
+}
+:is(.ad-button, .ad-icon-button)[data-ad-variant="ghost"]:active:not(
+    :disabled
+  ) {
+  background: #ffffff1a;
+  box-shadow: none;
+  transform: scale(0.98);
 }

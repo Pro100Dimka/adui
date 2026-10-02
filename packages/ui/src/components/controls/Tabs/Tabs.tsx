@@ -1,5 +1,5 @@
-import { useRef } from "react";
-import { mark, useControllable } from "../../../core/base";
+import { useLayoutEffect, useRef, useState } from "react";
+import { mark, useControllable, type TokenStyle } from "../../../core/base";
 import { type TabsProps } from "../shared";
 import { Tab } from "../Tab/Tab";
 
@@ -15,9 +15,28 @@ export const Tabs = (p: TabsProps) => {
     p.onValueChange,
   );
   const buttons = useRef<Array<HTMLButtonElement | null>>([]);
+  const selected = items.findIndex((item) => item.value === value);
+
+  // The indicator slides under the selected tab; it follows resizes and label changes.
+  const [indicator, setIndicator] = useState<TokenStyle>();
+  useLayoutEffect(() => {
+    const tab = buttons.current[selected];
+    if (!tab) return setIndicator(undefined);
+    const place = () =>
+      setIndicator({
+        "--ad-tabs-x": `${tab.offsetLeft}px`,
+        "--ad-tabs-w": `${tab.offsetWidth}px`,
+      });
+    place();
+    const observer = new ResizeObserver(place);
+    observer.observe(tab);
+    if (tab.parentElement) observer.observe(tab.parentElement);
+    return () => observer.disconnect();
+  }, [selected, items.length]);
+
   return (
     <nav
-      {...mark("Tabs", p, "glass")}
+      {...mark("Tabs", p)}
       role="tablist"
       aria-label={p.label ?? "Разделы"}
       onKeyDown={(e) => {
@@ -43,6 +62,9 @@ export const Tabs = (p: TabsProps) => {
         buttons.current[available[next].index]?.focus();
       }}
     >
+      {indicator && (
+        <span className="ad-tabs-indicator" style={indicator} aria-hidden />
+      )}
       {items.map((item, index) => (
         <Tab
           key={item.value}

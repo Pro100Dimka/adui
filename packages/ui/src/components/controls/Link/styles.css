@@ -22,7 +22,7 @@
   text-underline-offset: 0.18em;
 }
 .ad-link:hover {
-  color: #fff;
+  color: var(--ad-pink);
 }
 .ad-link:focus-visible {
   outline: 0.125rem solid #ffd7e2;
