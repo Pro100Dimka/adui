@@ -1,22 +1,18 @@
-import { U, useExampleState } from "../../../dev/exampleHelpers";
+import { useState } from "react";
+import { Button, Toast } from "@ad-voice/ui";
+
 export default function ToastExample() {
-  const { notice, setNotice, alert } = useExampleState();
-  const demo = (
-    <>
-      <U.Toast message="Настройки сохранены" />
-      <U.Button onClick={() => alert("Всплывающее уведомление")}>
-        Показать уведомление
-      </U.Button>
-    </>
-  );
+  const [open, setOpen] = useState(false);
   return (
     <>
-      {demo}
-      <U.Toast
+      <Button icon="save" onClick={() => setOpen(true)}>
+        Сохранить
+      </Button>
+      <Toast
         floating
-        open={!!notice}
-        message={notice}
-        onClose={() => setNotice("")}
+        open={open}
+        message="Настройки сохранены"
+        onClose={() => setOpen(false)}
       />
     </>
   );

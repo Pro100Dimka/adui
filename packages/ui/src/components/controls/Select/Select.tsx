@@ -2,8 +2,7 @@ import { useRef, useState } from "react";
 import { assignRef, useControllable } from "../../../core/base";
 import { Popover } from "../../feedback/Popover/Popover";
 import { Icon } from "../../layout/Icon/Icon";
-import { Button } from "../Button/Button";
-import { FieldFrame, toOption } from "../internal";
+import { FieldFrame, OptionList, toOption } from "../internal";
 import { InputBase } from "../InputBase/InputBase";
 import type { SelectProps } from "../shared";
 
@@ -13,11 +12,12 @@ export const Select = (p: SelectProps) => {
   );
   const [value, setValue] = useControllable(
     p.value,
-    p.defaultValue ?? options[0]?.value ?? "",
+    p.defaultValue ?? (p.placeholder ? "" : (options[0]?.value ?? "")),
     p.onValueChange,
   );
   const [open, setOpen] = useState(false);
   const anchor = useRef<HTMLButtonElement>(null);
+  const box = useRef<HTMLDivElement>(null);
   const selected = options.find((option) => option.value === value);
   const choose = (next: string) => {
     setValue(next);
@@ -33,7 +33,9 @@ export const Select = (p: SelectProps) => {
       error={p.error}
     >
       <InputBase
+        ref={box}
         size={p.size}
+        variant={p.variant}
         disabled={p.disabled}
         error={!!p.error}
         startAdornment={
@@ -57,6 +59,7 @@ export const Select = (p: SelectProps) => {
           aria-haspopup="listbox"
           aria-expanded={open}
           aria-required={p.required || undefined}
+          data-placeholder={!selected || undefined}
           onClick={() => setOpen((v) => !v)}
         >
           {selected?.label ?? p.placeholder ?? "Выберите значение"}
@@ -65,29 +68,18 @@ export const Select = (p: SelectProps) => {
       {p.name && <input type="hidden" name={p.name} value={value} />}
       <Popover
         open={open}
-        onOpenChange={setOpen}
-        anchorRef={anchor}
+        onOpenChange={(next) => {
+          setOpen(next);
+          if (!next) anchor.current?.focus();
+        }}
+        anchorRef={box}
         role="listbox"
         align="start"
         matchAnchorWidth
         className="ad-option-popover"
         label={typeof p.label === "string" ? p.label : "Варианты"}
       >
-        <div className="ad-option-list">
-          {options.map((option) => (
-            <Button
-              key={option.value}
-              role="option"
-              aria-selected={option.value === value}
-              variant="ghost"
-              disabled={option.disabled}
-              className="ad-option"
-              onClick={() => choose(option.value)}
-            >
-              {option.label}
-            </Button>
-          ))}
-        </div>
+        <OptionList options={options} selected={value} onChoose={choose} />
       </Popover>
     </FieldFrame>
   );

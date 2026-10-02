@@ -14,6 +14,7 @@ export const TextArea = ({
   endAdornment,
   className,
   size,
+  variant,
   tone: _tone,
   material: _material,
   style: _style,
@@ -34,6 +35,7 @@ export const TextArea = ({
     >
       <InputBase
         size={size}
+        variant={variant}
         multiline
         disabled={textarea.disabled}
         readOnly={textarea.readOnly}

@@ -21,6 +21,9 @@
     "paths": {
       "@ad-voice/ui": [
         "../../packages/ui/src/index.ts"
+      ],
+      "@ad-voice/ui/*": [
+        "../../packages/ui/src/*"
       ]
     }
   },

@@ -1,8 +1,18 @@
 /* Styles owned by Tabs. */
-
-/* Edge-aware active shape: first/last tabs use the outer container edge instead of leaving a triangular gap. */
+/* Tabs keep their labels whole; when they do not fit, the row scrolls (like MUI "scrollable"). */
 .ad-tabs {
-  overflow: visible;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+  /* Room for the active tab glow, which overflow would otherwise clip. */
+  padding-block: 0.35rem;
+  margin-block: -0.35rem;
+}
+.ad-tabs::-webkit-scrollbar {
+  display: none;
+}
+.ad-tabs > .ad-tab {
+  flex: 1 0 auto;
 }
 .ad-tabs > .ad-tab:first-child {
   border-top-left-radius: inherit;

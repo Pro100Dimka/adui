@@ -1,34 +1,52 @@
-import { Button, Stack } from "../../../index";
-import { Form, useForm } from "../Form/Form";
-import { FormFields, type FormFieldDefinition } from "./FormFields";
-type Values = { name: string; age: number; role: string; enabled: boolean };
+import { Button, Stack } from "@ad-voice/ui";
+import {
+  Form,
+  FormFields,
+  useForm,
+  type FormFieldDefinition,
+} from "@ad-voice/ui/forms";
+
+type Values = { name: string; delay: number; driver: string; monitor: boolean };
+
 const fields: FormFieldDefinition<Values>[] = [
-  { name: "name", label: "Name", span: 6 },
-  { name: "age", kind: "number", label: "Age", span: 6 },
+  { name: "name", label: "Имя", span: { base: "full", sm: 6 } },
   {
-    name: "role",
-    kind: "select",
-    label: "Role",
-    props: { options: ["Singer", "Host", "Guest"] },
-    span: 6,
+    name: "delay",
+    kind: "number",
+    label: "Задержка, мс",
+    span: { base: "full", sm: 6 },
+    props: { min: 0, max: 500, step: 10 },
   },
-  { name: "enabled", kind: "switch", label: "Enabled", span: 6 },
+  {
+    name: "driver",
+    kind: "select",
+    label: "Драйвер",
+    span: { base: "full", sm: 6 },
+    props: { options: ["WASAPI", "ASIO", "DirectSound"] },
+  },
+  {
+    name: "monitor",
+    kind: "switch",
+    label: "Мониторинг",
+    span: { base: "full", sm: 6 },
+  },
 ];
+
 export default function FormFieldsExample() {
   const form = useForm<Values>({
     initialValues: {
-      name: "A&D Voice",
-      age: 18,
-      role: "Singer",
-      enabled: true,
+      name: "Дмитрий",
+      delay: 120,
+      driver: "ASIO",
+      monitor: true,
     },
   });
   return (
     <Form form={form}>
-      <Stack gap={3}>
+      <Stack gap={4}>
         <FormFields fields={fields} />
-        <Button type="submit" variant="primary">
-          Save
+        <Button type="submit" variant="primary" icon="save">
+          Сохранить
         </Button>
       </Stack>
     </Form>

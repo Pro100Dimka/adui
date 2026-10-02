@@ -19,7 +19,11 @@ export function CatalogPage({ routeId }: { routeId?: string }) {
     >
       <CatalogSidebar activeItem={item} />
       <Stack as="main" className="docs-main" gap={4}>
-        {item ? <ComponentDocsPage item={item} /> : <CatalogOverview />}
+        {item ? (
+          <ComponentDocsPage key={item.name} item={item} />
+        ) : (
+          <CatalogOverview />
+        )}
       </Stack>
     </Grid>
   );

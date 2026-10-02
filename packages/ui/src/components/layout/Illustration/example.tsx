@@ -1,9 +1,10 @@
-import { U } from "../../../dev/exampleHelpers";
+import { Grid, Illustration } from "@ad-voice/ui";
+
 export default function IllustrationExample() {
   return (
-    <U.Grid columns={{ base: 1, md: 2 }} gap={4}>
-      <U.Illustration variant="planet" />
-      <U.Illustration variant="mountains" framed />
-    </U.Grid>
+    <Grid minChildWidth="12rem" gap={4}>
+      <Illustration variant="planet" label="Планета" />
+      <Illustration variant="mountains" framed label="Горы" />
+    </Grid>
   );
 }

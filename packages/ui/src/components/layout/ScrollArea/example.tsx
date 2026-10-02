@@ -1,25 +1,16 @@
-import { U, useExampleState } from "../../../dev/exampleHelpers";
+import { Badge, ScrollArea, Stack, Typography } from "@ad-voice/ui";
+
 export default function ScrollAreaExample() {
-  const { notice, setNotice } = useExampleState();
-  const demo = (
-    <U.ScrollArea height="clamp(9rem, 28dvh, 14rem)" label="Пример прокрутки">
-      {Array.from({ length: 12 }, (_, i) => (
-        <div className="scroll-row" key={i}>
-          <span>Запись {i + 1}</span>
-          <U.Badge tone="success">Готово</U.Badge>
-        </div>
-      ))}
-    </U.ScrollArea>
-  );
   return (
-    <>
-      {demo}
-      <U.Toast
-        floating
-        open={!!notice}
-        message={notice}
-        onClose={() => setNotice("")}
-      />
-    </>
+    <ScrollArea height="12rem" label="Записи">
+      <Stack gap={2}>
+        {Array.from({ length: 12 }, (_, i) => (
+          <Stack key={i} direction="row" justify="between" align="center">
+            <Typography variant="body-sm">Запись {i + 1}</Typography>
+            <Badge tone="success">Готово</Badge>
+          </Stack>
+        ))}
+      </Stack>
+    </ScrollArea>
   );
 }

@@ -1,4 +1,5 @@
-import { U } from "../../../dev/exampleHelpers";
+import { PianoRollGrid } from "@ad-voice/ui/editor";
+
 export default function PianoRollGridExample() {
-  return <U.PianoRollGrid selection showToolbar showLyrics />;
+  return <PianoRollGrid selection />;
 }

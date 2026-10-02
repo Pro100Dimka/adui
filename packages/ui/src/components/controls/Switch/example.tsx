@@ -1,29 +1,36 @@
-import {
-  U,
-  ExampleShowcase,
-  ExampleVariant,
-  ExampleVariantGrid,
-  useExampleSize,
-} from "../../../dev/exampleHelpers";
+import { Playground, U, jsx, sizes } from "../../../dev/exampleHelpers";
 
 export default function SwitchExample() {
-  const [size, setSize] = useExampleSize();
   return (
-    <ExampleShowcase size={size} onSizeChange={setSize}>
-      <ExampleVariantGrid>
-        <ExampleVariant title="Off" description="Disabled state">
-          <U.Switch size={size} label="Monitoring" />
-        </ExampleVariant>
-        <ExampleVariant title="On" description="Enabled state">
-          <U.Switch size={size} defaultChecked label="Monitoring" />
-        </ExampleVariant>
-        <ExampleVariant title="Compact label" description="Short option">
-          <U.Switch size={size} defaultChecked label="FX" />
-        </ExampleVariant>
-        <ExampleVariant title="Disabled" description="Unavailable">
-          <U.Switch size={size} disabled label="Monitoring" />
-        </ExampleVariant>
-      </ExampleVariantGrid>
-    </ExampleShowcase>
+    <Playground
+      knobs={{
+        size: { options: sizes, value: "md" },
+        disabled: { value: false },
+      }}
+      code={(v, c) =>
+        jsx("Switch", {
+          label: "Мониторинг голоса",
+          defaultChecked: true,
+          size: c.size,
+          disabled: v.disabled,
+        })
+      }
+    >
+      {(v) => (
+        <U.Stack gap={3}>
+          <U.Switch
+            label="Мониторинг голоса"
+            defaultChecked
+            size={v.size}
+            disabled={v.disabled}
+          />
+          <U.Switch
+            label="Шумоподавление"
+            size={v.size}
+            disabled={v.disabled}
+          />
+        </U.Stack>
+      )}
+    </Playground>
   );
 }

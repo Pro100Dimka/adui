@@ -1,20 +1,12 @@
-import { U, useExampleState } from "../../../dev/exampleHelpers";
+import { TabPanel, Typography } from "@ad-voice/ui";
+
+/** Content of one tab; pair it with Tabs (see the Tabs page for the full pattern). */
 export default function TabPanelExample() {
-  const { notice, setNotice } = useExampleState();
-  const demo = (
-    <U.TabPanel>
-      <U.Text>Содержимое выбранной вкладки</U.Text>
-    </U.TabPanel>
-  );
   return (
-    <>
-      {demo}
-      <U.Toast
-        floating
-        open={!!notice}
-        message={notice}
-        onClose={() => setNotice("")}
-      />
-    </>
+    <TabPanel labelledBy="tab-audio">
+      <Typography variant="body-sm" tone="muted">
+        Драйвер, задержка и мониторинг голоса.
+      </Typography>
+    </TabPanel>
   );
 }

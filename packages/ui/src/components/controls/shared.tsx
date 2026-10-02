@@ -114,6 +114,8 @@ export interface TabsProps extends CommonProps {
   onValueChange?: (value: string) => void;
   label?: string;
 }
+/** Field appearance: boxed outline, tinted fill or a single bottom line. */
+export type InputVariant = "outlined" | "filled" | "underlined";
 export interface FieldProps
   extends
     CommonProps,
@@ -127,6 +129,7 @@ export interface FieldProps
   startAdornment?: ReactNode;
   endAdornment?: ReactNode;
   inputRef?: Ref<HTMLInputElement>;
+  variant?: InputVariant;
 }
 export interface TextFieldProps extends FieldProps {
   label?: ReactNode;
@@ -158,6 +161,7 @@ export interface TextAreaProps
   error?: ReactNode;
   startAdornment?: ReactNode;
   endAdornment?: ReactNode;
+  variant?: InputVariant;
 }
 export interface AutocompleteOption {
   value: string;
@@ -188,6 +192,7 @@ export interface SelectProps extends CommonProps {
   required?: boolean;
   name?: string;
   ref?: Ref<HTMLButtonElement>;
+  variant?: InputVariant;
 }
 export interface BooleanProps extends CommonProps {
   checked?: boolean;

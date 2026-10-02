@@ -1,28 +1,21 @@
-import { U, useExampleState } from "../../../dev/exampleHelpers";
+import { useState } from "react";
+import { Button, Dialog } from "@ad-voice/ui";
+
 export default function DialogExample() {
-  const { open, setOpen, notice, setNotice, alert } = useExampleState();
-  const demo = (
-    <>
-      <U.Button onClick={() => setOpen(true)} icon="grid">
-        Открыть диалог
-      </U.Button>
-      <U.Dialog
-        open={open}
-        onOpenChange={setOpen}
-        title="Сохранить настройки?"
-        description="Общий React-диалог. Escape закрывает окно и возвращает фокус."
-        onConfirm={() => alert("Настройки сохранены")}
-      />
-    </>
-  );
+  const [open, setOpen] = useState(false);
   return (
     <>
-      {demo}
-      <U.Toast
-        floating
-        open={!!notice}
-        message={notice}
-        onClose={() => setNotice("")}
+      <Button variant="danger" icon="trash" onClick={() => setOpen(true)}>
+        Удалить запись
+      </Button>
+      <Dialog
+        open={open}
+        onOpenChange={setOpen}
+        danger
+        title="Удалить запись?"
+        description="Файл и результаты анализа будут удалены без возможности восстановления."
+        confirmLabel="Удалить"
+        onConfirm={() => new Promise((done) => setTimeout(done, 800))}
       />
     </>
   );

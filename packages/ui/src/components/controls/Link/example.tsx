@@ -1,12 +1,13 @@
-import { Link, Stack } from "../../../index";
+import { Link, Stack } from "@ad-voice/ui";
+
 export default function LinkExample() {
   return (
-    <Stack direction="row" gap={3} wrap>
+    <Stack direction="row" gap={4} wrap>
       <Link href="#/components/button">Документация</Link>
-      <Link href="#/components/button" icon="link" endIcon="chevron">
-        С иконками
+      <Link href="#/components/button" icon="document">
+        С иконкой
       </Link>
-      <Link href="https://example.com" external>
+      <Link href="https://react.dev" external underline="always">
         Внешняя ссылка
       </Link>
     </Stack>

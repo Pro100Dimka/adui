@@ -1,32 +1,40 @@
-import {
-  U,
-  ExampleShowcase,
-  ExampleVariant,
-  ExampleVariantGrid,
-  useExampleSize,
-} from "../../../dev/exampleHelpers";
+import { useState } from "react";
+import { Playground, U, expr, jsx, sizes } from "../../../dev/exampleHelpers";
 
 export default function ToggleButtonExample() {
-  const [size, setSize] = useExampleSize();
+  const [on, setOn] = useState(true);
   return (
-    <ExampleShowcase size={size} onSizeChange={setSize}>
-      <ExampleVariantGrid columns={3}>
-        <ExampleVariant>
-          <U.ToggleButton size={size} icon="volume">
-            Off
-          </U.ToggleButton>
-        </ExampleVariant>
-        <ExampleVariant>
-          <U.ToggleButton size={size} defaultChecked icon="wave">
-            On
-          </U.ToggleButton>
-        </ExampleVariant>
-        <ExampleVariant>
-          <U.ToggleButton size={size} disabled icon="wave">
-            Disabled
-          </U.ToggleButton>
-        </ExampleVariant>
-      </ExampleVariantGrid>
-    </ExampleShowcase>
+    <Playground
+      knobs={{
+        size: { options: sizes, value: "md" },
+        icon: { value: true },
+        disabled: { value: false },
+      }}
+      code={(v, c) =>
+        jsx(
+          "ToggleButton",
+          {
+            checked: expr("on"),
+            onValueChange: expr("setOn"),
+            icon: v.icon ? "mic" : undefined,
+            size: c.size,
+            disabled: v.disabled,
+          },
+          "Микрофон",
+        )
+      }
+    >
+      {(v) => (
+        <U.ToggleButton
+          checked={on}
+          onValueChange={setOn}
+          icon={v.icon ? "mic" : undefined}
+          size={v.size}
+          disabled={v.disabled}
+        >
+          Микрофон
+        </U.ToggleButton>
+      )}
+    </Playground>
   );
 }

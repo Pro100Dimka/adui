@@ -1,16 +1,13 @@
-import { U, useExampleState } from "../../../dev/exampleHelpers";
+import { Sparkline, Stack, Typography } from "@ad-voice/ui";
+
 export default function SparklineExample() {
-  const { notice, setNotice } = useExampleState();
-  const demo = <U.Sparkline />;
   return (
-    <>
-      {demo}
-      <U.Toast
-        floating
-        open={!!notice}
-        message={notice}
-        onClose={() => setNotice("")}
+    <Stack gap={1}>
+      <Typography variant="label">Задержка сети, мс</Typography>
+      <Sparkline
+        label="Задержка сети"
+        values={[18, 22, 19, 31, 44, 26, 24, 21, 38, 27, 23, 20]}
       />
-    </>
+    </Stack>
   );
 }

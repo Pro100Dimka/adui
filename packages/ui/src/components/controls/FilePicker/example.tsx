@@ -1,23 +1,31 @@
-import {
-  U,
-  ExampleShowcase,
-  ExampleVariant,
-  ExampleVariantGrid,
-  useExampleSize,
-} from "../../../dev/exampleHelpers";
+import { Playground, U, jsx, sizes } from "../../../dev/exampleHelpers";
 
 export default function FilePickerExample() {
-  const [size, setSize] = useExampleSize();
   return (
-    <ExampleShowcase size={size} onSizeChange={setSize}>
-      <ExampleVariantGrid>
-        <ExampleVariant title="Audio" description="Single audio file">
-          <U.FilePicker size={size} label="Choose audio" accept="audio/*" />
-        </ExampleVariant>
-        <ExampleVariant title="Multiple" description="Several files">
-          <U.FilePicker size={size} label="Choose files" multiple />
-        </ExampleVariant>
-      </ExampleVariantGrid>
-    </ExampleShowcase>
+    <Playground
+      knobs={{
+        size: { options: sizes, value: "md" },
+        multiple: { value: false },
+      }}
+      code={(v, c) =>
+        jsx("FilePicker", {
+          label: "Выбрать запись",
+          description: "WAV, MP3 или FLAC",
+          accept: "audio/*",
+          multiple: v.multiple,
+          size: c.size,
+        })
+      }
+    >
+      {(v) => (
+        <U.FilePicker
+          label="Выбрать запись"
+          description="WAV, MP3 или FLAC"
+          accept="audio/*"
+          multiple={v.multiple}
+          size={v.size}
+        />
+      )}
+    </Playground>
   );
 }

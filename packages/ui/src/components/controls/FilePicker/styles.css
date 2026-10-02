@@ -2,13 +2,19 @@
 .ad-file-picker {
   display: flex;
   align-items: center;
-  gap: 0.875rem;
+  gap: var(--ad-size-gap);
   flex-wrap: wrap;
+  min-width: 0;
+}
+.ad-file-picker > .ad-button {
+  flex: none;
 }
 .ad-file-picker > small {
+  flex: 1 1 8rem;
+  min-width: 0;
   font-size: calc(var(--ad-size-font) * 0.88);
   color: var(--ad-muted);
-  max-width: 13.125rem;
+  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }

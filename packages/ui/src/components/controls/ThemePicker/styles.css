@@ -1,15 +1,24 @@
 .ad-theme-picker {
-  display: flex;
+  display: inline-flex;
   flex-wrap: wrap;
   gap: var(--ad-space-2);
+  max-width: 100%;
 }
-.ad-theme-picker button[aria-pressed="true"] {
-  border-color: #ff839c;
-  box-shadow: var(--ad-shadow-ruby);
+.ad-theme-picker > .ad-button {
+  flex: none;
+}
+.ad-theme-picker > .ad-button[aria-pressed="true"] {
+  --ad-btn-border-a: var(--ad-pink);
+  --ad-btn-glow: #ff37746b;
 }
 .ad-theme-swatch {
-  width: 1em;
-  height: 1em;
+  display: inline-block;
+  margin-right: 0.45em;
+  vertical-align: -0.1em;
+  width: 0.9em;
+  height: 0.9em;
   border-radius: 50%;
-  box-shadow: 0 0 0.45em currentColor;
+  box-shadow:
+    0 0 0 0.125rem #0007,
+    0 0 0.45em currentColor;
 }

@@ -1,33 +1,31 @@
-import { U, useExampleState } from "../../../dev/exampleHelpers";
+import {
+  Button,
+  ButtonGroup,
+  Divider,
+  IconButton,
+  Select,
+  ToggleButton,
+  Toolbar,
+} from "@ad-voice/ui";
+
 export default function ToolbarExample() {
-  const { notice, setNotice, alert } = useExampleState();
-  const demo = (
-    <U.Toolbar>
-      <U.ButtonGroup>
-        <U.ToggleButton icon="cursor" label="Выделение" defaultChecked />
-        <U.IconButton icon="pencil" label="Карандаш" />
-        <U.IconButton icon="eraser" label="Ластик" />
-      </U.ButtonGroup>
-      <U.Divider vertical />
-      <U.Select options={["C#4", "D4", "E4"]} label="Тональность" />
-      <U.Button
-        icon="save"
-        variant="primary"
-        onClick={() => alert("Сохранено")}
-      >
-        Сохранить
-      </U.Button>
-    </U.Toolbar>
-  );
   return (
-    <>
-      {demo}
-      <U.Toast
-        floating
-        open={!!notice}
-        message={notice}
-        onClose={() => setNotice("")}
+    <Toolbar>
+      <ButtonGroup>
+        <ToggleButton icon="cursor" label="Выделение" defaultChecked />
+        <IconButton icon="pencil" label="Карандаш" />
+        <IconButton icon="eraser" label="Ластик" />
+      </ButtonGroup>
+      <Divider vertical />
+      <Select
+        size="sm"
+        options={["C#4", "D4", "E4"]}
+        defaultValue="D4"
+        icon="note"
       />
-    </>
+      <Button variant="primary" icon="save" size="sm">
+        Сохранить
+      </Button>
+    </Toolbar>
   );
 }

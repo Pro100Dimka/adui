@@ -1,33 +1,30 @@
-import { U, useExampleState } from "../../../dev/exampleHelpers";
+import { useRef, useState } from "react";
+import { Button, Menu } from "@ad-voice/ui";
+
 export default function MenuExample() {
-  const { open, setOpen, notice, setNotice, anchor, items } = useExampleState();
-  const demo = (
+  const [open, setOpen] = useState(false);
+  const anchor = useRef<HTMLButtonElement>(null);
+  return (
     <>
-      <U.Button
+      <Button
         ref={anchor}
         icon="more"
         aria-haspopup="menu"
         aria-expanded={open}
         onClick={() => setOpen((v) => !v)}
       >
-        Открыть меню
-      </U.Button>
-      <U.Menu
+        Действия
+      </Button>
+      <Menu
         open={open}
         onOpenChange={setOpen}
         anchorRef={anchor}
-        items={items}
-      />
-    </>
-  );
-  return (
-    <>
-      {demo}
-      <U.Toast
-        floating
-        open={!!notice}
-        message={notice}
-        onClose={() => setNotice("")}
+        items={[
+          { label: "Переименовать", icon: "pencil" },
+          { label: "Скачать", icon: "download" },
+          { separator: true },
+          { label: "Удалить", icon: "trash", danger: true },
+        ]}
       />
     </>
   );

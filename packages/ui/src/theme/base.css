@@ -88,16 +88,6 @@ button.ad:focus-visible {
   fill: none;
   z-index: 20;
 }
-.ad-theme-picker > .ad-button {
-  flex: 1;
-  min-width: 0;
-  height: 7.5rem;
-  display: flex;
-  flex-direction: column;
-  padding: 0;
-  overflow: hidden;
-  gap: 0;
-}
 .ad-spinner {
   width: 0.9375rem;
   height: 0.9375rem;

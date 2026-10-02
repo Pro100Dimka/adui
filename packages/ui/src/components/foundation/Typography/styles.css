@@ -109,19 +109,3 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-
-.ad-typography-demo {
-  display: grid;
-  gap: 1.125rem;
-  width: 100%;
-}
-.ad-typography-demo-row {
-  display: grid;
-  grid-template-columns: 6.5625rem minmax(0, 1fr);
-  gap: 1.125rem;
-  align-items: baseline;
-}
-.ad-typography-demo-key {
-  color: var(--ad-muted);
-  font: 500 0.6875rem/1.2 var(--ad-font-family-mono);
-}

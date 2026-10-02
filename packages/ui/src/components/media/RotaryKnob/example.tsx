@@ -1,32 +1,33 @@
-import { U, useExampleState } from "../../../dev/exampleHelpers";
+import { Playground, U, expr, jsx, sizes } from "../../../dev/exampleHelpers";
+
 export default function RotaryKnobExample() {
-  const { value, setValue, notice, setNotice } = useExampleState();
-  const demo = (
-    <>
-      <div className="sample-row sample-knob-row">
-        <U.RotaryKnob
-          size="lg"
-          value={value}
-          onValueChange={setValue}
-          onValueCommit={(v) => setNotice(`Громкость: ${v}%`)}
-          label="Громкость"
-        />
-      </div>
-      <span className="sample-note">
-        Круговой drag у края, линейный drag из центра, выбор по шкале, колесо,
-        клавиатура, Shift для точного шага, Escape и двойной щелчок для сброса.
-      </span>
-    </>
-  );
   return (
-    <>
-      {demo}
-      <U.Toast
-        floating
-        open={!!notice}
-        message={notice}
-        onClose={() => setNotice("")}
-      />
-    </>
+    <Playground
+      knobs={{
+        size: { options: sizes.filter((s) => s !== "xs"), value: "md" },
+        readOnly: { value: false },
+        disabled: { value: false },
+      }}
+      code={(v, c) =>
+        jsx("RotaryKnob", {
+          label: "Громкость",
+          value: expr("volume"),
+          onValueChange: expr("setVolume"),
+          size: c.size,
+          readOnly: v.readOnly,
+          disabled: v.disabled,
+        })
+      }
+    >
+      {(v) => (
+        <U.RotaryKnob
+          label="Громкость"
+          defaultValue={65}
+          size={v.size}
+          readOnly={v.readOnly}
+          disabled={v.disabled}
+        />
+      )}
+    </Playground>
   );
 }

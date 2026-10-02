@@ -1,13 +1,10 @@
-import { U, useExampleState } from "../../../dev/exampleHelpers";
+import { DialogBody, TextField } from "@ad-voice/ui";
+
+/** Content area of a dialog with the standard spacing. */
 export default function DialogBodyExample() {
-  const { text, setText } = useExampleState();
   return (
-    <U.DialogBody>
-      <U.TextField
-        label="Имя пользователя"
-        value={text}
-        onValueChange={setText}
-      />
-    </U.DialogBody>
+    <DialogBody>
+      <TextField label="Название записи" defaultValue="Ночь горит огнями" />
+    </DialogBody>
   );
 }

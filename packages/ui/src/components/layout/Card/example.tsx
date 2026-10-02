@@ -1,20 +1,40 @@
-import { U } from "../../../dev/exampleHelpers";
+import { Playground, U, jsx } from "../../../dev/exampleHelpers";
+
+const materials = ["card", "glass", "ruby", "tile", "shell"] as const;
+
 export default function CardExample() {
   return (
-    <U.Grid minChildWidth="14rem" gap={3}>
-      {(["card", "glass", "ruby", "tile"] as const).map((material) => (
+    <Playground
+      stretch
+      knobs={{
+        material: { options: materials, value: "card" },
+        border: { value: false },
+      }}
+      code={(v) =>
+        jsx(
+          "Card",
+          {
+            title: "Микрофон",
+            description: "Shure SM58 · 48 kHz",
+            icon: "mic",
+            material: v.material === "card" ? undefined : v.material,
+            border: v.border,
+          },
+          '<Button size="sm">Проверить</Button>',
+        )
+      }
+    >
+      {(v) => (
         <U.Card
-          key={material}
-          material={material}
-          title={material}
-          icon="music"
-          border={material === "ruby"}
+          title="Микрофон"
+          description="Shure SM58 · 48 kHz"
+          icon="mic"
+          material={v.material}
+          border={v.border}
         >
-          <U.Typography tone="muted">
-            Один Card вместо Surface и AnimatedBorder.
-          </U.Typography>
+          <U.Button size="sm">Проверить</U.Button>
         </U.Card>
-      ))}
-    </U.Grid>
+      )}
+    </Playground>
   );
 }

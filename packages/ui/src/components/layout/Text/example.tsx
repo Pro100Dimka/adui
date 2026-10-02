@@ -1,25 +1,15 @@
-import { U, useExampleState } from "../../../dev/exampleHelpers";
+import { Stack, Text } from "@ad-voice/ui";
+
+/** Lightweight text; Typography covers the full type scale. */
 export default function TextExample() {
-  const { notice, setNotice } = useExampleState();
-  const demo = (
-    <div className="typography-sample">
-      <U.Text as="h2" variant="title">
-        Заголовок
-      </U.Text>
-      <U.Text>Основной текст интерфейса</U.Text>
-      <U.Text variant="muted">Описание и вспомогательные подписи</U.Text>
-      <U.Text variant="eyebrow">A&D VOICE</U.Text>
-    </div>
-  );
   return (
-    <>
-      {demo}
-      <U.Toast
-        floating
-        open={!!notice}
-        message={notice}
-        onClose={() => setNotice("")}
-      />
-    </>
+    <Stack gap={2}>
+      <Text variant="eyebrow">A&D Voice</Text>
+      <Text as="h3" variant="title">
+        Настройки комнаты
+      </Text>
+      <Text>Основной текст интерфейса</Text>
+      <Text variant="muted">Вспомогательная подпись</Text>
+    </Stack>
   );
 }

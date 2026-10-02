@@ -1,52 +1,47 @@
 import {
+  Playground,
   U,
-  ExampleShowcase,
-  ExampleVariant,
-  ExampleVariantGrid,
-  useExampleSize,
+  inputVariants,
+  jsx,
+  sizes,
 } from "../../../dev/exampleHelpers";
 
 export default function NumberFieldExample() {
-  const [size, setSize] = useExampleSize();
   return (
-    <ExampleShowcase size={size} onSizeChange={setSize}>
-      <ExampleVariantGrid>
-        <ExampleVariant title="Default" description="Numeric value">
-          <U.NumberField
-            size={size}
-            label="Port"
-            defaultValue={8000}
-            min={1}
-            max={65535}
-          />
-        </ExampleVariant>
-        <ExampleVariant title="Minimum" description="Lower bound">
-          <U.NumberField
-            size={size}
-            label="Gain"
-            defaultValue={0}
-            min={0}
-            max={100}
-          />
-        </ExampleVariant>
-        <ExampleVariant title="Maximum" description="Upper bound">
-          <U.NumberField
-            size={size}
-            label="Latency"
-            defaultValue={100}
-            min={0}
-            max={100}
-          />
-        </ExampleVariant>
-        <ExampleVariant title="Disabled" description="Unavailable">
-          <U.NumberField
-            size={size}
-            label="Buffer"
-            defaultValue={256}
-            disabled
-          />
-        </ExampleVariant>
-      </ExampleVariantGrid>
-    </ExampleShowcase>
+    <Playground
+      stretch
+      knobs={{
+        variant: { options: inputVariants, value: "outlined" },
+        size: { options: sizes, value: "md" },
+        disabled: { value: false },
+      }}
+      code={(v, c) =>
+        jsx("NumberField", {
+          label: "Задержка, мс",
+          description: "От 0 до 500 с шагом 10",
+          min: 0,
+          max: 500,
+          step: 10,
+          defaultValue: 120,
+          variant: c.variant,
+          size: c.size,
+          disabled: v.disabled,
+        })
+      }
+    >
+      {(v) => (
+        <U.NumberField
+          label="Задержка, мс"
+          description="От 0 до 500 с шагом 10"
+          min={0}
+          max={500}
+          step={10}
+          defaultValue={120}
+          variant={v.variant}
+          size={v.size}
+          disabled={v.disabled}
+        />
+      )}
+    </Playground>
   );
 }

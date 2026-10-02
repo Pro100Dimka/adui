@@ -1,22 +1,26 @@
-import { U, useExampleState } from "../../../dev/exampleHelpers";
+import { useRef, useState } from "react";
+import { Button, Popover, Slider, Stack, Typography } from "@ad-voice/ui";
+
 export default function PopoverExample() {
-  const { value, setValue, open, setOpen, anchor } = useExampleState();
+  const [open, setOpen] = useState(false);
+  const [volume, setVolume] = useState(65);
+  const anchor = useRef<HTMLButtonElement>(null);
   return (
     <>
-      <U.Button ref={anchor} icon="sliders" onClick={() => setOpen((v) => !v)}>
-        Открыть параметры
-      </U.Button>
-      <U.Popover
+      <Button ref={anchor} icon="volume" onClick={() => setOpen((v) => !v)}>
+        Громкость {volume}%
+      </Button>
+      <Popover
         open={open}
         onOpenChange={setOpen}
         anchorRef={anchor}
         label="Громкость"
       >
-        <U.Stack gap={2}>
-          <U.Slider value={value} onValueChange={setValue} label="Громкость" />
-          <U.Typography variant="caption">{value}%</U.Typography>
-        </U.Stack>
-      </U.Popover>
+        <Stack gap={2}>
+          <Typography variant="label">Громкость</Typography>
+          <Slider value={volume} onValueChange={setVolume} label="Громкость" />
+        </Stack>
+      </Popover>
     </>
   );
 }

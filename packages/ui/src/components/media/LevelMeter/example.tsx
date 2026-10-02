@@ -1,25 +1,28 @@
-import { U, useExampleState } from "../../../dev/exampleHelpers";
+import { Playground, U, jsx } from "../../../dev/exampleHelpers";
+
 export default function LevelMeterExample() {
-  const { value, setValue, notice, setNotice } = useExampleState();
-  const demo = (
-    <>
-      <U.LevelMeter value={value} />
-      <U.Slider
-        value={value}
-        onValueChange={setValue}
-        label="Уровень сигнала"
-      />
-    </>
-  );
   return (
-    <>
-      {demo}
-      <U.Toast
-        floating
-        open={!!notice}
-        message={notice}
-        onClose={() => setNotice("")}
-      />
-    </>
+    <Playground
+      stretch
+      knobs={{
+        value: { options: ["20", "55", "80", "100"], value: "55" },
+        segmented: { value: false },
+      }}
+      code={(v) =>
+        jsx("LevelMeter", {
+          label: "Микрофон",
+          value: Number(v.value),
+          segmented: v.segmented,
+        })
+      }
+    >
+      {(v) => (
+        <U.LevelMeter
+          label="Микрофон"
+          value={Number(v.value)}
+          segmented={v.segmented}
+        />
+      )}
+    </Playground>
   );
 }

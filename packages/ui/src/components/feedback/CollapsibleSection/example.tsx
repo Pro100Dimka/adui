@@ -1,12 +1,15 @@
-import { U } from "../../../dev/exampleHelpers";
+import { CollapsibleSection, KeyValueList } from "@ad-voice/ui";
+
 export default function CollapsibleSectionExample() {
   return (
-    <U.CollapsibleSection title="JSON">
-      <U.TextArea
-        readOnly
-        defaultValue={'{\n  "enabled": true\n}'}
-        endAdornment={<U.IconButton size="xs" icon="copy" label="Копировать" />}
+    <CollapsibleSection title="Технические детали" icon="braces">
+      <KeyValueList
+        items={[
+          ["Частота", "48 kHz"],
+          ["Буфер", "128 сэмплов"],
+          ["Задержка", "6.7 мс"],
+        ]}
       />
-    </U.CollapsibleSection>
+    </CollapsibleSection>
   );
 }

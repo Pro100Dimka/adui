@@ -1,56 +1,76 @@
-.ad-select-shell {
-  display: grid;
-  gap: var(--ad-space-1);
-  min-width: 0;
-  color: var(--ad-text);
-}
-.ad-select-shell > small {
-  color: var(--ad-muted);
-  font-size: var(--ad-font-size-caption);
-}
 .ad-select-control {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.ad-select-chevron {
-  transition: transform 0.18s;
-  color: var(--ad-muted);
+.ad-select-control[data-placeholder] {
+  color: #8f8698;
 }
-.ad-input-base:focus-within .ad-select-chevron {
+.ad-select-chevron {
+  transition:
+    transform 0.2s,
+    color 0.2s;
+}
+.ad-input-base:has([aria-expanded="true"]) .ad-select-chevron {
+  transform: rotate(180deg);
   color: var(--ad-text);
 }
+
+/* Option list shared by Select and Autocomplete. */
 .ad-option-popover {
-  padding: var(--ad-space-1) !important;
+  padding: 0.3rem !important;
   background: var(--ad-surface-dialog) !important;
   box-shadow: var(--ad-shadow-dialog) !important;
   border-color: #ff5c8050 !important;
 }
 .ad-option-list {
   display: grid;
-  gap: 0.125rem;
+  gap: 0.0625rem;
   max-height: min(42dvh, 18rem);
   overflow: auto;
   overscroll-behavior: contain;
+  scrollbar-width: thin;
 }
 .ad-option {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
   width: 100%;
-  justify-content: flex-start;
-  border: 0 !important;
-  box-shadow: none !important;
-  background: transparent !important;
   min-height: 2.25rem;
+  padding: 0.4rem 0.65rem;
+  border: 0;
+  border-radius: calc(var(--ad-radius) * 0.6);
+  background: transparent;
+  color: #d9ced5;
+  font: inherit;
+  font-size: var(--ad-font-size-body-sm);
+  text-align: left;
+  cursor: pointer;
 }
-.ad-option:hover,
-.ad-option[aria-selected="true"] {
-  background: linear-gradient(
-    90deg,
-    #77112f70,
-    #2a0714 72%,
-    transparent
-  ) !important;
+.ad-option-label {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.ad-option > .ad-icon {
+  --ad-icon-size: 1rem;
+  color: var(--ad-pink);
+}
+.ad-option:hover:not(:disabled),
+.ad-option[data-active],
+.ad-option:focus-visible {
+  background: #ffffff0f;
   color: #fff;
+  outline: 0;
 }
 .ad-option[aria-selected="true"] {
-  box-shadow: inset 0.125rem 0 #ff5b83 !important;
+  background: linear-gradient(90deg, #8a15395e, #2a071444 80%);
+  color: #fff;
+  font-weight: 600;
+}
+.ad-option:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
 }

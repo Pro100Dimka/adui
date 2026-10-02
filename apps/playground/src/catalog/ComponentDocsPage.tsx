@@ -1,4 +1,5 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
+import { ExampleCodeContext } from "../../../../packages/ui/src/dev/exampleHelpers";
 import {
   Badge,
   Button,
@@ -125,15 +126,37 @@ const scrollToSection =
       ?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
+/** Adds the import line for every component tag used in a generated snippet. */
+function withImports(code: string, name: string, path: string) {
+  const tags = [
+    ...new Set([...code.matchAll(/<([A-Z][A-Za-z0-9]*)/g)].map((m) => m[1])),
+  ];
+  const others = tags.filter((tag) => tag !== name);
+  const lines =
+    path === "@ad-voice/ui"
+      ? [`import { ${[name, ...others].join(", ")} } from "@ad-voice/ui";`]
+      : [
+          `import { ${name} } from "${path}";`,
+          ...(others.length
+            ? [`import { ${others.join(", ")} } from "@ad-voice/ui";`]
+            : []),
+        ];
+  return [...lines, "", code].join("\n");
+}
+
 export function ComponentDocsPage({ item }: { item: CatalogMeta }) {
   const category = getCategoryForItem(item);
   const LiveExample = getExample(item.name);
   const exampleSource = getExampleSource(item.name);
+  const [liveCode, setLiveCode] = useState<string>();
   const apiSource = getComponentApiSource(item.name);
   const componentSource = getComponentSource(item.name);
   const sourcePath = getComponentSourcePath(item.name);
   const importPath = getImportPath(item);
   const importLine = `import { ${item.name} } from "${importPath}";`;
+  const usage = liveCode
+    ? withImports(liveCode, item.name, importPath)
+    : exampleSource;
   const categoryItems = category?.items ?? catalog;
   const index = categoryItems.findIndex(
     (candidate) => candidate.name === item.name,
@@ -262,7 +285,9 @@ export function ComponentDocsPage({ item }: { item: CatalogMeta }) {
               >
                 <DocsExampleBoundary name={item.name}>
                   {LiveExample ? (
-                    <LiveExample />
+                    <ExampleCodeContext.Provider value={setLiveCode}>
+                      <LiveExample />
+                    </ExampleCodeContext.Provider>
                   ) : (
                     <Typography variant="body-sm" tone="muted">
                       Для компонента пока нет example.tsx.
@@ -285,9 +310,9 @@ export function ComponentDocsPage({ item }: { item: CatalogMeta }) {
                 compact
                 eyebrow="02"
                 title="Использование"
-                description="Код соответствует live-примеру."
+                description="Меняется вместе с настройками примера."
               />
-              <CodeBlock title="Example.tsx" code={exampleSource} />
+              <CodeBlock title="Example.tsx" code={usage} />
             </Stack>
           </Card>
         </Grid>

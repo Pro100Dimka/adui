@@ -23,7 +23,7 @@ export const ThemePicker = (p: ThemePickerProps) => {
       {themes.map(([key, name, color]) => (
         <Button
           key={key}
-          size="sm"
+          size={p.size ?? "sm"}
           aria-pressed={key === value}
           onClick={() => setValue(key)}
         >

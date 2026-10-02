@@ -1,16 +1,6 @@
-import { U, useExampleState } from "../../../dev/exampleHelpers";
+import { WaveDecoration } from "@ad-voice/ui";
+
+/** Decorative animated waves for hero areas; hidden from assistive tech. */
 export default function WaveDecorationExample() {
-  const { notice, setNotice } = useExampleState();
-  const demo = <U.WaveDecoration style={{ height: 150 }} />;
-  return (
-    <>
-      {demo}
-      <U.Toast
-        floating
-        open={!!notice}
-        message={notice}
-        onClose={() => setNotice("")}
-      />
-    </>
-  );
+  return <WaveDecoration />;
 }

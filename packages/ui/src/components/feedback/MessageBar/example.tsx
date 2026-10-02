@@ -1,21 +1,21 @@
-import { U, useExampleState } from "../../../dev/exampleHelpers";
+import { Playground, U, jsx } from "../../../dev/exampleHelpers";
+
+const tones = ["warning", "error", "success", "info"] as const;
+const text = {
+  warning: "Осталось меньше 1 ГБ свободного места",
+  error: "Не удалось сохранить запись",
+  success: "Все параметры сохранены",
+  info: "Новая версия модели доступна",
+};
+
 export default function MessageBarExample() {
-  const { notice, setNotice } = useExampleState();
-  const demo = (
-    <>
-      <U.MessageBar tone="error">Недостаточно свободного места</U.MessageBar>
-      <U.MessageBar tone="success">Все параметры сохранены</U.MessageBar>
-    </>
-  );
   return (
-    <>
-      {demo}
-      <U.Toast
-        floating
-        open={!!notice}
-        message={notice}
-        onClose={() => setNotice("")}
-      />
-    </>
+    <Playground
+      stretch
+      knobs={{ tone: { options: tones, value: "warning" } }}
+      code={(v) => jsx("MessageBar", { tone: v.tone }, text[v.tone])}
+    >
+      {(v) => <U.MessageBar tone={v.tone}>{text[v.tone]}</U.MessageBar>}
+    </Playground>
   );
 }

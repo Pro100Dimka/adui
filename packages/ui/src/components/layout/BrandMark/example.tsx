@@ -1,16 +1,5 @@
-import { U, useExampleState } from "../../../dev/exampleHelpers";
+import { BrandMark } from "@ad-voice/ui";
+
 export default function BrandMarkExample() {
-  const { notice, setNotice } = useExampleState();
-  const demo = <U.BrandMark />;
-  return (
-    <>
-      {demo}
-      <U.Toast
-        floating
-        open={!!notice}
-        message={notice}
-        onClose={() => setNotice("")}
-      />
-    </>
-  );
+  return <BrandMark />;
 }

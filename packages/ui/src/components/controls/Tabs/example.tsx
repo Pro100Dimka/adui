@@ -1,37 +1,50 @@
 import { useState } from "react";
-import {
-  U,
-  ExampleShowcase,
-  ExampleStateStrip,
-  useExampleSize,
-} from "../../../dev/exampleHelpers";
+import { Playground, U, expr, jsx, sizes } from "../../../dev/exampleHelpers";
 
 const items = [
-  { value: "appearance", label: "View", icon: "palette" },
-  { value: "audio", label: "Audio", icon: "audio" },
-  { value: "env", label: "ENV", icon: "key" },
+  { value: "view", label: "Внешний вид", icon: "palette", id: "tab-view" },
+  { value: "audio", label: "Аудио", icon: "audio", id: "tab-audio" },
+  { value: "keys", label: "Ключи", icon: "key", id: "tab-keys" },
 ];
+const panels: Record<string, string> = {
+  view: "Тема, акцентный цвет и анимации интерфейса.",
+  audio: "Драйвер, задержка и мониторинг голоса.",
+  keys: "API-ключи сервисов обработки.",
+};
+
 export default function TabsExample() {
-  const [size, setSize] = useExampleSize();
-  const [value, setValue] = useState("audio");
+  const [tab, setTab] = useState("audio");
   return (
-    <ExampleShowcase
-      size={size}
-      onSizeChange={setSize}
-      states={
-        <ExampleStateStrip label="Active">
-          <span className="example-readout">{value}</span>
-        </ExampleStateStrip>
+    <Playground
+      stretch
+      knobs={{ size: { options: sizes, value: "md" } }}
+      code={(_, c) =>
+        `const items = ${JSON.stringify(items.map(({ value, label, icon }) => ({ value, label, icon })))};\n\n` +
+        jsx("Tabs", {
+          label: "Настройки",
+          items: expr("items"),
+          value: expr("tab"),
+          onValueChange: expr("setTab"),
+          size: c.size,
+        })
       }
     >
-      <div className="example-single-control">
-        <U.Tabs
-          size={size}
-          value={value}
-          onValueChange={setValue}
-          items={items}
-        />
-      </div>
-    </ExampleShowcase>
+      {(v) => (
+        <U.Stack gap={3}>
+          <U.Tabs
+            label="Настройки"
+            items={items}
+            value={tab}
+            onValueChange={setTab}
+            size={v.size}
+          />
+          <U.TabPanel labelledBy={`tab-${tab}`}>
+            <U.Typography variant="body-sm" tone="muted">
+              {panels[tab]}
+            </U.Typography>
+          </U.TabPanel>
+        </U.Stack>
+      )}
+    </Playground>
   );
 }

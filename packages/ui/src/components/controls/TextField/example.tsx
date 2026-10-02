@@ -1,45 +1,71 @@
 import {
+  Compare,
+  Playground,
   U,
-  ExampleShowcase,
-  ExampleVariant,
-  ExampleVariantGrid,
-  useExampleSize,
+  expr,
+  inputVariants,
+  jsx,
+  sizes,
 } from "../../../dev/exampleHelpers";
 
 export default function TextFieldExample() {
-  const [size, setSize] = useExampleSize();
   return (
-    <ExampleShowcase size={size} onSizeChange={setSize}>
-      <ExampleVariantGrid>
-        <ExampleVariant title="Default" description="Standard text input">
-          <U.TextField size={size} label="Name" placeholder="Enter text" />
-        </ExampleVariant>
-        <ExampleVariant title="Adornments" description="Start and end content">
-          <U.TextField
-            size={size}
-            label="Search"
-            placeholder="Search…"
-            startAdornment={<U.Icon name="search" />}
-            endAdornment={<U.Icon name="copy" />}
-          />
-        </ExampleVariant>
-        <ExampleVariant title="Read only" description="Visible but immutable">
-          <U.TextField
-            size={size}
-            label="Path"
-            readOnly
-            value="D:/Music/song.wav"
-          />
-        </ExampleVariant>
-        <ExampleVariant title="Error" description="Validation state">
-          <U.TextField
-            size={size}
-            label="Email"
-            error="Invalid value"
-            defaultValue="wrong@"
-          />
-        </ExampleVariant>
-      </ExampleVariantGrid>
-    </ExampleShowcase>
+    <Playground
+      stretch
+      knobs={{
+        variant: { options: inputVariants, value: "outlined" },
+        size: { options: sizes, value: "md" },
+        icon: { value: true },
+        clearable: { value: true },
+        required: { value: false },
+        error: { value: false },
+        disabled: { value: false },
+      }}
+      code={(v, c) =>
+        jsx("TextField", {
+          label: "Имя в комнате",
+          placeholder: "Как вас называть?",
+          variant: c.variant,
+          size: c.size,
+          startAdornment: v.icon ? expr('<Icon name="user" />') : undefined,
+          clearable: v.clearable,
+          required: v.required,
+          description: v.error ? undefined : "Видно другим участникам",
+          error: v.error ? "Имя уже занято" : undefined,
+          disabled: v.disabled,
+        })
+      }
+      extra={
+        <Compare
+          items={inputVariants.map((variant) => ({
+            label: variant,
+            node: (
+              <U.TextField
+                variant={variant}
+                size="sm"
+                placeholder="Поиск"
+                startAdornment={<U.Icon name="search" />}
+              />
+            ),
+          }))}
+        />
+      }
+    >
+      {(v) => (
+        <U.TextField
+          label="Имя в комнате"
+          placeholder="Как вас называть?"
+          defaultValue="Дмитрий"
+          variant={v.variant}
+          size={v.size}
+          startAdornment={v.icon ? <U.Icon name="user" /> : undefined}
+          clearable={v.clearable}
+          required={v.required}
+          description={v.error ? undefined : "Видно другим участникам"}
+          error={v.error ? "Имя уже занято" : undefined}
+          disabled={v.disabled}
+        />
+      )}
+    </Playground>
   );
 }

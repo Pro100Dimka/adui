@@ -1,21 +1,11 @@
-import { U, row, useExampleState } from "../../../dev/exampleHelpers";
+import { Stack } from "@ad-voice/ui";
+import { RoleEmblem } from "@ad-voice/ui/composites";
+
 export default function RoleEmblemExample() {
-  const { notice, setNotice } = useExampleState();
-  const demo = row(
-    <>
-      <U.RoleEmblem />
-      <U.RoleEmblem role="guest" />
-    </>,
-  );
   return (
-    <>
-      {demo}
-      <U.Toast
-        floating
-        open={!!notice}
-        message={notice}
-        onClose={() => setNotice("")}
-      />
-    </>
+    <Stack direction="row" gap={4} align="center">
+      <RoleEmblem role="host" />
+      <RoleEmblem role="guest" />
+    </Stack>
   );
 }

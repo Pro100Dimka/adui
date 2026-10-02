@@ -1,29 +1,28 @@
 import { useState } from "react";
-import { U } from "../../../dev/exampleHelpers";
+import {
+  Button,
+  Card,
+  Stack,
+  TextField,
+  ThemePicker,
+  ThemeProvider,
+} from "@ad-voice/ui";
+
+type Theme = "ruby" | "light" | "green" | "violet";
+
 export default function ThemeProviderExample() {
-  const [theme, setTheme] = useState<"ruby" | "green" | "violet" | "light">(
-      "ruby",
-    ),
-    [accent, setAccent] = useState("#ff244c");
+  const [theme, setTheme] = useState<Theme>("ruby");
   return (
-    <U.ThemeProvider theme={theme} accent={accent}>
-      <U.Stack gap={3}>
-        <U.ThemePicker value={theme} onValueChange={setTheme} />
-        <label>
-          Свой accent{" "}
-          <input
-            type="color"
-            value={accent}
-            onChange={(e) => setAccent(e.target.value)}
-          />
-        </label>
-        <U.Card material="glass" title="Theme preview">
-          <U.Stack direction="row" gap={2}>
-            <U.Button variant="primary">Primary</U.Button>
-            <U.TextField defaultValue="Text field" />
-          </U.Stack>
-        </U.Card>
-      </U.Stack>
-    </U.ThemeProvider>
+    <ThemeProvider theme={theme}>
+      <Stack gap={4}>
+        <ThemePicker value={theme} onValueChange={setTheme} />
+        <Card material="glass" title="Предпросмотр темы">
+          <Stack direction={{ base: "column", sm: "row" }} gap={2}>
+            <TextField placeholder="Поле ввода" />
+            <Button variant="primary">Применить</Button>
+          </Stack>
+        </Card>
+      </Stack>
+    </ThemeProvider>
   );
 }

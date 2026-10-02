@@ -1,29 +1,36 @@
-import {
-  U,
-  ExampleShowcase,
-  ExampleVariant,
-  ExampleVariantGrid,
-  useExampleSize,
-} from "../../../dev/exampleHelpers";
+import { Playground, U, jsx, sizes } from "../../../dev/exampleHelpers";
 
 export default function CheckboxExample() {
-  const [size, setSize] = useExampleSize();
   return (
-    <ExampleShowcase size={size} onSizeChange={setSize}>
-      <ExampleVariantGrid>
-        <ExampleVariant title="Unchecked" description="Default">
-          <U.Checkbox size={size} label="Option" />
-        </ExampleVariant>
-        <ExampleVariant title="Checked" description="Selected">
-          <U.Checkbox size={size} defaultChecked label="Option" />
-        </ExampleVariant>
-        <ExampleVariant title="Required" description="Form requirement">
-          <U.Checkbox size={size} required label="Accept" />
-        </ExampleVariant>
-        <ExampleVariant title="Disabled" description="Unavailable">
-          <U.Checkbox size={size} disabled label="Option" />
-        </ExampleVariant>
-      </ExampleVariantGrid>
-    </ExampleShowcase>
+    <Playground
+      knobs={{
+        size: { options: sizes, value: "md" },
+        disabled: { value: false },
+      }}
+      code={(v, c) =>
+        jsx("Checkbox", {
+          label: "Сохранять запись после выступления",
+          defaultChecked: true,
+          size: c.size,
+          disabled: v.disabled,
+        })
+      }
+    >
+      {(v) => (
+        <U.Stack gap={3}>
+          <U.Checkbox
+            label="Сохранять запись после выступления"
+            defaultChecked
+            size={v.size}
+            disabled={v.disabled}
+          />
+          <U.Checkbox
+            label="Отправлять анализ на почту"
+            size={v.size}
+            disabled={v.disabled}
+          />
+        </U.Stack>
+      )}
+    </Playground>
   );
 }

@@ -1,24 +1,16 @@
-import { U, useExampleState } from "../../../dev/exampleHelpers";
+import { Button, EmptyState } from "@ad-voice/ui";
+
 export default function EmptyStateExample() {
-  const { notice, setNotice, alert } = useExampleState();
-  const demo = (
-    <U.EmptyState
+  return (
+    <EmptyState
+      icon="music"
+      title="Пока нет записей"
+      description="Спойте первую песню — запись появится здесь."
       action={
-        <U.Button variant="primary" icon="plus" onClick={() => alert()}>
-          Добавить запись
-        </U.Button>
+        <Button variant="primary" icon="plus">
+          Новое выступление
+        </Button>
       }
     />
-  );
-  return (
-    <>
-      {demo}
-      <U.Toast
-        floating
-        open={!!notice}
-        message={notice}
-        onClose={() => setNotice("")}
-      />
-    </>
   );
 }

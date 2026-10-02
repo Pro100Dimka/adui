@@ -1,54 +1,49 @@
 import {
+  Playground,
   U,
-  ExampleShowcase,
-  ExampleVariant,
-  ExampleVariantGrid,
-  useExampleSize,
-  useExampleState,
+  buttonVariants,
+  expr,
+  jsx,
+  sizes,
 } from "../../../dev/exampleHelpers";
 
+const items = [
+  { label: "Сохранить как…", icon: "save" },
+  { label: "Экспорт в WAV", icon: "download" },
+  { label: "Экспорт в MP3", icon: "download" },
+];
+
 export default function SplitButtonExample() {
-  const [size, setSize] = useExampleSize();
-  const { items } = useExampleState();
   return (
-    <ExampleShowcase size={size} onSizeChange={setSize}>
-      <ExampleVariantGrid columns={4}>
-        <ExampleVariant>
-          <U.SplitButton
-            size={size}
-            variant="primary"
-            icon="save"
-            items={items}
-          >
-            Save
-          </U.SplitButton>
-        </ExampleVariant>
-        <ExampleVariant>
-          <U.SplitButton
-            size={size}
-            variant="secondary"
-            icon="download"
-            items={items}
-          >
-            Export
-          </U.SplitButton>
-        </ExampleVariant>
-        <ExampleVariant>
-          <U.SplitButton size={size} variant="ghost" icon="more" items={items}>
-            More
-          </U.SplitButton>
-        </ExampleVariant>
-        <ExampleVariant>
-          <U.SplitButton
-            size={size}
-            variant="danger"
-            icon="trash"
-            items={items}
-          >
-            Delete
-          </U.SplitButton>
-        </ExampleVariant>
-      </ExampleVariantGrid>
-    </ExampleShowcase>
+    <Playground
+      knobs={{
+        variant: { options: buttonVariants, value: "primary" },
+        size: { options: sizes, value: "md" },
+      }}
+      code={(v, c) =>
+        `const items = ${JSON.stringify(items)};\n\n` +
+        jsx(
+          "SplitButton",
+          {
+            icon: "save",
+            items: expr("items"),
+            variant: c.variant,
+            size: c.size,
+          },
+          "Сохранить",
+        )
+      }
+    >
+      {(v) => (
+        <U.SplitButton
+          icon="save"
+          items={items}
+          variant={v.variant}
+          size={v.size}
+        >
+          Сохранить
+        </U.SplitButton>
+      )}
+    </Playground>
   );
 }

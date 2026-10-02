@@ -1,44 +1,64 @@
 import {
+  Compare,
+  Playground,
   U,
-  ExampleShowcase,
-  ExampleVariant,
-  ExampleVariantGrid,
-  useExampleSize,
+  buttonVariants,
+  jsx,
+  sizes,
 } from "../../../dev/exampleHelpers";
 
+const icons = {
+  primary: "play",
+  secondary: "settings",
+  ghost: "more",
+  danger: "trash",
+};
+
 export default function IconButtonExample() {
-  const [size, setSize] = useExampleSize();
   return (
-    <ExampleShowcase size={size} onSizeChange={setSize}>
-      <ExampleVariantGrid columns={4}>
-        <ExampleVariant>
-          <U.IconButton
-            size={size}
-            variant="primary"
-            icon="play"
-            label="Primary"
-          />
-        </ExampleVariant>
-        <ExampleVariant>
-          <U.IconButton
-            size={size}
-            variant="secondary"
-            icon="settings"
-            label="Secondary"
-          />
-        </ExampleVariant>
-        <ExampleVariant>
-          <U.IconButton size={size} variant="ghost" icon="more" label="Ghost" />
-        </ExampleVariant>
-        <ExampleVariant>
-          <U.IconButton
-            size={size}
-            variant="danger"
-            icon="trash"
-            label="Danger"
-          />
-        </ExampleVariant>
-      </ExampleVariantGrid>
-    </ExampleShowcase>
+    <Playground
+      knobs={{
+        variant: { options: buttonVariants, value: "primary" },
+        size: { options: sizes, value: "md" },
+        round: { value: false },
+        disabled: { value: false },
+      }}
+      code={(v, c) =>
+        jsx("IconButton", {
+          icon: icons[v.variant as keyof typeof icons],
+          label: "Воспроизвести",
+          variant: v.variant === "secondary" ? undefined : v.variant,
+          size: c.size,
+          round: v.round,
+          disabled: v.disabled,
+        })
+      }
+      extra={
+        <Compare
+          items={buttonVariants.map((variant) => ({
+            label: variant,
+            node: (
+              <U.IconButton
+                variant={variant}
+                size="sm"
+                icon={icons[variant]}
+                label={variant}
+              />
+            ),
+          }))}
+        />
+      }
+    >
+      {(v) => (
+        <U.IconButton
+          icon={icons[v.variant as keyof typeof icons]}
+          label="Воспроизвести"
+          variant={v.variant}
+          size={v.size}
+          round={v.round}
+          disabled={v.disabled}
+        />
+      )}
+    </Playground>
   );
 }

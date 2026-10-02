@@ -47,9 +47,15 @@ export const Popover = (p: PopoverProps) => {
     const supports = typeof node.showPopover === "function";
     if (supports) node.showPopover();
     position();
-    node
-      .querySelector<HTMLElement>('button:not(:disabled),input,[tabindex="0"]')
-      ?.focus();
+    if (p.autoFocus !== false)
+      (
+        node.querySelector<HTMLElement>(
+          '[aria-selected="true"]:not(:disabled)',
+        ) ??
+        node.querySelector<HTMLElement>(
+          'button:not(:disabled),input,[tabindex="0"]',
+        )
+      )?.focus();
     const dismiss = (e: PointerEvent) => {
       const path = e.composedPath();
       if (

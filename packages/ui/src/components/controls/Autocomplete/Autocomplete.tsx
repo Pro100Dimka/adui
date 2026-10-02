@@ -1,8 +1,7 @@
 import { useRef, useState } from "react";
 import { assignRef, useControllable } from "../../../core/base";
 import { Popover } from "../../feedback/Popover/Popover";
-import { Button } from "../Button/Button";
-import { FieldFrame, toOption } from "../internal";
+import { FieldFrame, OptionList, toOption } from "../internal";
 import { IconButton } from "../IconButton/IconButton";
 import { InputBase } from "../InputBase/InputBase";
 import type { AutocompleteProps } from "../shared";
@@ -22,6 +21,7 @@ export const Autocomplete = ({
   inputRef,
   className,
   size,
+  variant,
   tone: _tone,
   material: _material,
   style: _style,
@@ -36,15 +36,18 @@ export const Autocomplete = ({
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState(0);
   const inputNode = useRef<HTMLInputElement>(null);
-  const query = current.trim().toLocaleLowerCase();
-  const filtered = options
-    .map(toOption)
-    .filter(
-      (o) =>
-        !query ||
-        o.label.toLocaleLowerCase().includes(query) ||
-        o.value.toLocaleLowerCase().includes(query),
-    );
+  const box = useRef<HTMLDivElement>(null);
+  const all = options.map(toOption);
+  // A value that already names an option shows the whole list, like a reopened select.
+  const query = all.some((o) => o.label === current)
+    ? ""
+    : current.trim().toLocaleLowerCase();
+  const filtered = all.filter(
+    (o) =>
+      !query ||
+      o.label.toLocaleLowerCase().includes(query) ||
+      o.value.toLocaleLowerCase().includes(query),
+  );
   const listId = `${input.id ?? "ad-autocomplete"}-listbox`;
   const choose = (next: string) => {
     setCurrent(next);
@@ -61,7 +64,9 @@ export const Autocomplete = ({
       error={error}
     >
       <InputBase
+        ref={box}
         size={size}
+        variant={variant}
         disabled={input.disabled}
         readOnly={input.readOnly}
         error={!!error}
@@ -131,28 +136,22 @@ export const Autocomplete = ({
       <Popover
         open={open && filtered.length > 0}
         onOpenChange={setOpen}
-        anchorRef={inputNode}
+        anchorRef={box}
+        autoFocus={false}
         role="listbox"
         align="start"
         matchAnchorWidth
         className="ad-option-popover ad-autocomplete-popover"
         label={typeof label === "string" ? label : "Подсказки"}
       >
-        <div id={listId} className="ad-option-list">
-          {filtered.map((option, index) => (
-            <Button
-              key={option.value}
-              role="option"
-              aria-selected={index === active}
-              variant="ghost"
-              className="ad-option"
-              onPointerMove={() => setActive(index)}
-              onClick={() => choose(option.value)}
-            >
-              {option.label}
-            </Button>
-          ))}
-        </div>
+        <OptionList
+          id={listId}
+          options={filtered}
+          selected={current}
+          active={active}
+          onChoose={choose}
+          onHover={setActive}
+        />
       </Popover>
     </FieldFrame>
   );

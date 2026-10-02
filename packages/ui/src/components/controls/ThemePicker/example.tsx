@@ -1,15 +1,18 @@
-import { useState } from "react";
-import { U } from "../../../dev/exampleHelpers";
+import { Playground, U, jsx, sizes } from "../../../dev/exampleHelpers";
+
 export default function ThemePickerExample() {
-  const [theme, setTheme] = useState<"ruby" | "light" | "green" | "violet">(
-    "ruby",
-  );
   return (
-    <U.Stack gap={2}>
-      <U.ThemePicker value={theme} onValueChange={setTheme} />
-      <U.Typography variant="caption" tone="muted">
-        Выбрано: {theme}
-      </U.Typography>
-    </U.Stack>
+    <Playground
+      knobs={{ size: { options: sizes, value: "sm" } }}
+      code={(_, c) =>
+        jsx("ThemePicker", {
+          value: { expr: "theme" },
+          onValueChange: { expr: "setTheme" },
+          size: c.size,
+        })
+      }
+    >
+      {(v) => <U.ThemePicker size={v.size} />}
+    </Playground>
   );
 }

@@ -12,7 +12,7 @@
   --ad-btn-inner: #ffffff3c;
   --ad-btn-bottom: #000a;
   display: inline-grid;
-  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-columns: minmax(0, auto) auto;
   align-items: stretch;
   position: relative;
   inline-size: max-content;

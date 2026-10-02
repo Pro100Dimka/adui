@@ -1,23 +1,11 @@
-import { U, useExampleState } from "../../../dev/exampleHelpers";
+import { Button, DialogActions } from "@ad-voice/ui";
+
+/** Footer row of a dialog; Dialog renders one for you, use it in custom dialogs. */
 export default function DialogActionsExample() {
-  const { notice, setNotice, alert } = useExampleState();
-  const demo = (
-    <U.DialogActions>
-      <U.Button onClick={() => alert("Отмена")}>Отмена</U.Button>
-      <U.Button variant="primary" onClick={() => alert("Сохранено")}>
-        Сохранить
-      </U.Button>
-    </U.DialogActions>
-  );
   return (
-    <>
-      {demo}
-      <U.Toast
-        floating
-        open={!!notice}
-        message={notice}
-        onClose={() => setNotice("")}
-      />
-    </>
+    <DialogActions>
+      <Button>Отмена</Button>
+      <Button variant="primary">Сохранить</Button>
+    </DialogActions>
   );
 }

@@ -20,6 +20,8 @@ export interface PopoverProps extends CommonProps {
   onKeyDown?: KeyboardEventHandler<HTMLDivElement>;
   align?: "start" | "end";
   matchAnchorWidth?: boolean;
+  /** Move focus into the popover when it opens (default). Off for comboboxes that keep typing focus. */
+  autoFocus?: boolean;
 }
 export interface MenuItemData {
   id?: string;

@@ -1,16 +1,15 @@
-import { U, useExampleState } from "../../../dev/exampleHelpers";
+import { DataTable } from "@ad-voice/ui";
+
 export default function DataTableExample() {
-  const { notice, setNotice } = useExampleState();
-  const demo = <U.DataTable />;
   return (
-    <>
-      {demo}
-      <U.Toast
-        floating
-        open={!!notice}
-        message={notice}
-        onClose={() => setNotice("")}
-      />
-    </>
+    <DataTable
+      caption="История обработки"
+      columns={["Время", "Событие", "Статус"]}
+      rows={[
+        ["13:24", "Анализ завершён", "Готово"],
+        ["13:23", "Запись загружена", "Готово"],
+        ["13:21", "Выступление начато", "Готово"],
+      ]}
+    />
   );
 }

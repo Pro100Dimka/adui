@@ -1,51 +1,60 @@
 import {
+  Compare,
+  Playground,
   U,
-  ExampleShowcase,
-  ExampleStateStrip,
-  ExampleVariant,
-  ExampleVariantGrid,
-  useExampleSize,
+  buttonVariants,
+  jsx,
+  sizes,
 } from "../../../dev/exampleHelpers";
 
 export default function ButtonExample() {
-  const [size, setSize] = useExampleSize();
   return (
-    <ExampleShowcase
-      size={size}
-      onSizeChange={setSize}
-      states={
-        <ExampleStateStrip>
-          <U.Button size={size} disabled>
-            Disabled
-          </U.Button>
-          <U.Button size={size} loading>
-            Loading
-          </U.Button>
-        </ExampleStateStrip>
+    <Playground
+      knobs={{
+        variant: { options: buttonVariants, value: "primary" },
+        size: { options: sizes, value: "md" },
+        icon: { value: true },
+        loading: { value: false },
+        disabled: { value: false },
+      }}
+      code={(v, c) =>
+        jsx(
+          "Button",
+          {
+            variant: v.variant === "secondary" ? undefined : v.variant,
+            size: c.size,
+            icon: v.icon ? "save" : undefined,
+            loading: v.loading,
+            disabled: v.disabled,
+          },
+          "Сохранить",
+        )
+      }
+      extra={
+        <Compare
+          captions={false}
+          items={buttonVariants.map((variant) => ({
+            label: variant,
+            node: (
+              <U.Button variant={variant} size="sm">
+                {variant[0].toUpperCase() + variant.slice(1)}
+              </U.Button>
+            ),
+          }))}
+        />
       }
     >
-      <ExampleVariantGrid columns={4}>
-        <ExampleVariant>
-          <U.Button size={size} variant="primary">
-            Primary
-          </U.Button>
-        </ExampleVariant>
-        <ExampleVariant>
-          <U.Button size={size} variant="secondary">
-            Secondary
-          </U.Button>
-        </ExampleVariant>
-        <ExampleVariant>
-          <U.Button size={size} variant="ghost">
-            Ghost
-          </U.Button>
-        </ExampleVariant>
-        <ExampleVariant>
-          <U.Button size={size} variant="danger">
-            Danger
-          </U.Button>
-        </ExampleVariant>
-      </ExampleVariantGrid>
-    </ExampleShowcase>
+      {(v) => (
+        <U.Button
+          variant={v.variant}
+          size={v.size}
+          icon={v.icon ? "save" : undefined}
+          loading={v.loading}
+          disabled={v.disabled}
+        >
+          Сохранить
+        </U.Button>
+      )}
+    </Playground>
   );
 }

@@ -17,6 +17,7 @@ export const TextField = ({
   inputRef,
   className,
   size,
+  variant,
   tone: _tone,
   material: _material,
   style: _style,
@@ -38,6 +39,7 @@ export const TextField = ({
     >
       <InputBase
         size={size}
+        variant={variant}
         disabled={input.disabled}
         readOnly={input.readOnly}
         error={!!error}

@@ -1,16 +1,16 @@
-import { U, useExampleState } from "../../../dev/exampleHelpers";
+import { KeyValueList, StatusIndicator } from "@ad-voice/ui";
+
 export default function KeyValueListExample() {
-  const { notice, setNotice } = useExampleState();
-  const demo = <U.KeyValueList />;
   return (
-    <>
-      {demo}
-      <U.Toast
-        floating
-        open={!!notice}
-        message={notice}
-        onClose={() => setNotice("")}
-      />
-    </>
+    <KeyValueList
+      items={[
+        [
+          "Python backend",
+          <StatusIndicator status="success" label="Работает" />,
+        ],
+        ["Аудиосервис", <StatusIndicator status="processing" label="Запуск" />],
+        ["База данных", <StatusIndicator status="success" label="Исправна" />],
+      ]}
+    />
   );
 }

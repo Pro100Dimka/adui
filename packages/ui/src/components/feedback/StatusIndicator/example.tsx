@@ -1,24 +1,22 @@
-import { U, row, useExampleState } from "../../../dev/exampleHelpers";
+import { Playground, U, jsx } from "../../../dev/exampleHelpers";
+
+const statuses = [
+  "success",
+  "processing",
+  "pending",
+  "warning",
+  "error",
+  "offline",
+  "info",
+] as const;
+
 export default function StatusIndicatorExample() {
-  const { notice, setNotice } = useExampleState();
-  const demo = row(
-    <>
-      {(["success", "processing", "pending", "error", "offline"] as const).map(
-        (status) => (
-          <U.StatusIndicator key={status} status={status} />
-        ),
-      )}
-    </>,
-  );
   return (
-    <>
-      {demo}
-      <U.Toast
-        floating
-        open={!!notice}
-        message={notice}
-        onClose={() => setNotice("")}
-      />
-    </>
+    <Playground
+      knobs={{ status: { options: statuses, value: "processing" } }}
+      code={(v) => jsx("StatusIndicator", { status: v.status })}
+    >
+      {(v) => <U.StatusIndicator status={v.status} />}
+    </Playground>
   );
 }

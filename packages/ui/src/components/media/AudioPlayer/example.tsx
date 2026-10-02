@@ -1,23 +1,6 @@
-import { U, useExampleState } from "../../../dev/exampleHelpers";
+import { AudioPlayer } from "@ad-voice/ui";
+
+/** Pass `src` to play a file; without it the player shows its timeline only. */
 export default function AudioPlayerExample() {
-  const { notice, setNotice } = useExampleState();
-  const demo = (
-    <>
-      <U.AudioPlayer duration={51} />
-      <span className="sample-note">
-        Без src проигрывается только демонстрационная шкала времени.
-      </span>
-    </>
-  );
-  return (
-    <>
-      {demo}
-      <U.Toast
-        floating
-        open={!!notice}
-        message={notice}
-        onClose={() => setNotice("")}
-      />
-    </>
-  );
+  return <AudioPlayer duration={51} defaultVolume={0.7} />;
 }

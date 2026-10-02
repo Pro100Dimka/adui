@@ -1,23 +1,26 @@
-import { Button, Stack, TextField } from "../../../index";
-import { Form, useForm } from "./Form";
+import { Button, Stack, TextField } from "@ad-voice/ui";
+import { Form, useForm } from "@ad-voice/ui/forms";
+
 export default function FormExample() {
   const form = useForm({
-      initialValues: { name: "A&D Voice" },
-      validate: (v) => (!v.name ? { name: "Required" } : {}),
-    }),
-    name = form.field("name");
+    initialValues: { name: "" },
+    validate: (values) => (values.name ? {} : { name: "Введите имя" }),
+    onSubmit: (values) => alert(`Привет, ${values.name}!`),
+  });
+  const name = form.field("name");
   return (
     <Form form={form}>
       <Stack gap={3}>
         <TextField
-          label="Name"
-          value={String(name.value ?? "")}
+          label="Имя в комнате"
+          required
+          value={String(name.value)}
           onValueChange={name.onValueChange}
-          error={name.touched ? name.error : undefined}
           onBlur={name.onBlur}
+          error={name.touched ? name.error : undefined}
         />
-        <Button type="submit" variant="primary">
-          Submit
+        <Button type="submit" variant="primary" loading={form.submitting}>
+          Войти
         </Button>
       </Stack>
     </Form>

@@ -1,30 +1,18 @@
-import { Card, Stack, Typography } from "../../../index";
-import { Router, matchRoute, type RouteDefinition } from "./Router";
+import { Typography } from "@ad-voice/ui";
+import { matchRoute, type RouteDefinition } from "@ad-voice/ui/router";
+
 const routes: RouteDefinition[] = [
-  { path: "/users/:id" },
-  { path: "/settings" },
-  { path: "*" },
+  { path: "/rooms/:id", element: (m) => `Комната ${m.params.id}` },
+  { path: "/settings", element: "Настройки" },
+  { path: "*", redirectTo: "/settings" },
 ];
+
+/** <Router routes={routes} /> renders the match for the current hash; matchRoute is the same matcher. */
 export default function RouterExample() {
-  const match = matchRoute(routes, "/users/42");
+  const match = matchRoute(routes, "/rooms/42");
   return (
-    <Stack gap={3}>
-      <Card material="glass">
-        <Stack gap={2}>
-          <Typography variant="label">Typed match</Typography>
-          <Typography variant="mono">
-            /users/:id → params.id = {match?.params.id}
-          </Typography>
-        </Stack>
-      </Card>
-      <Router
-        routes={[]}
-        fallback={
-          <Typography variant="caption" tone="muted">
-            Router fallback
-          </Typography>
-        }
-      />
-    </Stack>
+    <Typography variant="mono">
+      /rooms/42 → {match?.route.path} · id = {match?.params.id}
+    </Typography>
   );
 }

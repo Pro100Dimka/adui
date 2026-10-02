@@ -1,22 +1,18 @@
-import { U } from "../../../dev/exampleHelpers";
+import { Button, Stack } from "@ad-voice/ui";
 
+/** Column on phones, row from md: one prop instead of media queries. */
 export default function StackExample() {
   return (
-    <U.Stack gap={4}>
-      <U.Typography variant="title">Stack</U.Typography>
-      <U.Typography variant="body" tone="muted">
-        Один layout-компонент вместо ручного flex + gap + align-items.
-      </U.Typography>
-
-      <U.Stack
-        direction={{ base: "column", md: "row" }}
-        gap={{ base: 2, md: 4 }}
-        align={{ base: "stretch", md: "center" }}
-      >
-        <U.Button variant="primary">Сохранить</U.Button>
-        <U.Button>Предпросмотр</U.Button>
-        <U.Button>Отмена</U.Button>
-      </U.Stack>
-    </U.Stack>
+    <Stack
+      direction={{ base: "column", md: "row" }}
+      gap={{ base: 2, md: 3 }}
+      align={{ base: "stretch", md: "center" }}
+    >
+      <Button variant="primary" icon="save">
+        Сохранить
+      </Button>
+      <Button icon="eye">Предпросмотр</Button>
+      <Button variant="ghost">Отмена</Button>
+    </Stack>
   );
 }

@@ -1,16 +1,14 @@
-import { U, useExampleState } from "../../../dev/exampleHelpers";
+import { useState } from "react";
+import { Waveform } from "@ad-voice/ui";
+
 export default function WaveformExample() {
-  const { value, setValue, notice, setNotice } = useExampleState();
-  const demo = <U.Waveform position={value} duration={231} onSeek={setValue} />;
+  const [position, setPosition] = useState(64);
   return (
-    <>
-      {demo}
-      <U.Toast
-        floating
-        open={!!notice}
-        message={notice}
-        onClose={() => setNotice("")}
-      />
-    </>
+    <Waveform
+      label="Позиция в записи"
+      duration={231}
+      position={position}
+      onSeek={setPosition}
+    />
   );
 }

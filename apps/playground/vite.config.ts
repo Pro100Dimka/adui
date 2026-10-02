@@ -11,6 +11,10 @@ export default defineConfig({
     alias: [
       { find: /^@ad-voice\/ui$/, replacement: ui("index.ts") },
       { find: /^@ad-voice\/ui\/styles\.css$/, replacement: ui("styles.css") },
+      {
+        find: /^@ad-voice\/ui\/(editor|composites|core|router|forms)$/,
+        replacement: ui("$1.ts"),
+      },
     ],
   },
   // The docs embed every component source as raw text, so the bundle is intentionally large.

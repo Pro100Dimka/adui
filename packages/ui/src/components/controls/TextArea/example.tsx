@@ -1,51 +1,47 @@
 import {
+  Playground,
   U,
-  ExampleShowcase,
-  ExampleVariant,
-  ExampleVariantGrid,
-  useExampleSize,
+  inputVariants,
+  jsx,
+  sizes,
 } from "../../../dev/exampleHelpers";
 
 export default function TextAreaExample() {
-  const [size, setSize] = useExampleSize();
   return (
-    <ExampleShowcase size={size} onSizeChange={setSize}>
-      <ExampleVariantGrid>
-        <ExampleVariant title="Default" description="Multiline text">
-          <U.TextArea
-            size={size}
-            label="Description"
-            placeholder="Write something…"
-          />
-        </ExampleVariant>
-        <ExampleVariant title="Filled" description="Existing value">
-          <U.TextArea
-            size={size}
-            label="Notes"
-            defaultValue="Multiple lines of text"
-          />
-        </ExampleVariant>
-        <ExampleVariant
-          title="Read only"
-          description="Code or generated content"
-        >
-          <U.TextArea
-            size={size}
-            readOnly
-            aria-label="Read only textarea"
-            defaultValue={'{\n  "enabled": true\n}'}
-            style={{ fontFamily: "var(--ad-font-family-mono)" }}
-          />
-        </ExampleVariant>
-        <ExampleVariant title="Disabled" description="Unavailable">
-          <U.TextArea
-            size={size}
-            disabled
-            aria-label="Disabled textarea"
-            defaultValue="Locked"
-          />
-        </ExampleVariant>
-      </ExampleVariantGrid>
-    </ExampleShowcase>
+    <Playground
+      stretch
+      knobs={{
+        variant: { options: inputVariants, value: "outlined" },
+        size: { options: sizes, value: "md" },
+        error: { value: false },
+        readOnly: { value: false },
+        disabled: { value: false },
+      }}
+      code={(v, c) =>
+        jsx("TextArea", {
+          label: "Комментарий к записи",
+          placeholder: "Что получилось, что исправить…",
+          variant: c.variant,
+          size: c.size,
+          description: v.error ? undefined : "Видят только участники комнаты",
+          error: v.error ? "Не больше 500 символов" : undefined,
+          readOnly: v.readOnly,
+          disabled: v.disabled,
+        })
+      }
+    >
+      {(v) => (
+        <U.TextArea
+          label="Комментарий к записи"
+          placeholder="Что получилось, что исправить…"
+          variant={v.variant}
+          size={v.size}
+          description={v.error ? undefined : "Видят только участники комнаты"}
+          error={v.error ? "Не больше 500 символов" : undefined}
+          readOnly={v.readOnly}
+          disabled={v.disabled}
+        />
+      )}
+    </Playground>
   );
 }

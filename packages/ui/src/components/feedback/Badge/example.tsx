@@ -1,23 +1,28 @@
-import { U, row, useExampleState } from "../../../dev/exampleHelpers";
+import { Compare, Playground, U, jsx } from "../../../dev/exampleHelpers";
+
+const tones = ["none", "success", "warning", "error", "info"] as const;
+
 export default function BadgeExample() {
-  const { notice, setNotice } = useExampleState();
-  const demo = row(
-    <>
-      <U.Badge>GPU</U.Badge>
-      <U.Badge>Вы</U.Badge>
-      <U.Badge tone="success">Готово</U.Badge>
-      <U.Badge tone="error">Ошибка</U.Badge>
-    </>,
-  );
   return (
-    <>
-      {demo}
-      <U.Toast
-        floating
-        open={!!notice}
-        message={notice}
-        onClose={() => setNotice("")}
-      />
-    </>
+    <Playground
+      knobs={{ tone: { options: tones, value: "success" } }}
+      code={(v) =>
+        jsx("Badge", { tone: v.tone === "none" ? undefined : v.tone }, "Готово")
+      }
+      extra={
+        <Compare
+          items={tones.map((tone) => ({
+            label: tone,
+            node: (
+              <U.Badge tone={tone === "none" ? undefined : tone}>Метка</U.Badge>
+            ),
+          }))}
+        />
+      }
+    >
+      {(v) => (
+        <U.Badge tone={v.tone === "none" ? undefined : v.tone}>Готово</U.Badge>
+      )}
+    </Playground>
   );
 }

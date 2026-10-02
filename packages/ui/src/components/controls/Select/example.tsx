@@ -1,52 +1,53 @@
 import {
+  Playground,
   U,
-  ExampleShowcase,
-  ExampleVariant,
-  ExampleVariantGrid,
-  useExampleSize,
+  expr,
+  inputVariants,
+  jsx,
+  sizes,
 } from "../../../dev/exampleHelpers";
 
-const options = ["WASAPI Shared", "WASAPI Exclusive", "ASIO"];
+const options = ["WASAPI Shared", "WASAPI Exclusive", "ASIO", "DirectSound"];
+
 export default function SelectExample() {
-  const [size, setSize] = useExampleSize();
   return (
-    <ExampleShowcase size={size} onSizeChange={setSize}>
-      <ExampleVariantGrid>
-        <ExampleVariant title="Default" description="Nothing selected">
-          <U.Select
-            size={size}
-            label="Driver"
-            placeholder="Choose driver"
-            options={options}
-          />
-        </ExampleVariant>
-        <ExampleVariant title="Selected" description="Current value">
-          <U.Select
-            size={size}
-            label="Driver"
-            defaultValue="WASAPI Shared"
-            options={options}
-          />
-        </ExampleVariant>
-        <ExampleVariant title="With icon" description="Context adornment">
-          <U.Select
-            size={size}
-            label="Audio"
-            icon="audio"
-            defaultValue="ASIO"
-            options={options}
-          />
-        </ExampleVariant>
-        <ExampleVariant title="Disabled" description="Unavailable">
-          <U.Select
-            size={size}
-            disabled
-            value="WASAPI Shared"
-            options={options}
-            aria-label="Disabled select"
-          />
-        </ExampleVariant>
-      </ExampleVariantGrid>
-    </ExampleShowcase>
+    <Playground
+      stretch
+      knobs={{
+        variant: { options: inputVariants, value: "outlined" },
+        size: { options: sizes, value: "md" },
+        icon: { value: true },
+        error: { value: false },
+        disabled: { value: false },
+      }}
+      code={(v, c) =>
+        `const options = ${JSON.stringify(options)};\n\n` +
+        jsx("Select", {
+          label: "Аудиодрайвер",
+          placeholder: "Выберите драйвер",
+          options: expr("options"),
+          icon: v.icon ? "audio" : undefined,
+          variant: c.variant,
+          size: c.size,
+          description: v.error ? undefined : "ASIO даёт минимальную задержку",
+          error: v.error ? "Драйвер недоступен" : undefined,
+          disabled: v.disabled,
+        })
+      }
+    >
+      {(v) => (
+        <U.Select
+          label="Аудиодрайвер"
+          placeholder="Выберите драйвер"
+          options={options}
+          icon={v.icon ? "audio" : undefined}
+          variant={v.variant}
+          size={v.size}
+          description={v.error ? undefined : "ASIO даёт минимальную задержку"}
+          error={v.error ? "Драйвер недоступен" : undefined}
+          disabled={v.disabled}
+        />
+      )}
+    </Playground>
   );
 }
