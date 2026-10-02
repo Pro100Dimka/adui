@@ -1,6 +1,5 @@
 node_modules/
 packages/ui/dist/
 apps/playground/dist/
-release/*.tgz
 *.log
 .DS_Store
