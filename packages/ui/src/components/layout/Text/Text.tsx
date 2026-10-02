@@ -1,47 +1,10 @@
-import React, { createElement, useRef } from "react";
-import type { ElementType, ReactNode } from "react";
-import {
-  define,
-  mark,
-  type CommonProps,
-  type VectorNode,
-} from "../../../core/base";
-import { SvgAsset } from "../../../core/artwork";
-import { useBorder } from "../../../core/motion/hooks";
-import iconData from "../../../artwork/icons.json";
-import artworkData from "../../../artwork/illustrations.json";
-import {
-  icons,
-  illustrations,
-  HeaderView,
-  part,
-  type IconName,
-  type IconProps,
-  type TextProps,
-  type HeaderProps,
-  type CardProps,
-  type AvatarProps,
-  type TabPanelProps,
-  type ScrollAreaProps,
-  type DividerProps,
-  type IllustrationProps,
-} from "../shared";
-import { Icon } from "../Icon/Icon";
-import { Card } from "../Card/Card";
-import { Avatar } from "../Avatar/Avatar";
-import { DialogBody } from "../DialogBody/DialogBody";
-import { DialogActions } from "../DialogActions/DialogActions";
-import { Toolbar } from "../Toolbar/Toolbar";
-import { ButtonGroup } from "../ButtonGroup/ButtonGroup";
-import { TabPanel } from "../TabPanel/TabPanel";
-import { ScrollArea } from "../ScrollArea/ScrollArea";
-import { Divider } from "../Divider/Divider";
-import { BrandMark } from "../BrandMark/BrandMark";
+import { createElement } from "react";
+import { mark } from "../../../core/base";
+import { type TextProps } from "../shared";
 
-export const Text = define<TextProps>("Text", ({ as = "span", ...p }) =>
+export const Text = ({ as = "span", ...p }: TextProps) =>
   createElement(
     as,
     { ...mark("Text", p), "data-ad-variant": p.variant },
     p.children ?? p.text,
-  ),
-);
+  );

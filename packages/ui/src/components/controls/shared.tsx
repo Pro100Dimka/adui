@@ -1,4 +1,4 @@
-import React, { createContext } from "react";
+import React from "react";
 import type {
   ButtonHTMLAttributes,
   InputHTMLAttributes,
@@ -12,15 +12,7 @@ import {
   type Variant,
 } from "../../core/base";
 import { Icon } from "../layout/Icon/Icon";
-
-export interface FieldContextValue {
-  id: string;
-  required?: boolean;
-  error?: boolean;
-  describedBy?: string;
-}
-/** Legacy context kept only so older internal controls compile; new code should compose Field/TextField directly. */
-export const FieldContext = createContext<FieldContextValue | null>(null);
+import { variantMaterial } from "./internal";
 
 export interface ButtonProps
   extends
@@ -70,16 +62,7 @@ export function buttonView(p: ButtonProps, name = "Button") {
   return (
     <button
       {...dom}
-      {...mark(
-        name,
-        p,
-        {
-          primary: "ruby",
-          secondary: "glass",
-          danger: "danger",
-          ghost: "ghost",
-        }[variant] as "glass",
-      )}
+      {...mark(name, p, variantMaterial[variant])}
       ref={ref}
       type={p.type ?? "button"}
       disabled={p.disabled || loading}
@@ -165,7 +148,7 @@ export interface TextAreaProps
     Omit<CommonProps, "children">,
     Omit<
       React.TextareaHTMLAttributes<HTMLTextAreaElement>,
-      "size" | "value" | "defaultValue" | "onChange"
+      keyof CommonProps | "value" | "defaultValue" | "onChange"
     > {
   value?: string;
   defaultValue?: string;

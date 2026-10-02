@@ -1,16 +1,10 @@
-import React, { useEffect, useRef, useState } from "react";
-import {
-  clamp,
-  define,
-  mark,
-  timeText,
-  useControllable,
-} from "../../../core/base";
+import { useEffect, useRef, useState } from "react";
+import { clamp, mark, timeText, useControllable } from "../../../core/base";
 import { IconButton } from "../../controls/IconButton/IconButton";
 import { Slider } from "../../controls/Slider/Slider";
 import { Waveform } from "../Waveform/Waveform";
 import type { AudioPlayerProps } from "../shared";
-export const AudioPlayer = define<AudioPlayerProps>("AudioPlayer", (p) => {
+export const AudioPlayer = (p: AudioPlayerProps) => {
   const audio = useRef<HTMLAudioElement | null>(null);
   const [playing, setPlaying] = useState(false),
     [position, setPosition] = useState(0),
@@ -90,4 +84,4 @@ export const AudioPlayer = define<AudioPlayerProps>("AudioPlayer", (p) => {
       )}
     </div>
   );
-});
+};

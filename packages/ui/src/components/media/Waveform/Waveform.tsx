@@ -1,42 +1,8 @@
-import React, {
-  useEffect,
-  useId,
-  useLayoutEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
-import {
-  clamp,
-  define,
-  mark,
-  timeText,
-  useControllable,
-  type CommonProps,
-} from "../../../core/base";
-import { useDecoration } from "../../../core/motion/hooks";
-import { Icon } from "../../layout/Icon/Icon";
-import { Badge } from "../../feedback/Badge/Badge";
-import { MessageBar } from "../../feedback/MessageBar/MessageBar";
-import { IconButton } from "../../controls/IconButton/IconButton";
-import { Select } from "../../controls/Select/Select";
-import { Slider } from "../../controls/Slider/Slider";
-import { ToggleButton } from "../../controls/ToggleButton/ToggleButton";
-import {
-  type WaveformProps,
-  type AudioPlayerProps,
-  type LevelMeterProps,
-  type RotaryKnobProps,
-  type RotaryKnobController,
-  type SparklineProps,
-} from "../shared";
-import { WaveDecoration } from "../WaveDecoration/WaveDecoration";
-import { AudioPlayer } from "../AudioPlayer/AudioPlayer";
-import { LevelMeter } from "../LevelMeter/LevelMeter";
-import { RotaryKnob } from "../RotaryKnob/RotaryKnob";
-import { Sparkline } from "../Sparkline/Sparkline";
+import { useMemo } from "react";
+import { clamp, mark, useControllable } from "../../../core/base";
+import { type WaveformProps } from "../shared";
 
-export const Waveform = define<WaveformProps>("Waveform", (p) => {
+export const Waveform = (p: WaveformProps) => {
   const duration = Math.max(0.001, p.duration ?? 231);
   const [position, seek] = useControllable(
     p.position,
@@ -82,4 +48,4 @@ export const Waveform = define<WaveformProps>("Waveform", (p) => {
       />
     </div>
   );
-});
+};

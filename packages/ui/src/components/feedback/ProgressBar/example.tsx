@@ -1,29 +1,6 @@
-import React from "react";
-import { U, row, useExampleState } from "../../../dev/exampleHelpers";
+import { U, useExampleState } from "../../../dev/exampleHelpers";
 export default function ProgressBarExample() {
-  const {
-    value,
-    setValue,
-    checked,
-    setChecked,
-    open,
-    setOpen,
-    text,
-    setText,
-    choice,
-    setChoice,
-    notice,
-    setNotice,
-    note,
-    setNote,
-    history,
-    setHistory,
-    cursor,
-    setCursor,
-    anchor,
-    alert,
-    items,
-  } = useExampleState();
+  const { value, setValue, open, notice, setNotice } = useExampleState();
   const demo = (
     <>
       <U.ProgressBar value={value} />

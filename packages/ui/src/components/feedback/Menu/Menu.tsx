@@ -1,10 +1,8 @@
-import React from "react";
-import { define } from "../../../core/base";
 import { Divider } from "../../layout/Divider/Divider";
 import { Popover } from "../Popover/Popover";
 import { MenuItem } from "../MenuItem/MenuItem";
 import type { MenuProps } from "../shared";
-export const Menu = define<MenuProps>("Menu", (p) => (
+export const Menu = (p: MenuProps) => (
   <Popover
     {...p}
     role="menu"
@@ -47,4 +45,4 @@ export const Menu = define<MenuProps>("Menu", (p) => (
       ),
     )}
   </Popover>
-));
+);

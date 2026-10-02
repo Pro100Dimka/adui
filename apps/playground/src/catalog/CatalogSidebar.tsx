@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Badge,
   Button,
@@ -12,32 +12,53 @@ import {
   TextField,
   Typography,
 } from "@ad-voice/ui";
-import {
-  catalog,
-  componentSlug,
-  getCatalogItemBySlug,
-} from "./componentRegistry";
+import { catalog, componentHref, type CatalogMeta } from "./componentRegistry";
 import { catalogCategories, getCategoryForItem } from "./catalogNavigation";
 
-export function CatalogSidebar({ routeId }: { routeId?: string }) {
-  const activeItem = getCatalogItemBySlug(routeId);
-  const activeCategory = activeItem
-    ? getCategoryForItem(activeItem)
-    : undefined;
-  const [query, setQuery] = useState("");
-  const [open, setOpen] = useState<Set<string>>(
-    () => new Set(activeCategory ? [activeCategory.id] : ["fields", "buttons"]),
+function ItemLink({
+  item,
+  active,
+  className = "",
+}: {
+  item: CatalogMeta;
+  active: boolean;
+  className?: string;
+}) {
+  return (
+    <Link
+      className={`${className} ${active ? "active" : ""}`}
+      href={componentHref(item.name)}
+      underline="none"
+    >
+      <Typography variant="body-sm">{item.name}</Typography>
+    </Link>
   );
+}
+
+function OverviewLink({ className }: { className: string }) {
+  return (
+    <Link
+      className={className}
+      href="#/components/overview"
+      underline="none"
+      icon="grid"
+    >
+      <Typography variant="label">Обзор</Typography>
+      <Badge>{catalog.length}</Badge>
+    </Link>
+  );
+}
+
+export function CatalogSidebar({ activeItem }: { activeItem?: CatalogMeta }) {
+  const activeCategory = activeItem && getCategoryForItem(activeItem);
+  const [query, setQuery] = useState("");
+  const [openId, setOpenId] = useState(activeCategory?.id ?? "fields");
 
   useEffect(() => {
-    if (!activeCategory) return;
-    setOpen((current) =>
-      current.has(activeCategory.id)
-        ? current
-        : new Set([...current, activeCategory.id]),
-    );
-  }, [activeCategory?.id]);
+    if (activeCategory) setOpenId(activeCategory.id);
+  }, [activeCategory]);
 
+  // "/" focuses the search field, as on most documentation sites.
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key !== "/" || event.ctrlKey || event.metaKey || event.altKey)
@@ -55,27 +76,14 @@ export function CatalogSidebar({ routeId }: { routeId?: string }) {
   }, []);
 
   const needle = query.trim().toLowerCase();
-  const groups = useMemo(
-    () =>
-      catalogCategories
-        .map((category) => ({
-          category,
-          items: catalog
-            .filter(category.matches)
-            .filter(
-              (item) =>
-                !needle ||
-                `${item.name} ${item.description}`
-                  .toLowerCase()
-                  .includes(needle),
-            ),
-        }))
-        .filter((group) => group.items.length),
-    [needle],
-  );
-
-  const toggle = (id: string) =>
-    setOpen((current) => (current.has(id) ? new Set() : new Set([id])));
+  const groups = catalogCategories
+    .map((category) => ({
+      category,
+      items: category.items.filter((item) =>
+        `${item.name} ${item.description}`.toLowerCase().includes(needle),
+      ),
+    }))
+    .filter((group) => group.items.length);
 
   return (
     <Stack as="aside" className="sidebar docs-sidebar" gap={3}>
@@ -85,41 +93,27 @@ export function CatalogSidebar({ routeId }: { routeId?: string }) {
         icon="menu"
       >
         <Stack className="docs-mobile-nav-panel" gap={3}>
-          <Link
-            className="docs-mobile-overview"
-            href="#/components/overview"
-            underline="none"
-            icon="grid"
-          >
-            <Typography variant="label">Обзор</Typography>
-            <Badge>{catalog.length}</Badge>
-          </Link>
-          {catalogCategories.map((category) => {
-            const items = catalog.filter(category.matches);
-            return (
-              <Stack key={category.id} gap={2}>
-                <Stack direction="row" gap={2} align="center">
-                  <Icon name={category.icon} />
-                  <Typography variant="label" weight="bold">
-                    {category.label}
-                  </Typography>
-                  <Badge>{items.length}</Badge>
-                </Stack>
-                <Stack gap={1}>
-                  {items.map((item) => (
-                    <Link
-                      key={item.name}
-                      className={item.name === activeItem?.name ? "active" : ""}
-                      href={`#/components/${componentSlug(item.name)}`}
-                      underline="none"
-                    >
-                      <Typography variant="body-sm">{item.name}</Typography>
-                    </Link>
-                  ))}
-                </Stack>
+          <OverviewLink className="docs-mobile-overview" />
+          {catalogCategories.map((category) => (
+            <Stack key={category.id} gap={2}>
+              <Stack direction="row" gap={2} align="center">
+                <Icon name={category.icon} />
+                <Typography variant="label" weight="bold">
+                  {category.label}
+                </Typography>
+                <Badge>{category.items.length}</Badge>
               </Stack>
-            );
-          })}
+              <Stack gap={1}>
+                {category.items.map((item) => (
+                  <ItemLink
+                    key={item.name}
+                    item={item}
+                    active={item === activeItem}
+                  />
+                ))}
+              </Stack>
+            </Stack>
+          ))}
         </Stack>
       </CollapsibleSection>
 
@@ -143,29 +137,22 @@ export function CatalogSidebar({ routeId }: { routeId?: string }) {
               clearable
             />
           </Stack>
-          <Link
-            className={`docs-overview-link ${!routeId || routeId === "overview" ? "active" : ""}`}
-            href="#/components/overview"
-            underline="none"
-            icon="grid"
-          >
-            <Typography variant="label">Обзор</Typography>
-            <Badge>{catalog.length}</Badge>
-          </Link>
+          <OverviewLink
+            className={`docs-overview-link ${activeItem ? "" : "active"}`}
+          />
         </Stack>
       </Card>
 
       <ScrollArea className="docs-nav-scroll" label="Навигация по компонентам">
         <Stack as="nav" className="docs-nav" gap={2} aria-label="Компоненты">
           {groups.map(({ category, items }) => {
-            const expanded = needle ? true : open.has(category.id);
-            const current = category.id === activeCategory?.id;
+            const expanded = !!needle || openId === category.id;
             return (
               <Stack
                 className="docs-nav-group"
                 key={category.id}
                 gap={1}
-                data-current={current || undefined}
+                data-current={category === activeCategory || undefined}
               >
                 <Button
                   className="docs-nav-category"
@@ -174,7 +161,7 @@ export function CatalogSidebar({ routeId }: { routeId?: string }) {
                   icon={category.icon}
                   endIcon="chevron"
                   aria-expanded={expanded}
-                  onClick={() => toggle(category.id)}
+                  onClick={() => setOpenId(expanded ? "" : category.id)}
                 >
                   {category.label}
                   <Badge>{items.length}</Badge>
@@ -182,14 +169,12 @@ export function CatalogSidebar({ routeId }: { routeId?: string }) {
                 {expanded && (
                   <Stack className="docs-nav-items" gap={0}>
                     {items.map((item) => (
-                      <Link
+                      <ItemLink
                         key={item.name}
-                        className={`docs-nav-item ${item.name === activeItem?.name ? "active" : ""}`}
-                        href={`#/components/${componentSlug(item.name)}`}
-                        underline="none"
-                      >
-                        <Typography variant="body-sm">{item.name}</Typography>
-                      </Link>
+                        className="docs-nav-item"
+                        item={item}
+                        active={item === activeItem}
+                      />
                     ))}
                   </Stack>
                 )}

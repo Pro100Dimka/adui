@@ -1,45 +1,8 @@
-import React, { createElement, useRef } from "react";
-import type { ElementType, ReactNode } from "react";
-import {
-  define,
-  mark,
-  type CommonProps,
-  type VectorNode,
-} from "../../../core/base";
-import { SvgAsset } from "../../../core/artwork";
-import { useBorder } from "../../../core/motion/hooks";
-import iconData from "../../../artwork/icons.json";
-import artworkData from "../../../artwork/illustrations.json";
-import {
-  icons,
-  illustrations,
-  HeaderView,
-  part,
-  type IconName,
-  type IconProps,
-  type TextProps,
-  type HeaderProps,
-  type CardProps,
-  type AvatarProps,
-  type TabPanelProps,
-  type ScrollAreaProps,
-  type DividerProps,
-  type IllustrationProps,
-} from "../shared";
-import { Icon } from "../Icon/Icon";
-import { Text } from "../Text/Text";
-import { Card } from "../Card/Card";
-import { DialogBody } from "../DialogBody/DialogBody";
-import { DialogActions } from "../DialogActions/DialogActions";
-import { Toolbar } from "../Toolbar/Toolbar";
-import { ButtonGroup } from "../ButtonGroup/ButtonGroup";
-import { TabPanel } from "../TabPanel/TabPanel";
-import { ScrollArea } from "../ScrollArea/ScrollArea";
-import { Divider } from "../Divider/Divider";
-import { BrandMark } from "../BrandMark/BrandMark";
+import { mark } from "../../../core/base";
+import { type AvatarProps } from "../shared";
 
-export const Avatar = define<AvatarProps>("Avatar", (p) => (
+export const Avatar = (p: AvatarProps) => (
   <div {...mark("Avatar", p, "tile")} aria-label={p.name ?? "Пользователь"}>
     {(p.name ?? "Дмитрий").trim().slice(0, 1).toUpperCase()}
   </div>
-));
+);

@@ -1,4 +1,3 @@
-import React from "react";
 import type { AnchorHTMLAttributes, ReactNode } from "react";
 import { mark, type CommonProps } from "../../../core/base";
 import { Icon } from "../../layout/Icon/Icon";

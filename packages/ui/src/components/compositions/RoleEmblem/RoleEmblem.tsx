@@ -1,11 +1,11 @@
-import React, { useRef } from "react";
-import { define, mark } from "../../../core/base";
+import { useRef } from "react";
+import { mark } from "../../../core/base";
 import { SvgAsset } from "../../../core/artwork";
 import { useDecoration } from "../../../core/motion/hooks";
 import { Icon } from "../../layout/Icon/Icon";
 import { illustrations } from "../../layout/shared";
 import type { RoleEmblemProps } from "../shared";
-export const RoleEmblem = define<RoleEmblemProps>("RoleEmblem", (p) => {
+export const RoleEmblem = (p: RoleEmblemProps) => {
   const ref = useRef<HTMLDivElement>(null);
   useDecoration(ref, (t) =>
     ref.current
@@ -37,4 +37,4 @@ export const RoleEmblem = define<RoleEmblemProps>("RoleEmblem", (p) => {
       )}
     </div>
   );
-});
+};

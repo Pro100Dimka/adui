@@ -1,6 +1,5 @@
 export default {
   name: "EmptyState",
   description: "Пустой список и действие для начала",
-  category: "data",
-  wide: false,
+  category: "feedback",
 } as const;

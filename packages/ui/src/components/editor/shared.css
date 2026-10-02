@@ -1,18 +1,4 @@
 /* Shared only by sibling components. */
-.ad-piano-roll-grid > .ad-time-ruler {
-  margin-left: 3.375rem;
-}
 .ad-piano-roll-grid > .ad-lyrics-lane {
   margin-left: 3.375rem;
-}
-.ad-piano-roll-grid > .ad-piano-keyboard {
-  position: absolute;
-  left: 0;
-  top: 3.625rem;
-}
-.ad-zoom-control,
-.ad-undo-redo-controls {
-  display: flex;
-  align-items: center;
-  gap: 0.4375rem;
 }

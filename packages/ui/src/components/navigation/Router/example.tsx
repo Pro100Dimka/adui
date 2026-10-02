@@ -1,4 +1,3 @@
-import React from "react";
 import { Card, Stack, Typography } from "../../../index";
 import { Router, matchRoute, type RouteDefinition } from "./Router";
 const routes: RouteDefinition[] = [

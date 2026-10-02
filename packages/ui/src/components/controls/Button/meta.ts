@@ -1,6 +1,5 @@
 export default {
   name: "Button",
   description: "Primary, secondary, ghost, danger и размеры",
-  category: "actions",
-  wide: false,
+  category: "buttons",
 } as const;

@@ -6,66 +6,60 @@ export type CatalogMeta = {
   category: string;
   wide?: boolean;
 };
-type ExampleModule = { default: React.ComponentType };
-type MetaModule = { default: CatalogMeta };
 
-const examplesRaw = import.meta.glob(
-  "../../../../packages/ui/src/**/example.tsx",
-  { eager: true },
-) as Record<string, ExampleModule>;
-const metaRaw = import.meta.glob("../../../../packages/ui/src/**/meta.ts", {
-  eager: true,
-}) as Record<string, MetaModule>;
-const exampleSourcesRaw = import.meta.glob(
-  "../../../../packages/ui/src/**/example.tsx",
-  { eager: true, query: "?raw", import: "default" },
-) as Record<string, string>;
-const componentSourcesRaw = import.meta.glob(
-  "../../../../packages/ui/src/**/*.{ts,tsx}",
-  { eager: true, query: "?raw", import: "default" },
-) as Record<string, string>;
+const byComponent = <T>(modules: Record<string, T>) =>
+  new Map(
+    Object.entries(modules).map(([path, value]) => [
+      path.split("/").at(-2)!,
+      value,
+    ]),
+  );
 
-const componentNameFromPath = (path: string) => path.split("/").at(-2) ?? path;
-const examples = new Map(
-  Object.entries(examplesRaw).map(([path, value]) => [
-    componentNameFromPath(path),
-    value.default,
-  ]),
+const metas = import.meta.glob<CatalogMeta>(
+  "../../../../packages/ui/src/components/*/*/meta.ts",
+  { eager: true, import: "default" },
 );
-const exampleSources = new Map(
-  Object.entries(exampleSourcesRaw).map(([path, value]) => [
-    componentNameFromPath(path),
-    value,
-  ]),
+const examples = byComponent(
+  import.meta.glob<React.ComponentType>(
+    "../../../../packages/ui/src/components/*/*/example.tsx",
+    { eager: true, import: "default" },
+  ),
+);
+const exampleSources = byComponent(
+  import.meta.glob<string>(
+    "../../../../packages/ui/src/components/*/*/example.tsx",
+    { eager: true, query: "?raw", import: "default" },
+  ),
+);
+const sources = Object.entries(
+  import.meta.glob<string>("../../../../packages/ui/src/**/*.{ts,tsx}", {
+    eager: true,
+    query: "?raw",
+    import: "default",
+  }),
 );
 
-export const catalog = Object.values(metaRaw)
-  .map((value) => value.default)
-  .sort((a, b) => a.name.localeCompare(b.name));
+export const catalog = Object.values(metas).sort((a, b) =>
+  a.name.localeCompare(b.name),
+);
 export const componentSlug = (name: string) =>
-  name
-    .replace(/([a-z0-9])([A-Z])/g, "$1-$2")
-    .replace(/\s+/g, "-")
-    .toLowerCase();
+  name.replace(/([a-z0-9])([A-Z])/g, "$1-$2").toLowerCase();
+export const componentHref = (name: string) =>
+  `#/components/${componentSlug(name)}`;
 export const getCatalogItemBySlug = (slug?: string) =>
   catalog.find((item) => componentSlug(item.name) === slug);
 export const getExample = (name: string) => examples.get(name);
 export const getExampleSource = (name: string) =>
   exampleSources.get(name) ?? `// Нет example.tsx для ${name}`;
 
-const sourceEntries = Object.entries(componentSourcesRaw);
-export const getComponentSource = (name: string) => {
-  const suffix = `/${name}/${name}.tsx`;
-  return sourceEntries.find(([path]) => path.endsWith(suffix))?.[1] ?? "";
-};
-export const getComponentSourcePath = (name: string) => {
-  const suffix = `/${name}/${name}.tsx`;
-  const path = sourceEntries.find(([candidate]) =>
-    candidate.endsWith(suffix),
-  )?.[0];
-  return path?.replace(/^.*packages\/ui\/src\//, "src/") ?? "";
-};
+const sourceEntry = (name: string) =>
+  sources.find(([path]) => path.endsWith(`/${name}/${name}.tsx`));
+export const getComponentSource = (name: string) =>
+  sourceEntry(name)?.[1] ?? "";
+export const getComponentSourcePath = (name: string) =>
+  sourceEntry(name)?.[0].replace(/^.*packages\/ui\/src\//, "src/") ?? "";
 
+/** Text of the declaration starting at `marker`, up to its matching closing brace. */
 function extractBlock(source: string, marker: string) {
   const start = source.indexOf(marker);
   if (start < 0) return "";
@@ -76,22 +70,18 @@ function extractBlock(source: string, marker: string) {
   }
   let depth = 0;
   for (let index = brace; index < source.length; index += 1) {
-    const char = source[index];
-    if (char === "{") depth += 1;
-    if (char === "}") {
-      depth -= 1;
-      if (depth === 0) return source.slice(start, index + 1).trim();
-    }
+    if (source[index] === "{") depth += 1;
+    if (source[index] === "}" && --depth === 0)
+      return source.slice(start, index + 1).trim();
   }
   return source.slice(start).trim();
 }
 
 export const getComponentApiSource = (name: string) => {
-  const interfaceMarker = `export interface ${name}Props`;
-  const typeMarker = `export type ${name}Props`;
-  for (const [, source] of sourceEntries) {
+  for (const [, source] of sources) {
     const value =
-      extractBlock(source, interfaceMarker) || extractBlock(source, typeMarker);
+      extractBlock(source, `export interface ${name}Props`) ||
+      extractBlock(source, `export type ${name}Props`);
     if (value) return value;
   }
   return `// ${name} не объявляет отдельный Props-интерфейс.\n// Компонент использует общие props или композицию дочерних компонентов.`;
@@ -100,6 +90,6 @@ export const getComponentApiSource = (name: string) => {
 export const getImportPath = (item: CatalogMeta) =>
   item.category === "editor"
     ? "@ad-voice/ui/editor"
-    : item.category === "patterns"
+    : item.category === "composites"
       ? "@ad-voice/ui/composites"
       : "@ad-voice/ui";

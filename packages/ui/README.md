@@ -1,42 +1,31 @@
 # @ad-voice/ui
 
-React + TypeScript UI kit for A&D Voice. It contains the shared visual system extracted from the approved A&D Voice screens: glass/ruby surfaces, animated neon borders, fields, tabs, dialogs, audio controls, composite cards and melody-editor primitives.
+React + TypeScript UI kit for A&D Voice: glass/ruby surfaces, animated neon borders, fields, tabs, dialogs, audio controls and a melody editor.
 
 ## Install
-
-```bash
-npm install @ad-voice/ui
-```
 
 React and ReactDOM are peer dependencies.
 
 ```bash
-npm install react react-dom
+npm install @ad-voice/ui react react-dom
 ```
 
-## Styles
-
-Import the shared stylesheet once in your app entry point:
+Import the stylesheet once in the app entry point:
 
 ```ts
 import "@ad-voice/ui/styles.css";
 ```
 
-## Basic usage
+## Usage
 
 ```tsx
-import { Button, Card, Field, TextField, Switch } from "@ad-voice/ui";
-import "@ad-voice/ui/styles.css";
+import { Button, Card, Switch, TextField } from "@ad-voice/ui";
 
 export function SettingsCard() {
   return (
-    <Card animatedBorder>
-      <Field label="Имя в онлайн-комнате">
-        <TextField defaultValue="BBB" clearable />
-      </Field>
-
+    <Card title="Настройки" border>
+      <TextField label="Имя в онлайн-комнате" defaultValue="BBB" clearable />
       <Switch label="Радио включено" defaultChecked />
-
       <Button variant="primary" icon="save">
         Сохранить
       </Button>
@@ -45,79 +34,19 @@ export function SettingsCard() {
 }
 ```
 
+Every stateful component works both controlled (`value` + `onValueChange`) and uncontrolled (`defaultValue`).
+
 ## Entry points
 
 ```ts
 import { Button, Card, Dialog, AudioPlayer } from "@ad-voice/ui";
-import { PianoRollGrid, NoteBlock, PianoKeyboard } from "@ad-voice/ui/editor";
-import { RecordingCard, ProcessingTaskCard } from "@ad-voice/ui/composites";
-import { ThemeProvider } from "@ad-voice/ui/core";
+import { PianoRollGrid } from "@ad-voice/ui/editor";
+import { ParticipantCard, RoleEmblem } from "@ad-voice/ui/composites";
+import { Router } from "@ad-voice/ui/router";
+import { Form, FormFields, useForm } from "@ad-voice/ui/forms";
+import { ThemeProvider, useMotion } from "@ad-voice/ui/core";
 ```
 
-`@ad-voice/ui/editor` is separate so applications that only need settings/forms do not have to import editor components.
+## RotaryKnob
 
-## Build locally
-
-```bash
-npm install
-npm run typecheck
-npm run build
-npm run pack:check
-```
-
-The package emits ESM JavaScript, source maps and TypeScript declarations into `dist/`.
-
-## Local development from your karaoke repository
-
-You can install this folder without publishing it:
-
-```json
-{
-  "dependencies": {
-    "@ad-voice/ui": "file:../ad-voice-ui"
-  }
-}
-```
-
-Then:
-
-```bash
-npm install
-```
-
-For active development, npm workspaces or `npm link` also work.
-
-## Publishing
-
-The package is scoped. For a public npm publication:
-
-```bash
-npm login
-npm publish --access public
-```
-
-Before publishing under `@ad-voice`, that npm scope must belong to your npm account/organization. If not, change the `name` in `package.json`, for example to `@your-scope/ad-voice-ui`.
-
-## Design-system rule
-
-Application-specific names such as `SaveButton` or `JoinButton` should normally not become primitives. Use a shared `Button` variant and compose application-specific components from it. The same rule applies to fields, cards and dialogs.
-
-## RotaryKnob и CircularGauge
-
-`RotaryKnob` — прямой React-порт присланного `premium-knob-interactive-neon(2).html`: тот же Canvas-металл, насечки, рубиновый канал, неподвижная внешняя шкала, вращающийся ротор и тот же interaction model.
-
-`CircularGauge` больше не имеет отдельного визуального дизайна: это read-only вариант **того же самого RotaryKnob**.
-
-```tsx
-<RotaryKnob
-  diameter={300}
-  value={volume}
-  onValueChange={setVolume}
-  onValueCommit={saveVolume}
-  label="Громкость"
-/>
-
-<CircularGauge value={72} diameter={180} label="Микрофон" />
-```
-
-`RotaryKnob` поддерживает круговой drag, линейный drag из центра, прямой выбор по внешней шкале, колесо мыши, Arrow/Page/Home/End, Shift для точного шага, Escape для отмены текущего drag и двойной щелчок для сброса.
+Canvas-rendered volume knob. Drag near the edge to rotate, drag from the center to move linearly, click the outer scale to jump. Wheel and arrow keys change the value, Shift gives a fine step, PageUp/PageDown change by 10, Home/End set 0/100, Escape cancels a drag, double-click resets. `onValueChange` fires while adjusting, `onValueCommit` after the gesture. `readOnly` turns it into a gauge.

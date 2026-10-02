@@ -1,4 +1,3 @@
-import React from "react";
 import { U, useExampleState } from "../../../dev/exampleHelpers";
 export default function DialogBodyExample() {
   const { text, setText } = useExampleState();

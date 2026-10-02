@@ -3,5 +3,4 @@ export default {
   description:
     'Иконка; surface="tile" добавляет контейнер вместо отдельного IconTile.',
   category: "typography",
-  wide: false,
 };

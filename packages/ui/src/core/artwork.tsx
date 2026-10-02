@@ -1,44 +1,45 @@
 import React, { createElement, useId, useMemo } from "react";
-import { domProps, type VectorNode } from "./base";
+import type { VectorNode } from "./base";
 
-const svgTagNames: Record<string, string> = {
-  lineargradient: "linearGradient",
-  radialgradient: "radialGradient",
-  clippath: "clipPath",
-  fegaussianblur: "feGaussianBlur",
-  feturbulence: "feTurbulence",
-  fecolormatrix: "feColorMatrix",
-};
+/** Prefixes ids and their #references so several copies of one SVG can coexist on a page. */
+function scopeIds(value: unknown, prefix: string, key: string): unknown {
+  if (typeof value !== "string") return value;
+  if (key === "id") return prefix + value;
+  if (key === "href" && value.startsWith("#"))
+    return "#" + prefix + value.slice(1);
+  return value.replace(/url\(#([^)]*)\)/g, `url(#${prefix}$1)`);
+}
+
+/** Artwork JSON already stores React-ready SVG props; only ids are rewritten. */
 export function vectorElement(
   node: VectorNode | string,
-  prefix = "",
+  prefix: string,
   key?: string | number,
 ): React.ReactNode {
   if (typeof node === "string") return node;
-  const props = domProps(node.props, prefix, true);
+  const props: Record<string, unknown> = { key };
+  for (const [name, value] of Object.entries(node.props ?? {}))
+    props[name] = scopeIds(value, prefix, name);
   return createElement(
-    svgTagNames[node.tag] ?? node.tag,
-    { ...props, key },
+    node.tag,
+    props,
     node.children?.map((child, i) => vectorElement(child, prefix, i)),
   );
 }
 export function SvgAsset({
   node,
-  unique = true,
   className,
   style,
   label,
   component,
 }: {
   node: VectorNode;
-  unique?: boolean;
   className?: string;
   style?: React.CSSProperties;
   label?: string;
   component?: string;
 }) {
-  const id = useId().replace(/[^a-zA-Z0-9_-]/g, "");
-  const prefix = unique ? `svg-${id}-` : "";
+  const prefix = `svg-${useId().replace(/[^a-zA-Z0-9_-]/g, "")}-`;
   const element = useMemo(
     () =>
       vectorElement(node, prefix) as React.ReactElement<

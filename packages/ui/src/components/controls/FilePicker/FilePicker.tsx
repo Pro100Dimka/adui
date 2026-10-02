@@ -1,8 +1,8 @@
-import React, { useRef, useState } from "react";
-import { define, mark } from "../../../core/base";
+import { useRef, useState } from "react";
+import { mark } from "../../../core/base";
 import { Button } from "../Button/Button";
 import type { FilePickerProps } from "../shared";
-export const FilePicker = define<FilePickerProps>("FilePicker", (p) => {
+export const FilePicker = (p: FilePickerProps) => {
   const input = useRef<HTMLInputElement>(null),
     [names, setNames] = useState("");
   return (
@@ -30,4 +30,4 @@ export const FilePicker = define<FilePickerProps>("FilePicker", (p) => {
       />
     </div>
   );
-});
+};

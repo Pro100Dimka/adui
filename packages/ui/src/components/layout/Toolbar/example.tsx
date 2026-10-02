@@ -1,29 +1,6 @@
-import React from "react";
-import { U, row, useExampleState } from "../../../dev/exampleHelpers";
+import { U, useExampleState } from "../../../dev/exampleHelpers";
 export default function ToolbarExample() {
-  const {
-    value,
-    setValue,
-    checked,
-    setChecked,
-    open,
-    setOpen,
-    text,
-    setText,
-    choice,
-    setChoice,
-    notice,
-    setNotice,
-    note,
-    setNote,
-    history,
-    setHistory,
-    cursor,
-    setCursor,
-    anchor,
-    alert,
-    items,
-  } = useExampleState();
+  const { open, notice, setNotice, cursor, alert } = useExampleState();
   const demo = (
     <U.Toolbar>
       <U.ButtonGroup>

@@ -71,11 +71,6 @@ button.ad:focus-visible {
   color: #fb6688;
   filter: drop-shadow(0 0 0.5625rem #ff1e5b55);
 }
-.ad-code-viewer > .ad-icon-button {
-  position: absolute;
-  right: 0.4375rem;
-  top: 0.4375rem;
-}
 .ad-menu .ad-divider {
   margin: 0.3125rem 0;
 }
@@ -93,27 +88,6 @@ button.ad:focus-visible {
   fill: none;
   z-index: 20;
 }
-.ad-volume-control > .ad-slider {
-  flex: 1;
-  min-width: 3.75rem;
-}
-.ad-zoom-control > .ad-select {
-  width: 6rem;
-}
-.ad-recording-content .ad-audio-player {
-  gap: 0.625rem;
-  margin-top: 0.5rem;
-}
-.ad-recording-content .ad-waveform {
-  height: 2.3125rem;
-}
-.ad-recording-actions > .ad-icon-button {
-  width: 2.3125rem;
-  height: 2.5rem;
-}
-.ad-participant-info .ad-level-meter {
-  margin-top: 0.8125rem;
-}
 .ad-theme-picker > .ad-button {
   flex: 1;
   min-width: 0;
@@ -123,14 +97,6 @@ button.ad:focus-visible {
   padding: 0;
   overflow: hidden;
   gap: 0;
-}
-.ad-room-connection-form > .ad-button:last-child {
-  width: 100%;
-  margin-top: 0.3125rem;
-}
-.ad-storage-summary .ad-button-group,
-.ad-diagnostics-panel .ad-button-group {
-  margin-top: 1.25rem;
 }
 .ad-spinner {
   width: 0.9375rem;

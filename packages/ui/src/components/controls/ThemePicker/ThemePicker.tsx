@@ -1,10 +1,4 @@
-import React from "react";
-import {
-  define,
-  mark,
-  useControllable,
-  type CommonProps,
-} from "../../../core/base";
+import { mark, useControllable, type CommonProps } from "../../../core/base";
 import { Button } from "../Button/Button";
 export type ThemeName = "ruby" | "light" | "green" | "violet";
 export interface ThemePickerProps extends CommonProps {
@@ -12,7 +6,7 @@ export interface ThemePickerProps extends CommonProps {
   defaultValue?: ThemeName;
   onValueChange?: (value: ThemeName) => void;
 }
-export const ThemePicker = define<ThemePickerProps>("ThemePicker", (p) => {
+export const ThemePicker = (p: ThemePickerProps) => {
   const [value, setValue] = useControllable(
     p.value,
     p.defaultValue ?? "ruby",
@@ -39,4 +33,4 @@ export const ThemePicker = define<ThemePickerProps>("ThemePicker", (p) => {
       ))}
     </div>
   );
-});
+};

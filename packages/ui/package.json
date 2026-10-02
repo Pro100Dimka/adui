@@ -9,8 +9,7 @@
   ],
   "files": [
     "dist",
-    "README.md",
-    "docs"
+    "README.md"
   ],
   "main": "./dist/index.js",
   "module": "./dist/index.js",
@@ -52,12 +51,9 @@
     }
   },
   "scripts": {
-    "clean": "node scripts/clean.mjs",
     "typecheck": "tsc -p tsconfig.json",
-    "build": "npm run clean && tsc -p tsconfig.build.json && node scripts/copy-assets.mjs",
-    "pack:check": "npm pack --dry-run",
-    "prepublishOnly": "npm run typecheck && npm run build",
-    "package:check": "npm pack --dry-run"
+    "build": "node scripts/build.mjs",
+    "prepublishOnly": "npm run typecheck && npm run build"
   },
   "peerDependencies": {
     "react": ">=18.2.0 <20",

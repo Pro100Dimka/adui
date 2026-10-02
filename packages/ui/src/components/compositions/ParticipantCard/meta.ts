@@ -1,6 +1,6 @@
 export default {
   name: "ParticipantCard",
   description: "Участник, роль, уровень и громкость",
-  category: "patterns",
+  category: "composites",
   wide: true,
 } as const;

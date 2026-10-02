@@ -1,6 +1,5 @@
 export default {
   name: "Switch",
   description: "Переключатель логического параметра",
-  category: "forms",
-  wide: false,
+  category: "fields",
 } as const;

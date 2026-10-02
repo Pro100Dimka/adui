@@ -1,6 +1,5 @@
 export default {
   name: "MenuItem",
   description: "Действие меню, иконка и опасное состояние",
-  category: "actions",
-  wide: false,
+  category: "navigation",
 } as const;

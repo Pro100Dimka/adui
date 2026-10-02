@@ -1,49 +1,52 @@
-import React from "react";
-import { define, useControllable } from "../../../core/base";
+import { useControllable } from "../../../core/base";
+import { FieldFrame } from "../internal";
 import { InputBase } from "../InputBase/InputBase";
 import type { TextAreaProps } from "../shared";
-export const TextArea = define<TextAreaProps>("TextArea", (p) => {
-  const {
-    value,
-    defaultValue = "",
-    onValueChange,
-    label,
-    description,
-    error,
-    startAdornment,
-    endAdornment,
-    ...dom
-  } = p;
+
+export const TextArea = ({
+  value,
+  defaultValue = "",
+  onValueChange,
+  label,
+  description,
+  error,
+  startAdornment,
+  endAdornment,
+  className,
+  size,
+  tone: _tone,
+  material: _material,
+  style: _style,
+  ...textarea
+}: TextAreaProps) => {
   const [current, setCurrent] = useControllable(
     value,
     defaultValue,
     onValueChange,
   );
   return (
-    <label className={`ad-text-area ${p.className ?? ""}`}>
-      {label && <span className="ad-field-label">{label}</span>}
+    <FieldFrame
+      className={`ad-text-area ${className ?? ""}`}
+      label={label}
+      required={textarea.required}
+      description={description}
+      error={error}
+    >
       <InputBase
-        size={p.size}
+        size={size}
         multiline
-        disabled={p.disabled}
-        readOnly={p.readOnly}
+        disabled={textarea.disabled}
+        readOnly={textarea.readOnly}
         error={!!error}
         startAdornment={startAdornment}
         endAdornment={endAdornment}
       >
         <textarea
-          {...dom}
-          className={undefined}
-          style={undefined}
+          {...textarea}
           value={current}
           onChange={(e) => setCurrent(e.currentTarget.value)}
         />
       </InputBase>
-      {(description || error) && (
-        <small className={error ? "ad-field-error" : ""}>
-          {error || description}
-        </small>
-      )}
-    </label>
+    </FieldFrame>
   );
-});
+};

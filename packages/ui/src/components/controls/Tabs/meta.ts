@@ -1,6 +1,6 @@
 export default {
   name: "Tabs",
   description: "Переключение вкладок с фигурной подсветкой",
-  category: "actions",
+  category: "navigation",
   wide: true,
 } as const;

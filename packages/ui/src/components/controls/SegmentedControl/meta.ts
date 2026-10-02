@@ -1,6 +1,5 @@
 export default {
   name: "SegmentedControl",
   description: "Выбор представления или инструмента",
-  category: "actions",
-  wide: false,
+  category: "navigation",
 } as const;

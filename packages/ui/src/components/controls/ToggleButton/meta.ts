@@ -1,6 +1,5 @@
 export default {
   name: "ToggleButton",
   description: "Кнопка с выбранным состоянием",
-  category: "actions",
-  wide: false,
+  category: "buttons",
 } as const;

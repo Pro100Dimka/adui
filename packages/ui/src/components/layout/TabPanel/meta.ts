@@ -1,6 +1,5 @@
 export default {
   name: "TabPanel",
   description: "Содержимое выбранной вкладки",
-  category: "actions",
-  wide: false,
+  category: "navigation",
 } as const;

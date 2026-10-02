@@ -1,11 +1,5 @@
-import React, {
-  useEffect,
-  useId,
-  useLayoutEffect,
-  useRef,
-  useState,
-} from "react";
-import { define, mark, useControllable } from "../../../core/base";
+import { useId, useLayoutEffect, useRef, useState } from "react";
+import { mark, useControllable } from "../../../core/base";
 import { Button } from "../../controls/Button/Button";
 import { IconButton } from "../../controls/IconButton/IconButton";
 import { Header } from "../../layout/Header/Header";
@@ -13,7 +7,7 @@ import { DialogBody } from "../../layout/DialogBody/DialogBody";
 import { DialogActions } from "../../layout/DialogActions/DialogActions";
 import { MessageBar } from "../MessageBar/MessageBar";
 import type { DialogProps } from "../shared";
-export const Dialog = define<DialogProps>("Dialog", (p) => {
+export const Dialog = (p: DialogProps) => {
   const [open, setOpen] = useControllable(
       p.open,
       p.defaultOpen ?? false,
@@ -93,4 +87,4 @@ export const Dialog = define<DialogProps>("Dialog", (p) => {
       </DialogActions>
     </dialog>
   );
-});
+};

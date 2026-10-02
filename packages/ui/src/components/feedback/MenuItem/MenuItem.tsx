@@ -1,9 +1,8 @@
-import React from "react";
-import { define, mark } from "../../../core/base";
+import { mark } from "../../../core/base";
 import { Icon } from "../../layout/Icon/Icon";
 import type { MenuItemProps } from "../shared";
 
-export const MenuItem = define<MenuItemProps>("MenuItem", (p) => {
+export const MenuItem = (p: MenuItemProps) => {
   const label = p.label ?? p.children ?? "Действие";
   return (
     <button
@@ -24,4 +23,4 @@ export const MenuItem = define<MenuItemProps>("MenuItem", (p) => {
       )}
     </button>
   );
-});
+};

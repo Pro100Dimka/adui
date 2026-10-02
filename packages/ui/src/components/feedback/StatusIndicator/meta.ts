@@ -1,6 +1,5 @@
 export default {
   name: "StatusIndicator",
   description: "Готовность, обработка, очередь и ошибка",
-  category: "data",
-  wide: false,
+  category: "feedback",
 } as const;

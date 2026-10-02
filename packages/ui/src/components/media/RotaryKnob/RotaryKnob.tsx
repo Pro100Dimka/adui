@@ -1,42 +1,8 @@
-import React, {
-  useEffect,
-  useId,
-  useLayoutEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
-import {
-  clamp,
-  define,
-  mark,
-  timeText,
-  useControllable,
-  type CommonProps,
-} from "../../../core/base";
-import { useDecoration } from "../../../core/motion/hooks";
-import { Icon } from "../../layout/Icon/Icon";
-import { Badge } from "../../feedback/Badge/Badge";
-import { MessageBar } from "../../feedback/MessageBar/MessageBar";
-import { IconButton } from "../../controls/IconButton/IconButton";
-import { Select } from "../../controls/Select/Select";
-import { Slider } from "../../controls/Slider/Slider";
-import { ToggleButton } from "../../controls/ToggleButton/ToggleButton";
-import {
-  type WaveformProps,
-  type AudioPlayerProps,
-  type LevelMeterProps,
-  type RotaryKnobProps,
-  type RotaryKnobController,
-  type SparklineProps,
-} from "../shared";
-import { WaveDecoration } from "../WaveDecoration/WaveDecoration";
-import { Waveform } from "../Waveform/Waveform";
-import { AudioPlayer } from "../AudioPlayer/AudioPlayer";
-import { LevelMeter } from "../LevelMeter/LevelMeter";
-import { Sparkline } from "../Sparkline/Sparkline";
+import React, { useEffect, useLayoutEffect, useMemo, useRef } from "react";
+import { clamp, mark, normalizeSize } from "../../../core/base";
+import { type RotaryKnobProps, type RotaryKnobController } from "../shared";
 
-export const RotaryKnob = define<RotaryKnobProps>("RotaryKnob", (p) => {
+export const RotaryKnob = (p: RotaryKnobProps) => {
   const rootRef = useRef<HTMLDivElement>(null);
   const baseRef = useRef<HTMLCanvasElement>(null);
   const feedbackRef = useRef<HTMLCanvasElement>(null);
@@ -60,24 +26,25 @@ export const RotaryKnob = define<RotaryKnobProps>("RotaryKnob", (p) => {
   const initial = clamp(p.defaultValue ?? p.value ?? 67);
   const initialRef = useRef(initial);
   const diameter =
-    p.diameter ?? (p.size === "small" ? 124 : p.size === "large" ? 320 : 220);
+    p.diameter ??
+    { xs: 124, sm: 124, md: 220, lg: 320 }[normalizeSize(p.size) ?? "md"];
   const numberFormat = useMemo(
     () => new Intl.NumberFormat("ru-RU", { maximumFractionDigits: 1 }),
     [],
   );
 
   useLayoutEffect(() => {
-    const root = rootRef.current;
-    const canvas = baseRef.current;
-    const rotor = rotorRef.current;
-    const feedback = feedbackRef.current;
-    const readout = readoutRef.current;
-    const control = controlRef.current;
+    const root = rootRef.current!;
+    const canvas = baseRef.current!;
+    const rotor = rotorRef.current!;
+    const feedback = feedbackRef.current!;
+    const readout = readoutRef.current!;
+    const control = controlRef.current!;
     if (!root || !canvas || !rotor || !feedback || !readout || !control) return;
 
-    const rotorCtx = rotor.getContext("2d");
-    const feedbackCtx = feedback.getContext("2d");
-    const ctx = canvas.getContext("2d", { alpha: true });
+    const rotorCtx = rotor.getContext("2d")!;
+    const feedbackCtx = feedback.getContext("2d")!;
+    const ctx = canvas.getContext("2d", { alpha: true })!;
     if (!rotorCtx || !feedbackCtx || !ctx) return;
 
     const TAU = Math.PI * 2;
@@ -776,4 +743,4 @@ export const RotaryKnob = define<RotaryKnobProps>("RotaryKnob", (p) => {
       </span>
     </div>
   );
-});
+};

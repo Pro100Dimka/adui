@@ -1,6 +1,5 @@
 export default {
   name: "MessageBar",
   description: "Сообщение внутри карточки",
-  category: "data",
-  wide: false,
+  category: "feedback",
 } as const;

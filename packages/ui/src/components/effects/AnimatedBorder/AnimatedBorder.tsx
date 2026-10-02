@@ -1,4 +1,4 @@
-import React, { createElement, useRef } from "react";
+import { createElement, useRef } from "react";
 import type { ElementType, ReactNode } from "react";
 import { mark, type CommonProps } from "../../../core/base";
 import { useBorder } from "../../../core/motion/hooks";

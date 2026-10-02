@@ -17,7 +17,7 @@ import {
 } from "@ad-voice/ui";
 import {
   catalog,
-  componentSlug,
+  componentHref,
   getComponentApiSource,
   getComponentSource,
   getComponentSourcePath,
@@ -101,6 +101,15 @@ function CodeBlock({
   );
 }
 
+const sections = [
+  ["overview", "Обзор"],
+  ["preview", "Live preview"],
+  ["usage", "Использование"],
+  ["api", "API"],
+  ["source", "Исходник"],
+  ["related", "Связанные"],
+] as const;
+
 const scrollToSection =
   (id: string) => (event: React.MouseEvent<HTMLAnchorElement>) => {
     event.preventDefault();
@@ -118,7 +127,7 @@ export function ComponentDocsPage({ item }: { item: CatalogMeta }) {
   const sourcePath = getComponentSourcePath(item.name);
   const importPath = getImportPath(item);
   const importLine = `import { ${item.name} } from "${importPath}";`;
-  const categoryItems = category ? catalog.filter(category.matches) : catalog;
+  const categoryItems = category?.items ?? catalog;
   const index = categoryItems.findIndex(
     (candidate) => candidate.name === item.name,
   );
@@ -350,7 +359,7 @@ export function ComponentDocsPage({ item }: { item: CatalogMeta }) {
                   {related.map((candidate) => (
                     <Link
                       key={candidate.name}
-                      href={`#/components/${componentSlug(candidate.name)}`}
+                      href={componentHref(candidate.name)}
                       underline="none"
                       endIcon="chevron"
                     >
@@ -380,7 +389,7 @@ export function ComponentDocsPage({ item }: { item: CatalogMeta }) {
         >
           {previous ? (
             <Link
-              href={`#/components/${componentSlug(previous.name)}`}
+              href={componentHref(previous.name)}
               underline="none"
               icon="chevron"
             >
@@ -398,7 +407,7 @@ export function ComponentDocsPage({ item }: { item: CatalogMeta }) {
           )}
           {next ? (
             <Link
-              href={`#/components/${componentSlug(next.name)}`}
+              href={componentHref(next.name)}
               underline="none"
               endIcon="chevron"
             >
@@ -421,46 +430,18 @@ export function ComponentDocsPage({ item }: { item: CatalogMeta }) {
             <Typography variant="eyebrow" tone="muted">
               На этой странице
             </Typography>
-            <Link
-              href="#overview"
-              underline="none"
-              onClick={scrollToSection("overview")}
-            >
-              <Typography variant="body-sm">Обзор</Typography>
-            </Link>
-            <Link
-              href="#preview"
-              underline="none"
-              onClick={scrollToSection("preview")}
-            >
-              <Typography variant="body-sm">Live preview</Typography>
-            </Link>
-            <Link
-              href="#usage"
-              underline="none"
-              onClick={scrollToSection("usage")}
-            >
-              <Typography variant="body-sm">Использование</Typography>
-            </Link>
-            <Link href="#api" underline="none" onClick={scrollToSection("api")}>
-              <Typography variant="body-sm">API</Typography>
-            </Link>
-            <Link
-              href="#source"
-              underline="none"
-              onClick={scrollToSection("source")}
-            >
-              <Typography variant="body-sm">Исходник</Typography>
-            </Link>
-            {related.length > 0 && (
-              <Link
-                href="#related"
-                underline="none"
-                onClick={scrollToSection("related")}
-              >
-                <Typography variant="body-sm">Связанные</Typography>
-              </Link>
-            )}
+            {sections
+              .filter(([id]) => id !== "related" || related.length > 0)
+              .map(([id, label]) => (
+                <Link
+                  key={id}
+                  href={`#${id}`}
+                  underline="none"
+                  onClick={scrollToSection(id)}
+                >
+                  <Typography variant="body-sm">{label}</Typography>
+                </Link>
+              ))}
             <Divider />
             <Typography variant="caption" tone="muted">
               {category?.label}

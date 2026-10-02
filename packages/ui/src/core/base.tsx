@@ -1,11 +1,5 @@
-import React, { createElement, useCallback, useRef, useState } from "react";
-import type {
-  CSSProperties,
-  ReactElement,
-  ReactNode,
-  Ref,
-  ComponentType,
-} from "react";
+import { createElement, useCallback, useRef, useState } from "react";
+import type { CSSProperties, ReactNode, Ref } from "react";
 
 export type Material =
   | "shell"
@@ -46,16 +40,6 @@ export interface VectorNode {
   props?: Record<string, unknown>;
   children?: Array<VectorNode | string>;
 }
-export interface ReferenceOptions {
-  tag: string;
-  attrs: Record<string, unknown>;
-  material?: string | null;
-  children?: ReactNode;
-}
-/** Internal migration slot. Native consumers use the ordinary JSX props, not this property. */
-export interface ReferenceProps {
-  __reference?: ReferenceOptions;
-}
 
 export function classes(...values: (string | undefined | false)[]): string {
   return values.filter(Boolean).join(" ");
@@ -68,6 +52,7 @@ export function normalizeSize(size?: Size): ControlSize | undefined {
   );
 }
 
+/** Root attributes shared by every component: `ad ad-<kebab-name>` class and data-ad-* hooks for CSS. */
 export function mark(
   name: string,
   p: CommonProps,
@@ -91,158 +76,14 @@ export function mark(
   };
 }
 
-const names: Record<string, string> = {
-  class: "className",
-  for: "htmlFor",
-  tabindex: "tabIndex",
-  readonly: "readOnly",
-  maxlength: "maxLength",
-  minlength: "minLength",
-  autofocus: "autoFocus",
-  colspan: "colSpan",
-  rowspan: "rowSpan",
-  cellspacing: "cellSpacing",
-  cellpadding: "cellPadding",
-  spellcheck: "spellCheck",
-  viewbox: "viewBox",
-  preserveaspectratio: "preserveAspectRatio",
-  pathlength: "pathLength",
-  gradientunits: "gradientUnits",
-  gradienttransform: "gradientTransform",
-  filterunits: "filterUnits",
-  stddeviation: "stdDeviation",
-  basefrequency: "baseFrequency",
-  numoctaves: "numOctaves",
-  stitchtiles: "stitchTiles",
-  clippathunits: "clipPathUnits",
-  patternunits: "patternUnits",
-  textlength: "textLength",
-  lengthadjust: "lengthAdjust",
-};
-export function styleObject(raw: unknown): TokenStyle {
-  if (typeof raw !== "string") return (raw ?? {}) as TokenStyle;
-  const result: Record<string, string> = {};
-  for (const item of raw.split(";")) {
-    const at = item.indexOf(":");
-    if (at < 0) continue;
-    const name = item.slice(0, at).trim();
-    const key = name.startsWith("--")
-      ? name
-      : name
-          .replace(/^-ms-/, "ms-")
-          .replace(/-([a-z])/g, (_, c: string) => c.toUpperCase());
-    if (key)
-      result[key] = item
-        .slice(at + 1)
-        .trim()
-        .replace(/\s*!important$/, "");
-  }
-  return result as TokenStyle;
+/** Plain structural element with the standard component marks. */
+export function part(name: string, tag: "header" | "div" | "footer") {
+  const Part = (p: CommonProps) =>
+    createElement(tag, mark(name, p), p.children);
+  Part.displayName = name;
+  return Part;
 }
-export function domProps(
-  raw: Record<string, unknown> = {},
-  namespace = "",
-  svg = false,
-  tag = "",
-): Record<string, unknown> {
-  const out: Record<string, unknown> = {};
-  for (const [name, original] of Object.entries(raw)) {
-    if (
-      name === "xmlns" ||
-      name.startsWith("xmlns:") ||
-      name === "selected" ||
-      /^on[a-z]+$/.test(name)
-    )
-      continue;
-    let key = names[name] ?? name;
-    if (svg && !key.startsWith("data-") && !key.startsWith("aria-")) {
-      key = key.replace(/-([a-z])/g, (_, c: string) => c.toUpperCase());
-      if (key === "xlink:href") key = "href";
-    }
-    let value = original;
-    if (namespace && typeof value === "string") {
-      if (name === "id") value = namespace + value;
-      else if (
-        (name === "href" || name === "xlink:href") &&
-        value.startsWith("#")
-      )
-        value = "#" + namespace + value.slice(1);
-      else
-        value = value.replace(
-          /url\(#([^)]*)\)/g,
-          (_, id: string) => `url(#${namespace}${id})`,
-        );
-    }
-    if (key === "style") value = styleObject(value);
-    if (
-      [
-        "disabled",
-        "hidden",
-        "required",
-        "readOnly",
-        "multiple",
-        "open",
-        "autoFocus",
-        "controls",
-        "loop",
-        "muted",
-      ].includes(key)
-    )
-      value = value !== false && value != null;
-    if (key === "checked") {
-      key = "defaultChecked";
-      value = value !== false && value != null;
-    }
-    if (key === "value" && ["input", "select", "textarea"].includes(tag))
-      key = "defaultValue";
-    out[key] = value;
-  }
-  return out;
-}
-export function ReferenceElement({
-  name,
-  options,
-}: {
-  name: string;
-  options: ReferenceOptions;
-}) {
-  const attrs = domProps(options.attrs, "", false, options.tag);
-  const properties = {
-    ...attrs,
-    "data-ad-component": name,
-    "data-ad-reference": "",
-    "data-ad-material": options.material ?? undefined,
-  };
-  return [
-    "input",
-    "img",
-    "br",
-    "hr",
-    "meta",
-    "link",
-    "source",
-    "col",
-    "wbr",
-    "area",
-    "embed",
-    "param",
-    "track",
-  ].includes(options.tag)
-    ? createElement(options.tag, properties)
-    : createElement(options.tag, properties, options.children);
-}
-/** Keeps legacy geometry separate from the native, stateful React component. */
-export function define<P extends object>(name: string, View: ComponentType<P>) {
-  function Component(props: P & ReferenceProps): ReactElement {
-    return props.__reference ? (
-      <ReferenceElement name={name} options={props.__reference} />
-    ) : (
-      <View {...props} />
-    );
-  }
-  Component.displayName = name;
-  return Component;
-}
+
 export function useControllable<T>(
   value: T | undefined,
   initial: T,

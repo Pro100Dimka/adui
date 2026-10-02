@@ -1,81 +1,71 @@
-import React, { useRef } from "react";
-import { assignRef, define, useControllable } from "../../../core/base";
-import { InputBase } from "../InputBase/InputBase";
+import { useControllable } from "../../../core/base";
+import { FieldFrame } from "../internal";
 import { IconButton } from "../IconButton/IconButton";
+import { InputBase } from "../InputBase/InputBase";
 import type { TextFieldProps } from "../shared";
 
-export const TextField = define<TextFieldProps>("TextField", (p) => {
-  const {
-    label,
-    description,
-    error,
-    clearable,
-    startAdornment,
-    endAdornment,
-    value,
-    defaultValue = "",
-    onValueChange,
-    inputRef,
-    ...input
-  } = p;
+export const TextField = ({
+  label,
+  description,
+  error,
+  clearable,
+  startAdornment,
+  endAdornment,
+  value,
+  defaultValue = "",
+  onValueChange,
+  inputRef,
+  className,
+  size,
+  tone: _tone,
+  material: _material,
+  style: _style,
+  children: _children,
+  ...input
+}: TextFieldProps) => {
   const [current, setCurrent] = useControllable(
     value,
     defaultValue,
     onValueChange,
   );
-  const localRef = useRef<HTMLInputElement>(null);
-  const end = (
-    <>
-      {clearable && (
-        <IconButton
-          size="xs"
-          variant="ghost"
-          icon="close"
-          label="Очистить"
-          disabled={p.disabled || p.readOnly}
-          onClick={() => setCurrent("")}
-        />
-      )}{" "}
-      {endAdornment}
-    </>
-  );
   return (
-    <label
-      className={`ad-text-field-shell ${p.className ?? ""}`}
-      data-ad-invalid={!!error || undefined}
+    <FieldFrame
+      className={`ad-text-field-shell ${className ?? ""}`}
+      label={label}
+      required={input.required}
+      description={description}
+      error={error}
     >
-      {label && (
-        <span className="ad-field-label">
-          {label}
-          {p.required ? " *" : ""}
-        </span>
-      )}
       <InputBase
-        size={p.size}
-        disabled={p.disabled}
-        readOnly={p.readOnly}
+        size={size}
+        disabled={input.disabled}
+        readOnly={input.readOnly}
         error={!!error}
         startAdornment={startAdornment}
-        endAdornment={end}
+        endAdornment={
+          <>
+            {clearable && (
+              <IconButton
+                size="xs"
+                variant="ghost"
+                icon="close"
+                label="Очистить"
+                disabled={input.disabled || input.readOnly}
+                onClick={() => setCurrent("")}
+              />
+            )}
+            {endAdornment}
+          </>
+        }
       >
         <input
           {...input}
-          className={undefined}
-          style={undefined}
-          ref={(n) => {
-            localRef.current = n;
-            assignRef(inputRef, n);
-          }}
+          ref={inputRef}
           value={current}
           aria-invalid={!!error || undefined}
           onChange={(e) => setCurrent(e.currentTarget.value)}
         />
       </InputBase>
-      {(description || error) && (
-        <small className={error ? "ad-field-error" : ""}>
-          {error || description}
-        </small>
-      )}
-    </label>
+    </FieldFrame>
   );
-});
+};

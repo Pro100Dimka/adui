@@ -1,6 +1,5 @@
 export default {
   name: "Avatar",
   description: "Инициалы пользователя в круге",
-  category: "foundation",
-  wide: false,
+  category: "typography",
 } as const;

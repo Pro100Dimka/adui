@@ -1,4 +1,3 @@
-import React from "react";
 import { Link, Stack } from "../../../index";
 export default function LinkExample() {
   return (

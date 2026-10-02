@@ -1,42 +1,8 @@
-import React, {
-  useEffect,
-  useId,
-  useLayoutEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
-import {
-  clamp,
-  define,
-  mark,
-  timeText,
-  useControllable,
-  type CommonProps,
-} from "../../../core/base";
+import { useId, useRef } from "react";
+import { mark, type CommonProps } from "../../../core/base";
 import { useDecoration } from "../../../core/motion/hooks";
-import { Icon } from "../../layout/Icon/Icon";
-import { Badge } from "../../feedback/Badge/Badge";
-import { MessageBar } from "../../feedback/MessageBar/MessageBar";
-import { IconButton } from "../../controls/IconButton/IconButton";
-import { Select } from "../../controls/Select/Select";
-import { Slider } from "../../controls/Slider/Slider";
-import { ToggleButton } from "../../controls/ToggleButton/ToggleButton";
-import {
-  type WaveformProps,
-  type AudioPlayerProps,
-  type LevelMeterProps,
-  type RotaryKnobProps,
-  type RotaryKnobController,
-  type SparklineProps,
-} from "../shared";
-import { Waveform } from "../Waveform/Waveform";
-import { AudioPlayer } from "../AudioPlayer/AudioPlayer";
-import { LevelMeter } from "../LevelMeter/LevelMeter";
-import { RotaryKnob } from "../RotaryKnob/RotaryKnob";
-import { Sparkline } from "../Sparkline/Sparkline";
 
-export const WaveDecoration = define<CommonProps>("WaveDecoration", (p) => {
+export const WaveDecoration = (p: CommonProps) => {
   const ref = useRef<SVGSVGElement>(null);
   const uid = useId().replace(/:/g, "");
   const paint = (t: number) =>
@@ -90,4 +56,4 @@ export const WaveDecoration = define<CommonProps>("WaveDecoration", (p) => {
       ))}
     </svg>
   );
-});
+};

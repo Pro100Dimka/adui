@@ -40,13 +40,6 @@
 .ad-surface:not(.ad-card) {
   padding: 1.25rem;
 }
-.ad-page-header,
-.ad-section-header {
-  display: flex;
-  gap: 1.0625rem;
-  align-items: center;
-  position: relative;
-}
 .ad-header-copy {
   min-width: 0;
   flex: 1;
@@ -59,9 +52,6 @@
 }
 .ad-header-actions {
   margin-left: auto;
-}
-.ad-card > .ad-section-header {
-  margin-bottom: 1.25rem;
 }
 .ad-icon-tile > .ad-icon {
   color: #fff5f6;
@@ -81,30 +71,4 @@
 }
 .ad-collapsible-section[open] summary > .ad-icon:last-child {
   transform: rotate(180deg);
-}
-.ad-artwork-frame > .ad-scene-illustration {
-  display: block;
-  width: 100%;
-  height: 100%;
-}
-.ad-brandmark {
-  position: relative;
-  width: 15rem;
-  color: #f36784;
-  text-align: center;
-}
-.ad-brandmark svg {
-  width: 100%;
-  height: 4.625rem;
-  filter: drop-shadow(0 0 0.3125rem #ff154833);
-}
-.ad-brandmark em {
-  font: italic 1.6875rem cursive;
-}
-.ad-brandmark small {
-  display: block;
-  font-size: 0.5rem;
-  letter-spacing: 0.28125rem;
-  color: #f1c9db;
-  margin-top: -0.625rem;
 }

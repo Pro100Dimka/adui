@@ -1,6 +1,5 @@
 export default {
   name: "NumberField",
   description: "Число с диапазоном и шагом",
-  category: "forms",
-  wide: false,
+  category: "fields",
 } as const;

@@ -1,15 +1,12 @@
 export interface MotionScope {
   root: Document | ShadowRoot | Element;
   enabled: boolean;
-  active: boolean;
   time: number;
   previous: number | null;
   disposed?: boolean;
   callbacks: Map<Element, (time: number) => void>;
   add(node: Element, callback: (time: number) => void): () => void;
   set(enabled: boolean, explicit?: boolean): boolean;
-  setActive(active: boolean): void;
-  seek(seconds: number): void;
   dispose(): void;
 }
 export interface BorderEffect {
@@ -30,7 +27,6 @@ export function attachBorder(
   options: {
     shell?: boolean;
     round?: boolean;
-    index?: number;
     scope: MotionScope;
   },
 ): BorderEffect;

@@ -1,4 +1,3 @@
-import React from "react";
 import { U, useExampleState } from "../../../dev/exampleHelpers";
 export default function PopoverExample() {
   const { value, setValue, open, setOpen, anchor } = useExampleState();

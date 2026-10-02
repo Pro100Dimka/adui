@@ -1,31 +1,33 @@
-import React, { useMemo, useRef, useState } from "react";
-import { assignRef, define, useControllable } from "../../../core/base";
-import { Icon } from "../../layout/Icon/Icon";
+import { useRef, useState } from "react";
+import { assignRef, useControllable } from "../../../core/base";
+import { Popover } from "../../feedback/Popover/Popover";
 import { Button } from "../Button/Button";
+import { FieldFrame, toOption } from "../internal";
 import { IconButton } from "../IconButton/IconButton";
 import { InputBase } from "../InputBase/InputBase";
-import { Popover } from "../../feedback/Popover/Popover";
 import type { AutocompleteProps } from "../shared";
 
-export const Autocomplete = define<AutocompleteProps>("Autocomplete", (p) => {
-  const {
-    options = ["WASAPI Shared", "WASAPI Exclusive", "ASIO"],
-    onOptionSelect,
-    value,
-    defaultValue = "",
-    onValueChange,
-    label,
-    description,
-    error,
-    startAdornment,
-    endAdornment,
-    clearable,
-    inputRef,
-    ...input
-  } = p;
-  const normalized = options.map((o) =>
-    typeof o === "string" ? { value: o, label: o } : o,
-  );
+export const Autocomplete = ({
+  options = ["WASAPI Shared", "WASAPI Exclusive", "ASIO"],
+  onOptionSelect,
+  value,
+  defaultValue = "",
+  onValueChange,
+  label,
+  description,
+  error,
+  startAdornment,
+  endAdornment,
+  clearable,
+  inputRef,
+  className,
+  size,
+  tone: _tone,
+  material: _material,
+  style: _style,
+  children: _children,
+  ...input
+}: AutocompleteProps) => {
   const [current, setCurrent] = useControllable(
     value,
     defaultValue,
@@ -33,82 +35,78 @@ export const Autocomplete = define<AutocompleteProps>("Autocomplete", (p) => {
   );
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState(0);
-  const localInputRef = useRef<HTMLInputElement>(null);
-  const filtered = useMemo(() => {
-    const q = current.trim().toLocaleLowerCase();
-    return q
-      ? normalized.filter(
-          (o) =>
-            o.label.toLocaleLowerCase().includes(q) ||
-            o.value.toLocaleLowerCase().includes(q),
-        )
-      : normalized;
-  }, [current, options]);
+  const inputNode = useRef<HTMLInputElement>(null);
+  const query = current.trim().toLocaleLowerCase();
+  const filtered = options
+    .map(toOption)
+    .filter(
+      (o) =>
+        !query ||
+        o.label.toLocaleLowerCase().includes(query) ||
+        o.value.toLocaleLowerCase().includes(query),
+    );
+  const listId = `${input.id ?? "ad-autocomplete"}-listbox`;
   const choose = (next: string) => {
     setCurrent(next);
     onOptionSelect?.(next);
     setOpen(false);
-    localInputRef.current?.focus();
+    inputNode.current?.focus();
   };
-  const suffix = (
-    <>
-      {clearable && current && (
-        <IconButton
-          size="xs"
-          variant="ghost"
-          icon="close"
-          label="Очистить"
-          onClick={() => {
-            setCurrent("");
-            setOpen(true);
-          }}
-        />
-      )}
-      {endAdornment}
-      <IconButton
-        size="xs"
-        variant="ghost"
-        icon="chevron"
-        label="Показать варианты"
-        aria-expanded={open}
-        onClick={() => {
-          setOpen((v) => !v);
-          localInputRef.current?.focus();
-        }}
-      />
-    </>
-  );
   return (
-    <label className={`ad-autocomplete-shell ${p.className ?? ""}`}>
-      {label && (
-        <span className="ad-field-label">
-          {label}
-          {p.required ? " *" : ""}
-        </span>
-      )}
+    <FieldFrame
+      className={`ad-autocomplete-shell ${className ?? ""}`}
+      label={label}
+      required={input.required}
+      description={description}
+      error={error}
+    >
       <InputBase
-        size={p.size}
-        disabled={p.disabled}
-        readOnly={p.readOnly}
+        size={size}
+        disabled={input.disabled}
+        readOnly={input.readOnly}
         error={!!error}
         startAdornment={startAdornment}
-        endAdornment={suffix}
+        endAdornment={
+          <>
+            {clearable && current && (
+              <IconButton
+                size="xs"
+                variant="ghost"
+                icon="close"
+                label="Очистить"
+                onClick={() => {
+                  setCurrent("");
+                  setOpen(true);
+                }}
+              />
+            )}
+            {endAdornment}
+            <IconButton
+              size="xs"
+              variant="ghost"
+              icon="chevron"
+              label="Показать варианты"
+              aria-expanded={open}
+              onClick={() => {
+                setOpen((v) => !v);
+                inputNode.current?.focus();
+              }}
+            />
+          </>
+        }
       >
         <input
           {...input}
           className="ad-autocomplete-input"
-          style={undefined}
           ref={(n) => {
-            localInputRef.current = n;
+            inputNode.current = n;
             assignRef(inputRef, n);
           }}
           value={current}
           role="combobox"
           aria-autocomplete="list"
           aria-expanded={open}
-          aria-controls={
-            open ? `${p.id ?? "ad-autocomplete"}-listbox` : undefined
-          }
+          aria-controls={open ? listId : undefined}
           onFocus={() => setOpen(true)}
           onChange={(e) => {
             setCurrent(e.currentTarget.value);
@@ -130,25 +128,17 @@ export const Autocomplete = define<AutocompleteProps>("Autocomplete", (p) => {
           }}
         />
       </InputBase>
-      {(description || error) && (
-        <small className={error ? "ad-field-error" : ""}>
-          {error || description}
-        </small>
-      )}
       <Popover
         open={open && filtered.length > 0}
         onOpenChange={setOpen}
-        anchorRef={localInputRef}
+        anchorRef={inputNode}
         role="listbox"
         align="start"
         matchAnchorWidth
         className="ad-option-popover ad-autocomplete-popover"
         label={typeof label === "string" ? label : "Подсказки"}
       >
-        <div
-          id={`${p.id ?? "ad-autocomplete"}-listbox`}
-          className="ad-option-list"
-        >
+        <div id={listId} className="ad-option-list">
           {filtered.map((option, index) => (
             <Button
               key={option.value}
@@ -164,6 +154,6 @@ export const Autocomplete = define<AutocompleteProps>("Autocomplete", (p) => {
           ))}
         </div>
       </Popover>
-    </label>
+    </FieldFrame>
   );
-});
+};

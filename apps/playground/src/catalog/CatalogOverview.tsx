@@ -1,16 +1,14 @@
-import React from "react";
 import {
   Badge,
   Card,
   Grid,
   Header,
-  Icon,
   Link,
   Stack,
   Typography,
   WaveDecoration,
 } from "@ad-voice/ui";
-import { catalog, componentSlug } from "./componentRegistry";
+import { catalog, componentHref } from "./componentRegistry";
 import { catalogCategories } from "./catalogNavigation";
 
 export function CatalogOverview() {
@@ -45,8 +43,7 @@ export function CatalogOverview() {
         gap={4}
       >
         {catalogCategories.map((category) => {
-          const items = catalog.filter(category.matches);
-          const first = items[0];
+          const { items } = category;
           return (
             <Card
               className="docs-category-panel"
@@ -72,17 +69,17 @@ export function CatalogOverview() {
                   {items.map((item) => (
                     <Link
                       key={item.name}
-                      href={`#/components/${componentSlug(item.name)}`}
+                      href={componentHref(item.name)}
                       underline="none"
                     >
                       <Typography variant="label">{item.name}</Typography>
                     </Link>
                   ))}
                 </Stack>
-                {first && (
+                {items[0] && (
                   <Link
                     className="docs-category-enter"
-                    href={`#/components/${componentSlug(first.name)}`}
+                    href={componentHref(items[0].name)}
                     underline="none"
                     endIcon="chevron"
                   >

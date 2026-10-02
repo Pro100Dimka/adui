@@ -1,4 +1,4 @@
-import React, { createElement } from "react";
+import { createElement } from "react";
 import type { CSSProperties, ElementType, ReactNode } from "react";
 import { mark, type CommonProps } from "../../../core/base";
 

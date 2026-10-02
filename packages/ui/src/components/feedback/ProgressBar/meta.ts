@@ -1,6 +1,5 @@
 export default {
   name: "ProgressBar",
   description: "Отображение выполнения операции",
-  category: "data",
-  wide: false,
+  category: "feedback",
 } as const;

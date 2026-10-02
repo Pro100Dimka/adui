@@ -1,6 +1,5 @@
 export default {
   name: "Slider",
   description: "Изменение значения ползунком",
-  category: "forms",
-  wide: false,
+  category: "fields",
 } as const;

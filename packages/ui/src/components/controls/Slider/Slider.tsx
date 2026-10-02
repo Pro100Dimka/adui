@@ -1,7 +1,7 @@
 import React from "react";
-import { clamp, define, mark, useControllable } from "../../../core/base";
+import { clamp, mark, useControllable } from "../../../core/base";
 import type { SliderProps } from "../shared";
-export const Slider = define<SliderProps>("Slider", (p) => {
+export const Slider = (p: SliderProps) => {
   const min = p.min ?? 0,
     max = Math.max(min, p.max ?? 100);
   const [value, setValue] = useControllable(
@@ -27,4 +27,4 @@ export const Slider = define<SliderProps>("Slider", (p) => {
       onChange={(e) => setValue(Number(e.currentTarget.value))}
     />
   );
-});
+};

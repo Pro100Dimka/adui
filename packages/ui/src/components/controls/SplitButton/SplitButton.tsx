@@ -1,27 +1,18 @@
-import React, { useRef, useState } from "react";
-import { define, mark } from "../../../core/base";
+import { useRef, useState } from "react";
+import { mark } from "../../../core/base";
 import { Menu } from "../../feedback/Menu/Menu";
 import { Button } from "../Button/Button";
 import { IconButton } from "../IconButton/IconButton";
+import { variantMaterial } from "../internal";
 import type { SplitButtonProps } from "../shared";
 
-export const SplitButton = define<SplitButtonProps>("SplitButton", (p) => {
+export const SplitButton = (p: SplitButtonProps) => {
   const [open, setOpen] = useState(false);
   const anchor = useRef<HTMLButtonElement>(null);
   const variant = p.variant ?? "primary";
   return (
     <div
-      {...mark(
-        "SplitButton",
-        p,
-        variant === "primary"
-          ? "ruby"
-          : variant === "danger"
-            ? "danger"
-            : variant === "ghost"
-              ? "ghost"
-              : "glass",
-      )}
+      {...mark("SplitButton", p, variantMaterial[variant])}
       data-ad-variant={variant}
     >
       <Button
@@ -53,4 +44,4 @@ export const SplitButton = define<SplitButtonProps>("SplitButton", (p) => {
       />
     </div>
   );
-});
+};

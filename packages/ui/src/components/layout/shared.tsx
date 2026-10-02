@@ -1,8 +1,5 @@
-import React, { createElement } from "react";
 import type { ElementType, ReactNode } from "react";
 import {
-  define,
-  mark,
   type CommonProps,
   type Material,
   type VectorNode,
@@ -64,26 +61,4 @@ export interface IllustrationProps extends CommonProps {
   label?: string;
   framed?: boolean;
   fit?: "contain" | "cover";
-}
-
-/** Tiny DOM helper for structural parts; not a public component family. */
-export function part(name: string, tag: "header" | "div" | "footer") {
-  return define<CommonProps>(name, (p) =>
-    createElement(tag, mark(name, p), p.children),
-  );
-}
-/** Compatibility helper for older internal files. New code uses Header directly. */
-export function HeaderView({ kind, ...p }: HeaderProps & { kind: string }) {
-  const level = kind === "PageHeader" ? 1 : 3;
-  return (
-    <header {...mark("Header", p)}>
-      {p.icon && <span data-ad-header-icon>{p.icon}</span>}
-      <div className="ad-header-copy">
-        {p.eyebrow && <span>{p.eyebrow}</span>}
-        {createElement(`h${level}`, {}, p.title ?? "Название раздела")}
-        {p.description && <p>{p.description}</p>}
-      </div>
-      {p.actions && <div className="ad-header-actions">{p.actions}</div>}
-    </header>
-  );
 }

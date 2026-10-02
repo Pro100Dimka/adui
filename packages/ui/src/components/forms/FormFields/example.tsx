@@ -1,4 +1,3 @@
-import React from "react";
 import { Button, Stack } from "../../../index";
 import { Form, useForm } from "../Form/Form";
 import { FormFields, type FormFieldDefinition } from "./FormFields";

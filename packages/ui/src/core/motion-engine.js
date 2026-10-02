@@ -2,18 +2,11 @@
    React owns attachment / detachment through useLayoutEffect. No component DOM is built here. */
 let uid = 0;
 const U = {
-  scopes: new WeakMap(),
   uid: (p = "ad") => `${p}-${++uid}`,
   svg(tag, attrs = {}) {
     const n = document.createElementNS("http://www.w3.org/2000/svg", tag);
     for (const [k, v] of Object.entries(attrs)) n.setAttribute(k, String(v));
     return n;
-  },
-  scopeFor(node) {
-    for (let n = node; n; n = n.parentNode || n.host) {
-      if (this.scopes.has(n)) return this.scopes.get(n);
-    }
-    return null;
   },
 };
 const seen = new WeakMap();
@@ -43,14 +36,13 @@ U.createMotion = (root = document) => {
   const scope = {
     root,
     enabled: !media.matches,
-    active: true,
     time: 0,
     previous: null,
     explicit: false,
     callbacks: new Map(),
     observers: [],
     tick(now) {
-      if (!this.active || !this.enabled) {
+      if (!this.enabled) {
         this.previous = null;
         return;
       }
@@ -84,22 +76,10 @@ U.createMotion = (root = document) => {
           ? root
           : root.host || document.documentElement;
       target.dataset.adMotion = enabled ? "on" : "off";
-      if (this.enabled && this.active) running.add(this);
+      if (this.enabled) running.add(this);
       else running.delete(this);
       schedule();
       return this.enabled;
-    },
-    setActive(active) {
-      this.active = active;
-      this.previous = null;
-      if (active && this.enabled) running.add(this);
-      else running.delete(this);
-      schedule();
-    },
-    seek(t) {
-      this.time = Math.max(0, t);
-      for (const [node, fn] of this.callbacks)
-        if (node.isConnected) fn(this.time);
     },
     dispose() {
       if (this.disposed) return;
@@ -124,7 +104,6 @@ U.createMotion = (root = document) => {
     if (!scope.explicit) scope.set(!e.matches, false);
   };
   media.addEventListener("change", scope.onPreference);
-  U.scopes.set(root, scope);
   scope.set(scope.enabled, false);
   return scope;
 };
@@ -141,7 +120,7 @@ U.roundedPath = (w, h, r) => {
 const borders = new WeakMap();
 U.attachBorder = (
   element,
-  { shell = false, round = false, index = 0, scope = U.scopeFor(element) } = {},
+  { shell = false, round = false, scope } = {},
 ) => {
   if (borders.has(element)) return borders.get(element);
   const radius = round ? 28 : shell ? 102 : 116;
@@ -224,7 +203,7 @@ U.attachBorder = (
       red,
       blur,
       radius,
-      phase: (k * 0.48 + 0.535 + index * 0.051) % 1,
+      phase: (k * 0.48 + 0.535) % 1,
       speed: round ? (k ? 25 : 36) : k ? 86 : 125,
       paths: [aura, core],
     });
