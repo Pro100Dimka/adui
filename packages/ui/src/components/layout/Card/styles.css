@@ -1,3 +1,3 @@
-/* Styles owned by Card. */
-.ad-card{padding:1.375rem;}
-.ad-card > p{margin:0.75rem 0 0;color:var(--ad-muted);line-height:1.6;font-size:0.8125rem;}
+.ad-card{min-width:0;position:relative;}
+.ad-card[data-ad-padding="none"]{padding:0}.ad-card[data-ad-padding="sm"]{padding:var(--ad-space-2)}.ad-card[data-ad-padding="md"]{padding:var(--ad-space-4)}.ad-card[data-ad-padding="lg"]{padding:var(--ad-space-6)}
+.ad-card>.ad-header{margin-bottom:var(--ad-space-3);}

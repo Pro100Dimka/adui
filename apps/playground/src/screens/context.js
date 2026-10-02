@@ -1,7 +1,7 @@
 /* Compatibility boundary for the original, screen-specific domain controllers.
    UI trees are rendered by React. This adapter scopes DOM operations to a shadow root
    and cleans timers/listeners/observers on unmount. It is not a second UI library. */
-import {createMotion,attachBorder,attachTabShape} from '@ad-voice/ui/core';
+import {createMotion,attachBorder,attachTabShape} from './legacyUiInternals';
   const memoryStorage = ()=>{
     const map=new Map();return {getItem:k=>map.get(k)??null,setItem:(k,v)=>map.set(k,String(v)),removeItem:k=>map.delete(k),clear:()=>map.clear(),key:i=>[...map.keys()][i]||null,get length(){return map.size;}};
   };

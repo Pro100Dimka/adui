@@ -1,6 +1,6 @@
 {
   "name": "ad-voice-ui-workspace",
-  "version": "1.0.0",
+  "version": "0.2.2",
   "private": true,
   "type": "module",
   "workspaces": [
@@ -16,16 +16,23 @@
     "build": "npm run build:ui && npm run build:playground",
     "preview": "npm run preview --workspace @ad-voice/playground",
     "package:check": "npm run build:ui && npm pack ./packages/ui --dry-run",
-    "package": "npm run check:structure && npm run check:colocation && node scripts/create-package.mjs",
-    "release:patch": "npm run check:structure && npm run check:colocation && npm run check:catalog && node scripts/bump-and-package.mjs patch",
-    "release:minor": "npm run check:structure && npm run check:colocation && npm run check:catalog && node scripts/bump-and-package.mjs minor",
-    "release:major": "npm run check:structure && npm run check:colocation && npm run check:catalog && node scripts/bump-and-package.mjs major",
+    "package": "npm run check:structure && npm run check:colocation && npm run check:primitives && npm run check:units && npm run check:layout && npm run check:motion && npm run check:grid && npm run check:sizes && node scripts/create-package.mjs",
+    "release:patch": "npm run check:structure && npm run check:colocation && npm run check:catalog && npm run check:primitives && npm run check:units && npm run check:layout && npm run check:motion && npm run check:grid && npm run check:sizes && node scripts/bump-and-package.mjs patch",
+    "release:minor": "npm run check:structure && npm run check:colocation && npm run check:catalog && npm run check:primitives && npm run check:units && npm run check:layout && npm run check:motion && npm run check:grid && npm run check:sizes && node scripts/bump-and-package.mjs minor",
+    "release:major": "npm run check:structure && npm run check:colocation && npm run check:catalog && npm run check:primitives && npm run check:units && npm run check:layout && npm run check:motion && npm run check:grid && npm run check:sizes && node scripts/bump-and-package.mjs major",
     "clean": "node scripts/clean.mjs",
     "check:catalog": "node scripts/check-catalog-examples.mjs",
-    "check": "npm run check:structure && npm run check:colocation && npm run typecheck",
+    "check": "npm run check:structure && npm run check:colocation && npm run check:catalog && npm run check:primitives && npm run check:units && npm run check:layout && npm run check:motion && npm run check:grid && npm run check:sizes && npm run typecheck",
     "check:structure": "node scripts/check-component-structure.mjs",
     "check:colocation": "node scripts/check-colocation.mjs",
-    "create:component": "node scripts/create-component.mjs"
+    "create:component": "node scripts/create-component.mjs",
+    "check:units": "node scripts/check-responsive-units.mjs",
+    "check:layout": "node scripts/check-layout-contracts.mjs",
+    "check:motion": "node scripts/check-motion-contracts.mjs",
+    "check:grid": "node scripts/check-grid-contracts.mjs",
+    "check:sizes": "node scripts/check-control-sizes.mjs",
+    "check:buttons": "node scripts/check-buttons.mjs",
+    "check:primitives": "node scripts/check-primitives.mjs"
   },
   "engines": {
     "node": ">=20"

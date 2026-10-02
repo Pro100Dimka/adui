@@ -1,12 +1,3 @@
-export { DiagnosticsPanel } from "./components/compositions/DiagnosticsPanel/DiagnosticsPanel";
-export { ModelStatusCard } from "./components/compositions/ModelStatusCard/ModelStatusCard";
 export { ParticipantCard } from "./components/compositions/ParticipantCard/ParticipantCard";
-export { PerformanceSummary } from "./components/compositions/PerformanceSummary/PerformanceSummary";
-export { ProcessingTaskCard } from "./components/compositions/ProcessingTaskCard/ProcessingTaskCard";
-export { ProfileCard } from "./components/compositions/ProfileCard/ProfileCard";
-export { RecordingCard } from "./components/compositions/RecordingCard/RecordingCard";
 export { RoleEmblem } from "./components/compositions/RoleEmblem/RoleEmblem";
-export { RoomConnectionForm } from "./components/compositions/RoomConnectionForm/RoomConnectionForm";
-export { StorageSummary } from "./components/compositions/StorageSummary/StorageSummary";
-export { ThemePicker } from "./components/compositions/ThemePicker/ThemePicker";
-export * from "./components/compositions/shared";
+export type { ParticipantCardProps, RoleEmblemProps } from "./components/compositions/shared";

@@ -1,3 +1,7 @@
+## v0.2 — primitive-first cleanup
+
+Removed duplicate convenience components. Use composition/adornments instead.
+
 # A&D Voice UI — development workspace
 
 This workspace is designed for the exact workflow:
@@ -177,3 +181,8 @@ Run `npm run check:layout` to verify these contracts.
 ## Adaptive geometry and animated borders
 
 Relative dimensions such as `width: 100%` and `height: 100%` are intentionally allowed. The animated-border SVG always follows its host at `100% x 100%`; `ResizeObserver` recalculates only its path geometry. Run `npm run check:motion` to protect this behavior during refactors.
+
+
+## Primitive-first API (0.2)
+
+Актуальная карта удалённых дублей находится в `MIGRATION_0.2.md`. Каталог содержит только публичные примитивы; legacy names существуют только как локальные aliases внутри ScreenHost для старых экранных JSON.

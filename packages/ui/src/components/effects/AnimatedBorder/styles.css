@@ -1,0 +1,7 @@
+/* AnimatedBorder owns only the decoration host. Layout stays with the consumer. */
+.ad-animated-border{
+  position:relative;
+  min-width:0;
+  min-height:0;
+  border-radius:inherit;
+}

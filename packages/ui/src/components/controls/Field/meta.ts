@@ -1,6 +1,6 @@
 export default {
-  "name": "Field",
-  "description": "Подпись, обязательность, пояснение и ошибка",
-  "category": "forms",
-  "wide": false
-} as const;
+  name: "Field",
+  description: "Низкоуровневая input-base оболочка с startAdornment/endAdornment.",
+  category: "forms",
+  wide: false
+};

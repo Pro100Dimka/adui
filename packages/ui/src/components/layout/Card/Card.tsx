@@ -1,33 +1,10 @@
 import React, { createElement, useRef } from "react";
-import type { ElementType, ReactNode } from "react";
-import { define, mark, type CommonProps, type VectorNode } from "../../../core/base";
-import { SvgAsset } from "../../../core/artwork";
+import { define, mark } from "../../../core/base";
 import { useBorder } from "../../../core/motion/hooks";
-import iconData from "../../../artwork/icons.json";
-import artworkData from "../../../artwork/illustrations.json";
-import { icons, illustrations, HeaderView, part, type IconName, type IconProps, type TextProps, type SurfaceProps, type HeaderProps, type CardProps, type IconTileProps, type AvatarProps, type TabPanelProps, type ScrollAreaProps, type DividerProps, type IllustrationProps } from "../shared";
-import { Icon } from "../Icon/Icon";
-import { Text } from "../Text/Text";
-import { Surface } from "../Surface/Surface";
-import { PageHeader } from "../PageHeader/PageHeader";
-import { SectionHeader } from "../SectionHeader/SectionHeader";
-import { IconTile } from "../IconTile/IconTile";
-import { Avatar } from "../Avatar/Avatar";
-import { DialogHeader } from "../DialogHeader/DialogHeader";
-import { DialogBody } from "../DialogBody/DialogBody";
-import { DialogActions } from "../DialogActions/DialogActions";
-import { Toolbar } from "../Toolbar/Toolbar";
-import { ButtonGroup } from "../ButtonGroup/ButtonGroup";
-import { TabPanel } from "../TabPanel/TabPanel";
-import { ScrollArea } from "../ScrollArea/ScrollArea";
-import { Divider } from "../Divider/Divider";
-import { SceneIllustration } from "../SceneIllustration/SceneIllustration";
-import { ArtworkFrame } from "../ArtworkFrame/ArtworkFrame";
-import { BrandMark } from "../BrandMark/BrandMark";
-
-export const Card = define<CardProps>("Card", p => {
-  const ref = useRef<HTMLElement>(null); useBorder(ref, p.border ?? false);
-  return <section {...mark("Card", p, "card", "ad-surface")} ref={ref}>
-    {p.title && <SectionHeader title={p.title} description={p.description} icon={p.icon} actions={p.actions} />}{p.children}
-  </section>;
+import { Header } from "../Header/Header";
+import type { CardProps } from "../shared";
+export const Card = define<CardProps>("Card", ({ as="section", border=false, shell=false, padding="md", title, description, eyebrow, icon, actions, level=3, children, ...p }) => {
+  const ref=useRef<HTMLElement>(null); useBorder(ref,border,shell);
+  return createElement(as,{...mark("Card",p,p.material ?? (shell?"shell":"card"),"ad-surface"),ref,"data-ad-padding":padding},
+    title && <Header level={level as 1|2|3|4} title={title} description={description} eyebrow={eyebrow} icon={icon} actions={actions} compact={level>2}/>, children);
 });

@@ -19,7 +19,7 @@ export type TypographyVariant =
 export type TypographyTone = "default" | "muted" | "accent" | "success" | "warning" | "danger";
 export type TypographyWeight = "regular" | "medium" | "semibold" | "bold";
 
-export interface TypographyProps extends CommonProps {
+export interface TypographyProps extends Omit<CommonProps, "tone"> {
   as?: ElementType;
   variant?: TypographyVariant;
   tone?: TypographyTone;

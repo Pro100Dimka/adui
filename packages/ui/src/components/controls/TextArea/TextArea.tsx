@@ -1,0 +1,4 @@
+import React from "react";
+import { define, mark, useControllable } from "../../../core/base";
+import type { TextAreaProps } from "../shared";
+export const TextArea=define<TextAreaProps>("TextArea",p=>{const {value,defaultValue="",onValueChange,label,description,error,startAdornment,endAdornment,...dom}=p;const [current,setCurrent]=useControllable(value,defaultValue,onValueChange);return <label {...mark("TextArea",{...p,id:undefined})}>{label&&<span className="ad-field-label">{label}</span>}<div className="ad-text-area-control">{startAdornment}<textarea {...dom} className={undefined} style={undefined} value={current} onChange={e=>setCurrent(e.currentTarget.value)}/>{endAdornment}</div>{(description||error)&&<small className={error?"ad-field-error":""}>{error||description}</small>}</label>});

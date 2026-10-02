@@ -1,6 +1,6 @@
 export default {
-  "name": "Icon",
-  "description": "Векторные иконки из согласованных экранов",
-  "category": "foundation",
-  "wide": false
-} as const;
+  name: "Icon",
+  description: "Иконка; surface=\"tile\" добавляет контейнер вместо отдельного IconTile.",
+  category: "typography",
+  wide: false
+};

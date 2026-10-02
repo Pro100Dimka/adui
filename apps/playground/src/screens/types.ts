@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+export interface VectorNode { tag: string; props?: Record<string, unknown>; children?: Array<VectorNode | string> }
 export type ScreenId = "settings" | "join" | "room" | "room-full" | "analysis" | "performances" | "queue" | "editor";
 export interface LayoutNode { tag?: string; component?: string | null; art?: string; props?: Record<string, unknown>; material?: string | null; children?: Array<LayoutNode | string> }
 export interface ScreenDefinition { id: ScreenId; title: string; width: number; height: number; source: string; borderSelectors: string[]; shellSelector: string; rules: Array<[string, string, string | null]>; tree: Array<LayoutNode | string> }

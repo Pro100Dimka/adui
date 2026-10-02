@@ -1,30 +1,9 @@
-import React, { createElement, useRef } from "react";
-import type { ElementType, ReactNode } from "react";
-import { define, mark, type CommonProps, type VectorNode } from "../../../core/base";
+import React from "react";
+import { define, mark } from "../../../core/base";
 import { SvgAsset } from "../../../core/artwork";
-import { useBorder } from "../../../core/motion/hooks";
-import iconData from "../../../artwork/icons.json";
-import artworkData from "../../../artwork/illustrations.json";
-import { icons, illustrations, HeaderView, part, type IconName, type IconProps, type TextProps, type SurfaceProps, type HeaderProps, type CardProps, type IconTileProps, type AvatarProps, type TabPanelProps, type ScrollAreaProps, type DividerProps, type IllustrationProps } from "../shared";
-import { Text } from "../Text/Text";
-import { Surface } from "../Surface/Surface";
-import { PageHeader } from "../PageHeader/PageHeader";
-import { SectionHeader } from "../SectionHeader/SectionHeader";
-import { Card } from "../Card/Card";
-import { IconTile } from "../IconTile/IconTile";
-import { Avatar } from "../Avatar/Avatar";
-import { DialogHeader } from "../DialogHeader/DialogHeader";
-import { DialogBody } from "../DialogBody/DialogBody";
-import { DialogActions } from "../DialogActions/DialogActions";
-import { Toolbar } from "../Toolbar/Toolbar";
-import { ButtonGroup } from "../ButtonGroup/ButtonGroup";
-import { TabPanel } from "../TabPanel/TabPanel";
-import { ScrollArea } from "../ScrollArea/ScrollArea";
-import { Divider } from "../Divider/Divider";
-import { SceneIllustration } from "../SceneIllustration/SceneIllustration";
-import { ArtworkFrame } from "../ArtworkFrame/ArtworkFrame";
-import { BrandMark } from "../BrandMark/BrandMark";
-
-export const Icon = define<IconProps>("Icon", ({ name = "music", size = 24, className, style, label }) => (
-  <SvgAsset node={icons[name] ?? icons.info} component="Icon" className={`ad-icon ${className ?? ""}`} style={{ width: size, height: size, ...style }} label={label} />
+import { icons, type IconProps } from "../shared";
+export const Icon = define<IconProps>("Icon", ({ name="music", size="1.5rem", surface="none", className, style, label, ...p }) => (
+  <span {...mark("Icon", { ...p, className, style })} data-ad-surface={surface} style={{ "--ad-icon-size": typeof size === "number" ? `${size/16}rem` : size, ...style } as React.CSSProperties}>
+    <SvgAsset node={icons[name] ?? icons.info} component="IconAsset" label={label} />
+  </span>
 ));

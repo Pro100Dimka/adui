@@ -1,5 +1,0 @@
-/* Styles owned by ThemePicker. */
-.ad-theme-picker{display:flex;gap:0.625rem;}
-.ad-theme-picker button>span{display:grid;place-items:center;flex:1;width:100%;}
-.ad-theme-picker strong{font-size:0.75rem;padding:0.625rem;}
-.ad-theme-picker button[aria-pressed="true"]{outline:0.0625rem solid #ff839c;box-shadow:0 0 1.0625rem #ff245250;}

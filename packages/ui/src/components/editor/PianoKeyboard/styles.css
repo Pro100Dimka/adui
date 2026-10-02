@@ -1,5 +1,0 @@
-/* Styles owned by PianoKeyboard. */
-.ad-piano-keyboard{position:relative;width:3.375rem;height:15.75rem;flex:none;overflow:hidden;}
-.ad-piano-keyboard>button{display:block;width:3.375rem;height:1.125rem;border:0;border-bottom:0.0625rem solid #88828e;background:linear-gradient(90deg,#b4aebb,#e6dce5 80%,#a15770);color:#312535;text-align:right;padding-right:0.3125rem;font-size:0.5rem;cursor:pointer;}
-.ad-piano-keyboard>button.ad-black-key{position:absolute;left:0;width:1.75rem;height:0.75rem;background:linear-gradient(#25232d,#030508 80%);z-index:2;border:0.0625rem solid #261522;}
-.ad-piano-keyboard button:hover,.ad-piano-keyboard button.is-active{background:#fd7baa;}

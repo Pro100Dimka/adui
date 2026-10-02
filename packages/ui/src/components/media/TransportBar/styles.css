@@ -1,5 +1,0 @@
-/* Styles owned by TransportBar. */
-.ad-transport-bar{display:flex;align-items:center;gap:1.25rem;}
-@media (max-width:46.25rem){
-.ad-transport-bar{flex-wrap:wrap;}
-}

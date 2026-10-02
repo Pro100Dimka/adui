@@ -1,0 +1,1 @@
+import React from "react"; import { U } from "../../../dev/exampleHelpers"; export default function AutocompleteExample(){return <U.Autocomplete label="Аудиодрайвер" options={["WASAPI Shared","WASAPI Exclusive","ASIO"]} placeholder="Начните вводить..."/>}

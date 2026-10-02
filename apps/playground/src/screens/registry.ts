@@ -1,4 +1,4 @@
-import type { ScreenId, ScreenDefinition, ScreenHandle } from "./types"; import type { VectorNode } from "@ad-voice/ui/core";
+import type { ScreenId, ScreenDefinition, ScreenHandle, VectorNode } from "./types";
 import settings from "./settings";
 import join from "./join";
 import room from "./room";

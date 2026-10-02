@@ -1,4 +1,0 @@
-/* Styles owned by LatencyIndicator. */
-.ad-latency-indicator{display:flex;gap:1.5625rem;align-items:center;}
-.ad-latency-indicator>div>small{display:block;font-size:0.75rem;color:var(--ad-muted);}
-.ad-latency-indicator strong{display:block;font-size:1.6875rem;white-space:nowrap;}

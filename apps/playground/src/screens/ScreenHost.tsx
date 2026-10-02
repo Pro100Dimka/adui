@@ -1,15 +1,25 @@
 import React, { createElement, memo, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import * as UI from "@ad-voice/ui";
-import { SvgAsset } from "@ad-voice/ui/core";
-import { domProps, type ReferenceProps, type VectorNode } from "@ad-voice/ui/core";
+import { SvgAsset, domProps, type ReferenceProps } from "./legacyUiInternals";
+import type { VectorNode } from "./types";
 import { createScreenContext } from "./context.js";
 import { screenRegistry } from "./registry";
 import type { ScreenHandle, ScreenId, LayoutNode } from "./types";
 import uiCSS from "@ad-voice/ui/styles.css?inline";
 
 const voidTags = new Set(["input", "br", "hr", "meta", "link", "source", "col", "wbr", "area", "embed", "param", "track"]);
-const components = UI as unknown as Record<string, React.ComponentType<ReferenceProps>>;
+const baseComponents = UI as unknown as Record<string, React.ComponentType<ReferenceProps>>;
+const legacyAliases: Record<string, string> = {
+  PageHeader: "Header", SectionHeader: "Header", DialogHeader: "Header",
+  IconTile: "Icon", Surface: "Card", MetricCard: "Card", AnimatedBorder: "Card",
+  SceneIllustration: "Illustration", ArtworkFrame: "Illustration",
+  CircularGauge: "RotaryKnob", VolumeControl: "Slider", TransportBar: "AudioPlayer", LatencyIndicator: "Sparkline", ParticleLayer: "WaveDecoration",
+  PianoKeyboard: "PianoRollGrid", TimeRuler: "PianoRollGrid", LyricsLane: "PianoRollGrid", NoteBlock: "PianoRollGrid", Playhead: "PianoRollGrid", SelectionOverlay: "PianoRollGrid", UndoRedoControls: "Toolbar", ZoomControl: "Slider",
+  CodeViewer: "TextArea", CopyableField: "TextField", PathField: "TextField",
+  DiagnosticsPanel: "Card", ModelStatusCard: "Card", PerformanceSummary: "Card", ProcessingTaskCard: "Card", ProfileCard: "Card", RecordingCard: "Card", RoomConnectionForm: "Card", StorageSummary: "Card"
+};
+const components = new Proxy(baseComponents,{get(target,key:PropertyKey){if(typeof key!=="string")return undefined;return target[key] ?? target[legacyAliases[key]];}});
 function treeNode(node: LayoutNode | string, assets: Record<string, VectorNode>, key: number): React.ReactNode {
   if (typeof node === "string") return node;
   if (node.art) {

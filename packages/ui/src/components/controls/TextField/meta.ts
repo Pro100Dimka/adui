@@ -1,6 +1,6 @@
 export default {
-  "name": "TextField",
-  "description": "Текст, очистка и дополнительные действия",
-  "category": "forms",
-  "wide": false
-} as const;
+  name: "TextField",
+  description: "Основное текстовое поле с label, helper/error и start/end adornments.",
+  category: "forms",
+  wide: true
+};

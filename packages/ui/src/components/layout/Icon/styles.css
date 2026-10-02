@@ -1,2 +1,3 @@
-/* Styles owned by Icon. */
-.ad-icon{display:block;flex:none;width:1.5rem;height:1.5rem;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;pointer-events:none;}
+.ad-icon{--ad-icon-size:1.5rem;display:inline-grid;place-items:center;flex:none;width:var(--ad-icon-size);height:var(--ad-icon-size);color:inherit;}
+.ad-icon>[data-ad-component="IconAsset"]{display:block;width:100%;height:100%;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;pointer-events:none;}
+.ad-icon[data-ad-surface="tile"]{width:calc(var(--ad-icon-size) * 1.8);height:calc(var(--ad-icon-size) * 1.8);padding:calc(var(--ad-icon-size) * .34);border:0.0625rem solid #ff567d5c;border-radius:calc(var(--ad-radius) * .85);background:var(--ad-surface-tile);box-shadow:var(--ad-shadow-tile);color:#fff5f6;}

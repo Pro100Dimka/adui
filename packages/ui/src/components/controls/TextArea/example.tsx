@@ -1,0 +1,1 @@
+import React from "react"; import { U } from "../../../dev/exampleHelpers"; export default function TextAreaExample(){return <U.TextArea label="JSON / заметка" style={{fontFamily:"var(--ad-font-family-mono)"}} defaultValue={'{\n  "enabled": true\n}'} endAdornment={<U.IconButton size="xs" icon="copy" label="Копировать"/>}/>}

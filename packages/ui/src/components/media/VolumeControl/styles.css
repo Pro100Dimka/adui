@@ -1,3 +1,0 @@
-/* Styles owned by VolumeControl. */
-.ad-volume-control{display:flex;align-items:center;gap:0.75rem;border-radius:0.8125rem;padding:0 0.5625rem;min-height:var(--ad-control-height);min-width:clamp(9rem,18vw,12rem);}
-.ad-volume-control>output{border:0.0625rem solid #725365;border-radius:0.5625rem;padding:0.25rem 0.5625rem;background:#0d0a11;font-size:0.75rem;min-width:2.1875rem;text-align:center;}

@@ -51,7 +51,7 @@ export function SettingsCard() {
 import { Button, Card, Dialog, AudioPlayer } from "@ad-voice/ui";
 import { PianoRollGrid, NoteBlock, PianoKeyboard } from "@ad-voice/ui/editor";
 import { RecordingCard, ProcessingTaskCard } from "@ad-voice/ui/composites";
-import { MotionProvider, ThemeProvider } from "@ad-voice/ui/core";
+import { ThemeProvider } from "@ad-voice/ui/core";
 ```
 
 `@ad-voice/ui/editor` is separate so applications that only need settings/forms do not have to import editor components.

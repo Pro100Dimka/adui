@@ -1,6 +1,6 @@
 export default {
-  "name": "Card",
-  "description": "Поверхность, заголовок и слоты содержимого",
-  "category": "layout",
-  "wide": false
-} as const;
+  name: "Card",
+  description: "Единая поверхность: card/glass/ruby/tile/shell через material и анимированная рамка через border.",
+  category: "layout",
+  wide: true
+};

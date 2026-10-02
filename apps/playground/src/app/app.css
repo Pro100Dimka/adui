@@ -144,3 +144,46 @@ button,input,select{font:inherit;}button{cursor:pointer;}a{color:inherit;text-de
 /* Gentle viewport-aware root scale. Existing rem geometry keeps its proportions,
    while the whole UI adapts instead of stretching individual controls independently. */
 html{font-size:clamp(87.5%,calc(82% + .25vw),100%);}
+
+/* Split component catalogue: each family is its own route/page. */
+.catalog-overview{padding-top:1.25rem;}
+.catalog-page-head{position:relative;padding:2.125rem 2.25rem 1.5rem;border:0.0625rem solid #7331493d;border-radius:1.125rem;background:radial-gradient(ellipse 60% 100% at 10% 0,#6418322f,transparent),linear-gradient(120deg,#0b080d,#07070b);box-shadow:var(--ad-shadow-card);}
+.catalog-page-head h1{margin:0.25rem 0 0.625rem;font-size:2rem;line-height:1.05;}
+.catalog-page-head>p:last-child{max-width:44rem;margin:0;color:#aa99ac;font-size:0.8125rem;line-height:1.7;}
+.catalog-category-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,18rem),1fr));gap:1rem;margin-top:1rem;}
+.catalog-category-card{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:1rem;min-height:7rem;padding:1.125rem 1.25rem;border:0.0625rem solid #8e38504a;border-radius:1rem;background:radial-gradient(ellipse 80% 120% at 0 0,#7d18362d,transparent 70%),linear-gradient(135deg,#0d0a10,#07070b 65%,#0b070c);box-shadow:inset 0 0.0625rem 0.125rem #ffe2ed12,0 0.375rem 1.25rem #0004;transition:transform .18s,border-color .18s,box-shadow .18s;}
+.catalog-category-card:hover{transform:translateY(-0.125rem);border-color:#db4c705f;box-shadow:inset 0 0.0625rem 0.125rem #ffe2ed1c,0 0 1.25rem #ff214b20,0 0.75rem 1.75rem #0006;}
+.catalog-category-icon{display:grid;place-items:center;width:3rem;height:3rem;border:0.0625rem solid #b842625c;border-radius:0.875rem;background:var(--ad-surface-ruby);box-shadow:var(--ad-shadow-ruby);}
+.catalog-category-icon .ad-icon{width:1.375rem;height:1.375rem;}
+.catalog-category-copy{min-width:0;display:flex;flex-direction:column;gap:0.375rem;}
+.catalog-category-copy strong{font-size:0.9375rem;color:#fff6f8;}
+.catalog-category-copy small{font-size:0.6875rem;line-height:1.55;color:#9f8da3;}
+.catalog-category-count{display:grid;place-items:center;min-width:2rem;height:2rem;padding:0 0.5rem;border-radius:999rem;border:0.0625rem solid #91405a3c;background:#1a0d14;color:#e4b5c5;font:0.6875rem Consolas,monospace;}
+.catalog-hero--compact{min-height:13rem;}
+.catalog-section--page{padding-top:0;}
+
+/* Compact family catalogue: examples consume only the space they need. */
+.catalog-family{margin-bottom:1.5rem;}
+.catalog-family+.catalog-family{padding-top:.25rem;border-top:.0625rem solid #5d26382b;}
+.catalog-family .section-caption{padding:.5rem 0 .75rem;align-items:flex-start;}
+.catalog-family .section-caption>div{min-width:0;}
+.catalog-family .section-caption h2{font-size:1rem;}
+.catalog-family .section-caption p{margin:.2rem 0 0;color:#8f7c91;font-size:.625rem;line-height:1.5;}
+.catalog-grid--compact{grid-template-columns:repeat(auto-fit,minmax(min(100%,20rem),1fr));gap:.75rem;align-items:start;}
+.catalog-grid--compact .catalog-component{align-self:start;}
+.catalog-grid--compact .catalog-component.wide{grid-column:1/-1;}
+.catalog-grid--compact .component-head{padding:.8rem .9rem .6rem;}
+.catalog-grid--compact .component-head h3{font-size:.8125rem;}
+.catalog-grid--compact .component-head p{font-size:.625rem;line-height:1.45;}
+.catalog-grid--compact .component-demo{padding:.875rem;min-height:0;justify-content:flex-start;gap:.75rem;}
+.catalog-grid--compact .component-bottom{padding:.5rem .85rem;}
+.catalog-grid--compact .component-code summary{padding:.55rem .85rem;}
+.catalog-grid--compact .component-code pre{padding:.75rem .85rem;}
+.catalog-grid--compact .component-code .copy-code{margin:0 .85rem .75rem;}
+.catalog-grid--compact .component-demo>.ad-text-field,
+.catalog-grid--compact .component-demo>.ad-number-field,
+.catalog-grid--compact .component-demo>.ad-autocomplete,
+.catalog-grid--compact .component-demo>.ad-select,
+.catalog-grid--compact .component-demo>.ad-text-area,
+.catalog-grid--compact .component-demo>.ad-file-picker{width:100%;}
+@media(min-width:90rem){.catalog-grid--compact{grid-template-columns:repeat(auto-fit,minmax(min(100%,18rem),1fr));}}

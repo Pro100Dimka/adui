@@ -1,7 +1,3 @@
 import React from "react";
-import { U, row, useExampleState } from "../../../dev/exampleHelpers";
-export default function CardExample() {
-  const {value,setValue,checked,setChecked,open,setOpen,text,setText,choice,setChoice,notice,setNotice,note,setNote,history,setHistory,cursor,setCursor,anchor,alert,items}=useExampleState();
-  const demo=<U.Card title="Память / хранилище" description="Общая карточка с содержимым" icon="database" border><U.ProgressBar value={35} /></U.Card>;
-  return <>{demo}<U.Toast floating open={!!notice} message={notice} onClose={()=>setNotice("")} /></>;
-}
+import { U } from "../../../dev/exampleHelpers";
+export default function CardExample(){return <U.Grid minChildWidth="14rem" gap={3}>{(["card","glass","ruby","tile"] as const).map(material=><U.Card key={material} material={material} title={material} icon="music" border={material==="ruby"}><U.Typography tone="muted">Один Card вместо Surface и AnimatedBorder.</U.Typography></U.Card>)}</U.Grid>}

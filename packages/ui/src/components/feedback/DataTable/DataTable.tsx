@@ -4,14 +4,12 @@ import { clamp, copyText, define, mark, useControllable, type CommonProps, type 
 import { Button } from "../../controls/Button/Button";
 import { IconButton } from "../../controls/IconButton/IconButton";
 import { Card } from "../../layout/Card/Card";
-import { DialogHeader } from "../../layout/DialogHeader/DialogHeader";
 import { DialogBody } from "../../layout/DialogBody/DialogBody";
 import { DialogActions } from "../../layout/DialogActions/DialogActions";
 import { Divider } from "../../layout/Divider/Divider";
 import { Icon } from "../../layout/Icon/Icon";
-import { IconTile } from "../../layout/IconTile/IconTile";
 import { Text } from "../../layout/Text/Text";
-import { type DialogProps, type PopoverProps, type MenuItemData, type MenuItemProps, type MenuProps, type ToastProps, type BadgeProps, type StatusIndicatorProps, type ProgressBarProps, type StepsProps, type EmptyStateProps, type MetricCardProps, type KeyValueListProps, type DataTableProps, type CollapsibleSectionProps, type CodeViewerProps } from "../shared";
+import { type DialogProps, type PopoverProps, type MenuItemData, type MenuItemProps, type MenuProps, type ToastProps, type BadgeProps, type StatusIndicatorProps, type ProgressBarProps, type StepsProps, type EmptyStateProps, type KeyValueListProps, type DataTableProps, type CollapsibleSectionProps } from "../shared";
 import { Dialog } from "../Dialog/Dialog";
 import { Popover } from "../Popover/Popover";
 import { MenuItem } from "../MenuItem/MenuItem";
@@ -23,9 +21,7 @@ import { ProgressBar } from "../ProgressBar/ProgressBar";
 import { Steps } from "../Steps/Steps";
 import { MessageBar } from "../MessageBar/MessageBar";
 import { EmptyState } from "../EmptyState/EmptyState";
-import { MetricCard } from "../MetricCard/MetricCard";
 import { KeyValueList } from "../KeyValueList/KeyValueList";
 import { CollapsibleSection } from "../CollapsibleSection/CollapsibleSection";
-import { CodeViewer } from "../CodeViewer/CodeViewer";
 
 export const DataTable = define<DataTableProps>("DataTable", p => <table {...mark("DataTable", p)}>{p.caption && <caption>{p.caption}</caption>}<thead><tr>{(p.columns ?? ["Дата", "Событие", "Статус"]).map((name, i) => <th key={i} scope="col">{name}</th>)}</tr></thead><tbody>{(p.rows ?? [["30.09.2026, 13:24", "AnalysisCompleted", "Готово"], ["30.09.2026, 13:23", "RecordingRegistered", "Готово"]]).map((row, i) => <tr key={i}>{row.map((v, j) => <td key={j}>{v}</td>)}</tr>)}</tbody></table>);

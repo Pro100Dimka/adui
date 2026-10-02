@@ -1,11 +1,5 @@
-export * from "./core/base";
-export * from "./core/artwork";
-export { ThemeProvider } from "./core/providers/ThemeProvider/ThemeProvider";
-export type { ThemeProviderProps } from "./core/providers/ThemeProvider/ThemeProvider";
-export { MotionProvider } from "./core/providers/MotionProvider/MotionProvider";
-export type { MotionProviderProps } from "./core/providers/MotionProvider/MotionProvider";
-export { useMotion, useReducedMotion } from "./core/providers/context";
-export { AnimatedBorder } from "./core/motion/AnimatedBorder/AnimatedBorder";
-export type { AnimatedBorderProps } from "./core/motion/AnimatedBorder/AnimatedBorder";
+export { ThemeProvider } from "./components/foundation/ThemeProvider/ThemeProvider";
+export type { ThemeProviderProps } from "./components/foundation/ThemeProvider/ThemeProvider";
+export { useReducedMotion, useMotion } from "./core/providers/context";
 export { useBorder, useDecoration, useTabShape } from "./core/motion/hooks";
-export { createMotion, attachBorder, attachTabShape, getMotionStats } from "./core/motion-engine.js";
+export { getMotionStats } from "./core/motion-engine.js";
