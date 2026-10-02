@@ -1,1 +1,39 @@
-/* Styles owned by Popover. */
+/* Styles owned by Popover: unfolds from its anchor side, rows arrive in a quick cascade. */
+.ad-popover {
+  transform-origin: var(--ad-popover-anchor-x, 50%) top;
+  animation: ad-popover-in 0.22s cubic-bezier(0.2, 0.9, 0.3, 1.2) both;
+}
+.ad-popover[data-ad-side="above"] {
+  transform-origin: var(--ad-popover-anchor-x, 50%) bottom;
+}
+:is(.ad-option-list, .ad-menu) > :is(.ad-option, .ad-menu-item) {
+  animation: ad-row-in 0.28s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+:is(.ad-option-list, .ad-menu) > :nth-child(2) {
+  animation-delay: 0.03s;
+}
+:is(.ad-option-list, .ad-menu) > :nth-child(3) {
+  animation-delay: 0.06s;
+}
+:is(.ad-option-list, .ad-menu) > :nth-child(4) {
+  animation-delay: 0.09s;
+}
+:is(.ad-option-list, .ad-menu) > :nth-child(5) {
+  animation-delay: 0.12s;
+}
+:is(.ad-option-list, .ad-menu) > :nth-child(n + 6) {
+  animation-delay: 0.15s;
+}
+@keyframes ad-popover-in {
+  from {
+    opacity: 0;
+    transform: translateY(-0.35rem) scale(0.96);
+    filter: blur(0.25rem);
+  }
+}
+@keyframes ad-row-in {
+  from {
+    opacity: 0;
+    transform: translateX(-0.4rem);
+  }
+}

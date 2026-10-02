@@ -1,7 +1,6 @@
 import { mark } from "../../../core/base";
 import { Icon } from "../../layout/Icon/Icon";
 import { type StepsProps } from "../shared";
-import { StatusIndicator } from "../StatusIndicator/StatusIndicator";
 
 export const Steps = (p: StepsProps) => {
   const steps = p.steps ?? [
@@ -11,26 +10,24 @@ export const Steps = (p: StepsProps) => {
     "Обработка",
     "Проверка",
   ];
+  const current = p.current ?? 3;
   return (
     <ol {...mark("Steps", p)}>
-      {steps.map((label, i) => (
-        <li
-          key={`${i}-${label}`}
-          aria-current={i === (p.current ?? 3) ? "step" : undefined}
-        >
-          <StatusIndicator
-            status={
-              i < (p.current ?? 3)
-                ? "success"
-                : i === (p.current ?? 3)
-                  ? "processing"
-                  : "pending"
-            }
-            label={label}
-          />
-          {i < steps.length - 1 && <Icon name="chevron" size={12} />}
-        </li>
-      ))}
+      {steps.map((label, i) => {
+        const state = i < current ? "done" : i === current ? "current" : "todo";
+        return (
+          <li
+            key={`${i}-${label}`}
+            data-state={state}
+            aria-current={state === "current" ? "step" : undefined}
+          >
+            <span className="ad-step-node" aria-hidden>
+              {state === "done" ? <Icon name="check" /> : i + 1}
+            </span>
+            <span className="ad-step-label">{label}</span>
+          </li>
+        );
+      })}
     </ol>
   );
 };

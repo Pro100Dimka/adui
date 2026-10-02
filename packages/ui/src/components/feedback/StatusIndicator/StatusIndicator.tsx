@@ -1,19 +1,9 @@
 import { mark, type Tone } from "../../../core/base";
-import { Icon } from "../../layout/Icon/Icon";
 import type { StatusIndicatorProps } from "../shared";
 export const StatusIndicator = ({
   status = "success",
   ...p
 }: StatusIndicatorProps) => {
-  const names: Record<Tone, string> = {
-    success: "check",
-    error: "warning",
-    warning: "warning",
-    processing: "processing",
-    pending: "clock",
-    offline: "minus",
-    info: "info",
-  };
   const labels: Record<Tone, string> = {
     success: "Готово",
     error: "Ошибка",
@@ -25,8 +15,8 @@ export const StatusIndicator = ({
   };
   return (
     <span {...mark("StatusIndicator", { ...p, tone: status })}>
-      <span className="ad-status-dot">
-        <Icon name={names[status]} size="1.125rem" />
+      <span className="ad-status-dot" aria-hidden>
+        <i />
       </span>
       <span>{p.label ?? labels[status]}</span>
     </span>

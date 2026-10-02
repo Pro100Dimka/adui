@@ -21,15 +21,32 @@ export const Toast = ({
     <div
       {...mark(
         "Toast",
-        p,
+        { ...p, tone: p.tone ?? "success" },
         "dialog",
         p.floating ? "ad-toast-floating" : undefined,
       )}
       role={p.tone === "error" ? "alert" : "status"}
       aria-live={p.tone === "error" ? "assertive" : "polite"}
     >
-      <Icon name={p.tone === "error" ? "warning" : "check"} size={20} />
+      <span className="ad-toast-icon" aria-hidden>
+        <Icon
+          name={
+            p.tone === "error" || p.tone === "warning"
+              ? "warning"
+              : p.tone === "info"
+                ? "info"
+                : "check"
+          }
+        />
+      </span>
       <span>{p.message ?? p.children ?? "Настройки сохранены"}</span>
+      {onClose && duration > 0 && (
+        <span
+          className="ad-toast-timer"
+          style={{ animationDuration: `${duration}ms` }}
+          aria-hidden
+        />
+      )}
     </div>
   );
 };

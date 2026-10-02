@@ -1,26 +1,127 @@
-/* Styles owned by Steps. */
+/* Styles owned by Steps: nodes on a rail; energy flows along the rail into the current step. */
 .ad-steps {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.375rem;
+  --ad-step-node: 1.9rem;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
   padding: 0;
   margin: 0;
   list-style: none;
-  flex-wrap: wrap;
 }
-.ad-steps li {
-  display: flex;
+.ad-steps > li {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  align-content: start;
   gap: 0.5rem;
-  align-items: center;
+  min-width: 0;
+  text-align: center;
 }
-.ad-steps li[aria-current="step"] {
-  padding: 0.3125rem 0.5rem;
-  border-radius: 0.625rem;
-  background: var(--ad-surface-ruby);
-  box-shadow: var(--ad-shadow-ruby);
-  border: 0.0625rem solid #c6436650;
+/* Rail segment from the previous node to this one. */
+.ad-steps > li + li::before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  top: calc(var(--ad-step-node) / 2 - 0.0625rem);
+  right: calc(50% + var(--ad-step-node) / 2 + 0.25rem);
+  left: calc(-50% + var(--ad-step-node) / 2 + 0.25rem);
+  height: 0.125rem;
+  border-radius: 999rem;
+  background: #ffffff14;
 }
-.ad-steps li > .ad-icon:last-child {
-  rotate: -90deg;
+.ad-steps > li[data-state="done"] + li::before,
+.ad-steps > li + li[data-state="done"]::before {
+  background: linear-gradient(90deg, #ff2f6a, #ff8aa6);
+  box-shadow: 0 0 0.5rem #ff2f6a88;
+}
+.ad-steps > li + li[data-state="current"]::before {
+  background: linear-gradient(
+      90deg,
+      #ff2f6a 0 30%,
+      #ffe3ea 45%,
+      #ff2f6a 60%,
+      #ff2f6a40 100%
+    )
+    0 0 / 250% 100%;
+  box-shadow: 0 0 0.5rem #ff2f6a88;
+  animation: ad-steps-flow 1.6s linear infinite;
+}
+.ad-step-node {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: var(--ad-step-node);
+  height: var(--ad-step-node);
+  border-radius: 50%;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #8f8496;
+  background: #0b090e;
+  box-shadow: inset 0 0 0 0.0625rem #ffffff26;
+  transition:
+    background 0.3s,
+    box-shadow 0.3s,
+    color 0.3s;
+}
+.ad-step-node > .ad-icon {
+  --ad-icon-size: 1rem;
+  animation: ad-steps-pop 0.45s cubic-bezier(0.34, 1.6, 0.5, 1) both;
+}
+.ad-steps > li[data-state="done"] .ad-step-node {
+  color: #fff;
+  background: linear-gradient(180deg, #e0245a, #8c0d34);
+  box-shadow:
+    inset 0 0.0625rem 0 #ffd3df88,
+    0 0 0.6rem #ff2f6a66;
+}
+.ad-steps > li[data-state="current"] .ad-step-node {
+  color: #fff;
+  background: radial-gradient(circle, #ff2f6a55, #0b090e 70%);
+  box-shadow:
+    inset 0 0 0 0.125rem #ff6d93,
+    0 0 0.9rem #ff2f6a88;
+  animation: ad-steps-pulse 1.8s ease-in-out infinite;
+}
+/* Orbiting dashed ring around the current node. */
+.ad-steps > li[data-state="current"] .ad-step-node::after {
+  content: "";
+  position: absolute;
+  inset: -0.3rem;
+  border-radius: 50%;
+  border: 0.0625rem dashed #ff8aa6aa;
+  animation: ad-steps-orbit 6s linear infinite;
+}
+.ad-step-label {
+  max-width: 100%;
+  font-size: var(--ad-font-size-caption);
+  font-weight: 600;
+  color: #8f8496;
+  overflow-wrap: anywhere;
+}
+.ad-steps > li:is([data-state="done"], [data-state="current"]) .ad-step-label {
+  color: #f1e6ec;
+}
+@keyframes ad-steps-flow {
+  to {
+    background-position: -250% 0;
+  }
+}
+@keyframes ad-steps-pulse {
+  50% {
+    box-shadow:
+      inset 0 0 0 0.125rem #ffb3c6,
+      0 0 1.4rem #ff2f6aaa;
+  }
+}
+@keyframes ad-steps-orbit {
+  to {
+    rotate: 1turn;
+  }
+}
+@keyframes ad-steps-pop {
+  from {
+    scale: 0;
+    rotate: -45deg;
+  }
 }

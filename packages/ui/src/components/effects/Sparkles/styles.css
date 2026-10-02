@@ -1,0 +1,27 @@
+/* Styles owned by Sparkles. */
+.ad-sparkles {
+  --ad-sparkle: #fff4e8;
+  position: relative;
+  display: inline-block;
+}
+.ad-sparkle {
+  position: absolute;
+  aspect-ratio: 1;
+  translate: -50% -50%;
+  fill: var(--ad-sparkle);
+  filter: drop-shadow(0 0 0.25em #ff4a7a);
+  pointer-events: none;
+  scale: 0;
+  animation: ad-sparkle-twinkle 2.4s ease-in-out infinite;
+}
+@keyframes ad-sparkle-twinkle {
+  0%,
+  100% {
+    scale: 0;
+    rotate: 0deg;
+  }
+  50% {
+    scale: 1;
+    rotate: 90deg;
+  }
+}

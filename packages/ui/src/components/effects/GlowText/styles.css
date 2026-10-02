@@ -1,0 +1,45 @@
+/* Styles owned by GlowText. */
+.ad-glow-text {
+  display: inline-block;
+  margin: 0;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: transparent;
+  background: linear-gradient(
+      100deg,
+      #ff2f6a,
+      #ff9ab4 30%,
+      #fff 45%,
+      #ff9ab4 60%,
+      #ff2f6a 80%,
+      #f243dd
+    )
+    0 0 / 250% 100%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  filter: drop-shadow(0 0 0.35em #ff2f6a88) drop-shadow(0 0 1em #ff2f6a44);
+  animation: ad-glow-flow 5s linear infinite;
+}
+.ad-glow-text[data-flicker] {
+  animation:
+    ad-glow-flow 5s linear infinite,
+    ad-glow-flicker 4.5s steps(1, end) infinite;
+}
+@keyframes ad-glow-flow {
+  to {
+    background-position: -250% 0;
+  }
+}
+@keyframes ad-glow-flicker {
+  0%,
+  41%,
+  44%,
+  47%,
+  100% {
+    opacity: 1;
+  }
+  42%,
+  46% {
+    opacity: 0.35;
+  }
+}

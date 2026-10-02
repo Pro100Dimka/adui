@@ -1,0 +1,37 @@
+/* Styles owned by Beacon. */
+.ad-beacon {
+  --ad-beacon: var(--ad-red);
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  isolation: isolate;
+}
+.ad-beacon > i {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  border-radius: 50%;
+  border: 0.125rem solid var(--ad-beacon);
+  box-shadow: 0 0 1rem var(--ad-beacon);
+  opacity: 0;
+  pointer-events: none;
+}
+.ad-beacon[data-active] > i {
+  animation: ad-beacon-ring 2.4s cubic-bezier(0.2, 0.6, 0.3, 1) infinite;
+}
+.ad-beacon[data-active] > i:nth-child(2) {
+  animation-delay: 0.8s;
+}
+.ad-beacon[data-active] > i:nth-child(3) {
+  animation-delay: 1.6s;
+}
+@keyframes ad-beacon-ring {
+  from {
+    opacity: 0.85;
+    scale: 0.9;
+  }
+  to {
+    opacity: 0;
+    scale: 2.2;
+  }
+}

@@ -1,0 +1,59 @@
+/* Styles owned by Tilt: floats gently on its own, leans toward the pointer with depth and glare. */
+.ad-tilt {
+  position: relative;
+  display: block;
+  border-radius: var(--ad-radius);
+  perspective: 50rem;
+  transform-style: preserve-3d;
+  animation: ad-tilt-float 6s ease-in-out infinite;
+}
+.ad-tilt:hover {
+  animation-play-state: paused;
+}
+.ad-tilt > * {
+  transform: rotateX(var(--ad-tilt-x, 0deg)) rotateY(var(--ad-tilt-y, 0deg));
+  transform-style: preserve-3d;
+  transition:
+    transform 0.7s cubic-bezier(0.34, 1.45, 0.5, 1),
+    scale 0.5s cubic-bezier(0.34, 1.45, 0.5, 1),
+    box-shadow 0.4s;
+  will-change: transform;
+}
+.ad-tilt:hover > * {
+  scale: 1.03;
+  transition-duration: 0.12s, 0.5s, 0.4s;
+  box-shadow:
+    0 1.4rem 2.6rem #000c,
+    0 0 1.6rem #ff2f6a33;
+}
+.ad-tilt[data-glare]::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  border-radius: inherit;
+  background: radial-gradient(
+    circle at var(--ad-glare-x, 50%) var(--ad-glare-y, 50%),
+    #ffffff44,
+    #ff9ab41a 30%,
+    transparent 60%
+  );
+  mix-blend-mode: screen;
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: none;
+}
+.ad-tilt[data-glare]:hover::after {
+  opacity: 1;
+}
+@keyframes ad-tilt-float {
+  0%,
+  100% {
+    transform: perspective(50rem) rotateX(3deg) rotateY(-4deg);
+    translate: 0 0;
+  }
+  50% {
+    transform: perspective(50rem) rotateX(-3deg) rotateY(4deg);
+    translate: 0 -0.35rem;
+  }
+}

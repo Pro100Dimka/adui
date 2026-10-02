@@ -7,6 +7,7 @@ import type {
 } from "react";
 import {
   mark,
+  ripple,
   useControllable,
   type CommonProps,
   type Variant,
@@ -37,6 +38,7 @@ export function buttonView(p: ButtonProps, name = "Button") {
     children,
     ref,
     onPointerMove,
+    onPointerDown,
     onPointerLeave,
     ...rest
   } = p;
@@ -69,6 +71,10 @@ export function buttonView(p: ButtonProps, name = "Button") {
       aria-busy={loading || undefined}
       data-ad-variant={variant}
       data-ad-round={round || undefined}
+      onPointerDown={(event) => {
+        ripple(event.currentTarget, event.clientX, event.clientY);
+        onPointerDown?.(event);
+      }}
       onPointerMove={trackLight}
       onPointerLeave={resetLight}
     >

@@ -1,16 +1,23 @@
-/* Styles owned by Tabs: a track with one indicator that slides under the selected tab. */
+/* Styles owned by Tabs: a dark track with a neon rail, and a ruby "blade" that flies to the selected tab. */
 .ad-tabs {
+  --ad-tabs-pad: 0.25rem;
+  --ad-tabs-spring: cubic-bezier(0.34, 1.45, 0.5, 1);
   position: relative;
   display: flex;
   gap: 0.125rem;
   min-width: 0;
-  padding: 0.1875rem;
+  padding: var(--ad-tabs-pad) var(--ad-tabs-pad)
+    calc(var(--ad-tabs-pad) + 0.3rem);
   border: 0.0625rem solid #86445a3d;
-  border-radius: calc(var(--ad-size-radius) + 0.1875rem);
-  background: linear-gradient(180deg, #0b090e, #070609);
-  box-shadow: inset 0 0.0625rem 0.1875rem #000a;
+  border-radius: calc(var(--ad-size-radius) + 0.25rem);
+  background:
+    linear-gradient(180deg, #ffffff06, transparent 40%),
+    linear-gradient(180deg, #0d0a10, #060508);
+  box-shadow:
+    inset 0 0.0625rem 0.1875rem #000c,
+    inset 0 -0.0625rem 0 #ffffff08;
   isolation: isolate;
-  /* Tabs keep their labels whole; when they do not fit, the row scrolls (like MUI "scrollable"). */
+  /* Tabs keep their labels whole; when they do not fit, the row scrolls. */
   overflow-x: auto;
   overscroll-behavior-x: contain;
   scrollbar-width: none;
@@ -18,36 +25,185 @@
 .ad-tabs::-webkit-scrollbar {
   display: none;
 }
+/* The rail: a dim line along the bottom that lights up under the blade. */
+.ad-tabs::after {
+  content: "";
+  position: absolute;
+  z-index: -3;
+  left: calc(var(--ad-tabs-pad) + 0.5rem);
+  right: calc(var(--ad-tabs-pad) + 0.5rem);
+  bottom: 0.25rem;
+  height: 0.0625rem;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    #ff4a7a30 15%,
+    #ff4a7a30 85%,
+    transparent
+  );
+}
 .ad-tabs > .ad-tab {
   flex: 1 0 auto;
 }
-.ad-tabs-indicator {
+
+/* Blade geometry: chamfered corners and a notch cut into the bottom edge. */
+:is(.ad-tabs, .ad-tab) {
+  --ad-blade-cut: calc(var(--ad-size-radius) * 0.75);
+  --ad-blade-notch: 0.4rem;
+  --ad-blade: polygon(
+    var(--ad-blade-cut) 0,
+    calc(100% - var(--ad-blade-cut)) 0,
+    100% var(--ad-blade-cut),
+    100% calc(100% - var(--ad-blade-cut)),
+    calc(100% - var(--ad-blade-cut)) 100%,
+    calc(50% + var(--ad-blade-notch)) 100%,
+    50% calc(100% - var(--ad-blade-notch) * 0.75),
+    calc(50% - var(--ad-blade-notch)) 100%,
+    var(--ad-blade-cut) 100%,
+    0 calc(100% - var(--ad-blade-cut)),
+    0 var(--ad-blade-cut)
+  );
+}
+
+.ad-tabs-indicator,
+.ad-tabs-trail {
   position: absolute;
-  z-index: -1;
-  top: 0.1875rem;
-  bottom: 0.1875rem;
+  top: var(--ad-tabs-pad);
+  bottom: calc(var(--ad-tabs-pad) + 0.3rem);
   left: 0;
   width: var(--ad-tabs-w);
   transform: translateX(var(--ad-tabs-x));
-  border-radius: var(--ad-size-radius);
-  border: 0.0625rem solid #ff7f9d8c;
-  background:
-    radial-gradient(90% 120% at 50% 120%, #ff2f6a66, transparent 70%),
-    linear-gradient(180deg, #a3123f, #5c0723 60%, #3a0516);
-  box-shadow:
-    inset 0 0.0625rem 0 #ffd3e070,
-    0 0 0.875rem #ff1f5a40;
-  transition:
-    transform 0.32s cubic-bezier(0.2, 0.8, 0.2, 1),
-    width 0.32s cubic-bezier(0.2, 0.8, 0.2, 1);
+  pointer-events: none;
 }
-/* The tabs sit on the indicator, so a selected tab draws no fill of its own here. */
-.ad-tabs > .ad-tab[aria-selected="true"] {
-  background: transparent;
-  box-shadow: none;
+.ad-tabs-indicator {
+  z-index: -1;
+  filter: drop-shadow(0 0 0.4rem #ff1f5a66)
+    drop-shadow(0 0.2rem 0.6rem #ff1f5a33);
+  transition:
+    transform 0.55s var(--ad-tabs-spring),
+    width 0.45s var(--ad-tabs-spring),
+    scale 0.3s ease-out;
+  animation: ad-tabs-breathe 3.2s ease-in-out infinite;
+}
+/* Neon edge: the blade's own background is the edge, a glint runs along it. */
+.ad-tabs-blade {
+  position: absolute;
+  inset: 0;
+  clip-path: var(--ad-blade);
+  background: linear-gradient(
+      100deg,
+      #ff6d93 0%,
+      #ff9ab4 38%,
+      #fff3f6 48%,
+      #ff9ab4 58%,
+      #b0103f 100%
+    )
+    0 0 / 300% 100%;
+  animation: ad-tabs-glint 3.6s linear infinite;
+}
+/* Fill, one hairline inside the edge, with a hot core near the notch. */
+.ad-tabs-blade::before {
+  content: "";
+  position: absolute;
+  inset: 0.0625rem;
+  clip-path: var(--ad-blade);
+  background:
+    radial-gradient(60% 90% at 50% 120%, #ff3f73aa, transparent 70%),
+    linear-gradient(180deg, #ffffff22, transparent 35%),
+    linear-gradient(180deg, #8c0f37, #4d0620 62%, #2a030f);
+}
+/* A light sweep crosses the fill now and then. */
+.ad-tabs-blade::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  clip-path: var(--ad-blade);
+  background: linear-gradient(
+      105deg,
+      transparent 35%,
+      #ffffff30 48%,
+      transparent 60%
+    ) -150%
+    0 / 250% 100% no-repeat;
+  animation: ad-tabs-sweep 5.5s ease-in-out infinite;
+}
+/* Comet trail: a blurred copy that lags behind while the blade travels. */
+.ad-tabs-trail {
+  z-index: -2;
+  border-radius: var(--ad-size-radius);
+  background: radial-gradient(closest-side, #ff2f6a80, transparent);
+  filter: blur(0.6rem);
+  opacity: 0;
+  transition:
+    transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1),
+    width 0.8s cubic-bezier(0.2, 0.8, 0.2, 1),
+    opacity 0.5s;
+}
+/* Rail glow under the blade, with a spark that drops from the notch. */
+.ad-tabs-rail {
+  position: absolute;
+  z-index: -2;
+  left: 0;
+  bottom: 0.1875rem;
+  width: var(--ad-tabs-w);
+  height: 0.1875rem;
+  transform: translateX(var(--ad-tabs-x));
+  border-radius: 999rem;
+  background: radial-gradient(closest-side, #fff2f5, #ff4f7d 45%, transparent);
+  box-shadow: 0 0 0.75rem 0.15rem #ff2a5f88;
+  pointer-events: none;
+  transition:
+    transform 0.6s var(--ad-tabs-spring),
+    width 0.5s var(--ad-tabs-spring);
+}
+
+/* While travelling the blade squashes and flares, the trail shows. */
+.ad-tabs[data-moving] .ad-tabs-indicator {
+  scale: 1.04 0.86;
+  filter: drop-shadow(0 0 0.8rem #ff1f5aaa) brightness(1.25);
+}
+.ad-tabs[data-moving] .ad-tabs-trail {
+  opacity: 1;
+}
+
+/* Inside Tabs the blade is the selection, so selected tabs draw no fill of their own. */
+.ad-tabs > .ad-tab[aria-selected="true"]::before {
+  display: none;
+}
+
+@keyframes ad-tabs-glint {
+  to {
+    background-position: 300% 0;
+  }
+}
+@keyframes ad-tabs-sweep {
+  0%,
+  55% {
+    background-position: -150% 0;
+  }
+  85%,
+  100% {
+    background-position: 250% 0;
+  }
+}
+@keyframes ad-tabs-breathe {
+  0%,
+  100% {
+    filter: drop-shadow(0 0 0.35rem #ff1f5a55)
+      drop-shadow(0 0.2rem 0.6rem #ff1f5a2a);
+  }
+  50% {
+    filter: drop-shadow(0 0 0.7rem #ff1f5a88)
+      drop-shadow(0 0.2rem 0.9rem #ff1f5a44);
+  }
 }
 @media (prefers-reduced-motion: reduce) {
-  .ad-tabs-indicator {
+  .ad-tabs-indicator,
+  .ad-tabs-trail,
+  .ad-tabs-rail,
+  .ad-tabs-blade,
+  .ad-tabs-blade::after {
     transition: none;
+    animation: none;
   }
 }

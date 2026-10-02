@@ -29,6 +29,15 @@
 @import "./components/controls/ToggleButton/styles.css";
 @import "./components/editor/PianoRollGrid/styles.css";
 @import "./components/effects/AnimatedBorder/styles.css";
+@import "./components/effects/Marquee/styles.css";
+@import "./components/effects/Beacon/styles.css";
+@import "./components/effects/Sparkles/styles.css";
+@import "./components/effects/Shimmer/styles.css";
+@import "./components/effects/Equalizer/styles.css";
+@import "./components/effects/GlowText/styles.css";
+@import "./components/effects/Reveal/styles.css";
+@import "./components/effects/Tilt/styles.css";
+@import "./components/effects/Spotlight/styles.css";
 @import "./components/feedback/Badge/styles.css";
 @import "./components/feedback/CollapsibleSection/styles.css";
 @import "./components/feedback/DataTable/styles.css";

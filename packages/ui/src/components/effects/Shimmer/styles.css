@@ -1,0 +1,40 @@
+/* Styles owned by Shimmer. */
+.ad-shimmer {
+  display: flex;
+  align-items: center;
+  gap: var(--ad-space-3);
+  min-width: 0;
+}
+.ad-shimmer-lines {
+  display: grid;
+  gap: 0.6rem;
+  flex: 1;
+  min-width: 0;
+}
+.ad-shimmer i {
+  display: block;
+  height: 0.75rem;
+  border-radius: 999rem;
+  background:
+    linear-gradient(
+        100deg,
+        transparent 30%,
+        #ff8aa633 50%,
+        transparent 70%
+      ) -150%
+      0 / 60% 100% no-repeat,
+    #ffffff10;
+  animation: ad-shimmer-run 1.6s ease-in-out infinite;
+}
+.ad-shimmer-circle {
+  flex: none;
+  width: 2.75rem !important;
+  height: 2.75rem !important;
+}
+@keyframes ad-shimmer-run {
+  to {
+    background-position:
+      250% 0,
+      0 0;
+  }
+}

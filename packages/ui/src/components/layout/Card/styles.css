@@ -17,3 +17,21 @@
 .ad-card > .ad-header {
   margin-bottom: var(--ad-space-3);
 }
+/* Pointer spotlight: a soft ruby light under the cursor, faded in on hover. */
+.ad-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    22rem circle at var(--ad-spot-x, 50%) var(--ad-spot-y, 0%),
+    #ff3b6c14,
+    transparent 60%
+  );
+  opacity: 0;
+  transition: opacity 0.35s;
+  pointer-events: none;
+}
+.ad-card:hover::after {
+  opacity: 1;
+}

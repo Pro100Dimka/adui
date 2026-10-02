@@ -1,5 +1,10 @@
 import { useLayoutEffect, useRef, useState } from "react";
-import { mark, useControllable, type TokenStyle } from "../../../core/base";
+import {
+  mark,
+  ripple,
+  useControllable,
+  type TokenStyle,
+} from "../../../core/base";
 import { type TabsProps } from "../shared";
 import { Tab } from "../Tab/Tab";
 
@@ -17,21 +22,32 @@ export const Tabs = (p: TabsProps) => {
   const buttons = useRef<Array<HTMLButtonElement | null>>([]);
   const selected = items.findIndex((item) => item.value === value);
 
-  // The indicator slides under the selected tab; it follows resizes and label changes.
-  const [indicator, setIndicator] = useState<TokenStyle>();
+  // The blade follows the selected tab and is told when it is travelling, to squash and flare.
+  const [place, setPlace] = useState<TokenStyle>();
+  const [moving, setMoving] = useState(false);
+  const first = useRef(true);
   useLayoutEffect(() => {
     const tab = buttons.current[selected];
-    if (!tab) return setIndicator(undefined);
-    const place = () =>
-      setIndicator({
+    if (!tab) return setPlace(undefined);
+    const update = () =>
+      setPlace({
         "--ad-tabs-x": `${tab.offsetLeft}px`,
         "--ad-tabs-w": `${tab.offsetWidth}px`,
       });
-    place();
-    const observer = new ResizeObserver(place);
+    update();
+    const observer = new ResizeObserver(update);
     observer.observe(tab);
     if (tab.parentElement) observer.observe(tab.parentElement);
-    return () => observer.disconnect();
+    let timer = 0;
+    if (!first.current) {
+      setMoving(true);
+      timer = window.setTimeout(() => setMoving(false), 420);
+    }
+    first.current = false;
+    return () => {
+      observer.disconnect();
+      clearTimeout(timer);
+    };
   }, [selected, items.length]);
 
   return (
@@ -39,6 +55,11 @@ export const Tabs = (p: TabsProps) => {
       {...mark("Tabs", p)}
       role="tablist"
       aria-label={p.label ?? "Разделы"}
+      data-moving={moving || undefined}
+      onPointerDown={(e) => {
+        const tab = (e.target as HTMLElement).closest<HTMLElement>(".ad-tab");
+        if (tab && !tab.matches(":disabled")) ripple(tab, e.clientX, e.clientY);
+      }}
       onKeyDown={(e) => {
         if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(e.key)) return;
         const available = items
@@ -62,8 +83,14 @@ export const Tabs = (p: TabsProps) => {
         buttons.current[available[next].index]?.focus();
       }}
     >
-      {indicator && (
-        <span className="ad-tabs-indicator" style={indicator} aria-hidden />
+      {place && (
+        <>
+          <span className="ad-tabs-trail" style={place} aria-hidden />
+          <span className="ad-tabs-indicator" style={place} aria-hidden>
+            <span className="ad-tabs-blade" />
+          </span>
+          <span className="ad-tabs-rail" style={place} aria-hidden />
+        </>
       )}
       {items.map((item, index) => (
         <Tab

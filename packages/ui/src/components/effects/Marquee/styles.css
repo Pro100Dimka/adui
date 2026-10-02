@@ -1,0 +1,29 @@
+/* Styles owned by Marquee. */
+.ad-marquee {
+  overflow: hidden;
+  min-width: 0;
+  mask: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+.ad-marquee-track {
+  display: flex;
+  width: max-content;
+  animation: ad-marquee var(--ad-marquee-time) linear infinite;
+}
+.ad-marquee[data-reverse] .ad-marquee-track {
+  animation-direction: reverse;
+}
+.ad-marquee:hover .ad-marquee-track {
+  animation-play-state: paused;
+}
+.ad-marquee-group {
+  display: flex;
+  align-items: center;
+  gap: var(--ad-space-6);
+  padding-right: var(--ad-space-6);
+  flex: none;
+}
+@keyframes ad-marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}

@@ -1,4 +1,4 @@
-/* Styles owned by ProgressBar. */
+/* Styles owned by ProgressBar: the fill glides to its value with a glint running through it. */
 .ad-progress-bar {
   height: 0.5625rem;
   border: 0.0625rem solid #685365;
@@ -6,16 +6,46 @@
   background: linear-gradient(#05070c, #0c0b14);
   position: relative;
   width: 100%;
+  overflow: hidden;
 }
 .ad-progress-bar > span {
   position: absolute;
-  left: -0.0625rem;
-  top: -0.0625rem;
-  bottom: -0.0625rem;
-  max-width: calc(100% + 0.125rem);
+  left: 0;
+  top: 0;
+  bottom: 0;
   border-radius: inherit;
-  background: linear-gradient(90deg, #ff2457, #ff7194);
+  background:
+    linear-gradient(
+        100deg,
+        transparent 30%,
+        #ffffff66 50%,
+        transparent 70%
+      ) -100%
+      0 / 60% 100% no-repeat,
+    linear-gradient(90deg, #ff2457, #ff7194);
   box-shadow:
     inset 0 0.0625rem 0.0625rem #ffb4c477,
-    0 0 0.5rem #ff2b5330;
+    0 0 0.6rem #ff2b5355;
+  transition: width 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+  animation: ad-progress-glint 2.2s ease-in-out infinite;
+}
+.ad-progress-bar[data-indeterminate] > span {
+  animation:
+    ad-progress-glint 2.2s ease-in-out infinite,
+    ad-progress-run 1.4s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+}
+@keyframes ad-progress-glint {
+  to {
+    background-position:
+      260% 0,
+      0 0;
+  }
+}
+@keyframes ad-progress-run {
+  from {
+    left: -35%;
+  }
+  to {
+    left: 100%;
+  }
 }

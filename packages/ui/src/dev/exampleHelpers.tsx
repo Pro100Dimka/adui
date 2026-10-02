@@ -90,6 +90,15 @@ const knobLabels: Record<string, string> = {
   surface: "Подложка",
   segmented: "Сегменты",
   role: "Роль",
+  active: "Активен",
+  bars: "Столбики",
+  playing: "Играет",
+  flicker: "Мерцание",
+  lines: "Строки",
+  circle: "Аватар",
+  effect: "Эффект",
+  max: "Наклон, °",
+  glare: "Блик",
 };
 
 /**

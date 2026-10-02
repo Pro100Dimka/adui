@@ -464,8 +464,11 @@
   background: linear-gradient(135deg, #35313d, #141018);
   box-shadow: 0 0 0.1875rem #ddd1ee40;
   transition:
-    transform 0.2s,
-    background 0.2s;
+    transform 0.42s cubic-bezier(0.34, 1.56, 0.5, 1),
+    scale 0.18s ease-out,
+    background 0.25s,
+    border-color 0.25s,
+    box-shadow 0.25s;
 }
 .ad-switch input:focus-visible + .ad-toggle-track,
 .ad-checkbox input:focus-visible + .ad-toggle-track {

@@ -148,3 +148,14 @@ export function downloadFile(
   link.click();
   window.setTimeout(() => URL.revokeObjectURL(url), 1500);
 }
+
+/** Spreads a ring of light from the pointer inside `host` (which should clip its overflow). */
+export function ripple(host: HTMLElement, clientX: number, clientY: number) {
+  const rect = host.getBoundingClientRect();
+  const ring = document.createElement("span");
+  ring.className = "ad-ripple";
+  ring.style.left = `${clientX - rect.left}px`;
+  ring.style.top = `${clientY - rect.top}px`;
+  ring.addEventListener("animationend", () => ring.remove());
+  host.append(ring);
+}

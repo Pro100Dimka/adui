@@ -64,8 +64,8 @@ button.ad:focus-visible {
 [data-ad-tone="processing"] {
   --ad-tone: #ff608a;
 }
-.ad-message-bar > .ad-icon {
-  color: var(--ad-tone);
+[data-ad-tone="info"] {
+  --ad-tone: #6fc8ff;
 }
 .ad-empty-state > .ad-icon {
   color: #fb6688;
@@ -101,11 +101,16 @@ button.ad:focus-visible {
     transform: rotate(360deg);
   }
 }
-[data-ad-motion="off"] .ad *,
-[data-ad-motion="off"] .ad,
-[data-ad-motion="off"] .ad::before,
-[data-ad-motion="off"] .ad::after {
-  animation-play-state: paused !important;
+/* Motion off: every animation jumps straight to its final frame, so entrances (dialogs, toasts,
+   popovers) still end visible, and nothing keeps looping. */
+:is([data-ad-motion="off"] .ad, [data-ad-motion="off"] .ad *),
+:is([data-ad-motion="off"] .ad, [data-ad-motion="off"] .ad *)::before,
+:is([data-ad-motion="off"] .ad, [data-ad-motion="off"] .ad *)::after,
+[data-ad-motion="off"] .ad-dialog::backdrop {
+  animation-duration: 0.01ms !important;
+  animation-delay: 0s !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
 }
 @media (prefers-reduced-motion: reduce) {
   .ad * {
@@ -122,4 +127,29 @@ button.ad:focus-visible {
   height: 2.625rem;
   margin-top: -0.75rem;
   filter: drop-shadow(0 0 0.4375rem #64d4ff66);
+}
+/* Ring of light spread from the press point; hosts clip it with overflow: hidden. */
+.ad-ripple {
+  position: absolute;
+  z-index: 0;
+  width: 0.5rem;
+  height: 0.5rem;
+  margin: -0.25rem 0 0 -0.25rem;
+  border-radius: 50%;
+  border: 0.0625rem solid #ffd3df;
+  background: radial-gradient(closest-side, #ff8aa633, transparent);
+  box-shadow: 0 0 0.75rem #ff4a7a;
+  pointer-events: none;
+  animation: ad-ripple 0.65s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+@keyframes ad-ripple {
+  to {
+    scale: 18;
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ad-ripple {
+    display: none;
+  }
 }

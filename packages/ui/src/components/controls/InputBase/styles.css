@@ -261,3 +261,17 @@
 .ad-input-base :is(input, textarea, button.ad-input-control):focus-visible {
   outline: 0;
 }
+/* A field that turns invalid gives one short shake. */
+.ad-input-base[data-invalid] {
+  animation: ad-field-shake 0.4s cubic-bezier(0.36, 0.07, 0.19, 0.97);
+}
+@keyframes ad-field-shake {
+  20%,
+  60% {
+    transform: translateX(-0.25rem);
+  }
+  40%,
+  80% {
+    transform: translateX(0.25rem);
+  }
+}

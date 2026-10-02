@@ -1,0 +1,45 @@
+/* Styles owned by Spotlight. */
+.ad-spotlight {
+  --ad-spot-color: var(--ad-red);
+  --ad-spot-r: 18rem;
+  position: relative;
+  isolation: isolate;
+  border-radius: var(--ad-radius);
+}
+.ad-spotlight::before,
+.ad-spotlight::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  opacity: 0;
+  transition: opacity 0.35s;
+  pointer-events: none;
+}
+/* Glow over the surface. */
+.ad-spotlight::before {
+  z-index: 1;
+  background: radial-gradient(
+    var(--ad-spot-r) circle at var(--ad-spot-x, 50%) var(--ad-spot-y, 50%),
+    color-mix(in srgb, var(--ad-spot-color) 18%, transparent),
+    transparent 65%
+  );
+}
+/* Edge that lights up near the pointer. */
+.ad-spotlight::after {
+  z-index: 2;
+  padding: 0.0625rem;
+  background: radial-gradient(
+    calc(var(--ad-spot-r) * 0.6) circle at var(--ad-spot-x, 50%)
+      var(--ad-spot-y, 50%),
+    color-mix(in srgb, var(--ad-spot-color) 90%, #fff),
+    transparent 70%
+  );
+  mask:
+    linear-gradient(#000 0 0) content-box exclude,
+    linear-gradient(#000 0 0);
+}
+.ad-spotlight:hover::before,
+.ad-spotlight:hover::after {
+  opacity: 1;
+}

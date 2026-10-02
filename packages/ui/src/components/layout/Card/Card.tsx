@@ -1,4 +1,4 @@
-import { createElement, useRef } from "react";
+import React, { createElement, useRef } from "react";
 import { mark } from "../../../core/base";
 import { useBorder } from "../../../core/motion/hooks";
 import { Header } from "../Header/Header";
@@ -30,6 +30,18 @@ export const Card = ({
       ),
       ref,
       "data-ad-padding": padding,
+      // A soft light follows the pointer across the surface.
+      onPointerMove: (event: React.PointerEvent<HTMLElement>) => {
+        const box = event.currentTarget.getBoundingClientRect();
+        event.currentTarget.style.setProperty(
+          "--ad-spot-x",
+          `${event.clientX - box.left}px`,
+        );
+        event.currentTarget.style.setProperty(
+          "--ad-spot-y",
+          `${event.clientY - box.top}px`,
+        );
+      },
     },
     title && (
       <Header
