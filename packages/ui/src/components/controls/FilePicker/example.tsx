@@ -1,7 +1,24 @@
 import React from "react";
-import { U, row, useExampleState } from "../../../dev/exampleHelpers";
+import {
+  U,
+  ExampleShowcase,
+  ExampleVariant,
+  ExampleVariantGrid,
+  useExampleSize,
+} from "../../../dev/exampleHelpers";
+
 export default function FilePickerExample() {
-  const {value,setValue,checked,setChecked,open,setOpen,text,setText,choice,setChoice,notice,setNotice,note,setNote,history,setHistory,cursor,setCursor,anchor,alert,items}=useExampleState();
-  const demo=<U.FilePicker label="Добавить запись" accept="audio/*" multiple onFiles={files => alert(`Выбрано файлов: ${files.length}`)} />;
-  return <>{demo}<U.Toast floating open={!!notice} message={notice} onClose={()=>setNotice("")} /></>;
+  const [size, setSize] = useExampleSize();
+  return (
+    <ExampleShowcase size={size} onSizeChange={setSize}>
+      <ExampleVariantGrid>
+        <ExampleVariant title="Audio" description="Single audio file">
+          <U.FilePicker size={size} label="Choose audio" accept="audio/*" />
+        </ExampleVariant>
+        <ExampleVariant title="Multiple" description="Several files">
+          <U.FilePicker size={size} label="Choose files" multiple />
+        </ExampleVariant>
+      </ExampleVariantGrid>
+    </ExampleShowcase>
+  );
 }

@@ -1,5 +1,22 @@
 /* Styles owned by CollapsibleSection. */
-.ad-collapsible-section{border-radius:0.9375rem;}
-.ad-collapsible-section summary{padding:1.125rem 1.25rem;display:flex;align-items:center;gap:0.875rem;cursor:pointer;list-style:none;font-size:1rem;font-weight:600;}
-.ad-collapsible-section summary::-webkit-details-marker{display:none;}
-.ad-collapse-content{padding:0 1.25rem 1.25rem;font-size:0.8125rem;color:var(--ad-muted);}
+.ad-collapsible-section {
+  border-radius: 0.9375rem;
+}
+.ad-collapsible-section summary {
+  padding: 1.125rem 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  cursor: pointer;
+  list-style: none;
+  font-size: 1rem;
+  font-weight: 600;
+}
+.ad-collapsible-section summary::-webkit-details-marker {
+  display: none;
+}
+.ad-collapse-content {
+  padding: 0 1.25rem 1.25rem;
+  font-size: 0.8125rem;
+  color: var(--ad-muted);
+}

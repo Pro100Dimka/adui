@@ -1,6 +1,21 @@
-import React, { useEffect, useId, useLayoutEffect, useRef, useState } from "react";
+import React, {
+  useEffect,
+  useId,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
 import type { ReactNode, RefObject } from "react";
-import { clamp, copyText, cssRem, define, mark, useControllable, type CommonProps, type Tone } from "../../../core/base";
+import {
+  clamp,
+  copyText,
+  cssRem,
+  define,
+  mark,
+  useControllable,
+  type CommonProps,
+  type Tone,
+} from "../../../core/base";
 import { Button } from "../../controls/Button/Button";
 import { IconButton } from "../../controls/IconButton/IconButton";
 import { Card } from "../../layout/Card/Card";
@@ -9,7 +24,22 @@ import { DialogActions } from "../../layout/DialogActions/DialogActions";
 import { Divider } from "../../layout/Divider/Divider";
 import { Icon } from "../../layout/Icon/Icon";
 import { Text } from "../../layout/Text/Text";
-import { type DialogProps, type PopoverProps, type MenuItemData, type MenuItemProps, type MenuProps, type ToastProps, type BadgeProps, type StatusIndicatorProps, type ProgressBarProps, type StepsProps, type EmptyStateProps, type KeyValueListProps, type DataTableProps, type CollapsibleSectionProps } from "../shared";
+import {
+  type DialogProps,
+  type PopoverProps,
+  type MenuItemData,
+  type MenuItemProps,
+  type MenuProps,
+  type ToastProps,
+  type BadgeProps,
+  type StatusIndicatorProps,
+  type ProgressBarProps,
+  type StepsProps,
+  type EmptyStateProps,
+  type KeyValueListProps,
+  type DataTableProps,
+  type CollapsibleSectionProps,
+} from "../shared";
 import { Dialog } from "../Dialog/Dialog";
 import { MenuItem } from "../MenuItem/MenuItem";
 import { Menu } from "../Menu/Menu";
@@ -24,25 +54,82 @@ import { KeyValueList } from "../KeyValueList/KeyValueList";
 import { DataTable } from "../DataTable/DataTable";
 import { CollapsibleSection } from "../CollapsibleSection/CollapsibleSection";
 
-export const Popover = define<PopoverProps>("Popover", p => {
-  const ref = useRef<HTMLDivElement>(null); const change = useRef(p.onOpenChange); change.current = p.onOpenChange;
+export const Popover = define<PopoverProps>("Popover", (p) => {
+  const ref = useRef<HTMLDivElement>(null);
+  const change = useRef(p.onOpenChange);
+  change.current = p.onOpenChange;
   useLayoutEffect(() => {
-    const node = ref.current; if (!node || !p.open) return;
+    const node = ref.current;
+    if (!node || !p.open) return;
     const position = () => {
       const target = p.anchorRef?.current?.getBoundingClientRect();
       const r = node.getBoundingClientRect();
-      node.style.left = cssRem(Math.max(8, Math.min(innerWidth - r.width - 8, (target?.right ?? innerWidth / 2) - r.width)));
-      node.style.top = cssRem(Math.max(8, Math.min(innerHeight - r.height - 8, (target?.bottom ?? innerHeight / 2) + 8)));
+      const gap = 6;
+      if (target && p.matchAnchorWidth)
+        node.style.minWidth = cssRem(target.width);
+      const desired = target
+        ? p.align === "start"
+          ? target.left
+          : target.right - r.width
+        : innerWidth / 2 - r.width / 2;
+      node.style.left = cssRem(
+        Math.max(8, Math.min(innerWidth - r.width - 8, desired)),
+      );
+      node.style.top = cssRem(
+        Math.max(
+          8,
+          Math.min(
+            innerHeight - r.height - 8,
+            (target?.bottom ?? innerHeight / 2) + gap,
+          ),
+        ),
+      );
     };
     const supports = typeof node.showPopover === "function";
     if (supports) node.showPopover();
-    position(); node.querySelector<HTMLElement>('button:not(:disabled),input,[tabindex="0"]')?.focus();
-    const dismiss = (e: PointerEvent) => { const path = e.composedPath(); if (!path.includes(node) && !path.includes(p.anchorRef?.current as EventTarget)) change.current?.(false); };
-    const key = (e: KeyboardEvent) => { if (e.key === "Escape") { e.preventDefault(); change.current?.(false); p.anchorRef?.current?.focus(); } };
-    document.addEventListener("pointerdown", dismiss); document.addEventListener("keydown", key);
-    window.addEventListener("resize", position); window.addEventListener("scroll", position, true);
-    return () => { document.removeEventListener("pointerdown", dismiss); document.removeEventListener("keydown", key); window.removeEventListener("resize", position); window.removeEventListener("scroll", position, true); if (supports && node.matches(":popover-open")) node.hidePopover(); };
+    position();
+    node
+      .querySelector<HTMLElement>('button:not(:disabled),input,[tabindex="0"]')
+      ?.focus();
+    const dismiss = (e: PointerEvent) => {
+      const path = e.composedPath();
+      if (
+        !path.includes(node) &&
+        !path.includes(p.anchorRef?.current as EventTarget)
+      )
+        change.current?.(false);
+    };
+    const key = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        e.preventDefault();
+        change.current?.(false);
+        p.anchorRef?.current?.focus();
+      }
+    };
+    document.addEventListener("pointerdown", dismiss);
+    document.addEventListener("keydown", key);
+    window.addEventListener("resize", position);
+    window.addEventListener("scroll", position, true);
+    return () => {
+      document.removeEventListener("pointerdown", dismiss);
+      document.removeEventListener("keydown", key);
+      window.removeEventListener("resize", position);
+      window.removeEventListener("scroll", position, true);
+      if (supports && node.matches(":popover-open")) node.hidePopover();
+    };
   }, [p.open, p.anchorRef]);
   if (!p.open) return null;
-  return <div {...mark("Popover", p, "dialog")} ref={ref} role={p.role ?? "dialog"} aria-label={p.label} popover="manual" onKeyDown={p.onKeyDown} style={{ margin: 0, position: "fixed", ...p.style }}>{p.children}</div>;
+  return (
+    <div
+      {...mark("Popover", p, "dialog")}
+      ref={ref}
+      role={p.role ?? "dialog"}
+      aria-label={p.label}
+      popover="manual"
+      onKeyDown={p.onKeyDown}
+      style={{ margin: 0, position: "fixed", ...p.style }}
+    >
+      {p.children}
+    </div>
+  );
 });

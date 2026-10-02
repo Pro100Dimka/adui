@@ -1,3 +1,22 @@
 /* Styles owned by StatusIndicator. */
-.ad-status-indicator{display:inline-flex;align-items:center;gap:0.5rem;font-size:0.75rem;color:var(--ad-muted);white-space:nowrap;}
-.ad-status-dot{width:1.5625rem;height:1.5625rem;display:grid;place-items:center;flex:none;border:0.0625rem solid color-mix(in srgb,var(--ad-tone,#ff426b) 50%,transparent);border-radius:50%;color:var(--ad-tone);background:color-mix(in srgb,var(--ad-tone) 15%,#06070a);box-shadow:0 0 0.5rem color-mix(in srgb,var(--ad-tone) 10%,transparent);}
+.ad-status-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  color: var(--ad-muted);
+  white-space: nowrap;
+}
+.ad-status-dot {
+  width: 1.5625rem;
+  height: 1.5625rem;
+  display: grid;
+  place-items: center;
+  flex: none;
+  border: 0.0625rem solid
+    color-mix(in srgb, var(--ad-tone, #ff426b) 50%, transparent);
+  border-radius: 50%;
+  color: var(--ad-tone);
+  background: color-mix(in srgb, var(--ad-tone) 15%, #06070a);
+  box-shadow: 0 0 0.5rem color-mix(in srgb, var(--ad-tone) 10%, transparent);
+}

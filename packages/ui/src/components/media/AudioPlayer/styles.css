@@ -1,4 +1,16 @@
 /* Styles owned by AudioPlayer. */
-.ad-audio-player{display:flex;align-items:center;gap:1.125rem;min-width:0;}
-.ad-player-track{flex:1;min-width:0;}
-.ad-time{font-size:0.6875rem;color:var(--ad-muted);font-variant-numeric:tabular-nums;}
+.ad-audio-player {
+  display: flex;
+  align-items: center;
+  gap: 1.125rem;
+  min-width: 0;
+}
+.ad-player-track {
+  flex: 1;
+  min-width: 0;
+}
+.ad-time {
+  font-size: 0.6875rem;
+  color: var(--ad-muted);
+  font-variant-numeric: tabular-nums;
+}

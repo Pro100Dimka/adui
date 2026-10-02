@@ -1,1 +1,21 @@
-/* Autocomplete reuses TextField styles. */
+.ad-autocomplete-shell {
+  display: grid;
+  gap: var(--ad-space-1);
+  min-width: 0;
+  color: var(--ad-text);
+}
+.ad-autocomplete-shell > small {
+  color: var(--ad-muted);
+  font-size: var(--ad-font-size-caption);
+}
+.ad-autocomplete-input::placeholder {
+  color: #928b9a;
+}
+.ad-autocomplete-popover .ad-option[aria-selected="true"] {
+  background: linear-gradient(
+    90deg,
+    #8a15396e,
+    #2a0714 76%,
+    transparent
+  ) !important;
+}

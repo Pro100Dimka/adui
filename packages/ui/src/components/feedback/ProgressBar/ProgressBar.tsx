@@ -1,6 +1,20 @@
-import React, { useEffect, useId, useLayoutEffect, useRef, useState } from "react";
+import React, {
+  useEffect,
+  useId,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
 import type { ReactNode, RefObject } from "react";
-import { clamp, copyText, define, mark, useControllable, type CommonProps, type Tone } from "../../../core/base";
+import {
+  clamp,
+  copyText,
+  define,
+  mark,
+  useControllable,
+  type CommonProps,
+  type Tone,
+} from "../../../core/base";
 import { Button } from "../../controls/Button/Button";
 import { IconButton } from "../../controls/IconButton/IconButton";
 import { Card } from "../../layout/Card/Card";
@@ -9,7 +23,22 @@ import { DialogActions } from "../../layout/DialogActions/DialogActions";
 import { Divider } from "../../layout/Divider/Divider";
 import { Icon } from "../../layout/Icon/Icon";
 import { Text } from "../../layout/Text/Text";
-import { type DialogProps, type PopoverProps, type MenuItemData, type MenuItemProps, type MenuProps, type ToastProps, type BadgeProps, type StatusIndicatorProps, type ProgressBarProps, type StepsProps, type EmptyStateProps, type KeyValueListProps, type DataTableProps, type CollapsibleSectionProps } from "../shared";
+import {
+  type DialogProps,
+  type PopoverProps,
+  type MenuItemData,
+  type MenuItemProps,
+  type MenuProps,
+  type ToastProps,
+  type BadgeProps,
+  type StatusIndicatorProps,
+  type ProgressBarProps,
+  type StepsProps,
+  type EmptyStateProps,
+  type KeyValueListProps,
+  type DataTableProps,
+  type CollapsibleSectionProps,
+} from "../shared";
 import { Dialog } from "../Dialog/Dialog";
 import { Popover } from "../Popover/Popover";
 import { MenuItem } from "../MenuItem/MenuItem";
@@ -24,9 +53,22 @@ import { KeyValueList } from "../KeyValueList/KeyValueList";
 import { DataTable } from "../DataTable/DataTable";
 import { CollapsibleSection } from "../CollapsibleSection/CollapsibleSection";
 
-export const ProgressBar = define<ProgressBarProps>("ProgressBar", p => {
-  const max = Math.max(0.0001, p.max ?? 100); const value = clamp(p.value ?? 56, 0, max);
-  return <div {...mark("ProgressBar", p)} role="progressbar" aria-label={p.label ?? "Прогресс"} aria-valuemin={0} aria-valuemax={max} aria-valuenow={p.indeterminate ? undefined : value} data-indeterminate={p.indeterminate || undefined}>
-    <span style={{ width: p.indeterminate ? "35%" : `${value / max * 100}%` }} />
-  </div>;
+export const ProgressBar = define<ProgressBarProps>("ProgressBar", (p) => {
+  const max = Math.max(0.0001, p.max ?? 100);
+  const value = clamp(p.value ?? 56, 0, max);
+  return (
+    <div
+      {...mark("ProgressBar", p)}
+      role="progressbar"
+      aria-label={p.label ?? "Прогресс"}
+      aria-valuemin={0}
+      aria-valuemax={max}
+      aria-valuenow={p.indeterminate ? undefined : value}
+      data-indeterminate={p.indeterminate || undefined}
+    >
+      <span
+        style={{ width: p.indeterminate ? "35%" : `${(value / max) * 100}%` }}
+      />
+    </div>
+  );
 });

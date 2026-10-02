@@ -1,6 +1,6 @@
 export default {
-  "name": "Text",
-  "description": "Иерархия заголовков, подписей и описаний",
-  "category": "layout",
-  "wide": false
+  name: "Text",
+  description: "Иерархия заголовков, подписей и описаний",
+  category: "layout",
+  wide: false,
 } as const;

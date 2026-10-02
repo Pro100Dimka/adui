@@ -1,7 +1,30 @@
 import React from "react";
-import { U, row, useExampleState } from "../../../dev/exampleHelpers";
+import {
+  U,
+  ExampleShowcase,
+  ExampleVariant,
+  ExampleVariantGrid,
+  useExampleSize,
+} from "../../../dev/exampleHelpers";
+
 export default function CheckboxExample() {
-  const {value,setValue,checked,setChecked,open,setOpen,text,setText,choice,setChoice,notice,setNotice,note,setNote,history,setHistory,cursor,setCursor,anchor,alert,items}=useExampleState();
-  const demo=row(<><U.Checkbox checked={checked} onValueChange={setChecked} label="Включить параметр" /><U.Checkbox label="Выключенный" /></>);
-  return <>{demo}<U.Toast floating open={!!notice} message={notice} onClose={()=>setNotice("")} /></>;
+  const [size, setSize] = useExampleSize();
+  return (
+    <ExampleShowcase size={size} onSizeChange={setSize}>
+      <ExampleVariantGrid>
+        <ExampleVariant title="Unchecked" description="Default">
+          <U.Checkbox size={size} label="Option" />
+        </ExampleVariant>
+        <ExampleVariant title="Checked" description="Selected">
+          <U.Checkbox size={size} defaultChecked label="Option" />
+        </ExampleVariant>
+        <ExampleVariant title="Required" description="Form requirement">
+          <U.Checkbox size={size} required label="Accept" />
+        </ExampleVariant>
+        <ExampleVariant title="Disabled" description="Unavailable">
+          <U.Checkbox size={size} disabled label="Option" />
+        </ExampleVariant>
+      </ExampleVariantGrid>
+    </ExampleShowcase>
+  );
 }

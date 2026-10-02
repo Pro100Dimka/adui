@@ -1,12 +1,52 @@
-import React, { createContext, useContext, useId, useRef, useState } from "react";
-import type { ButtonHTMLAttributes, InputHTMLAttributes, ReactNode, Ref } from "react";
-import { assignRef, clamp, copyText, define, mark, useControllable, type CommonProps, type Variant } from "../../../core/base";
+import React, {
+  createContext,
+  useContext,
+  useId,
+  useRef,
+  useState,
+} from "react";
+import type {
+  ButtonHTMLAttributes,
+  InputHTMLAttributes,
+  ReactNode,
+  Ref,
+} from "react";
+import {
+  assignRef,
+  clamp,
+  copyText,
+  define,
+  mark,
+  useControllable,
+  type CommonProps,
+  type Variant,
+} from "../../../core/base";
 import { useTabShape } from "../../../core/motion/hooks";
 import { Icon } from "../../layout/Icon/Icon";
 import { Menu } from "../../feedback/Menu/Menu";
 import { Dialog } from "../../feedback/Dialog/Dialog";
 import { type MenuItemData } from "../../feedback/shared";
-import { buttonView, FieldContext, BooleanControl, type ButtonProps, type IconButtonProps, type ToggleButtonProps, type SplitButtonProps, type TabProps, type TabItem, type TabsProps, type FieldContextValue, type FieldProps, type TextFieldProps, type NumberFieldProps, type SelectOption, type SelectProps, type BooleanProps, type SliderProps, type FilePickerProps } from "../shared";
+import {
+  buttonView,
+  FieldContext,
+  BooleanControl,
+  type ButtonProps,
+  type IconButtonProps,
+  type ToggleButtonProps,
+  type SplitButtonProps,
+  type TabProps,
+  type TabItem,
+  type TabsProps,
+  type FieldContextValue,
+  type FieldProps,
+  type TextFieldProps,
+  type NumberFieldProps,
+  type SelectOption,
+  type SelectProps,
+  type BooleanProps,
+  type SliderProps,
+  type FilePickerProps,
+} from "../shared";
 import { Button } from "../Button/Button";
 import { IconButton } from "../IconButton/IconButton";
 import { ToggleButton } from "../ToggleButton/ToggleButton";
@@ -22,16 +62,63 @@ import { Checkbox } from "../Checkbox/Checkbox";
 import { Slider } from "../Slider/Slider";
 import { FilePicker } from "../FilePicker/FilePicker";
 
-export const Tabs = define<TabsProps>("Tabs", p => {
-  const items = p.items ?? [{ value: "appearance", label: "Внешний вид", icon: "palette" }, { value: "audio", label: "Аудио", icon: "audio" }, { value: "advanced", label: "Дополнительно", icon: "wrench" }];
-  const [value, setValue] = useControllable(p.value, p.defaultValue ?? items[0]?.value ?? "", p.onValueChange);
+export const Tabs = define<TabsProps>("Tabs", (p) => {
+  const items = p.items ?? [
+    { value: "appearance", label: "Внешний вид", icon: "palette" },
+    { value: "audio", label: "Аудио", icon: "audio" },
+    { value: "advanced", label: "Дополнительно", icon: "wrench" },
+  ];
+  const [value, setValue] = useControllable(
+    p.value,
+    p.defaultValue ?? items[0]?.value ?? "",
+    p.onValueChange,
+  );
   const buttons = useRef<Array<HTMLButtonElement | null>>([]);
-  return <nav {...mark("Tabs", p, "glass")} role="tablist" aria-label={p.label ?? "Разделы"} onKeyDown={e => {
-    if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(e.key)) return;
-    const available = items.map((item, index) => ({ item, index })).filter(x => !x.item.disabled);
-    if (!available.length) return;
-    e.preventDefault(); const current = available.findIndex(x => buttons.current[x.index] === document.activeElement);
-    const next = e.key === "Home" ? 0 : e.key === "End" ? available.length - 1 : (current + (e.key === "ArrowRight" ? 1 : -1) + available.length) % available.length;
-    setValue(available[next].item.value); buttons.current[available[next].index]?.focus();
-  }}>{items.map((item, index) => <Tab key={item.value} id={item.id} ref={n => { buttons.current[index] = n; }} icon={item.icon} panelId={item.panelId} disabled={item.disabled} size={p.size} selected={item.value === value} onClick={() => setValue(item.value)}>{item.label}</Tab>)}</nav>;
+  return (
+    <nav
+      {...mark("Tabs", p, "glass")}
+      role="tablist"
+      aria-label={p.label ?? "Разделы"}
+      onKeyDown={(e) => {
+        if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(e.key)) return;
+        const available = items
+          .map((item, index) => ({ item, index }))
+          .filter((x) => !x.item.disabled);
+        if (!available.length) return;
+        e.preventDefault();
+        const current = available.findIndex(
+          (x) => buttons.current[x.index] === document.activeElement,
+        );
+        const next =
+          e.key === "Home"
+            ? 0
+            : e.key === "End"
+              ? available.length - 1
+              : (current +
+                  (e.key === "ArrowRight" ? 1 : -1) +
+                  available.length) %
+                available.length;
+        setValue(available[next].item.value);
+        buttons.current[available[next].index]?.focus();
+      }}
+    >
+      {items.map((item, index) => (
+        <Tab
+          key={item.value}
+          id={item.id}
+          ref={(n) => {
+            buttons.current[index] = n;
+          }}
+          icon={item.icon}
+          panelId={item.panelId}
+          disabled={item.disabled}
+          size={p.size}
+          selected={item.value === value}
+          onClick={() => setValue(item.value)}
+        >
+          {item.label}
+        </Tab>
+      ))}
+    </nav>
+  );
 });

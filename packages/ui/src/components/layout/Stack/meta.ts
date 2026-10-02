@@ -1,6 +1,7 @@
 export default {
   name: "Stack",
-  description: "Flex-layout для вертикальных и горизонтальных групп с responsive-настройками",
+  description:
+    "Flex-layout для вертикальных и горизонтальных групп с responsive-настройками",
   category: "layout",
-  wide: true
+  wide: true,
 } as const;

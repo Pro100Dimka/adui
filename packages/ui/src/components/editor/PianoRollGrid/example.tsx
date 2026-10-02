@@ -1,1 +1,5 @@
-import React from "react"; import { U } from "../../../dev/exampleHelpers"; export default function PianoRollGridExample(){return <U.PianoRollGrid selection showToolbar showLyrics/>}
+import React from "react";
+import { U } from "../../../dev/exampleHelpers";
+export default function PianoRollGridExample() {
+  return <U.PianoRollGrid selection showToolbar showLyrics />;
+}

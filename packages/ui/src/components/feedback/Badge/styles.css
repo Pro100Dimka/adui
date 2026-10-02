@@ -1,2 +1,14 @@
 /* Styles owned by Badge. */
-.ad-badge{display:inline-flex;align-items:center;justify-content:center;font-size:0.6875rem;line-height:1.125rem;font-weight:600;padding:0.125rem 0.5625rem;border-radius:0.4375rem;border:0.0625rem solid #ce345967;background:#78172b6b;color:#ffc8d7;}
+.ad-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.6875rem;
+  line-height: 1.125rem;
+  font-weight: 600;
+  padding: 0.125rem 0.5625rem;
+  border-radius: 0.4375rem;
+  border: 0.0625rem solid #ce345967;
+  background: #78172b6b;
+  color: #ffc8d7;
+}

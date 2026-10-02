@@ -1,2 +1,96 @@
-import React,{useEffect,useId,useLayoutEffect,useRef,useState} from "react"; import { define,mark,useControllable } from "../../../core/base"; import { Button } from "../../controls/Button/Button"; import { IconButton } from "../../controls/IconButton/IconButton"; import { Header } from "../../layout/Header/Header"; import { DialogBody } from "../../layout/DialogBody/DialogBody"; import { DialogActions } from "../../layout/DialogActions/DialogActions"; import { MessageBar } from "../MessageBar/MessageBar"; import type { DialogProps } from "../shared";
-export const Dialog=define<DialogProps>("Dialog",p=>{const [open,setOpen]=useControllable(p.open,p.defaultOpen??false,p.onOpenChange),[pending,setPending]=useState(false),[error,setError]=useState<string>();const ref=useRef<HTMLDialogElement>(null),titleId=useId(),descId=useId();useLayoutEffect(()=>{const d=ref.current;if(!d)return;if(open&&!d.open)d.showModal();else if(!open&&d.open)d.close();return()=>{if(d.open)d.close()}},[open]);return <dialog {...mark("Dialog",p,"dialog")} ref={ref} aria-labelledby={titleId} aria-describedby={p.description?descId:undefined} onCancel={e=>{e.preventDefault();if(!pending)setOpen(false)}}><Header title={<span id={titleId}>{p.title??"Подтверждение"}</span>} level={2} actions={<IconButton variant="ghost" icon="close" label="Закрыть" disabled={pending} onClick={()=>setOpen(false)}/>} /><DialogBody>{p.description&&<p id={descId}>{p.description}</p>}{p.children}{error&&<MessageBar tone="error">{error}</MessageBar>}</DialogBody><DialogActions>{p.cancelLabel!==false&&<Button disabled={pending} onClick={()=>setOpen(false)}>{p.cancelLabel??"Отмена"}</Button>}<Button variant={p.danger?"danger":"primary"} loading={pending} onClick={async()=>{setPending(true);setError(undefined);try{const result=await p.onConfirm?.();if(result!==false)setOpen(false)}catch(e){setError(e instanceof Error?e.message:"Не удалось выполнить действие")}finally{setPending(false)}}}>{p.confirmLabel??"Готово"}</Button></DialogActions></dialog>});
+import React, {
+  useEffect,
+  useId,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
+import { define, mark, useControllable } from "../../../core/base";
+import { Button } from "../../controls/Button/Button";
+import { IconButton } from "../../controls/IconButton/IconButton";
+import { Header } from "../../layout/Header/Header";
+import { DialogBody } from "../../layout/DialogBody/DialogBody";
+import { DialogActions } from "../../layout/DialogActions/DialogActions";
+import { MessageBar } from "../MessageBar/MessageBar";
+import type { DialogProps } from "../shared";
+export const Dialog = define<DialogProps>("Dialog", (p) => {
+  const [open, setOpen] = useControllable(
+      p.open,
+      p.defaultOpen ?? false,
+      p.onOpenChange,
+    ),
+    [pending, setPending] = useState(false),
+    [error, setError] = useState<string>();
+  const ref = useRef<HTMLDialogElement>(null),
+    titleId = useId(),
+    descId = useId();
+  useLayoutEffect(() => {
+    const d = ref.current;
+    if (!d) return;
+    if (open && !d.open) d.showModal();
+    else if (!open && d.open) d.close();
+    return () => {
+      if (d.open) d.close();
+    };
+  }, [open]);
+  return (
+    <dialog
+      {...mark("Dialog", p, "dialog")}
+      ref={ref}
+      aria-labelledby={titleId}
+      aria-describedby={p.description ? descId : undefined}
+      onCancel={(e) => {
+        e.preventDefault();
+        if (!pending) setOpen(false);
+      }}
+    >
+      <Header
+        title={<span id={titleId}>{p.title ?? "Подтверждение"}</span>}
+        level={2}
+        actions={
+          <IconButton
+            variant="ghost"
+            icon="close"
+            label="Закрыть"
+            disabled={pending}
+            onClick={() => setOpen(false)}
+          />
+        }
+      />
+      <DialogBody>
+        {p.description && <p id={descId}>{p.description}</p>}
+        {p.children}
+        {error && <MessageBar tone="error">{error}</MessageBar>}
+      </DialogBody>
+      <DialogActions>
+        {p.cancelLabel !== false && (
+          <Button disabled={pending} onClick={() => setOpen(false)}>
+            {p.cancelLabel ?? "Отмена"}
+          </Button>
+        )}
+        <Button
+          variant={p.danger ? "danger" : "primary"}
+          loading={pending}
+          onClick={async () => {
+            setPending(true);
+            setError(undefined);
+            try {
+              const result = await p.onConfirm?.();
+              if (result !== false) setOpen(false);
+            } catch (e) {
+              setError(
+                e instanceof Error
+                  ? e.message
+                  : "Не удалось выполнить действие",
+              );
+            } finally {
+              setPending(false);
+            }
+          }}
+        >
+          {p.confirmLabel ?? "Готово"}
+        </Button>
+      </DialogActions>
+    </dialog>
+  );
+});

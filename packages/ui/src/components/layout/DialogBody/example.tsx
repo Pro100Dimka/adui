@@ -1,1 +1,14 @@
-import React from "react"; import { U,useExampleState } from "../../../dev/exampleHelpers"; export default function DialogBodyExample(){const {text,setText}=useExampleState();return <U.DialogBody><U.TextField label="Имя пользователя" value={text} onValueChange={setText}/></U.DialogBody>}
+import React from "react";
+import { U, useExampleState } from "../../../dev/exampleHelpers";
+export default function DialogBodyExample() {
+  const { text, setText } = useExampleState();
+  return (
+    <U.DialogBody>
+      <U.TextField
+        label="Имя пользователя"
+        value={text}
+        onValueChange={setText}
+      />
+    </U.DialogBody>
+  );
+}

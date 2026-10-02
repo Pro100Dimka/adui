@@ -1,7 +1,60 @@
 import React from "react";
-import { U, row, useExampleState } from "../../../dev/exampleHelpers";
+import {
+  U,
+  ExampleShowcase,
+  ExampleStateStrip,
+  ExampleVariant,
+  ExampleVariantGrid,
+  useExampleSize,
+} from "../../../dev/exampleHelpers";
+
 export default function IconButtonExample() {
-  const {notice,setNotice,alert}=useExampleState();
-  const demo=<U.ButtonGroup><U.IconButton icon="folder" label="Открыть папку" onClick={() => alert("Открыть папку")} /><U.IconButton icon="trash" label="Удалить" variant="danger" onClick={() => alert("Удалить")} /><U.IconButton icon="sliders" label="Параметры" onClick={() => alert("Параметры")} /><U.IconButton icon="more" label="Ещё" onClick={() => alert("Ещё")} /><U.IconButton icon="play" label="Воспроизвести" variant="primary" onClick={() => alert("Воспроизвести")} /></U.ButtonGroup>;
-  return <>{row(demo)}<U.Toast floating open={!!notice} message={notice} onClose={()=>setNotice("")} /></>;
+  const [size, setSize] = useExampleSize();
+  return (
+    <ExampleShowcase
+      size={size}
+      onSizeChange={setSize}
+      states={
+        <ExampleStateStrip label="Shape">
+          <U.IconButton
+            size={size}
+            round
+            variant="primary"
+            icon="play"
+            label="Round"
+          />
+        </ExampleStateStrip>
+      }
+    >
+      <ExampleVariantGrid>
+        <ExampleVariant title="Primary" description="Main icon action">
+          <U.IconButton
+            size={size}
+            variant="primary"
+            icon="play"
+            label="Primary"
+          />
+        </ExampleVariant>
+        <ExampleVariant title="Secondary" description="Standard icon action">
+          <U.IconButton
+            size={size}
+            variant="secondary"
+            icon="settings"
+            label="Secondary"
+          />
+        </ExampleVariant>
+        <ExampleVariant title="Ghost" description="Low emphasis">
+          <U.IconButton size={size} variant="ghost" icon="more" label="Ghost" />
+        </ExampleVariant>
+        <ExampleVariant title="Danger" description="Destructive action">
+          <U.IconButton
+            size={size}
+            variant="danger"
+            icon="trash"
+            label="Danger"
+          />
+        </ExampleVariant>
+      </ExampleVariantGrid>
+    </ExampleShowcase>
+  );
 }

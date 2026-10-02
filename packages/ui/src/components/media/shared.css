@@ -1,5 +1,17 @@
 /* Shared only by sibling components. */
-.ad-wave-decoration,.ad-particle-layer{width:100%;height:8.125rem;display:block;pointer-events:none;}
-.ad-transport-bar>.ad-audio-player{flex:1;}
-.ad-transport-bar>.ad-volume-control{width:12.8125rem;}
-.ad-circular-gauge>.ad-rotary-knob{display:block;}
+.ad-wave-decoration,
+.ad-particle-layer {
+  width: 100%;
+  height: 8.125rem;
+  display: block;
+  pointer-events: none;
+}
+.ad-transport-bar > .ad-audio-player {
+  flex: 1;
+}
+.ad-transport-bar > .ad-volume-control {
+  width: 12.8125rem;
+}
+.ad-circular-gauge > .ad-rotary-knob {
+  display: block;
+}

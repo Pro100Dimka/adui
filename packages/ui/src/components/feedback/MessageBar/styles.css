@@ -1,2 +1,13 @@
 /* Styles owned by MessageBar. */
-.ad-message-bar{display:flex;gap:0.6875rem;align-items:center;padding:0.75rem 0.875rem;font-size:0.75rem;line-height:1.6;border:0.0625rem solid color-mix(in srgb,var(--ad-tone,#f0c16a) 35%,transparent);border-radius:0.625rem;background:color-mix(in srgb,var(--ad-tone,#f0c16a) 8%,#09070c);}
+.ad-message-bar {
+  display: flex;
+  gap: 0.6875rem;
+  align-items: center;
+  padding: 0.75rem 0.875rem;
+  font-size: 0.75rem;
+  line-height: 1.6;
+  border: 0.0625rem solid
+    color-mix(in srgb, var(--ad-tone, #f0c16a) 35%, transparent);
+  border-radius: 0.625rem;
+  background: color-mix(in srgb, var(--ad-tone, #f0c16a) 8%, #09070c);
+}

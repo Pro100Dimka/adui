@@ -1,7 +1,41 @@
 import React from "react";
-import { U, row, useExampleState } from "../../../dev/exampleHelpers";
+import {
+  U,
+  ExampleShowcase,
+  ExampleVariant,
+  ExampleVariantGrid,
+  useExampleSize,
+} from "../../../dev/exampleHelpers";
+
 export default function ToggleButtonExample() {
-  const {value,setValue,checked,setChecked,open,setOpen,text,setText,choice,setChoice,notice,setNotice,note,setNote,history,setHistory,cursor,setCursor,anchor,alert,items}=useExampleState();
-  const demo=row(<><U.ToggleButton checked={checked} onValueChange={setChecked} icon="volume" label="Выключить звук" /><U.ToggleButton icon="wave">Прослушивание</U.ToggleButton><U.Text variant="muted">Выбрано: {String(checked)}</U.Text></>);
-  return <>{demo}<U.Toast floating open={!!notice} message={notice} onClose={()=>setNotice("")} /></>;
+  const [size, setSize] = useExampleSize();
+  return (
+    <ExampleShowcase size={size} onSizeChange={setSize}>
+      <ExampleVariantGrid>
+        <ExampleVariant title="Off" description="Unselected">
+          <U.ToggleButton size={size} icon="volume">
+            Monitoring
+          </U.ToggleButton>
+        </ExampleVariant>
+        <ExampleVariant title="On" description="Selected">
+          <U.ToggleButton size={size} defaultChecked icon="wave">
+            Monitoring
+          </U.ToggleButton>
+        </ExampleVariant>
+        <ExampleVariant title="Icon only" description="Compact toggle">
+          <U.ToggleButton
+            size={size}
+            defaultChecked
+            icon="volume"
+            label="Monitor"
+          />
+        </ExampleVariant>
+        <ExampleVariant title="Disabled" description="Unavailable">
+          <U.ToggleButton size={size} disabled icon="wave">
+            Monitoring
+          </U.ToggleButton>
+        </ExampleVariant>
+      </ExampleVariantGrid>
+    </ExampleShowcase>
+  );
 }

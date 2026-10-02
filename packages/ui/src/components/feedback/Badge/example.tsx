@@ -1,7 +1,46 @@
 import React from "react";
 import { U, row, useExampleState } from "../../../dev/exampleHelpers";
 export default function BadgeExample() {
-  const {value,setValue,checked,setChecked,open,setOpen,text,setText,choice,setChoice,notice,setNotice,note,setNote,history,setHistory,cursor,setCursor,anchor,alert,items}=useExampleState();
-  const demo=row(<><U.Badge>GPU</U.Badge><U.Badge>Вы</U.Badge><U.Badge tone="success">Готово</U.Badge><U.Badge tone="error">Ошибка</U.Badge></>);
-  return <>{demo}<U.Toast floating open={!!notice} message={notice} onClose={()=>setNotice("")} /></>;
+  const {
+    value,
+    setValue,
+    checked,
+    setChecked,
+    open,
+    setOpen,
+    text,
+    setText,
+    choice,
+    setChoice,
+    notice,
+    setNotice,
+    note,
+    setNote,
+    history,
+    setHistory,
+    cursor,
+    setCursor,
+    anchor,
+    alert,
+    items,
+  } = useExampleState();
+  const demo = row(
+    <>
+      <U.Badge>GPU</U.Badge>
+      <U.Badge>Вы</U.Badge>
+      <U.Badge tone="success">Готово</U.Badge>
+      <U.Badge tone="error">Ошибка</U.Badge>
+    </>,
+  );
+  return (
+    <>
+      {demo}
+      <U.Toast
+        floating
+        open={!!notice}
+        message={notice}
+        onClose={() => setNotice("")}
+      />
+    </>
+  );
 }

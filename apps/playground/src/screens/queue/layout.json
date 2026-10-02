@@ -4,91 +4,25 @@
   "width": 1064,
   "height": 1280,
   "source": "processing-queue-shared-style.html",
-  "borderSelectors": [
-    "[data-q-border]"
-  ],
+  "borderSelectors": ["[data-q-border]"],
   "shellSelector": ".q-modal",
   "rules": [
-    [
-      ".me-roll",
-      "PianoRollGrid",
-      null
-    ],
-    [
-      ".me-transport",
-      "TransportBar",
-      null
-    ],
-    [
-      "[data-dial]",
-      "RotaryKnob",
-      null
-    ],
-    [
-      ".pf-card",
-      "RecordingCard",
-      null
-    ],
-    [
-      ".q-card",
-      "ProcessingTaskCard",
-      null
-    ],
-    [
-      ".participant",
-      "ParticipantCard",
-      null
-    ],
-    [
-      ".pa-master",
-      "RecordingCard",
-      null
-    ],
-    [
-      ".pa-original",
-      "AudioPlayer",
-      null
-    ],
-    [
-      ".pa-recommendation",
-      "PerformanceSummary",
-      null
-    ],
-    [
-      ".card.storage",
-      "StorageSummary",
-      null
-    ],
-    [
-      ".card.diagnostics",
-      "DiagnosticsPanel",
-      null
-    ],
-    [
-      ".profile.card",
-      "ProfileCard",
-      null
-    ],
-    [
-      ".ai-model",
-      "ModelStatusCard",
-      null
-    ],
-    [
-      ".pa-metric",
-      "MetricCard",
-      null
-    ],
-    [
-      ".audio-latency",
-      "LatencyIndicator",
-      null
-    ],
-    [
-      ".modal,.pa-modal,.pf-modal,.q-modal",
-      "Dialog",
-      null
-    ],
+    [".me-roll", "PianoRollGrid", null],
+    [".me-transport", "TransportBar", null],
+    ["[data-dial]", "RotaryKnob", null],
+    [".pf-card", "RecordingCard", null],
+    [".q-card", "ProcessingTaskCard", null],
+    [".participant", "ParticipantCard", null],
+    [".pa-master", "RecordingCard", null],
+    [".pa-original", "AudioPlayer", null],
+    [".pa-recommendation", "PerformanceSummary", null],
+    [".card.storage", "StorageSummary", null],
+    [".card.diagnostics", "DiagnosticsPanel", null],
+    [".profile.card", "ProfileCard", null],
+    [".ai-model", "ModelStatusCard", null],
+    [".pa-metric", "MetricCard", null],
+    [".audio-latency", "LatencyIndicator", null],
+    [".modal,.pa-modal,.pf-modal,.q-modal", "Dialog", null],
     [
       ".dialog-box,.pa-dialog,.pf-dialog,.q-dialog,.me-dialog,dialog",
       "Dialog",
@@ -104,51 +38,15 @@
       "PageHeader",
       null
     ],
-    [
-      ".env-card-head,.ai-head",
-      "SectionHeader",
-      null
-    ],
-    [
-      ".card,.surface,.pa-panel,.me-panel",
-      "Surface",
-      null
-    ],
-    [
-      ".form",
-      "RoomConnectionForm",
-      null
-    ],
-    [
-      ".theme-picker,.themes",
-      "ThemePicker",
-      null
-    ],
-    [
-      ".theme-card",
-      "Card",
-      null
-    ],
-    [
-      ".pa-tile,.tile,.fi,.hero,.pf-header-tile",
-      "IconTile",
-      null
-    ],
-    [
-      ".avatar",
-      "Avatar",
-      null
-    ],
-    [
-      ".seal",
-      "RoleEmblem",
-      null
-    ],
-    [
-      ".signature,.pf-signature,.me-signature",
-      "BrandMark",
-      null
-    ],
+    [".env-card-head,.ai-head", "SectionHeader", null],
+    [".card,.surface,.pa-panel,.me-panel", "Surface", null],
+    [".form", "RoomConnectionForm", null],
+    [".theme-picker,.themes", "ThemePicker", null],
+    [".theme-card", "Card", null],
+    [".pa-tile,.tile,.fi,.hero,.pf-header-tile", "IconTile", null],
+    [".avatar", "Avatar", null],
+    [".seal", "RoleEmblem", null],
+    [".signature,.pf-signature,.me-signature", "BrandMark", null],
     [
       ".appearance-footer,.audio-footer,.pf-footer,.q-footer,.me-footer,.me-toolbar,.toolbar",
       "Toolbar",
@@ -159,241 +57,61 @@
       "ScrollArea",
       null
     ],
-    [
-      ".history-tabs,.tabs",
-      "Tabs",
-      null
-    ],
-    [
-      ".me-tools,.me-modes,.pf-view-switch",
-      "SegmentedControl",
-      null
-    ],
-    [
-      ".me-save-group,.pf-add",
-      "SplitButton",
-      null
-    ],
-    [
-      ".me-history",
-      "UndoRedoControls",
-      null
-    ],
-    [
-      ".me-zoom-step",
-      "ZoomControl",
-      null
-    ],
-    [
-      ".audio-gauge,.dial",
-      "CircularGauge",
-      null
-    ],
-    [
-      "[data-dial]",
-      "RotaryKnob",
-      null
-    ],
-    [
-      ".volume-control,.me-volume",
-      "VolumeControl",
-      null
-    ],
-    [
-      ".meter,.audio-mini-wave",
-      "LevelMeter",
-      null
-    ],
-    [
-      ".pa-waveform,.pf-waveform,.me-waveform",
-      "Waveform",
-      null
-    ],
-    [
-      ".me-transport",
-      "TransportBar",
-      null
-    ],
-    [
-      ".me-piano",
-      "PianoKeyboard",
-      null
-    ],
-    [
-      ".me-roll",
-      "PianoRollGrid",
-      null
-    ],
-    [
-      ".me-ruler",
-      "TimeRuler",
-      null
-    ],
-    [
-      ".me-words",
-      "LyricsLane",
-      null
-    ],
-    [
-      ".me-note",
-      "NoteBlock",
-      null
-    ],
-    [
-      ".me-playhead,.me-wave-cursor",
-      "Playhead",
-      null
-    ],
-    [
-      ".me-marquee",
-      "SelectionOverlay",
-      null
-    ],
-    [
-      ".q-stages",
-      "Steps",
-      null
-    ],
-    [
-      ".q-error-message",
-      "MessageBar",
-      null
-    ],
-    [
-      ".q-status-icon,.status-light",
-      "StatusIndicator",
-      null
-    ],
+    [".history-tabs,.tabs", "Tabs", null],
+    [".me-tools,.me-modes,.pf-view-switch", "SegmentedControl", null],
+    [".me-save-group,.pf-add", "SplitButton", null],
+    [".me-history", "UndoRedoControls", null],
+    [".me-zoom-step", "ZoomControl", null],
+    [".audio-gauge,.dial", "CircularGauge", null],
+    ["[data-dial]", "RotaryKnob", null],
+    [".volume-control,.me-volume", "VolumeControl", null],
+    [".meter,.audio-mini-wave", "LevelMeter", null],
+    [".pa-waveform,.pf-waveform,.me-waveform", "Waveform", null],
+    [".me-transport", "TransportBar", null],
+    [".me-piano", "PianoKeyboard", null],
+    [".me-roll", "PianoRollGrid", null],
+    [".me-ruler", "TimeRuler", null],
+    [".me-words", "LyricsLane", null],
+    [".me-note", "NoteBlock", null],
+    [".me-playhead,.me-wave-cursor", "Playhead", null],
+    [".me-marquee", "SelectionOverlay", null],
+    [".q-stages", "Steps", null],
+    [".q-error-message", "MessageBar", null],
+    [".q-status-icon,.status-light", "StatusIndicator", null],
     [
       ".q-track,.transfer-track,.storage-track,.pa-metric-bar",
       "ProgressBar",
       null
     ],
-    [
-      ".you-badge,.latency-quality,.env-gpu-badge",
-      "Badge",
-      null
-    ],
-    [
-      ".q-menu,.pf-popover,.me-popover,.popover",
-      "Menu",
-      null
-    ],
-    [
-      ".q-menu-item,.pf-menu-item,.me-menu-item",
-      "MenuItem",
-      null
-    ],
-    [
-      ".q-toast,.pf-toast,.me-toast,.pa-toast,.toast",
-      "Toast",
-      null
-    ],
-    [
-      ".q-empty,.pf-empty",
-      "EmptyState",
-      null
-    ],
-    [
-      "table",
-      "DataTable",
-      null
-    ],
-    [
-      "dl",
-      "KeyValueList",
-      null
-    ],
-    [
-      ".env-json-card",
-      "CollapsibleSection",
-      null
-    ],
-    [
-      ".env-json-code,pre",
-      "CodeViewer",
-      null
-    ],
-    [
-      ".pf-art-frame,.pa-cover,.cover,.me-cover,.q-cover",
-      "ArtworkFrame",
-      null
-    ],
+    [".you-badge,.latency-quality,.env-gpu-badge", "Badge", null],
+    [".q-menu,.pf-popover,.me-popover,.popover", "Menu", null],
+    [".q-menu-item,.pf-menu-item,.me-menu-item", "MenuItem", null],
+    [".q-toast,.pf-toast,.me-toast,.pa-toast,.toast", "Toast", null],
+    [".q-empty,.pf-empty", "EmptyState", null],
+    ["table", "DataTable", null],
+    ["dl", "KeyValueList", null],
+    [".env-json-card", "CollapsibleSection", null],
+    [".env-json-code,pre", "CodeViewer", null],
+    [".pf-art-frame,.pa-cover,.cover,.me-cover,.q-cover", "ArtworkFrame", null],
     [
       ".q-divider,.pf-divider,.pa-tool-divider,.divider,.storage-divider",
       "Divider",
       null
     ],
-    [
-      ".env-input-shell,.input-shell",
-      "TextField",
-      null
-    ],
-    [
-      ".select-shell,.me-select",
-      "Select",
-      null
-    ],
-    [
-      ".field,.ai-field,.env-field,.me-dialog-field",
-      "Field",
-      null
-    ],
-    [
-      ".toggle-field",
-      "Switch",
-      null
-    ],
-    [
-      "[role=\"tab\"]",
-      "Tab",
-      null
-    ],
-    [
-      "button[role=\"switch\"]",
-      "Switch",
-      null
-    ],
-    [
-      "button[aria-pressed]",
-      "ToggleButton",
-      null
-    ],
-    [
-      "input[type=\"range\"]",
-      "Slider",
-      null
-    ],
-    [
-      "input[type=\"number\"]",
-      "NumberField",
-      null
-    ],
-    [
-      "input[type=\"file\"]",
-      "FilePicker",
-      null
-    ],
-    [
-      "input[type=\"checkbox\"]",
-      "Checkbox",
-      null
-    ],
-    [
-      "input",
-      "TextField",
-      null
-    ],
-    [
-      "select",
-      "Select",
-      null
-    ],
-    [
-      "button",
-      "Button",
-      null
-    ]
+    [".env-input-shell,.input-shell", "TextField", null],
+    [".select-shell,.me-select", "Select", null],
+    [".field,.ai-field,.env-field,.me-dialog-field", "Field", null],
+    [".toggle-field", "Switch", null],
+    ["[role=\"tab\"]", "Tab", null],
+    ["button[role=\"switch\"]", "Switch", null],
+    ["button[aria-pressed]", "ToggleButton", null],
+    ["input[type=\"range\"]", "Slider", null],
+    ["input[type=\"number\"]", "NumberField", null],
+    ["input[type=\"file\"]", "FilePicker", null],
+    ["input[type=\"checkbox\"]", "Checkbox", null],
+    ["input", "TextField", null],
+    ["select", "Select", null],
+    ["button", "Button", null]
   ],
   "tree": [
     {
@@ -448,9 +166,7 @@
                         "id": "q-title",
                         "className": "q-title"
                       },
-                      "children": [
-                        "Очередь обработки"
-                      ]
+                      "children": ["Очередь обработки"]
                     },
                     {
                       "tag": "p",
@@ -477,9 +193,7 @@
                         },
                         {
                           "tag": "span",
-                          "children": [
-                            "Закрыть"
-                          ]
+                          "children": ["Закрыть"]
                         }
                       ]
                     }
@@ -542,9 +256,7 @@
                             "title": "Скрябін — Не треба",
                             "className": "q-name"
                           },
-                          "children": [
-                            "Скрябін — Не треба"
-                          ]
+                          "children": ["Скрябін — Не треба"]
                         },
                         {
                           "tag": "p",
@@ -557,27 +269,21 @@
                               "props": {
                                 "className": "q-status-label"
                               },
-                              "children": [
-                                "Завершено"
-                              ]
+                              "children": ["Завершено"]
                             },
                             {
                               "tag": "span",
                               "props": {
                                 "className": "q-dot"
                               },
-                              "children": [
-                                "•"
-                              ]
+                              "children": ["•"]
                             },
                             {
                               "tag": "span",
                               "props": {
                                 "className": "q-stage-name"
                               },
-                              "children": [
-                                "ProjectValidationPublication"
-                              ]
+                              "children": ["ProjectValidationPublication"]
                             }
                           ]
                         },
@@ -613,18 +319,14 @@
                               "props": {
                                 "className": "q-percent"
                               },
-                              "children": [
-                                "100%"
-                              ]
+                              "children": ["100%"]
                             },
                             {
                               "tag": "span",
                               "props": {
                                 "className": "q-time"
                               },
-                              "children": [
-                                "1:22"
-                              ]
+                              "children": ["1:22"]
                             }
                           ]
                         },
@@ -799,9 +501,7 @@
                                 },
                                 {
                                   "tag": "span",
-                                  "children": [
-                                    "Подготовка"
-                                  ]
+                                  "children": ["Подготовка"]
                                 }
                               ]
                             },
@@ -829,9 +529,7 @@
                                 },
                                 {
                                   "tag": "span",
-                                  "children": [
-                                    "Анализ"
-                                  ]
+                                  "children": ["Анализ"]
                                 }
                               ]
                             },
@@ -859,9 +557,7 @@
                                 },
                                 {
                                   "tag": "span",
-                                  "children": [
-                                    "Модель"
-                                  ]
+                                  "children": ["Модель"]
                                 }
                               ]
                             },
@@ -890,9 +586,7 @@
                                 },
                                 {
                                   "tag": "span",
-                                  "children": [
-                                    "Обработка"
-                                  ]
+                                  "children": ["Обработка"]
                                 }
                               ]
                             },
@@ -920,9 +614,7 @@
                                 },
                                 {
                                   "tag": "span",
-                                  "children": [
-                                    "Проверка"
-                                  ]
+                                  "children": ["Проверка"]
                                 }
                               ]
                             },
@@ -950,9 +642,7 @@
                                 },
                                 {
                                   "tag": "span",
-                                  "children": [
-                                    "Публикация"
-                                  ]
+                                  "children": ["Публикация"]
                                 }
                               ]
                             }
@@ -1023,9 +713,7 @@
                             "title": "Yuliya Savicheva & TRITIA — Каплями",
                             "className": "q-name"
                           },
-                          "children": [
-                            "Yuliya Savicheva & TRITIA — Каплями"
-                          ]
+                          "children": ["Yuliya Savicheva & TRITIA — Каплями"]
                         },
                         {
                           "tag": "p",
@@ -1038,27 +726,21 @@
                               "props": {
                                 "className": "q-status-label"
                               },
-                              "children": [
-                                "Завершено"
-                              ]
+                              "children": ["Завершено"]
                             },
                             {
                               "tag": "span",
                               "props": {
                                 "className": "q-dot"
                               },
-                              "children": [
-                                "•"
-                              ]
+                              "children": ["•"]
                             },
                             {
                               "tag": "span",
                               "props": {
                                 "className": "q-stage-name"
                               },
-                              "children": [
-                                "ProjectValidationPublication"
-                              ]
+                              "children": ["ProjectValidationPublication"]
                             }
                           ]
                         },
@@ -1094,18 +776,14 @@
                               "props": {
                                 "className": "q-percent"
                               },
-                              "children": [
-                                "100%"
-                              ]
+                              "children": ["100%"]
                             },
                             {
                               "tag": "span",
                               "props": {
                                 "className": "q-time"
                               },
-                              "children": [
-                                "1:24"
-                              ]
+                              "children": ["1:24"]
                             }
                           ]
                         },
@@ -1280,9 +958,7 @@
                                 },
                                 {
                                   "tag": "span",
-                                  "children": [
-                                    "Подготовка"
-                                  ]
+                                  "children": ["Подготовка"]
                                 }
                               ]
                             },
@@ -1310,9 +986,7 @@
                                 },
                                 {
                                   "tag": "span",
-                                  "children": [
-                                    "Анализ"
-                                  ]
+                                  "children": ["Анализ"]
                                 }
                               ]
                             },
@@ -1340,9 +1014,7 @@
                                 },
                                 {
                                   "tag": "span",
-                                  "children": [
-                                    "Модель"
-                                  ]
+                                  "children": ["Модель"]
                                 }
                               ]
                             },
@@ -1371,9 +1043,7 @@
                                 },
                                 {
                                   "tag": "span",
-                                  "children": [
-                                    "Обработка"
-                                  ]
+                                  "children": ["Обработка"]
                                 }
                               ]
                             },
@@ -1401,9 +1071,7 @@
                                 },
                                 {
                                   "tag": "span",
-                                  "children": [
-                                    "Проверка"
-                                  ]
+                                  "children": ["Проверка"]
                                 }
                               ]
                             },
@@ -1431,9 +1099,7 @@
                                 },
                                 {
                                   "tag": "span",
-                                  "children": [
-                                    "Публикация"
-                                  ]
+                                  "children": ["Публикация"]
                                 }
                               ]
                             }
@@ -1504,9 +1170,7 @@
                             "title": "Nervy — Счастье",
                             "className": "q-name"
                           },
-                          "children": [
-                            "Nervy — Счастье"
-                          ]
+                          "children": ["Nervy — Счастье"]
                         },
                         {
                           "tag": "p",
@@ -1519,27 +1183,21 @@
                               "props": {
                                 "className": "q-status-label"
                               },
-                              "children": [
-                                "Завершено"
-                              ]
+                              "children": ["Завершено"]
                             },
                             {
                               "tag": "span",
                               "props": {
                                 "className": "q-dot"
                               },
-                              "children": [
-                                "•"
-                              ]
+                              "children": ["•"]
                             },
                             {
                               "tag": "span",
                               "props": {
                                 "className": "q-stage-name"
                               },
-                              "children": [
-                                "ProjectValidationPublication"
-                              ]
+                              "children": ["ProjectValidationPublication"]
                             }
                           ]
                         },
@@ -1575,18 +1233,14 @@
                               "props": {
                                 "className": "q-percent"
                               },
-                              "children": [
-                                "100%"
-                              ]
+                              "children": ["100%"]
                             },
                             {
                               "tag": "span",
                               "props": {
                                 "className": "q-time"
                               },
-                              "children": [
-                                "0:44"
-                              ]
+                              "children": ["0:44"]
                             }
                           ]
                         },
@@ -1761,9 +1415,7 @@
                                 },
                                 {
                                   "tag": "span",
-                                  "children": [
-                                    "Подготовка"
-                                  ]
+                                  "children": ["Подготовка"]
                                 }
                               ]
                             },
@@ -1791,9 +1443,7 @@
                                 },
                                 {
                                   "tag": "span",
-                                  "children": [
-                                    "Анализ"
-                                  ]
+                                  "children": ["Анализ"]
                                 }
                               ]
                             },
@@ -1821,9 +1471,7 @@
                                 },
                                 {
                                   "tag": "span",
-                                  "children": [
-                                    "Модель"
-                                  ]
+                                  "children": ["Модель"]
                                 }
                               ]
                             },
@@ -1852,9 +1500,7 @@
                                 },
                                 {
                                   "tag": "span",
-                                  "children": [
-                                    "Обработка"
-                                  ]
+                                  "children": ["Обработка"]
                                 }
                               ]
                             },
@@ -1882,9 +1528,7 @@
                                 },
                                 {
                                   "tag": "span",
-                                  "children": [
-                                    "Проверка"
-                                  ]
+                                  "children": ["Проверка"]
                                 }
                               ]
                             },
@@ -1912,9 +1556,7 @@
                                 },
                                 {
                                   "tag": "span",
-                                  "children": [
-                                    "Публикация"
-                                  ]
+                                  "children": ["Публикация"]
                                 }
                               ]
                             }
@@ -1985,9 +1627,7 @@
                             "title": "d5f0e884-7678-4197-96c2-22f5a943e717",
                             "className": "q-name"
                           },
-                          "children": [
-                            "d5f0e884-7678-4197-96c2-22f5a943e717"
-                          ]
+                          "children": ["d5f0e884-7678-4197-96c2-22f5a943e717"]
                         },
                         {
                           "tag": "p",
@@ -2000,27 +1640,21 @@
                               "props": {
                                 "className": "q-status-label"
                               },
-                              "children": [
-                                "Обработка"
-                              ]
+                              "children": ["Обработка"]
                             },
                             {
                               "tag": "span",
                               "props": {
                                 "className": "q-dot"
                               },
-                              "children": [
-                                "•"
-                              ]
+                              "children": ["•"]
                             },
                             {
                               "tag": "span",
                               "props": {
                                 "className": "q-stage-name"
                               },
-                              "children": [
-                                "Kaggle"
-                              ]
+                              "children": ["Kaggle"]
                             }
                           ]
                         },
@@ -2056,18 +1690,14 @@
                               "props": {
                                 "className": "q-percent"
                               },
-                              "children": [
-                                "56%"
-                              ]
+                              "children": ["56%"]
                             },
                             {
                               "tag": "span",
                               "props": {
                                 "className": "q-time"
                               },
-                              "children": [
-                                "0:54"
-                              ]
+                              "children": ["0:54"]
                             }
                           ]
                         },
@@ -2241,9 +1871,7 @@
                                 },
                                 {
                                   "tag": "span",
-                                  "children": [
-                                    "Подготовка"
-                                  ]
+                                  "children": ["Подготовка"]
                                 }
                               ]
                             },
@@ -2271,9 +1899,7 @@
                                 },
                                 {
                                   "tag": "span",
-                                  "children": [
-                                    "Анализ"
-                                  ]
+                                  "children": ["Анализ"]
                                 }
                               ]
                             },
@@ -2301,9 +1927,7 @@
                                 },
                                 {
                                   "tag": "span",
-                                  "children": [
-                                    "Модель"
-                                  ]
+                                  "children": ["Модель"]
                                 }
                               ]
                             },
@@ -2332,9 +1956,7 @@
                                 },
                                 {
                                   "tag": "span",
-                                  "children": [
-                                    "Обработка"
-                                  ]
+                                  "children": ["Обработка"]
                                 }
                               ]
                             },
@@ -2362,9 +1984,7 @@
                                 },
                                 {
                                   "tag": "span",
-                                  "children": [
-                                    "Проверка"
-                                  ]
+                                  "children": ["Проверка"]
                                 }
                               ]
                             },
@@ -2392,9 +2012,7 @@
                                 },
                                 {
                                   "tag": "span",
-                                  "children": [
-                                    "Публикация"
-                                  ]
+                                  "children": ["Публикация"]
                                 }
                               ]
                             }
@@ -2465,9 +2083,7 @@
                             "title": "5a1df07d-ce6b-4303-b1d3-f00d5f9bde37",
                             "className": "q-name"
                           },
-                          "children": [
-                            "5a1df07d-ce6b-4303-b1d3-f00d5f9bde37"
-                          ]
+                          "children": ["5a1df07d-ce6b-4303-b1d3-f00d5f9bde37"]
                         },
                         {
                           "tag": "p",
@@ -2480,27 +2096,21 @@
                               "props": {
                                 "className": "q-status-label"
                               },
-                              "children": [
-                                "В очереди"
-                              ]
+                              "children": ["В очереди"]
                             },
                             {
                               "tag": "span",
                               "props": {
                                 "className": "q-dot"
                               },
-                              "children": [
-                                "•"
-                              ]
+                              "children": ["•"]
                             },
                             {
                               "tag": "span",
                               "props": {
                                 "className": "q-stage-name"
                               },
-                              "children": [
-                                "ProjectValidationPublication"
-                              ]
+                              "children": ["ProjectValidationPublication"]
                             }
                           ]
                         },
@@ -2536,18 +2146,14 @@
                               "props": {
                                 "className": "q-percent"
                               },
-                              "children": [
-                                "0%"
-                              ]
+                              "children": ["0%"]
                             },
                             {
                               "tag": "span",
                               "props": {
                                 "className": "q-time"
                               },
-                              "children": [
-                                "0:00"
-                              ]
+                              "children": ["0:00"]
                             }
                           ]
                         },
@@ -2722,9 +2328,7 @@
                                 },
                                 {
                                   "tag": "span",
-                                  "children": [
-                                    "Подготовка"
-                                  ]
+                                  "children": ["Подготовка"]
                                 }
                               ]
                             },
@@ -2752,9 +2356,7 @@
                                 },
                                 {
                                   "tag": "span",
-                                  "children": [
-                                    "Анализ"
-                                  ]
+                                  "children": ["Анализ"]
                                 }
                               ]
                             },
@@ -2782,9 +2384,7 @@
                                 },
                                 {
                                   "tag": "span",
-                                  "children": [
-                                    "Модель"
-                                  ]
+                                  "children": ["Модель"]
                                 }
                               ]
                             },
@@ -2813,9 +2413,7 @@
                                 },
                                 {
                                   "tag": "span",
-                                  "children": [
-                                    "Обработка"
-                                  ]
+                                  "children": ["Обработка"]
                                 }
                               ]
                             },
@@ -2843,9 +2441,7 @@
                                 },
                                 {
                                   "tag": "span",
-                                  "children": [
-                                    "Проверка"
-                                  ]
+                                  "children": ["Проверка"]
                                 }
                               ]
                             },
@@ -2873,9 +2469,7 @@
                                 },
                                 {
                                   "tag": "span",
-                                  "children": [
-                                    "Публикация"
-                                  ]
+                                  "children": ["Публикация"]
                                 }
                               ]
                             }
@@ -2946,9 +2540,7 @@
                             "title": "5a1df07d-ce6b-4303-b1d3-f00d5f9bde37",
                             "className": "q-name"
                           },
-                          "children": [
-                            "5a1df07d-ce6b-4303-b1d3-f00d5f9bde37"
-                          ]
+                          "children": ["5a1df07d-ce6b-4303-b1d3-f00d5f9bde37"]
                         },
                         {
                           "tag": "p",
@@ -2961,27 +2553,21 @@
                               "props": {
                                 "className": "q-status-label"
                               },
-                              "children": [
-                                "Ошибка"
-                              ]
+                              "children": ["Ошибка"]
                             },
                             {
                               "tag": "span",
                               "props": {
                                 "className": "q-dot"
                               },
-                              "children": [
-                                "•"
-                              ]
+                              "children": ["•"]
                             },
                             {
                               "tag": "span",
                               "props": {
                                 "className": "q-stage-name"
                               },
-                              "children": [
-                                "Queued"
-                              ]
+                              "children": ["Queued"]
                             }
                           ]
                         },
@@ -3017,18 +2603,14 @@
                               "props": {
                                 "className": "q-percent"
                               },
-                              "children": [
-                                "0%"
-                              ]
+                              "children": ["0%"]
                             },
                             {
                               "tag": "span",
                               "props": {
                                 "className": "q-time"
                               },
-                              "children": [
-                                "0:00"
-                              ]
+                              "children": ["0:00"]
                             }
                           ]
                         },
@@ -3204,9 +2786,7 @@
                                 },
                                 {
                                   "tag": "span",
-                                  "children": [
-                                    "Подготовка"
-                                  ]
+                                  "children": ["Подготовка"]
                                 }
                               ]
                             },
@@ -3234,9 +2814,7 @@
                                 },
                                 {
                                   "tag": "span",
-                                  "children": [
-                                    "Анализ"
-                                  ]
+                                  "children": ["Анализ"]
                                 }
                               ]
                             },
@@ -3264,9 +2842,7 @@
                                 },
                                 {
                                   "tag": "span",
-                                  "children": [
-                                    "Модель"
-                                  ]
+                                  "children": ["Модель"]
                                 }
                               ]
                             },
@@ -3295,9 +2871,7 @@
                                 },
                                 {
                                   "tag": "span",
-                                  "children": [
-                                    "Обработка"
-                                  ]
+                                  "children": ["Обработка"]
                                 }
                               ]
                             },
@@ -3325,9 +2899,7 @@
                                 },
                                 {
                                   "tag": "span",
-                                  "children": [
-                                    "Проверка"
-                                  ]
+                                  "children": ["Проверка"]
                                 }
                               ]
                             },
@@ -3355,9 +2927,7 @@
                                 },
                                 {
                                   "tag": "span",
-                                  "children": [
-                                    "Публикация"
-                                  ]
+                                  "children": ["Публикация"]
                                 }
                               ]
                             }
@@ -3430,9 +3000,7 @@
                             "title": "cffbbeab-3edc-49e9-8810-3c149a888723",
                             "className": "q-name"
                           },
-                          "children": [
-                            "cffbbeab-3edc-49e9-8810-3c149a888723"
-                          ]
+                          "children": ["cffbbeab-3edc-49e9-8810-3c149a888723"]
                         },
                         {
                           "tag": "p",
@@ -3445,27 +3013,21 @@
                               "props": {
                                 "className": "q-status-label"
                               },
-                              "children": [
-                                "Завершено"
-                              ]
+                              "children": ["Завершено"]
                             },
                             {
                               "tag": "span",
                               "props": {
                                 "className": "q-dot"
                               },
-                              "children": [
-                                "•"
-                              ]
+                              "children": ["•"]
                             },
                             {
                               "tag": "span",
                               "props": {
                                 "className": "q-stage-name"
                               },
-                              "children": [
-                                "ProjectValidationPublication"
-                              ]
+                              "children": ["ProjectValidationPublication"]
                             }
                           ]
                         },
@@ -3501,18 +3063,14 @@
                               "props": {
                                 "className": "q-percent"
                               },
-                              "children": [
-                                "100%"
-                              ]
+                              "children": ["100%"]
                             },
                             {
                               "tag": "span",
                               "props": {
                                 "className": "q-time"
                               },
-                              "children": [
-                                "1:10"
-                              ]
+                              "children": ["1:10"]
                             }
                           ]
                         },
@@ -3687,9 +3245,7 @@
                                 },
                                 {
                                   "tag": "span",
-                                  "children": [
-                                    "Подготовка"
-                                  ]
+                                  "children": ["Подготовка"]
                                 }
                               ]
                             },
@@ -3717,9 +3273,7 @@
                                 },
                                 {
                                   "tag": "span",
-                                  "children": [
-                                    "Анализ"
-                                  ]
+                                  "children": ["Анализ"]
                                 }
                               ]
                             },
@@ -3747,9 +3301,7 @@
                                 },
                                 {
                                   "tag": "span",
-                                  "children": [
-                                    "Модель"
-                                  ]
+                                  "children": ["Модель"]
                                 }
                               ]
                             },
@@ -3778,9 +3330,7 @@
                                 },
                                 {
                                   "tag": "span",
-                                  "children": [
-                                    "Обработка"
-                                  ]
+                                  "children": ["Обработка"]
                                 }
                               ]
                             },
@@ -3808,9 +3358,7 @@
                                 },
                                 {
                                   "tag": "span",
-                                  "children": [
-                                    "Проверка"
-                                  ]
+                                  "children": ["Проверка"]
                                 }
                               ]
                             },
@@ -3838,9 +3386,7 @@
                                 },
                                 {
                                   "tag": "span",
-                                  "children": [
-                                    "Публикация"
-                                  ]
+                                  "children": ["Публикация"]
                                 }
                               ]
                             }
@@ -3911,9 +3457,7 @@
                             "title": "d4e482fa-4d6d-404f-a8c4-f7d9cddafce0",
                             "className": "q-name"
                           },
-                          "children": [
-                            "d4e482fa-4d6d-404f-a8c4-f7d9cddafce0"
-                          ]
+                          "children": ["d4e482fa-4d6d-404f-a8c4-f7d9cddafce0"]
                         },
                         {
                           "tag": "p",
@@ -3926,27 +3470,21 @@
                               "props": {
                                 "className": "q-status-label"
                               },
-                              "children": [
-                                "В очереди"
-                              ]
+                              "children": ["В очереди"]
                             },
                             {
                               "tag": "span",
                               "props": {
                                 "className": "q-dot"
                               },
-                              "children": [
-                                "•"
-                              ]
+                              "children": ["•"]
                             },
                             {
                               "tag": "span",
                               "props": {
                                 "className": "q-stage-name"
                               },
-                              "children": [
-                                "ProjectValidationPublication"
-                              ]
+                              "children": ["ProjectValidationPublication"]
                             }
                           ]
                         },
@@ -3982,18 +3520,14 @@
                               "props": {
                                 "className": "q-percent"
                               },
-                              "children": [
-                                "0%"
-                              ]
+                              "children": ["0%"]
                             },
                             {
                               "tag": "span",
                               "props": {
                                 "className": "q-time"
                               },
-                              "children": [
-                                "0:00"
-                              ]
+                              "children": ["0:00"]
                             }
                           ]
                         },
@@ -4168,9 +3702,7 @@
                                 },
                                 {
                                   "tag": "span",
-                                  "children": [
-                                    "Подготовка"
-                                  ]
+                                  "children": ["Подготовка"]
                                 }
                               ]
                             },
@@ -4198,9 +3730,7 @@
                                 },
                                 {
                                   "tag": "span",
-                                  "children": [
-                                    "Анализ"
-                                  ]
+                                  "children": ["Анализ"]
                                 }
                               ]
                             },
@@ -4228,9 +3758,7 @@
                                 },
                                 {
                                   "tag": "span",
-                                  "children": [
-                                    "Модель"
-                                  ]
+                                  "children": ["Модель"]
                                 }
                               ]
                             },
@@ -4259,9 +3787,7 @@
                                 },
                                 {
                                   "tag": "span",
-                                  "children": [
-                                    "Обработка"
-                                  ]
+                                  "children": ["Обработка"]
                                 }
                               ]
                             },
@@ -4289,9 +3815,7 @@
                                 },
                                 {
                                   "tag": "span",
-                                  "children": [
-                                    "Проверка"
-                                  ]
+                                  "children": ["Проверка"]
                                 }
                               ]
                             },
@@ -4319,9 +3843,7 @@
                                 },
                                 {
                                   "tag": "span",
-                                  "children": [
-                                    "Публикация"
-                                  ]
+                                  "children": ["Публикация"]
                                 }
                               ]
                             }
@@ -4354,9 +3876,7 @@
                         "hidden": true,
                         "className": "q-empty"
                       },
-                      "children": [
-                        "Очередь пуста"
-                      ]
+                      "children": ["Очередь пуста"]
                     },
                     {
                       "tag": "div",
@@ -4420,9 +3940,7 @@
                       "props": {
                         "className": "q-storage-title"
                       },
-                      "children": [
-                        "Свободно на диске"
-                      ]
+                      "children": ["Свободно на диске"]
                     },
                     {
                       "tag": "div",
@@ -4441,9 +3959,7 @@
                       "props": {
                         "className": "q-storage-value"
                       },
-                      "children": [
-                        "42.7 GB / 232 GB"
-                      ]
+                      "children": ["42.7 GB / 232 GB"]
                     },
                     {
                       "tag": "button",
@@ -4460,9 +3976,7 @@
                         },
                         {
                           "tag": "span",
-                          "children": [
-                            "Очистить завершённые"
-                          ]
+                          "children": ["Очистить завершённые"]
                         }
                       ]
                     }
@@ -4526,9 +4040,7 @@
                                 "type": "button",
                                 "className": "q-glass"
                               },
-                              "children": [
-                                "Отмена"
-                              ]
+                              "children": ["Отмена"]
                             },
                             {
                               "tag": "button",
@@ -4538,9 +4050,7 @@
                                 "type": "button",
                                 "className": "q-glass q-ruby"
                               },
-                              "children": [
-                                "Подтвердить"
-                              ]
+                              "children": ["Подтвердить"]
                             }
                           ]
                         }
@@ -4570,9 +4080,7 @@
                 "hidden": true,
                 "className": "q-glass q-ruby q-reopen"
               },
-              "children": [
-                "Открыть очередь обработки"
-              ]
+              "children": ["Открыть очередь обработки"]
             }
           ]
         }

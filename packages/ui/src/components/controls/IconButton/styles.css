@@ -1,3 +1,6 @@
 /* Styles owned by IconButton. */
-.ad-icon-button{width:var(--ad-control-height);padding:0;flex:none;}
-
+.ad-icon-button {
+  width: var(--ad-control-height);
+  padding: 0;
+  flex: none;
+}

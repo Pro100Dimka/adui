@@ -14,10 +14,16 @@ export default function GridExample() {
 
       <U.Grid columns={12} gap={3}>
         <U.Grid span={{ base: "full", md: 8 }}>
-          <U.Card title="Основная область" description="8 из 12 колонок · растягивается правильно" />
+          <U.Card
+            title="Основная область"
+            description="8 из 12 колонок · растягивается правильно"
+          />
         </U.Grid>
         <U.Grid span={{ base: "full", md: 4 }}>
-          <U.Card title="Боковая область" description="4 из 12 колонок · растягивается правильно" />
+          <U.Card
+            title="Боковая область"
+            description="4 из 12 колонок · растягивается правильно"
+          />
         </U.Grid>
       </U.Grid>
 

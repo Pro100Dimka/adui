@@ -1,2 +1,7 @@
 /* Styles owned by DialogActions. */
-.ad-dialog-actions{display:flex;justify-content:flex-end;gap:0.625rem;align-items:center;}
+.ad-dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.625rem;
+  align-items: center;
+}

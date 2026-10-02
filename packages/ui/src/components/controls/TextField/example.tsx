@@ -1,16 +1,46 @@
 import React from "react";
-import { U, useExampleState } from "../../../dev/exampleHelpers";
+import {
+  U,
+  ExampleShowcase,
+  ExampleVariant,
+  ExampleVariantGrid,
+  useExampleSize,
+} from "../../../dev/exampleHelpers";
 
 export default function TextFieldExample() {
-  const { text, setText, alert } = useExampleState();
-  return <U.Stack gap={3}>
-    <U.Grid minChildWidth="11rem" gap={2}>
-      <U.TextField label="Обычное" value={text} onValueChange={setText} />
-      <U.TextField label="С adornments" value={text} onValueChange={setText} startAdornment={<U.Icon name="search" />} endAdornment={<U.IconButton size="xs" icon="copy" label="Копировать" onClick={() => { void U.copyText(text); alert("Скопировано"); }} />} />
-      <U.TextField label="Read only" readOnly value="D:/Music/song.wav" endAdornment={<U.IconButton size="xs" icon="folder" label="Открыть" />} />
-    </U.Grid>
-    <U.Grid minChildWidth="8rem" gap={2}>
-      {(["xs", "sm", "md", "lg"] as const).map(size => <U.TextField key={size} size={size} aria-label={`TextField ${size}`} placeholder={size.toUpperCase()} />)}
-    </U.Grid>
-  </U.Stack>;
+  const [size, setSize] = useExampleSize();
+  return (
+    <ExampleShowcase size={size} onSizeChange={setSize}>
+      <ExampleVariantGrid>
+        <ExampleVariant title="Default" description="Standard text input">
+          <U.TextField size={size} label="Name" placeholder="Enter text" />
+        </ExampleVariant>
+        <ExampleVariant title="Adornments" description="Start and end content">
+          <U.TextField
+            size={size}
+            label="Search"
+            placeholder="Search…"
+            startAdornment={<U.Icon name="search" />}
+            endAdornment={<U.Icon name="copy" />}
+          />
+        </ExampleVariant>
+        <ExampleVariant title="Read only" description="Visible but immutable">
+          <U.TextField
+            size={size}
+            label="Path"
+            readOnly
+            value="D:/Music/song.wav"
+          />
+        </ExampleVariant>
+        <ExampleVariant title="Error" description="Validation state">
+          <U.TextField
+            size={size}
+            label="Email"
+            error="Invalid value"
+            defaultValue="wrong@"
+          />
+        </ExampleVariant>
+      </ExampleVariantGrid>
+    </ExampleShowcase>
+  );
 }

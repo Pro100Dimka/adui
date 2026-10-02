@@ -11,7 +11,7 @@
 @import "./components/controls/Autocomplete/styles.css";
 @import "./components/controls/Button/styles.css";
 @import "./components/controls/Checkbox/styles.css";
-@import "./components/controls/Field/styles.css";
+@import "./components/controls/InputBase/styles.css";
 @import "./components/controls/FilePicker/styles.css";
 @import "./components/controls/IconButton/styles.css";
 @import "./components/controls/NumberField/styles.css";

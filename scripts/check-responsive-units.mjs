@@ -4,7 +4,8 @@ import path from "node:path";
 const roots = ["packages", "apps"];
 const extensions = new Set([".css", ".ts", ".tsx", ".js", ".jsx", ".html"]);
 const ignored = new Set(["node_modules", "dist", "release", ".git"]);
-const unitPattern = /(?<![\w.-])-?(?:\d+(?:\.\d+)?|\.\d+)px\b|\}px\b|["']px["']/g;
+const unitPattern =
+  /(?<![\w.-])-?(?:\d+(?:\.\d+)?|\.\d+)px\b|\}px\b|["']px["']/g;
 const failures = [];
 
 function walk(directory) {
@@ -18,7 +19,8 @@ function walk(directory) {
       const lines = text.split(/\r?\n/);
       lines.forEach((line, index) => {
         unitPattern.lastIndex = 0;
-        if (unitPattern.test(line)) failures.push(`${file}:${index + 1}: ${line.trim()}`);
+        if (unitPattern.test(line))
+          failures.push(`${file}:${index + 1}: ${line.trim()}`);
       });
     }
   }
@@ -26,7 +28,9 @@ function walk(directory) {
 
 roots.forEach(walk);
 if (failures.length) {
-  console.error("Fixed pixel units are not allowed. Use rem/em/%/vw/vh/dvw/dvh/clamp/min/max instead:\n");
+  console.error(
+    "Fixed pixel units are not allowed. Use rem/em/%/vw/vh/dvw/dvh/clamp/min/max instead:\n",
+  );
   console.error(failures.join("\n"));
   process.exit(1);
 }

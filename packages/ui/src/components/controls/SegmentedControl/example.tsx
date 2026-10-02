@@ -1,7 +1,18 @@
 import React from "react";
-import { U, row, useExampleState } from "../../../dev/exampleHelpers";
+import {
+  U,
+  ExampleShowcase,
+  ExampleVariant,
+  useExampleSize,
+} from "../../../dev/exampleHelpers";
+
 export default function SegmentedControlExample() {
-  const {value,setValue,checked,setChecked,open,setOpen,text,setText,choice,setChoice,notice,setNotice,note,setNote,history,setHistory,cursor,setCursor,anchor,alert,items}=useExampleState();
-  const demo=<U.SegmentedControl />;
-  return <>{demo}<U.Toast floating open={!!notice} message={notice} onClose={()=>setNotice("")} /></>;
+  const [size, setSize] = useExampleSize();
+  return (
+    <ExampleShowcase size={size} onSizeChange={setSize}>
+      <ExampleVariant title="Default" description="Switch between views" wide>
+        <U.SegmentedControl size={size} />
+      </ExampleVariant>
+    </ExampleShowcase>
+  );
 }

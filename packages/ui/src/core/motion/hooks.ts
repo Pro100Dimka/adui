@@ -1,11 +1,15 @@
 import React, { useLayoutEffect, useRef } from "react";
-import { attachBorder, attachTabShape, createMotion } from "../motion-engine.js";
+import {
+  attachBorder,
+  attachTabShape,
+  createMotion,
+} from "../motion-engine.js";
 import { useMotion } from "../providers/context";
 
 /** One scheduler in the engine; every observer and subscription is detached on unmount. */
 export function useDecoration(
   ref: React.RefObject<Element | null>,
-  paint: (time: number) => void
+  paint: (time: number) => void,
 ) {
   const enabled = useMotion();
   const painter = useRef(paint);
@@ -18,7 +22,9 @@ export function useDecoration(
 
     const controller = createMotion(node);
     scope.current = controller;
-    const unsubscribe = controller.add(node, (time: number) => painter.current(time));
+    const unsubscribe = controller.add(node, (time: number) =>
+      painter.current(time),
+    );
 
     return () => {
       unsubscribe();
@@ -36,7 +42,7 @@ export function useBorder(
   ref: React.RefObject<HTMLElement | null>,
   enabled = true,
   shell = false,
-  round = false
+  round = false,
 ) {
   const motion = useMotion();
   const scope = useRef<ReturnType<typeof createMotion> | null>(null);

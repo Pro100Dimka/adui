@@ -1,9 +1,16 @@
 import React, { Children, Fragment } from "react";
-import type { CSSProperties, ElementType, HTMLAttributes, ReactNode } from "react";
+import type {
+  CSSProperties,
+  ElementType,
+  HTMLAttributes,
+  ReactNode,
+} from "react";
 
-export type StackDirection = "row" | "column" | "row-reverse" | "column-reverse";
+export type StackDirection =
+  "row" | "column" | "row-reverse" | "column-reverse";
 export type StackAlign = "start" | "center" | "end" | "stretch" | "baseline";
-export type StackJustify = "start" | "center" | "end" | "between" | "around" | "evenly";
+export type StackJustify =
+  "start" | "center" | "end" | "between" | "around" | "evenly";
 export type StackWrap = "nowrap" | "wrap" | "wrap-reverse";
 export type StackBreakpoint = "base" | "sm" | "md" | "lg" | "xl";
 export type StackResponsive<T> = T | Partial<Record<StackBreakpoint, T>>;
@@ -26,7 +33,7 @@ const alignMap: Record<StackAlign, string> = {
   center: "center",
   end: "flex-end",
   stretch: "stretch",
-  baseline: "baseline"
+  baseline: "baseline",
 };
 const justifyMap: Record<StackJustify, string> = {
   start: "flex-start",
@@ -34,13 +41,15 @@ const justifyMap: Record<StackJustify, string> = {
   end: "flex-end",
   between: "space-between",
   around: "space-around",
-  evenly: "space-evenly"
+  evenly: "space-evenly",
 };
 
-function responsive<T>(value: StackResponsive<T> | undefined): Partial<Record<StackBreakpoint, T>> {
+function responsive<T>(
+  value: StackResponsive<T> | undefined,
+): Partial<Record<StackBreakpoint, T>> {
   if (value == null) return {};
   return typeof value === "object" && !Array.isArray(value)
-    ? value as Partial<Record<StackBreakpoint, T>>
+    ? (value as Partial<Record<StackBreakpoint, T>>)
     : { base: value as T };
 }
 
@@ -53,18 +62,21 @@ function spacing(value: StackSpacing): string {
 function vars<T>(
   prefix: string,
   value: StackResponsive<T> | undefined,
-  format: (item: T) => string = String
+  format: (item: T) => string = String,
 ): CSSProperties {
   const result: Record<string, string> = {};
   const values = responsive(value);
   for (const bp of BREAKPOINTS) {
     const item = values[bp];
-    if (item != null) result[`--ad-stack-${prefix}${bp === "base" ? "" : `-${bp}`}`] = format(item);
+    if (item != null)
+      result[`--ad-stack-${prefix}${bp === "base" ? "" : `-${bp}`}`] =
+        format(item);
   }
   return result as CSSProperties;
 }
 
-const wrapValue = (value: StackWrap | boolean) => value === true ? "wrap" : value === false ? "nowrap" : value;
+const wrapValue = (value: StackWrap | boolean) =>
+  value === true ? "wrap" : value === false ? "nowrap" : value;
 
 export function Stack({
   as: Component = "div",
@@ -81,28 +93,35 @@ export function Stack({
   ...props
 }: StackProps) {
   const items = Children.toArray(children);
-  const content = divider == null
-    ? children
-    : items.map((child, index) => (
-        <Fragment key={index}>
-          {index > 0 && <span className="ad-stack__divider" aria-hidden="true">{divider}</span>}
-          {child}
-        </Fragment>
-      ));
+  const content =
+    divider == null
+      ? children
+      : items.map((child, index) => (
+          <Fragment key={index}>
+            {index > 0 && (
+              <span className="ad-stack__divider" aria-hidden="true">
+                {divider}
+              </span>
+            )}
+            {child}
+          </Fragment>
+        ));
 
   const layoutStyle: CSSProperties = {
     ...vars("direction", direction),
     ...vars("gap", gap, spacing),
-    ...vars("align", align, value => alignMap[value]),
-    ...vars("justify", justify, value => justifyMap[value]),
+    ...vars("align", align, (value) => alignMap[value]),
+    ...vars("justify", justify, (value) => justifyMap[value]),
     ...vars("wrap", wrap, wrapValue),
-    ...style
+    ...style,
   };
 
   return (
     <Component
       {...props}
-      className={["ad-stack", inline && "ad-stack--inline", className].filter(Boolean).join(" ")}
+      className={["ad-stack", inline && "ad-stack--inline", className]
+        .filter(Boolean)
+        .join(" ")}
       style={layoutStyle}
     >
       {content}

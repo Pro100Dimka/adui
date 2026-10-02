@@ -1,4 +1,39 @@
-.ad-field{display:flex;align-items:center;gap:var(--ad-size-gap);min-width:0;height:var(--ad-size-h);padding:0 var(--ad-size-pad-x);border:0.0625rem solid transparent;border-radius:var(--ad-size-radius);background:var(--ad-surface-input);box-shadow:var(--ad-shadow-input);font-size:var(--ad-size-font);}
-.ad-field:focus-within{border-color:#ff95b3;box-shadow:0 0 0 0.125rem #ff4a701d,0 0 0.9375rem #ff214b2b,inset 0 0.0625rem 0.125rem #ffe2ed22;}
-.ad-field>input{flex:1;min-width:0;width:100%;height:100%;padding:0;border:0;background:transparent;outline:0;color:var(--ad-text);font:inherit;}
-.ad-field-adornment{display:inline-flex;align-items:center;justify-content:center;flex:none;color:var(--ad-muted);}
+.ad-field {
+  display: flex;
+  align-items: center;
+  gap: var(--ad-size-gap);
+  min-width: 0;
+  height: var(--ad-size-h);
+  padding: 0 var(--ad-size-pad-x);
+  border: 0.0625rem solid transparent;
+  border-radius: var(--ad-size-radius);
+  background: var(--ad-surface-input);
+  box-shadow: var(--ad-shadow-input);
+  font-size: var(--ad-size-font);
+}
+.ad-field:focus-within {
+  border-color: #ff95b3;
+  box-shadow:
+    0 0 0 0.125rem #ff4a701d,
+    0 0 0.9375rem #ff214b2b,
+    inset 0 0.0625rem 0.125rem #ffe2ed22;
+}
+.ad-field > input {
+  flex: 1;
+  min-width: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  outline: 0;
+  color: var(--ad-text);
+  font: inherit;
+}
+.ad-field-adornment {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  color: var(--ad-muted);
+}

@@ -1,2 +1,11 @@
 /* Styles owned by Avatar. */
-.ad-avatar{width:4.0625rem;height:4.0625rem;display:grid;place-items:center;flex:none;border-radius:50%;font-size:1.6875rem;font-weight:650;}
+.ad-avatar {
+  width: 4.0625rem;
+  height: 4.0625rem;
+  display: grid;
+  place-items: center;
+  flex: none;
+  border-radius: 50%;
+  font-size: 1.6875rem;
+  font-weight: 650;
+}

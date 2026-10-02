@@ -1,3 +1,30 @@
 import React from "react";
-import { U, useExampleState } from "../../../dev/exampleHelpers";
-export default function SliderExample(){const {value,setValue,notice,setNotice}=useExampleState();const demo=<U.Grid minChildWidth="9rem" gap={2}>{(["xs","sm","md","lg"] as const).map(size=><U.Stack key={size} gap={1}><U.Typography variant="caption" tone="muted">{size.toUpperCase()}</U.Typography><U.Slider size={size} value={value} onValueChange={setValue} label={`Громкость ${size}`}/></U.Stack>)}</U.Grid>;return <>{demo}<U.Toast floating open={!!notice} message={notice} onClose={()=>setNotice("")}/></>}
+import {
+  U,
+  ExampleShowcase,
+  ExampleVariant,
+  ExampleVariantGrid,
+  useExampleSize,
+} from "../../../dev/exampleHelpers";
+
+export default function SliderExample() {
+  const [size, setSize] = useExampleSize();
+  return (
+    <ExampleShowcase size={size} onSizeChange={setSize}>
+      <ExampleVariantGrid>
+        <ExampleVariant title="Low" description="25 percent">
+          <U.Slider size={size} defaultValue={25} label="Low" />
+        </ExampleVariant>
+        <ExampleVariant title="Middle" description="50 percent">
+          <U.Slider size={size} defaultValue={50} label="Middle" />
+        </ExampleVariant>
+        <ExampleVariant title="High" description="80 percent">
+          <U.Slider size={size} defaultValue={80} label="High" />
+        </ExampleVariant>
+        <ExampleVariant title="Disabled" description="Unavailable">
+          <U.Slider size={size} disabled defaultValue={45} label="Disabled" />
+        </ExampleVariant>
+      </ExampleVariantGrid>
+    </ExampleShowcase>
+  );
+}

@@ -1,3 +1,12 @@
 /* Styles owned by Switch. */
-.ad-switch input:checked+.ad-toggle-track{border-color:#ff476e;background:linear-gradient(90deg,#471223,#931335 70%,#d51b4d);box-shadow:0 0 0.75rem #ff254532;}
-.ad-switch input:checked+.ad-toggle-track i{transform:translateX(calc(var(--ad-track-w) - var(--ad-track-h)));background:linear-gradient(145deg,#fff8fa,#ffcfdd);border-color:#ffedf1;box-shadow:0 0 0.625rem #ff446650;}
+.ad-switch input:checked + .ad-toggle-track {
+  border-color: #ff476e;
+  background: linear-gradient(90deg, #471223, #931335 70%, #d51b4d);
+  box-shadow: 0 0 0.75rem #ff254532;
+}
+.ad-switch input:checked + .ad-toggle-track i {
+  transform: translateX(calc(var(--ad-track-w) - var(--ad-track-h)));
+  background: linear-gradient(145deg, #fff8fa, #ffcfdd);
+  border-color: #ffedf1;
+  box-shadow: 0 0 0.625rem #ff446650;
+}

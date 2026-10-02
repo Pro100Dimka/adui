@@ -5,4 +5,8 @@
 export { SvgAsset } from "../../../../packages/ui/src/core/artwork";
 export { domProps } from "../../../../packages/ui/src/core/base";
 export type { ReferenceProps } from "../../../../packages/ui/src/core/base";
-export { createMotion, attachBorder, attachTabShape } from "../../../../packages/ui/src/core/motion-engine.js";
+export {
+  createMotion,
+  attachBorder,
+  attachTabShape,
+} from "../../../../packages/ui/src/core/motion-engine.js";

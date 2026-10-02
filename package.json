@@ -32,7 +32,8 @@
     "check:grid": "node scripts/check-grid-contracts.mjs",
     "check:sizes": "node scripts/check-control-sizes.mjs",
     "check:buttons": "node scripts/check-buttons.mjs",
-    "check:primitives": "node scripts/check-primitives.mjs"
+    "check:primitives": "node scripts/check-primitives.mjs",
+    "check:examples": "node scripts/check-example-dedup.mjs"
   },
   "engines": {
     "node": ">=20"

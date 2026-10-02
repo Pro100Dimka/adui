@@ -1,0 +1,99 @@
+/* Shared visual/input foundation for text, select, autocomplete and textarea controls. */
+.ad-input-base {
+  display: flex;
+  align-items: center;
+  gap: var(--ad-size-gap);
+  min-width: 0;
+  width: 100%;
+  height: var(--ad-size-h);
+  padding: 0 var(--ad-size-pad-x);
+  border: 0.0625rem solid transparent;
+  border-radius: var(--ad-size-radius);
+  background: var(--ad-surface-input);
+  box-shadow: var(--ad-shadow-input);
+  font-size: var(--ad-size-font);
+  color: var(--ad-text);
+  transition:
+    border-color 0.18s,
+    box-shadow 0.18s,
+    filter 0.18s,
+    background 0.18s;
+}
+.ad-input-base:hover:not([data-disabled]) {
+  border-color: #ff78983b;
+  filter: brightness(1.045);
+}
+.ad-input-base:focus-within,
+.ad-input-base[data-open="true"] {
+  border-color: #ff95b3;
+  box-shadow:
+    0 0 0 0.125rem #ff4a701d,
+    0 0 0.9375rem #ff214b2b,
+    inset 0 0.0625rem 0.125rem #ffe2ed22;
+}
+.ad-input-base[data-invalid] {
+  border-color: #ff527b8c;
+  box-shadow: 0 0 0.75rem #ff234522;
+}
+.ad-input-base[data-disabled] {
+  opacity: 0.48;
+  cursor: default;
+}
+.ad-input-base[data-readonly] {
+  background: linear-gradient(135deg, #0b0a0e, #07070a 62%, #0d0b10);
+}
+.ad-input-base[data-multiline] {
+  height: auto;
+  align-items: flex-start;
+  padding-block: var(--ad-space-2);
+}
+.ad-input-base-content {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+}
+.ad-input-base[data-multiline] .ad-input-base-content {
+  height: auto;
+  align-items: stretch;
+}
+.ad-input-adornment {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  color: var(--ad-muted);
+}
+.ad-input-adornment > .ad-icon-button {
+  margin: calc(var(--ad-space-1) * -0.5);
+}
+.ad-input-base input,
+.ad-input-base textarea,
+.ad-input-base select,
+.ad-input-base button.ad-input-control {
+  flex: 1;
+  min-width: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+}
+.ad-input-base button.ad-input-control {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+.ad-input-base button.ad-input-control:disabled {
+  cursor: default;
+}
+.ad-input-base textarea {
+  min-height: 6lh;
+  resize: vertical;
+  line-height: 1.5;
+}

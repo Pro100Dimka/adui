@@ -1,1 +1,15 @@
-import React,{useState} from "react"; import { U } from "../../../dev/exampleHelpers"; export default function ThemePickerExample(){const [theme,setTheme]=useState<"ruby"|"light"|"green"|"violet">("ruby");return <U.ThemeProvider theme={theme}><U.Stack gap={3}><U.ThemePicker value={theme} onValueChange={setTheme}/><U.Card material="glass" title="Preview"><U.Button variant="primary">Primary</U.Button></U.Card></U.Stack></U.ThemeProvider>}
+import React, { useState } from "react";
+import { U } from "../../../dev/exampleHelpers";
+export default function ThemePickerExample() {
+  const [theme, setTheme] = useState<"ruby" | "light" | "green" | "violet">(
+    "ruby",
+  );
+  return (
+    <U.Stack gap={2}>
+      <U.ThemePicker value={theme} onValueChange={setTheme} />
+      <U.Typography variant="caption" tone="muted">
+        Выбрано: {theme}
+      </U.Typography>
+    </U.Stack>
+  );
+}

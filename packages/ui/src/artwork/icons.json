@@ -1,1 +1,1056 @@
-{"back": {"tag": "svg", "props": {"viewBox": "0 0 24 24"}, "children": [{"tag": "path", "props": {"d": "M19 12H5m6-6-6 6 6 6"}}]}, "close": {"tag": "svg", "props": {"viewBox": "0 0 24 24"}, "children": [{"tag": "path", "props": {"d": "m6 6 12 12M18 6 6 18"}}]}, "plus": {"tag": "svg", "props": {"viewBox": "0 0 24 24"}, "children": [{"tag": "path", "props": {"d": "M12 5v14M5 12h14"}}]}, "minus": {"tag": "svg", "props": {"viewBox": "0 0 24 24"}, "children": [{"tag": "path", "props": {"d": "M5 12h14"}}]}, "check": {"tag": "svg", "props": {"viewBox": "0 0 24 24"}, "children": [{"tag": "path", "props": {"d": "m5 12 5 5L20 6"}}]}, "chevron": {"tag": "svg", "props": {"viewBox": "0 0 24 24"}, "children": [{"tag": "path", "props": {"d": "m6 9 6 6 6-6"}}]}, "play": {"tag": "svg", "props": {"viewBox": "0 0 24 24"}, "children": [{"tag": "path", "props": {"d": "m7 3 14 9-14 9Z", "fill": "currentColor", "stroke": "none"}}]}, "pause": {"tag": "svg", "props": {"viewBox": "0 0 24 24"}, "children": [{"tag": "path", "props": {"d": "M6 4h4v16H6ZM15 4h4v16h-4Z", "fill": "currentColor", "stroke": "none"}}]}, "music": {"tag": "svg", "props": {"viewBox": "0 0 24 24"}, "children": [{"tag": "path", "props": {"d": "M9 18V5l11-3v13M9 9l11-3"}}, {"tag": "ellipse", "props": {"cx": "6", "cy": "19", "rx": "3", "ry": "2.5"}}, {"tag": "ellipse", "props": {"cx": "17", "cy": "16", "rx": "3", "ry": "2.5"}}]}, "document": {"tag": "svg", "props": {"viewBox": "0 0 24 24"}, "children": [{"tag": "path", "props": {"d": "M5 2h9l5 5v15H5ZM14 2v6h5M8 12h8M8 16h8"}}]}, "wave": {"tag": "svg", "props": {"viewBox": "0 0 24 24"}, "children": [{"tag": "path", "props": {"d": "M3 10v4M6 7v10M10 2v20M14 5v14M18 8v8M21 10v4"}}]}, "grid": {"tag": "svg", "props": {"viewBox": "0 0 24 24"}, "children": [{"tag": "rect", "props": {"height": "7", "rx": "1", "width": "7", "x": "3", "y": "3"}}, {"tag": "rect", "props": {"height": "7", "rx": "1", "width": "7", "x": "14", "y": "3"}}, {"tag": "rect", "props": {"height": "7", "rx": "1", "width": "7", "x": "3", "y": "14"}}, {"tag": "rect", "props": {"height": "7", "rx": "1", "width": "7", "x": "14", "y": "14"}}]}, "cursor": {"tag": "svg", "props": {"viewBox": "0 0 24 24"}, "children": [{"tag": "path", "props": {"d": "m6 2 13 12-6 1 2.8 6-3 1-2.6-6-4.2 4Z"}}]}, "pencil": {"tag": "svg", "props": {"viewBox": "0 0 24 24"}, "children": [{"tag": "path", "props": {"d": "m14 4 5 5M4 20l2-7L17 2l5 5L11 18ZM6 13l5 5M4 20l7-2"}}]}, "eraser": {"tag": "svg", "props": {"viewBox": "0 0 24 24"}, "children": [{"tag": "path", "props": {"d": "m13 3 8 8-9 10H6l-4-4ZM7 12l9 6"}}, {"tag": "path", "props": {"d": "m13 3 8 8-5 6-9-6Z", "fill": "currentColor", "opacity": ".85", "stroke": "none"}}]}, "scissors": {"tag": "svg", "props": {"viewBox": "0 0 24 24"}, "children": [{"tag": "circle", "props": {"cx": "6", "cy": "18", "r": "3"}}, {"tag": "circle", "props": {"cx": "18", "cy": "18", "r": "3"}}, {"tag": "path", "props": {"d": "m4 2 12 14M20 2 8 16"}}]}, "mouse": {"tag": "svg", "props": {"viewBox": "0 0 24 24"}, "children": [{"tag": "rect", "props": {"height": "20", "rx": "6", "width": "12", "x": "6", "y": "2"}}, {"tag": "path", "props": {"d": "M12 2v9M6 10h12M12 5v3"}}]}, "volume": {"tag": "svg", "props": {"viewBox": "0 0 24 24"}, "children": [{"tag": "path", "props": {"d": "M3 9h4l5-4v14l-5-4H3ZM16 8c3 2 3 6 0 8M19 5c5 4 5 10 0 14"}}]}, "search": {"tag": "svg", "props": {"viewBox": "0 0 24 24"}, "children": [{"tag": "circle", "props": {"cx": "10", "cy": "10", "r": "6"}}, {"tag": "path", "props": {"d": "m14.5 14.5 5.5 5.5M8 10h4m-2-2v4"}}]}, "more": {"tag": "svg", "props": {"viewBox": "0 0 24 24"}, "children": [{"tag": "g", "props": {"fill": "currentColor", "stroke": "none"}, "children": [{"tag": "circle", "props": {"cx": "5", "cy": "12", "r": "1.5"}}, {"tag": "circle", "props": {"cx": "12", "cy": "12", "r": "1.5"}}, {"tag": "circle", "props": {"cx": "19", "cy": "12", "r": "1.5"}}]}]}, "sliders": {"tag": "svg", "props": {"viewBox": "0 0 24 24"}, "children": [{"tag": "path", "props": {"d": "M3 5h8m4 0h6M3 12h3m4 0h11M3 19h11m4 0h3"}}, {"tag": "circle", "props": {"cx": "13", "cy": "5", "r": "2"}}, {"tag": "circle", "props": {"cx": "8", "cy": "12", "r": "2"}}, {"tag": "circle", "props": {"cx": "16", "cy": "19", "r": "2"}}]}, "settings": {"tag": "svg", "props": {"viewBox": "0 0 24 24"}, "children": [{"tag": "path", "props": {"d": "m10 2-.5 2.5-2 1.2L5 5 3 8l1.8 2v3.7L3 16l2 3 2.5-.6 2 1.2L10 22h4l.5-2.4 2-1.2L19 19l2-3-1.8-2.3V10L21 8l-2-3-2.5.7-2-1.2L14 2Z"}}, {"tag": "circle", "props": {"cx": "12", "cy": "12", "r": "3.5"}}]}, "fit": {"tag": "svg", "props": {"viewBox": "0 0 24 24"}, "children": [{"tag": "path", "props": {"d": "M3 9V3h6m6 0h6v6M3 15v6h6m6 0h6v-6"}}]}, "save": {"tag": "svg", "props": {"viewBox": "0 0 24 24"}, "children": [{"tag": "path", "props": {"d": "M4 3h13l4 4v14H3V3ZM7 3v7h10V3M7 21v-7h10v7"}}]}, "undo": {"tag": "svg", "props": {"viewBox": "0 0 24 24"}, "children": [{"tag": "path", "props": {"d": "M4 9h9a6 6 0 1 1 0 12H8M4 9l5-5M4 9l5 5"}}]}, "redo": {"tag": "svg", "props": {"viewBox": "0 0 24 24"}, "children": [{"tag": "path", "props": {"d": "M20 9h-9a6 6 0 1 0 0 12h5M20 9l-5-5M20 9l-5 5"}}]}, "bulb": {"tag": "svg", "props": {"viewBox": "0 0 24 24"}, "children": [{"tag": "path", "props": {"d": "M8 17c0-3-3-4-3-8a7 7 0 0 1 14 0c0 4-3 5-3 8ZM8 18h8M9 21h6M12 1v-1M2 3 0 2m24 0-2 1M2 11H0m24 0h-2"}}]}, "window": {"tag": "svg", "props": {"viewBox": "0 0 24 24"}, "children": [{"tag": "rect", "props": {"height": "14", "rx": "1", "width": "14", "x": "5", "y": "5"}}]}, "folder": {"tag": "svg", "props": {"viewBox": "0 0 24 24"}, "children": [{"tag": "path", "props": {"d": "M3 6h7l2 3h8a1 1 0 0 1 1 1l-2 10H3ZM3 6V4h7l2 2h7v3"}}]}, "upload": {"tag": "svg", "props": {"viewBox": "0 0 24 24"}, "children": [{"tag": "path", "props": {"d": "M12 17V3m-5 5 5-5 5 5M3 15v6h18v-6"}}]}, "download": {"tag": "svg", "props": {"viewBox": "0 0 24 24"}, "children": [{"tag": "path", "props": {"d": "M12 3v14m-5-5 5 5 5-5M3 15v6h18v-6"}}]}, "reset": {"tag": "svg", "props": {"viewBox": "0 0 24 24"}, "children": [{"tag": "path", "props": {"d": "M3 10a9 9 0 1 1 0 6M3 4v6h6"}}]}, "info": {"tag": "svg", "props": {"viewBox": "0 0 24 24"}, "children": [{"tag": "circle", "props": {"cx": "12", "cy": "12", "r": "10"}}, {"tag": "path", "props": {"d": "M12 11v6M12 7v1"}}]}, "copy": {"tag": "svg", "props": {"viewBox": "0 0 24 24"}, "children": [{"tag": "rect", "props": {"height": "15", "rx": "2", "width": "12", "x": "8", "y": "7"}}, {"tag": "path", "props": {"d": "M15 7V2H3v15h5"}}]}, "clock": {"tag": "svg", "props": {"viewBox": "0 0 28 28"}, "children": [{"tag": "circle", "props": {"cx": "14", "cy": "14", "r": "11"}}, {"tag": "path", "props": {"d": "M14 7v7l5 3"}}]}, "warning": {"tag": "svg", "props": {"viewBox": "0 0 28 28"}, "children": [{"tag": "path", "props": {"d": "M13 3.5a1.2 1.2 0 0 1 2 0L25.5 23a1.2 1.2 0 0 1-1 2H3.5a1.2 1.2 0 0 1-1-2Z"}}, {"tag": "path", "props": {"d": "M14 10v6m0 4v.2"}}]}, "processing": {"tag": "svg", "props": {"viewBox": "0 0 28 28"}, "children": [{"tag": "circle", "props": {"cx": "14", "cy": "14", "opacity": ".65", "r": "10.2", "stroke": "currentColor"}}, {"tag": "circle", "props": {"cx": "14", "cy": "14", "fill": "currentColor", "r": "5.8", "stroke": "none"}}]}, "stop": {"tag": "svg", "props": {"viewBox": "0 0 28 28"}, "children": [{"tag": "rect", "props": {"fill": "currentColor", "height": "16", "rx": "2", "stroke": "none", "width": "16", "x": "6", "y": "6"}}]}, "up": {"tag": "svg", "props": {"viewBox": "0 0 28 28"}, "children": [{"tag": "path", "props": {"d": "M14 22V7m-6 6 6-6 6 6"}}]}, "down": {"tag": "svg", "props": {"viewBox": "0 0 28 28"}, "children": [{"tag": "path", "props": {"d": "M14 6v15m-6-6 6 6 6-6"}}]}, "trash": {"tag": "svg", "props": {"viewBox": "0 0 28 28"}, "children": [{"tag": "path", "props": {"d": "M5 7h18M10 7V3h8v4M8 7l1 18h10l1-18M12 11v10m4-10v10"}}]}, "database": {"tag": "svg", "props": {"viewBox": "0 0 28 28"}, "children": [{"tag": "ellipse", "props": {"cx": "14", "cy": "6", "rx": "8.8", "ry": "3"}}, {"tag": "path", "props": {"d": "M5.2 6v16c0 4 17.6 4 17.6 0V6M5.2 11c0 4 17.6 4 17.6 0M5.2 16c0 4 17.6 4 17.6 0M5.2 20c0 4 17.6 4 17.6 0"}}]}, "refresh": {"tag": "svg", "props": {"viewBox": "0 0 28 28"}, "children": [{"tag": "path", "props": {"d": "M24 11A10 10 0 0 0 6 6L3 10V4m0 6h6M4 17a10 10 0 0 0 18 5l3-4v6m0-6h-6"}}]}, "motion": {"tag": "svg", "props": {"viewBox": "0 0 28 28"}, "children": [{"tag": "path", "props": {"d": "M3 14h3m3-6v12m5-17v23m5-18v12m5-8v4"}}]}, "cloud-gpu": {"tag": "svg", "props": {"viewBox": "0 0 32 32"}, "children": [{"tag": "path", "props": {"d": "M9 24H7a6 6 0 0 1-1-11.9A10 10 0 0 1 25.4 11a6.8 6.8 0 0 1 1.1 13"}}, {"tag": "circle", "props": {"cx": "17", "cy": "23", "r": "5.1"}}, {"tag": "path", "props": {"d": "M17 16v3m0 8v3m-7-7h3m8 0h3M12 18l2 2m6 6 2 2m0-10-2 2m-6 6-2 2"}}]}, "antenna": {"tag": "svg", "props": {"viewBox": "0 0 32 32"}, "children": [{"tag": "path", "props": {"d": "M6 7a13 13 0 0 0 0 18m4-14a7 7 0 0 0 0 10M26 7a13 13 0 0 1 0 18m-4-14a7 7 0 0 1 0 10M16 18l-7 13m7-13 7 13m-10-5h6"}}, {"tag": "circle", "props": {"cx": "16", "cy": "14", "r": "3"}}]}, "rocket": {"tag": "svg", "props": {"viewBox": "0 0 32 32"}, "children": [{"tag": "path", "props": {"d": "M11 22c-3-1-5-3-6-6C11 6 20 2 29 3c0 10-4 18-14 23l-4-4Z M8 12 3 13l-2 7 7-1m13 3-1 7-7 2 1-6M7 24l-4 5m7-3-2 5"}}, {"tag": "circle", "props": {"cx": "21", "cy": "11", "r": "3"}}]}, "login": {"tag": "svg", "props": {"viewBox": "0 0 32 32"}, "children": [{"tag": "path", "props": {"d": "M18 5h8v24h-8M3 17h17m-6-6 6 6-6 6"}}]}, "braces": {"tag": "svg", "props": {"viewBox": "0 0 32 32"}, "children": [{"tag": "path", "props": {"d": "M11 4H9C5 4 7 11 6 13c-.5 1.5-1.8 2-3 3 1.2 1 2.5 1.5 3 3 1 2-1 9 3 9h2M21 4h2c4 0 2 7 3 9 .5 1.5 1.8 2 3 3-1.2 1-2.5 1.5-3 3-1 2 1 9-3 9h-2"}}]}, "ok": {"tag": "svg", "props": {"viewBox": "0 0 32 32"}, "children": [{"tag": "circle", "props": {"cx": "16", "cy": "16", "r": "12.4"}}, {"tag": "path", "props": {"d": "m10 16 4.1 4.4L23 11"}}]}, "stopwatch": {"tag": "svg", "props": {"viewBox": "0 0 28 28"}, "children": [{"tag": "circle", "props": {"cx": "14", "cy": "16", "r": "10"}}, {"tag": "path", "props": {"d": "M11 2h6m-3 0v4m7 2 2-3m-9 11 4-5"}}]}, "levels": {"tag": "svg", "props": {"viewBox": "0 0 28 28"}, "children": [{"tag": "path", "props": {"d": "M5 25V17m9 8V9m9 16V2", "stroke-width": "2.4"}}]}, "mic": {"tag": "svg", "props": {"viewBox": "0 0 28 28"}, "children": [{"tag": "rect", "props": {"height": "15", "rx": "4", "width": "8", "x": "10", "y": "3"}}, {"tag": "path", "props": {"d": "M7 13v2a7 7 0 0 0 14 0v-2M14 22v4m-4 0h8"}}]}, "headphones": {"tag": "svg", "props": {"viewBox": "0 0 28 28"}, "children": [{"tag": "path", "props": {"d": "M3 17v-4a11 11 0 0 1 22 0v4"}}, {"tag": "rect", "props": {"height": "10", "rx": "2.5", "width": "6", "x": "3", "y": "15"}}, {"tag": "rect", "props": {"height": "10", "rx": "2.5", "width": "6", "x": "19", "y": "15"}}]}, "gauge": {"tag": "svg", "props": {"viewBox": "0 0 28 28"}, "children": [{"tag": "path", "props": {"d": "M3.5 23a12 12 0 1 1 21 0M6 14l2 1m-1-7 2 2m5-6v3m7 1-2 2m5 4-2 1M14 18l5-6"}}, {"tag": "circle", "props": {"cx": "14", "cy": "18", "r": "2"}}]}, "gear": {"tag": "svg", "props": {"viewBox": "0 0 24 24"}, "children": [{"tag": "path", "props": {"d": "m9 3 .6-1h4.8l.6 1 .5 2 2 .9 1.9-.6 2.1 3.7-1.4 1.5v2.9l1.4 1.5-2.1 3.7-1.9-.6-2 .9-.5 2-.6 1H9l-.6-1-.5-2-2-.9-1.9.6-2.1-3.7 1.4-1.5v-2.9L1.9 9l2.1-3.7 1.9.6 2-.9Z"}}, {"tag": "circle", "props": {"cx": "12", "cy": "12", "r": "3.4"}}]}, "palette": {"tag": "svg", "props": {"viewBox": "0 0 24 24"}, "children": [{"tag": "path", "props": {"d": "M20.8 11.7C20.8 6 17 2.5 11.4 2.5a9.2 9.2 0 0 0-.8 18.4c1.6.1 2.5-.9 1.9-2.2-.5-1.1-.8-2.1.2-2.9 1.1-.9 2.5-.1 4.6-.5 2.1-.4 3.5-1.7 3.5-3.6Z"}}, {"tag": "circle", "props": {"cx": "7.2", "cy": "9", "r": ".9"}}, {"tag": "circle", "props": {"cx": "10.9", "cy": "6.3", "r": ".9"}}, {"tag": "circle", "props": {"cx": "15.8", "cy": "7.2", "r": ".9"}}, {"tag": "circle", "props": {"cx": "17.8", "cy": "11.1", "r": ".9"}}]}, "audio": {"tag": "svg", "props": {"viewBox": "0 0 24 24"}, "children": [{"tag": "path", "props": {"d": "M3 8.5h4l5-4v15l-5-4H3Z M16 7a7 7 0 0 1 0 10 M19 4a11 11 0 0 1 0 16"}}]}, "chip": {"tag": "svg", "props": {"viewBox": "0 0 24 24"}, "children": [{"tag": "rect", "props": {"height": "14", "rx": "2", "width": "14", "x": "5", "y": "5"}}, {"tag": "rect", "props": {"height": "6", "rx": ".6", "width": "6", "x": "9", "y": "9"}}, {"tag": "path", "props": {"d": "M8 2v3m4-3v3m4-3v3M8 19v3m4-3v3m4-3v3M2 8h3m-3 4h3m-3 4h3M19 8h3m-3 4h3m-3 4h3"}}]}, "key": {"tag": "svg", "props": {"viewBox": "0 0 24 24"}, "children": [{"tag": "path", "props": {"d": "M14 14a6 6 0 1 0-4-4L2 18v4h4v-3h3v-3h3Z"}}, {"tag": "circle", "props": {"cx": "16", "cy": "6", "r": "1.5"}}]}, "wrench": {"tag": "svg", "props": {"viewBox": "0 0 24 24"}, "children": [{"tag": "path", "props": {"d": "M14 3a6 6 0 0 0-7 7L2.8 18a2.5 2.5 0 1 0 3.5 3.5L15 13a6 6 0 0 0 6-8l-4 4-3-1-1-3 3-3Z"}}]}, "photo": {"tag": "svg", "props": {"viewBox": "0 0 24 24"}, "children": [{"tag": "path", "props": {"d": "M14 3H4v18h17V11M6 17l5-6 4 4 3-3 3 4M19 2v6m-3-3h6"}}, {"tag": "circle", "props": {"cx": "8", "cy": "7", "r": "1.3"}}]}, "eye": {"tag": "svg", "props": {"viewBox": "0 0 24 24"}, "children": [{"tag": "path", "props": {"d": "M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12Z"}}, {"tag": "circle", "props": {"cx": "12", "cy": "12", "r": "3.1"}}]}, "migrate": {"tag": "svg", "props": {"viewBox": "0 0 24 24"}, "children": [{"tag": "rect", "props": {"height": "13", "rx": "1.4", "width": "10", "x": "3", "y": "3"}}, {"tag": "path", "props": {"d": "M7 7h10v6M7 10v9h6m3-6 5 5-5 4v-3h-5v-3h5Z"}}]}, "radio": {"tag": "svg", "props": {"viewBox": "0 0 24 24"}, "children": [{"tag": "path", "props": {"d": "M4 5h13m-7 3 5 9M8 11l-4 6h15M12 6 2 20h20L15 9M3 9c0-5 7-8 12-6M19 3l2 3-3 2"}}]}, "heart": {"tag": "svg", "props": {"viewBox": "0 0 24 24"}, "children": [{"tag": "path", "props": {"d": "M12 21C10 18 2 13 2 7a5 5 0 0 1 10-1 5 5 0 0 1 10 1c0 6-8 11-10 14Z"}}]}, "history": {"tag": "svg", "props": {"viewBox": "0 0 28 28"}, "children": [{"tag": "path", "props": {"d": "M5 7A10.5 10.5 0 1 1 3.5 17M5 3v5H1M14 7v7l5 3"}}]}, "cube": {"tag": "svg", "props": {"viewBox": "0 0 28 28"}, "children": [{"tag": "path", "props": {"d": "m14 2 11 6.5v12L14 27 3 20.5v-12Z M3 8.5 14 15l11-6.5M14 15v12M8.5 5.2 20 12"}}]}, "file": {"tag": "svg", "props": {"viewBox": "0 0 28 28"}, "children": [{"tag": "path", "props": {"d": "M6 2h10l6 6v18H6ZM16 2v7h6M10 14h3m3 0h2m-8 5h8"}}]}, "list": {"tag": "svg", "props": {"viewBox": "0 0 32 32"}, "children": [{"tag": "path", "props": {"d": "M12 6h17M12 16h17M12 26h17M3 5l2 1-2 1M3 14h3v3H3m0 8h3v3H3"}}]}, "stethoscope": {"tag": "svg", "props": {"viewBox": "0 0 32 32"}, "children": [{"tag": "path", "props": {"d": "M5 3v7c0 8 13 8 13 0V3M5 3h3m7 0h3M8 1v5m7-5v5M11.5 16v6a8.5 8.5 0 0 0 17 0v-6"}}, {"tag": "circle", "props": {"cx": "28.5", "cy": "13.5", "r": "2.6"}}]}, "crown": {"tag": "svg", "props": {"viewBox": "0 0 44 40"}, "children": [{"tag": "path", "props": {"d": "m5 11 6 19h22l6-19-11 10-6-18-6 18Z"}}, "\n", {"tag": "path", "props": {"d": "M11 35h22"}}, "\n", {"tag": "g", "props": {"fill": "currentColor", "stroke": "none"}, "children": [{"tag": "circle", "props": {"cx": "5", "cy": "10", "r": "2.4"}}, "\n", {"tag": "circle", "props": {"cx": "22", "cy": "3", "r": "2.5"}}, "\n", {"tag": "circle", "props": {"cx": "39", "cy": "10", "r": "2.4"}}, "\n"]}]}, "person": {"tag": "svg", "props": {"viewBox": "0 0 38 42"}, "children": [{"tag": "circle", "props": {"cx": "19", "cy": "11", "r": "7"}}, "\n", {"tag": "path", "props": {"d": "M5.5 36a13.5 13.5 0 0 1 27 0v1h-27Z"}}, "\n"]}, "signal": {"tag": "svg", "props": {"viewBox": "0 0 40 40"}, "children": [{"tag": "g", "props": {"fill": "currentColor", "stroke": "none"}, "children": [{"tag": "rect", "props": {"height": "10", "rx": "1", "width": "5", "x": "3", "y": "26"}}, "\n", {"tag": "rect", "props": {"height": "17", "rx": "1", "width": "5", "x": "13", "y": "19"}}, "\n", {"tag": "rect", "props": {"height": "26", "rx": "1", "width": "5", "x": "23", "y": "10"}}, "\n", {"tag": "rect", "props": {"height": "35", "rx": "1", "width": "5", "x": "33", "y": "1"}}, "\n"]}]}, "leave": {"tag": "svg", "props": {"viewBox": "0 0 36 36"}, "children": [{"tag": "path", "props": {"d": "M17 4H6a2 2 0 0 0-2 2v24a2 2 0 0 0 2 2h11M16 18h17m-6-6 6 6-6 6"}}, "\n"]}, "prev": {"tag": "svg", "props": {"viewBox": "0 0 28 28"}, "children": [{"tag": "path", "props": {"d": "m18 5-9 9 9 9"}}]}, "sparkle": {"tag": "svg", "props": {"viewBox": "0 0 28 28"}, "children": [{"tag": "path", "props": {"d": "M14 2c.8 8 3 11 11 12-8 1-10.2 4-11 12-1-8-3-11-11-12 8-1 10-4 11-12Z"}}]}, "studio": {"tag": "svg", "props": {"viewBox": "0 0 28 28"}, "children": [{"tag": "path", "props": {"d": "M13 7c.8 6 3 8.2 9 9-6 .8-8.2 3-9 9-1-6-3-8.2-9-9 6-.8 8-3 9-9Z M23 1v7M19.5 4.5h7"}}]}, "note": {"tag": "svg", "props": {"viewBox": "0 0 28 28"}, "children": [{"tag": "path", "props": {"d": "M10 22V6l13-3v16M10 10l13-3"}}, {"tag": "ellipse", "props": {"cx": "6.5", "cy": "22", "rx": "3.5", "ry": "3"}}, {"tag": "ellipse", "props": {"cx": "19.5", "cy": "19.5", "rx": "3.5", "ry": "3"}}]}, "rhythm": {"tag": "svg", "props": {"viewBox": "0 0 28 28"}, "children": [{"tag": "path", "props": {"d": "M2 15h5l3-8 5 16 4-20 4 15 3-5h3"}}]}, "timer": {"tag": "svg", "props": {"viewBox": "0 0 28 28"}, "children": [{"tag": "circle", "props": {"cx": "14", "cy": "16", "r": "10"}}, {"tag": "path", "props": {"d": "M11 2h6M14 2v4m7.5 2 2.5-3M14 16l5-5"}}]}, "target": {"tag": "svg", "props": {"viewBox": "0 0 28 28"}, "children": [{"tag": "circle", "props": {"cx": "14", "cy": "14", "r": "9.5"}}, {"tag": "circle", "props": {"cx": "14", "cy": "14", "r": "3.3"}}, {"tag": "path", "props": {"d": "M14 1v6m0 14v6M1 14h6m14 0h6M6 6l1.5 1.5m13 13L22 22M22 6l-1.5 1.5m-13 13L6 22"}}]}, "user": {"tag": "svg", "props": {"viewBox": "0 0 28 28"}, "children": [{"tag": "circle", "props": {"cx": "14", "cy": "9", "r": "5"}}, {"tag": "path", "props": {"d": "M5 26c1-8 5-11 9-11s8 3 9 11Z"}}]}, "users": {"tag": "svg", "props": {"viewBox": "0 0 32 32"}, "children": [{"tag": "circle", "props": {"cx": "12", "cy": "10", "r": "5"}}, {"tag": "circle", "props": {"cx": "24", "cy": "12", "r": "4"}}, {"tag": "path", "props": {"d": "M2 29c0-8 4-12 10-12s10 4 10 12M21 20c5-3 10 2 10 9"}}]}}
+{
+  "back": {
+    "tag": "svg",
+    "props": { "viewBox": "0 0 24 24" },
+    "children": [{ "tag": "path", "props": { "d": "M19 12H5m6-6-6 6 6 6" } }]
+  },
+  "close": {
+    "tag": "svg",
+    "props": { "viewBox": "0 0 24 24" },
+    "children": [{ "tag": "path", "props": { "d": "m6 6 12 12M18 6 6 18" } }]
+  },
+  "plus": {
+    "tag": "svg",
+    "props": { "viewBox": "0 0 24 24" },
+    "children": [{ "tag": "path", "props": { "d": "M12 5v14M5 12h14" } }]
+  },
+  "minus": {
+    "tag": "svg",
+    "props": { "viewBox": "0 0 24 24" },
+    "children": [{ "tag": "path", "props": { "d": "M5 12h14" } }]
+  },
+  "check": {
+    "tag": "svg",
+    "props": { "viewBox": "0 0 24 24" },
+    "children": [{ "tag": "path", "props": { "d": "m5 12 5 5L20 6" } }]
+  },
+  "chevron": {
+    "tag": "svg",
+    "props": { "viewBox": "0 0 24 24" },
+    "children": [{ "tag": "path", "props": { "d": "m6 9 6 6 6-6" } }]
+  },
+  "play": {
+    "tag": "svg",
+    "props": { "viewBox": "0 0 24 24" },
+    "children": [
+      {
+        "tag": "path",
+        "props": {
+          "d": "m7 3 14 9-14 9Z",
+          "fill": "currentColor",
+          "stroke": "none"
+        }
+      }
+    ]
+  },
+  "pause": {
+    "tag": "svg",
+    "props": { "viewBox": "0 0 24 24" },
+    "children": [
+      {
+        "tag": "path",
+        "props": {
+          "d": "M6 4h4v16H6ZM15 4h4v16h-4Z",
+          "fill": "currentColor",
+          "stroke": "none"
+        }
+      }
+    ]
+  },
+  "music": {
+    "tag": "svg",
+    "props": { "viewBox": "0 0 24 24" },
+    "children": [
+      { "tag": "path", "props": { "d": "M9 18V5l11-3v13M9 9l11-3" } },
+      {
+        "tag": "ellipse",
+        "props": { "cx": "6", "cy": "19", "rx": "3", "ry": "2.5" }
+      },
+      {
+        "tag": "ellipse",
+        "props": { "cx": "17", "cy": "16", "rx": "3", "ry": "2.5" }
+      }
+    ]
+  },
+  "document": {
+    "tag": "svg",
+    "props": { "viewBox": "0 0 24 24" },
+    "children": [
+      {
+        "tag": "path",
+        "props": { "d": "M5 2h9l5 5v15H5ZM14 2v6h5M8 12h8M8 16h8" }
+      }
+    ]
+  },
+  "wave": {
+    "tag": "svg",
+    "props": { "viewBox": "0 0 24 24" },
+    "children": [
+      {
+        "tag": "path",
+        "props": { "d": "M3 10v4M6 7v10M10 2v20M14 5v14M18 8v8M21 10v4" }
+      }
+    ]
+  },
+  "grid": {
+    "tag": "svg",
+    "props": { "viewBox": "0 0 24 24" },
+    "children": [
+      {
+        "tag": "rect",
+        "props": { "height": "7", "rx": "1", "width": "7", "x": "3", "y": "3" }
+      },
+      {
+        "tag": "rect",
+        "props": { "height": "7", "rx": "1", "width": "7", "x": "14", "y": "3" }
+      },
+      {
+        "tag": "rect",
+        "props": { "height": "7", "rx": "1", "width": "7", "x": "3", "y": "14" }
+      },
+      {
+        "tag": "rect",
+        "props": {
+          "height": "7",
+          "rx": "1",
+          "width": "7",
+          "x": "14",
+          "y": "14"
+        }
+      }
+    ]
+  },
+  "cursor": {
+    "tag": "svg",
+    "props": { "viewBox": "0 0 24 24" },
+    "children": [
+      {
+        "tag": "path",
+        "props": { "d": "m6 2 13 12-6 1 2.8 6-3 1-2.6-6-4.2 4Z" }
+      }
+    ]
+  },
+  "pencil": {
+    "tag": "svg",
+    "props": { "viewBox": "0 0 24 24" },
+    "children": [
+      {
+        "tag": "path",
+        "props": { "d": "m14 4 5 5M4 20l2-7L17 2l5 5L11 18ZM6 13l5 5M4 20l7-2" }
+      }
+    ]
+  },
+  "eraser": {
+    "tag": "svg",
+    "props": { "viewBox": "0 0 24 24" },
+    "children": [
+      { "tag": "path", "props": { "d": "m13 3 8 8-9 10H6l-4-4ZM7 12l9 6" } },
+      {
+        "tag": "path",
+        "props": {
+          "d": "m13 3 8 8-5 6-9-6Z",
+          "fill": "currentColor",
+          "opacity": ".85",
+          "stroke": "none"
+        }
+      }
+    ]
+  },
+  "scissors": {
+    "tag": "svg",
+    "props": { "viewBox": "0 0 24 24" },
+    "children": [
+      { "tag": "circle", "props": { "cx": "6", "cy": "18", "r": "3" } },
+      { "tag": "circle", "props": { "cx": "18", "cy": "18", "r": "3" } },
+      { "tag": "path", "props": { "d": "m4 2 12 14M20 2 8 16" } }
+    ]
+  },
+  "mouse": {
+    "tag": "svg",
+    "props": { "viewBox": "0 0 24 24" },
+    "children": [
+      {
+        "tag": "rect",
+        "props": {
+          "height": "20",
+          "rx": "6",
+          "width": "12",
+          "x": "6",
+          "y": "2"
+        }
+      },
+      { "tag": "path", "props": { "d": "M12 2v9M6 10h12M12 5v3" } }
+    ]
+  },
+  "volume": {
+    "tag": "svg",
+    "props": { "viewBox": "0 0 24 24" },
+    "children": [
+      {
+        "tag": "path",
+        "props": {
+          "d": "M3 9h4l5-4v14l-5-4H3ZM16 8c3 2 3 6 0 8M19 5c5 4 5 10 0 14"
+        }
+      }
+    ]
+  },
+  "search": {
+    "tag": "svg",
+    "props": { "viewBox": "0 0 24 24" },
+    "children": [
+      { "tag": "circle", "props": { "cx": "10", "cy": "10", "r": "6" } },
+      { "tag": "path", "props": { "d": "m14.5 14.5 5.5 5.5M8 10h4m-2-2v4" } }
+    ]
+  },
+  "more": {
+    "tag": "svg",
+    "props": { "viewBox": "0 0 24 24" },
+    "children": [
+      {
+        "tag": "g",
+        "props": { "fill": "currentColor", "stroke": "none" },
+        "children": [
+          { "tag": "circle", "props": { "cx": "5", "cy": "12", "r": "1.5" } },
+          { "tag": "circle", "props": { "cx": "12", "cy": "12", "r": "1.5" } },
+          { "tag": "circle", "props": { "cx": "19", "cy": "12", "r": "1.5" } }
+        ]
+      }
+    ]
+  },
+  "sliders": {
+    "tag": "svg",
+    "props": { "viewBox": "0 0 24 24" },
+    "children": [
+      {
+        "tag": "path",
+        "props": { "d": "M3 5h8m4 0h6M3 12h3m4 0h11M3 19h11m4 0h3" }
+      },
+      { "tag": "circle", "props": { "cx": "13", "cy": "5", "r": "2" } },
+      { "tag": "circle", "props": { "cx": "8", "cy": "12", "r": "2" } },
+      { "tag": "circle", "props": { "cx": "16", "cy": "19", "r": "2" } }
+    ]
+  },
+  "settings": {
+    "tag": "svg",
+    "props": { "viewBox": "0 0 24 24" },
+    "children": [
+      {
+        "tag": "path",
+        "props": {
+          "d": "m10 2-.5 2.5-2 1.2L5 5 3 8l1.8 2v3.7L3 16l2 3 2.5-.6 2 1.2L10 22h4l.5-2.4 2-1.2L19 19l2-3-1.8-2.3V10L21 8l-2-3-2.5.7-2-1.2L14 2Z"
+        }
+      },
+      { "tag": "circle", "props": { "cx": "12", "cy": "12", "r": "3.5" } }
+    ]
+  },
+  "fit": {
+    "tag": "svg",
+    "props": { "viewBox": "0 0 24 24" },
+    "children": [
+      { "tag": "path", "props": { "d": "M3 9V3h6m6 0h6v6M3 15v6h6m6 0h6v-6" } }
+    ]
+  },
+  "save": {
+    "tag": "svg",
+    "props": { "viewBox": "0 0 24 24" },
+    "children": [
+      {
+        "tag": "path",
+        "props": { "d": "M4 3h13l4 4v14H3V3ZM7 3v7h10V3M7 21v-7h10v7" }
+      }
+    ]
+  },
+  "undo": {
+    "tag": "svg",
+    "props": { "viewBox": "0 0 24 24" },
+    "children": [
+      {
+        "tag": "path",
+        "props": { "d": "M4 9h9a6 6 0 1 1 0 12H8M4 9l5-5M4 9l5 5" }
+      }
+    ]
+  },
+  "redo": {
+    "tag": "svg",
+    "props": { "viewBox": "0 0 24 24" },
+    "children": [
+      {
+        "tag": "path",
+        "props": { "d": "M20 9h-9a6 6 0 1 0 0 12h5M20 9l-5-5M20 9l-5 5" }
+      }
+    ]
+  },
+  "bulb": {
+    "tag": "svg",
+    "props": { "viewBox": "0 0 24 24" },
+    "children": [
+      {
+        "tag": "path",
+        "props": {
+          "d": "M8 17c0-3-3-4-3-8a7 7 0 0 1 14 0c0 4-3 5-3 8ZM8 18h8M9 21h6M12 1v-1M2 3 0 2m24 0-2 1M2 11H0m24 0h-2"
+        }
+      }
+    ]
+  },
+  "window": {
+    "tag": "svg",
+    "props": { "viewBox": "0 0 24 24" },
+    "children": [
+      {
+        "tag": "rect",
+        "props": {
+          "height": "14",
+          "rx": "1",
+          "width": "14",
+          "x": "5",
+          "y": "5"
+        }
+      }
+    ]
+  },
+  "folder": {
+    "tag": "svg",
+    "props": { "viewBox": "0 0 24 24" },
+    "children": [
+      {
+        "tag": "path",
+        "props": { "d": "M3 6h7l2 3h8a1 1 0 0 1 1 1l-2 10H3ZM3 6V4h7l2 2h7v3" }
+      }
+    ]
+  },
+  "upload": {
+    "tag": "svg",
+    "props": { "viewBox": "0 0 24 24" },
+    "children": [
+      { "tag": "path", "props": { "d": "M12 17V3m-5 5 5-5 5 5M3 15v6h18v-6" } }
+    ]
+  },
+  "download": {
+    "tag": "svg",
+    "props": { "viewBox": "0 0 24 24" },
+    "children": [
+      { "tag": "path", "props": { "d": "M12 3v14m-5-5 5 5 5-5M3 15v6h18v-6" } }
+    ]
+  },
+  "reset": {
+    "tag": "svg",
+    "props": { "viewBox": "0 0 24 24" },
+    "children": [
+      { "tag": "path", "props": { "d": "M3 10a9 9 0 1 1 0 6M3 4v6h6" } }
+    ]
+  },
+  "info": {
+    "tag": "svg",
+    "props": { "viewBox": "0 0 24 24" },
+    "children": [
+      { "tag": "circle", "props": { "cx": "12", "cy": "12", "r": "10" } },
+      { "tag": "path", "props": { "d": "M12 11v6M12 7v1" } }
+    ]
+  },
+  "copy": {
+    "tag": "svg",
+    "props": { "viewBox": "0 0 24 24" },
+    "children": [
+      {
+        "tag": "rect",
+        "props": {
+          "height": "15",
+          "rx": "2",
+          "width": "12",
+          "x": "8",
+          "y": "7"
+        }
+      },
+      { "tag": "path", "props": { "d": "M15 7V2H3v15h5" } }
+    ]
+  },
+  "clock": {
+    "tag": "svg",
+    "props": { "viewBox": "0 0 28 28" },
+    "children": [
+      { "tag": "circle", "props": { "cx": "14", "cy": "14", "r": "11" } },
+      { "tag": "path", "props": { "d": "M14 7v7l5 3" } }
+    ]
+  },
+  "warning": {
+    "tag": "svg",
+    "props": { "viewBox": "0 0 28 28" },
+    "children": [
+      {
+        "tag": "path",
+        "props": {
+          "d": "M13 3.5a1.2 1.2 0 0 1 2 0L25.5 23a1.2 1.2 0 0 1-1 2H3.5a1.2 1.2 0 0 1-1-2Z"
+        }
+      },
+      { "tag": "path", "props": { "d": "M14 10v6m0 4v.2" } }
+    ]
+  },
+  "processing": {
+    "tag": "svg",
+    "props": { "viewBox": "0 0 28 28" },
+    "children": [
+      {
+        "tag": "circle",
+        "props": {
+          "cx": "14",
+          "cy": "14",
+          "opacity": ".65",
+          "r": "10.2",
+          "stroke": "currentColor"
+        }
+      },
+      {
+        "tag": "circle",
+        "props": {
+          "cx": "14",
+          "cy": "14",
+          "fill": "currentColor",
+          "r": "5.8",
+          "stroke": "none"
+        }
+      }
+    ]
+  },
+  "stop": {
+    "tag": "svg",
+    "props": { "viewBox": "0 0 28 28" },
+    "children": [
+      {
+        "tag": "rect",
+        "props": {
+          "fill": "currentColor",
+          "height": "16",
+          "rx": "2",
+          "stroke": "none",
+          "width": "16",
+          "x": "6",
+          "y": "6"
+        }
+      }
+    ]
+  },
+  "up": {
+    "tag": "svg",
+    "props": { "viewBox": "0 0 28 28" },
+    "children": [{ "tag": "path", "props": { "d": "M14 22V7m-6 6 6-6 6 6" } }]
+  },
+  "down": {
+    "tag": "svg",
+    "props": { "viewBox": "0 0 28 28" },
+    "children": [{ "tag": "path", "props": { "d": "M14 6v15m-6-6 6 6 6-6" } }]
+  },
+  "trash": {
+    "tag": "svg",
+    "props": { "viewBox": "0 0 28 28" },
+    "children": [
+      {
+        "tag": "path",
+        "props": { "d": "M5 7h18M10 7V3h8v4M8 7l1 18h10l1-18M12 11v10m4-10v10" }
+      }
+    ]
+  },
+  "database": {
+    "tag": "svg",
+    "props": { "viewBox": "0 0 28 28" },
+    "children": [
+      {
+        "tag": "ellipse",
+        "props": { "cx": "14", "cy": "6", "rx": "8.8", "ry": "3" }
+      },
+      {
+        "tag": "path",
+        "props": {
+          "d": "M5.2 6v16c0 4 17.6 4 17.6 0V6M5.2 11c0 4 17.6 4 17.6 0M5.2 16c0 4 17.6 4 17.6 0M5.2 20c0 4 17.6 4 17.6 0"
+        }
+      }
+    ]
+  },
+  "refresh": {
+    "tag": "svg",
+    "props": { "viewBox": "0 0 28 28" },
+    "children": [
+      {
+        "tag": "path",
+        "props": {
+          "d": "M24 11A10 10 0 0 0 6 6L3 10V4m0 6h6M4 17a10 10 0 0 0 18 5l3-4v6m0-6h-6"
+        }
+      }
+    ]
+  },
+  "motion": {
+    "tag": "svg",
+    "props": { "viewBox": "0 0 28 28" },
+    "children": [
+      {
+        "tag": "path",
+        "props": { "d": "M3 14h3m3-6v12m5-17v23m5-18v12m5-8v4" }
+      }
+    ]
+  },
+  "cloud-gpu": {
+    "tag": "svg",
+    "props": { "viewBox": "0 0 32 32" },
+    "children": [
+      {
+        "tag": "path",
+        "props": {
+          "d": "M9 24H7a6 6 0 0 1-1-11.9A10 10 0 0 1 25.4 11a6.8 6.8 0 0 1 1.1 13"
+        }
+      },
+      { "tag": "circle", "props": { "cx": "17", "cy": "23", "r": "5.1" } },
+      {
+        "tag": "path",
+        "props": {
+          "d": "M17 16v3m0 8v3m-7-7h3m8 0h3M12 18l2 2m6 6 2 2m0-10-2 2m-6 6-2 2"
+        }
+      }
+    ]
+  },
+  "antenna": {
+    "tag": "svg",
+    "props": { "viewBox": "0 0 32 32" },
+    "children": [
+      {
+        "tag": "path",
+        "props": {
+          "d": "M6 7a13 13 0 0 0 0 18m4-14a7 7 0 0 0 0 10M26 7a13 13 0 0 1 0 18m-4-14a7 7 0 0 1 0 10M16 18l-7 13m7-13 7 13m-10-5h6"
+        }
+      },
+      { "tag": "circle", "props": { "cx": "16", "cy": "14", "r": "3" } }
+    ]
+  },
+  "rocket": {
+    "tag": "svg",
+    "props": { "viewBox": "0 0 32 32" },
+    "children": [
+      {
+        "tag": "path",
+        "props": {
+          "d": "M11 22c-3-1-5-3-6-6C11 6 20 2 29 3c0 10-4 18-14 23l-4-4Z M8 12 3 13l-2 7 7-1m13 3-1 7-7 2 1-6M7 24l-4 5m7-3-2 5"
+        }
+      },
+      { "tag": "circle", "props": { "cx": "21", "cy": "11", "r": "3" } }
+    ]
+  },
+  "login": {
+    "tag": "svg",
+    "props": { "viewBox": "0 0 32 32" },
+    "children": [
+      { "tag": "path", "props": { "d": "M18 5h8v24h-8M3 17h17m-6-6 6 6-6 6" } }
+    ]
+  },
+  "braces": {
+    "tag": "svg",
+    "props": { "viewBox": "0 0 32 32" },
+    "children": [
+      {
+        "tag": "path",
+        "props": {
+          "d": "M11 4H9C5 4 7 11 6 13c-.5 1.5-1.8 2-3 3 1.2 1 2.5 1.5 3 3 1 2-1 9 3 9h2M21 4h2c4 0 2 7 3 9 .5 1.5 1.8 2 3 3-1.2 1-2.5 1.5-3 3-1 2 1 9-3 9h-2"
+        }
+      }
+    ]
+  },
+  "ok": {
+    "tag": "svg",
+    "props": { "viewBox": "0 0 32 32" },
+    "children": [
+      { "tag": "circle", "props": { "cx": "16", "cy": "16", "r": "12.4" } },
+      { "tag": "path", "props": { "d": "m10 16 4.1 4.4L23 11" } }
+    ]
+  },
+  "stopwatch": {
+    "tag": "svg",
+    "props": { "viewBox": "0 0 28 28" },
+    "children": [
+      { "tag": "circle", "props": { "cx": "14", "cy": "16", "r": "10" } },
+      { "tag": "path", "props": { "d": "M11 2h6m-3 0v4m7 2 2-3m-9 11 4-5" } }
+    ]
+  },
+  "levels": {
+    "tag": "svg",
+    "props": { "viewBox": "0 0 28 28" },
+    "children": [
+      {
+        "tag": "path",
+        "props": { "d": "M5 25V17m9 8V9m9 16V2", "stroke-width": "2.4" }
+      }
+    ]
+  },
+  "mic": {
+    "tag": "svg",
+    "props": { "viewBox": "0 0 28 28" },
+    "children": [
+      {
+        "tag": "rect",
+        "props": {
+          "height": "15",
+          "rx": "4",
+          "width": "8",
+          "x": "10",
+          "y": "3"
+        }
+      },
+      {
+        "tag": "path",
+        "props": { "d": "M7 13v2a7 7 0 0 0 14 0v-2M14 22v4m-4 0h8" }
+      }
+    ]
+  },
+  "headphones": {
+    "tag": "svg",
+    "props": { "viewBox": "0 0 28 28" },
+    "children": [
+      { "tag": "path", "props": { "d": "M3 17v-4a11 11 0 0 1 22 0v4" } },
+      {
+        "tag": "rect",
+        "props": {
+          "height": "10",
+          "rx": "2.5",
+          "width": "6",
+          "x": "3",
+          "y": "15"
+        }
+      },
+      {
+        "tag": "rect",
+        "props": {
+          "height": "10",
+          "rx": "2.5",
+          "width": "6",
+          "x": "19",
+          "y": "15"
+        }
+      }
+    ]
+  },
+  "gauge": {
+    "tag": "svg",
+    "props": { "viewBox": "0 0 28 28" },
+    "children": [
+      {
+        "tag": "path",
+        "props": {
+          "d": "M3.5 23a12 12 0 1 1 21 0M6 14l2 1m-1-7 2 2m5-6v3m7 1-2 2m5 4-2 1M14 18l5-6"
+        }
+      },
+      { "tag": "circle", "props": { "cx": "14", "cy": "18", "r": "2" } }
+    ]
+  },
+  "gear": {
+    "tag": "svg",
+    "props": { "viewBox": "0 0 24 24" },
+    "children": [
+      {
+        "tag": "path",
+        "props": {
+          "d": "m9 3 .6-1h4.8l.6 1 .5 2 2 .9 1.9-.6 2.1 3.7-1.4 1.5v2.9l1.4 1.5-2.1 3.7-1.9-.6-2 .9-.5 2-.6 1H9l-.6-1-.5-2-2-.9-1.9.6-2.1-3.7 1.4-1.5v-2.9L1.9 9l2.1-3.7 1.9.6 2-.9Z"
+        }
+      },
+      { "tag": "circle", "props": { "cx": "12", "cy": "12", "r": "3.4" } }
+    ]
+  },
+  "palette": {
+    "tag": "svg",
+    "props": { "viewBox": "0 0 24 24" },
+    "children": [
+      {
+        "tag": "path",
+        "props": {
+          "d": "M20.8 11.7C20.8 6 17 2.5 11.4 2.5a9.2 9.2 0 0 0-.8 18.4c1.6.1 2.5-.9 1.9-2.2-.5-1.1-.8-2.1.2-2.9 1.1-.9 2.5-.1 4.6-.5 2.1-.4 3.5-1.7 3.5-3.6Z"
+        }
+      },
+      { "tag": "circle", "props": { "cx": "7.2", "cy": "9", "r": ".9" } },
+      { "tag": "circle", "props": { "cx": "10.9", "cy": "6.3", "r": ".9" } },
+      { "tag": "circle", "props": { "cx": "15.8", "cy": "7.2", "r": ".9" } },
+      { "tag": "circle", "props": { "cx": "17.8", "cy": "11.1", "r": ".9" } }
+    ]
+  },
+  "audio": {
+    "tag": "svg",
+    "props": { "viewBox": "0 0 24 24" },
+    "children": [
+      {
+        "tag": "path",
+        "props": {
+          "d": "M3 8.5h4l5-4v15l-5-4H3Z M16 7a7 7 0 0 1 0 10 M19 4a11 11 0 0 1 0 16"
+        }
+      }
+    ]
+  },
+  "chip": {
+    "tag": "svg",
+    "props": { "viewBox": "0 0 24 24" },
+    "children": [
+      {
+        "tag": "rect",
+        "props": {
+          "height": "14",
+          "rx": "2",
+          "width": "14",
+          "x": "5",
+          "y": "5"
+        }
+      },
+      {
+        "tag": "rect",
+        "props": { "height": "6", "rx": ".6", "width": "6", "x": "9", "y": "9" }
+      },
+      {
+        "tag": "path",
+        "props": {
+          "d": "M8 2v3m4-3v3m4-3v3M8 19v3m4-3v3m4-3v3M2 8h3m-3 4h3m-3 4h3M19 8h3m-3 4h3m-3 4h3"
+        }
+      }
+    ]
+  },
+  "key": {
+    "tag": "svg",
+    "props": { "viewBox": "0 0 24 24" },
+    "children": [
+      {
+        "tag": "path",
+        "props": { "d": "M14 14a6 6 0 1 0-4-4L2 18v4h4v-3h3v-3h3Z" }
+      },
+      { "tag": "circle", "props": { "cx": "16", "cy": "6", "r": "1.5" } }
+    ]
+  },
+  "wrench": {
+    "tag": "svg",
+    "props": { "viewBox": "0 0 24 24" },
+    "children": [
+      {
+        "tag": "path",
+        "props": {
+          "d": "M14 3a6 6 0 0 0-7 7L2.8 18a2.5 2.5 0 1 0 3.5 3.5L15 13a6 6 0 0 0 6-8l-4 4-3-1-1-3 3-3Z"
+        }
+      }
+    ]
+  },
+  "photo": {
+    "tag": "svg",
+    "props": { "viewBox": "0 0 24 24" },
+    "children": [
+      {
+        "tag": "path",
+        "props": { "d": "M14 3H4v18h17V11M6 17l5-6 4 4 3-3 3 4M19 2v6m-3-3h6" }
+      },
+      { "tag": "circle", "props": { "cx": "8", "cy": "7", "r": "1.3" } }
+    ]
+  },
+  "eye": {
+    "tag": "svg",
+    "props": { "viewBox": "0 0 24 24" },
+    "children": [
+      {
+        "tag": "path",
+        "props": { "d": "M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12Z" }
+      },
+      { "tag": "circle", "props": { "cx": "12", "cy": "12", "r": "3.1" } }
+    ]
+  },
+  "migrate": {
+    "tag": "svg",
+    "props": { "viewBox": "0 0 24 24" },
+    "children": [
+      {
+        "tag": "rect",
+        "props": {
+          "height": "13",
+          "rx": "1.4",
+          "width": "10",
+          "x": "3",
+          "y": "3"
+        }
+      },
+      {
+        "tag": "path",
+        "props": { "d": "M7 7h10v6M7 10v9h6m3-6 5 5-5 4v-3h-5v-3h5Z" }
+      }
+    ]
+  },
+  "radio": {
+    "tag": "svg",
+    "props": { "viewBox": "0 0 24 24" },
+    "children": [
+      {
+        "tag": "path",
+        "props": {
+          "d": "M4 5h13m-7 3 5 9M8 11l-4 6h15M12 6 2 20h20L15 9M3 9c0-5 7-8 12-6M19 3l2 3-3 2"
+        }
+      }
+    ]
+  },
+  "heart": {
+    "tag": "svg",
+    "props": { "viewBox": "0 0 24 24" },
+    "children": [
+      {
+        "tag": "path",
+        "props": {
+          "d": "M12 21C10 18 2 13 2 7a5 5 0 0 1 10-1 5 5 0 0 1 10 1c0 6-8 11-10 14Z"
+        }
+      }
+    ]
+  },
+  "history": {
+    "tag": "svg",
+    "props": { "viewBox": "0 0 28 28" },
+    "children": [
+      {
+        "tag": "path",
+        "props": { "d": "M5 7A10.5 10.5 0 1 1 3.5 17M5 3v5H1M14 7v7l5 3" }
+      }
+    ]
+  },
+  "cube": {
+    "tag": "svg",
+    "props": { "viewBox": "0 0 28 28" },
+    "children": [
+      {
+        "tag": "path",
+        "props": {
+          "d": "m14 2 11 6.5v12L14 27 3 20.5v-12Z M3 8.5 14 15l11-6.5M14 15v12M8.5 5.2 20 12"
+        }
+      }
+    ]
+  },
+  "file": {
+    "tag": "svg",
+    "props": { "viewBox": "0 0 28 28" },
+    "children": [
+      {
+        "tag": "path",
+        "props": { "d": "M6 2h10l6 6v18H6ZM16 2v7h6M10 14h3m3 0h2m-8 5h8" }
+      }
+    ]
+  },
+  "list": {
+    "tag": "svg",
+    "props": { "viewBox": "0 0 32 32" },
+    "children": [
+      {
+        "tag": "path",
+        "props": {
+          "d": "M12 6h17M12 16h17M12 26h17M3 5l2 1-2 1M3 14h3v3H3m0 8h3v3H3"
+        }
+      }
+    ]
+  },
+  "stethoscope": {
+    "tag": "svg",
+    "props": { "viewBox": "0 0 32 32" },
+    "children": [
+      {
+        "tag": "path",
+        "props": {
+          "d": "M5 3v7c0 8 13 8 13 0V3M5 3h3m7 0h3M8 1v5m7-5v5M11.5 16v6a8.5 8.5 0 0 0 17 0v-6"
+        }
+      },
+      { "tag": "circle", "props": { "cx": "28.5", "cy": "13.5", "r": "2.6" } }
+    ]
+  },
+  "crown": {
+    "tag": "svg",
+    "props": { "viewBox": "0 0 44 40" },
+    "children": [
+      {
+        "tag": "path",
+        "props": { "d": "m5 11 6 19h22l6-19-11 10-6-18-6 18Z" }
+      },
+      "\n",
+      { "tag": "path", "props": { "d": "M11 35h22" } },
+      "\n",
+      {
+        "tag": "g",
+        "props": { "fill": "currentColor", "stroke": "none" },
+        "children": [
+          { "tag": "circle", "props": { "cx": "5", "cy": "10", "r": "2.4" } },
+          "\n",
+          { "tag": "circle", "props": { "cx": "22", "cy": "3", "r": "2.5" } },
+          "\n",
+          { "tag": "circle", "props": { "cx": "39", "cy": "10", "r": "2.4" } },
+          "\n"
+        ]
+      }
+    ]
+  },
+  "person": {
+    "tag": "svg",
+    "props": { "viewBox": "0 0 38 42" },
+    "children": [
+      { "tag": "circle", "props": { "cx": "19", "cy": "11", "r": "7" } },
+      "\n",
+      {
+        "tag": "path",
+        "props": { "d": "M5.5 36a13.5 13.5 0 0 1 27 0v1h-27Z" }
+      },
+      "\n"
+    ]
+  },
+  "signal": {
+    "tag": "svg",
+    "props": { "viewBox": "0 0 40 40" },
+    "children": [
+      {
+        "tag": "g",
+        "props": { "fill": "currentColor", "stroke": "none" },
+        "children": [
+          {
+            "tag": "rect",
+            "props": {
+              "height": "10",
+              "rx": "1",
+              "width": "5",
+              "x": "3",
+              "y": "26"
+            }
+          },
+          "\n",
+          {
+            "tag": "rect",
+            "props": {
+              "height": "17",
+              "rx": "1",
+              "width": "5",
+              "x": "13",
+              "y": "19"
+            }
+          },
+          "\n",
+          {
+            "tag": "rect",
+            "props": {
+              "height": "26",
+              "rx": "1",
+              "width": "5",
+              "x": "23",
+              "y": "10"
+            }
+          },
+          "\n",
+          {
+            "tag": "rect",
+            "props": {
+              "height": "35",
+              "rx": "1",
+              "width": "5",
+              "x": "33",
+              "y": "1"
+            }
+          },
+          "\n"
+        ]
+      }
+    ]
+  },
+  "leave": {
+    "tag": "svg",
+    "props": { "viewBox": "0 0 36 36" },
+    "children": [
+      {
+        "tag": "path",
+        "props": {
+          "d": "M17 4H6a2 2 0 0 0-2 2v24a2 2 0 0 0 2 2h11M16 18h17m-6-6 6 6-6 6"
+        }
+      },
+      "\n"
+    ]
+  },
+  "prev": {
+    "tag": "svg",
+    "props": { "viewBox": "0 0 28 28" },
+    "children": [{ "tag": "path", "props": { "d": "m18 5-9 9 9 9" } }]
+  },
+  "sparkle": {
+    "tag": "svg",
+    "props": { "viewBox": "0 0 28 28" },
+    "children": [
+      {
+        "tag": "path",
+        "props": {
+          "d": "M14 2c.8 8 3 11 11 12-8 1-10.2 4-11 12-1-8-3-11-11-12 8-1 10-4 11-12Z"
+        }
+      }
+    ]
+  },
+  "studio": {
+    "tag": "svg",
+    "props": { "viewBox": "0 0 28 28" },
+    "children": [
+      {
+        "tag": "path",
+        "props": {
+          "d": "M13 7c.8 6 3 8.2 9 9-6 .8-8.2 3-9 9-1-6-3-8.2-9-9 6-.8 8-3 9-9Z M23 1v7M19.5 4.5h7"
+        }
+      }
+    ]
+  },
+  "note": {
+    "tag": "svg",
+    "props": { "viewBox": "0 0 28 28" },
+    "children": [
+      { "tag": "path", "props": { "d": "M10 22V6l13-3v16M10 10l13-3" } },
+      {
+        "tag": "ellipse",
+        "props": { "cx": "6.5", "cy": "22", "rx": "3.5", "ry": "3" }
+      },
+      {
+        "tag": "ellipse",
+        "props": { "cx": "19.5", "cy": "19.5", "rx": "3.5", "ry": "3" }
+      }
+    ]
+  },
+  "rhythm": {
+    "tag": "svg",
+    "props": { "viewBox": "0 0 28 28" },
+    "children": [
+      { "tag": "path", "props": { "d": "M2 15h5l3-8 5 16 4-20 4 15 3-5h3" } }
+    ]
+  },
+  "timer": {
+    "tag": "svg",
+    "props": { "viewBox": "0 0 28 28" },
+    "children": [
+      { "tag": "circle", "props": { "cx": "14", "cy": "16", "r": "10" } },
+      {
+        "tag": "path",
+        "props": { "d": "M11 2h6M14 2v4m7.5 2 2.5-3M14 16l5-5" }
+      }
+    ]
+  },
+  "target": {
+    "tag": "svg",
+    "props": { "viewBox": "0 0 28 28" },
+    "children": [
+      { "tag": "circle", "props": { "cx": "14", "cy": "14", "r": "9.5" } },
+      { "tag": "circle", "props": { "cx": "14", "cy": "14", "r": "3.3" } },
+      {
+        "tag": "path",
+        "props": {
+          "d": "M14 1v6m0 14v6M1 14h6m14 0h6M6 6l1.5 1.5m13 13L22 22M22 6l-1.5 1.5m-13 13L6 22"
+        }
+      }
+    ]
+  },
+  "user": {
+    "tag": "svg",
+    "props": { "viewBox": "0 0 28 28" },
+    "children": [
+      { "tag": "circle", "props": { "cx": "14", "cy": "9", "r": "5" } },
+      { "tag": "path", "props": { "d": "M5 26c1-8 5-11 9-11s8 3 9 11Z" } }
+    ]
+  },
+  "users": {
+    "tag": "svg",
+    "props": { "viewBox": "0 0 32 32" },
+    "children": [
+      { "tag": "circle", "props": { "cx": "12", "cy": "10", "r": "5" } },
+      { "tag": "circle", "props": { "cx": "24", "cy": "12", "r": "4" } },
+      {
+        "tag": "path",
+        "props": { "d": "M2 29c0-8 4-12 10-12s10 4 10 12M21 20c5-3 10 2 10 9" }
+      }
+    ]
+  }
+}

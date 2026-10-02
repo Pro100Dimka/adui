@@ -1,10 +1,32 @@
 import React from "react";
-import { U } from "../../../dev/exampleHelpers";
+import {
+  U,
+  ExampleShowcase,
+  ExampleVariant,
+  ExampleVariantGrid,
+  useExampleSize,
+} from "../../../dev/exampleHelpers";
 
 export default function TabExample() {
+  const [size, setSize] = useExampleSize();
   return (
-    <div role="tablist" style={{ width: "100%" }}>
-      <U.Tab selected icon="palette">Внешний вид</U.Tab>
-    </div>
+    <ExampleShowcase size={size} onSizeChange={setSize}>
+      <ExampleVariantGrid>
+        <ExampleVariant title="Selected" description="Active tab">
+          <div role="tablist">
+            <U.Tab size={size} selected icon="palette">
+              View
+            </U.Tab>
+          </div>
+        </ExampleVariant>
+        <ExampleVariant title="Idle" description="Inactive tab">
+          <div role="tablist">
+            <U.Tab size={size} icon="audio">
+              Audio
+            </U.Tab>
+          </div>
+        </ExampleVariant>
+      </ExampleVariantGrid>
+    </ExampleShowcase>
   );
 }

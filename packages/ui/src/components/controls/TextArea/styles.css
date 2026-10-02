@@ -1,1 +1,10 @@
-.ad-text-area{display:grid;gap:var(--ad-space-1);min-width:0}.ad-text-area-control{display:flex;align-items:flex-start;gap:var(--ad-space-2);min-width:0;padding:var(--ad-space-2);border:0.0625rem solid transparent;border-radius:var(--ad-radius);background:var(--ad-surface-input);box-shadow:var(--ad-shadow-input)}.ad-text-area-control:focus-within{border-color:#ff95b3}.ad-text-area textarea{width:100%;min-height:6lh;resize:vertical;border:0;outline:0;background:transparent;color:var(--ad-text);font:inherit}.ad-text-area small{color:var(--ad-muted)}
+.ad-text-area {
+  display: grid;
+  gap: var(--ad-space-1);
+  min-width: 0;
+  color: var(--ad-text);
+}
+.ad-text-area small {
+  color: var(--ad-muted);
+  font-size: var(--ad-font-size-caption);
+}

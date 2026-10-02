@@ -125,7 +125,6 @@ During `npm run package`, only `packages/ui` is compiled and packed. The playgro
 
 `RotaryKnob` — премиальный процедурный регулятор без картинок. Поддерживает круговое и линейное перетаскивание, внешнюю шкалу, колесо, клавиатуру, точный режим с Shift и двойной щелчок для сброса. См. `packages/ui/docs/ROTARY_KNOB.md`.
 
-
 ## RotaryKnob source of truth
 
 `RotaryKnob` is a direct React port of `packages/ui/docs/premium-knob-interactive-neon.reference.html`.
@@ -143,8 +142,8 @@ Do not replace it with the old CircularGauge arc implementation. `CircularGauge`
 npm run check:structure
 ```
 
-
 ## Всё по месту
+
 См. `АРХИТЕКТУРА_ПО_МЕСТУ.md`.
 
 ## Typography
@@ -157,7 +156,6 @@ npm run check:structure
 <Typography variant="h1">Настройки</Typography>
 <Typography variant="body" tone="muted">Описание раздела</Typography>
 ```
-
 
 ## Stack / Grid
 
@@ -181,7 +179,6 @@ Run `npm run check:layout` to verify these contracts.
 ## Adaptive geometry and animated borders
 
 Relative dimensions such as `width: 100%` and `height: 100%` are intentionally allowed. The animated-border SVG always follows its host at `100% x 100%`; `ResizeObserver` recalculates only its path geometry. Run `npm run check:motion` to protect this behavior during refactors.
-
 
 ## Primitive-first API (0.2)
 

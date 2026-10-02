@@ -24,8 +24,8 @@ export function AnimatedBorder({
     as,
     {
       ...mark("AnimatedBorder", props),
-      ref
+      ref,
     },
-    children
+    children,
   );
 }

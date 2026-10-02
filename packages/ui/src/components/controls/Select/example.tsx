@@ -1,3 +1,53 @@
 import React from "react";
-import { U, useExampleState } from "../../../dev/exampleHelpers";
-export default function SelectExample(){const {notice,setNotice}=useExampleState();const demo=<U.Stack direction="row" gap={2} wrap>{(["xs","sm","md","lg"] as const).map(size=><U.Select key={size} size={size} label={size.toUpperCase()} options={["WASAPI Shared","WASAPI Exclusive","ASIO"]} style={{flex:"1 1 9rem"}}/>)}</U.Stack>;return <>{demo}<U.Toast floating open={!!notice} message={notice} onClose={()=>setNotice("")}/></>}
+import {
+  U,
+  ExampleShowcase,
+  ExampleVariant,
+  ExampleVariantGrid,
+  useExampleSize,
+} from "../../../dev/exampleHelpers";
+
+const options = ["WASAPI Shared", "WASAPI Exclusive", "ASIO"];
+export default function SelectExample() {
+  const [size, setSize] = useExampleSize();
+  return (
+    <ExampleShowcase size={size} onSizeChange={setSize}>
+      <ExampleVariantGrid>
+        <ExampleVariant title="Default" description="Nothing selected">
+          <U.Select
+            size={size}
+            label="Driver"
+            placeholder="Choose driver"
+            options={options}
+          />
+        </ExampleVariant>
+        <ExampleVariant title="Selected" description="Current value">
+          <U.Select
+            size={size}
+            label="Driver"
+            defaultValue="WASAPI Shared"
+            options={options}
+          />
+        </ExampleVariant>
+        <ExampleVariant title="With icon" description="Context adornment">
+          <U.Select
+            size={size}
+            label="Audio"
+            icon="audio"
+            defaultValue="ASIO"
+            options={options}
+          />
+        </ExampleVariant>
+        <ExampleVariant title="Disabled" description="Unavailable">
+          <U.Select
+            size={size}
+            disabled
+            value="WASAPI Shared"
+            options={options}
+            aria-label="Disabled select"
+          />
+        </ExampleVariant>
+      </ExampleVariantGrid>
+    </ExampleShowcase>
+  );
+}

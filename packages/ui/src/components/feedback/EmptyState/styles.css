@@ -1,4 +1,17 @@
 /* Styles owned by EmptyState. */
-.ad-empty-state{padding:1.5625rem 0.9375rem;text-align:center;display:flex;flex-direction:column;align-items:center;}
-.ad-empty-state h3{font-size:1.125rem;margin:0.9375rem 0 0.3125rem;}
-.ad-empty-state p{font-size:0.8125rem;color:var(--ad-muted);margin:0 0 1.0625rem;}
+.ad-empty-state {
+  padding: 1.5625rem 0.9375rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.ad-empty-state h3 {
+  font-size: 1.125rem;
+  margin: 0.9375rem 0 0.3125rem;
+}
+.ad-empty-state p {
+  font-size: 0.8125rem;
+  color: var(--ad-muted);
+  margin: 0 0 1.0625rem;
+}

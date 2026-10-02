@@ -1,5 +1,18 @@
 /* Styles owned by ButtonGroup. */
-.ad-button-group{display:inline-flex;align-items:center;gap:0.625rem;flex-wrap:wrap;min-width:0;}
-.ad-button-group>.ad{flex:none;}
-.ad-button-group>.ad-button{min-inline-size:max-content;}
-.ad-button-group>.ad-icon-button,.ad-button-group>.ad-toggle-button{justify-self:center;}
+.ad-button-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+  flex-wrap: wrap;
+  min-width: 0;
+}
+.ad-button-group > .ad {
+  flex: none;
+}
+.ad-button-group > .ad-button {
+  min-inline-size: max-content;
+}
+.ad-button-group > .ad-icon-button,
+.ad-button-group > .ad-toggle-button {
+  justify-self: center;
+}

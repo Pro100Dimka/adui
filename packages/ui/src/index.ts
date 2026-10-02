@@ -5,7 +5,12 @@ export { useBorder, useDecoration, useTabShape } from "./core/motion/hooks";
 export { ThemeProvider } from "./components/foundation/ThemeProvider/ThemeProvider";
 export type { ThemeProviderProps } from "./components/foundation/ThemeProvider/ThemeProvider";
 export { Typography } from "./components/foundation/Typography/Typography";
-export type { TypographyProps, TypographyTone, TypographyVariant, TypographyWeight } from "./components/foundation/Typography/Typography";
+export type {
+  TypographyProps,
+  TypographyTone,
+  TypographyVariant,
+  TypographyWeight,
+} from "./components/foundation/Typography/Typography";
 export { typography } from "./theme/typography";
 export { Header } from "./components/layout/Header/Header";
 export { Illustration } from "./components/layout/Illustration/Illustration";
@@ -27,9 +32,10 @@ export * from "./components/layout/shared";
 export { Autocomplete } from "./components/controls/Autocomplete/Autocomplete";
 export { Button } from "./components/controls/Button/Button";
 export { Checkbox } from "./components/controls/Checkbox/Checkbox";
-export { Field } from "./components/controls/Field/Field";
 export { FilePicker } from "./components/controls/FilePicker/FilePicker";
 export { IconButton } from "./components/controls/IconButton/IconButton";
+export { InputBase } from "./components/controls/InputBase/InputBase";
+export type { InputBaseProps } from "./components/controls/InputBase/InputBase";
 export { NumberField } from "./components/controls/NumberField/NumberField";
 export { SegmentedControl } from "./components/controls/SegmentedControl/SegmentedControl";
 export { Select } from "./components/controls/Select/Select";

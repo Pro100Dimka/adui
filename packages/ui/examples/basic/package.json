@@ -2,7 +2,9 @@
   "name": "ad-voice-ui-basic-example",
   "private": true,
   "type": "module",
-  "scripts": {"dev": "vite"},
+  "scripts": {
+    "dev": "vite"
+  },
   "dependencies": {
     "@ad-voice/ui": "file:../..",
     "@vitejs/plugin-react": "latest",

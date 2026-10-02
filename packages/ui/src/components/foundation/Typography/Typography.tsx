@@ -16,7 +16,8 @@ export type TypographyVariant =
   | "eyebrow"
   | "mono";
 
-export type TypographyTone = "default" | "muted" | "accent" | "success" | "warning" | "danger";
+export type TypographyTone =
+  "default" | "muted" | "accent" | "success" | "warning" | "danger";
 export type TypographyWeight = "regular" | "medium" | "semibold" | "bold";
 
 export interface TypographyProps extends Omit<CommonProps, "tone"> {
@@ -41,7 +42,7 @@ const defaultElement: Record<TypographyVariant, ElementType> = {
   label: "span",
   caption: "span",
   eyebrow: "span",
-  mono: "code"
+  mono: "code",
 };
 
 export function Typography({
@@ -64,8 +65,8 @@ export function Typography({
       "data-ad-tone": tone,
       "data-ad-weight": weight,
       "data-ad-truncate": truncate || undefined,
-      style: { ...style, textAlign: align }
+      style: { ...style, textAlign: align },
     },
-    children ?? text
+    children ?? text,
   );
 }

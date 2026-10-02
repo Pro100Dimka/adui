@@ -1,6 +1,6 @@
 export default {
-  "name": "CollapsibleSection",
-  "description": "Раскрывающийся раздел",
-  "category": "data",
-  "wide": false
+  name: "CollapsibleSection",
+  description: "Раскрывающийся раздел",
+  category: "data",
+  wide: false,
 } as const;

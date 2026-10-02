@@ -1,2 +1,10 @@
 /* Shared only by sibling components. */
-.ad-task-meta,.ad-storage-meta{display:flex;align-items:center;justify-content:space-between;font-size:0.75rem;color:var(--ad-muted);margin:0.625rem 0;}
+.ad-task-meta,
+.ad-storage-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  color: var(--ad-muted);
+  margin: 0.625rem 0;
+}
