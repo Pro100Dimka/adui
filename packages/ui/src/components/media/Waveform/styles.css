@@ -1,7 +1,9 @@
 /* Styles owned by Waveform. */
 .ad-waveform {
   position: relative;
-  height: clamp(3.25rem, 7dvh, 4.5rem);
+  aspect-ratio: 10;
+  min-height: 3rem;
+  max-height: 4.5rem;
   min-width: 3.125rem;
 }
 .ad-waveform > svg {

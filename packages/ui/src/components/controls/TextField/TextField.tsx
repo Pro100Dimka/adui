@@ -44,7 +44,7 @@ export const TextField = ({
         startAdornment={startAdornment}
         endAdornment={
           <>
-            {clearable && (
+            {clearable && current && (
               <IconButton
                 size="xs"
                 variant="ghost"

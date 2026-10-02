@@ -1,6 +1,6 @@
 import { U, useExampleState } from "../../../dev/exampleHelpers";
 export default function TabPanelExample() {
-  const { open, notice, setNotice } = useExampleState();
+  const { notice, setNotice } = useExampleState();
   const demo = (
     <U.TabPanel>
       <U.Text>Содержимое выбранной вкладки</U.Text>

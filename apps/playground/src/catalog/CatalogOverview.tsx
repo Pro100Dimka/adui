@@ -53,7 +53,7 @@ export function CatalogOverview() {
             >
               <Stack gap={4}>
                 <Header
-                  level={2}
+                  level={3}
                   compact
                   icon={category.icon}
                   title={category.label}

@@ -1,6 +1,6 @@
 import { U, useExampleState } from "../../../dev/exampleHelpers";
 export default function TextExample() {
-  const { open, notice, setNotice } = useExampleState();
+  const { notice, setNotice } = useExampleState();
   const demo = (
     <div className="typography-sample">
       <U.Text as="h2" variant="title">

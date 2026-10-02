@@ -1,6 +1,6 @@
 import { U, row, useExampleState } from "../../../dev/exampleHelpers";
 export default function StatusIndicatorExample() {
-  const { open, notice, setNotice } = useExampleState();
+  const { notice, setNotice } = useExampleState();
   const demo = row(
     <>
       {(["success", "processing", "pending", "error", "offline"] as const).map(

@@ -86,11 +86,11 @@ export function CatalogSidebar({ activeItem }: { activeItem?: CatalogMeta }) {
     .filter((group) => group.items.length);
 
   return (
-    <Stack as="aside" className="sidebar docs-sidebar" gap={3}>
+    <Stack as="aside" className="docs-sidebar" gap={3}>
       <CollapsibleSection
         className="docs-mobile-nav"
         title={activeItem?.name ?? "Компоненты"}
-        icon="menu"
+        icon="list"
       >
         <Stack className="docs-mobile-nav-panel" gap={3}>
           <OverviewLink className="docs-mobile-overview" />
@@ -143,7 +143,11 @@ export function CatalogSidebar({ activeItem }: { activeItem?: CatalogMeta }) {
         </Stack>
       </Card>
 
-      <ScrollArea className="docs-nav-scroll" label="Навигация по компонентам">
+      <ScrollArea
+        className="docs-nav-scroll"
+        height="none"
+        label="Навигация по компонентам"
+      >
         <Stack as="nav" className="docs-nav" gap={2} aria-label="Компоненты">
           {groups.map(({ category, items }) => {
             const expanded = !!needle || openId === category.id;
@@ -163,7 +167,9 @@ export function CatalogSidebar({ activeItem }: { activeItem?: CatalogMeta }) {
                   aria-expanded={expanded}
                   onClick={() => setOpenId(expanded ? "" : category.id)}
                 >
-                  {category.label}
+                  <Typography as="span" variant="label" truncate>
+                    {category.label}
+                  </Typography>
                   <Badge>{items.length}</Badge>
                 </Button>
                 {expanded && (

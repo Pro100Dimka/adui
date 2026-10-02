@@ -6,7 +6,7 @@ export const catalogCategories = [
     id: "fields",
     label: "Поля и ввод",
     description: "InputBase, текстовые поля, выбор, файлы и контролы значений.",
-    icon: "edit",
+    icon: "sliders",
   },
   {
     id: "buttons",
@@ -18,7 +18,7 @@ export const catalogCategories = [
     id: "navigation",
     label: "Навигация",
     description: "Tabs, segmented controls, menu и popover.",
-    icon: "menu",
+    icon: "list",
   },
   {
     id: "layout",
@@ -30,7 +30,7 @@ export const catalogCategories = [
     id: "typography",
     label: "Типографика и тема",
     description: "Текст, иконки, идентика и ThemeProvider.",
-    icon: "text",
+    icon: "document",
   },
   {
     id: "feedback",
@@ -54,13 +54,13 @@ export const catalogCategories = [
     id: "composites",
     label: "Композиции",
     description: "Редкие reusable-композиции с собственной логикой.",
-    icon: "layers",
+    icon: "cube",
   },
   {
     id: "motion",
     label: "Эффекты и motion",
     description: "AnimatedBorder и независимые визуальные эффекты.",
-    icon: "sparkles",
+    icon: "sparkle",
   },
 ].map((category) => ({
   ...category,

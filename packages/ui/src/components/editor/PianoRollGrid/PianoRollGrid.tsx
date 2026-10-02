@@ -15,7 +15,7 @@ export const PianoRollGrid = (p: PianoRollGridProps) => {
   ];
   const [notes, setNotes] = useControllable(p.notes, defaults, p.onChange);
   const [zoom, setZoom] = useState(1),
-    [head, setHead] = useControllable(p.playhead, 100, p.onPlayheadChange);
+    [head] = useControllable(p.playhead, 100, p.onPlayheadChange);
   const [selection, setSelection] = useState<{
     x: number;
     y: number;
@@ -90,9 +90,9 @@ export const PianoRollGrid = (p: PianoRollGridProps) => {
               key={i}
               className="ad-note"
               style={{
-                left: `${n.x / 6}rem`,
+                left: `calc(${n.x / 6}rem * var(--ad-editor-zoom))`,
                 top: `${n.y / 6}rem`,
-                width: `${n.width / 6}rem`,
+                width: `calc(${n.width / 6}rem * var(--ad-editor-zoom))`,
               }}
               onPointerDown={(e) => {
                 e.stopPropagation();
@@ -125,7 +125,10 @@ export const PianoRollGrid = (p: PianoRollGridProps) => {
               }}
             />
           )}
-          <div className="ad-playhead" style={{ left: `${head / 6}rem` }} />
+          <div
+            className="ad-playhead"
+            style={{ left: `calc(${head / 6}rem * var(--ad-editor-zoom))` }}
+          />
         </div>
         {p.showLyrics !== false && (
           <div className="ad-lyrics-lane">

@@ -1,6 +1,6 @@
 import { U, useExampleState } from "../../../dev/exampleHelpers";
 export default function DataTableExample() {
-  const { open, notice, setNotice } = useExampleState();
+  const { notice, setNotice } = useExampleState();
   const demo = <U.DataTable />;
   return (
     <>

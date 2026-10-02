@@ -1,6 +1,6 @@
 import { U, useExampleState } from "../../../dev/exampleHelpers";
 export default function EmptyStateExample() {
-  const { open, notice, setNotice, alert } = useExampleState();
+  const { notice, setNotice, alert } = useExampleState();
   const demo = (
     <U.EmptyState
       action={

@@ -1,6 +1,6 @@
 import { U, useExampleState } from "../../../dev/exampleHelpers";
 export default function AudioPlayerExample() {
-  const { open, notice, setNotice, note } = useExampleState();
+  const { notice, setNotice } = useExampleState();
   const demo = (
     <>
       <U.AudioPlayer duration={51} />

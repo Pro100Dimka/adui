@@ -1,3 +1,105 @@
+/* Responsive inputs belong to one element only; nested layouts must not inherit them. */
+@property --ad-stack-direction {
+  syntax: "*";
+  inherits: false;
+}
+@property --ad-stack-direction-sm {
+  syntax: "*";
+  inherits: false;
+}
+@property --ad-stack-direction-md {
+  syntax: "*";
+  inherits: false;
+}
+@property --ad-stack-direction-lg {
+  syntax: "*";
+  inherits: false;
+}
+@property --ad-stack-direction-xl {
+  syntax: "*";
+  inherits: false;
+}
+@property --ad-stack-gap {
+  syntax: "*";
+  inherits: false;
+}
+@property --ad-stack-gap-sm {
+  syntax: "*";
+  inherits: false;
+}
+@property --ad-stack-gap-md {
+  syntax: "*";
+  inherits: false;
+}
+@property --ad-stack-gap-lg {
+  syntax: "*";
+  inherits: false;
+}
+@property --ad-stack-gap-xl {
+  syntax: "*";
+  inherits: false;
+}
+@property --ad-stack-align {
+  syntax: "*";
+  inherits: false;
+}
+@property --ad-stack-align-sm {
+  syntax: "*";
+  inherits: false;
+}
+@property --ad-stack-align-md {
+  syntax: "*";
+  inherits: false;
+}
+@property --ad-stack-align-lg {
+  syntax: "*";
+  inherits: false;
+}
+@property --ad-stack-align-xl {
+  syntax: "*";
+  inherits: false;
+}
+@property --ad-stack-justify {
+  syntax: "*";
+  inherits: false;
+}
+@property --ad-stack-justify-sm {
+  syntax: "*";
+  inherits: false;
+}
+@property --ad-stack-justify-md {
+  syntax: "*";
+  inherits: false;
+}
+@property --ad-stack-justify-lg {
+  syntax: "*";
+  inherits: false;
+}
+@property --ad-stack-justify-xl {
+  syntax: "*";
+  inherits: false;
+}
+@property --ad-stack-wrap {
+  syntax: "*";
+  inherits: false;
+}
+@property --ad-stack-wrap-sm {
+  syntax: "*";
+  inherits: false;
+}
+@property --ad-stack-wrap-md {
+  syntax: "*";
+  inherits: false;
+}
+@property --ad-stack-wrap-lg {
+  syntax: "*";
+  inherits: false;
+}
+@property --ad-stack-wrap-xl {
+  syntax: "*";
+  inherits: false;
+}
+
 .ad-stack {
   display: flex;
   min-width: 0;

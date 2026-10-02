@@ -1,6 +1,6 @@
 import { U, row, useExampleState } from "../../../dev/exampleHelpers";
 export default function AvatarExample() {
-  const { open, notice, setNotice } = useExampleState();
+  const { notice, setNotice } = useExampleState();
   const demo = row(
     <>
       <U.Avatar name="Дмитрий" />

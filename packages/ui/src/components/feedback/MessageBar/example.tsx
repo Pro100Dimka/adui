@@ -1,6 +1,6 @@
 import { U, useExampleState } from "../../../dev/exampleHelpers";
 export default function MessageBarExample() {
-  const { open, notice, setNotice } = useExampleState();
+  const { notice, setNotice } = useExampleState();
   const demo = (
     <>
       <U.MessageBar tone="error">Недостаточно свободного места</U.MessageBar>

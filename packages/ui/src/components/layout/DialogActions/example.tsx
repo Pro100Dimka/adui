@@ -1,6 +1,6 @@
 import { U, useExampleState } from "../../../dev/exampleHelpers";
 export default function DialogActionsExample() {
-  const { open, notice, setNotice, alert } = useExampleState();
+  const { notice, setNotice, alert } = useExampleState();
   const demo = (
     <U.DialogActions>
       <U.Button onClick={() => alert("Отмена")}>Отмена</U.Button>

@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Stack } from "@ad-voice/ui";
+import { Grid, Stack } from "@ad-voice/ui";
 import { getCatalogItemBySlug } from "./componentRegistry";
 import { CatalogSidebar } from "./CatalogSidebar";
 import { CatalogOverview } from "./CatalogOverview";
@@ -13,11 +13,14 @@ export function CatalogPage({ routeId }: { routeId?: string }) {
   }, [item]);
 
   return (
-    <>
+    <Grid
+      className="docs-layout"
+      columns={{ base: 1, md: "minmax(15rem, 18rem) minmax(0, 1fr)" }}
+    >
       <CatalogSidebar activeItem={item} />
-      <Stack as="main" className="catalog-main docs-main" gap={4}>
+      <Stack as="main" className="docs-main" gap={4}>
         {item ? <ComponentDocsPage item={item} /> : <CatalogOverview />}
       </Stack>
-    </>
+    </Grid>
   );
 }

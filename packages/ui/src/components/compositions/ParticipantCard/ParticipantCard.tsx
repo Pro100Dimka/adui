@@ -1,4 +1,4 @@
-import { useControllable } from "../../../core/base";
+import { classes, useControllable } from "../../../core/base";
 import { Card } from "../../layout/Card/Card";
 import { Stack } from "../../layout/Stack/Stack";
 import { Typography } from "../../foundation/Typography/Typography";
@@ -11,14 +11,17 @@ export const ParticipantCard = (p: ParticipantCardProps) => {
   const [volume, setVolume] = useControllable(p.volume, 72, p.onVolumeChange),
     [muted, setMuted] = useControllable(p.muted, false, p.onMuteChange);
   return (
-    <Card {...p}>
-      <Stack direction="row" gap={3} align="center">
+    <Card {...p} className={classes("ad-participant-card", p.className)}>
+      <Stack direction="row" gap={3} align="center" wrap>
         <RoleEmblem role={p.role} />
-        <Stack gap={1}>
-          <Typography variant="title">{p.name ?? "Release Host"}</Typography>
+        <Stack gap={1} className="ad-participant-card-info">
+          <Typography variant="title" truncate>
+            {p.name ?? "Release Host"}
+          </Typography>
           <LevelMeter value={muted ? 0 : 72} />
         </Stack>
         <RotaryKnob
+          size="sm"
           value={volume}
           onValueChange={setVolume}
           label="Громкость"

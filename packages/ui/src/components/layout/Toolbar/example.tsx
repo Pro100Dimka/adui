@@ -1,6 +1,6 @@
 import { U, useExampleState } from "../../../dev/exampleHelpers";
 export default function ToolbarExample() {
-  const { open, notice, setNotice, cursor, alert } = useExampleState();
+  const { notice, setNotice, alert } = useExampleState();
   const demo = (
     <U.Toolbar>
       <U.ButtonGroup>

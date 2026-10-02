@@ -7,15 +7,14 @@
   position: relative;
   display: grid;
   grid-template-columns: minmax(4rem, 8%) 1fr;
-  grid-template-rows: auto minmax(16rem, 46dvh) auto;
   overflow: auto;
   border: 0.0625rem solid #ff577447;
   border-radius: var(--ad-radius);
   background: #07070b;
-  transform-origin: top left;
 }
 .ad-piano-roll-ruler {
   grid-column: 2;
+  min-width: calc(42rem * var(--ad-editor-zoom, 1));
   display: flex;
   justify-content: space-between;
   padding: var(--ad-space-2);
@@ -25,7 +24,7 @@
 .ad-piano-roll-keyboard {
   grid-row: 2;
   display: grid;
-  grid-template-rows: repeat(12, 1fr);
+  grid-template-rows: repeat(12, minmax(1.75rem, auto));
   border-right: 0.0625rem solid #ffffff14;
 }
 .ad-piano-roll-keyboard span {
@@ -39,14 +38,14 @@
   grid-column: 2;
   grid-row: 2;
   position: relative;
-  min-width: 42rem;
+  min-width: calc(42rem * var(--ad-editor-zoom, 1));
   background:
     repeating-linear-gradient(
       to right,
       #ffffff0a 0,
       #ffffff0a 0.0625rem,
       transparent 0.0625rem,
-      transparent 3rem
+      transparent calc(3rem * var(--ad-editor-zoom, 1))
     ),
     repeating-linear-gradient(
       to bottom,
@@ -86,4 +85,8 @@
   gap: var(--ad-space-6);
   padding: var(--ad-space-2);
   color: var(--ad-text);
+}
+.ad-piano-roll-grid > .ad-toolbar > .ad-slider {
+  flex: 1;
+  min-width: min(100%, 10rem);
 }

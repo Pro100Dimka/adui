@@ -1,6 +1,6 @@
 import { U, useExampleState } from "../../../dev/exampleHelpers";
 export default function ProgressBarExample() {
-  const { value, setValue, open, notice, setNotice } = useExampleState();
+  const { value, setValue, notice, setNotice } = useExampleState();
   const demo = (
     <>
       <U.ProgressBar value={value} />

@@ -1,6 +1,6 @@
 import { U, row, useExampleState } from "../../../dev/exampleHelpers";
 export default function DividerExample() {
-  const { open, notice, setNotice } = useExampleState();
+  const { notice, setNotice } = useExampleState();
   const demo = (
     <>
       <U.Text>Горизонтальный</U.Text>

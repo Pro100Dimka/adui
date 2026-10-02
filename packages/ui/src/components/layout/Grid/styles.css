@@ -1,3 +1,209 @@
+/* Responsive inputs belong to one element only; nested layouts must not inherit them. */
+@property --ad-grid-columns {
+  syntax: "*";
+  inherits: false;
+}
+@property --ad-grid-columns-sm {
+  syntax: "*";
+  inherits: false;
+}
+@property --ad-grid-columns-md {
+  syntax: "*";
+  inherits: false;
+}
+@property --ad-grid-columns-lg {
+  syntax: "*";
+  inherits: false;
+}
+@property --ad-grid-columns-xl {
+  syntax: "*";
+  inherits: false;
+}
+@property --ad-grid-gap {
+  syntax: "*";
+  inherits: false;
+}
+@property --ad-grid-gap-sm {
+  syntax: "*";
+  inherits: false;
+}
+@property --ad-grid-gap-md {
+  syntax: "*";
+  inherits: false;
+}
+@property --ad-grid-gap-lg {
+  syntax: "*";
+  inherits: false;
+}
+@property --ad-grid-gap-xl {
+  syntax: "*";
+  inherits: false;
+}
+@property --ad-grid-row-gap {
+  syntax: "*";
+  inherits: false;
+}
+@property --ad-grid-row-gap-sm {
+  syntax: "*";
+  inherits: false;
+}
+@property --ad-grid-row-gap-md {
+  syntax: "*";
+  inherits: false;
+}
+@property --ad-grid-row-gap-lg {
+  syntax: "*";
+  inherits: false;
+}
+@property --ad-grid-row-gap-xl {
+  syntax: "*";
+  inherits: false;
+}
+@property --ad-grid-column-gap {
+  syntax: "*";
+  inherits: false;
+}
+@property --ad-grid-column-gap-sm {
+  syntax: "*";
+  inherits: false;
+}
+@property --ad-grid-column-gap-md {
+  syntax: "*";
+  inherits: false;
+}
+@property --ad-grid-column-gap-lg {
+  syntax: "*";
+  inherits: false;
+}
+@property --ad-grid-column-gap-xl {
+  syntax: "*";
+  inherits: false;
+}
+@property --ad-grid-align {
+  syntax: "*";
+  inherits: false;
+}
+@property --ad-grid-align-sm {
+  syntax: "*";
+  inherits: false;
+}
+@property --ad-grid-align-md {
+  syntax: "*";
+  inherits: false;
+}
+@property --ad-grid-align-lg {
+  syntax: "*";
+  inherits: false;
+}
+@property --ad-grid-align-xl {
+  syntax: "*";
+  inherits: false;
+}
+@property --ad-grid-justify {
+  syntax: "*";
+  inherits: false;
+}
+@property --ad-grid-justify-sm {
+  syntax: "*";
+  inherits: false;
+}
+@property --ad-grid-justify-md {
+  syntax: "*";
+  inherits: false;
+}
+@property --ad-grid-justify-lg {
+  syntax: "*";
+  inherits: false;
+}
+@property --ad-grid-justify-xl {
+  syntax: "*";
+  inherits: false;
+}
+@property --ad-grid-column-start {
+  syntax: "*";
+  inherits: false;
+}
+@property --ad-grid-column-start-sm {
+  syntax: "*";
+  inherits: false;
+}
+@property --ad-grid-column-start-md {
+  syntax: "*";
+  inherits: false;
+}
+@property --ad-grid-column-start-lg {
+  syntax: "*";
+  inherits: false;
+}
+@property --ad-grid-column-start-xl {
+  syntax: "*";
+  inherits: false;
+}
+@property --ad-grid-column-end {
+  syntax: "*";
+  inherits: false;
+}
+@property --ad-grid-column-end-sm {
+  syntax: "*";
+  inherits: false;
+}
+@property --ad-grid-column-end-md {
+  syntax: "*";
+  inherits: false;
+}
+@property --ad-grid-column-end-lg {
+  syntax: "*";
+  inherits: false;
+}
+@property --ad-grid-column-end-xl {
+  syntax: "*";
+  inherits: false;
+}
+@property --ad-grid-row-start {
+  syntax: "*";
+  inherits: false;
+}
+@property --ad-grid-row-start-sm {
+  syntax: "*";
+  inherits: false;
+}
+@property --ad-grid-row-start-md {
+  syntax: "*";
+  inherits: false;
+}
+@property --ad-grid-row-start-lg {
+  syntax: "*";
+  inherits: false;
+}
+@property --ad-grid-row-start-xl {
+  syntax: "*";
+  inherits: false;
+}
+@property --ad-grid-row-end {
+  syntax: "*";
+  inherits: false;
+}
+@property --ad-grid-row-end-sm {
+  syntax: "*";
+  inherits: false;
+}
+@property --ad-grid-row-end-md {
+  syntax: "*";
+  inherits: false;
+}
+@property --ad-grid-row-end-lg {
+  syntax: "*";
+  inherits: false;
+}
+@property --ad-grid-row-end-xl {
+  syntax: "*";
+  inherits: false;
+}
+@property --ad-grid-min-child-width {
+  syntax: "*";
+  inherits: false;
+}
+
 .ad-grid {
   display: grid;
   min-width: 0;

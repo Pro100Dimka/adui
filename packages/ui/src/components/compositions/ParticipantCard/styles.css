@@ -1,12 +1,5 @@
 /* Styles owned by ParticipantCard. */
-.ad-participant-card {
-  display: flex;
-  align-items: center;
-  gap: 0.9375rem;
-  padding: 1.0625rem;
-}
-@media (max-width: 46.25rem) {
-  .ad-participant-card {
-    flex-wrap: wrap;
-  }
+.ad-participant-card-info {
+  flex: 1 1 10rem;
+  min-width: 0;
 }

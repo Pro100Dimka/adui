@@ -72,9 +72,16 @@ function CodeBlock({
         align="center"
         gap={3}
       >
-        <Stack direction="row" gap={2} align="center">
+        <Stack
+          className="docs-code-title"
+          direction="row"
+          gap={2}
+          align="center"
+        >
           <Badge>{language.toUpperCase()}</Badge>
-          <Typography variant="label">{title}</Typography>
+          <Typography variant="label" truncate>
+            {title}
+          </Typography>
         </Stack>
         <Button
           size="xs"
@@ -382,13 +389,14 @@ export function ComponentDocsPage({ item }: { item: CatalogMeta }) {
         <Stack
           as="nav"
           className="docs-prev-next"
-          direction="row"
+          direction={{ base: "column", sm: "row" }}
           justify="between"
           gap={3}
           aria-label="Следующий и предыдущий компонент"
         >
           {previous ? (
             <Link
+              className="docs-prev"
               href={componentHref(previous.name)}
               underline="none"
               icon="chevron"
@@ -403,10 +411,11 @@ export function ComponentDocsPage({ item }: { item: CatalogMeta }) {
               </Stack>
             </Link>
           ) : (
-            <Stack aria-hidden="true" />
+            <span />
           )}
           {next ? (
             <Link
+              className="docs-next"
               href={componentHref(next.name)}
               underline="none"
               endIcon="chevron"

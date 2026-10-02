@@ -118,10 +118,7 @@ U.roundedPath = (w, h, r) => {
     : `M${i} ${i}H${R}V${B}H${i}Z`;
 };
 const borders = new WeakMap();
-U.attachBorder = (
-  element,
-  { shell = false, round = false, scope } = {},
-) => {
+U.attachBorder = (element, { shell = false, round = false, scope } = {}) => {
   if (borders.has(element)) return borders.get(element);
   const radius = round ? 28 : shell ? 102 : 116;
   const overlay = U.svg("svg", {

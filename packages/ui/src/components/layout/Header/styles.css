@@ -29,3 +29,7 @@
 .ad-header[data-ad-compact="true"] {
   gap: var(--ad-space-2);
 }
+.ad-header-copy {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
