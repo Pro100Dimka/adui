@@ -12,6 +12,7 @@
 @import "./components/controls/Button/styles.css";
 @import "./components/controls/Checkbox/styles.css";
 @import "./components/controls/InputBase/styles.css";
+@import "./components/controls/Link/styles.css";
 @import "./components/controls/FilePicker/styles.css";
 @import "./components/controls/IconButton/styles.css";
 @import "./components/controls/NumberField/styles.css";
@@ -66,3 +67,6 @@
 @import "./components/media/Sparkline/styles.css";
 @import "./components/media/WaveDecoration/styles.css";
 @import "./components/media/Waveform/styles.css";
+@import "./components/navigation/Router/styles.css";
+@import "./components/forms/Form/styles.css";
+@import "./components/forms/FormFields/styles.css";

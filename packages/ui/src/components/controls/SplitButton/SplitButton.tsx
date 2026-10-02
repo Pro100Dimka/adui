@@ -25,6 +25,7 @@ export const SplitButton = define<SplitButtonProps>("SplitButton", (p) => {
       data-ad-variant={variant}
     >
       <Button
+        className="ad-split-button-main"
         size={p.size}
         variant="ghost"
         icon={p.icon ?? "save"}
@@ -33,6 +34,7 @@ export const SplitButton = define<SplitButtonProps>("SplitButton", (p) => {
         {p.children ?? p.label ?? "Сохранить"}
       </Button>
       <IconButton
+        className="ad-split-button-trigger"
         size={p.size}
         ref={anchor}
         variant="ghost"

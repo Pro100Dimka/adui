@@ -66,6 +66,7 @@ export function buttonView(p: ButtonProps, name = "Button") {
     event.currentTarget.style.removeProperty("--ad-button-y");
     onPointerLeave?.(event);
   };
+  const content = children ?? label;
   return (
     <button
       {...dom}
@@ -89,7 +90,8 @@ export function buttonView(p: ButtonProps, name = "Button") {
       onPointerLeave={resetLight}
     >
       {loading && <span className="ad-spinner" aria-hidden="true" />}
-      {icon && <Icon name={icon} />} {children ?? label}{" "}
+      {icon && <Icon name={icon} />}{" "}
+      {content != null && <span className="ad-button-label">{content}</span>}
       {endIcon && <Icon name={endIcon} />}
     </button>
   );

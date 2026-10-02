@@ -1,3 +1,4 @@
+export { copyText } from "./core/base";
 export * from "./core/base";
 export * from "./core/artwork";
 export { useReducedMotion, useMotion } from "./core/providers/context";
@@ -35,6 +36,8 @@ export { Checkbox } from "./components/controls/Checkbox/Checkbox";
 export { FilePicker } from "./components/controls/FilePicker/FilePicker";
 export { IconButton } from "./components/controls/IconButton/IconButton";
 export { InputBase } from "./components/controls/InputBase/InputBase";
+export { Link } from "./components/controls/Link/Link";
+export type { LinkProps } from "./components/controls/Link/Link";
 export type { InputBaseProps } from "./components/controls/InputBase/InputBase";
 export { NumberField } from "./components/controls/NumberField/NumberField";
 export { SegmentedControl } from "./components/controls/SegmentedControl/SegmentedControl";
@@ -77,3 +80,30 @@ export { ParticipantCard } from "./components/compositions/ParticipantCard/Parti
 export { RoleEmblem } from "./components/compositions/RoleEmblem/RoleEmblem";
 export * from "./components/compositions/shared";
 export { getMotionStats } from "./core/motion-engine.js";
+export {
+  Router,
+  useRouter,
+  matchRoute,
+} from "./components/navigation/Router/Router";
+export type {
+  RouterProps,
+  RouterValue,
+  RouteDefinition,
+  RouteMatch,
+  RouteAccessContext,
+} from "./components/navigation/Router/Router";
+export { Form, useForm, useFormContext } from "./components/forms/Form/Form";
+export type {
+  FormApi,
+  FormErrors,
+  UseFormOptions,
+} from "./components/forms/Form/Form";
+export {
+  FormFields,
+  defaultFieldRegistry,
+} from "./components/forms/FormFields/FormFields";
+export type {
+  FormFieldDefinition,
+  FieldKind,
+  FieldRegistry,
+} from "./components/forms/FormFields/FormFields";

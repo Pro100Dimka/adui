@@ -13,8 +13,8 @@ export default function SplitButtonExample() {
   const { items } = useExampleState();
   return (
     <ExampleShowcase size={size} onSizeChange={setSize}>
-      <ExampleVariantGrid>
-        <ExampleVariant title="Primary" description="Main action + menu">
+      <ExampleVariantGrid columns={4}>
+        <ExampleVariant>
           <U.SplitButton
             size={size}
             variant="primary"
@@ -24,7 +24,7 @@ export default function SplitButtonExample() {
             Save
           </U.SplitButton>
         </ExampleVariant>
-        <ExampleVariant title="Secondary" description="Neutral action + menu">
+        <ExampleVariant>
           <U.SplitButton
             size={size}
             variant="secondary"
@@ -34,12 +34,12 @@ export default function SplitButtonExample() {
             Export
           </U.SplitButton>
         </ExampleVariant>
-        <ExampleVariant title="Ghost" description="Minimal surface">
+        <ExampleVariant>
           <U.SplitButton size={size} variant="ghost" icon="more" items={items}>
             More
           </U.SplitButton>
         </ExampleVariant>
-        <ExampleVariant title="Danger" description="Destructive menu">
+        <ExampleVariant>
           <U.SplitButton
             size={size}
             variant="danger"

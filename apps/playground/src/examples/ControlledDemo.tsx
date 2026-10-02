@@ -1,20 +1,20 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   AudioPlayer,
   Button,
   Card,
   Dialog,
-  Field,
   FilePicker,
-  MotionProvider,
   Slider,
+  Stack,
   Switch,
   TextField,
   ThemeProvider,
+  Typography,
 } from "@ad-voice/ui";
 import "@ad-voice/ui/styles.css";
 
-/** A native React consumer. No legacy controller, raw HTML or reference mode. */
+/** Native React consumer built only from public A&D UI primitives. */
 export default function ControlledDemo() {
   const [name, setName] = useState("Дмитрий");
   const [volume, setVolume] = useState(35);
@@ -23,6 +23,10 @@ export default function ControlledDemo() {
   const [savedName, setSavedName] = useState("");
   const [file, setFile] = useState<File | null>(null);
   const [source, setSource] = useState<string>();
+
+  useEffect(() => {
+    document.documentElement.dataset.adMotion = motion ? "on" : "off";
+  }, [motion]);
 
   useEffect(() => {
     if (!file) {
@@ -36,18 +40,23 @@ export default function ControlledDemo() {
 
   return (
     <ThemeProvider>
-      <MotionProvider enabled={motion}>
-        <Card
-          title="Мои настройки"
-          description="Пример управления через React state"
-          border
-        >
-          <Field label="Имя в комнате" required>
-            <TextField value={name} onValueChange={setName} clearable />
-          </Field>
-          <Field label="Громкость">
+      <Card
+        title="Мои настройки"
+        description="Пример управления через React state"
+        border
+      >
+        <Stack gap={4}>
+          <TextField
+            label="Имя в комнате"
+            required
+            value={name}
+            onValueChange={setName}
+            clearable
+          />
+          <Stack gap={2}>
+            <Typography variant="label">Громкость</Typography>
             <Slider value={volume} onValueChange={setVolume} />
-          </Field>
+          </Stack>
           <Switch label="Анимации" checked={motion} onValueChange={setMotion} />
           <FilePicker
             label="Выбрать свою запись"
@@ -63,19 +72,19 @@ export default function ControlledDemo() {
             Сохранить
           </Button>
           {savedName && (
-            <p role="status">
+            <Typography as="p" variant="body-sm" tone="success">
               Сохранено локально в состоянии примера: {savedName}
-            </p>
+            </Typography>
           )}
-        </Card>
-        <Dialog
-          open={confirming}
-          onOpenChange={setConfirming}
-          title="Сохранить настройки?"
-          description="В этом примере данные не отправляются на сервер."
-          onConfirm={() => setSavedName(name)}
-        />
-      </MotionProvider>
+        </Stack>
+      </Card>
+      <Dialog
+        open={confirming}
+        onOpenChange={setConfirming}
+        title="Сохранить настройки?"
+        description="В этом примере данные не отправляются на сервер."
+        onConfirm={() => setSavedName(name)}
+      />
     </ThemeProvider>
   );
 }

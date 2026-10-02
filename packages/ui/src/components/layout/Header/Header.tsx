@@ -1,8 +1,24 @@
-import React, { createElement } from "react";
+import React from "react";
 import { define, mark } from "../../../core/base";
 import { Icon } from "../Icon/Icon";
-import { Typography } from "../../foundation/Typography/Typography";
+import {
+  Typography,
+  type TypographyVariant,
+} from "../../foundation/Typography/Typography";
 import type { HeaderProps } from "../shared";
+
+const headingVariant: Record<1 | 2 | 3 | 4, TypographyVariant> = {
+  1: "h1",
+  2: "h2",
+  3: "h3",
+  4: "title",
+};
+const headingTag: Record<1 | 2 | 3 | 4, "h1" | "h2" | "h3" | "h4"> = {
+  1: "h1",
+  2: "h2",
+  3: "h3",
+  4: "h4",
+};
 
 export const Header = define<HeaderProps>(
   "Header",
@@ -17,21 +33,27 @@ export const Header = define<HeaderProps>(
     compact,
     ...p
   }) => {
-    const heading = createElement(`h${level}`, {}, title ?? "Название раздела");
-    return React.createElement(
-      as,
-      { ...mark("Header", p), "data-ad-compact": compact || undefined },
-      icon && <Icon name={icon} surface="tile" />,
-      <div className="ad-header-copy">
-        {eyebrow && <Typography variant="eyebrow">{eyebrow}</Typography>}
-        {heading}
-        {description && (
-          <Typography variant="body-sm" tone="muted">
-            {description}
+    const Component = as;
+    return (
+      <Component {...mark("Header", p)} data-ad-compact={compact || undefined}>
+        {icon && <Icon name={icon} surface="tile" />}
+        <div className="ad-header-copy">
+          {eyebrow && <Typography variant="eyebrow">{eyebrow}</Typography>}
+          <Typography
+            as={headingTag[level]}
+            variant={headingVariant[level]}
+            weight="bold"
+          >
+            {title ?? "Название раздела"}
           </Typography>
-        )}
-      </div>,
-      actions && <div className="ad-header-actions">{actions}</div>,
+          {description && (
+            <Typography variant="body-sm" tone="muted">
+              {description}
+            </Typography>
+          )}
+        </div>
+        {actions && <div className="ad-header-actions">{actions}</div>}
+      </Component>
     );
   },
 );

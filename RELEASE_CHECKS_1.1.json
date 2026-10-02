@@ -1,0 +1,10 @@
+{
+  "version": "1.1.0",
+  "uiPrimitiveContract": true,
+  "documentedComponents": 61,
+  "typescriptSyntaxFiles": 227,
+  "cssFilesParsed": 82,
+  "relativeImports": "ok",
+  "publicImportSurface": "ok",
+  "notes": "Visible playground/docs UI uses @ad-voice/ui primitives; ScreenHost technical DOM bridge is the only exception."
+}

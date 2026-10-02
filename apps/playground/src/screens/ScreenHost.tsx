@@ -212,29 +212,7 @@ const ReferenceDocument = memo(function ReferenceDocument({
       :host([data-inactive]) *, :host([data-ad-motion="off"]) *{animation-play-state:paused!important;}
       [data-inspect-hover]{outline:0.125rem solid #4df6cf!important;outline-offset:0.1875rem;}
       .ad-border{z-index:20;}
-      /* Screen action buttons keep each screen's placement/geometry, but share the UI-library material. */
-      [data-ad-component="Button"],[data-ad-component="IconButton"],[data-ad-component="ToggleButton"]{
-        position:relative;isolation:isolate;color:#fff7fa;border-color:#ff6f8e42!important;
-        background:linear-gradient(180deg,#18111a,#07090d 62%,#06060a)!important;
-        box-shadow:inset 0 .0625rem .125rem #ffe2ed29,inset 0 0 .5rem #e6c3ff06,0 .1875rem .4375rem #0005!important;
-        transition:filter .18s,box-shadow .18s,transform .18s,border-color .18s!important;
-        backdrop-filter:blur(.5rem) saturate(1.06);
-      }
-      [data-ad-component="Button"]::before,[data-ad-component="IconButton"]::before,[data-ad-component="ToggleButton"]::before{
-        content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
-        background:linear-gradient(180deg,#ffffff20 0%,#ffffff08 10%,transparent 34%),radial-gradient(85% 90% at 50% -6%,#ff5b7f30 0%,#ff5b7f0c 42%,transparent 78%);
-      }
-      [data-ad-component="Button"]:hover:not(:disabled),[data-ad-component="IconButton"]:hover:not(:disabled),[data-ad-component="ToggleButton"]:hover:not(:disabled){
-        filter:brightness(1.18);box-shadow:0 0 .9375rem #ff35552a,inset 0 .0625rem .125rem #ffd4e438!important;transform:translateY(-.0625rem);
-      }
-      [data-ad-component="Button"]:active:not(:disabled),[data-ad-component="IconButton"]:active:not(:disabled),[data-ad-component="ToggleButton"]:active:not(:disabled){filter:brightness(.95);transform:translateY(0);}
-      [data-ad-component="ToggleButton"][aria-pressed="true"],[data-ad-component="IconButton"][aria-pressed="true"],
-      [data-ad-component="Button"][data-primary],[data-ad-component="IconButton"][data-primary],
-      .pa-play[data-ad-component="IconButton"],.leave-button[data-ad-component="Button"],.rejoin-button[data-ad-component="Button"]{
-        border-color:#ff8aa65e!important;background:linear-gradient(180deg,#8e1438,#3b0616 55%,#24040d)!important;
-        box-shadow:inset 0 .0625rem .125rem #ffe2ed75,inset 0 0 .9375rem #ff1d4548,0 0 .3125rem #ff45634c,0 0 1.1875rem #ff214b30!important;
-      }
-      [data-ad-component="IconButton"] svg,[data-ad-component="ToggleButton"] svg{filter:drop-shadow(0 0 .1875rem #ff8da6a6);}
+      /* Visible UI materials come from @ad-voice/ui. Scene CSS owns geometry only. */
     `}
       </style>
       <div ref={bodyRef} className="ad-legacy-body">

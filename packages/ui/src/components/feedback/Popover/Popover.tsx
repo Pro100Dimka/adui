@@ -63,27 +63,38 @@ export const Popover = define<PopoverProps>("Popover", (p) => {
     if (!node || !p.open) return;
     const position = () => {
       const target = p.anchorRef?.current?.getBoundingClientRect();
-      const r = node.getBoundingClientRect();
-      const gap = 6;
+      const gap = 8;
       if (target && p.matchAnchorWidth)
         node.style.minWidth = cssRem(target.width);
+      const r = node.getBoundingClientRect();
       const desired = target
         ? p.align === "start"
           ? target.left
           : target.right - r.width
         : innerWidth / 2 - r.width / 2;
-      node.style.left = cssRem(
-        Math.max(8, Math.min(innerWidth - r.width - 8, desired)),
-      );
-      node.style.top = cssRem(
-        Math.max(
-          8,
-          Math.min(
-            innerHeight - r.height - 8,
-            (target?.bottom ?? innerHeight / 2) + gap,
-          ),
-        ),
-      );
+      const left = Math.max(8, Math.min(innerWidth - r.width - 8, desired));
+      const roomBelow = target ? innerHeight - target.bottom : innerHeight / 2;
+      const roomAbove = target ? target.top : innerHeight / 2;
+      const placeAbove =
+        !!target && roomBelow < r.height + gap + 8 && roomAbove > roomBelow;
+      const rawTop = target
+        ? placeAbove
+          ? target.top - r.height - gap
+          : target.bottom + gap
+        : innerHeight / 2 - r.height / 2;
+      const top = Math.max(8, Math.min(innerHeight - r.height - 8, rawTop));
+      node.style.left = cssRem(left);
+      node.style.top = cssRem(top);
+      node.dataset.adSide = placeAbove ? "above" : "below";
+      if (target) {
+        const anchorX = Math.max(
+          24,
+          Math.min(r.width - 24, target.left + target.width / 2 - left),
+        );
+        node.style.setProperty("--ad-popover-anchor-x", cssRem(anchorX));
+      } else {
+        node.style.removeProperty("--ad-popover-anchor-x");
+      }
     };
     const supports = typeof node.showPopover === "function";
     if (supports) node.showPopover();

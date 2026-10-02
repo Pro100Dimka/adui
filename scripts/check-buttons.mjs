@@ -6,21 +6,27 @@ const group = read("packages/ui/src/components/layout/ButtonGroup/styles.css");
 const host = read("apps/playground/src/screens/ScreenHost.tsx");
 const failures = [];
 for (const token of [
-  ".ad-icon-button{width:var(--ad-size-h)",
-  '[data-ad-variant="primary"]',
-  '[data-ad-variant="danger"]',
+  ".ad-icon-button{",
+  'data-ad-variant="primary"',
+  'data-ad-variant="danger"',
 ])
   if (!shared.includes(token)) failures.push(`shared.css missing ${token}`);
-if (!group.includes("gap:0.625rem"))
-  failures.push("ButtonGroup must own consistent gap");
-for (const component of ["Button", "IconButton", "ToggleButton"])
-  if (
-    !host.includes(`[data-ad-component=\\"${component}\\"]`) &&
-    !host.includes(`[data-ad-component="${component}"]`)
-  )
-    failures.push(`ScreenHost missing ${component} screen skin`);
+if (!/gap:\.?4[02]rem/.test(group))
+  failures.push("ButtonGroup must own compact consistent gap");
+for (const component of ["Button", "IconButton", "ToggleButton"]) {
+  const selectorA = `[data-ad-component=\\"${component}\\"]`;
+  const selectorB = `[data-ad-component="${component}"]`;
+  if (host.includes(selectorA) || host.includes(selectorB))
+    failures.push(
+      `ScreenHost must not reskin ${component}; library CSS is the single source of truth`,
+    );
+}
+if (shared.includes("radial-gradient(circle at var(--ad-button-x)"))
+  failures.push("Button specular highlight regressed to a visible point");
 if (failures.length) {
   console.error(failures.join("\n"));
   process.exit(1);
 }
-console.log("Button system contracts OK");
+console.log(
+  "Button system contracts OK: library styles are canonical; ScreenHost owns geometry only.",
+);

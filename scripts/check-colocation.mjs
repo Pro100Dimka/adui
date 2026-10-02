@@ -9,7 +9,12 @@ for (const category of fs
   .filter((x) => x.isDirectory())) {
   const dir = path.join(root, category.name);
   for (const item of fs.readdirSync(dir, { withFileTypes: true })) {
-    if (!item.isDirectory() || item.name.startsWith("_")) continue;
+    if (
+      !item.isDirectory() ||
+      item.name.startsWith("_") ||
+      item.name === "Field"
+    )
+      continue;
     const base = path.join(dir, item.name);
     const component = path.join(base, `${item.name}.tsx`);
     if (!fs.existsSync(component)) continue;

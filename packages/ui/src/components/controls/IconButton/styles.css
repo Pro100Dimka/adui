@@ -1,6 +1,4 @@
-/* Styles owned by IconButton. */
+/* IconButton geometry is owned by controls/shared.css. */
 .ad-icon-button {
-  width: var(--ad-control-height);
-  padding: 0;
   flex: none;
 }

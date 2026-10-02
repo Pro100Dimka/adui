@@ -25,6 +25,7 @@ export interface MenuItemData {
   id?: string;
   label?: string;
   icon?: string;
+  endIcon?: string;
   disabled?: boolean;
   danger?: boolean;
   separator?: boolean;

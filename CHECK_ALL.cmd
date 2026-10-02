@@ -2,40 +2,42 @@
 setlocal
 cd /d "%~dp0"
 
-echo [1/6] Checking component structure...
-call npm run check:structure
-if errorlevel 1 goto :error
-
-echo [2/6] Checking colocation...
-call npm run check:colocation
-if errorlevel 1 goto :error
-
-echo [3/6] Checking catalog examples...
-call npm run check:catalog
-if errorlevel 1 goto :error
-
-echo [4/6] Checking responsive units...
-call npm run check:units
-if errorlevel 1 goto :error
-
-echo [5/6] Checking adaptive layout and scroll contracts...
-call npm run check:layout
-if errorlevel 1 goto :error
-
-echo [6/6] TypeScript typecheck...
-call npm run check:grid
-if errorlevel 1 goto :error
-call npm run typecheck
-if errorlevel 1 goto :error
+echo [1/13] Component structure...
+call npm run check:structure || goto :error
+echo [2/13] Colocation...
+call npm run check:colocation || goto :error
+echo [3/13] Catalog examples...
+call npm run check:catalog || goto :error
+echo [4/13] Primitive API...
+call npm run check:primitives || goto :error
+echo [5/13] Responsive units...
+call npm run check:units || goto :error
+echo [6/13] Layout / scroll contracts...
+call npm run check:layout || goto :error
+echo [7/13] Motion contracts...
+call npm run check:motion || goto :error
+echo [8/13] Grid contracts...
+call npm run check:grid || goto :error
+echo [9/13] Control sizes...
+call npm run check:sizes || goto :error
+echo [10/13] Button system...
+call npm run check:buttons || goto :error
+call npm run check:button-css || goto :error
+call npm run check:button-layout || goto :error
+echo [11/13] Isolated examples...
+call npm run check:examples || goto :error
+echo [12/13] Documentation portal...
+call npm run check:docs || goto :error
+echo [13/13] TypeScript...
+call npm run typecheck || goto :error
 
 echo.
-echo Everything is OK.
+echo RELEASE CHECKS PASSED.
 pause
 exit /b 0
 
 :error
 echo.
-echo CHECK FAILED.
-call npm run check:buttons || goto :error
+echo RELEASE CHECK FAILED.
 pause
 exit /b 1

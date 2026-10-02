@@ -1,12 +1,21 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { Button, CodeViewer, IconButton, Select, Toast } from "@ad-voice/ui";
-import { ScreenHost } from "../screens/ScreenHost";
 import {
-  routes,
-  type Route,
-  type ScreenHandle,
-  type ScreenId,
-} from "../screens/types";
+  Badge,
+  Button,
+  Card,
+  Divider,
+  Header,
+  IconButton,
+  ScrollArea,
+  Select,
+  Stack,
+  Toast,
+  ToggleButton,
+  Toolbar,
+  Typography,
+} from "@ad-voice/ui";
+import { ScreenHost } from "../screens/ScreenHost";
+import { routes, type ScreenHandle, type ScreenId } from "../screens/types";
 import { screenRegistry } from "../screens/registry";
 
 export function ScreensPage({
@@ -31,6 +40,7 @@ export function ScreensPage({
   const currentRef = useRef(route);
   currentRef.current = route;
   const definition = screenRegistry[route.screen].definition;
+
   useEffect(() => {
     setMounted((old) =>
       old.includes(route.screen) ? old : [...old, route.screen],
@@ -48,6 +58,7 @@ export function ScreensPage({
   const navigate = (id: string) => {
     location.hash = `#/screens/${id}`;
   };
+
   useEffect(() => {
     const debug = {
       go: navigate,
@@ -77,75 +88,107 @@ export function ScreensPage({
         .ADReactScreens;
     };
   }, []);
+
   return (
     <>
-      <aside className="sidebar">
-        {[true, false].map((isSettings) => (
-          <div className="sidebar-section" key={String(isSettings)}>
-            <div className="sidebar-label">
-              {isSettings ? "Настройки" : "Экраны приложения"}
-            </div>
-            {routes
-              .filter((x) => (x.screen === "settings") === isSettings)
-              .map((item) => (
-                <button
-                  className={`sidebar-link ${item.id === route.id ? "active" : ""}`}
-                  key={item.id}
-                  data-route={item.id}
-                  onClick={() => navigate(item.id)}
-                >
-                  {item.title}
-                  <small>{isSettings ? "TAB" : "UI"}</small>
-                </button>
-              ))}
-          </div>
-        ))}
-        <div className="side-rule" />
-        <div className="sidebar-foot">
-          React-деревья + согласованные стили.
-          <br />
-          Контроллеры сцен изолированы.
-          <br />
-          Без iframe и HTML-подложек.
-        </div>
-      </aside>
-      <main className="screen-main">
-        <div className="screen-toolbar">
-          <div className="screen-heading">
-            <strong>{route.title}</strong>
-            <small>{definition.source} · React</small>
-          </div>
-          <Select
-            label="Масштаб предпросмотра"
-            options={[
-              { value: "fit", label: "Вписать" },
-              { value: "actual", label: "100%" },
-            ]}
-            value={zoom}
-            onValueChange={(v) => setZoom(v as "fit" | "actual")}
-          />
-          <Button
-            variant="ghost"
-            icon="cursor"
-            aria-pressed={inspect}
-            onClick={() => setInspect((v) => !v)}
+      <Stack as="aside" className="sidebar screens-sidebar" gap={3}>
+        <ScrollArea className="screens-nav-scroll" label="Навигация по экранам">
+          <Stack gap={4}>
+            {[true, false].map((isSettings) => (
+              <Stack
+                className="sidebar-section"
+                gap={2}
+                key={String(isSettings)}
+              >
+                <Typography variant="eyebrow" tone="muted">
+                  {isSettings ? "Настройки" : "Экраны приложения"}
+                </Typography>
+                <Stack gap={1}>
+                  {routes
+                    .filter((x) => (x.screen === "settings") === isSettings)
+                    .map((item) => (
+                      <Button
+                        className={`sidebar-link ${item.id === route.id ? "active" : ""}`}
+                        size="sm"
+                        variant={item.id === route.id ? "primary" : "ghost"}
+                        key={item.id}
+                        onClick={() => navigate(item.id)}
+                      >
+                        {item.title}
+                        <Badge>{isSettings ? "Tab" : "UI"}</Badge>
+                      </Button>
+                    ))}
+                </Stack>
+              </Stack>
+            ))}
+          </Stack>
+        </ScrollArea>
+        <Divider />
+        <Stack className="sidebar-foot" gap={1}>
+          <Typography variant="caption" tone="muted">
+            React-деревья + согласованные стили.
+          </Typography>
+          <Typography variant="caption" tone="muted">
+            Контроллеры сцен изолированы.
+          </Typography>
+          <Typography variant="caption" tone="muted">
+            Без iframe и HTML-подложек.
+          </Typography>
+        </Stack>
+      </Stack>
+
+      <Stack as="main" className="screen-main" gap={3}>
+        <Toolbar className="screen-toolbar">
+          <Stack
+            direction={{ base: "column", md: "row" }}
+            align={{ base: "stretch", md: "center" }}
+            justify="between"
+            gap={3}
           >
-            Компоненты
-          </Button>
-          <IconButton
-            icon="refresh"
-            label="Сбросить пример"
-            onClick={() =>
-              setGeneration((old) => ({
-                ...old,
-                [route.screen]: (old[route.screen] ?? 0) + 1,
-              }))
-            }
-          />
-        </div>
-        <div className="screen-stage">
-          <div
+            <Header
+              as="div"
+              level={2}
+              compact
+              title={route.title}
+              description={`${definition.source} · React`}
+            />
+            <Stack direction="row" align="center" gap={2} wrap>
+              <Select
+                label="Масштаб предпросмотра"
+                options={[
+                  { value: "fit", label: "Вписать" },
+                  { value: "actual", label: "100%" },
+                ]}
+                value={zoom}
+                onValueChange={(v) => setZoom(v as "fit" | "actual")}
+              />
+              <ToggleButton
+                variant="secondary"
+                icon="cursor"
+                checked={inspect}
+                onValueChange={setInspect}
+              >
+                Компоненты
+              </ToggleButton>
+              <IconButton
+                icon="refresh"
+                label="Сбросить пример"
+                onClick={() =>
+                  setGeneration((old) => ({
+                    ...old,
+                    [route.screen]: (old[route.screen] ?? 0) + 1,
+                  }))
+                }
+              />
+            </Stack>
+          </Stack>
+        </Toolbar>
+
+        <Card className="screen-stage" material="shell" padding="none">
+          <Stack
             className="screen-frame"
+            align="center"
+            justify="center"
             style={
               zoom === "actual"
                 ? { width: definition.width, height: definition.height }
@@ -182,36 +225,45 @@ export function ScreensPage({
                 }}
               />
             ))}
-          </div>
-        </div>
-        <footer className="screen-foot">
-          <span>
-            {definition.width} × {definition.height} · исходная геометрия
-          </span>
-          <span>{count} экземпляров компонентов</span>
-          <span>
+          </Stack>
+        </Card>
+
+        <Stack as="footer" className="screen-foot" direction="row" gap={2} wrap>
+          <Badge>
+            {definition.width} × {definition.height}
+          </Badge>
+          <Badge>{count} компонентов</Badge>
+          <Typography variant="caption" tone="muted">
             Сервисы приложения не подключены · демонстрационные данные
-          </span>
-        </footer>
-      </main>
+          </Typography>
+        </Stack>
+      </Stack>
+
       {inspect && (
-        <aside className="inspect-panel">
-          <p className="eyebrow">ИНСПЕКТОР КОМПОНЕНТОВ</p>
-          <strong>{selected?.name ?? "Наведите на элемент"}</strong>
-          <code>
-            {selected
-              ? `<${selected.name} ${Object.entries(selected.info)
-                  .filter(([, v]) => v)
-                  .map(([k, v]) => `${k}=${JSON.stringify(v)}`)
-                  .join(" ")} />`
-              : "Имя React-компонента и общие параметры"}
-          </code>
-          <p>
-            Размеры сцены сохранены. Управление сложной сценой выполняет её
-            изолированный контроллер.
-          </p>
-        </aside>
+        <Card className="inspect-panel" material="glass" border padding="md">
+          <Stack gap={3}>
+            <Header
+              level={3}
+              compact
+              eyebrow="Инспектор компонентов"
+              title={selected?.name ?? "Наведите на элемент"}
+            />
+            <Typography variant="mono">
+              {selected
+                ? `<${selected.name} ${Object.entries(selected.info)
+                    .filter(([, v]) => v)
+                    .map(([k, v]) => `${k}=${JSON.stringify(v)}`)
+                    .join(" ")} />`
+                : "Имя React-компонента и общие параметры"}
+            </Typography>
+            <Typography variant="body-sm" tone="muted">
+              Размеры сцены сохранены. Управление сложной сценой выполняет её
+              изолированный контроллер.
+            </Typography>
+          </Stack>
+        </Card>
       )}
+
       <Toast
         floating
         open={!!notice}

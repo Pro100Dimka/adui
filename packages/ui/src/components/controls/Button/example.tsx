@@ -25,23 +25,23 @@ export default function ButtonExample() {
         </ExampleStateStrip>
       }
     >
-      <ExampleVariantGrid>
-        <ExampleVariant title="Primary" description="Main action">
+      <ExampleVariantGrid columns={4}>
+        <ExampleVariant>
           <U.Button size={size} variant="primary">
             Primary
           </U.Button>
         </ExampleVariant>
-        <ExampleVariant title="Secondary" description="Alternative action">
+        <ExampleVariant>
           <U.Button size={size} variant="secondary">
             Secondary
           </U.Button>
         </ExampleVariant>
-        <ExampleVariant title="Ghost" description="Minimal emphasis">
+        <ExampleVariant>
           <U.Button size={size} variant="ghost">
             Ghost
           </U.Button>
         </ExampleVariant>
-        <ExampleVariant title="Danger" description="Destructive action">
+        <ExampleVariant>
           <U.Button size={size} variant="danger">
             Danger
           </U.Button>

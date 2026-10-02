@@ -1,6 +1,6 @@
 {
   "name": "@ad-voice/ui",
-  "version": "0.2.11",
+  "version": "1.2.0",
   "description": "A&D Voice React UI component library",
   "type": "module",
   "license": "UNLICENSED",
@@ -39,7 +39,17 @@
     "./styles.css": "./dist/styles.css",
     "./tokens.css": "./dist/tokens.css",
     "./package.json": "./package.json",
-    "./components.css": "./dist/components.css"
+    "./components.css": "./dist/components.css",
+    "./router": {
+      "types": "./dist/router.d.ts",
+      "import": "./dist/router.js",
+      "default": "./dist/router.js"
+    },
+    "./forms": {
+      "types": "./dist/forms.d.ts",
+      "import": "./dist/forms.js",
+      "default": "./dist/forms.js"
+    }
   },
   "scripts": {
     "clean": "node scripts/clean.mjs",

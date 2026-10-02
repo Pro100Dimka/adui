@@ -1,4 +1,4 @@
-/* Shared control sizing and one canonical button material system. */
+/* Shared control sizing + canonical premium button system. */
 .ad-button,
 .ad-icon-button,
 .ad-toggle-button,
@@ -34,11 +34,11 @@
 .ad-file-picker[data-ad-size="xs"],
 .ad-tabs[data-ad-size="xs"],
 .ad-segmented-control[data-ad-size="xs"] {
-  --ad-size-h: 1.75rem;
+  --ad-size-h: 1.8rem;
   --ad-size-font: 0.6875rem;
-  --ad-size-radius: 0.5rem;
-  --ad-size-pad-x: 0.5rem;
-  --ad-size-gap: 0.4375rem;
+  --ad-size-radius: 0.52rem;
+  --ad-size-pad-x: 0.52rem;
+  --ad-size-gap: 0.42rem;
 }
 .ad-button[data-ad-size="sm"],
 .ad-icon-button[data-ad-size="sm"],
@@ -54,10 +54,10 @@
 .ad-file-picker[data-ad-size="sm"],
 .ad-tabs[data-ad-size="sm"],
 .ad-segmented-control[data-ad-size="sm"] {
-  --ad-size-h: 2.125rem;
+  --ad-size-h: 2.15rem;
   --ad-size-font: 0.75rem;
-  --ad-size-radius: 0.625rem;
-  --ad-size-pad-x: 0.625rem;
+  --ad-size-radius: 0.64rem;
+  --ad-size-pad-x: 0.64rem;
   --ad-size-gap: 0.5rem;
 }
 .ad-button[data-ad-size="md"],
@@ -74,11 +74,11 @@
 .ad-file-picker[data-ad-size="md"],
 .ad-tabs[data-ad-size="md"],
 .ad-segmented-control[data-ad-size="md"] {
-  --ad-size-h: var(--ad-control-height);
-  --ad-size-font: 0.8125rem;
-  --ad-size-radius: var(--ad-radius);
-  --ad-size-pad-x: 0.6875rem;
-  --ad-size-gap: 0.625rem;
+  --ad-size-h: 2.65rem;
+  --ad-size-font: 0.825rem;
+  --ad-size-radius: 0.78rem;
+  --ad-size-pad-x: 0.76rem;
+  --ad-size-gap: 0.6rem;
 }
 .ad-button[data-ad-size="lg"],
 .ad-icon-button[data-ad-size="lg"],
@@ -94,269 +94,271 @@
 .ad-file-picker[data-ad-size="lg"],
 .ad-tabs[data-ad-size="lg"],
 .ad-segmented-control[data-ad-size="lg"] {
-  --ad-size-h: 3.1875rem;
-  --ad-size-font: 0.9375rem;
-  --ad-size-radius: 1rem;
-  --ad-size-pad-x: 0.9375rem;
-  --ad-size-gap: 0.75rem;
+  --ad-size-h: 3.08rem;
+  --ad-size-font: 0.94rem;
+  --ad-size-radius: 0.9rem;
+  --ad-size-pad-x: 0.95rem;
+  --ad-size-gap: 0.72rem;
 }
 
-@keyframes ad-button-alive-pulse {
+@keyframes ad-btn-breathe {
   0%,
   100% {
-    filter: saturate(1);
-    box-shadow:
-      inset 0 0.075rem 0.13rem #fff8,
-      inset 0 -0.42rem 1rem #43001755,
-      0 0 0.55rem #ff315b4d,
-      0 0.36rem 0.9rem #0009;
+    filter: saturate(1) brightness(1);
   }
   50% {
-    filter: saturate(1.08);
-    box-shadow:
-      inset 0 0.075rem 0.18rem #fffb,
-      inset 0 -0.42rem 1.15rem #65002270,
-      0 0 1.28rem #ff315f73,
-      0 0.42rem 1.05rem #000a;
+    filter: saturate(1.08) brightness(1.03);
   }
 }
-@keyframes ad-button-sweep {
+@keyframes ad-btn-sheen {
   0%,
-  56% {
-    transform: translateX(-175%) skewX(-23deg);
+  60% {
+    transform: translateX(-190%) rotate(14deg);
     opacity: 0;
   }
-  64% {
-    opacity: 0.2;
+  68% {
+    opacity: 0.18;
   }
-  72% {
-    opacity: 0.95;
+  76% {
+    opacity: 0.85;
   }
-  84%,
+  92%,
   100% {
-    transform: translateX(225%) skewX(-23deg);
+    transform: translateX(255%) rotate(14deg);
     opacity: 0;
   }
 }
-@keyframes ad-button-rim {
-  0%,
-  100% {
-    opacity: 0.45;
-    transform: scaleX(0.72);
-  }
-  50% {
-    opacity: 0.95;
-    transform: scaleX(1);
-  }
-}
 
+/* Shared visual contract. */
 .ad-button,
 .ad-icon-button,
 .ad-toggle-button {
+  --ad-btn-radius: calc(var(--ad-size-radius) * 1.08);
+  --ad-btn-bg-top: #302431;
+  --ad-btn-bg-mid: #17111d;
+  --ad-btn-bg-bottom: #09090d;
+  --ad-btn-border-a: #ffd7e3a6;
+  --ad-btn-border-b: #8a36586e;
+  --ad-btn-edge: #ff79a336;
+  --ad-btn-glow: #ff447329;
+  --ad-btn-inner: #ffffff3d;
+  --ad-btn-bottom: #000a;
   --ad-button-x: 50%;
   --ad-button-y: 20%;
   position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: calc(var(--ad-size-gap) * 1.12);
+  min-inline-size: 0;
+  max-inline-size: 100%;
   height: var(--ad-size-h);
-  padding-inline: calc(var(--ad-size-pad-x) * 1.85);
-  border: 0.0625rem solid #ff9ab56b;
-  border-radius: calc(var(--ad-size-h) * 0.46);
+  gap: var(--ad-size-gap);
+  padding-inline: calc(var(--ad-size-pad-x) * 1.55);
+  border: 0.0625rem solid transparent;
+  border-radius: var(--ad-btn-radius);
   color: #fff9fc;
   font-size: var(--ad-size-font);
-  font-weight: 680;
+  font-weight: 700;
+  letter-spacing: 0.01em;
   line-height: 1;
   white-space: nowrap;
-  background: linear-gradient(180deg, #1d171f 0%, #0d0a10 54%, #07070a 100%);
+  background:
+    linear-gradient(
+        180deg,
+        var(--ad-btn-bg-top),
+        var(--ad-btn-bg-mid) 58%,
+        var(--ad-btn-bg-bottom)
+      )
+      padding-box,
+    linear-gradient(
+        135deg,
+        var(--ad-btn-border-a),
+        #ffffff18 18%,
+        var(--ad-btn-border-b) 56%,
+        #4f19314f 100%
+      )
+      border-box;
   box-shadow:
-    inset 0 0.075rem 0.13rem #ffffff35,
-    inset 0 -0.38rem 0.9rem #0007,
-    0 0 0.3rem #ff3b6422,
-    0 0.32rem 0.8rem #0008;
-  overflow: hidden;
+    inset 0 0.08rem 0.15rem var(--ad-btn-inner),
+    inset 0 -0.48rem 0.95rem var(--ad-btn-bottom),
+    inset 0 0 0 0.03125rem #ffffff09,
+    0 0.42rem 1rem #0009,
+    0 0 1rem var(--ad-btn-glow);
   isolation: isolate;
+  overflow: hidden;
   -webkit-tap-highlight-color: transparent;
   transition:
-    transform 0.2s cubic-bezier(0.18, 0.8, 0.2, 1),
-    filter 0.2s,
-    border-color 0.2s,
-    box-shadow 0.2s;
+    transform 0.22s cubic-bezier(0.2, 0.78, 0.24, 1),
+    filter 0.22s,
+    box-shadow 0.22s,
+    border-color 0.22s,
+    opacity 0.22s;
 }
 .ad-button::before,
 .ad-icon-button::before,
 .ad-toggle-button::before {
   content: "";
   position: absolute;
-  inset: 0;
+  inset: 0.0625rem;
   z-index: -1;
-  border-radius: inherit;
+  border-radius: calc(var(--ad-btn-radius) - 0.0625rem);
   pointer-events: none;
   background:
     radial-gradient(
-      circle at var(--ad-button-x) var(--ad-button-y),
-      #fff 0%,
-      #ffe1ea7a 7%,
-      #ffadc247 18%,
-      #ff5c851a 34%,
-      transparent 52%
+      70% 105% at var(--ad-button-x) var(--ad-button-y),
+      #ffffff3f 0%,
+      #ffe3ed24 24%,
+      #ffadc515 48%,
+      transparent 72%
     ),
-    radial-gradient(
-      80% 48% at 22% -2%,
-      #fff8f7a3 0%,
-      #ffb9ca40 16%,
-      transparent 62%
-    ),
-    linear-gradient(180deg, #ffffff20 0%, #ffffff08 18%, transparent 46%);
-  opacity: 0.72;
-  transition: opacity 0.2s;
+    linear-gradient(180deg, #ffffff2f 0%, #ffffff10 18%, transparent 36%),
+    linear-gradient(180deg, #ffffff12 0%, transparent 24%, transparent 100%),
+    radial-gradient(88% 48% at 50% 112%, var(--ad-btn-edge) 0%, transparent 74%);
+  opacity: 0.96;
+  transition:
+    opacity 0.22s,
+    filter 0.22s;
 }
 .ad-button::after,
 .ad-icon-button::after,
 .ad-toggle-button::after {
   content: "";
   position: absolute;
-  top: -48%;
-  bottom: -48%;
-  left: 0;
-  width: 38%;
+  top: -72%;
+  bottom: -72%;
+  left: -18%;
+  width: 34%;
   pointer-events: none;
   background: linear-gradient(
     90deg,
     transparent,
-    #fff7fb22 30%,
-    #fff9f6bf 49%,
-    #ffd4df6a 58%,
-    transparent 72%
+    #fff6fa14 18%,
+    #fffefecf 48%,
+    #ffd4e34d 62%,
+    transparent 80%
   );
-  filter: blur(0.06rem);
-  transform: translateX(-175%) skewX(-23deg);
+  filter: blur(0.08rem);
+  transform: translateX(-190%) rotate(14deg);
   opacity: 0;
 }
 .ad-button:hover:not(:disabled),
 .ad-icon-button:hover:not(:disabled),
 .ad-toggle-button:hover:not(:disabled) {
-  transform: translateY(-0.1rem) scale(1.02);
-  filter: brightness(1.09) saturate(1.08);
-  border-color: #ffb0c8bc;
+  transform: translateY(-0.09rem);
+  filter: brightness(1.07) saturate(1.08);
   box-shadow:
-    inset 0 0.08rem 0.16rem #fff7,
-    inset 0 -0.42rem 1rem #0006,
-    0 0 1.25rem #ff356052,
-    0 0.46rem 1rem #0009;
+    inset 0 0.09rem 0.18rem #ffffff61,
+    inset 0 -0.54rem 1.05rem var(--ad-btn-bottom),
+    inset 0 0 0 0.03125rem #ffffff14,
+    0 0.58rem 1.15rem #000a,
+    0 0 1.35rem color-mix(in srgb, var(--ad-btn-glow) 92%, transparent);
 }
 .ad-button:hover:not(:disabled)::before,
 .ad-icon-button:hover:not(:disabled)::before,
 .ad-toggle-button:hover:not(:disabled)::before {
   opacity: 1;
+  filter: brightness(1.04);
 }
 .ad-button:hover:not(:disabled)::after,
 .ad-icon-button:hover:not(:disabled)::after,
 .ad-toggle-button:hover:not(:disabled)::after {
-  animation: ad-button-sweep 1.15s ease-out 1;
+  animation: ad-btn-sheen 1.05s ease-out 1;
 }
 .ad-button:active:not(:disabled),
 .ad-icon-button:active:not(:disabled),
 .ad-toggle-button:active:not(:disabled) {
-  transform: translateY(0.06rem) scale(0.975);
-  filter: brightness(0.94);
+  transform: translateY(0.03rem) scale(0.987);
+  filter: brightness(0.96);
   box-shadow:
-    inset 0 0.24rem 0.7rem #000b,
-    inset 0 0 0.45rem #ff6c8a1f,
-    0 0.08rem 0.2rem #0008;
+    inset 0 0.26rem 0.64rem #000b,
+    inset 0 0 0.4rem var(--ad-btn-edge),
+    0 0.1rem 0.24rem #0008;
 }
 .ad-button:focus-visible,
 .ad-icon-button:focus-visible,
 .ad-toggle-button:focus-visible {
-  outline: 0.125rem solid #ffdce5;
+  outline: 0.125rem solid #ffe1ea;
   outline-offset: 0.18rem;
 }
 
+/* Semantic variants: one source for Button, IconButton, SplitButton and ToggleButton. */
 .ad-button[data-ad-variant="primary"],
-.ad-icon-button[data-ad-variant="primary"] {
-  background:
-    radial-gradient(
-      112% 135% at 50% -35%,
-      #ffb4cba8 0%,
-      #ff44716a 31%,
-      transparent 66%
-    ),
-    linear-gradient(180deg, #d01955 0%, #8e0d37 43%, #4c071c 72%, #26030c 100%);
-  border-color: #ffbdd0d1;
-  box-shadow:
-    inset 0 0.075rem 0.16rem #fff9,
-    inset 0 -0.42rem 1rem #43001755,
-    0 0 0.75rem #ff315b55,
-    0 0.36rem 0.9rem #0009;
-  animation: ad-button-alive-pulse 3.1s ease-in-out infinite;
+.ad-icon-button[data-ad-variant="primary"],
+.ad-split-button[data-ad-variant="primary"],
+.ad-toggle-button[aria-pressed="true"] {
+  --ad-btn-bg-top: #f23878;
+  --ad-btn-bg-mid: #a70b45;
+  --ad-btn-bg-bottom: #330412;
+  --ad-btn-border-a: #fff8fb;
+  --ad-btn-border-b: #ff78a4dc;
+  --ad-btn-edge: #ff2f746f;
+  --ad-btn-glow: #ff37746b;
+  --ad-btn-inner: #fffafca3;
+  --ad-btn-bottom: #4b00196c;
 }
-.ad-button[data-ad-variant="primary"]::before,
-.ad-icon-button[data-ad-variant="primary"]::before {
-  background:
-    radial-gradient(
-      circle at var(--ad-button-x) var(--ad-button-y),
-      #fff 0%,
-      #fff3f4c2 5%,
-      #ffc5d56f 14%,
-      #ff6f9830 29%,
-      transparent 49%
-    ),
-    radial-gradient(
-      78% 44% at 17% 0%,
-      #fff 0%,
-      #ffcbd98c 9%,
-      #ff94b240 25%,
-      transparent 58%
-    ),
-    linear-gradient(180deg, #ffffff27 0%, transparent 37%);
+.ad-button[data-ad-variant="primary"],
+.ad-icon-button[data-ad-variant="primary"],
+.ad-toggle-button[aria-pressed="true"] {
+  animation: ad-btn-breathe 3.1s ease-in-out infinite;
 }
 .ad-button[data-ad-variant="primary"]::after,
-.ad-icon-button[data-ad-variant="primary"]::after {
-  animation: ad-button-sweep 4.2s ease-in-out infinite;
+.ad-icon-button[data-ad-variant="primary"]::after,
+.ad-toggle-button[aria-pressed="true"]::after {
+  animation: ad-btn-sheen 4.6s ease-in-out infinite;
 }
+
 .ad-button[data-ad-variant="secondary"],
 .ad-icon-button[data-ad-variant="secondary"],
-.ad-toggle-button {
-  background:
-    radial-gradient(95% 120% at 50% -26%, #d67e9c39, transparent 60%),
-    linear-gradient(180deg, #241b25 0%, #100c13 57%, #08070b 100%);
-  border-color: #c1788d70;
+.ad-split-button[data-ad-variant="secondary"],
+.ad-toggle-button[aria-pressed="false"] {
+  --ad-btn-bg-top: #302c36;
+  --ad-btn-bg-mid: #17151c;
+  --ad-btn-bg-bottom: #08090c;
+  --ad-btn-border-a: #d5cbd2a8;
+  --ad-btn-border-b: #6258655c;
+  --ad-btn-edge: #b49aaa2c;
+  --ad-btn-glow: #aa889b1c;
+  --ad-btn-inner: #ffffff35;
+  --ad-btn-bottom: #000a;
 }
+
 .ad-button[data-ad-variant="ghost"],
-.ad-icon-button[data-ad-variant="ghost"] {
-  background: linear-gradient(180deg, #130f15cc, #07070aa8);
-  border-color: #dd7a994a;
-  box-shadow:
-    inset 0 0.065rem 0.1rem #ffffff18,
-    0 0 0 transparent;
+.ad-icon-button[data-ad-variant="ghost"],
+.ad-split-button[data-ad-variant="ghost"] {
+  --ad-btn-bg-top: #ffffff05;
+  --ad-btn-bg-mid: #ffffff02;
+  --ad-btn-bg-bottom: #0000000b;
+  --ad-btn-border-a: #d9b7c52e;
+  --ad-btn-border-b: #7d596720;
+  --ad-btn-edge: #ff9bbb0d;
+  --ad-btn-glow: transparent;
+  --ad-btn-inner: #ffffff08;
+  --ad-btn-bottom: #00000018;
+  color: #d9ced5;
 }
-.ad-button[data-ad-variant="ghost"]:hover:not(:disabled),
-.ad-icon-button[data-ad-variant="ghost"]:hover:not(:disabled) {
-  background: linear-gradient(180deg, #271622e6, #0a080db8);
-  border-color: #ff9bb686;
-}
+
 .ad-button[data-ad-variant="danger"],
-.ad-icon-button[data-ad-variant="danger"] {
-  background:
-    radial-gradient(105% 125% at 50% -26%, #ff8ca8a0, transparent 64%),
-    linear-gradient(180deg, #c31649 0%, #760a2a 57%, #390411 100%);
-  border-color: #ff9cb7ad;
-  color: #fff5f8;
-  box-shadow:
-    inset 0 0.075rem 0.15rem #ffdfe87d,
-    0 0 0.9rem #ff174c4b,
-    0 0.32rem 0.8rem #0008;
+.ad-icon-button[data-ad-variant="danger"],
+.ad-split-button[data-ad-variant="danger"] {
+  --ad-btn-bg-top: #a31328;
+  --ad-btn-bg-mid: #5b0613;
+  --ad-btn-bg-bottom: #1a0206;
+  --ad-btn-border-a: #ffb8c0d4;
+  --ad-btn-border-b: #d534476e;
+  --ad-btn-edge: #ff263f4d;
+  --ad-btn-glow: #d70d2938;
+  --ad-btn-inner: #ffd6db5e;
+  --ad-btn-bottom: #33000878;
+  color: #fff5f6;
 }
 .ad-button:disabled,
 .ad-icon-button:disabled,
 .ad-toggle-button:disabled {
-  opacity: 0.36;
-  filter: saturate(0.35);
+  opacity: 0.42;
+  filter: saturate(0.2) brightness(0.88);
   cursor: not-allowed;
-  background: #0a090d;
-  box-shadow: inset 0 0.06rem 0.08rem #fff1;
   animation: none;
+  transform: none;
 }
 .ad-button:disabled::after,
 .ad-icon-button:disabled::after,
@@ -364,10 +366,29 @@
   display: none;
 }
 
+.ad-button > .ad-icon,
+.ad-toggle-button > .ad-icon {
+  flex: 0 0 auto;
+  filter: drop-shadow(0 0 0.24rem #ffd6e26b);
+}
+.ad-button-label {
+  display: block;
+  min-inline-size: 0;
+  max-inline-size: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.ad-button > .ad-spinner {
+  flex: 0 0 auto;
+}
+
 .ad-icon-button {
+  aspect-ratio: 1/1;
   width: var(--ad-size-h);
+  min-width: var(--ad-size-h);
   padding: 0;
-  border-radius: calc(var(--ad-size-h) * 0.4);
+  border-radius: var(--ad-btn-radius);
 }
 .ad-icon-button[data-ad-round],
 .ad-button[data-ad-round] {
@@ -378,24 +399,24 @@
 }
 .ad-icon-button .ad-icon,
 .ad-toggle-button .ad-icon {
-  width: 1.22rem;
-  height: 1.22rem;
-  filter: drop-shadow(0 0 0.2rem #ff9cb2a8);
+  width: 1.12rem;
+  height: 1.12rem;
+  filter: drop-shadow(0 0 0.2rem #ffd8e67e);
 }
 .ad-icon-button[data-ad-size="xs"] .ad-icon,
 .ad-toggle-button[data-ad-size="xs"] .ad-icon {
-  width: 0.98rem;
-  height: 0.98rem;
+  width: 0.92rem;
+  height: 0.92rem;
 }
 .ad-icon-button[data-ad-size="sm"] .ad-icon,
 .ad-toggle-button[data-ad-size="sm"] .ad-icon {
-  width: 1.08rem;
-  height: 1.08rem;
+  width: 1rem;
+  height: 1rem;
 }
 .ad-icon-button[data-ad-size="lg"] .ad-icon,
 .ad-toggle-button[data-ad-size="lg"] .ad-icon {
-  width: 1.34rem;
-  height: 1.34rem;
+  width: 1.24rem;
+  height: 1.24rem;
 }
 
 .ad-tabs,

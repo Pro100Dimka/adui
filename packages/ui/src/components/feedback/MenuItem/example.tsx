@@ -1,36 +1,30 @@
 import React from "react";
-import { U, row, useExampleState } from "../../../dev/exampleHelpers";
+import { U, useExampleState } from "../../../dev/exampleHelpers";
 export default function MenuItemExample() {
-  const {
-    value,
-    setValue,
-    checked,
-    setChecked,
-    open,
-    setOpen,
-    text,
-    setText,
-    choice,
-    setChoice,
-    notice,
-    setNotice,
-    note,
-    setNote,
-    history,
-    setHistory,
-    cursor,
-    setCursor,
-    anchor,
-    alert,
-    items,
-  } = useExampleState();
-  const demo = (
-    <div role="menu">
+  const { alert } = useExampleState();
+  return (
+    <div
+      className="ad-menu"
+      role="menu"
+      style={{
+        position: "relative",
+        inset: "auto",
+        minWidth: "min(100%,20rem)",
+      }}
+    >
       <U.MenuItem
         label="Переименовать"
         icon="pencil"
+        endIcon="chevron"
         onSelect={() => alert("Переименовать")}
       />
+      <U.Divider />
+      <U.MenuItem
+        label="Копировать"
+        icon="copy"
+        onSelect={() => alert("Копировать")}
+      />
+      <U.Divider />
       <U.MenuItem
         label="Удалить"
         icon="trash"
@@ -38,16 +32,5 @@ export default function MenuItemExample() {
         onSelect={() => alert("Удалить")}
       />
     </div>
-  );
-  return (
-    <>
-      {demo}
-      <U.Toast
-        floating
-        open={!!notice}
-        message={notice}
-        onClose={() => setNotice("")}
-      />
-    </>
   );
 }

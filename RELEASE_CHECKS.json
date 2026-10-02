@@ -1,0 +1,26 @@
+{
+  "version": "1.0.0",
+  "status": "static-release-checks-passed",
+  "documented_component_pages": 60,
+  "checks": {
+    "component_structure": "passed",
+    "colocation": "passed",
+    "catalog_examples": "passed",
+    "primitive_api": "passed",
+    "responsive_units": "passed",
+    "layout_scroll_contracts": "passed",
+    "motion_contracts": "passed",
+    "grid_contracts": "passed",
+    "control_sizes": "passed",
+    "button_css": "passed",
+    "button_system": "passed",
+    "button_layout": "passed",
+    "example_isolation": "passed",
+    "docs_release_contracts": "passed",
+    "typescript_syntax": "passed (224 files)",
+    "css_parse": "passed (81 files)",
+    "relative_imports": "passed",
+    "json_parse": "passed"
+  },
+  "environment_note": "Full npm install/typecheck/Vite build could not be completed in the artifact environment because npm dependency installation timed out. Run npm install && npm run check && npm run build locally before publishing the npm package."
+}

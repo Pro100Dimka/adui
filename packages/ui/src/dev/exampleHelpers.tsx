@@ -23,6 +23,7 @@ export function useExampleState() {
     {
       label: "Переименовать",
       icon: "pencil",
+      endIcon: "chevron",
       onSelect: () => alert("Переименование выбрано"),
     },
     {
@@ -124,12 +125,18 @@ export function ExampleShowcase({
 export function ExampleVariantGrid({
   children,
   columns = 2,
+  layout = "grid",
 }: {
   children: React.ReactNode;
   columns?: 2 | 3 | 4;
+  layout?: "grid" | "rows";
 }) {
   return (
-    <div className="example-variant-grid" data-columns={columns}>
+    <div
+      className="example-variant-grid"
+      data-columns={columns}
+      data-layout={layout}
+    >
       {children}
     </div>
   );
@@ -141,7 +148,7 @@ export function ExampleVariant({
   children,
   wide = false,
 }: {
-  title: React.ReactNode;
+  title?: React.ReactNode;
   description?: React.ReactNode;
   children: React.ReactNode;
   wide?: boolean;
@@ -149,7 +156,7 @@ export function ExampleVariant({
   return (
     <div className="example-variant" data-wide={wide || undefined}>
       <div className="example-variant-control">{children}</div>
-      <strong className="example-variant-title">{title}</strong>
+      {title && <strong className="example-variant-title">{title}</strong>}
       {description && (
         <span className="example-variant-description">{description}</span>
       )}

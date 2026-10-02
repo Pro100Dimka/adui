@@ -1,0 +1,34 @@
+.ad-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-width: 0;
+  color: inherit;
+  text-decoration: none;
+  border-radius: 0.55rem;
+  outline: none;
+  transition:
+    color 0.16s,
+    background 0.16s,
+    box-shadow 0.16s,
+    transform 0.16s;
+}
+.ad-link[data-ad-underline="always"] {
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+}
+.ad-link[data-ad-underline="hover"]:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+}
+.ad-link:hover {
+  color: #fff;
+}
+.ad-link:focus-visible {
+  outline: 0.125rem solid #ffd7e2;
+  outline-offset: 0.18rem;
+}
+.ad-link > .ad-icon {
+  width: 1em;
+  height: 1em;
+}

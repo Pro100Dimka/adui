@@ -11,28 +11,20 @@ export default function ToggleButtonExample() {
   const [size, setSize] = useExampleSize();
   return (
     <ExampleShowcase size={size} onSizeChange={setSize}>
-      <ExampleVariantGrid>
-        <ExampleVariant title="Off" description="Unselected">
+      <ExampleVariantGrid columns={3}>
+        <ExampleVariant>
           <U.ToggleButton size={size} icon="volume">
-            Monitoring
+            Off
           </U.ToggleButton>
         </ExampleVariant>
-        <ExampleVariant title="On" description="Selected">
+        <ExampleVariant>
           <U.ToggleButton size={size} defaultChecked icon="wave">
-            Monitoring
+            On
           </U.ToggleButton>
         </ExampleVariant>
-        <ExampleVariant title="Icon only" description="Compact toggle">
-          <U.ToggleButton
-            size={size}
-            defaultChecked
-            icon="volume"
-            label="Monitor"
-          />
-        </ExampleVariant>
-        <ExampleVariant title="Disabled" description="Unavailable">
+        <ExampleVariant>
           <U.ToggleButton size={size} disabled icon="wave">
-            Monitoring
+            Disabled
           </U.ToggleButton>
         </ExampleVariant>
       </ExampleVariantGrid>
