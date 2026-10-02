@@ -1,0 +1,25 @@
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check package version matches tag
+        run: |
+          VERSION=$(node -p "require('./packages/ui/package.json').version")
+          test "v$VERSION" = "$GITHUB_REF_NAME" || { echo "Tag $GITHUB_REF_NAME != v$VERSION"; exit 1; }
+          test -f "release/ad-voice-ui-$VERSION.tgz" || { echo "release/ad-voice-ui-$VERSION.tgz missing, run npm run package"; exit 1; }
+          echo "VERSION=$VERSION" >> "$GITHUB_ENV"
+      - uses: softprops/action-gh-release@v2
+        with:
+          name: "@ad-voice/ui ${{ github.ref_name }}"
+          files: release/ad-voice-ui-${{ env.VERSION }}.tgz
+          generate_release_notes: true
