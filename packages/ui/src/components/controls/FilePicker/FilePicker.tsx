@@ -14,7 +14,9 @@ export const FilePicker = (p: FilePickerProps) => {
       >
         {p.label ?? "Выбрать файл"}
       </Button>
-      <small>{names || p.description || "Файл не выбран"}</small>
+      <small key={names} data-picked={!!names || undefined}>
+        {names || p.description || "Файл не выбран"}
+      </small>
       <input
         type="file"
         ref={input}

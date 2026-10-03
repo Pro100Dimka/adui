@@ -1,5 +1,5 @@
 /* Styles owned by RotaryKnob. */
-/* Exact CSS geometry from premium-knob-interactive-neon(2).html, scoped to A&D UI. */
+/* Exact CSS geometry from premium-knob-interactive-neon(2).html, scoped to Neo UI. */
 .ad-rotary-knob.knob {
   --size: 13.75rem;
   --angle: 45.9deg;
@@ -10,6 +10,10 @@
   flex: none;
   isolation: isolate;
   -webkit-tap-highlight-color: transparent;
+  /* Leans towards the pointer in 3D; settles back when it leaves or is grabbed. */
+  transform: perspective(60rem) rotateX(var(--tilt-x, 0deg))
+    rotateY(var(--tilt-y, 0deg));
+  transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 .ad-rotary-knob.knob::before {
   content: "";
@@ -28,6 +32,16 @@
     0 0 3.25rem rgba(255, 7, 42, 0.12),
     0 0 5.375rem rgba(255, 5, 38, 0.06);
   z-index: -1;
+  animation: ad-knob-breathe 5s ease-in-out infinite;
+}
+/* At rest the halo breathes slowly; grabbing the knob wakes it fully. */
+@keyframes ad-knob-breathe {
+  50% {
+    opacity: 0.6;
+  }
+}
+.ad-rotary-knob.is-dragging.knob::before {
+  animation: none;
 }
 .ad-rotary-knob.knob::after {
   content: "";
@@ -69,34 +83,108 @@
   filter: drop-shadow(0 0 0.625rem rgba(255, 26, 56, 0.28))
     drop-shadow(0 0 1.75rem rgba(255, 8, 44, 0.16));
 }
+.ad-rotary-knob .knob__surface {
+  transition:
+    filter 0.4s ease,
+    scale 0.3s cubic-bezier(0.34, 1.56, 0.5, 1);
+}
+/* Depth: the knob stands off the panel and casts a soft shadow; the cap stands off the bezel. */
+.ad-rotary-knob .knob__base {
+  filter: drop-shadow(0 0.9rem 1.1rem #000c)
+    drop-shadow(0 0 0.4375rem rgba(255, 18, 48, 0.18))
+    drop-shadow(0 0 1.25rem rgba(255, 10, 44, 0.1));
+}
+.ad-rotary-knob .knob__rotor {
+  filter: drop-shadow(0 0.35rem 0.45rem #000b);
+}
 .ad-rotary-knob .knob__rotor {
   transform: rotate(var(--rotation));
   transform-origin: center;
   will-change: transform;
 }
-.ad-rotary-knob .knob__value {
+/* Grabbed, the cap sinks a touch into the panel. */
+.ad-rotary-knob.is-dragging .knob__rotor,
+.ad-rotary-knob.is-dragging .knob__sheen {
+  scale: 0.975;
+}
+/* Fixed studio lights on the cap: the brushed metal turns, its highlights stay put. */
+.ad-rotary-knob .knob__sheen {
+  position: absolute;
+  inset: 18.7%;
+  border-radius: 50%;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 34% 26%, #ffffff2e, transparent 42%),
+    conic-gradient(
+      from 0deg,
+      transparent 0deg,
+      #ffffff14 30deg,
+      transparent 70deg,
+      transparent 150deg,
+      #ff6b8a12 200deg,
+      transparent 240deg,
+      transparent 300deg,
+      #ffffff10 330deg,
+      transparent 360deg
+    );
+  box-shadow:
+    inset 0 0.0625rem 0.0625rem #ffffff2a,
+    inset 0 -0.25rem 0.75rem #0009;
+  mix-blend-mode: screen;
+  transition: scale 0.3s cubic-bezier(0.34, 1.56, 0.5, 1);
+}
+/* The value sits in the scale's dead zone at the bottom, like a hardware display;
+   click it to type a number. */
+.ad-rotary-knob .knob__value,
+.ad-rotary-knob .knob__input {
   position: absolute;
   left: 50%;
-  bottom: -1%;
-  transform: translateX(-50%);
+  bottom: 2.5%;
+  translate: -50% 0;
+  min-width: 3.4em;
+  padding: 0.12em 0.45em;
+  border-radius: 0.4em;
   color: #ffe9e8;
-  font:
-    500 clamp(0.75rem, 2.8vmin, 1.5rem)/1.1 system-ui,
-    sans-serif;
+  font: 600 max(0.625rem, calc(var(--size) * 0.068)) / 1.2
+    var(--ad-font-family-mono, monospace);
   font-variant-numeric: tabular-nums;
+  text-align: center;
   text-shadow:
     0 0 0.3125rem #fff8f8,
-    0 0 0.875rem #ff385d,
-    0 0 1.875rem #ff173866;
-  opacity: 0;
-  pointer-events: none;
-  filter: drop-shadow(0 0 0.4375rem rgba(255, 18, 48, 0.18))
-    drop-shadow(0 0 1.25rem rgba(255, 10, 44, 0.1));
+    0 0 0.875rem #ff385d;
+  background: linear-gradient(#0b0507e6, #170a0ee6);
+  box-shadow:
+    inset 0 0 0 0.0625rem #ff4a6a3d,
+    inset 0 0.0625rem 0 #ffffff14,
+    0 0.25rem 0.75rem #0009;
+  transition:
+    box-shadow 0.25s,
+    color 0.25s;
 }
-.ad-rotary-knob:hover .knob__value,
-.ad-rotary-knob:focus-within .knob__value,
-.ad-rotary-knob.is-dragging .knob__value {
-  opacity: 1;
+.ad-rotary-knob .knob__value[data-editable] {
+  cursor: text;
+}
+.ad-rotary-knob .knob__value[data-editable]:hover {
+  box-shadow:
+    inset 0 0 0 0.0625rem #ff6a86aa,
+    inset 0 0.0625rem 0 #ffffff1f,
+    0 0 0.9rem #ff2f6a55;
+}
+.ad-rotary-knob .knob__value[data-editing] {
+  visibility: hidden;
+}
+.ad-rotary-knob .knob__input {
+  width: 3.4em;
+  border: 0;
+  outline: none;
+  box-shadow:
+    inset 0 0 0 0.0625rem #ff6a86,
+    0 0 1rem #ff2f6a77;
+  caret-color: #fff;
+}
+.ad-rotary-knob[data-ad-size="xs"] .knob__value,
+.ad-rotary-knob[data-ad-size="xs"] .knob__input {
+  bottom: -0.4em;
 }
 .ad-rotary-knob .knob__control:focus-visible::after {
   content: "";
@@ -190,4 +278,13 @@
   .ad-rotary-knob .knob__rotor {
     will-change: auto;
   }
+}
+/* Hover and grab brighten the glow but keep the depth shadows. */
+.ad-rotary-knob:is(:hover, .is-dragging) .knob__base {
+  filter: drop-shadow(0 0.9rem 1.1rem #000c)
+    drop-shadow(0 0 0.625rem rgba(255, 26, 56, 0.28))
+    drop-shadow(0 0 1.75rem rgba(255, 8, 44, 0.16));
+}
+.ad-rotary-knob:is(:hover, .is-dragging) .knob__rotor {
+  filter: drop-shadow(0 0.35rem 0.45rem #000b);
 }

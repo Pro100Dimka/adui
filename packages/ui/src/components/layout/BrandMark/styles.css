@@ -1,1 +1,37 @@
-/* Styles owned by BrandMark. */
+/* Styles owned by BrandMark: the logo breathes in neon and its strokes shift from ruby to white. */
+.ad-brand-mark {
+  position: relative;
+  display: inline-grid;
+  justify-items: center;
+  gap: 0.25rem;
+  max-width: 100%;
+  color: #f36784;
+}
+.ad-brand-mark > svg {
+  width: min(15rem, 100%);
+  height: auto;
+  animation: ad-brand-breathe 4s ease-in-out infinite;
+}
+.ad-brand-mark > small {
+  font-size: 0.5rem;
+  letter-spacing: 0.28rem;
+  color: #f1c9db;
+  animation: ad-brand-spacing 4s ease-in-out infinite;
+}
+@keyframes ad-brand-breathe {
+  0%,
+  100% {
+    color: #f36784;
+    filter: drop-shadow(0 0 0.3rem #ff154833);
+  }
+  50% {
+    color: #ffc2d2;
+    filter: drop-shadow(0 0 0.9rem #ff1548aa);
+  }
+}
+@keyframes ad-brand-spacing {
+  50% {
+    letter-spacing: 0.36rem;
+    color: #fff;
+  }
+}

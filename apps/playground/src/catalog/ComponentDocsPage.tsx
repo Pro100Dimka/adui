@@ -1,19 +1,19 @@
-import React, { Component, useState } from "react";
+import { useState } from "react";
+import { DocsExampleBoundary } from "./DocsExampleBoundary";
+import { HeroBackdrop } from "./HeroBackdrop";
 import { ExampleCodeContext } from "../../../../packages/ui/src/dev/exampleHelpers";
 import {
   Badge,
   Button,
   Card,
-  CollapsibleSection,
+  Dialog,
   Divider,
   Grid,
   Header,
   Icon,
   Link,
-  ScrollArea,
   Stack,
   Typography,
-  WaveDecoration,
   copyText,
 } from "@ad-voice/ui";
 import {
@@ -29,41 +29,17 @@ import {
 } from "./componentRegistry";
 import { getCategoryForItem } from "./catalogNavigation";
 
-class DocsExampleBoundary extends Component<
-  { name: string; children: React.ReactNode },
-  { error?: Error }
-> {
-  state: { error?: Error } = {};
-  static getDerivedStateFromError(error: Error) {
-    return { error };
-  }
-  componentDidCatch(error: Error) {
-    console.error(`[A&D UI] Docs example ${this.props.name} crashed`, error);
-  }
-  render() {
-    if (!this.state.error) return this.props.children;
-    return (
-      <Card className="docs-example-error" material="danger" padding="sm">
-        <Stack gap={2}>
-          <Typography variant="label" weight="bold">
-            Пример {this.props.name} не отрисовался
-          </Typography>
-          <Typography variant="mono">{this.state.error.message}</Typography>
-        </Stack>
-      </Card>
-    );
-  }
-}
-
+/** A code listing with its file name and a copy button that confirms itself. */
 function CodeBlock({
-  title,
+  file,
   code,
   language = "tsx",
 }: {
-  title: string;
+  file: string;
   code: string;
   language?: string;
 }) {
+  const [copied, setCopied] = useState(false);
   return (
     <Card className="docs-code-block" material="glass" padding="none">
       <Stack
@@ -81,50 +57,31 @@ function CodeBlock({
         >
           <Badge>{language.toUpperCase()}</Badge>
           <Typography variant="label" truncate>
-            {title}
+            {file}
           </Typography>
         </Stack>
         <Button
           size="xs"
-          variant="ghost"
-          icon="copy"
+          variant={copied ? "primary" : "secondary"}
+          icon={copied ? "check" : "copy"}
           onClick={() => {
             void copyText(code);
+            setCopied(true);
+            window.setTimeout(() => setCopied(false), 1600);
           }}
         >
-          Копировать
+          {copied ? "Скопировано" : "Копировать"}
         </Button>
       </Stack>
       <Divider />
-      <ScrollArea
-        className="docs-code-scroll"
-        height="clamp(10rem,32dvh,24rem)"
-        label={title}
-      >
+      <div className="docs-code-body">
         <Typography as="pre" className="docs-code-pre" variant="mono">
           {code}
         </Typography>
-      </ScrollArea>
+      </div>
     </Card>
   );
 }
-
-const sections = [
-  ["overview", "Обзор"],
-  ["preview", "Live preview"],
-  ["usage", "Использование"],
-  ["api", "API"],
-  ["source", "Исходник"],
-  ["related", "Связанные"],
-] as const;
-
-const scrollToSection =
-  (id: string) => (event: React.MouseEvent<HTMLAnchorElement>) => {
-    event.preventDefault();
-    document
-      .getElementById(id)
-      ?.scrollIntoView({ behavior: "smooth", block: "start" });
-  };
 
 /** Adds the import line for every component tag used in a generated snippet. */
 function withImports(code: string, name: string, path: string) {
@@ -149,14 +106,28 @@ export function ComponentDocsPage({ item }: { item: CatalogMeta }) {
   const LiveExample = getExample(item.name);
   const exampleSource = getExampleSource(item.name);
   const [liveCode, setLiveCode] = useState<string>();
+  const [modal, setModal] = useState<"example" | "api" | "source">();
   const apiSource = getComponentApiSource(item.name);
   const componentSource = getComponentSource(item.name);
   const sourcePath = getComponentSourcePath(item.name);
   const importPath = getImportPath(item);
-  const importLine = `import { ${item.name} } from "${importPath}";`;
   const usage = liveCode
     ? withImports(liveCode, item.name, importPath)
     : exampleSource;
+  const codeViews = {
+    example: { title: "код примера", file: "Example.tsx", code: usage },
+    api: {
+      title: "API",
+      file: `${item.name}Props`,
+      code: apiSource,
+      language: "ts",
+    },
+    source: {
+      title: "исходник",
+      file: sourcePath || `${item.name}.tsx`,
+      code: componentSource || "// Исходник не найден",
+    },
+  };
   const categoryItems = category?.items ?? catalog;
   const index = categoryItems.findIndex(
     (candidate) => candidate.name === item.name,
@@ -168,21 +139,28 @@ export function ComponentDocsPage({ item }: { item: CatalogMeta }) {
     .slice(0, 5);
 
   return (
-    <Grid
-      className="docs-component-shell"
-      columns={{ base: 1, xl: "minmax(0,1fr) 12rem" }}
-      gap={5}
-      align="start"
+    <Stack
+      as="article"
+      className="docs-component-shell docs-component-content"
+      gap={4}
     >
-      <Stack as="article" className="docs-component-content" gap={5}>
-        <Card
-          className="docs-component-hero"
-          id="overview"
-          material="shell"
-          border
-          padding="lg"
-        >
-          <Stack gap={4}>
+      <Card
+        className="docs-component-hero"
+        id="overview"
+        material="shell"
+        border
+        padding="md"
+      >
+        <HeroBackdrop index={catalog.indexOf(item)} />
+        <Stack className="docs-hero-content" gap={4}>
+          <Stack
+            className="docs-hero-top"
+            direction="row"
+            justify="between"
+            align="center"
+            gap={3}
+            wrap
+          >
             <Stack
               className="docs-breadcrumbs"
               direction="row"
@@ -204,289 +182,176 @@ export function ComponentDocsPage({ item }: { item: CatalogMeta }) {
                 {item.name}
               </Typography>
             </Stack>
-
-            <Grid
-              className="docs-component-title-row"
-              columns={{ base: 1, lg: "minmax(0,1fr) 14rem" }}
-              gap={4}
-              align="center"
+            <Stack
+              className="docs-component-badges"
+              direction="row"
+              gap={2}
+              wrap
             >
-              <Stack gap={3}>
-                <Stack
-                  className="docs-component-badges"
-                  direction="row"
-                  gap={2}
-                  wrap
-                >
-                  <Badge tone="success">Stable</Badge>
-                  <Badge>React</Badge>
-                  <Badge>A&D UI</Badge>
-                </Stack>
-                <Header
-                  as="div"
-                  level={1}
-                  title={item.name}
-                  description={item.description}
-                />
-              </Stack>
-              <WaveDecoration />
-            </Grid>
+              <Badge tone="success">Stable</Badge>
+              <Badge>React</Badge>
+              <Badge>Neo UI</Badge>
+            </Stack>
+          </Stack>
 
-            <Card className="docs-import" material="glass" padding="sm">
-              <Stack
-                direction={{ base: "column", sm: "row" }}
-                justify="between"
-                align={{ base: "stretch", sm: "center" }}
-                gap={3}
-              >
-                <Typography variant="mono" truncate>
-                  {importLine}
-                </Typography>
+          <Header
+            as="div"
+            level={1}
+            title={item.name}
+            description={item.description}
+          />
+        </Stack>
+      </Card>
+
+      <Card
+        className="docs-section docs-section--example"
+        id="example"
+        material="card"
+        padding="md"
+      >
+        <Stack gap={4}>
+          <Header
+            level={2}
+            compact
+            title="Пример"
+            description={
+              liveCode
+                ? "Меняйте настройки — в «Коде» будет ровно то, что вы видите."
+                : "Живой компонент из текущих исходников."
+            }
+            actions={
+              <Stack direction="row" gap={2} wrap>
                 <Button
                   size="sm"
                   variant="secondary"
-                  icon="copy"
-                  onClick={() => {
-                    void copyText(importLine);
-                  }}
+                  icon="braces"
+                  onClick={() => setModal("example")}
                 >
-                  Копировать import
+                  Код
+                </Button>
+                <Button
+                  size="sm"
+                  variant="secondary"
+                  icon="list"
+                  onClick={() => setModal("api")}
+                >
+                  API
                 </Button>
               </Stack>
-            </Card>
-          </Stack>
-        </Card>
-
-        <Grid
-          className="docs-primary-grid"
-          columns={{ base: 1, lg: "minmax(0,1.15fr) minmax(20rem,.85fr)" }}
-          gap={4}
-          align="start"
-        >
+            }
+          />
           <Card
-            className="docs-section docs-section--preview"
-            id="preview"
-            material="card"
-            padding="md"
+            className={`docs-live-stage ${item.wide ? "docs-live-stage--wide" : ""}`}
+            material="glass"
+            padding={item.wide ? "sm" : "md"}
           >
-            <Stack gap={4}>
-              <Header
-                level={2}
-                compact
-                eyebrow="01"
-                title="Live preview"
-                description="Настоящий компонент из текущих исходников."
-                actions={<Badge tone="success">Live</Badge>}
-              />
-              <Card
-                className={`docs-live-stage ${item.wide ? "docs-live-stage--wide" : ""}`}
-                material="glass"
-                padding={item.wide ? "sm" : "md"}
-              >
-                <DocsExampleBoundary name={item.name}>
-                  {LiveExample ? (
-                    <ExampleCodeContext.Provider value={setLiveCode}>
-                      <LiveExample />
-                    </ExampleCodeContext.Provider>
-                  ) : (
-                    <Typography variant="body-sm" tone="muted">
-                      Для компонента пока нет example.tsx.
-                    </Typography>
-                  )}
-                </DocsExampleBoundary>
-              </Card>
-            </Stack>
+            <DocsExampleBoundary name={item.name}>
+              {LiveExample ? (
+                <ExampleCodeContext.Provider value={setLiveCode}>
+                  <LiveExample />
+                </ExampleCodeContext.Provider>
+              ) : (
+                <Typography variant="body-sm" tone="muted">
+                  Для компонента пока нет example.tsx.
+                </Typography>
+              )}
+            </DocsExampleBoundary>
           </Card>
-
-          <Card
-            className="docs-section docs-section--usage"
-            id="usage"
-            material="card"
-            padding="md"
-          >
-            <Stack gap={4}>
-              <Header
-                level={2}
-                compact
-                eyebrow="02"
-                title="Использование"
-                description={
-                  liveCode
-                    ? "Меняется вместе с настройками примера."
-                    : "Готовый код — копируйте и используйте."
-                }
-              />
-              <CodeBlock title="Example.tsx" code={usage} />
-            </Stack>
-          </Card>
-        </Grid>
-
-        <Card
-          className="docs-section docs-section--api"
-          id="api"
-          material="card"
-          padding="md"
-        >
-          <Stack gap={4}>
-            <Header
-              level={2}
-              compact
-              eyebrow="03"
-              title="API"
-              description="TypeScript props из текущей версии."
-            />
-            <CodeBlock
-              title={`${item.name}Props`}
-              code={apiSource}
-              language="ts"
-            />
-          </Stack>
-        </Card>
-
-        <Grid
-          className="docs-secondary-grid"
-          columns={{ base: 1, lg: related.length ? 2 : 1 }}
-          gap={4}
-          align="start"
-        >
-          <Card
-            className="docs-section docs-section--source"
-            id="source"
-            material="card"
-            padding="md"
-          >
-            <Stack gap={4}>
-              <Header
-                level={2}
-                compact
-                eyebrow="04"
-                title="Исходник"
-                description={sourcePath || "Реализация компонента"}
-              />
-              <CollapsibleSection title="Показать реализацию" icon="braces">
-                <CodeBlock
-                  title={sourcePath || `${item.name}.tsx`}
-                  code={componentSource || "// Исходник не найден"}
-                />
-              </CollapsibleSection>
-            </Stack>
-          </Card>
-
-          {!!related.length && (
-            <Card
-              className="docs-section docs-section--related"
-              id="related"
-              material="card"
-              padding="md"
-            >
-              <Stack gap={4}>
-                <Header
-                  level={2}
-                  compact
-                  eyebrow="05"
-                  title="Связанные"
-                  description="Компоненты из той же категории."
-                />
-                <Grid
-                  className="docs-related-grid"
-                  minChildWidth="min(100%,13rem)"
-                  gap={2}
-                >
-                  {related.map((candidate) => (
-                    <Link
-                      key={candidate.name}
-                      href={componentHref(candidate.name)}
-                      underline="none"
-                      endIcon="chevron"
-                    >
-                      <Stack gap={1}>
-                        <Typography variant="label" weight="bold">
-                          {candidate.name}
-                        </Typography>
-                        <Typography variant="caption" tone="muted">
-                          {candidate.description}
-                        </Typography>
-                      </Stack>
-                    </Link>
-                  ))}
-                </Grid>
-              </Stack>
-            </Card>
-          )}
-        </Grid>
-
-        <Stack
-          as="nav"
-          className="docs-prev-next"
-          direction={{ base: "column", sm: "row" }}
-          justify="between"
-          gap={3}
-          aria-label="Следующий и предыдущий компонент"
-        >
-          {previous ? (
-            <Link
-              className="docs-prev"
-              href={componentHref(previous.name)}
-              underline="none"
-              icon="chevron"
-            >
-              <Stack gap={0}>
-                <Typography variant="caption" tone="muted">
-                  Назад
-                </Typography>
-                <Typography variant="label" weight="bold">
-                  {previous.name}
-                </Typography>
-              </Stack>
-            </Link>
-          ) : (
-            <span />
-          )}
-          {next ? (
-            <Link
-              className="docs-next"
-              href={componentHref(next.name)}
-              underline="none"
-              endIcon="chevron"
-            >
-              <Stack gap={0} align="end">
-                <Typography variant="caption" tone="muted">
-                  Дальше
-                </Typography>
-                <Typography variant="label" weight="bold">
-                  {next.name}
-                </Typography>
-              </Stack>
-            </Link>
-          ) : null}
         </Stack>
-      </Stack>
+      </Card>
 
-      <Stack as="aside" className="docs-toc" gap={3}>
-        <Card className="docs-toc-card" material="glass" padding="sm">
-          <Stack gap={2}>
-            <Typography variant="eyebrow" tone="muted">
-              На этой странице
-            </Typography>
-            {sections
-              .filter(([id]) => id !== "related" || related.length > 0)
-              .map(([id, label]) => (
-                <Link
-                  key={id}
-                  href={`#${id}`}
-                  underline="none"
-                  onClick={scrollToSection(id)}
+      <Card
+        className="docs-section docs-section--related"
+        id="related"
+        material="card"
+        padding="md"
+      >
+        <Stack gap={4}>
+          <Header
+            level={2}
+            compact
+            title={related.length ? "Связанные" : "Исходник"}
+            actions={
+              <Stack
+                as="nav"
+                className="docs-prev-next"
+                direction="row"
+                gap={2}
+                align="center"
+                wrap
+                aria-label="Соседние компоненты и исходник"
+              >
+                {previous && (
+                  <Link
+                    className="docs-prev"
+                    href={componentHref(previous.name)}
+                    underline="none"
+                    icon="chevron"
+                    title="Предыдущий компонент"
+                  >
+                    {previous.name}
+                  </Link>
+                )}
+                {next && (
+                  <Link
+                    className="docs-next"
+                    href={componentHref(next.name)}
+                    underline="none"
+                    endIcon="chevron"
+                    title="Следующий компонент"
+                  >
+                    {next.name}
+                  </Link>
+                )}
+                <Button
+                  size="sm"
+                  variant="secondary"
+                  icon="document"
+                  onClick={() => setModal("source")}
                 >
-                  <Typography variant="body-sm">{label}</Typography>
+                  Исходник
+                </Button>
+              </Stack>
+            }
+          />
+          {!!related.length && (
+            <Grid
+              className="docs-related-grid"
+              minChildWidth="min(100%,13rem)"
+              gap={2}
+            >
+              {related.map((candidate) => (
+                <Link
+                  key={candidate.name}
+                  href={componentHref(candidate.name)}
+                  underline="none"
+                  endIcon="chevron"
+                >
+                  <Stack gap={1}>
+                    <Typography variant="label" weight="bold">
+                      {candidate.name}
+                    </Typography>
+                    <Typography variant="caption" tone="muted">
+                      {candidate.description}
+                    </Typography>
+                  </Stack>
                 </Link>
               ))}
-            <Divider />
-            <Typography variant="caption" tone="muted">
-              {category?.label}
-            </Typography>
-          </Stack>
-        </Card>
-      </Stack>
-    </Grid>
+            </Grid>
+          )}
+        </Stack>
+      </Card>
+
+      <Dialog
+        className="docs-code-dialog"
+        open={!!modal}
+        onOpenChange={(open) => !open && setModal(undefined)}
+        title={`${item.name} — ${modal ? codeViews[modal].title : ""}`}
+        cancelLabel={false}
+        confirmLabel="Готово"
+      >
+        {modal && <CodeBlock {...codeViews[modal]} />}
+      </Dialog>
+    </Stack>
   );
 }

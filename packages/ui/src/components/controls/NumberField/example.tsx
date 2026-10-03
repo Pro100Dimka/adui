@@ -13,6 +13,7 @@ export default function NumberFieldExample() {
       knobs={{
         variant: { options: inputVariants, value: "outlined" },
         size: { options: sizes, value: "md" },
+        floating: { value: true },
         disabled: { value: false },
       }}
       code={(v, c) =>
@@ -25,6 +26,7 @@ export default function NumberFieldExample() {
           defaultValue: 120,
           variant: c.variant,
           size: c.size,
+          labelPlacement: v.floating ? "floating" : undefined,
           disabled: v.disabled,
         })
       }
@@ -39,6 +41,7 @@ export default function NumberFieldExample() {
           defaultValue={120}
           variant={v.variant}
           size={v.size}
+          labelPlacement={v.floating ? "floating" : "top"}
           disabled={v.disabled}
         />
       )}

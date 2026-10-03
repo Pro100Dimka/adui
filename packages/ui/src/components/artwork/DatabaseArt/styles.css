@@ -1,0 +1,46 @@
+/* Styles owned by DatabaseArt. Orbit, spark and aura animations are shared with ServerArt. */
+.ad-database-art {
+  display: block;
+  width: 100%;
+  max-width: 11rem;
+  aspect-ratio: 170 / 179;
+  height: auto;
+  overflow: visible;
+}
+.ad-art-orbit {
+  stroke-dasharray: 14 86;
+  stroke-linecap: round;
+  animation: ad-art-orbit 4s linear infinite;
+}
+.ad-art-spark {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: ad-art-spark 4s ease-in-out var(--ad-delay, 0s) infinite;
+}
+.ad-art-aura {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: ad-art-aura 5s ease-in-out infinite;
+}
+@keyframes ad-art-orbit {
+  to {
+    stroke-dashoffset: -100;
+  }
+}
+@keyframes ad-art-spark {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(0.7);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+@keyframes ad-art-aura {
+  50% {
+    opacity: 0.6;
+    transform: scale(1.08);
+  }
+}

@@ -4,10 +4,7 @@
 @import "./components/controls/shared.css";
 @import "./components/feedback/shared.css";
 @import "./components/media/shared.css";
-@import "./components/compositions/shared.css";
 @import "./components/editor/shared.css";
-@import "./components/compositions/ParticipantCard/styles.css";
-@import "./components/compositions/RoleEmblem/styles.css";
 @import "./components/controls/Autocomplete/styles.css";
 @import "./components/controls/Button/styles.css";
 @import "./components/controls/Checkbox/styles.css";
@@ -79,3 +76,9 @@
 @import "./components/navigation/Router/styles.css";
 @import "./components/forms/Form/styles.css";
 @import "./components/forms/FormFields/styles.css";
+@import "./components/artwork/Landscape/styles.css";
+@import "./components/artwork/Planet/styles.css";
+@import "./components/artwork/NeonWaves/styles.css";
+@import "./components/artwork/Spectrum/styles.css";
+@import "./components/artwork/DatabaseArt/styles.css";
+@import "./components/artwork/ServerArt/styles.css";

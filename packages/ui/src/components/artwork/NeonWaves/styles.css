@@ -1,0 +1,17 @@
+/* Styles owned by NeonWaves: the strands move by script; the stars twinkle on their own. */
+.ad-neon-waves {
+  display: block;
+  width: 100%;
+  height: clamp(4.5rem, 3rem + 6vw, 7.5rem);
+  overflow: visible;
+  pointer-events: none;
+}
+.ad-neon-waves-star {
+  fill: var(--ad-pink);
+  animation: ad-neon-twinkle 4s ease-in-out infinite;
+}
+@keyframes ad-neon-twinkle {
+  50% {
+    opacity: 0.05;
+  }
+}

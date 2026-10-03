@@ -1,9 +1,15 @@
-/* Styles owned by CollapsibleSection. */
+/* Styles owned by CollapsibleSection: the body unfolds smoothly, the chevron turns, content rises in. */
 .ad-collapsible-section {
   border-radius: 0.9375rem;
+  interpolate-size: allow-keywords;
+  transition: box-shadow 0.35s;
+}
+.ad-collapsible-section[open] {
+  box-shadow: 0 0 1.2rem #ff2f6a22;
 }
 .ad-collapsible-section summary {
-  padding: 1.125rem 1.25rem;
+  position: relative;
+  padding: 1rem 1.25rem;
   display: flex;
   align-items: center;
   gap: 0.875rem;
@@ -11,12 +17,49 @@
   list-style: none;
   font-size: 1rem;
   font-weight: 600;
+  border-radius: inherit;
+  transition:
+    background 0.25s,
+    color 0.25s;
 }
 .ad-collapsible-section summary::-webkit-details-marker {
   display: none;
+}
+.ad-collapsible-section summary:hover {
+  background: #ffffff08;
+}
+.ad-collapsible-section summary > .ad-icon:first-child {
+  transition:
+    transform 0.4s cubic-bezier(0.34, 1.56, 0.5, 1),
+    color 0.25s;
+}
+.ad-collapsible-section summary:hover > .ad-icon:first-child,
+.ad-collapsible-section[open] summary > .ad-icon:first-child {
+  transform: scale(1.12) rotate(-8deg);
+  color: var(--ad-pink);
+}
+/* Smooth height where supported (::details-content); elsewhere it opens instantly. */
+.ad-collapsible-section::details-content {
+  block-size: 0;
+  overflow: hidden;
+  transition:
+    block-size 0.45s cubic-bezier(0.2, 0.8, 0.2, 1),
+    content-visibility 0.45s allow-discrete;
+}
+.ad-collapsible-section[open]::details-content {
+  block-size: auto;
 }
 .ad-collapse-content {
   padding: 0 1.25rem 1.25rem;
   font-size: 0.8125rem;
   color: var(--ad-muted);
+}
+.ad-collapsible-section[open] .ad-collapse-content {
+  animation: ad-collapse-in 0.5s 0.05s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+@keyframes ad-collapse-in {
+  from {
+    opacity: 0;
+    transform: translateY(-0.5rem);
+  }
 }

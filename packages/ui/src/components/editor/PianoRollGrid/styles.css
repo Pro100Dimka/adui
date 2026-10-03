@@ -21,7 +21,7 @@
   --ad-icon-size: 1rem;
 }
 .ad-piano-roll-stage {
-  --ad-roll-row: 1.75rem;
+  --ad-roll-row: clamp(1.25rem, 2.4dvh, 1.75rem);
   --ad-roll-keys: 3.5rem;
   --ad-roll-beat: calc(3rem * var(--ad-editor-zoom, 1));
   position: relative;

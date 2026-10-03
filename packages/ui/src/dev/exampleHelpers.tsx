@@ -11,6 +11,12 @@ import * as Editor from "../editor";
 
 export const U = { ...UI, ...Editor };
 
+/** True inside overview tiles: a playground shows only its specimens, without controls. */
+export const ExamplePreviewContext = createContext(false);
+
+/** Knobs that pick a look rather than tune it: all of their options are shown side by side. */
+const spreadKeys = ["variant", "tone", "status", "material", "effect"];
+
 /** The docs page listens here to show the code of the current playground state. */
 export const ExampleCodeContext = createContext<
   ((code: string) => void) | null
@@ -99,6 +105,10 @@ const knobLabels: Record<string, string> = {
   effect: "Эффект",
   max: "Наклон, °",
   glare: "Блик",
+  floating: "Подпись внутри",
+  strands: "Нити",
+  stars: "Звёзды",
+  upload: "Облако загрузки",
 };
 
 /**
@@ -127,7 +137,18 @@ export function Playground<K extends Record<string, Knob>>({
       ) as KnobValues<K>,
   );
   const report = useContext(ExampleCodeContext);
-  const source = code(values, changed(knobs, values));
+  const preview = useContext(ExamplePreviewContext);
+  const spread = Object.keys(knobs).find(
+    (key) => spreadKeys.includes(key) && "options" in knobs[key],
+  ) as keyof K | undefined;
+  const looks = spread
+    ? (knobs[spread] as { options: readonly string[] }).options.map(
+        (option) => ({ option, values: { ...values, [spread]: option } }),
+      )
+    : [{ option: "", values }];
+  const source = looks
+    .map((look) => code(look.values, changed(knobs, look.values)))
+    .join("\n\n");
   const reported = useRef("");
   useEffect(() => {
     if (report && reported.current !== source) {
@@ -140,34 +161,49 @@ export function Playground<K extends Record<string, Knob>>({
 
   return (
     <div className="example-playground">
-      <div className="example-stage" data-stretch={stretch || undefined}>
-        {children(values)}
+      <div
+        className="example-stage"
+        data-stretch={stretch || undefined}
+        data-spread={spread ? true : undefined}
+      >
+        {spread
+          ? looks.map((look) => (
+              <figure key={look.option}>
+                {children(look.values)}
+                <figcaption>{look.option}</figcaption>
+              </figure>
+            ))
+          : children(values)}
       </div>
-      <div className="example-knobs">
-        {Object.entries(knobs).map(([key, knob]) =>
-          "options" in knob ? (
-            <div className="example-knob" key={key}>
-              <span>{knobLabels[key] ?? key}</span>
-              <U.SegmentedControl
-                size="xs"
-                label={knobLabels[key] ?? key}
-                value={values[key] as string}
-                onValueChange={(v) => set(key, v)}
-                items={knob.options.map((o) => ({ value: o, label: o }))}
-              />
-            </div>
-          ) : (
-            <U.Switch
-              key={key}
-              size="xs"
-              label={knobLabels[key] ?? key}
-              checked={values[key] as boolean}
-              onValueChange={(v) => set(key, v)}
-            />
-          ),
-        )}
-      </div>
-      {extra && <div className="example-extra">{extra}</div>}
+      {!preview && (
+        <div className="example-knobs">
+          {Object.entries(knobs)
+            .filter(([key]) => key !== spread)
+            .map(([key, knob]) =>
+              "options" in knob ? (
+                <div className="example-knob" key={key}>
+                  <span>{knobLabels[key] ?? key}</span>
+                  <U.SegmentedControl
+                    size="xs"
+                    label={knobLabels[key] ?? key}
+                    value={values[key] as string}
+                    onValueChange={(v) => set(key, v)}
+                    items={knob.options.map((o) => ({ value: o, label: o }))}
+                  />
+                </div>
+              ) : (
+                <U.Switch
+                  key={key}
+                  size="xs"
+                  label={knobLabels[key] ?? key}
+                  checked={values[key] as boolean}
+                  onValueChange={(v) => set(key, v)}
+                />
+              ),
+            )}
+        </div>
+      )}
+      {extra && !preview && <div className="example-extra">{extra}</div>}
     </div>
   );
 }

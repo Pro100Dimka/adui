@@ -28,3 +28,31 @@
   box-shadow: var(--ad-shadow-tile);
   color: #fff5f6;
 }
+/* Tile icons breathe with light; hovering lifts the tile and rocks the glyph. */
+.ad-icon[data-ad-surface="tile"] {
+  animation: ad-tile-breathe 4s ease-in-out infinite;
+  transition:
+    transform 0.4s cubic-bezier(0.34, 1.56, 0.5, 1),
+    border-color 0.3s;
+}
+.ad-icon[data-ad-surface="tile"] > [data-ad-component="IconAsset"] {
+  transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.5, 1);
+}
+.ad-icon[data-ad-surface="tile"]:hover {
+  transform: translateY(-0.125rem) scale(1.06);
+  border-color: #ff8aa6;
+}
+.ad-icon[data-ad-surface="tile"]:hover > [data-ad-component="IconAsset"] {
+  transform: rotate(-10deg) scale(1.08);
+}
+@keyframes ad-tile-breathe {
+  0%,
+  100% {
+    box-shadow: var(--ad-shadow-tile);
+  }
+  50% {
+    box-shadow:
+      var(--ad-shadow-tile),
+      0 0 1rem #ff2f6a55;
+  }
+}

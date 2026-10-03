@@ -78,6 +78,7 @@ export function buttonView(p: ButtonProps, name = "Button") {
       onPointerMove={trackLight}
       onPointerLeave={resetLight}
     >
+      <span className="ad-button-fx" aria-hidden="true" />
       {loading && <span className="ad-spinner" aria-hidden="true" />}
       {icon && <Icon name={icon} />}{" "}
       {content != null && <span className="ad-button-label">{content}</span>}
@@ -122,6 +123,8 @@ export interface TabsProps extends CommonProps {
 }
 /** Field appearance: boxed outline, tinted fill or a single bottom line. */
 export type InputVariant = "outlined" | "filled" | "underlined";
+/** Label above the field, or inside it rising on focus like Material inputs. */
+export type LabelPlacement = "top" | "floating";
 export interface FieldProps
   extends
     CommonProps,
@@ -136,6 +139,7 @@ export interface FieldProps
   endAdornment?: ReactNode;
   inputRef?: Ref<HTMLInputElement>;
   variant?: InputVariant;
+  labelPlacement?: LabelPlacement;
 }
 export interface TextFieldProps extends FieldProps {
   label?: ReactNode;
@@ -168,6 +172,7 @@ export interface TextAreaProps
   startAdornment?: ReactNode;
   endAdornment?: ReactNode;
   variant?: InputVariant;
+  labelPlacement?: LabelPlacement;
 }
 export interface AutocompleteOption {
   value: string;
@@ -199,6 +204,7 @@ export interface SelectProps extends CommonProps {
   name?: string;
   ref?: Ref<HTMLButtonElement>;
   variant?: InputVariant;
+  labelPlacement?: LabelPlacement;
 }
 export interface BooleanProps extends CommonProps {
   checked?: boolean;

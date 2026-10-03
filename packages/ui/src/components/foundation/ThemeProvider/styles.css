@@ -1,33 +1,34 @@
-[data-ad-theme="green"] {
-  --ad-red: #10deae;
-  --ad-pink: #77f6d3;
-  --ad-focus: #aaffea;
-  --ad-surface-card:
-    radial-gradient(ellipse at 40% 0, #10deae25, transparent 70%),
-    linear-gradient(135deg, #07120f, #050908 65%, #07100e);
-  --ad-surface-ruby: linear-gradient(140deg, #0d6d59, #06382e 58%, #0b7059);
-  --ad-surface-input: linear-gradient(135deg, #091310, #050908 65%, #0a1411);
+/* Styles owned by ThemeProvider: switching theme morphs the accent colours instead of snapping. */
+@property --ad-red {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #ff244c;
 }
-[data-ad-theme="violet"] {
-  --ad-red: #9d5cff;
-  --ad-pink: #cf9cff;
-  --ad-focus: #ead9ff;
-  --ad-surface-card:
-    radial-gradient(ellipse at 40% 0, #9d5cff2d, transparent 70%),
-    linear-gradient(135deg, #10091a, #08060d 65%, #100919);
-  --ad-surface-ruby: linear-gradient(140deg, #5f2ba8, #29104f 58%, #6a2fba);
-  --ad-surface-input: linear-gradient(135deg, #110b19, #07060b 65%, #100b18);
+@property --ad-pink {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #ff7c97;
 }
-[data-ad-theme="light"] {
-  color-scheme: light;
-  --ad-text: #281821;
-  --ad-muted: #6e5d68;
-  --ad-red: #a45b34;
-  --ad-pink: #bb7c55;
-  --ad-surface-card: linear-gradient(#fffaf4, #f5eadc);
-  --ad-surface-glass: linear-gradient(#fffdf9, #eee3d8);
-  --ad-surface-ruby: linear-gradient(140deg, #c1845f, #9c5d3a);
-  --ad-surface-input: linear-gradient(#fff, #f5eee7);
-  --ad-shadow-card: 0 0.3rem 1rem #4a2c1b14;
-  --ad-shadow-glass: 0 0.3rem 0.8rem #4a2c1b12;
+@property --ad-focus {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #ffd0d9;
+}
+@property --ad-text {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #f7f5f8;
+}
+@property --ad-muted {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #bfc0d9;
+}
+.ad-theme {
+  transition:
+    --ad-red 0.7s ease,
+    --ad-pink 0.7s ease,
+    --ad-focus 0.7s ease,
+    --ad-text 0.7s ease,
+    --ad-muted 0.7s ease;
 }

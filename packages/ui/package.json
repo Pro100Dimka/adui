@@ -1,7 +1,7 @@
 {
   "name": "@ad-voice/ui",
   "version": "1.2.0",
-  "description": "A&D Voice React UI component library",
+  "description": "Neo UI — React component library",
   "type": "module",
   "license": "UNLICENSED",
   "sideEffects": [
@@ -24,11 +24,6 @@
       "types": "./dist/editor.d.ts",
       "import": "./dist/editor.js",
       "default": "./dist/editor.js"
-    },
-    "./composites": {
-      "types": "./dist/composites.d.ts",
-      "import": "./dist/composites.js",
-      "default": "./dist/composites.js"
     },
     "./core": {
       "types": "./dist/core.d.ts",

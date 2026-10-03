@@ -1,20 +1,65 @@
-/* Styles owned by DataTable. */
+/* Styles owned by DataTable: rows cascade in; a hovered row lights up with an accent bar. */
 .ad-data-table {
   border-collapse: collapse;
   width: 100%;
   font-size: 0.75rem;
   text-align: left;
 }
+.ad-data-table caption {
+  padding-bottom: 0.6rem;
+  text-align: left;
+  font-weight: 700;
+  color: #f1e6ec;
+}
 .ad-data-table th {
-  font-weight: 500;
+  font-weight: 600;
   color: #bdb4cb;
-  background: #20101aa8;
+  background: linear-gradient(180deg, #2a1220, #1a0c14);
+  box-shadow: inset 0 -0.0625rem 0 #ff2f6a55;
 }
 .ad-data-table th,
 .ad-data-table td {
-  padding: 0.625rem 0.75rem;
+  padding: 0.65rem 0.8rem;
   border-bottom: 0.0625rem solid #7f334330;
 }
 .ad-data-table td {
   color: #d7c3d7;
+  transition:
+    background 0.25s,
+    color 0.25s;
+}
+.ad-data-table tbody tr {
+  animation: ad-table-row 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+.ad-data-table tbody tr:nth-child(2) {
+  animation-delay: 0.06s;
+}
+.ad-data-table tbody tr:nth-child(3) {
+  animation-delay: 0.12s;
+}
+.ad-data-table tbody tr:nth-child(4) {
+  animation-delay: 0.18s;
+}
+.ad-data-table tbody tr:nth-child(n + 5) {
+  animation-delay: 0.24s;
+}
+.ad-data-table tbody tr:hover td {
+  background: #ff2f6a12;
+  color: #fff;
+}
+.ad-data-table tbody tr td:first-child {
+  box-shadow: inset 0 0 0 #ff2f6a;
+  transition:
+    box-shadow 0.25s,
+    background 0.25s,
+    color 0.25s;
+}
+.ad-data-table tbody tr:hover td:first-child {
+  box-shadow: inset 0.1875rem 0 0 #ff2f6a;
+}
+@keyframes ad-table-row {
+  from {
+    opacity: 0;
+    transform: translateY(0.5rem);
+  }
 }

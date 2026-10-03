@@ -6,6 +6,8 @@ import {
   useState,
   type ReactNode,
 } from "react";
+import { flushSync } from "react-dom";
+import { useMotion } from "../../../core/providers/context";
 export interface RouteAccessContext {
   pathname: string;
   params: Record<string, string>;
@@ -39,6 +41,11 @@ const Context = createContext<RouterValue | null>(null),
   },
   current = (m: "hash" | "history") =>
     clean(m === "hash" ? location.hash.slice(1) || "/" : location.pathname);
+/** With motion on, the page change morphs through a view transition where the browser has one. */
+const morph = (motion: boolean, update: () => void) =>
+  motion && "startViewTransition" in document
+    ? void document.startViewTransition(() => flushSync(update))
+    : update();
 function matchPath(pattern: string, pathname: string) {
   const p = clean(pattern).split("/").filter(Boolean),
     v = clean(pathname).split("/").filter(Boolean),
@@ -73,12 +80,13 @@ export function Router({
   mode = "hash",
 }: RouterProps) {
   const [pathname, setPathname] = useState(() => current(mode));
+  const motion = useMotion();
   useEffect(() => {
     const event = mode === "hash" ? "hashchange" : "popstate",
-      sync = () => setPathname(current(mode));
+      sync = () => morph(motion, () => setPathname(current(mode)));
     window.addEventListener(event, sync);
     return () => window.removeEventListener(event, sync);
-  }, [mode]);
+  }, [mode, motion]);
   const match = useMemo(() => matchRoute(routes, pathname), [routes, pathname]);
   const navigate = (to: string, replace = false) => {
     const path = clean(to);
@@ -90,7 +98,7 @@ export function Router({
       } else location.hash = path;
     } else {
       history[replace ? "replaceState" : "pushState"](null, "", path);
-      setPathname(path);
+      morph(motion, () => setPathname(path));
     }
   };
   useEffect(() => {

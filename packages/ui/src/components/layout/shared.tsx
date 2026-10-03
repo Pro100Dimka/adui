@@ -44,6 +44,8 @@ export interface CardProps extends CommonProps, Omit<HeaderProps, "as"> {
 }
 export interface AvatarProps extends CommonProps {
   name?: string;
+  /** Initials in a turning ring, or the animated host seal with a crown. */
+  variant?: "initials" | "host";
 }
 export interface TabPanelProps extends CommonProps {
   labelledBy?: string;

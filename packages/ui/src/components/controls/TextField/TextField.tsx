@@ -1,5 +1,5 @@
 import { useControllable } from "../../../core/base";
-import { FieldFrame } from "../internal";
+import { FieldFrame, fieldLabel } from "../internal";
 import { IconButton } from "../IconButton/IconButton";
 import { InputBase } from "../InputBase/InputBase";
 import type { TextFieldProps } from "../shared";
@@ -18,6 +18,7 @@ export const TextField = ({
   className,
   size,
   variant,
+  labelPlacement = "top",
   tone: _tone,
   material: _material,
   style: _style,
@@ -29,10 +30,11 @@ export const TextField = ({
     defaultValue,
     onValueChange,
   );
+  const floating = labelPlacement === "floating" && !!label;
   return (
     <FieldFrame
       className={`ad-text-field-shell ${className ?? ""}`}
-      label={label}
+      label={floating ? undefined : label}
       required={input.required}
       description={description}
       error={error}
@@ -40,6 +42,8 @@ export const TextField = ({
       <InputBase
         size={size}
         variant={variant}
+        label={floating ? fieldLabel(label, input.required) : undefined}
+        filled={!!current}
         disabled={input.disabled}
         readOnly={input.readOnly}
         error={!!error}

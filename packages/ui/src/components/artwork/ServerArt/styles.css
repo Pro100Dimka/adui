@@ -1,0 +1,39 @@
+/* Styles owned by ServerArt. Spark and aura animations come from DatabaseArt. */
+.ad-server-art {
+  display: block;
+  width: 100%;
+  max-width: 11rem;
+  aspect-ratio: 180 / 170;
+  height: auto;
+  overflow: visible;
+}
+.ad-server-led,
+.ad-server-glow {
+  stroke: var(--ad-red);
+  animation: ad-server-led 3.4s ease-in-out infinite;
+}
+.ad-server-dot {
+  fill: var(--ad-pink);
+  filter: drop-shadow(0 0 0.2rem var(--ad-red));
+  animation: ad-server-led 3.4s ease-in-out infinite;
+}
+.ad-server-orbit {
+  stroke: color-mix(in srgb, var(--ad-pink) 72%, #fff);
+  stroke-width: 1px;
+  stroke-dasharray: 7 93;
+  stroke-linecap: round;
+  animation: ad-art-orbit 6.4s linear infinite;
+}
+.ad-server-cloud {
+  animation: ad-server-cloud 3s ease-in-out infinite;
+}
+@keyframes ad-server-led {
+  50% {
+    opacity: 0.35;
+  }
+}
+@keyframes ad-server-cloud {
+  50% {
+    transform: translateY(-0.2rem);
+  }
+}

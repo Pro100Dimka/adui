@@ -1,4 +1,4 @@
-# A&D Voice UI
+# Neo UI
 
 Библиотека React-компонентов `@ad-voice/ui` и документация к ней (playground).
 

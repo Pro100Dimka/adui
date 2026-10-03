@@ -1,5 +1,4 @@
 import {
-  Compare,
   Playground,
   U,
   buttonVariants,
@@ -32,21 +31,6 @@ export default function IconButtonExample() {
           round: v.round,
           disabled: v.disabled,
         })
-      }
-      extra={
-        <Compare
-          items={buttonVariants.map((variant) => ({
-            label: variant,
-            node: (
-              <U.IconButton
-                variant={variant}
-                size="sm"
-                icon={icons[variant]}
-                label={variant}
-              />
-            ),
-          }))}
-        />
       }
     >
       {(v) => (

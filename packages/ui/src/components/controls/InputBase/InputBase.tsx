@@ -10,6 +10,10 @@ export interface InputBaseProps extends CommonProps {
   error?: boolean;
   multiline?: boolean;
   variant?: InputVariant;
+  /** Floating label drawn inside the box; it rises when focused or filled. */
+  label?: ReactNode;
+  /** The control has a value, so a floating label stays raised. */
+  filled?: boolean;
   ref?: Ref<HTMLDivElement>;
   onClick?: MouseEventHandler<HTMLDivElement>;
 }
@@ -22,6 +26,8 @@ export const InputBase = ({
   error,
   multiline,
   variant = "outlined",
+  label,
+  filled,
   ref,
   onClick,
   children,
@@ -35,6 +41,8 @@ export const InputBase = ({
     data-invalid={error || undefined}
     data-multiline={multiline || undefined}
     data-ad-variant={variant}
+    data-floating={label ? "" : undefined}
+    data-filled={filled || undefined}
     onClick={onClick}
   >
     {startAdornment && (
@@ -42,7 +50,10 @@ export const InputBase = ({
         {startAdornment}
       </span>
     )}
-    <span className="ad-input-base-content">{children}</span>
+    <span className="ad-input-base-content">
+      {label && <span className="ad-input-label">{label}</span>}
+      {children}
+    </span>
     {endAdornment && (
       <span className="ad-input-adornment" data-position="end">
         {endAdornment}

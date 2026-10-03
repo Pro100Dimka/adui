@@ -27,3 +27,23 @@
 .ad-toggle-button[aria-pressed="false"] {
   filter: saturate(0.88) brightness(0.94);
 }
+/* Switching on pops the button and spins its icon, then it settles into the breathing glow. */
+.ad-toggle-button[aria-pressed="true"] {
+  animation:
+    ad-toggle-pop 0.45s cubic-bezier(0.34, 1.6, 0.5, 1),
+    ad-btn-breathe 3.1s 0.45s ease-in-out infinite;
+}
+.ad-toggle-button[aria-pressed="true"] > .ad-icon {
+  animation: ad-toggle-icon 0.55s cubic-bezier(0.34, 1.6, 0.5, 1);
+}
+@keyframes ad-toggle-pop {
+  40% {
+    scale: 1.08;
+    box-shadow: 0 0 1.6rem #ff3a68aa;
+  }
+}
+@keyframes ad-toggle-icon {
+  from {
+    transform: rotate(-120deg) scale(0.4);
+  }
+}

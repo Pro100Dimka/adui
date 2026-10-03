@@ -1,5 +1,4 @@
 import {
-  Compare,
   Playground,
   U,
   expr,
@@ -15,6 +14,7 @@ export default function TextFieldExample() {
       knobs={{
         variant: { options: inputVariants, value: "outlined" },
         size: { options: sizes, value: "md" },
+        floating: { value: true },
         icon: { value: true },
         clearable: { value: true },
         required: { value: false },
@@ -27,6 +27,7 @@ export default function TextFieldExample() {
           placeholder: "Как вас называть?",
           variant: c.variant,
           size: c.size,
+          labelPlacement: v.floating ? "floating" : undefined,
           startAdornment: v.icon ? expr('<Icon name="user" />') : undefined,
           clearable: v.clearable,
           required: v.required,
@@ -34,21 +35,6 @@ export default function TextFieldExample() {
           error: v.error ? "Имя уже занято" : undefined,
           disabled: v.disabled,
         })
-      }
-      extra={
-        <Compare
-          items={inputVariants.map((variant) => ({
-            label: variant,
-            node: (
-              <U.TextField
-                variant={variant}
-                size="sm"
-                placeholder="Поиск"
-                startAdornment={<U.Icon name="search" />}
-              />
-            ),
-          }))}
-        />
       }
     >
       {(v) => (
@@ -58,6 +44,7 @@ export default function TextFieldExample() {
           defaultValue="Дмитрий"
           variant={v.variant}
           size={v.size}
+          labelPlacement={v.floating ? "floating" : "top"}
           startAdornment={v.icon ? <U.Icon name="user" /> : undefined}
           clearable={v.clearable}
           required={v.required}

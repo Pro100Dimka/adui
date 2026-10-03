@@ -21,3 +21,60 @@
   background: var(--ad-surface-glass);
   box-shadow: var(--ad-shadow-glass);
 }
+/* The artwork floats slowly in a pulsing glow; a framed one gets a living edge. */
+.ad-illustration > [data-ad-component="IllustrationAsset"] {
+  animation:
+    ad-art-float 7s ease-in-out infinite,
+    ad-art-glow 5s ease-in-out infinite;
+}
+.ad-illustration[data-ad-framed="true"] {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+.ad-illustration[data-ad-framed="true"]::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 0.0625rem;
+  background: conic-gradient(
+    from var(--ad-art-angle, 0deg),
+    transparent 0 70%,
+    #ff8aa6,
+    transparent 85%
+  );
+  mask:
+    linear-gradient(#000 0 0) content-box exclude,
+    linear-gradient(#000 0 0);
+  animation: ad-art-edge 5s linear infinite;
+  pointer-events: none;
+}
+@property --ad-art-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+@keyframes ad-art-float {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-0.4rem) scale(1.02);
+  }
+}
+@keyframes ad-art-glow {
+  0%,
+  100% {
+    filter: drop-shadow(0 0 0.4rem #ff2f6a33);
+  }
+  50% {
+    filter: drop-shadow(0 0 1.2rem #ff2f6a77);
+  }
+}
+@keyframes ad-art-edge {
+  to {
+    --ad-art-angle: 360deg;
+  }
+}

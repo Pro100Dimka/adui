@@ -8,3 +8,13 @@
   color: var(--ad-muted);
   margin: 0 0 0.875rem;
 }
+/* Inside an opening dialog the body fades in right after the window. */
+.ad-dialog[open] .ad-dialog-body {
+  animation: ad-dialog-part 0.45s 0.12s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+@keyframes ad-dialog-part {
+  from {
+    opacity: 0;
+    transform: translateY(0.5rem);
+  }
+}
