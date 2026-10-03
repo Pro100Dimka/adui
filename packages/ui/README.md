@@ -1,6 +1,6 @@
 # @ad-voice/ui
 
-React + TypeScript UI kit for A&D Voice: glass/ruby surfaces, animated neon borders, fields, tabs, dialogs, audio controls and a melody editor.
+Neo UI — React + TypeScript UI kit: glass/ruby surfaces, animated neon borders, fields, tabs, dialogs, audio controls and a melody editor.
 
 ## Install
 

@@ -1,0 +1,21 @@
+/* Styles owned by Spectrum. */
+.ad-spectrum {
+  display: block;
+  width: 100%;
+  max-width: 21rem;
+  aspect-ratio: 325 / 232;
+  height: auto;
+  pointer-events: none;
+}
+.ad-spectrum[data-variant="bars"] {
+  max-width: 12rem;
+  aspect-ratio: 163 / 140;
+}
+.ad-spectrum[data-variant="segmented"] rect {
+  fill: #c2244a;
+}
+.ad-spectrum[data-variant="bars"] rect {
+  filter: drop-shadow(
+    0 0 0.15rem color-mix(in srgb, var(--ad-red) 60%, transparent)
+  );
+}

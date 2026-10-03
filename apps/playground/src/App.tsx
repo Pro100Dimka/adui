@@ -44,7 +44,7 @@ export default function App() {
             <Icon name="wave" size="1.55rem" surface="tile" />
             <Stack gap={0}>
               <Typography variant="title" weight="bold">
-                A&D UI
+                Neo UI
               </Typography>
               <Typography variant="eyebrow" tone="muted">
                 React component system

@@ -1,5 +1,4 @@
 import {
-  Compare,
   Playground,
   U,
   expr,
@@ -36,21 +35,6 @@ export default function TextFieldExample() {
           error: v.error ? "Имя уже занято" : undefined,
           disabled: v.disabled,
         })
-      }
-      extra={
-        <Compare
-          items={inputVariants.map((variant) => ({
-            label: variant,
-            node: (
-              <U.TextField
-                variant={variant}
-                size="sm"
-                placeholder="Поиск"
-                startAdornment={<U.Icon name="search" />}
-              />
-            ),
-          }))}
-        />
       }
     >
       {(v) => (

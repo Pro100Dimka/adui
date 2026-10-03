@@ -78,6 +78,7 @@ export function buttonView(p: ButtonProps, name = "Button") {
       onPointerMove={trackLight}
       onPointerLeave={resetLight}
     >
+      <span className="ad-button-fx" aria-hidden="true" />
       {loading && <span className="ad-spinner" aria-hidden="true" />}
       {icon && <Icon name={icon} />}{" "}
       {content != null && <span className="ad-button-label">{content}</span>}

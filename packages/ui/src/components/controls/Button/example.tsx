@@ -1,5 +1,4 @@
 import {
-  Compare,
   Playground,
   U,
   buttonVariants,
@@ -29,19 +28,6 @@ export default function ButtonExample() {
           },
           "Сохранить",
         )
-      }
-      extra={
-        <Compare
-          captions={false}
-          items={buttonVariants.map((variant) => ({
-            label: variant,
-            node: (
-              <U.Button variant={variant} size="sm">
-                {variant[0].toUpperCase() + variant.slice(1)}
-              </U.Button>
-            ),
-          }))}
-        />
       }
     >
       {(v) => (

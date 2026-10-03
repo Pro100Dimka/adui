@@ -1,0 +1,41 @@
+/* Styles owned by Planet: the planet fades in and its rim breathes with light. */
+.ad-planet {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  min-height: 6rem;
+  aspect-ratio: 515 / 114;
+  border-radius: var(--ad-radius);
+  background:
+    radial-gradient(ellipse 60% 120% at 100% 100%, #ff2f6a14, transparent 70%),
+    #07060a;
+}
+.ad-planet > canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 100% 100%;
+  opacity: 0;
+  transition: opacity 1.2s ease-out;
+  animation: ad-planet-rim 6s ease-in-out infinite;
+}
+.ad-planet > canvas[data-ready] {
+  opacity: 1;
+}
+.ad-planet-content {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  padding: clamp(0.75rem, 2vw, 1.5rem);
+}
+@keyframes ad-planet-rim {
+  0%,
+  100% {
+    filter: brightness(0.92) saturate(1);
+  }
+  50% {
+    filter: brightness(1.18) saturate(1.2);
+  }
+}

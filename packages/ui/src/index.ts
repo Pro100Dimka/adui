@@ -2,7 +2,12 @@ export { copyText } from "./core/base";
 export * from "./core/base";
 export * from "./core/artwork";
 export { useReducedMotion, useMotion } from "./core/providers/context";
-export { useBorder, useDecoration, useTabShape } from "./core/motion/hooks";
+export {
+  useBorder,
+  useDecoration,
+  useSmoothWheel,
+  useTabShape,
+} from "./core/motion/hooks";
 export { ThemeProvider } from "./components/foundation/ThemeProvider/ThemeProvider";
 export type { ThemeProviderProps } from "./components/foundation/ThemeProvider/ThemeProvider";
 export { Typography } from "./components/foundation/Typography/Typography";
@@ -87,6 +92,18 @@ export { Beacon } from "./components/effects/Beacon/Beacon";
 export type { BeaconProps } from "./components/effects/Beacon/Beacon";
 export { Marquee } from "./components/effects/Marquee/Marquee";
 export type { MarqueeProps } from "./components/effects/Marquee/Marquee";
+export { Landscape } from "./components/artwork/Landscape/Landscape";
+export type { LandscapeProps } from "./components/artwork/Landscape/Landscape";
+export { Planet } from "./components/artwork/Planet/Planet";
+export type { PlanetProps } from "./components/artwork/Planet/Planet";
+export { NeonWaves } from "./components/artwork/NeonWaves/NeonWaves";
+export type { NeonWavesProps } from "./components/artwork/NeonWaves/NeonWaves";
+export { Spectrum } from "./components/artwork/Spectrum/Spectrum";
+export type { SpectrumProps } from "./components/artwork/Spectrum/Spectrum";
+export { DatabaseArt } from "./components/artwork/DatabaseArt/DatabaseArt";
+export type { DatabaseArtProps } from "./components/artwork/DatabaseArt/DatabaseArt";
+export { ServerArt } from "./components/artwork/ServerArt/ServerArt";
+export type { ServerArtProps } from "./components/artwork/ServerArt/ServerArt";
 export { AudioPlayer } from "./components/media/AudioPlayer/AudioPlayer";
 export { LevelMeter } from "./components/media/LevelMeter/LevelMeter";
 export { RotaryKnob } from "./components/media/RotaryKnob/RotaryKnob";

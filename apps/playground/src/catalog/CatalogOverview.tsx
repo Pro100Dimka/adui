@@ -1,98 +1,93 @@
-import {
-  Badge,
-  Card,
-  Grid,
-  Header,
-  Link,
-  Stack,
-  Typography,
-  WaveDecoration,
-} from "@ad-voice/ui";
-import { catalog, componentHref } from "./componentRegistry";
+import { ExamplePreviewContext } from "../../../../packages/ui/src/dev/exampleHelpers";
+import { Badge, Card, Header, Icon, Stack, Typography } from "@ad-voice/ui";
+import { catalog, componentHref, getExample } from "./componentRegistry";
 import { catalogCategories } from "./catalogNavigation";
+import { DocsExampleBoundary } from "./DocsExampleBoundary";
+import { HeroBackdrop } from "./HeroBackdrop";
 
+/**
+ * The storefront: every component is shown live, grouped by category, so a visitor sees
+ * the whole kit on one page and opens whatever catches the eye.
+ */
 export function CatalogOverview() {
   return (
     <Stack as="section" className="docs-overview" gap={5}>
-      <Card className="docs-overview-hero" material="shell" border padding="lg">
-        <Grid
-          columns={{ base: 1, lg: "minmax(0,1fr) minmax(15rem,32%)" }}
-          gap={5}
-          align="center"
-        >
-          <Stack gap={4}>
-            <Header
-              level={1}
-              eyebrow="A&D UI · Component documentation"
-              title="Компоненты, которые хочется использовать"
-              description="Каждый компонент имеет собственную страницу: живой preview, реальный TSX, API и связанные элементы. Навигация раскрывается по категориям и не превращает документацию в длинный каталог."
-            />
-            <Stack className="docs-overview-stats" direction="row" gap={2} wrap>
-              <Badge tone="success">{catalog.length} компонентов</Badge>
-              <Badge>Live preview</Badge>
-              <Badge>TypeScript API</Badge>
-            </Stack>
+      <Card
+        className="docs-overview-hero docs-component-hero"
+        material="shell"
+        border
+        padding="md"
+      >
+        <HeroBackdrop index={0} />
+        <Stack gap={3}>
+          <Header
+            level={1}
+            eyebrow="Neo UI · React component system"
+            title="Компоненты, от которых не оторвать глаз"
+            description="Здесь вся библиотека вживую. Наведите на понравившийся компонент и откройте его: там настройки, код и API."
+          />
+          <Stack direction="row" gap={2} wrap>
+            <Badge tone="success">{catalog.length} компонентов</Badge>
+            <Badge>{catalogCategories.length} категорий</Badge>
+            <Badge>TypeScript</Badge>
           </Stack>
-          <WaveDecoration />
-        </Grid>
+        </Stack>
       </Card>
 
-      <Grid
-        className="docs-category-list"
-        minChildWidth="min(100%,22rem)"
-        gap={4}
-      >
-        {catalogCategories.map((category) => {
-          const { items } = category;
-          return (
-            <Card
-              className="docs-category-panel"
-              key={category.id}
-              padding="md"
-              material="card"
-            >
-              <Stack gap={4}>
-                <Header
-                  level={3}
-                  compact
-                  icon={category.icon}
-                  title={category.label}
-                  description={category.description}
-                  actions={<Badge>{items.length}</Badge>}
-                />
-                <Stack
-                  className="docs-category-components"
-                  direction="row"
-                  gap={2}
-                  wrap
+      {catalogCategories.map((category) => (
+        <Stack
+          as="section"
+          className="docs-showcase"
+          key={category.id}
+          gap={3}
+          aria-label={category.label}
+        >
+          <Header
+            level={2}
+            compact
+            icon={category.icon}
+            title={category.label}
+            description={category.description}
+            actions={<Badge>{category.items.length}</Badge>}
+          />
+          <div className="docs-showcase-grid">
+            {category.items.map((item) => {
+              const Example = getExample(item.name);
+              return (
+                <div
+                  key={item.name}
+                  className="docs-showcase-tile"
+                  data-wide={item.wide || undefined}
                 >
-                  {items.map((item) => (
-                    <Link
-                      key={item.name}
-                      href={componentHref(item.name)}
-                      underline="none"
-                    >
-                      <Typography variant="label">{item.name}</Typography>
-                    </Link>
-                  ))}
-                </Stack>
-                {items[0] && (
-                  <Link
-                    className="docs-category-enter"
-                    href={componentHref(items[0].name)}
-                    underline="none"
-                    endIcon="chevron"
-                  >
-                    <Typography variant="label">
-                      Открыть документацию
-                    </Typography>
-                  </Link>
-                )}
-              </Stack>
-            </Card>
-          );
-        })}
-      </Grid>
+                  <div className="docs-showcase-preview" inert>
+                    <DocsExampleBoundary name={item.name}>
+                      <ExamplePreviewContext.Provider value>
+                        {Example && <Example />}
+                      </ExamplePreviewContext.Provider>
+                    </DocsExampleBoundary>
+                  </div>
+                  <div className="docs-showcase-foot">
+                    <Stack gap={0}>
+                      <a
+                        className="docs-showcase-link"
+                        href={componentHref(item.name)}
+                      >
+                        <Typography variant="label" weight="bold">
+                          {item.name}
+                        </Typography>
+                      </a>
+                      <Typography variant="caption" tone="muted" truncate>
+                        {item.description}
+                      </Typography>
+                    </Stack>
+                    <Icon name="chevron" />
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </Stack>
+      ))}
     </Stack>
   );
 }

@@ -58,8 +58,9 @@ export const catalogCategories = [
   },
   {
     id: "motion",
-    label: "Эффекты и motion",
-    description: "AnimatedBorder и независимые визуальные эффекты.",
+    label: "Эффекты и арт",
+    description:
+      "Анимации, свет, неон, процедурные пейзажи, планеты, спектры и иллюстрации.",
     icon: "sparkle",
   },
 ].map((category) => ({

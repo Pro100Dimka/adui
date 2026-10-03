@@ -552,3 +552,116 @@
   box-shadow: none;
   transform: scale(0.98);
 }
+
+/* Living plasma inside the button and a comet of light running round its edge.
+   Accent buttons always show them; quieter variants reveal them on hover. */
+@property --ad-btn-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+.ad-button-fx {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  overflow: hidden;
+  pointer-events: none;
+}
+.ad-button-fx::before {
+  content: "";
+  position: absolute;
+  inset: -40% -10% -40% 30%;
+  background:
+    radial-gradient(circle at 72% 30%, #fff 0 1.2%, transparent 2.6%),
+    radial-gradient(circle at 86% 68%, #ffd3df 0 1.4%, transparent 3.2%),
+    radial-gradient(circle at 58% 74%, #ff9ab4 0 1.8%, transparent 4%),
+    repeating-conic-gradient(
+      from 20deg at 80% 50%,
+      transparent 0 7deg,
+      #ffffff24 8deg 10deg,
+      transparent 12deg 19deg
+    ),
+    radial-gradient(ellipse at 80% 50%, #ff6d9370, transparent 65%);
+  mask-image: linear-gradient(90deg, transparent, #000 40%);
+  opacity: 0;
+  transition: opacity 0.4s;
+  animation: ad-btn-plasma 7s ease-in-out infinite alternate;
+}
+.ad-button-fx::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 0.0625rem;
+  background: conic-gradient(
+    from var(--ad-btn-angle),
+    transparent 0 76%,
+    #ff8aa6 84%,
+    #fff 88%,
+    transparent 93%
+  );
+  mask:
+    linear-gradient(#000 0 0) content-box exclude,
+    linear-gradient(#000 0 0);
+  opacity: 0;
+  transition: opacity 0.4s;
+  animation: ad-btn-orbit 4.5s linear infinite;
+}
+:is(.ad-button, .ad-icon-button):is(
+    [data-ad-variant="primary"],
+    [data-ad-variant="danger"]
+  )
+  > .ad-button-fx::before,
+.ad-toggle-button[aria-pressed="true"] > .ad-button-fx::before {
+  opacity: 0.85;
+}
+:is(.ad-button, .ad-icon-button):is(
+    [data-ad-variant="primary"],
+    [data-ad-variant="danger"]
+  )
+  > .ad-button-fx::after,
+.ad-toggle-button[aria-pressed="true"] > .ad-button-fx::after {
+  opacity: 1;
+}
+:is(.ad-button, .ad-icon-button, .ad-toggle-button):hover:not(:disabled)
+  > .ad-button-fx::before {
+  opacity: 0.9;
+}
+:is(.ad-button, .ad-icon-button, .ad-toggle-button):hover:not(:disabled)
+  > .ad-button-fx::after {
+  opacity: 1;
+  animation-duration: 1.6s;
+}
+:is(.ad-button, .ad-icon-button):disabled > .ad-button-fx {
+  display: none;
+}
+/* Icon-only buttons are small: the plasma centres on them instead of the right side. */
+.ad-icon-button > .ad-button-fx::before {
+  inset: -30%;
+  mask-image: radial-gradient(closest-side, #000 40%, transparent);
+}
+/* Ghost buttons stay subtle: only the comet, no plasma. */
+:is(.ad-button, .ad-icon-button)[data-ad-variant="ghost"]
+  > .ad-button-fx::before {
+  display: none;
+}
+@keyframes ad-btn-plasma {
+  from {
+    transform: translate3d(-3%, -2%, 0) scale(1.02) rotate(0deg);
+    filter: saturate(1.1);
+  }
+  to {
+    transform: translate3d(3%, 2%, 0) scale(1.14) rotate(8deg);
+    filter: saturate(1.6);
+  }
+}
+@keyframes ad-btn-orbit {
+  to {
+    --ad-btn-angle: 360deg;
+  }
+}
+/* Buttons that live inside other controls stay plain. */
+:is(.ad-input-adornment, .ad-split-button) .ad-button-fx {
+  display: none;
+}

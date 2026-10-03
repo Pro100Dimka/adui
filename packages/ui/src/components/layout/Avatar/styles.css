@@ -18,7 +18,8 @@
     linear-gradient(160deg, #5c0a26, #1a0710);
   transition:
     transform 0.4s cubic-bezier(0.34, 1.56, 0.5, 1),
-    box-shadow 0.4s;
+    box-shadow 0.4s,
+    filter 0.4s;
 }
 .ad-avatar[data-ad-size="xs"] {
   --ad-avatar: 1.75rem;
@@ -62,4 +63,38 @@
   to {
     rotate: 1turn;
   }
+}
+/* Host variant: the neon seal replaces the face and its ring; it lifts and glows brighter on hover. */
+/* The seal carries a label, so it starts larger than the initials at every size. */
+.ad-avatar[data-variant="host"] {
+  --ad-avatar: 5.5rem;
+  background: none;
+  text-shadow: none;
+}
+.ad-avatar[data-variant="host"][data-ad-size="xs"] {
+  --ad-avatar: 3rem;
+}
+.ad-avatar[data-variant="host"][data-ad-size="sm"] {
+  --ad-avatar: 4.25rem;
+}
+.ad-avatar[data-variant="host"][data-ad-size="lg"] {
+  --ad-avatar: 8rem;
+}
+.ad-avatar[data-variant="host"]::before {
+  content: none;
+}
+.ad-avatar[data-variant="host"]:hover {
+  box-shadow: none;
+  filter: brightness(1.18) drop-shadow(0 0 0.6rem #ff2f6a66);
+}
+.ad-host-seal {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.ad-host-seal > svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
 }

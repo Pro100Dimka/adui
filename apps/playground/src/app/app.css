@@ -58,8 +58,8 @@ a {
 }
 .docs-main {
   min-width: 0;
-  padding: var(--ad-space-6) clamp(var(--ad-space-3), 2.4vw, var(--ad-space-10))
-    var(--ad-space-10);
+  padding: var(--ad-space-4) clamp(var(--ad-space-3), 2.4vw, var(--ad-space-8))
+    var(--ad-space-5);
 }
 .docs-mobile-nav-panel {
   max-height: min(66dvh, 32rem);
@@ -213,27 +213,138 @@ a {
   line-height: 1;
   letter-spacing: -0.04em;
 }
-.docs-overview-hero .ad-wave-decoration,
-.docs-component-title-row > .ad-wave-decoration {
+.docs-overview-hero .ad-wave-decoration {
   opacity: 0.72;
 }
-.docs-category-components > .ad-link {
-  padding: var(--ad-space-1) var(--ad-space-2);
-  border: 0.0625rem solid #6831493a;
-  border-radius: 0.48rem;
-  background: #0a080c;
-  color: #ae9aae;
+/* The component hero: neon strands flow behind the whole block, fading out under the title. */
+.docs-component-hero.ad-card {
+  position: relative;
+  isolation: isolate;
 }
-.docs-category-components > .ad-link:hover {
-  border-color: #cd4d7066;
-  color: #fff;
-  background: #36111f;
+.docs-hero-backdrop {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  overflow: hidden;
+  border-radius: inherit;
+  pointer-events: none;
+  mask: linear-gradient(90deg, transparent, #000 30%, #000 88%, transparent);
 }
-.docs-category-enter {
-  align-self: flex-start;
-  color: #ef8daa;
+/* Every scene stretches over the hero instead of keeping its own proportions. */
+.docs-hero-backdrop > * {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  min-height: 0;
+  aspect-ratio: auto;
+  border-radius: 0;
+  background: none;
+  opacity: 0.9;
 }
-.docs-category-enter:hover {
+/* The planet's lit rim belongs on the right, away from the title. */
+.docs-hero-backdrop > .ad-planet {
+  scale: -1 1;
+}
+/* Spectra stand at the right, rising from the bottom edge. */
+.docs-hero-backdrop > .ad-spectrum {
+  inset: auto 3% 0 auto;
+  width: min(42%, 32rem);
+  height: 88%;
+  opacity: 0.6;
+}
+/* Showcase: live tiles, each a link to its page; off-screen tiles are not rendered. */
+.docs-showcase-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr));
+  gap: var(--ad-space-3);
+}
+@media (min-width: 48rem) {
+  .docs-showcase-tile[data-wide] {
+    grid-column: span 2;
+  }
+}
+.docs-showcase-tile {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: 1fr auto;
+  min-width: 0;
+  overflow: hidden;
+  border: 0.0625rem solid #6730473a;
+  border-radius: 1rem;
+  background:
+    radial-gradient(ellipse 80% 70% at 50% 0%, #ff245c12, transparent 70%),
+    #09070bf2;
+  color: inherit;
+  text-decoration: none;
+  content-visibility: auto;
+  contain-intrinsic-size: auto 15rem;
+  transition:
+    translate 0.5s cubic-bezier(0.2, 0.8, 0.2, 1),
+    border-color 0.4s,
+    box-shadow 0.5s;
+}
+/* The name is the link; its hit area covers the whole tile. */
+.docs-showcase-link {
+  color: inherit;
+  text-decoration: none;
+  outline: none;
+}
+.docs-showcase-link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+.docs-showcase-tile:hover,
+.docs-showcase-tile:focus-within {
+  translate: 0 -0.25rem;
+  border-color: #ff5a8299;
+  box-shadow:
+    0 1rem 2.5rem -1rem #ff245c55,
+    0 0 0 0.0625rem #ff5a8233 inset;
+  outline: none;
+}
+.docs-showcase-preview {
+  display: grid;
+  place-items: center;
+  min-height: 9rem;
+  max-height: 15rem;
+  padding: var(--ad-space-4);
+  overflow: hidden;
+  zoom: 0.82;
+}
+.docs-showcase-preview .example-playground {
+  gap: 0;
+}
+.docs-showcase-preview .example-stage {
+  padding: 0;
+  border: 0;
+  background: none;
+}
+.docs-showcase-foot {
+  display: flex;
+  align-items: center;
+  gap: var(--ad-space-3);
+  padding: var(--ad-space-3) var(--ad-space-4);
+  border-top: 0.0625rem solid #ffffff0a;
+  background: #0b090dcc;
+}
+.docs-showcase-foot > .ad-stack {
+  flex: 1;
+  min-width: 0;
+}
+.docs-showcase-foot > .ad-icon {
+  rotate: -90deg;
+  color: #795b6e;
+  transition:
+    translate 0.4s cubic-bezier(0.2, 0.8, 0.2, 1),
+    color 0.3s;
+}
+.docs-showcase-tile:hover .docs-showcase-foot > .ad-icon {
+  translate: 0.25rem 0;
   color: #fff;
 }
 
@@ -244,7 +355,6 @@ a {
 }
 /* The icon set has one chevron (pointing down); rotate it for forward/back links. */
 .docs-breadcrumbs > .ad-icon,
-.docs-category-enter > .ad-icon,
 .docs-related-grid > .ad-link > .ad-icon,
 .docs-next > .ad-icon {
   rotate: -90deg;
@@ -257,7 +367,7 @@ a {
   place-items: safe center;
   overflow: auto;
 }
-.docs-live-stage > * {
+:where(.docs-live-stage) > * {
   max-width: 100%;
   min-width: 0;
 }
@@ -286,7 +396,11 @@ a {
   padding: var(--ad-space-3);
   white-space: pre;
   color: #e8c7d7;
+  line-height: 1.6;
   tab-size: 2;
+}
+.docs-code-body {
+  overflow-x: auto;
 }
 .docs-related-grid > .ad-link,
 .docs-prev-next > .ad-link {
@@ -306,31 +420,19 @@ a {
   color: #fff;
   border-color: #bd45655c;
 }
+/* Neighbour links sit next to the source button, so they take its height. */
+.docs-prev-next > .ad-link {
+  padding: var(--ad-space-1) var(--ad-space-3);
+  min-height: 2rem;
+  font-size: var(--ad-font-size-label);
+  font-weight: 600;
+}
 .docs-related-grid > .ad-link > .ad-stack {
   flex: 1;
   min-width: 0;
 }
-.docs-toc {
-  position: sticky;
-  top: 0;
-}
-.docs-toc-card .ad-link {
-  padding: var(--ad-space-1) var(--ad-space-2);
-  border-radius: 0.45rem;
-  color: #a995a6;
-}
-.docs-toc-card .ad-link:hover {
-  background: #ffffff08;
-  color: #fff;
-}
-@media (max-width: 95.99rem) {
-  .docs-toc {
-    display: none;
-  }
-}
 @media (max-width: 74.99rem) {
-  .docs-overview-hero .ad-wave-decoration,
-  .docs-component-title-row > .ad-wave-decoration {
+  .docs-overview-hero .ad-wave-decoration {
     display: none;
   }
 }
@@ -353,19 +455,44 @@ a {
   display: grid;
   place-items: safe center;
   min-width: 0;
-  padding: clamp(var(--ad-space-4), 4vw, var(--ad-space-10)) var(--ad-space-4);
+  padding: clamp(var(--ad-space-3), 2.5vw, var(--ad-space-6)) var(--ad-space-4);
   border-radius: var(--ad-radius);
   background:
     radial-gradient(ellipse 70% 90% at 50% 0%, #ff245c14, transparent 70%),
     #08070bcc;
   border: 0.0625rem solid #ffffff0d;
 }
-.example-stage > * {
+:where(.example-stage) > * {
   max-width: 100%;
   min-width: 0;
 }
 .example-stage[data-stretch] > * {
   width: min(100%, 26rem);
+}
+/* All looks of the main prop side by side, each captioned; fields share the row evenly. */
+.example-stage[data-spread] {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-end;
+  gap: var(--ad-space-4) var(--ad-space-6);
+}
+.example-stage[data-spread] > figure {
+  display: grid;
+  justify-items: center;
+  gap: var(--ad-space-2);
+  margin: 0;
+  min-width: 0;
+}
+.example-stage[data-spread][data-stretch] > figure {
+  flex: 1 1 min(100%, 14rem);
+  width: auto;
+  justify-items: stretch;
+}
+.example-stage[data-spread] figcaption {
+  color: var(--ad-muted);
+  font-size: var(--ad-font-size-caption);
+  text-align: center;
 }
 .example-knobs {
   display: flex;
@@ -434,23 +561,23 @@ a {
   animation: docs-page-in 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) both;
 }
 .docs-component-content > *,
-.docs-category-list > * {
+.docs-overview > * {
   animation: docs-section-in 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) both;
 }
 .docs-component-content > :nth-child(2),
-.docs-category-list > :nth-child(2) {
+.docs-overview > :nth-child(2) {
   animation-delay: 0.06s;
 }
 .docs-component-content > :nth-child(3),
-.docs-category-list > :nth-child(3) {
+.docs-overview > :nth-child(3) {
   animation-delay: 0.12s;
 }
 .docs-component-content > :nth-child(4),
-.docs-category-list > :nth-child(4) {
+.docs-overview > :nth-child(4) {
   animation-delay: 0.18s;
 }
 .docs-component-content > :nth-child(n + 5),
-.docs-category-list > :nth-child(n + 5) {
+.docs-overview > :nth-child(n + 5) {
   animation-delay: 0.24s;
 }
 @keyframes docs-page-in {
@@ -465,12 +592,43 @@ a {
     transform: translateY(1rem);
   }
 }
+/* Scroll-linked motion: tiles float up out of a soft blur as they enter, hero scenes drift
+   slower than the page (parallax). Tied to scroll position, so it is smooth at any speed. */
+@supports (animation-timeline: view()) {
+  .docs-showcase-tile,
+  .docs-showcase > .ad-header {
+    animation: docs-float-in linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 70%;
+  }
+  .docs-hero-backdrop > * {
+    animation: docs-parallax linear both;
+    animation-timeline: scroll(nearest);
+    animation-range: 0 20rem;
+  }
+}
+@keyframes docs-float-in {
+  from {
+    opacity: 0;
+    transform: translateY(2.5rem) scale(0.96);
+    filter: blur(0.35rem);
+  }
+}
+@keyframes docs-parallax {
+  to {
+    transform: translateY(2.5rem) scale(1.06);
+    opacity: 0.35;
+  }
+}
 [data-ad-motion="off"]
   :is(
     .docs-component-shell,
     .docs-overview,
     .docs-component-content > *,
-    .docs-category-list > *
+    .docs-overview > *,
+    .docs-showcase-tile,
+    .docs-showcase > .ad-header,
+    .docs-hero-backdrop > *
   ) {
   animation: none;
 }
@@ -478,7 +636,15 @@ a {
   .docs-component-shell,
   .docs-overview,
   .docs-component-content > *,
-  .docs-category-list > * {
+  .docs-overview > *,
+  .docs-showcase-tile,
+  .docs-showcase > .ad-header,
+  .docs-hero-backdrop > * {
     animation: none;
   }
+}
+
+/* The example's code opens in a wide window: room for long lines, the page stays behind. */
+.docs-code-dialog.ad-dialog {
+  width: min(56rem, calc(100vw - 2rem));
 }

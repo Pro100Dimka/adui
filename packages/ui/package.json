@@ -1,7 +1,7 @@
 {
   "name": "@ad-voice/ui",
   "version": "1.2.0",
-  "description": "A&D Voice React UI component library",
+  "description": "Neo UI — React component library",
   "type": "module",
   "license": "UNLICENSED",
   "sideEffects": [

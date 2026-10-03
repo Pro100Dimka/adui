@@ -1,5 +1,5 @@
 export default {
   name: "Avatar",
-  description: "Инициалы пользователя в круге",
+  description: "Инициалы в неоновом кольце или анимированная печать ведущего с короной",
   category: "typography",
 } as const;

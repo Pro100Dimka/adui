@@ -1,5 +1,5 @@
 import { Children, Fragment } from "react";
-import type { ElementType, HTMLAttributes, ReactNode } from "react";
+import type { ElementType, HTMLAttributes, ReactNode, Ref } from "react";
 import { classes } from "../../../core/base";
 import {
   responsiveVars,
@@ -21,6 +21,7 @@ export type StackSpacing = Spacing;
 
 export interface StackProps extends Omit<HTMLAttributes<HTMLElement>, "color"> {
   as?: ElementType;
+  ref?: Ref<HTMLElement>;
   direction?: StackResponsive<StackDirection>;
   gap?: StackResponsive<StackSpacing>;
   align?: StackResponsive<StackAlign>;

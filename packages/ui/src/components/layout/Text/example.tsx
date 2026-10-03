@@ -4,7 +4,7 @@ import { Stack, Text } from "@ad-voice/ui";
 export default function TextExample() {
   return (
     <Stack gap={2}>
-      <Text variant="eyebrow">A&D Voice</Text>
+      <Text variant="eyebrow">Neo UI</Text>
       <Text as="h3" variant="title">
         Настройки комнаты
       </Text>
