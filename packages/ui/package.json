@@ -25,11 +25,6 @@
       "import": "./dist/editor.js",
       "default": "./dist/editor.js"
     },
-    "./composites": {
-      "types": "./dist/composites.d.ts",
-      "import": "./dist/composites.js",
-      "default": "./dist/composites.js"
-    },
     "./core": {
       "types": "./dist/core.d.ts",
       "import": "./dist/core.js",

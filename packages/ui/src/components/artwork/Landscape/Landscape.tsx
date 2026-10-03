@@ -1,6 +1,7 @@
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import { mark, type CommonProps } from "../../../core/base";
-import { cachedCanvas, clamp01, fbm, seeded } from "../../../core/noise";
+import { clamp01, fbm, seeded, type Painting } from "../../../core/noise";
+import { useArtwork } from "../useArtwork";
 
 export interface LandscapeProps extends CommonProps {
   /** Darken the left side so text placed over it stays readable. */
@@ -11,108 +12,109 @@ type Point = readonly [number, number];
 const W = 1220;
 const H = 168;
 
-/** Night nebula, a ruby-rimmed planet and two mountain ridges, painted procedurally. */
-function paintLandscape(
-  context: CanvasRenderingContext2D,
-  width: number,
-  height: number,
-) {
-  const scale = width / W;
-  const image = context.createImageData(width, height);
-  const centerX = 1129,
-    centerY = 309,
-    radius = 346;
-  for (let py = 0; py < height; py += 1)
-    for (let px = 0; px < width; px += 1) {
-      const x = px / scale,
-        y = py / scale;
-      const n = fbm(x * 0.012, y * 0.013 + 20),
-        warp = fbm(x * 0.004, y * 0.005) * 70;
-      const f = fbm(x * 0.025 + warp * 0.03, y * 0.032 + warp * 0.02);
-      const ridge =
-        1 - Math.abs(2 * fbm(x * 0.026 + n * 5, y * 0.034 + n * 5, 5) - 1);
-      const threads =
-        Math.pow(clamp01((ridge - 0.61) * 2.7), 4) *
-        Math.pow(clamp01((f - 0.33) * 3), 1.3);
-      const horizon = Math.exp(
-        -(((x - 820) / 160) ** 2 + ((y - 171) / 40) ** 2),
-      );
-      const cloud =
-        Math.exp(-(((x - 830) / 340) ** 2)) * (8 + 32 * n ** 2 + 95 * threads);
-      let red = 6 + cloud + horizon * 170,
-        green = 8 + cloud * 0.19 + horizon * 32,
-        blue = 14 + cloud * 0.3 + horizon * 44;
-      const dx = (x - centerX) / radius,
-        dy = (y - centerY) / radius,
-        radial = Math.hypot(dx, dy),
-        edge = (1 - radial) * radius;
-      const sideLight = clamp01(0.18 - dx * 0.98 - dy * 0.15, 0.08, 1.3);
-      if (radial <= 1) {
-        const z = Math.sqrt(Math.max(0, 1 - dx * dx - dy * dy));
-        const terrain = fbm(dx * 22 + z * 9, dy * 26 + z * 4, 6);
-        const geology = fbm(dx * 78 + terrain * 9, dy * 82 + terrain * 7, 3);
-        const vein =
-          1 -
-          Math.abs(
-            fbm(dx * 83 + geology * 5, dy * 97 + geology * 5, 3) * 2 - 1,
-          );
-        const lava =
-          Math.pow(clamp01((vein - 0.66) * 2.9), 5) *
-          Math.pow(clamp01((terrain - 0.34) * 3.3), 1.6);
-        const rim = Math.exp(-Math.max(0, edge) / 2.15) * sideLight;
-        const atmosphere = Math.exp(-Math.max(0, edge) / 23) * sideLight;
-        const face = clamp01(0.5 - dx * 0.32 - z * 0.5, 0.12, 0.6);
-        red =
-          7 +
-          face * (26 + 46 * terrain) +
-          lava * 82 +
-          rim * 238 +
-          atmosphere * 166;
-        green =
-          8 +
-          face * (17 + 12 * terrain) +
-          lava * 5 +
-          rim * 202 +
-          atmosphere * 38;
-        blue =
-          16 +
-          face * (21 + 18 * terrain) +
-          lava * 14 +
-          rim * 211 +
-          atmosphere * 62;
-      } else if (radial < 1.12) {
-        const halo = Math.exp(edge / 13) * sideLight;
-        red += halo * 142;
-        green += halo * 18;
-        blue += halo * 34;
-      }
-      const pixel = (py * width + px) * 4;
-      image.data[pixel] = red;
-      image.data[pixel + 1] = green;
-      image.data[pixel + 2] = blue;
-      image.data[pixel + 3] = 255;
-    }
-  context.putImageData(image, 0, 0);
-  context.save();
-  context.scale(scale, scale);
+const centerX = 1129,
+  centerY = 309,
+  radius = 346;
 
-  // Stars above the ridge line.
-  const next = seeded(840);
-  for (let i = 0; i < 350; i += 1) {
-    const x = 410 + next() * 810,
-      y = next() * 168;
-    if (Math.hypot(x - centerX, y - centerY) < radius) continue;
-    context.fillStyle = `rgba(255,${55 + Math.round(next() * 68)},${75 + Math.round(next() * 70)},${0.1 + next() * 0.4})`;
-    context.beginPath();
-    context.arc(x, y, 0.15 + next() * 0.57, 0, Math.PI * 2);
-    context.fill();
-  }
-  glow(context, 828, 156, 96, "255,98,96", 0.26);
-  glow(context, 828, 156, 38, "255,168,132", 0.4);
-  mountain(context, FAR_RIDGE, 180, "#451320", "#ef56667a", 716);
-  mountain(context, NEAR_RIDGE, 181, "#080a10", "#7f2635a0", 282);
-  context.restore();
-}
+/** Night nebula, a ruby-rimmed planet and two mountain ridges, painted procedurally. */
+const landscape: Painting = {
+  pixels(image, from, to) {
+    const { width } = image;
+    const scale = width / W;
+    for (let py = from; py < to; py += 1)
+      for (let px = 0; px < width; px += 1) {
+        const x = px / scale,
+          y = py / scale;
+        const n = fbm(x * 0.012, y * 0.013 + 20),
+          warp = fbm(x * 0.004, y * 0.005) * 70;
+        const f = fbm(x * 0.025 + warp * 0.03, y * 0.032 + warp * 0.02);
+        const ridge =
+          1 - Math.abs(2 * fbm(x * 0.026 + n * 5, y * 0.034 + n * 5, 5) - 1);
+        const threads =
+          Math.pow(clamp01((ridge - 0.61) * 2.7), 4) *
+          Math.pow(clamp01((f - 0.33) * 3), 1.3);
+        const horizon = Math.exp(
+          -(((x - 820) / 160) ** 2 + ((y - 171) / 40) ** 2),
+        );
+        const cloud =
+          Math.exp(-(((x - 830) / 340) ** 2)) *
+          (8 + 32 * n ** 2 + 95 * threads);
+        let red = 6 + cloud + horizon * 170,
+          green = 8 + cloud * 0.19 + horizon * 32,
+          blue = 14 + cloud * 0.3 + horizon * 44;
+        const dx = (x - centerX) / radius,
+          dy = (y - centerY) / radius,
+          radial = Math.hypot(dx, dy),
+          edge = (1 - radial) * radius;
+        const sideLight = clamp01(0.18 - dx * 0.98 - dy * 0.15, 0.08, 1.3);
+        if (radial <= 1) {
+          const z = Math.sqrt(Math.max(0, 1 - dx * dx - dy * dy));
+          const terrain = fbm(dx * 22 + z * 9, dy * 26 + z * 4, 6);
+          const geology = fbm(dx * 78 + terrain * 9, dy * 82 + terrain * 7, 3);
+          const vein =
+            1 -
+            Math.abs(
+              fbm(dx * 83 + geology * 5, dy * 97 + geology * 5, 3) * 2 - 1,
+            );
+          const lava =
+            Math.pow(clamp01((vein - 0.66) * 2.9), 5) *
+            Math.pow(clamp01((terrain - 0.34) * 3.3), 1.6);
+          const rim = Math.exp(-Math.max(0, edge) / 2.15) * sideLight;
+          const atmosphere = Math.exp(-Math.max(0, edge) / 23) * sideLight;
+          const face = clamp01(0.5 - dx * 0.32 - z * 0.5, 0.12, 0.6);
+          red =
+            7 +
+            face * (26 + 46 * terrain) +
+            lava * 82 +
+            rim * 238 +
+            atmosphere * 166;
+          green =
+            8 +
+            face * (17 + 12 * terrain) +
+            lava * 5 +
+            rim * 202 +
+            atmosphere * 38;
+          blue =
+            16 +
+            face * (21 + 18 * terrain) +
+            lava * 14 +
+            rim * 211 +
+            atmosphere * 62;
+        } else if (radial < 1.12) {
+          const halo = Math.exp(edge / 13) * sideLight;
+          red += halo * 142;
+          green += halo * 18;
+          blue += halo * 34;
+        }
+        const pixel = (py * width + px) * 4;
+        image.data[pixel] = red;
+        image.data[pixel + 1] = green;
+        image.data[pixel + 2] = blue;
+        image.data[pixel + 3] = 255;
+      }
+  },
+  finish(context, width) {
+    context.save();
+    context.scale(width / W, width / W);
+
+    // Stars above the ridge line.
+    const next = seeded(840);
+    for (let i = 0; i < 350; i += 1) {
+      const x = 410 + next() * 810,
+        y = next() * 168;
+      if (Math.hypot(x - centerX, y - centerY) < radius) continue;
+      context.fillStyle = `rgba(255,${55 + Math.round(next() * 68)},${75 + Math.round(next() * 70)},${0.1 + next() * 0.4})`;
+      context.beginPath();
+      context.arc(x, y, 0.15 + next() * 0.57, 0, Math.PI * 2);
+      context.fill();
+    }
+    glow(context, 828, 156, 96, "255,98,96", 0.26);
+    glow(context, 828, 156, 38, "255,168,132", 0.4);
+    mountain(context, FAR_RIDGE, 180, "#451320", "#ef56667a", 716);
+    mountain(context, NEAR_RIDGE, 181, "#080a10", "#7f2635a0", 282);
+    context.restore();
+  },
+};
 
 function glow(
   context: CanvasRenderingContext2D,
@@ -265,24 +267,10 @@ const NEAR_RIDGE: Point[] = [
 /** Procedural night landscape with a planet; children are laid over it. */
 export function Landscape({ shade = true, children, ...p }: LandscapeProps) {
   const ref = useRef<HTMLCanvasElement>(null);
-  useEffect(() => {
-    // Painting is heavy, so it waits for the first frame to be on screen.
-    const timer = window.setTimeout(() => {
-      const canvas = ref.current;
-      const context = canvas?.getContext("2d");
-      if (!canvas || !context) return;
-      context.drawImage(
-        cachedCanvas("landscape", W * 2, H * 2, paintLandscape),
-        0,
-        0,
-      );
-      canvas.dataset.ready = "";
-    }, 30);
-    return () => clearTimeout(timer);
-  }, []);
+  useArtwork(ref, "landscape", W, H, landscape);
   return (
     <div {...mark("Landscape", p)} data-shade={shade || undefined}>
-      <canvas ref={ref} width={W * 2} height={H * 2} aria-hidden />
+      <canvas ref={ref} aria-hidden />
       <span className="ad-landscape-glow" aria-hidden />
       {children && <div className="ad-landscape-content">{children}</div>}
     </div>

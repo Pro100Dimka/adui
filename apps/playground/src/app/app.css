@@ -257,13 +257,9 @@ a {
 /* Showcase: live tiles, each a link to its page; off-screen tiles are not rendered. */
 .docs-showcase-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr));
+  grid-auto-flow: row dense;
   gap: var(--ad-space-3);
-}
-@media (min-width: 48rem) {
-  .docs-showcase-tile[data-wide] {
-    grid-column: span 2;
-  }
 }
 .docs-showcase-tile {
   position: relative;
@@ -555,10 +551,25 @@ a {
   flex: none;
 }
 
-/* Page transitions: each component page glides in and its sections follow in a cascade. */
-.docs-component-shell,
-.docs-overview {
-  animation: docs-page-in 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+/* Page transitions: the old page lifts away and the new one glides in (a view transition,
+   drawn by the compositor); its sections then follow in a cascade. */
+.docs-main {
+  view-transition-name: docs-main;
+}
+::view-transition-group(root) {
+  animation-duration: 0.3s;
+}
+::view-transition-old(docs-main) {
+  animation: docs-page-out 0.26s cubic-bezier(0.4, 0, 1, 1) both;
+}
+::view-transition-new(docs-main) {
+  animation: docs-page-in 0.55s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+@keyframes docs-page-out {
+  to {
+    opacity: 0;
+    transform: translate3d(0, -0.75rem, 0) scale(0.99);
+  }
 }
 .docs-component-content > *,
 .docs-overview > * {
@@ -583,13 +594,13 @@ a {
 @keyframes docs-page-in {
   from {
     opacity: 0;
-    filter: blur(0.3rem);
+    transform: translate3d(0, 1.25rem, 0) scale(0.985);
   }
 }
 @keyframes docs-section-in {
   from {
     opacity: 0;
-    transform: translateY(1rem);
+    transform: translate3d(0, 1rem, 0);
   }
 }
 /* Scroll-linked motion: tiles float up out of a soft blur as they enter, hero scenes drift
@@ -610,8 +621,7 @@ a {
 @keyframes docs-float-in {
   from {
     opacity: 0;
-    transform: translateY(2.5rem) scale(0.96);
-    filter: blur(0.35rem);
+    transform: translate3d(0, 2.5rem, 0) scale(0.96);
   }
 }
 @keyframes docs-parallax {

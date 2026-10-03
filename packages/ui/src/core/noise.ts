@@ -49,31 +49,54 @@ export function fbm(initialX: number, initialY: number, octaves = 5) {
   return value;
 }
 
-/**
- * Paints once into an offscreen canvas and keeps it, so every instance of an artwork
- * reuses the same picture instead of recomputing millions of noise samples.
- */
-export function cachedCanvas(
-  key: string,
-  width: number,
-  height: number,
-  paint: (
+/** A procedural picture: rows of pixels computed one by one, then optional vector strokes. */
+export interface Painting {
+  /** Fill rows `from`..`to` of the image; scale from `image.width` to stay resolution-free. */
+  pixels(image: ImageData, from: number, to: number): void;
+  /** Draw on top of the pixels (stars, glows, outlines). */
+  finish?(
     context: CanvasRenderingContext2D,
     width: number,
     height: number,
-  ) => void,
+  ): void;
+}
+
+const paintings = new Map<string, Promise<HTMLCanvasElement>>();
+const pause = () => new Promise<void>((resume) => setTimeout(resume));
+
+/**
+ * Paints a picture into an offscreen canvas in ~8 ms slices, so even a large one never
+ * freezes the page, and keeps it: every instance of the same size reuses the result.
+ */
+export function paintCanvas(
+  key: string,
+  width: number,
+  height: number,
+  painting: Painting,
 ) {
-  const cache = ((
-    cachedCanvas as { store?: Map<string, HTMLCanvasElement> }
-  ).store ??= new Map());
-  let canvas = cache.get(key);
-  if (!canvas) {
-    canvas = document.createElement("canvas");
-    canvas.width = width;
-    canvas.height = height;
-    const context = canvas.getContext("2d");
-    if (context) paint(context, width, height);
-    cache.set(key, canvas);
+  const id = `${key}:${width}x${height}`;
+  let done = paintings.get(id);
+  if (!done) {
+    done = (async () => {
+      const canvas = document.createElement("canvas");
+      canvas.width = width;
+      canvas.height = height;
+      const context = canvas.getContext("2d");
+      if (!context) return canvas;
+      const image = context.createImageData(width, height);
+      for (let row = 0; row < height;) {
+        const started = performance.now();
+        while (row < height && performance.now() - started < 8) {
+          painting.pixels(image, row, row + 1);
+          row += 1;
+        }
+        if (row < height) await pause();
+      }
+      context.putImageData(image, 0, 0);
+      painting.finish?.(context, width, height);
+      return canvas;
+    })();
+    paintings.set(id, done);
   }
-  return canvas;
+  return done;
 }

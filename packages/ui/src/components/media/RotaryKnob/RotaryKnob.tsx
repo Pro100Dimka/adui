@@ -1,4 +1,10 @@
-import React, { useEffect, useLayoutEffect, useMemo, useRef } from "react";
+import React, {
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { clamp, mark, normalizeSize } from "../../../core/base";
 import { type RotaryKnobProps, type RotaryKnobController } from "../shared";
 
@@ -27,7 +33,7 @@ export const RotaryKnob = (p: RotaryKnobProps) => {
   const initialRef = useRef(initial);
   const diameter =
     p.diameter ??
-    { xs: 124, sm: 124, md: 220, lg: 320 }[normalizeSize(p.size) ?? "md"];
+    { xs: 84, sm: 124, md: 220, lg: 320 }[normalizeSize(p.size) ?? "md"];
   const numberFormat = useMemo(
     () => new Intl.NumberFormat("ru-RU", { maximumFractionDigits: 1 }),
     [],
@@ -74,6 +80,8 @@ export const RotaryKnob = (p: RotaryKnobProps) => {
       mode: "circular" | "linear";
       value: number;
       start: number;
+      /** Set by a click on the scale: the knob glides to the spot instead of snapping. */
+      glide: boolean;
       distance: number;
     } = null;
     let renderTimer = 0;
@@ -393,17 +401,86 @@ export const RotaryKnob = (p: RotaryKnobProps) => {
       feedbackCtx.strokeStyle = "rgba(0, 0, 0, 0.78)";
       feedbackCtx.lineWidth = 0.052;
       feedbackCtx.stroke();
-      if (visualValue > 0) {
+      if (visualValue > 0) paintValue(start, end, scale);
+      feedbackCtx.restore();
+    }
+
+    /**
+     * The value as a neon tube: deep ruby at the start heating up to white at the end,
+     * a comet head of light on its tip, and every scale tick it has passed lit up.
+     */
+    function paintValue(start: number, end: number, scale: number) {
+      const sweep = Math.max(0.0001, (end - start) / TAU);
+      const tube = feedbackCtx.createConicGradient(start, 0, 0);
+      tube.addColorStop(0, "rgba(110, 0, 22, 0.9)");
+      tube.addColorStop(sweep * 0.65, "rgba(255, 36, 72, 1)");
+      tube.addColorStop(sweep, "rgba(255, 238, 242, 1)");
+      tube.addColorStop(Math.min(1, sweep + 0.0001), "rgba(255, 238, 242, 0)");
+      const stroke = (width: number, alpha: number, blur: number) => {
         feedbackCtx.beginPath();
         feedbackCtx.arc(0, 0, 0.8395, start, end);
         feedbackCtx.lineCap = "round";
-        feedbackCtx.lineWidth = 0.007;
+        feedbackCtx.lineWidth = width;
+        feedbackCtx.globalAlpha = alpha;
         feedbackCtx.shadowColor = "#ff163d";
-        feedbackCtx.shadowBlur = scale * 0.034;
-        feedbackCtx.strokeStyle = "rgba(255, 218, 224, 0.96)";
+        feedbackCtx.shadowBlur = scale * blur;
+        feedbackCtx.strokeStyle = tube;
         feedbackCtx.stroke();
+      };
+      stroke(0.05, 0.35, 0.06);
+      stroke(0.017, 0.95, 0.03);
+      stroke(0.006, 1, 0.012);
+      feedbackCtx.globalAlpha = 1;
+      feedbackCtx.shadowBlur = 0;
+
+      const tipX = Math.cos(end) * 0.8395;
+      const tipY = Math.sin(end) * 0.8395;
+      const head = feedbackCtx.createRadialGradient(
+        tipX,
+        tipY,
+        0,
+        tipX,
+        tipY,
+        0.12,
+      );
+      head.addColorStop(0, "rgba(255, 255, 255, 1)");
+      head.addColorStop(0.12, "rgba(255, 220, 228, 0.9)");
+      head.addColorStop(0.35, "rgba(255, 60, 100, 0.45)");
+      head.addColorStop(1, "rgba(255, 0, 40, 0)");
+      feedbackCtx.fillStyle = head;
+      feedbackCtx.beginPath();
+      feedbackCtx.arc(tipX, tipY, 0.12, 0, TAU);
+      feedbackCtx.fill();
+
+      const reached = valueAngle(visualValue);
+      for (let i = 0; i < 16; i += 1) {
+        const angle = normalizeAngle(i * 22.5);
+        if (angle < startAngle || angle > -startAngle) continue;
+        const x = Math.sin(angle / degrees) * 0.933;
+        const y = -Math.cos(angle / degrees) * 0.933;
+        // Ticks still ahead of the value are dimmed, so the passed ones read as lit.
+        if (angle > reached - 0.5) {
+          const shade = feedbackCtx.createRadialGradient(x, y, 0, x, y, 0.05);
+          shade.addColorStop(0, "rgba(8, 3, 4, 0.72)");
+          shade.addColorStop(0.55, "rgba(8, 3, 4, 0.55)");
+          shade.addColorStop(1, "rgba(8, 3, 4, 0)");
+          feedbackCtx.fillStyle = shade;
+          feedbackCtx.beginPath();
+          feedbackCtx.arc(x, y, 0.05, 0, TAU);
+          feedbackCtx.fill();
+          continue;
+        }
+        const heat = 0.5 + 0.5 * Math.exp(-(reached - angle) / 28);
+        const glow = feedbackCtx.createRadialGradient(x, y, 0, x, y, 0.075);
+        glow.addColorStop(0, `rgba(255, 255, 255, ${heat})`);
+        glow.addColorStop(0.16, `rgba(255, 210, 220, ${0.85 * heat})`);
+        glow.addColorStop(0.42, `rgba(255, 40, 76, ${0.55 * heat})`);
+        glow.addColorStop(1, "rgba(255, 0, 40, 0)");
+        feedbackCtx.fillStyle = glow;
+        feedbackCtx.beginPath();
+        feedbackCtx.arc(x, y, 0.075, 0, TAU);
+        feedbackCtx.fill();
       }
-      feedbackCtx.restore();
     }
 
     function paint() {
@@ -422,7 +499,7 @@ export const RotaryKnob = (p: RotaryKnobProps) => {
         ? Math.min(64, timestamp - previousFrame)
         : 16;
       previousFrame = timestamp;
-      const immediate = !!drag || reducedMotion.matches;
+      const immediate = (!!drag && !drag.glide) || reducedMotion.matches;
       visualValue = immediate
         ? value
         : visualValue + (value - visualValue) * (1 - Math.exp(-elapsed / 42));
@@ -506,10 +583,14 @@ export const RotaryKnob = (p: RotaryKnobProps) => {
         value,
         start: value,
         distance: localClamp(center.radius * 1.2, 160, 420),
+        glide: false,
       };
       control.setPointerCapture(event.pointerId);
       root.classList.add("is-dragging");
-      if (distance >= 0.88) {
+      tilt(0, 0);
+      // A press on the glowing scale ring or the ticks sets the value right there.
+      if (distance >= 0.8) {
+        drag.glide = true;
         let angle = normalizeAngle((drag.angle ?? 0) + 90);
         if (Math.abs(angle) > 179.99) angle = value >= 50 ? 180 : -180;
         drag.value = localClamp(
@@ -521,8 +602,29 @@ export const RotaryKnob = (p: RotaryKnobProps) => {
       }
     }
 
+    /** The knob leans a little towards the pointer, like a real object under a light. */
+    function tilt(x: number, y: number) {
+      root.style.setProperty("--tilt-x", `${(-y * 7).toFixed(2)}deg`);
+      root.style.setProperty("--tilt-y", `${(x * 7).toFixed(2)}deg`);
+    }
+    function hover(event: PointerEvent) {
+      if (
+        drag ||
+        disabledRef.current ||
+        reducedMotion.matches ||
+        document.documentElement.dataset.adMotion === "off"
+      )
+        return;
+      const center = geometry();
+      tilt(
+        localClamp((event.clientX - center.x) / center.radius, -1, 1),
+        localClamp((event.clientY - center.y) / center.radius, -1, 1),
+      );
+    }
+
     function pointerMove(event: PointerEvent) {
       if (!drag || event.pointerId !== drag.id) return;
+      drag.glide = false;
       event.preventDefault();
       const precision = event.shiftKey ? 0.1 : 1;
       const angle = polar(event, drag.center);
@@ -632,6 +734,12 @@ export const RotaryKnob = (p: RotaryKnobProps) => {
       passive: false,
       signal: listeners.signal,
     });
+    root.addEventListener("pointermove", hover as EventListener, {
+      signal: listeners.signal,
+    });
+    root.addEventListener("pointerleave", () => tilt(0, 0), {
+      signal: listeners.signal,
+    });
     window.addEventListener("blur", () => finishDrag(true), {
       signal: listeners.signal,
     });
@@ -680,6 +788,21 @@ export const RotaryKnob = (p: RotaryKnobProps) => {
       controllerRef.current?.setValue(clamp(p.value), false);
   }, [p.value]);
 
+  // Typing a value, as in studio plug-ins: click the readout, Enter applies, Escape cancels.
+  const [draft, setDraft] = useState<string | null>(null);
+  const cancelled = useRef(false);
+  const editable = !p.disabled && !p.readOnly;
+  const applyDraft = () => {
+    if (cancelled.current) return;
+    const next = Number(draft?.replace(",", ".").replace("%", ""));
+    setDraft(null);
+    const controller = controllerRef.current;
+    if (!controller || !Number.isFinite(next)) return;
+    const before = controller.value;
+    controller.setValue(clamp(next), true);
+    if (controller.value !== before) p.onValueCommit?.(controller.value);
+  };
+
   const rootProps = mark("RotaryKnob", p, undefined, "knob");
   return (
     <div
@@ -712,6 +835,7 @@ export const RotaryKnob = (p: RotaryKnobProps) => {
         aria-hidden="true"
         ref={rotorRef}
       />
+      <span className="knob__sheen" aria-hidden="true" />
       <div
         ref={controlRef}
         className="knob__control"
@@ -731,9 +855,41 @@ export const RotaryKnob = (p: RotaryKnobProps) => {
         </div>
       </div>
       {p.showValue !== false && (
-        <div ref={readoutRef} className="knob__value" aria-hidden="true">
+        <div
+          ref={readoutRef}
+          className="knob__value"
+          data-editable={editable || undefined}
+          data-editing={draft !== null || undefined}
+          title={editable ? "Нажмите, чтобы ввести значение" : undefined}
+          onClick={() => {
+            if (!editable) return;
+            cancelled.current = false;
+            setDraft(
+              numberFormat.format(controllerRef.current?.value ?? initial),
+            );
+          }}
+        >
           {numberFormat.format(initial)}%
         </div>
+      )}
+      {draft !== null && (
+        <input
+          className="knob__input"
+          aria-label={`${p.label ?? "Громкость"}, значение`}
+          inputMode="decimal"
+          autoFocus
+          value={draft}
+          onFocus={(event) => event.currentTarget.select()}
+          onChange={(event) => setDraft(event.currentTarget.value)}
+          onBlur={applyDraft}
+          onKeyDown={(event) => {
+            if (event.key === "Enter") event.currentTarget.blur();
+            if (event.key === "Escape") {
+              cancelled.current = true;
+              setDraft(null);
+            }
+          }}
+        />
       )}
       <span className="ad-sr-only">
         Зажмите ручку ближе к краю и ведите мышью по кругу. За центр можно

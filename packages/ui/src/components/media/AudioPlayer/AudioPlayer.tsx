@@ -10,40 +10,51 @@ export const AudioPlayer = (p: AudioPlayerProps) => {
     [position, setPosition] = useState(0),
     [muted, setMuted] = useState(false);
   const [volume, setVolume] = useControllable(p.volume, p.defaultVolume ?? 0.7);
-  const duration = p.duration ?? 51;
+  const [fileDuration, setFileDuration] = useState<number>();
+  const duration = p.duration ?? fileDuration ?? 51;
   useEffect(() => {
     if (!p.src) return;
     const media = new Audio(p.src);
     audio.current = media;
-    const time = () => {
-      setPosition(media.currentTime);
-      p.onTimeChange?.(media.currentTime);
+    const meta = () =>
+      Number.isFinite(media.duration) && setFileDuration(media.duration);
+    const ended = () => {
+      setPlaying(false);
+      p.onPlayingChange?.(false);
     };
-    media.addEventListener("timeupdate", time);
+    media.addEventListener("loadedmetadata", meta);
+    media.addEventListener("ended", ended);
     return () => {
       media.pause();
-      media.removeEventListener("timeupdate", time);
+      media.removeEventListener("loadedmetadata", meta);
+      media.removeEventListener("ended", ended);
       audio.current = null;
+      setFileDuration(undefined);
     };
   }, [p.src]);
-  // Without a source the timeline still runs, so the player can be shown alive in demos.
+  // While playing, the position is read every display refresh (timeupdate fires only ~4
+  // times a second), so the cursor glides. Without a source the timeline runs on its own,
+  // so the player can be shown alive in demos.
   useEffect(() => {
-    if (p.src || !playing) return;
+    if (!playing) return;
     let last = performance.now();
     let frame = requestAnimationFrame(function tick(now) {
-      setPosition((v) => {
-        const next = v + (now - last) / 1000;
-        if (next >= duration) {
+      const media = audio.current;
+      if (media) {
+        setPosition(media.currentTime);
+        p.onTimeChange?.(media.currentTime);
+      } else
+        setPosition((v) => {
+          const next = v + (now - last) / 1000;
+          if (next < duration) return next;
           setPlaying(false);
           return 0;
-        }
-        return next;
-      });
+        });
       last = now;
       frame = requestAnimationFrame(tick);
     });
     return () => cancelAnimationFrame(frame);
-  }, [p.src, playing, duration]);
+  }, [playing, duration]);
   useEffect(() => {
     if (audio.current) {
       audio.current.muted = muted;
@@ -81,6 +92,7 @@ export const AudioPlayer = (p: AudioPlayerProps) => {
           position={position}
           onSeek={seek}
           points={p.points}
+          src={p.points ? undefined : p.src}
         />
         <div className="ad-player-times">
           <span className="ad-time">{timeText(position)}</span>

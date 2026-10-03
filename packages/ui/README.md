@@ -41,7 +41,6 @@ Every stateful component works both controlled (`value` + `onValueChange`) and u
 ```ts
 import { Button, Card, Dialog, AudioPlayer } from "@ad-voice/ui";
 import { PianoRollGrid } from "@ad-voice/ui/editor";
-import { ParticipantCard, RoleEmblem } from "@ad-voice/ui/composites";
 import { Router } from "@ad-voice/ui/router";
 import { Form, FormFields, useForm } from "@ad-voice/ui/forms";
 import { ThemeProvider, useMotion } from "@ad-voice/ui/core";

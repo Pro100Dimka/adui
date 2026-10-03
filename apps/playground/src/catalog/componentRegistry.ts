@@ -88,8 +88,4 @@ export const getComponentApiSource = (name: string) => {
 };
 
 export const getImportPath = (item: CatalogMeta) =>
-  item.category === "editor"
-    ? "@ad-voice/ui/editor"
-    : item.category === "composites"
-      ? "@ad-voice/ui/composites"
-      : "@ad-voice/ui";
+  item.category === "editor" ? "@ad-voice/ui/editor" : "@ad-voice/ui";

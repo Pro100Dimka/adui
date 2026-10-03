@@ -4,7 +4,12 @@ export interface WaveformProps extends CommonProps {
   position?: number;
   defaultPosition?: number;
   onSeek?: (time: number) => void;
-  points?: number[];
+  /** Ready peaks (any scale, any count); without them the shape is read from `src`. */
+  points?: readonly number[];
+  /** An audio file (URL, File or Blob) whose peaks are decoded in the browser. */
+  src?: string | Blob | null;
+  /** How many bars to decode from `src`. */
+  bins?: number;
   color?: string;
   label?: string;
   disabled?: boolean;
@@ -20,9 +25,15 @@ export interface AudioPlayerProps extends CommonProps {
   showVolume?: boolean;
 }
 export interface LevelMeterProps extends CommonProps {
+  /** Current level, 0–100; change it as often as you like. */
   value?: number;
+  /** A live input (e.g. from getUserMedia) the meter listens to by itself; overrides `value`. */
+  stream?: MediaStream | null;
+  /** Off (muted, disconnected): the wave settles and dims. */
+  active?: boolean;
+  /** Small pill-sized meter for lists and participant rows. */
+  compact?: boolean;
   label?: string;
-  segmented?: boolean;
 }
 export interface RotaryKnobProps extends CommonProps {
   value?: number;

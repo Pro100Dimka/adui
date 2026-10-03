@@ -110,10 +110,8 @@ export { RotaryKnob } from "./components/media/RotaryKnob/RotaryKnob";
 export { Sparkline } from "./components/media/Sparkline/Sparkline";
 export { WaveDecoration } from "./components/media/WaveDecoration/WaveDecoration";
 export { Waveform } from "./components/media/Waveform/Waveform";
+export { useWaveformPeaks } from "./components/media/Waveform/useWaveformPeaks";
 export * from "./components/media/shared";
-export { ParticipantCard } from "./components/compositions/ParticipantCard/ParticipantCard";
-export { RoleEmblem } from "./components/compositions/RoleEmblem/RoleEmblem";
-export * from "./components/compositions/shared";
 export { getMotionStats } from "./core/motion-engine.js";
 export {
   Router,

@@ -12,7 +12,7 @@ export default defineConfig({
       { find: /^@ad-voice\/ui$/, replacement: ui("index.ts") },
       { find: /^@ad-voice\/ui\/styles\.css$/, replacement: ui("styles.css") },
       {
-        find: /^@ad-voice\/ui\/(editor|composites|core|router|forms)$/,
+        find: /^@ad-voice\/ui\/(editor|core|router|forms)$/,
         replacement: ui("$1.ts"),
       },
     ],

@@ -4,7 +4,7 @@ export default function RotaryKnobExample() {
   return (
     <Playground
       knobs={{
-        size: { options: sizes.filter((s) => s !== "xs"), value: "md" },
+        size: { options: sizes, value: "md" },
         readOnly: { value: false },
         disabled: { value: false },
       }}

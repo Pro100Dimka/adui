@@ -41,16 +41,54 @@
     inset 0 0.0625rem 0 #ffffff26;
   animation: ad-badge-sweep 6s ease-in-out infinite;
 }
+/* Sizes scale the type, padding, chamfer and dot together. */
+.ad-badge[data-ad-size="xs"] {
+  --ad-badge-cut: 0.2rem;
+  padding: 0.05rem 0.4rem;
+  font-size: 0.5625rem;
+  line-height: 0.9rem;
+}
+.ad-badge[data-ad-size="sm"] {
+  --ad-badge-cut: 0.25rem;
+  padding: 0.12rem 0.5rem;
+  font-size: 0.625rem;
+  line-height: 1rem;
+}
+.ad-badge[data-ad-size="lg"] {
+  --ad-badge-cut: 0.4rem;
+  padding: 0.3rem 0.85rem;
+  font-size: 0.8125rem;
+  line-height: 1.35rem;
+}
 .ad-badge-dot {
-  width: 0.4rem;
-  height: 0.4rem;
+  width: 0.58em;
+  height: 0.58em;
   border-radius: 50%;
   background: var(--ad-tone);
   box-shadow: 0 0 0.35rem var(--ad-tone);
   flex: none;
 }
 .ad-badge:is([data-ad-tone="success"], [data-ad-tone="processing"])
-  .ad-badge-dot {
+  /* Sizes scale the type, padding, chamfer and dot together. */
+.ad-badge[data-ad-size="xs"] {
+  --ad-badge-cut: 0.2rem;
+  padding: 0.05rem 0.4rem;
+  font-size: 0.5625rem;
+  line-height: 0.9rem;
+}
+.ad-badge[data-ad-size="sm"] {
+  --ad-badge-cut: 0.25rem;
+  padding: 0.12rem 0.5rem;
+  font-size: 0.625rem;
+  line-height: 1rem;
+}
+.ad-badge[data-ad-size="lg"] {
+  --ad-badge-cut: 0.4rem;
+  padding: 0.3rem 0.85rem;
+  font-size: 0.8125rem;
+  line-height: 1.35rem;
+}
+.ad-badge-dot {
   animation: ad-badge-pulse 1.8s ease-in-out infinite;
 }
 @keyframes ad-badge-sweep {

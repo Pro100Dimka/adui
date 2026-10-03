@@ -51,12 +51,6 @@ export const catalogCategories = [
     icon: "pencil",
   },
   {
-    id: "composites",
-    label: "Композиции",
-    description: "Редкие reusable-композиции с собственной логикой.",
-    icon: "cube",
-  },
-  {
     id: "motion",
     label: "Эффекты и арт",
     description:

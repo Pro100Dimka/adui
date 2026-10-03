@@ -91,15 +91,37 @@ export function useSmoothWheel(ref: React.RefObject<HTMLElement | null>) {
     )
       return;
     let target = element.scrollTop;
+    let position = target;
+    let applied = target;
     let frame = 0;
-    const glide = () => {
-      const rest = target - element.scrollTop;
-      if (Math.abs(rest) < 0.5) {
-        element.scrollTop = target;
-        frame = 0;
-        return;
+    let last = 0;
+    const stop = () => {
+      cancelAnimationFrame(frame);
+      frame = 0;
+      last = 0;
+    };
+    // Exponential easing on real elapsed time: the same glide at 60, 144 or 360 Hz,
+    // and every refresh of the display gets its own sub-pixel step.
+    const glide = (now: number) => {
+      // Something else moved the scroller (the browser keeping the view anchored while
+      // content above resizes, a scrollbar drag, keys): take that shift on board and glide
+      // the remaining distance from there instead of fighting it.
+      const shift = element.scrollTop - applied;
+      if (Math.abs(shift) > 1.5) {
+        position += shift;
+        target += shift;
       }
-      element.scrollTop += rest * 0.12;
+      const elapsed = Math.min(64, now - (last || now - 16));
+      last = now;
+      target = Math.max(
+        0,
+        Math.min(element.scrollHeight - element.clientHeight, target),
+      );
+      position += (target - position) * (1 - Math.exp(-elapsed / 95));
+      if (Math.abs(target - position) < 0.25) position = target;
+      element.scrollTop = position;
+      applied = element.scrollTop;
+      if (position === target) return stop();
       frame = requestAnimationFrame(glide);
     };
     const onWheel = (event: WheelEvent) => {
@@ -124,7 +146,7 @@ export function useSmoothWheel(ref: React.RefObject<HTMLElement | null>) {
           return;
       }
       event.preventDefault();
-      if (!frame) target = element.scrollTop;
+      if (!frame) target = position = applied = element.scrollTop;
       target = Math.max(
         0,
         Math.min(element.scrollHeight - element.clientHeight, target + delta),
@@ -134,7 +156,7 @@ export function useSmoothWheel(ref: React.RefObject<HTMLElement | null>) {
     element.addEventListener("wheel", onWheel, { passive: false });
     return () => {
       element.removeEventListener("wheel", onWheel);
-      cancelAnimationFrame(frame);
+      stop();
     };
   }, [ref, enabled]);
 }
