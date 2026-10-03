@@ -106,19 +106,20 @@ export interface TabProps extends ButtonProps {
   selected?: boolean;
   panelId?: string;
 }
-export interface TabItem {
-  value: string;
+export interface TabItem<V extends string = string> {
+  value: V;
   label: ReactNode;
   icon?: string;
   disabled?: boolean;
   panelId?: string;
   id?: string;
 }
-export interface TabsProps extends CommonProps {
-  items?: TabItem[];
-  value?: string;
-  defaultValue?: string;
-  onValueChange?: (value: string) => void;
+/** `V` narrows the values, e.g. `Tabs<"audio" | "video">`, so handlers get the exact type. */
+export interface TabsProps<V extends string = string> extends CommonProps {
+  items?: TabItem<V>[];
+  value?: V;
+  defaultValue?: V;
+  onValueChange?: (value: V) => void;
   label?: string;
 }
 /** Field appearance: boxed outline, tinted fill or a single bottom line. */

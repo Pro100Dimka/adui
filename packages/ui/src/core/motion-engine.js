@@ -1,3 +1,8 @@
+import {
+  canObserveIntersection,
+  createResizeObserver,
+  reducedMotionQuery,
+} from "./environment";
 /* Shared SVG effect engine retained from the approved DOM library.
    React owns attachment / detachment through useLayoutEffect. No component DOM is built here. */
 let uid = 0;
@@ -32,7 +37,7 @@ const wake = () => {
 let scopeCount = 0;
 U.createMotion = (root = document) => {
   if (scopeCount++ === 0) document.addEventListener("visibilitychange", wake);
-  const media = matchMedia("(prefers-reduced-motion: reduce)");
+  const media = reducedMotionQuery();
   const scope = {
     root,
     enabled: !media.matches,
@@ -95,11 +100,13 @@ U.createMotion = (root = document) => {
       media.removeEventListener("change", this.onPreference);
     },
   };
-  scope.intersection = new IntersectionObserver(
-    (entries) =>
-      entries.forEach((e) => (e.target._adInView = e.isIntersecting)),
-    { rootMargin: "10%" },
-  );
+  scope.intersection = canObserveIntersection()
+    ? new IntersectionObserver(
+        (entries) =>
+          entries.forEach((e) => (e.target._adInView = e.isIntersecting)),
+        { rootMargin: "10%" },
+      )
+    : null;
   scope.onPreference = (e) => {
     if (!scope.explicit) scope.set(!e.matches, false);
   };
@@ -258,7 +265,7 @@ U.attachBorder = (element, { shell = false, round = false, scope } = {}) => {
     item.length = path.getTotalLength();
     item.paint(scope?.time || 0);
   };
-  item.observer = new ResizeObserver(item.sync);
+  item.observer = createResizeObserver(item.sync);
   item.observer.observe(element);
   item.sync();
   const unsubscribe = scope.add(element, item.paint);
@@ -367,7 +374,7 @@ U.attachTabShape = (button) => {
           ? "last"
           : "middle";
   };
-  const observer = new ResizeObserver(sync);
+  const observer = createResizeObserver(sync);
   observer.observe(button);
   if (button.parentElement) observer.observe(button.parentElement);
   sync();

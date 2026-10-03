@@ -1,3 +1,4 @@
+import { createResizeObserver } from "../../../core/environment";
 import { useLayoutEffect, useRef, useState } from "react";
 import {
   mark,
@@ -5,18 +6,20 @@ import {
   useControllable,
   type TokenStyle,
 } from "../../../core/base";
-import { type TabsProps } from "../shared";
+import { type TabItem, type TabsProps } from "../shared";
 import { Tab } from "../Tab/Tab";
 
-export const Tabs = (p: TabsProps) => {
-  const items = p.items ?? [
-    { value: "appearance", label: "Внешний вид", icon: "palette" },
-    { value: "audio", label: "Аудио", icon: "audio" },
-    { value: "advanced", label: "Дополнительно", icon: "wrench" },
-  ];
-  const [value, setValue] = useControllable(
+export function Tabs<V extends string = string>(p: TabsProps<V>) {
+  const items =
+    p.items ??
+    ([
+      { value: "appearance", label: "Внешний вид", icon: "palette" },
+      { value: "audio", label: "Аудио", icon: "audio" },
+      { value: "advanced", label: "Дополнительно", icon: "wrench" },
+    ] as TabItem<V>[]);
+  const [value, setValue] = useControllable<V>(
     p.value,
-    p.defaultValue ?? items[0]?.value ?? "",
+    p.defaultValue ?? items[0]?.value ?? ("" as V),
     p.onValueChange,
   );
   const buttons = useRef<Array<HTMLButtonElement | null>>([]);
@@ -35,7 +38,7 @@ export const Tabs = (p: TabsProps) => {
         "--ad-tabs-w": `${tab.offsetWidth}px`,
       });
     update();
-    const observer = new ResizeObserver(update);
+    const observer = createResizeObserver(update);
     observer.observe(tab);
     if (tab.parentElement) observer.observe(tab.parentElement);
     let timer = 0;
@@ -111,4 +114,4 @@ export const Tabs = (p: TabsProps) => {
       ))}
     </nav>
   );
-};
+}

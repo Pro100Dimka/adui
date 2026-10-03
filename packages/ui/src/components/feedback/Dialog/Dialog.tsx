@@ -21,10 +21,18 @@ export const Dialog = (p: DialogProps) => {
   useLayoutEffect(() => {
     const d = ref.current;
     if (!d) return;
-    if (open && !d.open) d.showModal();
-    else if (!open && d.open) d.close();
+    // Environments without the modal dialog API (jsdom) just toggle the open attribute.
+    const modal = typeof d.showModal === "function";
+    if (open && !d.open) {
+      if (modal) d.showModal();
+      else d.setAttribute("open", "");
+    } else if (!open && d.open) {
+      if (modal) d.close();
+      else d.removeAttribute("open");
+    }
     return () => {
-      if (d.open) d.close();
+      if (d.open && modal) d.close();
+      else d.removeAttribute("open");
     };
   }, [open]);
   return (
@@ -40,12 +48,13 @@ export const Dialog = (p: DialogProps) => {
     >
       <Header
         title={<span id={titleId}>{p.title ?? "Подтверждение"}</span>}
+        icon={p.icon}
         level={2}
         actions={
           <IconButton
             variant="ghost"
             icon="close"
-            label="Закрыть"
+            label={p.closeLabel ?? "Закрыть"}
             disabled={pending}
             onClick={() => setOpen(false)}
           />
@@ -56,35 +65,39 @@ export const Dialog = (p: DialogProps) => {
         {p.children}
         {error && <MessageBar tone="error">{error}</MessageBar>}
       </DialogBody>
-      <DialogActions>
-        {p.cancelLabel !== false && (
-          <Button disabled={pending} onClick={() => setOpen(false)}>
-            {p.cancelLabel ?? "Отмена"}
-          </Button>
-        )}
-        <Button
-          variant={p.danger ? "danger" : "primary"}
-          loading={pending}
-          onClick={async () => {
-            setPending(true);
-            setError(undefined);
-            try {
-              const result = await p.onConfirm?.();
-              if (result !== false) setOpen(false);
-            } catch (e) {
-              setError(
-                e instanceof Error
-                  ? e.message
-                  : "Не удалось выполнить действие",
-              );
-            } finally {
-              setPending(false);
-            }
-          }}
-        >
-          {p.confirmLabel ?? "Готово"}
-        </Button>
-      </DialogActions>
+      {(p.cancelLabel !== false || p.confirmLabel !== false) && (
+        <DialogActions>
+          {p.cancelLabel !== false && (
+            <Button disabled={pending} onClick={() => setOpen(false)}>
+              {p.cancelLabel ?? "Отмена"}
+            </Button>
+          )}
+          {p.confirmLabel !== false && (
+            <Button
+              variant={p.danger ? "danger" : "primary"}
+              loading={pending}
+              onClick={async () => {
+                setPending(true);
+                setError(undefined);
+                try {
+                  const result = await p.onConfirm?.();
+                  if (result !== false) setOpen(false);
+                } catch (e) {
+                  setError(
+                    e instanceof Error
+                      ? e.message
+                      : "Не удалось выполнить действие",
+                  );
+                } finally {
+                  setPending(false);
+                }
+              }}
+            >
+              {p.confirmLabel ?? "Готово"}
+            </Button>
+          )}
+        </DialogActions>
+      )}
     </dialog>
   );
 };

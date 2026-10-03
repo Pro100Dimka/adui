@@ -1,16 +1,19 @@
 import { mark } from "../../../core/base";
-import { type TabsProps } from "../shared";
+import { type TabItem, type TabsProps } from "../shared";
 import { Tabs } from "../Tabs/Tabs";
 
-export const SegmentedControl = (p: TabsProps) => (
+export const SegmentedControl = <V extends string = string>(
+  p: TabsProps<V>,
+) => (
   <div {...mark("SegmentedControl", p)}>
-    <Tabs
+    <Tabs<V>
       {...p}
       items={
-        p.items ?? [
+        p.items ??
+        ([
           { value: "list", label: "Список", icon: "list" },
           { value: "grid", label: "Плитка", icon: "grid" },
-        ]
+        ] as TabItem<V>[])
       }
     />
   </div>

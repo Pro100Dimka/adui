@@ -1,3 +1,4 @@
+import { canObserveIntersection } from "../../../core/environment";
 import {
   Children,
   cloneElement,
@@ -37,6 +38,8 @@ export function Reveal({
   useEffect(() => {
     const node = ref.current;
     if (!node) return;
+    // Without visibility tracking there is no "scrolled into view": show at once.
+    if (!canObserveIntersection()) return setShown(true);
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {

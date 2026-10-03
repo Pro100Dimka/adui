@@ -2,8 +2,6 @@
 :root,
 :host,
 .ad-theme {
-  color-scheme: dark;
-  font-family: var(--ad-font-family-sans);
 
   /* Typography */
   --ad-font-family-sans:
@@ -168,4 +166,10 @@
   --ad-focus: var(--ad-secondary-100);
   --ad-success: #11d6a4;
   --ad-warning: #f0c16a;
+}
+
+/* Only a themed area takes the library's type and dark scheme; the host page keeps its own. */
+.ad-theme {
+  color-scheme: dark;
+  font-family: var(--ad-font-family-sans);
 }

@@ -1,5 +1,5 @@
 import { createElement, useCallback, useRef, useState } from "react";
-import type { CSSProperties, ReactNode, Ref } from "react";
+import type { AriaRole, CSSProperties, ReactNode, Ref } from "react";
 
 export type Material =
   | "shell"
@@ -34,6 +34,13 @@ export interface CommonProps {
   material?: Material;
   size?: Size;
   tone?: Tone;
+  /** Accessibility and test hooks reach the root element of every component. */
+  role?: AriaRole;
+  "aria-label"?: string;
+  "aria-labelledby"?: string;
+  "aria-describedby"?: string;
+  "aria-live"?: "off" | "polite" | "assertive";
+  [data: `data-${string}`]: string | number | boolean | undefined;
 }
 export interface VectorNode {
   tag: string;
@@ -59,7 +66,12 @@ export function mark(
   material?: Material,
   extra?: string,
 ) {
+  const passed: Record<string, unknown> = {};
+  for (const key in p)
+    if (key === "role" || key.startsWith("aria-") || key.startsWith("data-"))
+      passed[key] = p[key as keyof CommonProps];
   return {
+    ...passed,
     id: p.id,
     className: classes(
       "ad",

@@ -1,3 +1,8 @@
+import {
+  canPaint,
+  createResizeObserver,
+  reducedMotionQuery,
+} from "../../../core/environment";
 import React, {
   useEffect,
   useLayoutEffect,
@@ -48,10 +53,13 @@ export const RotaryKnob = (p: RotaryKnobProps) => {
     const control = controlRef.current!;
     if (!root || !canvas || !rotor || !feedback || !readout || !control) return;
 
-    const rotorCtx = rotor.getContext("2d")!;
-    const feedbackCtx = feedback.getContext("2d")!;
-    const ctx = canvas.getContext("2d", { alpha: true })!;
-    if (!rotorCtx || !feedbackCtx || !ctx) return;
+    // Without a 2D canvas (tests, server rendering) only the painting is skipped; the value,
+    // keys, wheel and typed input keep working.
+    const paintable = canPaint();
+    const rotorCtx = (paintable ? rotor.getContext("2d") : null)!;
+    const feedbackCtx = (paintable ? feedback.getContext("2d") : null)!;
+    const ctx = (paintable ? canvas.getContext("2d", { alpha: true }) : null)!;
+    const painted = Boolean(rotorCtx && feedbackCtx && ctx);
 
     const TAU = Math.PI * 2;
     const localClamp = (value: number, min = 0, max = 1) =>
@@ -67,7 +75,7 @@ export const RotaryKnob = (p: RotaryKnobProps) => {
       startAngle + (value * sweepAngle) / 100;
     const initialAngle = valueAngle(defaultValue);
     const degrees = 180 / Math.PI;
-    const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)");
+    const reducedMotion = reducedMotionQuery();
     const listeners = new AbortController();
     let value = defaultValue;
     let visualValue = value;
@@ -90,7 +98,7 @@ export const RotaryKnob = (p: RotaryKnobProps) => {
     let disposed = false;
 
     function render() {
-      if (disposed) return;
+      if (disposed || !painted) return;
       const cssSize = root.getBoundingClientRect().width;
       const size = Math.round(
         Math.min(
@@ -388,7 +396,7 @@ export const RotaryKnob = (p: RotaryKnobProps) => {
     }
 
     function paintFeedback() {
-      if (!feedbackCtx || !feedback.width || disposed) return;
+      if (!painted || !feedback.width || disposed) return;
       const scale = feedback.width * 0.445;
       const start = (startAngle - 90) / degrees;
       const end = (valueAngle(visualValue) - 90) / degrees;
@@ -753,7 +761,7 @@ export const RotaryKnob = (p: RotaryKnobProps) => {
     window.addEventListener("resize", scheduleRender, {
       signal: listeners.signal,
     });
-    const observer = new ResizeObserver(scheduleRender);
+    const observer = createResizeObserver(scheduleRender);
     observer.observe(root);
 
     controllerRef.current = {

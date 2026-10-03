@@ -1,9 +1,10 @@
-import { mark, type CommonProps } from "../../../core/base";
+import { mark } from "../../../core/base";
+import type { MessageBarProps } from "../shared";
 import { Icon } from "../../layout/Icon/Icon";
 
 const icons = { success: "check", error: "warning", warning: "warning" };
 
-export const MessageBar = (p: CommonProps) => (
+export const MessageBar = ({ action, ...p }: MessageBarProps) => (
   <div
     {...mark("MessageBar", { ...p, tone: p.tone ?? "warning" })}
     role={p.tone === "error" ? "alert" : "status"}
@@ -14,5 +15,6 @@ export const MessageBar = (p: CommonProps) => (
     <span className="ad-message-bar-text">
       {p.children ?? "Для операции нужно больше свободного места."}
     </span>
+    {action && <span className="ad-message-bar-action">{action}</span>}
   </div>
 );

@@ -1,3 +1,4 @@
+import { reducedMotionQuery } from "../environment";
 import React, { useEffect, useLayoutEffect, useRef } from "react";
 import {
   attachBorder,
@@ -87,7 +88,7 @@ export function useSmoothWheel(ref: React.RefObject<HTMLElement | null>) {
     if (
       !element ||
       !enabled ||
-      matchMedia("(prefers-reduced-motion: reduce)").matches
+      reducedMotionQuery().matches
     )
       return;
     let target = element.scrollTop;

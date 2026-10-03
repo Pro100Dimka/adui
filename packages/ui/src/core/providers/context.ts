@@ -1,12 +1,9 @@
+import { reducedMotionQuery } from "../environment";
 import { useEffect, useState } from "react";
 export function useReducedMotion() {
-  const [reduced, setReduced] = useState(
-    () =>
-      typeof matchMedia === "function" &&
-      matchMedia("(prefers-reduced-motion: reduce)").matches,
-  );
+  const [reduced, setReduced] = useState(() => reducedMotionQuery().matches);
   useEffect(() => {
-    const media = matchMedia("(prefers-reduced-motion: reduce)"),
+    const media = reducedMotionQuery(),
       update = () => setReduced(media.matches);
     media.addEventListener("change", update);
     update();

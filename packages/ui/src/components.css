@@ -48,6 +48,7 @@
 @import "./components/feedback/StatusIndicator/styles.css";
 @import "./components/feedback/Steps/styles.css";
 @import "./components/feedback/Toast/styles.css";
+@import "./components/feedback/Tooltip/styles.css";
 @import "./components/foundation/ThemeProvider/styles.css";
 @import "./components/foundation/Typography/styles.css";
 @import "./components/layout/Avatar/styles.css";

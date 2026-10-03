@@ -1,3 +1,4 @@
+import { canPaint, createResizeObserver } from "../../core/environment";
 import { useEffect, type RefObject } from "react";
 import { paintCanvas, type Painting } from "../../core/noise";
 
@@ -22,6 +23,7 @@ export function useArtwork(
     let shown = 0;
     let alive = true;
     const paint = () => {
+      if (!canPaint()) return;
       const box = canvas.getBoundingClientRect();
       const density = window.devicePixelRatio || 1;
       const wanted = Math.max(box.width / width, box.height / height) * density;
@@ -40,7 +42,7 @@ export function useArtwork(
         canvas.dataset.ready = "";
       });
     };
-    const observer = new ResizeObserver(paint);
+    const observer = createResizeObserver(paint);
     observer.observe(canvas);
     return () => {
       alive = false;

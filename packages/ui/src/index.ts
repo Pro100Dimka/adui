@@ -72,6 +72,8 @@ export { KeyValueList } from "./components/feedback/KeyValueList/KeyValueList";
 export { Menu } from "./components/feedback/Menu/Menu";
 export { MenuItem } from "./components/feedback/MenuItem/MenuItem";
 export { MessageBar } from "./components/feedback/MessageBar/MessageBar";
+export { Tooltip } from "./components/feedback/Tooltip/Tooltip";
+export type { TooltipProps } from "./components/feedback/Tooltip/Tooltip";
 export { Popover } from "./components/feedback/Popover/Popover";
 export { ProgressBar } from "./components/feedback/ProgressBar/ProgressBar";
 export { StatusIndicator } from "./components/feedback/StatusIndicator/StatusIndicator";

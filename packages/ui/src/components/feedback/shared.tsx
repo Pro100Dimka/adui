@@ -6,8 +6,13 @@ export interface DialogProps extends CommonProps {
   onOpenChange?: (open: boolean) => void;
   title?: ReactNode;
   description?: ReactNode;
-  confirmLabel?: string;
+  /** `false` (with `cancelLabel={false}`) leaves the dialog without a footer, e.g. for settings that apply at once. */
+  confirmLabel?: string | false;
   cancelLabel?: string | false;
+  /** Icon tile beside the title. */
+  icon?: string;
+  /** Label of the close button, for localisation. */
+  closeLabel?: string;
   danger?: boolean;
   onConfirm?: () => boolean | void | Promise<boolean | void>;
 }
@@ -46,6 +51,10 @@ export interface ToastProps extends CommonProps {
 }
 export interface BadgeProps extends CommonProps {
   label?: string;
+}
+export interface MessageBarProps extends CommonProps {
+  /** A button or link that resolves the message, e.g. "Повторить". */
+  action?: ReactNode;
 }
 export interface StatusIndicatorProps extends CommonProps {
   status?: Tone;
