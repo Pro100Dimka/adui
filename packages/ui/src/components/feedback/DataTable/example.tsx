@@ -1,15 +1,110 @@
-import { DataTable } from "@ad-voice/ui";
+import { Playground, U, expr, jsx } from "../../../dev/exampleHelpers";
+import type { DataTableColumn } from "@ad-voice/ui";
+
+type Track = {
+  id: string;
+  title: string;
+  artist: string;
+  seconds: number;
+  plays: number;
+  status: "ready" | "processing" | "error";
+};
+
+const tracks: Track[] = [
+  ["Ночь горит огнями", "Аура", 214, 1840, "ready"],
+  ["Сквозь бетон", "Норд", 187, 920, "ready"],
+  ["Рубиновый рассвет", "Мия", 242, 3110, "processing"],
+  ["Шёпот волн", "Аура", 199, 640, "ready"],
+  ["Город без сна", "Кай", 228, 2405, "error"],
+  ["Лёд и пламя", "Мия", 176, 1290, "ready"],
+  ["Последний трамвай", "Норд", 205, 455, "processing"],
+  ["Неон", "Кай", 231, 5020, "ready"],
+].map(([title, artist, seconds, plays, status], i) => ({
+  id: `t${i}`,
+  title,
+  artist,
+  seconds,
+  plays,
+  status,
+})) as Track[];
+
+const statuses = {
+  ready: ["Готово", "success"],
+  processing: ["Обработка", "processing"],
+  error: ["Ошибка", "error"],
+} as const;
+
+const columns: DataTableColumn<Track>[] = [
+  { key: "title", title: "Трек" },
+  { key: "artist", title: "Исполнитель" },
+  {
+    key: "seconds",
+    title: "Длина",
+    align: "end",
+    render: (t) =>
+      `${Math.floor(t.seconds / 60)}:${String(t.seconds % 60).padStart(2, "0")}`,
+  },
+  {
+    key: "plays",
+    title: "Прослушивания",
+    align: "end",
+    render: (t) => t.plays.toLocaleString("ru-RU"),
+  },
+  {
+    key: "status",
+    title: "Статус",
+    value: (t) => statuses[t.status][0],
+    render: (t) => (
+      <U.Badge size="sm" tone={statuses[t.status][1]}>
+        {statuses[t.status][0]}
+      </U.Badge>
+    ),
+  },
+];
 
 export default function DataTableExample() {
   return (
-    <DataTable
-      caption="История обработки"
-      columns={["Время", "Событие", "Статус"]}
-      rows={[
-        ["13:24", "Анализ завершён", "Готово"],
-        ["13:23", "Запись загружена", "Готово"],
-        ["13:21", "Выступление начато", "Готово"],
-      ]}
-    />
+    <Playground
+      stretch
+      knobs={{
+        selectable: { value: true },
+        searchable: { value: true },
+        dense: { value: false },
+        striped: { value: false },
+        loading: { value: false },
+      }}
+      code={(v) =>
+        jsx("DataTable", {
+          caption: "Треки",
+          columns: expr("columns"),
+          rows: expr("tracks"),
+          rowKey: expr("(t) => t.id"),
+          defaultSort: expr('{ key: "plays", direction: "desc" }'),
+          pageSize: 4,
+          selectable: v.selectable,
+          searchable: v.searchable,
+          dense: v.dense,
+          striped: v.striped,
+          loading: v.loading,
+        })
+      }
+    >
+      {(v) => (
+        <U.DataTable
+          style={{ width: "min(100%, 48rem)" }}
+          caption="Треки"
+          columns={columns}
+          rows={tracks}
+          rowKey={(t) => t.id}
+          defaultSort={{ key: "plays", direction: "desc" }}
+          pageSize={4}
+          selectable={v.selectable}
+          searchable={v.searchable}
+          dense={v.dense}
+          striped={v.striped}
+          loading={v.loading}
+        />
+      )}
+    </Playground>
   );
 }

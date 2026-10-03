@@ -16,29 +16,29 @@
   background:
     radial-gradient(
         120% 92% at 50% -12%,
-        #8f28443b 0%,
-        #5a183028 25%,
+        rgb(from var(--ad-primary-600) r g b / 0.23) 0%,
+        rgb(from var(--ad-primary-800) r g b / 0.16) 25%,
         transparent 57%
       )
       padding-box,
-    radial-gradient(90% 120% at 0 100%, #55132820 0%, transparent 65%)
+    radial-gradient(90% 120% at 0 100%, rgb(from var(--ad-primary-800) r g b / 0.13) 0%, transparent 65%)
       padding-box,
-    linear-gradient(145deg, #1a1019ed, #0b090fef 56%, #140a12ed) padding-box,
+    linear-gradient(145deg, rgb(from var(--ad-neutral-850) r g b / 0.93), rgb(from var(--ad-neutral-900) r g b / 0.94) 56%, rgb(from var(--ad-neutral-850) r g b / 0.93)) padding-box,
     linear-gradient(
         140deg,
-        #ffabc0b8 0%,
-        #d153788d 14%,
-        #7a2c4857 40%,
-        #ff628ba0 76%,
-        #7a294957 100%
+        rgb(from var(--ad-secondary-200) r g b / 0.72) 0%,
+        rgb(from var(--ad-primary) r g b / 0.55) 14%,
+        rgb(from var(--ad-primary-700) r g b / 0.34) 40%,
+        rgb(from var(--ad-secondary) r g b / 0.63) 76%,
+        rgb(from var(--ad-primary-700) r g b / 0.34) 100%
       )
       border-box;
   box-shadow:
-    inset 0 0.0625rem 0.125rem #fff0f04a,
-    inset 0 0 1.2rem #ff31591a,
+    inset 0 0.0625rem 0.125rem rgb(from var(--ad-neutral-200) r g b / 0.29),
+    inset 0 0 1.2rem rgb(from var(--ad-primary) r g b / 0.1),
     0 0.9rem 2.8rem #000c,
-    0 0 1.35rem #ff29543b,
-    0 0 3rem #ff1c4d18;
+    0 0 1.35rem rgb(from var(--ad-primary) r g b / 0.23),
+    0 0 3rem rgb(from var(--ad-primary) r g b / 0.09);
   transform-origin: var(--ad-popover-anchor-x, 50%) top;
   animation: ad-menu-enter 0.19s cubic-bezier(0.18, 0.82, 0.28, 1) both;
 }
@@ -65,11 +65,11 @@
   );
   top: calc(var(--ad-menu-caret-size) * -0.49);
   transform: rotate(45deg);
-  border-left: 0.0625rem solid #e976988f;
-  border-top: 0.0625rem solid #ffb6c8b0;
+  border-left: 0.0625rem solid rgb(from var(--ad-secondary) r g b / 0.56);
+  border-top: 0.0625rem solid rgb(from var(--ad-secondary-200) r g b / 0.69);
   border-radius: 0.15rem 0 0 0;
-  background: linear-gradient(135deg, #3a1627, #170d16 66%);
-  box-shadow: -0.18rem -0.18rem 0.65rem #ff31573a;
+  background: linear-gradient(135deg, var(--ad-primary-800), var(--ad-neutral-850) 66%);
+  box-shadow: -0.18rem -0.18rem 0.65rem rgb(from var(--ad-primary) r g b / 0.23);
 }
 .ad.ad-menu[data-ad-side="above"] {
   transform-origin: var(--ad-popover-anchor-x, 50%) bottom;
@@ -86,9 +86,9 @@
   background: linear-gradient(
     90deg,
     transparent,
-    #b7728b2c 14%,
-    #d890a93b 50%,
-    #b7728b2c 86%,
+    rgb(from var(--ad-primary) r g b / 0.17) 14%,
+    rgb(from var(--ad-secondary) r g b / 0.23) 50%,
+    rgb(from var(--ad-primary) r g b / 0.17) 86%,
     transparent
   );
 }

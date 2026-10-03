@@ -12,8 +12,8 @@
         135deg,
         var(--ad-btn-border-a),
         var(--ad-btn-border-b) 48%,
-        #ff6b8c8a 78%,
-        #5d18304f
+        rgb(from var(--ad-secondary) r g b / 0.54) 78%,
+        rgb(from var(--ad-primary-700) r g b / 0.31)
       )
       border-box;
   box-shadow:
@@ -21,7 +21,7 @@
     inset 0 -0.42rem 0.95rem var(--ad-btn-bottom),
     0 0.32rem 0.75rem #0008,
     0 0 1.15rem var(--ad-btn-glow);
-  color: #fff9fc;
+  color: var(--ad-neutral-200);
   filter: none;
 }
 .ad-toggle-button[aria-pressed="false"] {
@@ -39,7 +39,7 @@
 @keyframes ad-toggle-pop {
   40% {
     scale: 1.08;
-    box-shadow: 0 0 1.6rem #ff3a68aa;
+    box-shadow: 0 0 1.6rem rgb(from var(--ad-primary) r g b / 0.67);
   }
 }
 @keyframes ad-toggle-icon {

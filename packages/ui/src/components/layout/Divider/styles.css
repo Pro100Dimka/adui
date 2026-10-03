@@ -6,8 +6,8 @@
   background: linear-gradient(
     90deg,
     transparent,
-    #9f627756 15%,
-    #9f627756 85%,
+    rgb(from var(--ad-primary-600) r g b / 0.34) 15%,
+    rgb(from var(--ad-primary-600) r g b / 0.34) 85%,
     transparent
   );
 }
@@ -28,8 +28,8 @@
   background: linear-gradient(
       90deg,
       transparent,
-      #ffd3df,
-      #ff2f6a,
+      var(--ad-secondary-100),
+      var(--ad-primary),
       transparent
     ) -40%
     0 / 40% 100% no-repeat;
@@ -39,8 +39,8 @@
   background: linear-gradient(
       180deg,
       transparent,
-      #ffd3df,
-      #ff2f6a,
+      var(--ad-secondary-100),
+      var(--ad-primary),
       transparent
     )
     0 -40% / 100% 40% no-repeat;

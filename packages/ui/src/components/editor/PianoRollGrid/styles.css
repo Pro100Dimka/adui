@@ -20,7 +20,10 @@
 .ad-piano-roll-zoom > .ad-icon {
   --ad-icon-size: 1rem;
 }
+/* The ruler, key names and lyrics are labels of the editor, not text to select. */
 .ad-piano-roll-stage {
+  user-select: none;
+  -webkit-user-select: none;
   --ad-roll-row: clamp(1.25rem, 2.4dvh, 1.75rem);
   --ad-roll-keys: 3.5rem;
   --ad-roll-beat: calc(3rem * var(--ad-editor-zoom, 1));
@@ -28,17 +31,17 @@
   display: grid;
   grid-template-columns: var(--ad-roll-keys) auto;
   overflow: auto;
-  border: 0.0625rem solid #ff577440;
+  border: 0.0625rem solid rgb(from var(--ad-primary) r g b / 0.25);
   border-radius: var(--ad-radius);
-  background: #07060a;
+  background: var(--ad-neutral-900);
   scrollbar-width: thin;
-  scrollbar-color: #683046 transparent;
+  scrollbar-color: var(--ad-primary-700) transparent;
 }
 .ad-piano-roll-corner {
   position: sticky;
   left: 0;
   z-index: 3;
-  background: #0b090e;
+  background: var(--ad-neutral-900);
   border-right: 0.0625rem solid #ffffff14;
 }
 
@@ -48,7 +51,7 @@
   height: 1.6rem;
   min-width: calc(42rem * var(--ad-editor-zoom, 1));
   border-bottom: 0.0625rem solid #ffffff14;
-  background: linear-gradient(180deg, #120d13, #0b090e);
+  background: linear-gradient(180deg, var(--ad-neutral-850), var(--ad-neutral-900));
   cursor: pointer;
 }
 .ad-piano-roll-ruler > span {
@@ -63,8 +66,8 @@
 }
 .ad-piano-roll-ruler > span[data-bar] {
   height: 0.9rem;
-  border-left-color: #ff8aa688;
-  color: #f1e6ec;
+  border-left-color: rgb(from var(--ad-secondary) r g b / 0.53);
+  color: var(--ad-neutral-200);
   font-weight: 700;
 }
 .ad-piano-roll-head-mark {
@@ -75,7 +78,7 @@
   translate: -50% 0;
   border: 0.4rem solid transparent;
   border-top: 0.5rem solid #fff;
-  filter: drop-shadow(0 0 0.3rem #ff4a7a);
+  filter: drop-shadow(0 0 0.3rem var(--ad-primary));
 }
 
 /* Piano keys: white keys light, black keys short and glossy. */
@@ -85,7 +88,7 @@
   z-index: 2;
   display: grid;
   grid-template-rows: repeat(var(--ad-roll-rows), var(--ad-roll-row));
-  background: #0b090e;
+  background: var(--ad-neutral-900);
   border-right: 0.0625rem solid #ffffff1f;
   box-shadow: 0.4rem 0 1rem #0008;
 }
@@ -96,15 +99,15 @@
   padding-right: 0.4rem;
   font-size: 0.625rem;
   font-weight: 600;
-  color: #6d5f6b;
-  background: linear-gradient(90deg, #d8cfd6 0 40%, #efe7ec 85%, #c9bec6);
+  color: var(--ad-neutral-600);
+  background: linear-gradient(90deg, var(--ad-neutral-300) 0 40%, var(--ad-neutral-200) 85%, var(--ad-neutral-300));
   border-bottom: 0.0625rem solid #00000055;
 }
 .ad-piano-roll-keyboard > span[data-sharp] {
   color: transparent;
   background:
-    linear-gradient(90deg, #1b151c 0 62%, transparent 62%),
-    linear-gradient(90deg, #d8cfd6 0 40%, #efe7ec 85%, #c9bec6);
+    linear-gradient(90deg, var(--ad-neutral-800) 0 62%, transparent 62%),
+    linear-gradient(90deg, var(--ad-neutral-300) 0 40%, var(--ad-neutral-200) 85%, var(--ad-neutral-300));
   box-shadow: inset 0 0.0625rem 0 #ffffff22;
 }
 
@@ -116,7 +119,7 @@
   background:
     repeating-linear-gradient(
       90deg,
-      #ff8aa626 0 0.0625rem,
+      rgb(from var(--ad-secondary) r g b / 0.15) 0 0.0625rem,
       transparent 0.0625rem calc(var(--ad-roll-beat) * 4)
     ),
     repeating-linear-gradient(
@@ -154,9 +157,9 @@
   border-radius: 999rem;
   background:
     linear-gradient(180deg, #ffffff66, #ffffff00 50%),
-    linear-gradient(90deg, #ff2f6a, #f243dd 70%, #eb96ff);
+    linear-gradient(90deg, var(--ad-primary), var(--ad-primary) 70%, var(--ad-secondary-200));
   box-shadow:
-    0 0 0.5rem #ff2b7066,
+    0 0 0.5rem rgb(from var(--ad-primary) r g b / 0.4),
     inset 0 -0.0625rem 0 #0004;
   transition:
     box-shadow 0.2s,
@@ -165,7 +168,7 @@
 }
 .ad-note:hover::before {
   filter: brightness(1.15);
-  box-shadow: 0 0 0.8rem #ff2b70aa;
+  box-shadow: 0 0 0.8rem rgb(from var(--ad-primary) r g b / 0.67);
 }
 .ad-note:active {
   cursor: grabbing;
@@ -173,14 +176,14 @@
 .ad-note[data-picked]::before {
   box-shadow:
     0 0 0 0.125rem #fff,
-    0 0 1rem #ff4a7a;
+    0 0 1rem var(--ad-primary);
 }
 .ad-note[data-active]::before {
   scale: 1 1.25;
   filter: brightness(1.35);
   box-shadow:
-    0 0 1.2rem #ff4a7a,
-    0 0 2.4rem #f243dd88;
+    0 0 1.2rem var(--ad-primary),
+    0 0 2.4rem rgb(from var(--ad-primary) r g b / 0.53);
 }
 .ad-note:focus-visible {
   outline: 0.125rem solid #fff;
@@ -194,10 +197,10 @@
   bottom: 0;
   width: 0.125rem;
   translate: -50% 0;
-  background: linear-gradient(#fff, #ffd3df);
+  background: linear-gradient(#fff, var(--ad-secondary-100));
   box-shadow:
-    0 0 0.5rem #ff486c,
-    0 0 1.5rem #ff486c66;
+    0 0 0.5rem var(--ad-primary),
+    0 0 1.5rem rgb(from var(--ad-primary) r g b / 0.4);
   pointer-events: none;
 }
 .ad-piano-roll-grid[data-playing] .ad-playhead {
@@ -205,9 +208,9 @@
 }
 .ad-selection {
   position: absolute;
-  border: 0.0625rem dashed #ff86a4;
+  border: 0.0625rem dashed var(--ad-secondary);
   border-radius: 0.25rem;
-  background: #ff4b7219;
+  background: rgb(from var(--ad-primary) r g b / 0.1);
   pointer-events: none;
 }
 
@@ -224,7 +227,7 @@
   translate: 0 -50%;
   font-size: var(--ad-font-size-body-sm);
   font-weight: 600;
-  color: #8f8496;
+  color: var(--ad-neutral-500);
   white-space: nowrap;
   transition:
     color 0.2s,
@@ -232,19 +235,19 @@
     scale 0.25s cubic-bezier(0.34, 1.56, 0.5, 1);
 }
 .ad-lyrics-lane > span[data-sung] {
-  color: #ff8aa6;
+  color: var(--ad-secondary);
 }
 .ad-lyrics-lane > span[data-active] {
   color: #fff;
   scale: 1.15;
   text-shadow:
-    0 0 0.5rem #ff4a7a,
-    0 0 1rem #ff4a7a;
+    0 0 0.5rem var(--ad-primary),
+    0 0 1rem var(--ad-primary);
 }
 @keyframes ad-roll-head {
   to {
     box-shadow:
-      0 0 0.9rem #ff486c,
-      0 0 2.2rem #ff486caa;
+      0 0 0.9rem var(--ad-primary),
+      0 0 2.2rem rgb(from var(--ad-primary) r g b / 0.67);
   }
 }

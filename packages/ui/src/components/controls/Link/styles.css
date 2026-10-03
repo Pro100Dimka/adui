@@ -19,7 +19,7 @@
 }
 /* The underline grows from the left instead of snapping in. */
 .ad-link[data-ad-underline="hover"] {
-  background: linear-gradient(90deg, var(--ad-pink), #ffd3df) 0 100% / 0
+  background: linear-gradient(90deg, var(--ad-pink), var(--ad-secondary-100)) 0 100% / 0
     0.0625rem no-repeat;
   transition:
     color 0.2s,
@@ -41,7 +41,7 @@
   color: var(--ad-pink);
 }
 .ad-link:focus-visible {
-  outline: 0.125rem solid #ffd7e2;
+  outline: 0.125rem solid var(--ad-secondary-100);
   outline-offset: 0.18rem;
 }
 .ad-link > .ad-icon {

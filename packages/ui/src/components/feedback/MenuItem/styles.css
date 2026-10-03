@@ -1,6 +1,6 @@
 /* Menu row: plain icon and label, a soft highlight on hover or keyboard focus. */
 .ad-menu-item {
-  --ad-menu-item-tone: #eadde5;
+  --ad-menu-item-tone: var(--ad-neutral-200);
   appearance: none;
   inline-size: 100%;
   min-inline-size: 0;
@@ -41,7 +41,7 @@
 .ad-menu-item-end {
   display: grid;
   place-items: center;
-  color: #b9a7b5;
+  color: var(--ad-neutral-400);
 }
 .ad-menu-item-icon > .ad-icon {
   --ad-icon-size: 1.15rem;
@@ -59,13 +59,13 @@
   --ad-icon-size: 1rem;
 }
 .ad-menu-item[data-ad-tone="error"] {
-  --ad-menu-item-tone: #ff8aa6;
+  --ad-menu-item-tone: var(--ad-secondary);
 }
 .ad-menu-item[data-ad-tone="error"] .ad-menu-item-icon {
-  color: #ff8aa6;
+  color: var(--ad-secondary);
 }
 .ad-menu-item[data-ad-tone="error"]:hover:not(:disabled),
 .ad-menu-item[data-ad-tone="error"]:focus-visible {
-  background: #ff3b6522;
-  color: #ffb3c4;
+  background: rgb(from var(--ad-primary) r g b / 0.13);
+  color: var(--ad-secondary-200);
 }

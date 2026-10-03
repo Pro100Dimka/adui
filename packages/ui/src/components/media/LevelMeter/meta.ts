@@ -1,5 +1,5 @@
 export default {
   name: "LevelMeter",
-  description: "Сегментированный индикатор уровня",
+  description: "Живой уровень сигнала: бегущая зеркальная волна, слушает микрофон сам",
   category: "audio",
 } as const;

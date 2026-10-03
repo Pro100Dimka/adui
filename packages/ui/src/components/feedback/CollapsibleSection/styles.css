@@ -5,7 +5,7 @@
   transition: box-shadow 0.35s;
 }
 .ad-collapsible-section[open] {
-  box-shadow: 0 0 1.2rem #ff2f6a22;
+  box-shadow: 0 0 1.2rem rgb(from var(--ad-primary) r g b / 0.13);
 }
 .ad-collapsible-section summary {
   position: relative;

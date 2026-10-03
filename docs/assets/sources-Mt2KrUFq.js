@@ -35,34 +35,34 @@ export function DatabaseArt({ label, ...p }: DatabaseArtProps) {
           <feGaussianBlur stdDeviation="3" />
         </filter>
         <linearGradient id={\`\${id}-body\`}>
-          <stop stopColor="#9a1636" />
-          <stop offset=".12" stopColor="#3b0313" />
-          <stop offset=".3" stopColor="#19050d" />
-          <stop offset=".72" stopColor="#090408" />
-          <stop offset="1" stopColor="#5e071e" />
+          <stop stopColor="var(--ad-primary-600)" />
+          <stop offset=".12" stopColor="var(--ad-primary-800)" />
+          <stop offset=".3" stopColor="var(--ad-primary-900)" />
+          <stop offset=".72" stopColor="var(--ad-neutral-950)" />
+          <stop offset="1" stopColor="var(--ad-primary-800)" />
         </linearGradient>
         <radialGradient id={\`\${id}-top\`} cx=".3" cy=".27" r=".9">
-          <stop stopColor="#a72649" />
-          <stop offset=".23" stopColor="#38111d" />
-          <stop offset=".66" stopColor="#10040a" />
-          <stop offset="1" stopColor="#290610" />
+          <stop stopColor="var(--ad-primary-600)" />
+          <stop offset=".23" stopColor="var(--ad-primary-800)" />
+          <stop offset=".66" stopColor="var(--ad-neutral-900)" />
+          <stop offset="1" stopColor="var(--ad-primary-900)" />
         </radialGradient>
         <linearGradient id={\`\${id}-edge\`}>
-          <stop stopColor="#fff1e9" />
-          <stop offset=".16" stopColor="#ff6388" />
-          <stop offset=".47" stopColor="#8b0730" />
-          <stop offset=".8" stopColor="#ff285f" />
-          <stop offset="1" stopColor="#ffabbc" />
+          <stop stopColor="var(--ad-neutral-200)" />
+          <stop offset=".16" stopColor="var(--ad-secondary)" />
+          <stop offset=".47" stopColor="var(--ad-primary-700)" />
+          <stop offset=".8" stopColor="var(--ad-primary)" />
+          <stop offset="1" stopColor="var(--ad-secondary-200)" />
         </linearGradient>
         <radialGradient id={\`\${id}-aura\`}>
-          <stop stopColor="#fd1746" stopOpacity=".3" />
-          <stop offset=".5" stopColor="#ff083c" stopOpacity=".12" />
-          <stop offset="1" stopColor="#ff083c" stopOpacity="0" />
+          <stop stopColor="var(--ad-primary)" stopOpacity=".3" />
+          <stop offset=".5" stopColor="var(--ad-primary)" stopOpacity=".12" />
+          <stop offset="1" stopColor="var(--ad-primary)" stopOpacity="0" />
         </radialGradient>
         <g id={\`\${id}-spark\`}>
-          <path d="M-7 0H7M0-8V8" stroke="#ffafbc" strokeWidth=".7" />
-          <circle r="3.4" fill="#ff4264" filter={ref("bloom")} />
-          <circle r="1.4" fill="#fff1eb" />
+          <path d="M-7 0H7M0-8V8" stroke="var(--ad-secondary-200)" strokeWidth=".7" />
+          <circle r="3.4" fill="var(--ad-primary)" filter={ref("bloom")} />
+          <circle r="1.4" fill="var(--ad-neutral-200)" />
         </g>
       </defs>
       <ellipse
@@ -77,12 +77,12 @@ export function DatabaseArt({ label, ...p }: DatabaseArtProps) {
         <path
           d="M39 57V133C39 156 134 156 134 133V57Z"
           fill={ref("body")}
-          stroke="#ff345b"
+          stroke="var(--ad-primary)"
           strokeWidth=".75"
         />
         <path
           d={rings}
-          stroke="#ff335d"
+          stroke="var(--ad-primary)"
           strokeWidth="3.5"
           opacity=".7"
           filter={ref("bloom")}
@@ -94,7 +94,7 @@ export function DatabaseArt({ label, ...p }: DatabaseArtProps) {
           rx="47.5"
           ry="17"
           fill={ref("top")}
-          stroke="#ff426b"
+          stroke="var(--ad-primary)"
           strokeWidth="1.1"
         />
         <ellipse
@@ -102,7 +102,7 @@ export function DatabaseArt({ label, ...p }: DatabaseArtProps) {
           cy="57"
           rx="47.5"
           ry="17"
-          stroke="#ff2b57"
+          stroke="var(--ad-primary)"
           strokeWidth="5"
           opacity=".75"
           filter={ref("bloom")}
@@ -123,12 +123,12 @@ export function DatabaseArt({ label, ...p }: DatabaseArtProps) {
             cy={cy}
             rx="47.5"
             ry="17"
-            stroke="#e4264f"
+            stroke="var(--ad-primary)"
             strokeWidth=".7"
             opacity=".75"
           />
         ))}
-        <g stroke="#ffe7ed" strokeWidth="1.45">
+        <g stroke="var(--ad-neutral-200)" strokeWidth="1.45">
           {[57, 106, 132].map((cy, i) => (
             <ellipse
               key={cy}
@@ -147,10 +147,10 @@ export function DatabaseArt({ label, ...p }: DatabaseArtProps) {
           cy="53.5"
           rx="5"
           ry="1.6"
-          fill="#ff577b"
+          fill="var(--ad-primary)"
           filter={ref("bloom")}
         />
-        <ellipse cx="86.5" cy="53.5" rx="3.4" ry=".8" fill="#ffb5c3" />
+        <ellipse cx="86.5" cy="53.5" rx="3.4" ry=".8" fill="var(--ad-secondary-200)" />
       </g>
       {SPARKS.map(([x, y, scale, delay]) => (
         <g
@@ -167,12 +167,12 @@ export function DatabaseArt({ label, ...p }: DatabaseArtProps) {
     </svg>
   );
 }
-`,p=`import { DatabaseArt } from "@ad-voice/ui";
+`,d=`import { DatabaseArt } from "@ad-voice/ui";
 
 export default function DatabaseArtExample() {
   return <DatabaseArt label="Хранилище записей" />;
 }
-`,d=`export default {\r
+`,p=`export default {\r
   name: "DatabaseArt",\r
   description:\r
     "Неоновая база данных с бегущими орбитами и искрами — для хранилища и данных.",\r
@@ -534,11 +534,11 @@ export function NeonWaves({
     >
       <defs>
         <linearGradient id={\`\${id}-strand\`}>
-          <stop stopColor="#6d112b" stopOpacity="0" />
-          <stop offset=".16" stopColor="#af153d" stopOpacity=".35" />
+          <stop stopColor="var(--ad-primary-700)" stopOpacity="0" />
+          <stop offset=".16" stopColor="var(--ad-primary-600)" stopOpacity=".35" />
           <stop offset=".57" stopColor="var(--ad-red)" stopOpacity=".74" />
           <stop offset=".78" stopColor="var(--ad-pink)" stopOpacity=".85" />
-          <stop offset="1" stopColor="#d91b43" stopOpacity=".44" />
+          <stop offset="1" stopColor="var(--ad-primary-600)" stopOpacity=".44" />
         </linearGradient>
       </defs>
       {Array.from({ length: strands }, (_, i) => (
@@ -586,14 +586,14 @@ export default function NeonWavesExample() {
     </Playground>
   );
 }
-`,b=`export default {\r
+`,h=`export default {\r
   name: "NeonWaves",\r
   description:\r
     "Пучок текущих неоновых нитей со звёздами — живой фон карточек и шапок.",\r
   category: "motion",\r
   wide: true,\r
 } as const;\r
-`,h=`import { useRef } from "react";
+`,b=`import { useRef } from "react";
 import { mark, type CommonProps } from "../../../core/base";
 import { clamp01, fbm, noise, type Painting } from "../../../core/noise";
 import { useArtwork } from "../useArtwork";
@@ -664,12 +664,12 @@ export function Planet({ children, ...p }: PlanetProps) {
     </div>
   );
 }
-`,x=`import { Planet } from "@ad-voice/ui";
+`,y=`import { Planet } from "@ad-voice/ui";
 
 export default function PlanetExample() {
   return <Planet />;
 }
-`,y=`export default {\r
+`,x=`export default {\r
   name: "Planet",\r
   description:\r
     "Кромка планеты в рубиновой атмосфере — фон для баннеров и слоганов.",\r
@@ -701,33 +701,33 @@ export function ServerArt({ upload = false, label, ...p }: ServerArtProps) {
     >
       <defs>
         <linearGradient id={\`\${id}-front\`} x1="0" y1="0" x2="1" y2="1">
-          <stop stopColor="#592034" />
-          <stop offset=".22" stopColor="#1b0611" />
-          <stop offset=".72" stopColor="#0d040b" />
-          <stop offset="1" stopColor="#360a1d" />
+          <stop stopColor="var(--ad-primary-700)" />
+          <stop offset=".22" stopColor="var(--ad-primary-900)" />
+          <stop offset=".72" stopColor="var(--ad-neutral-900)" />
+          <stop offset="1" stopColor="var(--ad-primary-800)" />
         </linearGradient>
         <linearGradient id={\`\${id}-side\`} x1="0" y1="0" x2=".9" y2="1">
-          <stop stopColor="#481023" />
-          <stop offset=".27" stopColor="#14040d" />
-          <stop offset="1" stopColor="#020208" />
+          <stop stopColor="var(--ad-primary-800)" />
+          <stop offset=".27" stopColor="var(--ad-primary-900)" />
+          <stop offset="1" stopColor="var(--ad-neutral-950)" />
         </linearGradient>
         <linearGradient id={\`\${id}-top\`} x1="0" y1="0" x2=".7" y2="1">
-          <stop stopColor="#ffa0c2" />
-          <stop offset=".23" stopColor="#b1375f" />
-          <stop offset=".57" stopColor="#481029" />
-          <stop offset="1" stopColor="#16060f" />
+          <stop stopColor="var(--ad-secondary-200)" />
+          <stop offset=".23" stopColor="var(--ad-primary-600)" />
+          <stop offset=".57" stopColor="var(--ad-primary-800)" />
+          <stop offset="1" stopColor="var(--ad-neutral-900)" />
         </linearGradient>
         <linearGradient id={\`\${id}-edge\`} x1="0" y1="0" x2="1" y2="1">
-          <stop stopColor="#ffb0d3" />
-          <stop offset=".29" stopColor="#c94367" />
-          <stop offset=".52" stopColor="#6d1530" />
-          <stop offset=".8" stopColor="#fc2451" />
-          <stop offset="1" stopColor="#79213a" />
+          <stop stopColor="var(--ad-secondary-200)" />
+          <stop offset=".29" stopColor="var(--ad-primary)" />
+          <stop offset=".52" stopColor="var(--ad-primary-700)" />
+          <stop offset=".8" stopColor="var(--ad-primary)" />
+          <stop offset="1" stopColor="var(--ad-primary-700)" />
         </linearGradient>
         <radialGradient id={\`\${id}-aura\`}>
-          <stop stopColor="#ff234d" stopOpacity=".28" />
-          <stop offset=".6" stopColor="#ff1238" stopOpacity=".06" />
-          <stop offset="1" stopColor="#ff1238" stopOpacity="0" />
+          <stop stopColor="var(--ad-primary)" stopOpacity=".28" />
+          <stop offset=".6" stopColor="var(--ad-primary)" stopOpacity=".06" />
+          <stop offset="1" stopColor="var(--ad-primary)" stopOpacity="0" />
         </radialGradient>
         <filter id={\`\${id}-bloom\`} x="-35%" y="-35%" width="170%" height="170%">
           <feGaussianBlur stdDeviation="2.4" />
@@ -737,12 +737,12 @@ export function ServerArt({ upload = false, label, ...p }: ServerArtProps) {
         <g className="ad-server-cloud">
           <path
             d="M57 40C37 42 40 16 58 20 63-5 96-4 102 18 120 13 132 32 117 42Z"
-            fill="#260815"
-            stroke="#ff7a9b"
+            fill="var(--ad-primary-900)"
+            stroke="var(--ad-secondary)"
             strokeOpacity=".65"
             strokeWidth=".7"
           />
-          <path d="M80 37V18m-7 7 7-7 7 7" stroke="#ed6b91" strokeWidth="1.5" />
+          <path d="M80 37V18m-7 7 7-7 7 7" stroke="var(--ad-secondary)" strokeWidth="1.5" />
         </g>
       )}
       <g transform={upload ? "translate(0 15)" : undefined}>
@@ -763,7 +763,7 @@ export function ServerArt({ upload = false, label, ...p }: ServerArtProps) {
         <path
           d="M98 29 150 45 150 119 98 107Z"
           fill={url("side")}
-          stroke="#741932"
+          stroke="var(--ad-primary-700)"
           strokeWidth=".7"
         />
         <path
@@ -774,8 +774,8 @@ export function ServerArt({ upload = false, label, ...p }: ServerArtProps) {
         />
         <path
           d="M29 46 94 33 94 105 29 117Z"
-          fill="#0d050d"
-          stroke="#9d3654"
+          fill="var(--ad-neutral-900)"
+          stroke="var(--ad-primary-600)"
           strokeOpacity=".45"
           strokeWidth=".65"
         />
@@ -783,14 +783,14 @@ export function ServerArt({ upload = false, label, ...p }: ServerArtProps) {
           <g key={row}>
             <path
               d={\`M33 \${50 + row * 3.35} 90 \${38.8 + row * 3.35}\`}
-              stroke="#7e2844"
+              stroke="var(--ad-primary-700)"
               strokeOpacity=".58"
             />
             {Array.from({ length: 9 }, (__, col) => (
               <path
                 key={col}
                 d={\`M\${34 + col * 6.15} \${49.8 + row * 3.35 - col * 1.205}l2.6-.51\`}
-                stroke="#01040a"
+                stroke="var(--ad-neutral-950)"
                 strokeWidth="1.65"
               />
             ))}
@@ -798,18 +798,18 @@ export function ServerArt({ upload = false, label, ...p }: ServerArtProps) {
         ))}
         <path
           d="M27 44 98 30 147 45"
-          stroke="#ffc0d5"
+          stroke="var(--ad-secondary-200)"
           strokeWidth="3"
           opacity=".35"
           filter={url("bloom")}
         />
-        <path d="M27 44 98 30 147 45" stroke="#ffc0d5" strokeWidth=".75" />
+        <path d="M27 44 98 30 147 45" stroke="var(--ad-secondary-200)" strokeWidth=".75" />
         {Array.from({ length: 8 }, (_, i) => (
           <g key={i}>
             <path
               d={\`M107 \${52 + i * 7.5}l34 9v4l-34-9Z\`}
-              fill="#040309"
-              stroke="#34101f"
+              fill="var(--ad-neutral-950)"
+              stroke="var(--ad-primary-800)"
               strokeWidth=".55"
             />
             <path
@@ -822,8 +822,8 @@ export function ServerArt({ upload = false, label, ...p }: ServerArtProps) {
         ))}
         <path
           d="M31 108 93 96v8l-62 12Z"
-          fill="#17050e"
-          stroke="#5b1a2b"
+          fill="var(--ad-primary-900)"
+          stroke="var(--ad-primary-700)"
           strokeWidth=".55"
         />
         <path d="M35 110l20-4" className="ad-server-glow" strokeWidth="1.1" />
@@ -836,18 +836,18 @@ export function ServerArt({ upload = false, label, ...p }: ServerArtProps) {
         <path
           d="M26 125 98 112 150 126v14l-73 10-51-10Z"
           fill={url("side")}
-          stroke="#65142f"
+          stroke="var(--ad-primary-700)"
           strokeWidth=".6"
         />
         <path
           d="M26 125 98 112v15l-72 13Z"
           fill={url("front")}
-          stroke="#9d2f4a"
+          stroke="var(--ad-primary-600)"
           strokeWidth=".65"
         />
         <path
           d="M33 130 83 121m-50 13 41-7"
-          stroke="#78273f"
+          stroke="var(--ad-primary-700)"
           strokeWidth=".8"
         />
         <circle
@@ -859,8 +859,8 @@ export function ServerArt({ upload = false, label, ...p }: ServerArtProps) {
         />
       </g>
       <g className="ad-art-spark">
-        <path d="M114 27h14m-7-10v20" stroke="#ffc6d5" strokeWidth=".65" />
-        <circle cx="121" cy="27" r="2.6" fill="#fff6eb" />
+        <path d="M114 27h14m-7-10v20" stroke="var(--ad-secondary-100)" strokeWidth=".65" />
+        <circle cx="121" cy="27" r="2.6" fill="var(--ad-neutral-200)" />
       </g>
     </svg>
   );
@@ -879,7 +879,7 @@ export default function ServerArtExample() {
     </Playground>
   );
 }
-`,P=`export default {\r
+`,w=`export default {\r
   name: "ServerArt",\r
   description:\r
     "Неоновая серверная стойка с мигающими светодиодами — для сервисов и развёртывания.",\r
@@ -970,9 +970,9 @@ export function Spectrum({ variant = "segmented", ...p }: SpectrumProps) {
         <>
           <defs>
             <linearGradient id={\`\${id}-bar\`} x1="0" x2="0" y1="0" y2="1">
-              <stop stopColor="#ffa7b9" />
+              <stop stopColor="var(--ad-secondary-200)" />
               <stop offset=".24" stopColor="var(--ad-red)" />
-              <stop offset="1" stopColor="#b40733" stopOpacity="0" />
+              <stop offset="1" stopColor="var(--ad-primary-600)" stopOpacity="0" />
             </linearGradient>
           </defs>
           {Array.from({ length: BARS }, (_, i) => (
@@ -993,7 +993,7 @@ export function Spectrum({ variant = "segmented", ...p }: SpectrumProps) {
     </svg>
   );
 }
-`,w=`import { Playground, U, jsx } from "../../../dev/exampleHelpers";
+`,P=`import { Playground, U, jsx } from "../../../dev/exampleHelpers";
 
 export default function SpectrumExample() {
   return (
@@ -1390,12 +1390,12 @@ export default function CheckboxExample() {\r
     </Playground>\r
   );\r
 }\r
-`,F=`export default {\r
+`,L=`export default {\r
   name: "Checkbox",\r
   description: "Отметка параметра или согласия",\r
   category: "fields",\r
 } as const;\r
-`,L=`import { useRef, useState } from "react";\r
+`,F=`import { useRef, useState } from "react";\r
 import { mark } from "../../../core/base";\r
 import { Button } from "../Button/Button";\r
 import type { FilePickerProps } from "../shared";\r
@@ -1480,7 +1480,7 @@ export const IconButton = (p: IconButtonProps) =>\r
     },\r
     "IconButton",\r
   );\r
-`,O=`import {\r
+`,$=`import {\r
   Playground,\r
   U,\r
   buttonVariants,\r
@@ -1528,12 +1528,12 @@ export default function IconButtonExample() {\r
     </Playground>\r
   );\r
 }\r
-`,$=`export default {\r
+`,O=`export default {\r
   name: "IconButton",\r
   description: "Компактная кнопка с одной иконкой",\r
   category: "buttons",\r
 } as const;\r
-`,G=`import type { MouseEventHandler, ReactNode, Ref } from "react";\r
+`,U=`import type { MouseEventHandler, ReactNode, Ref } from "react";\r
 import { mark, type CommonProps } from "../../../core/base";\r
 import type { InputVariant } from "../shared";\r
 \r
@@ -1596,7 +1596,7 @@ export const InputBase = ({\r
     )}\r
   </div>\r
 );\r
-`,U=`import {\r
+`,G=`import {\r
   Playground,\r
   U,\r
   expr,\r
@@ -2219,12 +2219,12 @@ export default function SplitButtonExample() {\r
     </Playground>\r
   );\r
 }\r
-`,pn=`export default {\r
+`,dn=`export default {\r
   name: "SplitButton",\r
   description: "Основное действие и отдельное меню",\r
   category: "buttons",\r
 } as const;\r
-`,dn=`import { BooleanControl, type BooleanProps } from "../shared";\r
+`,pn=`import { BooleanControl, type BooleanProps } from "../shared";\r
 \r
 export const Switch = (p: BooleanProps) => (\r
   <BooleanControl kind="Switch" {...p} />\r
@@ -2338,7 +2338,7 @@ export default function TabExample() {\r
   description: "Отдельная вкладка с состоянием выбора",\r
   category: "navigation",\r
 } as const;\r
-`,bn=`import { useLayoutEffect, useRef, useState } from "react";\r
+`,hn=`import { useLayoutEffect, useRef, useState } from "react";\r
 import {\r
   mark,\r
   ripple,\r
@@ -2452,7 +2452,7 @@ export const Tabs = (p: TabsProps) => {\r
     </nav>\r
   );\r
 };\r
-`,hn=`import { useState } from "react";\r
+`,bn=`import { useState } from "react";\r
 import { Playground, U, expr, jsx, sizes } from "../../../dev/exampleHelpers";\r
 \r
 const items = [\r
@@ -2502,127 +2502,134 @@ export default function TabsExample() {\r
     </Playground>\r
   );\r
 }\r
-`,xn=`export default {\r
+`,yn=`export default {\r
   name: "Tabs",\r
   description: "Переключение вкладок с фигурной подсветкой",\r
   category: "navigation",\r
   wide: true,\r
 } as const;\r
-`,yn=`import { useControllable } from "../../../core/base";\r
-import { FieldFrame, fieldLabel } from "../internal";\r
-import { InputBase } from "../InputBase/InputBase";\r
-import type { TextAreaProps } from "../shared";\r
-\r
-export const TextArea = ({\r
-  value,\r
-  defaultValue = "",\r
-  onValueChange,\r
-  label,\r
-  description,\r
-  error,\r
-  startAdornment,\r
-  endAdornment,\r
-  className,\r
-  size,\r
-  variant,\r
-  labelPlacement = "top",\r
-  tone: _tone,\r
-  material: _material,\r
-  style: _style,\r
-  ...textarea\r
-}: TextAreaProps) => {\r
-  const [current, setCurrent] = useControllable(\r
-    value,\r
-    defaultValue,\r
-    onValueChange,\r
-  );\r
-  const floating = labelPlacement === "floating" && !!label;\r
-  return (\r
-    <FieldFrame\r
-      className={\`ad-text-area \${className ?? ""}\`}\r
-      label={floating ? undefined : label}\r
-      required={textarea.required}\r
-      description={description}\r
-      error={error}\r
-    >\r
-      <InputBase\r
-        size={size}\r
-        variant={variant}\r
-        label={floating ? fieldLabel(label, textarea.required) : undefined}\r
-        filled={!!current}\r
-        multiline\r
-        disabled={textarea.disabled}\r
-        readOnly={textarea.readOnly}\r
-        error={!!error}\r
-        startAdornment={startAdornment}\r
-        endAdornment={endAdornment}\r
-      >\r
-        <textarea\r
-          {...textarea}\r
-          value={current}\r
-          onChange={(e) => setCurrent(e.currentTarget.value)}\r
-        />\r
-      </InputBase>\r
-    </FieldFrame>\r
-  );\r
-};\r
-`,kn=`import {\r
-  Playground,\r
-  U,\r
-  inputVariants,\r
-  jsx,\r
-  sizes,\r
-} from "../../../dev/exampleHelpers";\r
-\r
-export default function TextAreaExample() {\r
-  return (\r
-    <Playground\r
-      stretch\r
-      knobs={{\r
-        variant: { options: inputVariants, value: "outlined" },\r
-        size: { options: sizes, value: "md" },\r
-        floating: { value: true },\r
-        error: { value: false },\r
-        readOnly: { value: false },\r
-        disabled: { value: false },\r
-      }}\r
-      code={(v, c) =>\r
-        jsx("TextArea", {\r
-          label: "Комментарий к записи",\r
-          placeholder: "Что получилось, что исправить…",\r
-          variant: c.variant,\r
-          size: c.size,\r
-          labelPlacement: v.floating ? "floating" : undefined,\r
-          description: v.error ? undefined : "Видят только участники комнаты",\r
-          error: v.error ? "Не больше 500 символов" : undefined,\r
-          readOnly: v.readOnly,\r
-          disabled: v.disabled,\r
-        })\r
-      }\r
-    >\r
-      {(v) => (\r
-        <U.TextArea\r
-          label="Комментарий к записи"\r
-          placeholder="Что получилось, что исправить…"\r
-          variant={v.variant}\r
-          size={v.size}\r
-          labelPlacement={v.floating ? "floating" : "top"}\r
-          description={v.error ? undefined : "Видят только участники комнаты"}\r
-          error={v.error ? "Не больше 500 символов" : undefined}\r
-          readOnly={v.readOnly}\r
-          disabled={v.disabled}\r
-        />\r
-      )}\r
-    </Playground>\r
-  );\r
-}\r
+`,xn=`import { useControllable } from "../../../core/base";
+import { FieldFrame, fieldLabel } from "../internal";
+import { InputBase } from "../InputBase/InputBase";
+import type { TextAreaProps } from "../shared";
+
+export const TextArea = ({
+  value,
+  defaultValue = "",
+  onValueChange,
+  label,
+  description,
+  error,
+  startAdornment,
+  endAdornment,
+  className,
+  size,
+  variant,
+  labelPlacement = "top",
+  resize = "vertical",
+  tone: _tone,
+  material: _material,
+  style: _style,
+  ...textarea
+}: TextAreaProps) => {
+  const [current, setCurrent] = useControllable(
+    value,
+    defaultValue,
+    onValueChange,
+  );
+  const floating = labelPlacement === "floating" && !!label;
+  return (
+    <FieldFrame
+      className={\`ad-text-area ad-text-area--resize-\${resize} \${className ?? ""}\`}
+      label={floating ? undefined : label}
+      required={textarea.required}
+      description={description}
+      error={error}
+    >
+      <InputBase
+        size={size}
+        variant={variant}
+        label={floating ? fieldLabel(label, textarea.required) : undefined}
+        filled={!!current}
+        multiline
+        disabled={textarea.disabled}
+        readOnly={textarea.readOnly}
+        error={!!error}
+        startAdornment={startAdornment}
+        endAdornment={endAdornment}
+      >
+        <textarea
+          {...textarea}
+          value={current}
+          onChange={(e) => setCurrent(e.currentTarget.value)}
+        />
+      </InputBase>
+    </FieldFrame>
+  );
+};
+`,kn=`import {
+  Playground,
+  U,
+  inputVariants,
+  jsx,
+  sizes,
+} from "../../../dev/exampleHelpers";
+
+export default function TextAreaExample() {
+  return (
+    <Playground
+      stretch
+      knobs={{
+        variant: { options: inputVariants, value: "outlined" },
+        size: { options: sizes, value: "md" },
+        floating: { value: true },
+        resize: {
+          options: ["vertical", "both", "none"] as const,
+          value: "vertical",
+        },
+        error: { value: false },
+        readOnly: { value: false },
+        disabled: { value: false },
+      }}
+      code={(v, c) =>
+        jsx("TextArea", {
+          label: "Комментарий к записи",
+          placeholder: "Что получилось, что исправить…",
+          variant: c.variant,
+          size: c.size,
+          labelPlacement: v.floating ? "floating" : undefined,
+          resize: c.resize,
+          description: v.error ? undefined : "Видят только участники комнаты",
+          error: v.error ? "Не больше 500 символов" : undefined,
+          readOnly: v.readOnly,
+          disabled: v.disabled,
+        })
+      }
+    >
+      {(v) => (
+        <U.TextArea
+          label="Комментарий к записи"
+          placeholder="Что получилось, что исправить…"
+          variant={v.variant}
+          size={v.size}
+          labelPlacement={v.floating ? "floating" : "top"}
+          resize={v.resize}
+          description={v.error ? undefined : "Видят только участники комнаты"}
+          error={v.error ? "Не больше 500 символов" : undefined}
+          readOnly={v.readOnly}
+          disabled={v.disabled}
+        />
+      )}
+    </Playground>
+  );
+}
 `,_n=`export default {\r
   name: "TextArea",\r
   description: "Многострочный текстовый ввод с теми же adornments.",\r
   category: "fields",\r
   wide: true,\r
 };\r
-`,Pn=`import { useControllable } from "../../../core/base";\r
+`,wn=`import { useControllable } from "../../../core/base";\r
 import { FieldFrame, fieldLabel } from "../internal";\r
 import { IconButton } from "../IconButton/IconButton";\r
 import { InputBase } from "../InputBase/InputBase";\r
@@ -2757,72 +2764,92 @@ export default function TextFieldExample() {\r
     </Playground>\r
   );\r
 }\r
-`,wn=`export default {\r
+`,Pn=`export default {\r
   name: "TextField",\r
   description:\r
     "Основное текстовое поле с label, helper/error и start/end adornments.",\r
   category: "fields",\r
   wide: true,\r
 };\r
-`,Tn=`import { mark, useControllable, type CommonProps } from "../../../core/base";\r
-import { Button } from "../Button/Button";\r
-export type ThemeName = "ruby" | "light" | "green" | "violet";\r
-export interface ThemePickerProps extends CommonProps {\r
-  value?: ThemeName;\r
-  defaultValue?: ThemeName;\r
-  onValueChange?: (value: ThemeName) => void;\r
-}\r
-export const ThemePicker = (p: ThemePickerProps) => {\r
-  const [value, setValue] = useControllable(\r
-    p.value,\r
-    p.defaultValue ?? "ruby",\r
-    p.onValueChange,\r
-  );\r
-  const themes: Array<[ThemeName, string, string]> = [\r
-    ["ruby", "Ruby", "#ff244c"],\r
-    ["light", "Light", "#e6c98d"],\r
-    ["green", "Green", "#10deae"],\r
-    ["violet", "Violet", "#b680ff"],\r
-  ];\r
-  return (\r
-    <div {...mark("ThemePicker", p)}>\r
-      {themes.map(([key, name, color]) => (\r
-        <Button\r
-          key={key}\r
-          size={p.size ?? "sm"}\r
-          aria-pressed={key === value}\r
-          onClick={() => setValue(key)}\r
-        >\r
-          <span className="ad-theme-swatch" style={{ background: color }} />\r
-          {name}\r
-        </Button>\r
-      ))}\r
-    </div>\r
-  );\r
-};\r
-`,Cn=`import { Playground, U, jsx, sizes } from "../../../dev/exampleHelpers";\r
-\r
-export default function ThemePickerExample() {\r
-  return (\r
-    <Playground\r
-      knobs={{ size: { options: sizes, value: "sm" } }}\r
-      code={(_, c) =>\r
-        jsx("ThemePicker", {\r
-          value: { expr: "theme" },\r
-          onValueChange: { expr: "setTheme" },\r
-          size: c.size,\r
-        })\r
-      }\r
-    >\r
-      {(v) => <U.ThemePicker size={v.size} />}\r
-    </Playground>\r
-  );\r
-}\r
+`,Tn=`import { mark, useControllable, type CommonProps } from "../../../core/base";
+import { Button } from "../Button/Button";
+import {
+  themes,
+  type ThemeName,
+} from "../../foundation/ThemeProvider/ThemeProvider";
+export type { ThemeName };
+export interface ThemePickerProps extends CommonProps {
+  value?: ThemeName;
+  defaultValue?: ThemeName;
+  onValueChange?: (value: ThemeName) => void;
+}
+export const ThemePicker = (p: ThemePickerProps) => {
+  const [value, setValue] = useControllable(
+    p.value,
+    p.defaultValue ?? "ruby",
+    p.onValueChange,
+  );
+  const names: Record<ThemeName, string> = {
+    ruby: "Ruby",
+    light: "Light",
+    green: "Green",
+    violet: "Violet",
+  };
+  return (
+    <div {...mark("ThemePicker", p)}>
+      {(Object.keys(names) as ThemeName[]).map((key) => (
+        <Button
+          key={key}
+          size={p.size ?? "sm"}
+          aria-pressed={key === value}
+          onClick={() => setValue(key)}
+        >
+          <span
+            className="ad-theme-swatch"
+            style={{ background: themes[key][0] }}
+          />
+          {names[key]}
+        </Button>
+      ))}
+    </div>
+  );
+};
+`,Cn=`import {
+  Playground,
+  U,
+  jsx,
+  sizes,
+  useSiteTheme,
+} from "../../../dev/exampleHelpers";
+
+/** On the docs site the picker switches the theme of the whole site. */
+export default function ThemePickerExample() {
+  const site = useSiteTheme();
+  return (
+    <Playground
+      knobs={{ size: { options: sizes, value: "sm" } }}
+      code={(_, c) =>
+        jsx("ThemePicker", {
+          value: { expr: "theme" },
+          onValueChange: { expr: "setTheme" },
+          size: c.size,
+        })
+      }
+    >
+      {(v) => (
+        <U.ThemePicker
+          size={v.size}
+          value={site.theme}
+          onValueChange={(theme) => site.set({ theme })}
+        />
+      )}
+    </Playground>
+  );
+}
 `,Rn=`export default {\r
   name: "ThemePicker",\r
-  description:\r
-    "Выбор темы — это поле настройки, поэтому живёт в «Поля и ввод».",\r
-  category: "fields",\r
+  description: "Переключатель готовых тем; пара цветов каждой темы задаёт всю палитру.",\r
+  category: "typography",\r
 };\r
 `,Mn=`import { useControllable } from "../../../core/base";\r
 import { buttonView, type ToggleButtonProps } from "../shared";\r
@@ -3017,269 +3044,278 @@ export function OptionList({\r
     </div>\r
   );\r
 }\r
-`,In=`import React from "react";\r
-import type {\r
-  ButtonHTMLAttributes,\r
-  InputHTMLAttributes,\r
-  ReactNode,\r
-  Ref,\r
-} from "react";\r
-import {\r
-  mark,\r
-  ripple,\r
-  useControllable,\r
-  type CommonProps,\r
-  type Variant,\r
-} from "../../core/base";\r
-import { Icon } from "../layout/Icon/Icon";\r
-import { variantMaterial } from "./internal";\r
-\r
-export interface ButtonProps\r
-  extends\r
-    CommonProps,\r
-    Omit<ButtonHTMLAttributes<HTMLButtonElement>, keyof CommonProps | "color"> {\r
-  variant?: Variant;\r
-  icon?: string;\r
-  endIcon?: string;\r
-  loading?: boolean;\r
-  round?: boolean;\r
-  label?: string;\r
-  ref?: Ref<HTMLButtonElement>;\r
-}\r
-export function buttonView(p: ButtonProps, name = "Button") {\r
-  const {\r
-    variant = "secondary",\r
-    icon,\r
-    endIcon,\r
-    loading,\r
-    round,\r
-    label,\r
-    children,\r
-    ref,\r
-    onPointerMove,\r
-    onPointerDown,\r
-    onPointerLeave,\r
-    ...rest\r
-  } = p;\r
-  const { size: _s, tone: _t, material: _m, ...dom } = rest;\r
-  const trackLight: React.PointerEventHandler<HTMLButtonElement> = (event) => {\r
-    const rect = event.currentTarget.getBoundingClientRect();\r
-    event.currentTarget.style.setProperty(\r
-      "--ad-button-x",\r
-      \`\${((event.clientX - rect.left) / Math.max(rect.width, 1)) * 100}%\`,\r
-    );\r
-    event.currentTarget.style.setProperty(\r
-      "--ad-button-y",\r
-      \`\${((event.clientY - rect.top) / Math.max(rect.height, 1)) * 100}%\`,\r
-    );\r
-    onPointerMove?.(event);\r
-  };\r
-  const resetLight: React.PointerEventHandler<HTMLButtonElement> = (event) => {\r
-    event.currentTarget.style.removeProperty("--ad-button-x");\r
-    event.currentTarget.style.removeProperty("--ad-button-y");\r
-    onPointerLeave?.(event);\r
-  };\r
-  const content = children ?? label;\r
-  return (\r
-    <button\r
-      {...dom}\r
-      {...mark(name, p, variantMaterial[variant])}\r
-      ref={ref}\r
-      type={p.type ?? "button"}\r
-      disabled={p.disabled || loading}\r
-      aria-busy={loading || undefined}\r
-      data-ad-variant={variant}\r
-      data-ad-round={round || undefined}\r
-      onPointerDown={(event) => {\r
-        ripple(event.currentTarget, event.clientX, event.clientY);\r
-        onPointerDown?.(event);\r
-      }}\r
-      onPointerMove={trackLight}\r
-      onPointerLeave={resetLight}\r
-    >\r
-      <span className="ad-button-fx" aria-hidden="true" />\r
-      {loading && <span className="ad-spinner" aria-hidden="true" />}\r
-      {icon && <Icon name={icon} />}{" "}\r
-      {content != null && <span className="ad-button-label">{content}</span>}\r
-      {endIcon && <Icon name={endIcon} />}\r
-    </button>\r
-  );\r
-}\r
-export interface IconButtonProps extends ButtonProps {\r
-  label: string;\r
-}\r
-export interface ToggleButtonProps extends ButtonProps {\r
-  checked?: boolean;\r
-  defaultChecked?: boolean;\r
-  onValueChange?: (value: boolean) => void;\r
-}\r
-export interface SplitButtonProps extends CommonProps {\r
-  variant?: Variant;\r
-  icon?: string;\r
-  label?: string;\r
-  items?: any[];\r
-  onClick?: () => void;\r
-  children?: ReactNode;\r
-}\r
-export interface TabProps extends ButtonProps {\r
-  selected?: boolean;\r
-  panelId?: string;\r
-}\r
-export interface TabItem {\r
-  value: string;\r
-  label: ReactNode;\r
-  icon?: string;\r
-  disabled?: boolean;\r
-  panelId?: string;\r
-  id?: string;\r
-}\r
-export interface TabsProps extends CommonProps {\r
-  items?: TabItem[];\r
-  value?: string;\r
-  defaultValue?: string;\r
-  onValueChange?: (value: string) => void;\r
-  label?: string;\r
-}\r
-/** Field appearance: boxed outline, tinted fill or a single bottom line. */\r
-export type InputVariant = "outlined" | "filled" | "underlined";\r
-/** Label above the field, or inside it rising on focus like Material inputs. */\r
-export type LabelPlacement = "top" | "floating";\r
-export interface FieldProps\r
-  extends\r
-    CommonProps,\r
-    Omit<\r
-      InputHTMLAttributes<HTMLInputElement>,\r
-      keyof CommonProps | "size" | "value" | "defaultValue" | "onChange"\r
-    > {\r
-  value?: string;\r
-  defaultValue?: string;\r
-  onValueChange?: (value: string) => void;\r
-  startAdornment?: ReactNode;\r
-  endAdornment?: ReactNode;\r
-  inputRef?: Ref<HTMLInputElement>;\r
-  variant?: InputVariant;\r
-  labelPlacement?: LabelPlacement;\r
-}\r
-export interface TextFieldProps extends FieldProps {\r
-  label?: ReactNode;\r
-  description?: ReactNode;\r
-  error?: ReactNode;\r
-  clearable?: boolean;\r
-  type?: InputHTMLAttributes<HTMLInputElement>["type"];\r
-}\r
-export interface NumberFieldProps extends Omit<\r
-  TextFieldProps,\r
-  "value" | "defaultValue" | "onValueChange" | "type"\r
-> {\r
-  value?: number | "";\r
-  defaultValue?: number | "";\r
-  onValueChange?: (value: number | "") => void;\r
-}\r
-export interface TextAreaProps\r
-  extends\r
-    Omit<CommonProps, "children">,\r
-    Omit<\r
-      React.TextareaHTMLAttributes<HTMLTextAreaElement>,\r
-      keyof CommonProps | "value" | "defaultValue" | "onChange"\r
-    > {\r
-  value?: string;\r
-  defaultValue?: string;\r
-  onValueChange?: (value: string) => void;\r
-  label?: ReactNode;\r
-  description?: ReactNode;\r
-  error?: ReactNode;\r
-  startAdornment?: ReactNode;\r
-  endAdornment?: ReactNode;\r
-  variant?: InputVariant;\r
-  labelPlacement?: LabelPlacement;\r
-}\r
-export interface AutocompleteOption {\r
-  value: string;\r
-  label: string;\r
-}\r
-export interface AutocompleteProps extends TextFieldProps {\r
-  options?: Array<string | AutocompleteOption>;\r
-  onOptionSelect?: (value: string) => void;\r
-}\r
-export interface SelectOption {\r
-  value: string;\r
-  label: string;\r
-  disabled?: boolean;\r
-}\r
-export interface SelectProps extends CommonProps {\r
-  label?: ReactNode;\r
-  description?: ReactNode;\r
-  error?: ReactNode;\r
-  placeholder?: string;\r
-  startAdornment?: ReactNode;\r
-  endAdornment?: ReactNode;\r
-  options?: Array<string | SelectOption>;\r
-  value?: string;\r
-  defaultValue?: string;\r
-  onValueChange?: (value: string) => void;\r
-  icon?: string;\r
-  disabled?: boolean;\r
-  required?: boolean;\r
-  name?: string;\r
-  ref?: Ref<HTMLButtonElement>;\r
-  variant?: InputVariant;\r
-  labelPlacement?: LabelPlacement;\r
-}\r
-export interface BooleanProps extends CommonProps {\r
-  checked?: boolean;\r
-  defaultChecked?: boolean;\r
-  onValueChange?: (value: boolean) => void;\r
-  label?: ReactNode;\r
-  disabled?: boolean;\r
-  name?: string;\r
-  required?: boolean;\r
-}\r
-export function BooleanControl({\r
-  kind,\r
-  ...p\r
-}: BooleanProps & { kind: "Switch" | "Checkbox" }) {\r
-  const [checked, setChecked] = useControllable(\r
-    p.checked,\r
-    p.defaultChecked ?? false,\r
-    p.onValueChange,\r
-  );\r
-  return (\r
-    <label {...mark(kind, p)}>\r
-      <input\r
-        name={p.name}\r
-        type="checkbox"\r
-        role={kind === "Switch" ? "switch" : undefined}\r
-        checked={checked}\r
-        disabled={p.disabled}\r
-        required={p.required}\r
-        onChange={(e) => setChecked(e.currentTarget.checked)}\r
-      />\r
-      <span className="ad-toggle-track" aria-hidden="true">\r
-        <i />\r
-      </span>\r
-      <span>{p.label}</span>\r
-    </label>\r
-  );\r
-}\r
-export interface SliderProps extends CommonProps {\r
-  value?: number;\r
-  defaultValue?: number;\r
-  min?: number;\r
-  max?: number;\r
-  step?: number;\r
-  label?: string;\r
-  disabled?: boolean;\r
-  onValueChange?: (value: number) => void;\r
-  ref?: Ref<HTMLInputElement>;\r
-}\r
-export interface FilePickerProps extends CommonProps {\r
-  label?: string;\r
-  description?: string;\r
-  icon?: string;\r
-  accept?: string;\r
-  multiple?: boolean;\r
-  onFiles?: (files: File[]) => void;\r
-}\r
+`,In=`import React, { useEffect, useRef } from "react";
+import type {
+  ButtonHTMLAttributes,
+  InputHTMLAttributes,
+  ReactNode,
+  Ref,
+} from "react";
+import {
+  mark,
+  ripple,
+  useControllable,
+  type CommonProps,
+  type Variant,
+} from "../../core/base";
+import { Icon } from "../layout/Icon/Icon";
+import { variantMaterial } from "./internal";
+
+export interface ButtonProps
+  extends
+    CommonProps,
+    Omit<ButtonHTMLAttributes<HTMLButtonElement>, keyof CommonProps | "color"> {
+  variant?: Variant;
+  icon?: string;
+  endIcon?: string;
+  loading?: boolean;
+  round?: boolean;
+  label?: string;
+  ref?: Ref<HTMLButtonElement>;
+}
+export function buttonView(p: ButtonProps, name = "Button") {
+  const {
+    variant = "secondary",
+    icon,
+    endIcon,
+    loading,
+    round,
+    label,
+    children,
+    ref,
+    onPointerMove,
+    onPointerDown,
+    onPointerLeave,
+    ...rest
+  } = p;
+  const { size: _s, tone: _t, material: _m, ...dom } = rest;
+  const trackLight: React.PointerEventHandler<HTMLButtonElement> = (event) => {
+    const rect = event.currentTarget.getBoundingClientRect();
+    event.currentTarget.style.setProperty(
+      "--ad-button-x",
+      \`\${((event.clientX - rect.left) / Math.max(rect.width, 1)) * 100}%\`,
+    );
+    event.currentTarget.style.setProperty(
+      "--ad-button-y",
+      \`\${((event.clientY - rect.top) / Math.max(rect.height, 1)) * 100}%\`,
+    );
+    onPointerMove?.(event);
+  };
+  const resetLight: React.PointerEventHandler<HTMLButtonElement> = (event) => {
+    event.currentTarget.style.removeProperty("--ad-button-x");
+    event.currentTarget.style.removeProperty("--ad-button-y");
+    onPointerLeave?.(event);
+  };
+  const content = children ?? label;
+  return (
+    <button
+      {...dom}
+      {...mark(name, p, variantMaterial[variant])}
+      ref={ref}
+      type={p.type ?? "button"}
+      disabled={p.disabled || loading}
+      aria-busy={loading || undefined}
+      data-ad-variant={variant}
+      data-ad-round={round || undefined}
+      onPointerDown={(event) => {
+        ripple(event.currentTarget, event.clientX, event.clientY);
+        onPointerDown?.(event);
+      }}
+      onPointerMove={trackLight}
+      onPointerLeave={resetLight}
+    >
+      <span className="ad-button-fx" aria-hidden="true" />
+      {loading && <span className="ad-spinner" aria-hidden="true" />}
+      {icon && <Icon name={icon} />}{" "}
+      {content != null && <span className="ad-button-label">{content}</span>}
+      {endIcon && <Icon name={endIcon} />}
+    </button>
+  );
+}
+export interface IconButtonProps extends ButtonProps {
+  label: string;
+}
+export interface ToggleButtonProps extends ButtonProps {
+  checked?: boolean;
+  defaultChecked?: boolean;
+  onValueChange?: (value: boolean) => void;
+}
+export interface SplitButtonProps extends CommonProps {
+  variant?: Variant;
+  icon?: string;
+  label?: string;
+  items?: any[];
+  onClick?: () => void;
+  children?: ReactNode;
+}
+export interface TabProps extends ButtonProps {
+  selected?: boolean;
+  panelId?: string;
+}
+export interface TabItem {
+  value: string;
+  label: ReactNode;
+  icon?: string;
+  disabled?: boolean;
+  panelId?: string;
+  id?: string;
+}
+export interface TabsProps extends CommonProps {
+  items?: TabItem[];
+  value?: string;
+  defaultValue?: string;
+  onValueChange?: (value: string) => void;
+  label?: string;
+}
+/** Field appearance: boxed outline, tinted fill or a single bottom line. */
+export type InputVariant = "outlined" | "filled" | "underlined";
+/** Label above the field, or inside it rising on focus like Material inputs. */
+export type LabelPlacement = "top" | "floating";
+export interface FieldProps
+  extends
+    CommonProps,
+    Omit<
+      InputHTMLAttributes<HTMLInputElement>,
+      keyof CommonProps | "size" | "value" | "defaultValue" | "onChange"
+    > {
+  value?: string;
+  defaultValue?: string;
+  onValueChange?: (value: string) => void;
+  startAdornment?: ReactNode;
+  endAdornment?: ReactNode;
+  inputRef?: Ref<HTMLInputElement>;
+  variant?: InputVariant;
+  labelPlacement?: LabelPlacement;
+}
+export interface TextFieldProps extends FieldProps {
+  label?: ReactNode;
+  description?: ReactNode;
+  error?: ReactNode;
+  clearable?: boolean;
+  type?: InputHTMLAttributes<HTMLInputElement>["type"];
+}
+export interface NumberFieldProps extends Omit<
+  TextFieldProps,
+  "value" | "defaultValue" | "onValueChange" | "type"
+> {
+  value?: number | "";
+  defaultValue?: number | "";
+  onValueChange?: (value: number | "") => void;
+}
+export interface TextAreaProps
+  extends
+    Omit<CommonProps, "children">,
+    Omit<
+      React.TextareaHTMLAttributes<HTMLTextAreaElement>,
+      keyof CommonProps | "value" | "defaultValue" | "onChange"
+    > {
+  value?: string;
+  defaultValue?: string;
+  onValueChange?: (value: string) => void;
+  label?: ReactNode;
+  description?: ReactNode;
+  error?: ReactNode;
+  startAdornment?: ReactNode;
+  endAdornment?: ReactNode;
+  variant?: InputVariant;
+  labelPlacement?: LabelPlacement;
+  /** Which way the reader may drag the corner; \`both\` lets the field follow the width too. */
+  resize?: "vertical" | "both" | "none";
+}
+export interface AutocompleteOption {
+  value: string;
+  label: string;
+}
+export interface AutocompleteProps extends TextFieldProps {
+  options?: Array<string | AutocompleteOption>;
+  onOptionSelect?: (value: string) => void;
+}
+export interface SelectOption {
+  value: string;
+  label: string;
+  disabled?: boolean;
+}
+export interface SelectProps extends CommonProps {
+  label?: ReactNode;
+  description?: ReactNode;
+  error?: ReactNode;
+  placeholder?: string;
+  startAdornment?: ReactNode;
+  endAdornment?: ReactNode;
+  options?: Array<string | SelectOption>;
+  value?: string;
+  defaultValue?: string;
+  onValueChange?: (value: string) => void;
+  icon?: string;
+  disabled?: boolean;
+  required?: boolean;
+  name?: string;
+  ref?: Ref<HTMLButtonElement>;
+  variant?: InputVariant;
+  labelPlacement?: LabelPlacement;
+}
+export interface BooleanProps extends CommonProps {
+  checked?: boolean;
+  defaultChecked?: boolean;
+  onValueChange?: (value: boolean) => void;
+  label?: ReactNode;
+  disabled?: boolean;
+  name?: string;
+  required?: boolean;
+  /** Checkbox only: neither on nor off, e.g. "select all" when some rows are chosen. */
+  indeterminate?: boolean;
+}
+export function BooleanControl({
+  kind,
+  ...p
+}: BooleanProps & { kind: "Switch" | "Checkbox" }) {
+  const [checked, setChecked] = useControllable(
+    p.checked,
+    p.defaultChecked ?? false,
+    p.onValueChange,
+  );
+  const input = useRef<HTMLInputElement>(null);
+  useEffect(() => {
+    if (input.current) input.current.indeterminate = !!p.indeterminate;
+  }, [p.indeterminate]);
+  return (
+    <label {...mark(kind, p)}>
+      <input
+        ref={input}
+        name={p.name}
+        type="checkbox"
+        role={kind === "Switch" ? "switch" : undefined}
+        checked={checked}
+        disabled={p.disabled}
+        required={p.required}
+        onChange={(e) => setChecked(e.currentTarget.checked)}
+      />
+      <span className="ad-toggle-track" aria-hidden="true">
+        <i />
+      </span>
+      <span>{p.label}</span>
+    </label>
+  );
+}
+export interface SliderProps extends CommonProps {
+  value?: number;
+  defaultValue?: number;
+  min?: number;
+  max?: number;
+  step?: number;
+  label?: string;
+  disabled?: boolean;
+  onValueChange?: (value: number) => void;
+  ref?: Ref<HTMLInputElement>;
+}
+export interface FilePickerProps extends CommonProps {
+  label?: string;
+  description?: string;
+  icon?: string;
+  accept?: string;
+  multiple?: boolean;
+  onFiles?: (files: File[]) => void;
+}
 `,Nn=`import { useEffect, useRef, useState, type CSSProperties } from "react";\r
 import { clamp, mark, useControllable } from "../../../core/base";\r
 import { Toolbar } from "../../layout/Toolbar/Toolbar";\r
@@ -3546,14 +3582,14 @@ export const PianoRollGrid = (p: PianoRollGridProps) => {\r
 export default function PianoRollGridExample() {\r
   return <PianoRollGrid selection />;\r
 }\r
-`,Fn=`export default {
+`,Ln=`export default {
   name: "PianoRollGrid",
   description:
     "Полный сервис piano-roll: клавиатура, ruler, notes, lyrics, playhead, selection и toolbar внутри одного компонента.",
   category: "editor",
   wide: true,
 };
-`,Ln=`import type { CommonProps } from "../../core/base";
+`,Fn=`import type { CommonProps } from "../../core/base";
 export interface NoteGeometry {
   x: number;
   y: number;
@@ -3619,7 +3655,7 @@ export default function AnimatedBorderExample() {\r
     "Анимированная неоновая обводка для любого контейнера, не только Card.",\r
   category: "motion",\r
 };\r
-`,On=`import type { CSSProperties } from "react";\r
+`,$n=`import type { CSSProperties } from "react";\r
 import { mark, type CommonProps } from "../../../core/base";\r
 \r
 export interface BeaconProps extends CommonProps {\r
@@ -3650,7 +3686,7 @@ export function Beacon({\r
     </span>\r
   );\r
 }\r
-`,$n=`import { Playground, U, expr, jsx } from "../../../dev/exampleHelpers";\r
+`,On=`import { Playground, U, expr, jsx } from "../../../dev/exampleHelpers";\r
 \r
 export default function BeaconExample() {\r
   return (\r
@@ -3677,12 +3713,12 @@ export default function BeaconExample() {\r
     </Playground>\r
   );\r
 }\r
-`,Gn=`export default {\r
+`,Un=`export default {\r
   name: "Beacon",\r
   description: "Радар-волны вокруг элемента, чтобы привлечь к нему внимание.",\r
   category: "motion",\r
 } as const;\r
-`,Un=`import { mark, type CommonProps } from "../../../core/base";\r
+`,Gn=`import { mark, type CommonProps } from "../../../core/base";\r
 \r
 export interface EqualizerProps extends CommonProps {\r
   /** Number of bars. */\r
@@ -4166,12 +4202,12 @@ export default function SpotlightExample() {\r
     </Grid>\r
   );\r
 }\r
-`,pe=`export default {\r
+`,de=`export default {\r
   name: "Spotlight",\r
   description: "Свет и подсветка кромки, которые следуют за курсором.",\r
   category: "motion",\r
 } as const;\r
-`,de=`import { createElement, type ElementType } from "react";\r
+`,pe=`import { createElement, type ElementType } from "react";\r
 import { mark, type CommonProps } from "../../../core/base";\r
 \r
 export interface TiltProps extends CommonProps {\r
@@ -4295,7 +4331,7 @@ export default function BadgeExample() {\r
   description: "Короткая метка или роль",\r
   category: "feedback",\r
 } as const;\r
-`,be=`import { mark, useControllable } from "../../../core/base";\r
+`,he=`import { mark, useControllable } from "../../../core/base";\r
 import { Icon } from "../../layout/Icon/Icon";\r
 import { type CollapsibleSectionProps } from "../shared";\r
 \r
@@ -4324,7 +4360,7 @@ export const CollapsibleSection = (p: CollapsibleSectionProps) => {\r
     </details>\r
   );\r
 };\r
-`,he=`import { CollapsibleSection, KeyValueList } from "@ad-voice/ui";\r
+`,be=`import { CollapsibleSection, KeyValueList } from "@ad-voice/ui";\r
 \r
 export default function CollapsibleSectionExample() {\r
   return (\r
@@ -4339,64 +4375,421 @@ export default function CollapsibleSectionExample() {\r
     </CollapsibleSection>\r
   );\r
 }\r
-`,xe=`export default {\r
+`,ye=`export default {\r
   name: "CollapsibleSection",\r
   description: "Раскрывающийся раздел",\r
   category: "feedback",\r
 } as const;\r
-`,ye=`import { mark } from "../../../core/base";\r
-import { type DataTableProps } from "../shared";\r
-\r
-export const DataTable = (p: DataTableProps) => (\r
-  <table {...mark("DataTable", p)}>\r
-    {p.caption && <caption>{p.caption}</caption>}\r
-    <thead>\r
-      <tr>\r
-        {(p.columns ?? ["Дата", "Событие", "Статус"]).map((name, i) => (\r
-          <th key={i} scope="col">\r
-            {name}\r
-          </th>\r
-        ))}\r
-      </tr>\r
-    </thead>\r
-    <tbody>\r
-      {(\r
-        p.rows ?? [\r
-          ["30.09.2026, 13:24", "AnalysisCompleted", "Готово"],\r
-          ["30.09.2026, 13:23", "RecordingRegistered", "Готово"],\r
-        ]\r
-      ).map((row, i) => (\r
-        <tr key={i}>\r
-          {row.map((v, j) => (\r
-            <td key={j}>{v}</td>\r
-          ))}\r
-        </tr>\r
-      ))}\r
-    </tbody>\r
-  </table>\r
-);\r
-`,ke=`import { DataTable } from "@ad-voice/ui";\r
-\r
-export default function DataTableExample() {\r
-  return (\r
-    <DataTable\r
-      caption="История обработки"\r
-      columns={["Время", "Событие", "Статус"]}\r
-      rows={[\r
-        ["13:24", "Анализ завершён", "Готово"],\r
-        ["13:23", "Запись загружена", "Готово"],\r
-        ["13:21", "Выступление начато", "Готово"],\r
-      ]}\r
-    />\r
-  );\r
-}\r
+`,xe=`import { useMemo, useState, type ReactNode } from "react";
+import { mark, useControllable } from "../../../core/base";
+import { Checkbox } from "../../controls/Checkbox/Checkbox";
+import { IconButton } from "../../controls/IconButton/IconButton";
+import { TextField } from "../../controls/TextField/TextField";
+import { Icon } from "../../layout/Icon/Icon";
+import type {
+  DataTableColumn,
+  DataTableProps,
+  DataTableRow,
+  DataTableSort,
+} from "../shared";
+
+const field = (row: DataTableRow, key: string) =>
+  (row as Record<string, unknown>)[key];
+
+/** Text of a cell for sorting and search: numbers stay numbers. */
+function cellValue(column: DataTableColumn, row: DataTableRow) {
+  const raw = column.value ? column.value(row) : field(row, column.key);
+  return typeof raw === "number" ? raw : raw == null ? "" : String(raw);
+}
+
+/**
+ * A data table: sortable columns, row selection with "select all", search, pages, a sticky
+ * header when it scrolls, loading and empty states. Plain \`columns: string[]\` with array
+ * rows still works.
+ */
+export function DataTable<T extends DataTableRow = DataTableRow>({
+  columns = ["Дата", "Событие", "Статус"],
+  rows = [] as unknown as T[],
+  caption,
+  rowKey = (_, index) => String(index),
+  sort: controlledSort,
+  defaultSort = null,
+  onSortChange,
+  selectable = false,
+  selected: controlledSelection,
+  defaultSelected = [],
+  onSelectionChange,
+  searchable = false,
+  pageSize,
+  maxHeight,
+  dense = false,
+  striped = false,
+  loading = false,
+  empty = "Нет данных",
+  onRowClick,
+  ...p
+}: DataTableProps<T>) {
+  const cols = useMemo(
+    () =>
+      columns.map((column, index) =>
+        typeof column === "string"
+          ? ({ key: String(index), title: column } as DataTableColumn<T>)
+          : column,
+      ),
+    [columns],
+  );
+  const [sort, setSort] = useControllable<DataTableSort | null>(
+    controlledSort,
+    defaultSort,
+    onSortChange,
+  );
+  const [selection, setSelection] = useControllable(
+    controlledSelection,
+    defaultSelected,
+    onSelectionChange,
+  );
+  const [query, setQuery] = useState("");
+  const [page, setPage] = useState(0);
+
+  const keyed = rows.map((row, index) => ({
+    row,
+    index,
+    key: rowKey(row, index),
+  }));
+  const found = query
+    ? keyed.filter(({ row }) =>
+        cols.some((column) =>
+          String(cellValue(column as DataTableColumn, row))
+            .toLowerCase()
+            .includes(query.toLowerCase()),
+        ),
+      )
+    : keyed;
+  const sortColumn = sort && cols.find((column) => column.key === sort.key);
+  const sorted = sortColumn
+    ? [...found].sort((a, b) => {
+        const x = cellValue(sortColumn as DataTableColumn, a.row);
+        const y = cellValue(sortColumn as DataTableColumn, b.row);
+        const order =
+          typeof x === "number" && typeof y === "number"
+            ? x - y
+            : String(x).localeCompare(String(y), undefined, { numeric: true });
+        return sort!.direction === "asc" ? order : -order;
+      })
+    : found;
+  const pages = pageSize ? Math.max(1, Math.ceil(sorted.length / pageSize)) : 1;
+  const current = Math.min(page, pages - 1);
+  const visible = pageSize
+    ? sorted.slice(current * pageSize, (current + 1) * pageSize)
+    : sorted;
+
+  const chosen = new Set(selection);
+  const allChosen =
+    found.length > 0 && found.every(({ key }) => chosen.has(key));
+  const someChosen = !allChosen && found.some(({ key }) => chosen.has(key));
+  const toggleAll = () =>
+    setSelection(
+      allChosen
+        ? selection.filter((key) => !found.some((item) => item.key === key))
+        : [...new Set([...selection, ...found.map(({ key }) => key)])],
+    );
+  const toggle = (key: string) =>
+    setSelection(
+      chosen.has(key)
+        ? selection.filter((k) => k !== key)
+        : [...selection, key],
+    );
+  // Ascending, descending, then back to the original order.
+  const cycleSort = (key: string) =>
+    setSort(
+      sort?.key !== key
+        ? { key, direction: "asc" }
+        : sort.direction === "asc"
+          ? { key, direction: "desc" }
+          : null,
+    );
+
+  const span = cols.length + (selectable ? 1 : 0);
+  const body: ReactNode = loading ? (
+    Array.from({ length: Math.min(pageSize ?? 4, 6) }, (_, i) => (
+      <tr key={i} className="ad-data-table-loading">
+        {Array.from({ length: span }, (__, j) => (
+          <td key={j}>
+            <i />
+          </td>
+        ))}
+      </tr>
+    ))
+  ) : visible.length === 0 ? (
+    <tr>
+      <td className="ad-data-table-empty" colSpan={span}>
+        {empty}
+      </td>
+    </tr>
+  ) : (
+    visible.map(({ row, index, key }) => (
+      <tr
+        key={key}
+        data-selected={chosen.has(key) || undefined}
+        data-clickable={onRowClick ? true : undefined}
+        onClick={onRowClick && (() => onRowClick(row, index))}
+      >
+        {selectable && (
+          <td
+            className="ad-data-table-check"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <Checkbox
+              size="sm"
+              checked={chosen.has(key)}
+              onValueChange={() => toggle(key)}
+              label={<span className="ad-sr-only">Выбрать строку</span>}
+            />
+          </td>
+        )}
+        {cols.map((column) => (
+          <td key={column.key} data-align={column.align}>
+            {column.render
+              ? column.render(row, index)
+              : (field(row, column.key) as ReactNode)}
+          </td>
+        ))}
+      </tr>
+    ))
+  );
+
+  return (
+    <div
+      {...mark("DataTable", p)}
+      data-dense={dense || undefined}
+      data-striped={striped || undefined}
+    >
+      {(caption || searchable) && (
+        <div className="ad-data-table-bar">
+          {caption && <strong>{caption}</strong>}
+          {searchable && (
+            <TextField
+              size="sm"
+              placeholder="Поиск…"
+              value={query}
+              onValueChange={(value) => {
+                setQuery(value);
+                setPage(0);
+              }}
+              startAdornment={<Icon name="search" />}
+              clearable
+              aria-label="Поиск по таблице"
+            />
+          )}
+        </div>
+      )}
+      <div className="ad-data-table-scroll" style={{ maxHeight }}>
+        <table>
+          <thead>
+            <tr>
+              {selectable && (
+                <th className="ad-data-table-check">
+                  <Checkbox
+                    size="sm"
+                    checked={allChosen}
+                    indeterminate={someChosen}
+                    onValueChange={toggleAll}
+                    label={<span className="ad-sr-only">Выбрать все</span>}
+                  />
+                </th>
+              )}
+              {cols.map((column) => {
+                const sortable = column.sortable ?? true;
+                const direction =
+                  sort?.key === column.key ? sort.direction : undefined;
+                return (
+                  <th
+                    key={column.key}
+                    scope="col"
+                    data-align={column.align}
+                    style={{ width: column.width }}
+                    aria-sort={
+                      direction === "asc"
+                        ? "ascending"
+                        : direction === "desc"
+                          ? "descending"
+                          : undefined
+                    }
+                  >
+                    {sortable ? (
+                      <button
+                        type="button"
+                        className="ad-data-table-sort"
+                        data-direction={direction}
+                        onClick={() => cycleSort(column.key)}
+                      >
+                        {column.title}
+                        <Icon name="chevron" />
+                      </button>
+                    ) : (
+                      column.title
+                    )}
+                  </th>
+                );
+              })}
+            </tr>
+          </thead>
+          <tbody>{body}</tbody>
+        </table>
+      </div>
+      {(pageSize || (selectable && selection.length > 0)) && (
+        <div className="ad-data-table-foot">
+          <span>
+            {selectable && selection.length > 0
+              ? \`Выбрано: \${selection.length}\`
+              : \`\${sorted.length} \${query ? "найдено" : "всего"}\`}
+          </span>
+          {pageSize && pages > 1 && (
+            <span className="ad-data-table-pages">
+              <IconButton
+                size="xs"
+                variant="ghost"
+                icon="prev"
+                label="Предыдущая страница"
+                disabled={current === 0}
+                onClick={() => setPage(current - 1)}
+              />
+              <span>
+                {current + 1} / {pages}
+              </span>
+              <IconButton
+                size="xs"
+                variant="ghost"
+                icon="prev"
+                label="Следующая страница"
+                className="ad-data-table-next"
+                disabled={current >= pages - 1}
+                onClick={() => setPage(current + 1)}
+              />
+            </span>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+`,ke=`import { Playground, U, expr, jsx } from "../../../dev/exampleHelpers";
+import type { DataTableColumn } from "@ad-voice/ui";
+
+type Track = {
+  id: string;
+  title: string;
+  artist: string;
+  seconds: number;
+  plays: number;
+  status: "ready" | "processing" | "error";
+};
+
+const tracks: Track[] = [
+  ["Ночь горит огнями", "Аура", 214, 1840, "ready"],
+  ["Сквозь бетон", "Норд", 187, 920, "ready"],
+  ["Рубиновый рассвет", "Мия", 242, 3110, "processing"],
+  ["Шёпот волн", "Аура", 199, 640, "ready"],
+  ["Город без сна", "Кай", 228, 2405, "error"],
+  ["Лёд и пламя", "Мия", 176, 1290, "ready"],
+  ["Последний трамвай", "Норд", 205, 455, "processing"],
+  ["Неон", "Кай", 231, 5020, "ready"],
+].map(([title, artist, seconds, plays, status], i) => ({
+  id: \`t\${i}\`,
+  title,
+  artist,
+  seconds,
+  plays,
+  status,
+})) as Track[];
+
+const statuses = {
+  ready: ["Готово", "success"],
+  processing: ["Обработка", "processing"],
+  error: ["Ошибка", "error"],
+} as const;
+
+const columns: DataTableColumn<Track>[] = [
+  { key: "title", title: "Трек" },
+  { key: "artist", title: "Исполнитель" },
+  {
+    key: "seconds",
+    title: "Длина",
+    align: "end",
+    render: (t) =>
+      \`\${Math.floor(t.seconds / 60)}:\${String(t.seconds % 60).padStart(2, "0")}\`,
+  },
+  {
+    key: "plays",
+    title: "Прослушивания",
+    align: "end",
+    render: (t) => t.plays.toLocaleString("ru-RU"),
+  },
+  {
+    key: "status",
+    title: "Статус",
+    value: (t) => statuses[t.status][0],
+    render: (t) => (
+      <U.Badge size="sm" tone={statuses[t.status][1]}>
+        {statuses[t.status][0]}
+      </U.Badge>
+    ),
+  },
+];
+
+export default function DataTableExample() {
+  return (
+    <Playground
+      stretch
+      knobs={{
+        selectable: { value: true },
+        searchable: { value: true },
+        dense: { value: false },
+        striped: { value: false },
+        loading: { value: false },
+      }}
+      code={(v) =>
+        jsx("DataTable", {
+          caption: "Треки",
+          columns: expr("columns"),
+          rows: expr("tracks"),
+          rowKey: expr("(t) => t.id"),
+          defaultSort: expr('{ key: "plays", direction: "desc" }'),
+          pageSize: 4,
+          selectable: v.selectable,
+          searchable: v.searchable,
+          dense: v.dense,
+          striped: v.striped,
+          loading: v.loading,
+        })
+      }
+    >
+      {(v) => (
+        <U.DataTable
+          style={{ width: "min(100%, 48rem)" }}
+          caption="Треки"
+          columns={columns}
+          rows={tracks}
+          rowKey={(t) => t.id}
+          defaultSort={{ key: "plays", direction: "desc" }}
+          pageSize={4}
+          selectable={v.selectable}
+          searchable={v.searchable}
+          dense={v.dense}
+          striped={v.striped}
+          loading={v.loading}
+        />
+      )}
+    </Playground>
+  );
+}
 `,_e=`export default {\r
   name: "DataTable",\r
   description: "Таблица истории и состояния данных",\r
   category: "feedback",\r
   wide: true,\r
 } as const;\r
-`,Pe=`import { useId, useLayoutEffect, useRef, useState } from "react";\r
+`,we=`import { useId, useLayoutEffect, useRef, useState } from "react";\r
 import { mark, useControllable } from "../../../core/base";\r
 import { Button } from "../../controls/Button/Button";\r
 import { IconButton } from "../../controls/IconButton/IconButton";\r
@@ -4508,7 +4901,7 @@ export default function DialogExample() {\r
     </>\r
   );\r
 }\r
-`,we=`export default {\r
+`,Pe=`export default {\r
   name: "Dialog",\r
   description: "Модальное окно и управление фокусом",\r
   category: "layout",\r
@@ -4696,7 +5089,7 @@ export const MenuItem = (p: MenuItemProps) => {\r
     </button>\r
   );\r
 };\r
-`,Fe=`import { Card, Divider, MenuItem, Stack } from "@ad-voice/ui";\r
+`,Le=`import { Card, Divider, MenuItem, Stack } from "@ad-voice/ui";\r
 \r
 /** MenuItem is what Menu renders for each entry; use it to build a custom menu surface. */\r
 export default function MenuItemExample() {\r
@@ -4711,7 +5104,7 @@ export default function MenuItemExample() {\r
     </Card>\r
   );\r
 }\r
-`,Le=`export default {\r
+`,Fe=`export default {\r
   name: "MenuItem",\r
   description: "Действие меню, иконка и опасное состояние",\r
   category: "navigation",\r
@@ -4760,7 +5153,7 @@ export default function MessageBarExample() {\r
   description: "Сообщение внутри карточки",\r
   category: "feedback",\r
 } as const;\r
-`,Oe=`import { useLayoutEffect, useRef } from "react";\r
+`,$e=`import { useLayoutEffect, useRef } from "react";\r
 import { cssRem, mark } from "../../../core/base";\r
 import { type PopoverProps } from "../shared";\r
 \r
@@ -4860,7 +5253,7 @@ export const Popover = (p: PopoverProps) => {\r
     </div>\r
   );\r
 };\r
-`,$e=`import { useRef, useState } from "react";\r
+`,Oe=`import { useRef, useState } from "react";\r
 import { Button, Popover, Slider, Stack, Typography } from "@ad-voice/ui";\r
 \r
 export default function PopoverExample() {\r
@@ -4886,12 +5279,12 @@ export default function PopoverExample() {\r
     </>\r
   );\r
 }\r
-`,Ge=`export default {\r
+`,Ue=`export default {\r
   name: "Popover",\r
   description: "Привязанная всплывающая поверхность",\r
   category: "navigation",\r
 } as const;\r
-`,Ue=`import { clamp, mark } from "../../../core/base";\r
+`,Ge=`import { clamp, mark } from "../../../core/base";\r
 import { type ProgressBarProps } from "../shared";\r
 \r
 export const ProgressBar = (p: ProgressBarProps) => {\r
@@ -5130,90 +5523,132 @@ export default function ToastExample() {\r
   description: "Короткое уведомление без изменения разметки",\r
   category: "feedback",\r
 } as const;\r
-`,rr=`import type { ReactNode, RefObject, KeyboardEventHandler } from "react";\r
-import type { CommonProps, Tone } from "../../core/base";\r
-export interface DialogProps extends CommonProps {\r
-  open?: boolean;\r
-  defaultOpen?: boolean;\r
-  onOpenChange?: (open: boolean) => void;\r
-  title?: ReactNode;\r
-  description?: ReactNode;\r
-  confirmLabel?: string;\r
-  cancelLabel?: string | false;\r
-  danger?: boolean;\r
-  onConfirm?: () => boolean | void | Promise<boolean | void>;\r
-}\r
-export interface PopoverProps extends CommonProps {\r
-  open?: boolean;\r
-  onOpenChange?: (open: boolean) => void;\r
-  anchorRef?: RefObject<HTMLElement | null>;\r
-  label?: string;\r
-  role?: "dialog" | "menu" | "listbox";\r
-  onKeyDown?: KeyboardEventHandler<HTMLDivElement>;\r
-  align?: "start" | "end";\r
-  matchAnchorWidth?: boolean;\r
-  /** Move focus into the popover when it opens (default). Off for comboboxes that keep typing focus. */\r
-  autoFocus?: boolean;\r
-}\r
-export interface MenuItemData {\r
-  id?: string;\r
-  label?: string;\r
-  icon?: string;\r
-  endIcon?: string;\r
-  disabled?: boolean;\r
-  danger?: boolean;\r
-  separator?: boolean;\r
-  onSelect?: () => void;\r
-}\r
-export interface MenuItemProps extends CommonProps, MenuItemData {}\r
-export interface MenuProps extends PopoverProps {\r
-  items?: MenuItemData[];\r
-}\r
-export interface ToastProps extends CommonProps {\r
-  message?: ReactNode;\r
-  open?: boolean;\r
-  duration?: number;\r
-  onClose?: () => void;\r
-  floating?: boolean;\r
-}\r
-export interface BadgeProps extends CommonProps {\r
-  label?: string;\r
-}\r
-export interface StatusIndicatorProps extends CommonProps {\r
-  status?: Tone;\r
-  label?: ReactNode;\r
-}\r
-export interface ProgressBarProps extends CommonProps {\r
-  value?: number;\r
-  max?: number;\r
-  label?: string;\r
-  indeterminate?: boolean;\r
-}\r
-export interface StepsProps extends CommonProps {\r
-  steps?: string[];\r
-  current?: number;\r
-}\r
-export interface EmptyStateProps extends CommonProps {\r
-  title?: string;\r
-  description?: string;\r
-  icon?: string;\r
-  action?: ReactNode;\r
-}\r
-export interface KeyValueListProps extends CommonProps {\r
-  items?: Array<[ReactNode, ReactNode]>;\r
-}\r
-export interface DataTableProps extends CommonProps {\r
-  columns?: string[];\r
-  rows?: ReactNode[][];\r
-  caption?: string;\r
-}\r
-export interface CollapsibleSectionProps extends CommonProps {\r
-  title?: string;\r
-  icon?: string;\r
-  open?: boolean;\r
-  defaultOpen?: boolean;\r
-  onOpenChange?: (open: boolean) => void;\r
-}\r
+`,rr=`import type { ReactNode, RefObject, KeyboardEventHandler } from "react";
+import type { CommonProps, Tone } from "../../core/base";
+export interface DialogProps extends CommonProps {
+  open?: boolean;
+  defaultOpen?: boolean;
+  onOpenChange?: (open: boolean) => void;
+  title?: ReactNode;
+  description?: ReactNode;
+  confirmLabel?: string;
+  cancelLabel?: string | false;
+  danger?: boolean;
+  onConfirm?: () => boolean | void | Promise<boolean | void>;
+}
+export interface PopoverProps extends CommonProps {
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
+  anchorRef?: RefObject<HTMLElement | null>;
+  label?: string;
+  role?: "dialog" | "menu" | "listbox";
+  onKeyDown?: KeyboardEventHandler<HTMLDivElement>;
+  align?: "start" | "end";
+  matchAnchorWidth?: boolean;
+  /** Move focus into the popover when it opens (default). Off for comboboxes that keep typing focus. */
+  autoFocus?: boolean;
+}
+export interface MenuItemData {
+  id?: string;
+  label?: string;
+  icon?: string;
+  endIcon?: string;
+  disabled?: boolean;
+  danger?: boolean;
+  separator?: boolean;
+  onSelect?: () => void;
+}
+export interface MenuItemProps extends CommonProps, MenuItemData {}
+export interface MenuProps extends PopoverProps {
+  items?: MenuItemData[];
+}
+export interface ToastProps extends CommonProps {
+  message?: ReactNode;
+  open?: boolean;
+  duration?: number;
+  onClose?: () => void;
+  floating?: boolean;
+}
+export interface BadgeProps extends CommonProps {
+  label?: string;
+}
+export interface StatusIndicatorProps extends CommonProps {
+  status?: Tone;
+  label?: ReactNode;
+}
+export interface ProgressBarProps extends CommonProps {
+  value?: number;
+  max?: number;
+  label?: string;
+  indeterminate?: boolean;
+}
+export interface StepsProps extends CommonProps {
+  steps?: string[];
+  current?: number;
+}
+export interface EmptyStateProps extends CommonProps {
+  title?: string;
+  description?: string;
+  icon?: string;
+  action?: ReactNode;
+}
+export interface KeyValueListProps extends CommonProps {
+  items?: Array<[ReactNode, ReactNode]>;
+}
+/** A row of a table: named fields, or the cells in column order. */
+export type DataTableRow = Record<string, unknown> | ReactNode[];
+export interface DataTableColumn<T extends DataTableRow = DataTableRow> {
+  /** Field of the row (or the cell index for array rows). */
+  key: string;
+  title: ReactNode;
+  align?: "start" | "center" | "end";
+  width?: string;
+  /** Click the header to sort; on by default. */
+  sortable?: boolean;
+  /** Cell content; the raw field by default. */
+  render?: (row: T, index: number) => ReactNode;
+  /** What sorting and search look at; the raw field by default. */
+  value?: (row: T) => string | number;
+}
+export type DataTableSort = { key: string; direction: "asc" | "desc" };
+export interface DataTableProps<
+  T extends DataTableRow = DataTableRow,
+> extends CommonProps {
+  /** Column titles, or full column descriptions. */
+  columns?: Array<string | DataTableColumn<T>>;
+  rows?: T[];
+  caption?: ReactNode;
+  /** Stable id of a row, for selection; its index by default. */
+  rowKey?: (row: T, index: number) => string;
+  sort?: DataTableSort | null;
+  defaultSort?: DataTableSort | null;
+  onSortChange?: (sort: DataTableSort | null) => void;
+  /** Checkboxes to pick rows, with "select all" in the header. */
+  selectable?: boolean;
+  selected?: string[];
+  defaultSelected?: string[];
+  onSelectionChange?: (keys: string[]) => void;
+  /** A search field over every column. */
+  searchable?: boolean;
+  /** Rows per page; everything on one page by default. */
+  pageSize?: number;
+  /** Scroll inside the table with a sticky header beyond this height. */
+  maxHeight?: string;
+  dense?: boolean;
+  striped?: boolean;
+  /** Placeholder rows while data loads. */
+  loading?: boolean;
+  /** Shown when there are no rows (or none match the search). */
+  empty?: ReactNode;
+  onRowClick?: (row: T, index: number) => void;
+}
+export interface CollapsibleSectionProps extends CommonProps {
+  title?: string;
+  icon?: string;
+  open?: boolean;
+  defaultOpen?: boolean;
+  onOpenChange?: (open: boolean) => void;
+}
 `,tr=`import {\r
   createContext,\r
   useContext,\r
@@ -5541,69 +5976,133 @@ export default function FormFieldsExample() {\r
   category: "fields",\r
   wide: true,\r
 };\r
-`,cr=`import { type CommonProps, type TokenStyle } from "../../../core/base";\r
-export interface ThemeProviderProps extends CommonProps {\r
-  theme?: "ruby" | "green" | "violet" | "light";\r
-  accent?: string;\r
-  tokens?: Record<string, string>;\r
-}\r
-export const ThemeProvider = ({\r
-  theme = "ruby",\r
-  accent,\r
-  tokens = {},\r
-  style,\r
-  children,\r
-  id,\r
-  className,\r
-}: ThemeProviderProps) => {\r
-  const vars: TokenStyle = { ...style };\r
-  for (const [key, value] of Object.entries(tokens))\r
-    vars[(key.startsWith("--") ? key : \`--ad-\${key}\`) as \`--\${string}\`] = value;\r
-  if (accent) {\r
-    vars["--ad-red"] = accent;\r
-    vars["--ad-pink"] = accent;\r
-  }\r
-  return (\r
-    <div\r
-      id={id}\r
-      className={\`ad-theme \${className ?? ""}\`}\r
-      style={vars}\r
-      data-ad-component="ThemeProvider"\r
-      data-ad-theme={theme}\r
-    >\r
-      {children}\r
-    </div>\r
-  );\r
-};\r
-`,pr=`import { useState } from "react";\r
-import {\r
-  Button,\r
-  Card,\r
-  Stack,\r
-  TextField,\r
-  ThemePicker,\r
-  ThemeProvider,\r
-} from "@ad-voice/ui";\r
-\r
-type Theme = "ruby" | "light" | "green" | "violet";\r
-\r
-export default function ThemeProviderExample() {\r
-  const [theme, setTheme] = useState<Theme>("ruby");\r
-  return (\r
-    <ThemeProvider theme={theme}>\r
-      <Stack gap={4}>\r
-        <ThemePicker value={theme} onValueChange={setTheme} />\r
-        <Card material="glass" title="Предпросмотр темы">\r
-          <Stack direction={{ base: "column", sm: "row" }} gap={2}>\r
-            <TextField placeholder="Поле ввода" />\r
-            <Button variant="primary">Применить</Button>\r
-          </Stack>\r
-        </Card>\r
-      </Stack>\r
-    </ThemeProvider>\r
-  );\r
-}\r
-`,dr=`export default {
+`,cr=`import { type CommonProps, type TokenStyle } from "../../../core/base";
+
+/** Ready colour pairs: [primary, secondary]. Everything else is derived from the pair. */
+export const themes = {
+  ruby: ["#ff244c", "#ff7c97"],
+  light: ["#e0a43a", "#f3d38f"],
+  green: ["#10c99a", "#7cf3d0"],
+  violet: ["#9b5cff", "#d3a8ff"],
+} as const;
+export type ThemeName = keyof typeof themes;
+
+export interface ThemeProviderProps extends CommonProps {
+  theme?: ThemeName;
+  /** Main colour; overrides the theme's. The whole palette is built from it and \`secondary\`. */
+  primary?: string;
+  /** Light accent colour for highlights and glints; overrides the theme's. */
+  secondary?: string;
+  /** Older name for \`primary\`. */
+  accent?: string;
+  /** Any token by name (\`primary-700\`, \`neutral-900\`, \`--ad-text\`…), for full control. */
+  tokens?: Record<string, string>;
+}
+
+/** HSL hue of a #rrggbb colour, in degrees. */
+function hue(hex: string) {
+  const [r, g, b] = [1, 3, 5].map(
+    (i) => parseInt(hex.slice(i, i + 2), 16) / 255,
+  );
+  const max = Math.max(r, g, b);
+  const delta = max - Math.min(r, g, b);
+  if (!delta) return 0;
+  const h =
+    max === r
+      ? ((g - b) / delta) % 6
+      : max === g
+        ? (b - r) / delta + 2
+        : (r - g) / delta + 4;
+  return (h * 60 + 360) % 360;
+}
+
+/**
+ * Applies a theme: the primary/secondary pair sets the palette, painted artwork (canvas and
+ * vector illustrations, drawn in ruby) is turned to the primary's hue.
+ */
+export const ThemeProvider = ({
+  theme = "ruby",
+  primary,
+  secondary,
+  accent,
+  tokens = {},
+  style,
+  children,
+  id,
+  className,
+}: ThemeProviderProps) => {
+  const main = primary ?? accent ?? themes[theme][0];
+  const vars: TokenStyle = {
+    ...style,
+    "--ad-primary": main,
+    "--ad-secondary": secondary ?? themes[theme][1],
+  };
+  if (/^#[0-9a-f]{6}$/i.test(main))
+    vars["--ad-hue-shift"] =
+      \`\${Math.round(hue(main) - hue(themes.ruby[0]))}deg\`;
+  for (const [key, value] of Object.entries(tokens))
+    vars[(key.startsWith("--") ? key : \`--ad-\${key}\`) as \`--\${string}\`] = value;
+  return (
+    <div
+      id={id}
+      className={\`ad-theme \${className ?? ""}\`}
+      style={vars}
+      data-ad-component="ThemeProvider"
+      data-ad-theme={theme}
+    >
+      {children}
+    </div>
+  );
+};
+`,dr=`import { useEffect } from "react";
+import { Playground, U, jsx, useSiteTheme } from "../../../dev/exampleHelpers";
+
+const names = ["ruby", "light", "green", "violet"] as const;
+
+/** The chosen theme also becomes the theme of the docs site. */
+function FollowSite({ theme }: { theme: (typeof names)[number] }) {
+  const site = useSiteTheme();
+  useEffect(() => {
+    if (theme !== site.theme) site.set({ theme });
+  }, [theme]);
+  return null;
+}
+
+export default function ThemeProviderExample() {
+  const site = useSiteTheme();
+  return (
+    <Playground
+      stretch
+      knobs={{ theme: { options: names, value: site.theme } }}
+      code={(v) =>
+        jsx(
+          "ThemeProvider",
+          { theme: v.theme },
+          '<Button variant="primary">Применить</Button>',
+        )
+      }
+    >
+      {(v) => (
+        <U.ThemeProvider theme={v.theme}>
+          <FollowSite theme={v.theme} />
+          <U.Card material="glass" title="Предпросмотр темы">
+            <U.Stack gap={3}>
+              <U.Stack direction={{ base: "column", sm: "row" }} gap={2}>
+                <U.TextField placeholder="Поле ввода" />
+                <U.Button variant="primary">Применить</U.Button>
+              </U.Stack>
+              <U.Slider defaultValue={60} label="Уровень" />
+              <U.Typography variant="caption" tone="muted">
+                Свои цвета — в «Тема» в верхней панели сайта.
+              </U.Typography>
+            </U.Stack>
+          </U.Card>
+        </U.ThemeProvider>
+      )}
+    </Playground>
+  );
+}
+`,pr=`export default {
   name: "ThemeProvider",
   description:
     "Тема и цветовые токены; находится рядом с типографикой как часть foundation.",
@@ -5786,7 +6285,7 @@ export function HostSeal() {\r
     </span>\r
   );\r
 }\r
-`,br=`import { Playground, U, jsx, sizes } from "../../../dev/exampleHelpers";\r
+`,hr=`import { Playground, U, jsx, sizes } from "../../../dev/exampleHelpers";\r
 \r
 export default function AvatarExample() {\r
   return (\r
@@ -5807,12 +6306,12 @@ export default function AvatarExample() {\r
     </Playground>\r
   );\r
 }\r
-`,hr=`export default {\r
+`,br=`export default {\r
   name: "Avatar",\r
   description: "Инициалы в неоновом кольце или анимированная печать ведущего с короной",\r
   category: "typography",\r
 } as const;\r
-`,xr=`import { mark, type CommonProps } from "../../../core/base";\r
+`,yr=`import { mark, type CommonProps } from "../../../core/base";\r
 import { SvgAsset } from "../../../core/artwork";\r
 import { illustrations } from "../shared";\r
 \r
@@ -5822,7 +6321,7 @@ export const BrandMark = (p: CommonProps) => (\r
     <small>KARAOKE STUDIO</small>\r
   </div>\r
 );\r
-`,yr=`import { BrandMark } from "@ad-voice/ui";\r
+`,xr=`import { BrandMark } from "@ad-voice/ui";\r
 \r
 export default function BrandMarkExample() {\r
   return <BrandMark />;\r
@@ -5835,7 +6334,7 @@ export default function BrandMarkExample() {\r
 `,_r=`import { part } from "../../../core/base";\r
 \r
 export const ButtonGroup = part("ButtonGroup", "div");\r
-`,Pr=`import { Playground, U, jsx, sizes } from "../../../dev/exampleHelpers";\r
+`,wr=`import { Playground, U, jsx, sizes } from "../../../dev/exampleHelpers";\r
 \r
 export default function ButtonGroupExample() {\r
   return (\r
@@ -5878,7 +6377,7 @@ export default function ButtonGroupExample() {\r
   description: "Согласованная группа кнопок",\r
   category: "buttons",\r
 } as const;\r
-`,wr=`import React, { createElement, useRef } from "react";\r
+`,Pr=`import React, { createElement, useRef } from "react";\r
 import { mark } from "../../../core/base";\r
 import { useBorder } from "../../../core/motion/hooks";\r
 import { Header } from "../Header/Header";\r
@@ -6046,12 +6545,12 @@ export default function DividerExample() {\r
     </Stack>\r
   );\r
 }\r
-`,Fr=`export default {\r
+`,Lr=`export default {\r
   name: "Divider",\r
   description: "Разделитель по горизонтали или вертикали",\r
   category: "layout",\r
 } as const;\r
-`,Lr=`import type { ElementType, HTMLAttributes } from "react";
+`,Fr=`import type { ElementType, HTMLAttributes } from "react";
 import { classes } from "../../../core/base";
 import {
   responsiveVars,
@@ -6255,7 +6754,7 @@ export const Header = ({\r
     </Component>\r
   );\r
 };\r
-`,Or=`import { Playground, U, jsx } from "../../../dev/exampleHelpers";\r
+`,$r=`import { Playground, U, jsx } from "../../../dev/exampleHelpers";\r
 \r
 export default function HeaderExample() {\r
   return (\r
@@ -6292,12 +6791,12 @@ export default function HeaderExample() {\r
     </Playground>\r
   );\r
 }\r
-`,$r=`export default {\r
+`,Or=`export default {\r
   name: "Header",\r
   description: "Единый заголовок для страницы, секции, карточки и диалога.",\r
   category: "layout",\r
 };\r
-`,Gr=`import React from "react";\r
+`,Ur=`import React from "react";\r
 import { mark } from "../../../core/base";\r
 import { SvgAsset } from "../../../core/artwork";\r
 import { icons, type IconProps } from "../shared";\r
@@ -6329,7 +6828,7 @@ export const Icon = ({\r
     />\r
   </span>\r
 );\r
-`,Ur=`import { Compare, Playground, U, jsx } from "../../../dev/exampleHelpers";\r
+`,Gr=`import { Compare, Playground, U, jsx } from "../../../dev/exampleHelpers";\r
 \r
 const names = ["mic", "headphones", "music", "wave", "settings", "trash"];\r
 \r
@@ -6675,7 +7174,7 @@ export default function ToolbarExample() {\r
   category: "layout",
   wide: true,
 } as const;
-`,pt=`import type { ElementType, ReactNode } from "react";\r
+`,dt=`import type { ElementType, ReactNode } from "react";\r
 import {\r
   type CommonProps,\r
   type Material,\r
@@ -6741,7 +7240,7 @@ export interface IllustrationProps extends CommonProps {\r
   framed?: boolean;\r
   fit?: "contain" | "cover";\r
 }\r
-`,dt=`import { useEffect, useRef, useState } from "react";
+`,pt=`import { useEffect, useRef, useState } from "react";
 import { clamp, mark, timeText, useControllable } from "../../../core/base";
 import { IconButton } from "../../controls/IconButton/IconButton";
 import { Slider } from "../../controls/Slider/Slider";
@@ -7002,9 +7501,9 @@ export function LevelMeter({
       >
         <defs>
           <linearGradient id={\`\${id}-wave\`}>
-            <stop stopColor="#8c0d34" />
+            <stop stopColor="var(--ad-primary-700)" />
             <stop offset="0.52" stopColor="var(--ad-red)" />
-            <stop offset="1" stopColor="#ffd3df" />
+            <stop offset="1" stopColor="var(--ad-secondary-100)" />
           </linearGradient>
         </defs>
         <line className="ad-level-meter-axis" x2={WIDTH} y1={MID} y2={MID} />
@@ -7095,12 +7594,12 @@ export default function LevelMeterExample() {
     </Playground>
   );
 }
-`,vt=`export default {\r
-  name: "LevelMeter",\r
-  description: "Сегментированный индикатор уровня",\r
-  category: "audio",\r
-} as const;\r
-`,bt=`import React, {
+`,vt=`export default {
+  name: "LevelMeter",
+  description: "Живой уровень сигнала: бегущая зеркальная волна, слушает микрофон сам",
+  category: "audio",
+} as const;
+`,ht=`import React, {
   useEffect,
   useLayoutEffect,
   useMemo,
@@ -8002,7 +8501,7 @@ export const RotaryKnob = (p: RotaryKnobProps) => {
     </div>
   );
 };
-`,ht=`import { Playground, U, expr, jsx, sizes } from "../../../dev/exampleHelpers";
+`,bt=`import { Playground, U, expr, jsx, sizes } from "../../../dev/exampleHelpers";
 
 export default function RotaryKnobExample() {
   return (
@@ -8035,13 +8534,13 @@ export default function RotaryKnobExample() {
     </Playground>
   );
 }
-`,xt=`export default {\r
+`,yt=`export default {\r
   name: "RotaryKnob",\r
   description:\r
-    "Точный интерактивный React-порт premium-knob-interactive-neon(2).html.",\r
+    "Студийная ручка: вращение, клик по шкале, ввод числа, колесо и клавиши",\r
   category: "audio",\r
 } as const;\r
-`,yt=`import { useSvgId } from "../../../core/artwork";
+`,xt=`import { useSvgId } from "../../../core/artwork";
 import { type CSSProperties } from "react";
 import { mark } from "../../../core/base";
 import { type SparklineProps } from "../shared";
@@ -8069,7 +8568,7 @@ export const Sparkline = (p: SparklineProps) => {
       aria-label={p.label}
       aria-hidden={!p.label}
       style={
-        { ...p.style, "--ad-spark": p.color ?? "#ff416a" } as CSSProperties
+        { ...p.style, "--ad-spark": p.color ?? "var(--ad-primary)" } as CSSProperties
       }
     >
       <defs>
@@ -8107,7 +8606,7 @@ export default function SparklineExample() {
   description: "Небольшой график без осей",\r
   category: "audio",\r
 } as const;\r
-`,Pt=`import { useSvgId } from "../../../core/artwork";
+`,wt=`import { useSvgId } from "../../../core/artwork";
 import { useRef } from "react";
 import { mark, type CommonProps } from "../../../core/base";
 import { useDecoration } from "../../../core/motion/hooks";
@@ -8148,7 +8647,7 @@ export const WaveDecoration = (p: CommonProps) => {
             <stop
               key={offset}
               offset={offset}
-              stopColor="#ff426d"
+              stopColor="var(--ad-primary)"
               stopOpacity={opacity}
             />
           ))}
@@ -8173,7 +8672,7 @@ export const WaveDecoration = (p: CommonProps) => {
 export default function WaveDecorationExample() {
   return <WaveDecoration />;
 }
-`,wt=`export default {\r
+`,Pt=`export default {\r
   name: "WaveDecoration",\r
   description: "Декоративные линии с меняющейся формой",\r
   category: "motion",\r
@@ -8380,14 +8879,14 @@ export function Waveform({
           </clipPath>
           {/* Brushed silver: brightest along the midline, fading to the edges. */}
           <linearGradient id={\`\${id}-silver\`} x1="0" x2="0" y1="0" y2="1">
-            <stop offset="0" stopColor="#d9cfdc" stopOpacity="0.35" />
+            <stop offset="0" stopColor="var(--ad-neutral-300)" stopOpacity="0.35" />
             <stop offset="0.5" stopColor="#fff" stopOpacity="0.95" />
-            <stop offset="1" stopColor="#d9cfdc" stopOpacity="0.35" />
+            <stop offset="1" stopColor="var(--ad-neutral-300)" stopOpacity="0.35" />
           </linearGradient>
           <linearGradient id={\`\${id}-solid\`} x1="0" x2="0" y1="0" y2="1">
-            <stop offset="0" stopColor="#efe6f0" stopOpacity="0.8" />
+            <stop offset="0" stopColor="var(--ad-neutral-200)" stopOpacity="0.8" />
             <stop offset="0.5" stopColor="#fff" />
-            <stop offset="1" stopColor="#efe6f0" stopOpacity="0.8" />
+            <stop offset="1" stopColor="var(--ad-neutral-200)" stopOpacity="0.8" />
           </linearGradient>
           {/* Light builds up along the played part and peaks at the cursor. */}
           <linearGradient
@@ -8396,12 +8895,12 @@ export function Waveform({
             x1="0"
             x2={Math.max(1, played)}
           >
-            <stop offset="0" stopColor="#6b0b2c" />
+            <stop offset="0" stopColor="var(--ad-primary-700)" />
             <stop
               offset="0.6"
               stopColor="var(--ad-wave-color, var(--ad-red))"
             />
-            <stop offset="1" stopColor="#ffd9e3" />
+            <stop offset="1" stopColor="var(--ad-secondary-100)" />
           </linearGradient>
           <linearGradient id={\`\${id}-depth\`} x1="0" x2="0" y1="0" y2="1">
             {/* Lit from above: the upper half catches light, the lower sinks into shadow. */}
@@ -8412,7 +8911,7 @@ export function Waveform({
           </linearGradient>
           <radialGradient id={\`\${id}-spot\`}>
             <stop offset="0" stopColor="#fff" stopOpacity="0.9" />
-            <stop offset="1" stopColor="#ff2f6a" stopOpacity="0" />
+            <stop offset="1" stopColor="var(--ad-primary)" stopOpacity="0" />
           </radialGradient>
           <filter
             id={\`\${id}-bloom\`}
@@ -8853,8 +9352,14 @@ export default function RouterExample() {\r
     "Typed universal routing with params, redirects and an optional access predicate — without project-specific role keys.",
   category: "navigation",
 };
-`,Nt=`export { ThemeProvider } from "./components/foundation/ThemeProvider/ThemeProvider";\r
-export type { ThemeProviderProps } from "./components/foundation/ThemeProvider/ThemeProvider";\r
+`,Nt=`export {\r
+  ThemeProvider,\r
+  themes,\r
+} from "./components/foundation/ThemeProvider/ThemeProvider";\r
+export type {\r
+  ThemeName,\r
+  ThemeProviderProps,\r
+} from "./components/foundation/ThemeProvider/ThemeProvider";\r
 export { useReducedMotion, useMotion } from "./core/providers/context";\r
 export {\r
   useBorder,\r
@@ -8924,7 +9429,7 @@ export function SvgAsset({
     ...(component ? { "data-ad-component": component } : {}),
   });
 }
-`,Ft=`import { createElement, useCallback, useRef, useState } from "react";\r
+`,Lt=`import { createElement, useCallback, useRef, useState } from "react";\r
 import type { CSSProperties, ReactNode, Ref } from "react";\r
 \r
 export type Material =\r
@@ -9085,7 +9590,7 @@ export function ripple(host: HTMLElement, clientX: number, clientY: number) {\r
   ring.addEventListener("animationend", () => ring.remove());\r
   host.append(ring);\r
 }\r
-`,Lt=`export interface MotionScope {\r
+`,Ft=`export interface MotionScope {\r
   root: Document | ShadowRoot | Element;\r
   enabled: boolean;\r
   time: number;\r
@@ -9441,7 +9946,7 @@ export function useMotion() {
   }, []);
   return explicit ?? !reduced;
 }
-`,Ot=`import type { CSSProperties } from "react";
+`,$t=`import type { CSSProperties } from "react";
 
 export type Breakpoint = "base" | "sm" | "md" | "lg" | "xl";
 export type Responsive<T> = T | Partial<Record<Breakpoint, T>>;
@@ -9481,251 +9986,291 @@ export function responsiveVars<T>(
   }
   return result as CSSProperties;
 }
-`,$t=`import {\r
-  createContext,\r
-  useContext,\r
-  useEffect,\r
-  useRef,\r
-  useState,\r
-  type ReactNode,\r
-} from "react";\r
-import * as UI from "../index";\r
-import * as Editor from "../editor";\r
-\r
-export const U = { ...UI, ...Editor };\r
-\r
-/** True inside overview tiles: a playground shows only its specimens, without controls. */\r
-export const ExamplePreviewContext = createContext(false);\r
-\r
-/** Knobs that pick a look rather than tune it: all of their options are shown side by side. */\r
-const spreadKeys = ["variant", "tone", "status", "material", "effect"];\r
-\r
-/** The docs page listens here to show the code of the current playground state. */\r
-export const ExampleCodeContext = createContext<\r
-  ((code: string) => void) | null\r
->(null);\r
-\r
-/** A prop the reader can change: a list of options (segmented) or a flag (switch). */\r
-export type Knob =\r
-  { options: readonly string[]; value: string } | { value: boolean };\r
-type KnobValue<K> = K extends { options: readonly (infer O)[] }\r
-  ? O\r
-  : K extends { value: infer V }\r
-    ? V\r
-    : never;\r
-export type KnobValues<K extends Record<string, Knob>> = {\r
-  [P in keyof K]: KnobValue<K[P]>;\r
-};\r
-\r
-/** Marks a prop value that is printed as an expression: \`{...}\` instead of \`"..."\`. */\r
-export const expr = (code: string) => ({ expr: code });\r
-\r
-/** Prints a JSX element; undefined/false props are left out, short elements stay on one line. */\r
-export function jsx(\r
-  name: string,\r
-  props: Record<string, unknown>,\r
-  children?: string,\r
-): string {\r
-  const attrs = Object.entries(props).flatMap(([key, value]) => {\r
-    if (value === undefined || value === false) return [];\r
-    if (value === true) return [key];\r
-    if (typeof value === "string") return [\`\${key}="\${value}"\`];\r
-    if (value && typeof value === "object" && "expr" in value)\r
-      return [\`\${key}={\${(value as { expr: string }).expr}}\`];\r
-    return [\`\${key}={\${JSON.stringify(value)}}\`];\r
-  });\r
-  const close = children ? \`>\${children}</\${name}>\` : " />";\r
-  const inline = \`<\${name}\${attrs.map((a) => " " + a).join("")}\${close}\`;\r
-  if (inline.length <= 56) return inline;\r
-  const body = attrs.map((a) => \`\\n  \${a}\`).join("");\r
-  if (!children) return \`<\${name}\${body}\\n/>\`;\r
-  const open = attrs.length ? \`<\${name}\${body}\\n>\` : \`<\${name}>\`;\r
-  return \`\${open}\\n  \${children}\\n</\${name}>\`;\r
-}\r
-\r
-/** Values that differ from the knob defaults, so generated code shows only what was changed. */\r
-function changed<K extends Record<string, Knob>>(\r
-  knobs: K,\r
-  values: KnobValues<K>,\r
-): Partial<KnobValues<K>> {\r
-  const out: Partial<KnobValues<K>> = {};\r
-  for (const key in knobs)\r
-    if (values[key] !== knobs[key].value) out[key] = values[key];\r
-  return out;\r
-}\r
-\r
-const knobLabels: Record<string, string> = {\r
-  size: "Размер",\r
-  variant: "Вид",\r
-  disabled: "Disabled",\r
-  readOnly: "Read only",\r
-  error: "Ошибка",\r
-  required: "Обязательное",\r
-  clearable: "Очистка",\r
-  loading: "Загрузка",\r
-  icon: "Иконка",\r
-  description: "Подсказка",\r
-  round: "Круглая",\r
-  multiple: "Несколько файлов",\r
-  selected: "Выбрана",\r
-  tone: "Тон",\r
-  status: "Статус",\r
-  value: "Значение",\r
-  indeterminate: "Без значения",\r
-  material: "Материал",\r
-  border: "Анимированная рамка",\r
-  level: "Уровень",\r
-  compact: "Компактный",\r
-  surface: "Подложка",\r
-  segmented: "Сегменты",\r
-  role: "Роль",\r
-  active: "Активен",\r
-  bars: "Столбики",\r
-  playing: "Играет",\r
-  flicker: "Мерцание",\r
-  lines: "Строки",\r
-  circle: "Аватар",\r
-  effect: "Эффект",\r
-  max: "Наклон, °",\r
-  glare: "Блик",\r
-  floating: "Подпись внутри",\r
-  strands: "Нити",\r
-  stars: "Звёзды",\r
-  upload: "Облако загрузки",\r
-};\r
-\r
-/**\r
- * One live specimen with its props as controls. Replaces grids of near-identical copies:\r
- * the reader changes a prop and sees the component and its code update together.\r
- */\r
-export function Playground<K extends Record<string, Knob>>({\r
-  knobs,\r
-  code,\r
-  children,\r
-  stretch = false,\r
-  extra,\r
-}: {\r
-  knobs: K;\r
-  code: (values: KnobValues<K>, changes: Partial<KnobValues<K>>) => string;\r
-  children: (values: KnobValues<K>) => ReactNode;\r
-  /** Let the specimen take the stage width (fields) instead of its own size (buttons). */\r
-  stretch?: boolean;\r
-  /** Short comparison shown under the controls, e.g. all variants side by side. */\r
-  extra?: ReactNode;\r
-}) {\r
-  const [values, setValues] = useState(\r
-    () =>\r
-      Object.fromEntries(\r
-        Object.entries(knobs).map(([k, v]) => [k, v.value]),\r
-      ) as KnobValues<K>,\r
-  );\r
-  const report = useContext(ExampleCodeContext);\r
-  const preview = useContext(ExamplePreviewContext);\r
-  const spread = Object.keys(knobs).find(\r
-    (key) => spreadKeys.includes(key) && "options" in knobs[key],\r
-  ) as keyof K | undefined;\r
-  const looks = spread\r
-    ? (knobs[spread] as { options: readonly string[] }).options.map(\r
-        (option) => ({ option, values: { ...values, [spread]: option } }),\r
-      )\r
-    : [{ option: "", values }];\r
-  const source = looks\r
-    .map((look) => code(look.values, changed(knobs, look.values)))\r
-    .join("\\n\\n");\r
-  const reported = useRef("");\r
-  useEffect(() => {\r
-    if (report && reported.current !== source) {\r
-      reported.current = source;\r
-      report(source);\r
-    }\r
-  }, [report, source]);\r
-  const set = (key: keyof K, value: string | boolean) =>\r
-    setValues((old) => ({ ...old, [key]: value }));\r
-\r
-  return (\r
-    <div className="example-playground">\r
-      <div\r
-        className="example-stage"\r
-        data-stretch={stretch || undefined}\r
-        data-spread={spread ? true : undefined}\r
-      >\r
-        {spread\r
-          ? looks.map((look) => (\r
-              <figure key={look.option}>\r
-                {children(look.values)}\r
-                <figcaption>{look.option}</figcaption>\r
-              </figure>\r
-            ))\r
-          : children(values)}\r
-      </div>\r
-      {!preview && (\r
-        <div className="example-knobs">\r
-          {Object.entries(knobs)\r
-            .filter(([key]) => key !== spread)\r
-            .map(([key, knob]) =>\r
-              "options" in knob ? (\r
-                <div className="example-knob" key={key}>\r
-                  <span>{knobLabels[key] ?? key}</span>\r
-                  <U.SegmentedControl\r
-                    size="xs"\r
-                    label={knobLabels[key] ?? key}\r
-                    value={values[key] as string}\r
-                    onValueChange={(v) => set(key, v)}\r
-                    items={knob.options.map((o) => ({ value: o, label: o }))}\r
-                  />\r
-                </div>\r
-              ) : (\r
-                <U.Switch\r
-                  key={key}\r
-                  size="xs"\r
-                  label={knobLabels[key] ?? key}\r
-                  checked={values[key] as boolean}\r
-                  onValueChange={(v) => set(key, v)}\r
-                />\r
-              ),\r
-            )}\r
-        </div>\r
-      )}\r
-      {extra && !preview && <div className="example-extra">{extra}</div>}\r
-    </div>\r
-  );\r
-}\r
-\r
-/** Captioned specimens in one row, for comparisons that are clearer side by side. */\r
-export function Compare({\r
-  items,\r
-  captions = true,\r
-}: {\r
-  items: Array<{ label: string; node: ReactNode }>;\r
-  /** Hide captions when the specimens already show their name. */\r
-  captions?: boolean;\r
-}) {\r
-  return (\r
-    <div className="example-compare">\r
-      {items.map((item) => (\r
-        <figure key={item.label}>\r
-          {item.node}\r
-          {captions && <figcaption>{item.label}</figcaption>}\r
-        </figure>\r
-      ))}\r
-    </div>\r
-  );\r
-}\r
-\r
-export const sizes = ["xs", "sm", "md", "lg"] as const;\r
-export const buttonVariants = [\r
-  "primary",\r
-  "secondary",\r
-  "ghost",\r
-  "danger",\r
-] as const;\r
-export const inputVariants = ["outlined", "filled", "underlined"] as const;\r
-`,Gt=`export { PianoRollGrid } from "./components/editor/PianoRollGrid/PianoRollGrid";
+`,Ot=`import {
+  createContext,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+  type ReactNode,
+} from "react";
+import * as UI from "../index";
+import * as Editor from "../editor";
+
+export const U = { ...UI, ...Editor };
+
+/** The docs site's own theme. Theme examples drive it, so the whole site follows them. */
+export interface SiteTheme {
+  theme: UI.ThemeName;
+  primary: string;
+  secondary: string;
+  /** A new theme brings its own pair of colours unless colours are given too. */
+  set: (patch: Partial<Omit<SiteTheme, "set">>) => void;
+}
+export const SiteThemeContext = createContext<SiteTheme | null>(null);
+
+/** The site theme when the docs provide one, otherwise a local theme of the example. */
+export function useSiteTheme(): SiteTheme {
+  const site = useContext(SiteThemeContext);
+  const [local, setLocal] = useState({
+    theme: "ruby" as UI.ThemeName,
+    primary: UI.themes.ruby[0] as string,
+    secondary: UI.themes.ruby[1] as string,
+  });
+  return (
+    site ?? {
+      ...local,
+      set: (patch) =>
+        setLocal((current) => ({
+          ...current,
+          ...(patch.theme && {
+            primary: UI.themes[patch.theme][0],
+            secondary: UI.themes[patch.theme][1],
+          }),
+          ...patch,
+        })),
+    }
+  );
+}
+
+/** True inside overview tiles: a playground shows only its specimens, without controls. */
+export const ExamplePreviewContext = createContext(false);
+
+/** Knobs that pick a look rather than tune it: all of their options are shown side by side. */
+const spreadKeys = ["variant", "tone", "status", "material", "effect"];
+
+/** The docs page listens here to show the code of the current playground state. */
+export const ExampleCodeContext = createContext<
+  ((code: string) => void) | null
+>(null);
+
+/** A prop the reader can change: a list of options (segmented) or a flag (switch). */
+export type Knob =
+  { options: readonly string[]; value: string } | { value: boolean };
+type KnobValue<K> = K extends { options: readonly (infer O)[] }
+  ? O
+  : K extends { value: infer V }
+    ? V
+    : never;
+export type KnobValues<K extends Record<string, Knob>> = {
+  [P in keyof K]: KnobValue<K[P]>;
+};
+
+/** Marks a prop value that is printed as an expression: \`{...}\` instead of \`"..."\`. */
+export const expr = (code: string) => ({ expr: code });
+
+/** Prints a JSX element; undefined/false props are left out, short elements stay on one line. */
+export function jsx(
+  name: string,
+  props: Record<string, unknown>,
+  children?: string,
+): string {
+  const attrs = Object.entries(props).flatMap(([key, value]) => {
+    if (value === undefined || value === false) return [];
+    if (value === true) return [key];
+    if (typeof value === "string") return [\`\${key}="\${value}"\`];
+    if (value && typeof value === "object" && "expr" in value)
+      return [\`\${key}={\${(value as { expr: string }).expr}}\`];
+    return [\`\${key}={\${JSON.stringify(value)}}\`];
+  });
+  const close = children ? \`>\${children}</\${name}>\` : " />";
+  const inline = \`<\${name}\${attrs.map((a) => " " + a).join("")}\${close}\`;
+  if (inline.length <= 56) return inline;
+  const body = attrs.map((a) => \`\\n  \${a}\`).join("");
+  if (!children) return \`<\${name}\${body}\\n/>\`;
+  const open = attrs.length ? \`<\${name}\${body}\\n>\` : \`<\${name}>\`;
+  return \`\${open}\\n  \${children}\\n</\${name}>\`;
+}
+
+/** Values that differ from the knob defaults, so generated code shows only what was changed. */
+function changed<K extends Record<string, Knob>>(
+  knobs: K,
+  values: KnobValues<K>,
+): Partial<KnobValues<K>> {
+  const out: Partial<KnobValues<K>> = {};
+  for (const key in knobs)
+    if (values[key] !== knobs[key].value) out[key] = values[key];
+  return out;
+}
+
+const knobLabels: Record<string, string> = {
+  size: "Размер",
+  variant: "Вид",
+  disabled: "Disabled",
+  readOnly: "Read only",
+  error: "Ошибка",
+  required: "Обязательное",
+  clearable: "Очистка",
+  loading: "Загрузка",
+  icon: "Иконка",
+  description: "Подсказка",
+  round: "Круглая",
+  multiple: "Несколько файлов",
+  selected: "Выбрана",
+  tone: "Тон",
+  status: "Статус",
+  value: "Значение",
+  indeterminate: "Без значения",
+  material: "Материал",
+  border: "Анимированная рамка",
+  level: "Уровень",
+  compact: "Компактный",
+  surface: "Подложка",
+  segmented: "Сегменты",
+  role: "Роль",
+  active: "Активен",
+  bars: "Столбики",
+  playing: "Играет",
+  flicker: "Мерцание",
+  lines: "Строки",
+  circle: "Аватар",
+  effect: "Эффект",
+  max: "Наклон, °",
+  glare: "Блик",
+  floating: "Подпись внутри",
+  resize: "Ресайз",
+  theme: "Тема",
+  selectable: "Выбор строк",
+  searchable: "Поиск",
+  dense: "Плотная",
+  striped: "Зебра",
+  strands: "Нити",
+  stars: "Звёзды",
+  upload: "Облако загрузки",
+};
+
+/**
+ * One live specimen with its props as controls. Replaces grids of near-identical copies:
+ * the reader changes a prop and sees the component and its code update together.
+ */
+export function Playground<K extends Record<string, Knob>>({
+  knobs,
+  code,
+  children,
+  stretch = false,
+  extra,
+}: {
+  knobs: K;
+  code: (values: KnobValues<K>, changes: Partial<KnobValues<K>>) => string;
+  children: (values: KnobValues<K>) => ReactNode;
+  /** Let the specimen take the stage width (fields) instead of its own size (buttons). */
+  stretch?: boolean;
+  /** Short comparison shown under the controls, e.g. all variants side by side. */
+  extra?: ReactNode;
+}) {
+  const [values, setValues] = useState(
+    () =>
+      Object.fromEntries(
+        Object.entries(knobs).map(([k, v]) => [k, v.value]),
+      ) as KnobValues<K>,
+  );
+  const report = useContext(ExampleCodeContext);
+  const preview = useContext(ExamplePreviewContext);
+  const spread = Object.keys(knobs).find(
+    (key) => spreadKeys.includes(key) && "options" in knobs[key],
+  ) as keyof K | undefined;
+  const looks = spread
+    ? (knobs[spread] as { options: readonly string[] }).options.map(
+        (option) => ({ option, values: { ...values, [spread]: option } }),
+      )
+    : [{ option: "", values }];
+  const source = looks
+    .map((look) => code(look.values, changed(knobs, look.values)))
+    .join("\\n\\n");
+  const reported = useRef("");
+  useEffect(() => {
+    if (report && reported.current !== source) {
+      reported.current = source;
+      report(source);
+    }
+  }, [report, source]);
+  const set = (key: keyof K, value: string | boolean) =>
+    setValues((old) => ({ ...old, [key]: value }));
+
+  return (
+    <div className="example-playground">
+      <div
+        className="example-stage"
+        data-stretch={stretch || undefined}
+        data-spread={spread ? true : undefined}
+      >
+        {spread
+          ? looks.map((look) => (
+              <figure key={look.option}>
+                {children(look.values)}
+                <figcaption>{look.option}</figcaption>
+              </figure>
+            ))
+          : children(values)}
+      </div>
+      {!preview && (
+        <div className="example-knobs">
+          {Object.entries(knobs)
+            .filter(([key]) => key !== spread)
+            .map(([key, knob]) =>
+              "options" in knob ? (
+                <div className="example-knob" key={key}>
+                  <span>{knobLabels[key] ?? key}</span>
+                  <U.SegmentedControl
+                    size="xs"
+                    label={knobLabels[key] ?? key}
+                    value={values[key] as string}
+                    onValueChange={(v) => set(key, v)}
+                    items={knob.options.map((o) => ({ value: o, label: o }))}
+                  />
+                </div>
+              ) : (
+                <U.Switch
+                  key={key}
+                  size="xs"
+                  label={knobLabels[key] ?? key}
+                  checked={values[key] as boolean}
+                  onValueChange={(v) => set(key, v)}
+                />
+              ),
+            )}
+        </div>
+      )}
+      {extra && !preview && <div className="example-extra">{extra}</div>}
+    </div>
+  );
+}
+
+/** Captioned specimens in one row, for comparisons that are clearer side by side. */
+export function Compare({
+  items,
+  captions = true,
+}: {
+  items: Array<{ label: string; node: ReactNode }>;
+  /** Hide captions when the specimens already show their name. */
+  captions?: boolean;
+}) {
+  return (
+    <div className="example-compare">
+      {items.map((item) => (
+        <figure key={item.label}>
+          {item.node}
+          {captions && <figcaption>{item.label}</figcaption>}
+        </figure>
+      ))}
+    </div>
+  );
+}
+
+export const sizes = ["xs", "sm", "md", "lg"] as const;
+export const buttonVariants = [
+  "primary",
+  "secondary",
+  "ghost",
+  "danger",
+] as const;
+export const inputVariants = ["outlined", "filled", "underlined"] as const;
+`,Ut=`export { PianoRollGrid } from "./components/editor/PianoRollGrid/PianoRollGrid";
 export type {
   PianoRollGridProps,
   NoteGeometry,
 } from "./components/editor/shared";
-`,Ut=`export { Form, useForm, useFormContext } from "./components/forms/Form/Form";
+`,Gt=`export { Form, useForm, useFormContext } from "./components/forms/Form/Form";
 export type {
   FormApi,
   FormErrors,
@@ -9752,8 +10297,14 @@ export {\r
   useSmoothWheel,\r
   useTabShape,\r
 } from "./core/motion/hooks";\r
-export { ThemeProvider } from "./components/foundation/ThemeProvider/ThemeProvider";\r
-export type { ThemeProviderProps } from "./components/foundation/ThemeProvider/ThemeProvider";\r
+export {\r
+  ThemeProvider,\r
+  themes,\r
+} from "./components/foundation/ThemeProvider/ThemeProvider";\r
+export type {\r
+  ThemeName,\r
+  ThemeProviderProps,\r
+} from "./components/foundation/ThemeProvider/ThemeProvider";\r
 export { Typography } from "./components/foundation/Typography/Typography";\r
 export type {\r
   TypographyProps,\r
@@ -9920,5 +10471,5 @@ export type {
     bold: 700,
   },
 } as const;
-`,l=Object.entries(Object.assign({"../../../../packages/ui/src/components/artwork/DatabaseArt/DatabaseArt.tsx":c,"../../../../packages/ui/src/components/artwork/DatabaseArt/example.tsx":p,"../../../../packages/ui/src/components/artwork/DatabaseArt/meta.ts":d,"../../../../packages/ui/src/components/artwork/Landscape/Landscape.tsx":u,"../../../../packages/ui/src/components/artwork/Landscape/example.tsx":m,"../../../../packages/ui/src/components/artwork/Landscape/meta.ts":f,"../../../../packages/ui/src/components/artwork/NeonWaves/NeonWaves.tsx":g,"../../../../packages/ui/src/components/artwork/NeonWaves/example.tsx":v,"../../../../packages/ui/src/components/artwork/NeonWaves/meta.ts":b,"../../../../packages/ui/src/components/artwork/Planet/Planet.tsx":h,"../../../../packages/ui/src/components/artwork/Planet/example.tsx":x,"../../../../packages/ui/src/components/artwork/Planet/meta.ts":y,"../../../../packages/ui/src/components/artwork/ServerArt/ServerArt.tsx":k,"../../../../packages/ui/src/components/artwork/ServerArt/example.tsx":_,"../../../../packages/ui/src/components/artwork/ServerArt/meta.ts":P,"../../../../packages/ui/src/components/artwork/Spectrum/Spectrum.tsx":S,"../../../../packages/ui/src/components/artwork/Spectrum/example.tsx":w,"../../../../packages/ui/src/components/artwork/Spectrum/meta.ts":T,"../../../../packages/ui/src/components/artwork/useArtwork.ts":C,"../../../../packages/ui/src/components/controls/Autocomplete/Autocomplete.tsx":R,"../../../../packages/ui/src/components/controls/Autocomplete/example.tsx":M,"../../../../packages/ui/src/components/controls/Autocomplete/meta.ts":E,"../../../../packages/ui/src/components/controls/Button/Button.tsx":A,"../../../../packages/ui/src/components/controls/Button/example.tsx":B,"../../../../packages/ui/src/components/controls/Button/meta.ts":I,"../../../../packages/ui/src/components/controls/Checkbox/Checkbox.tsx":N,"../../../../packages/ui/src/components/controls/Checkbox/example.tsx":z,"../../../../packages/ui/src/components/controls/Checkbox/meta.ts":F,"../../../../packages/ui/src/components/controls/FilePicker/FilePicker.tsx":L,"../../../../packages/ui/src/components/controls/FilePicker/example.tsx":D,"../../../../packages/ui/src/components/controls/FilePicker/meta.ts":V,"../../../../packages/ui/src/components/controls/IconButton/IconButton.tsx":H,"../../../../packages/ui/src/components/controls/IconButton/example.tsx":O,"../../../../packages/ui/src/components/controls/IconButton/meta.ts":$,"../../../../packages/ui/src/components/controls/InputBase/InputBase.tsx":G,"../../../../packages/ui/src/components/controls/InputBase/example.tsx":U,"../../../../packages/ui/src/components/controls/InputBase/meta.ts":W,"../../../../packages/ui/src/components/controls/Link/Link.tsx":j,"../../../../packages/ui/src/components/controls/Link/example.tsx":K,"../../../../packages/ui/src/components/controls/Link/meta.ts":q,"../../../../packages/ui/src/components/controls/NumberField/NumberField.tsx":Y,"../../../../packages/ui/src/components/controls/NumberField/example.tsx":X,"../../../../packages/ui/src/components/controls/NumberField/meta.ts":Z,"../../../../packages/ui/src/components/controls/SegmentedControl/SegmentedControl.tsx":J,"../../../../packages/ui/src/components/controls/SegmentedControl/example.tsx":Q,"../../../../packages/ui/src/components/controls/SegmentedControl/meta.ts":nn,"../../../../packages/ui/src/components/controls/Select/Select.tsx":en,"../../../../packages/ui/src/components/controls/Select/example.tsx":rn,"../../../../packages/ui/src/components/controls/Select/meta.ts":tn,"../../../../packages/ui/src/components/controls/Slider/Slider.tsx":on,"../../../../packages/ui/src/components/controls/Slider/example.tsx":an,"../../../../packages/ui/src/components/controls/Slider/meta.ts":sn,"../../../../packages/ui/src/components/controls/SplitButton/SplitButton.tsx":ln,"../../../../packages/ui/src/components/controls/SplitButton/example.tsx":cn,"../../../../packages/ui/src/components/controls/SplitButton/meta.ts":pn,"../../../../packages/ui/src/components/controls/Switch/Switch.tsx":dn,"../../../../packages/ui/src/components/controls/Switch/example.tsx":un,"../../../../packages/ui/src/components/controls/Switch/meta.ts":mn,"../../../../packages/ui/src/components/controls/Tab/Tab.tsx":fn,"../../../../packages/ui/src/components/controls/Tab/example.tsx":gn,"../../../../packages/ui/src/components/controls/Tab/meta.ts":vn,"../../../../packages/ui/src/components/controls/Tabs/Tabs.tsx":bn,"../../../../packages/ui/src/components/controls/Tabs/example.tsx":hn,"../../../../packages/ui/src/components/controls/Tabs/meta.ts":xn,"../../../../packages/ui/src/components/controls/TextArea/TextArea.tsx":yn,"../../../../packages/ui/src/components/controls/TextArea/example.tsx":kn,"../../../../packages/ui/src/components/controls/TextArea/meta.ts":_n,"../../../../packages/ui/src/components/controls/TextField/TextField.tsx":Pn,"../../../../packages/ui/src/components/controls/TextField/example.tsx":Sn,"../../../../packages/ui/src/components/controls/TextField/meta.ts":wn,"../../../../packages/ui/src/components/controls/ThemePicker/ThemePicker.tsx":Tn,"../../../../packages/ui/src/components/controls/ThemePicker/example.tsx":Cn,"../../../../packages/ui/src/components/controls/ThemePicker/meta.ts":Rn,"../../../../packages/ui/src/components/controls/ToggleButton/ToggleButton.tsx":Mn,"../../../../packages/ui/src/components/controls/ToggleButton/example.tsx":En,"../../../../packages/ui/src/components/controls/ToggleButton/meta.ts":An,"../../../../packages/ui/src/components/controls/internal.tsx":Bn,"../../../../packages/ui/src/components/controls/shared.tsx":In,"../../../../packages/ui/src/components/editor/PianoRollGrid/PianoRollGrid.tsx":Nn,"../../../../packages/ui/src/components/editor/PianoRollGrid/example.tsx":zn,"../../../../packages/ui/src/components/editor/PianoRollGrid/meta.ts":Fn,"../../../../packages/ui/src/components/editor/shared.tsx":Ln,"../../../../packages/ui/src/components/effects/AnimatedBorder/AnimatedBorder.tsx":Dn,"../../../../packages/ui/src/components/effects/AnimatedBorder/example.tsx":Vn,"../../../../packages/ui/src/components/effects/AnimatedBorder/meta.ts":Hn,"../../../../packages/ui/src/components/effects/Beacon/Beacon.tsx":On,"../../../../packages/ui/src/components/effects/Beacon/example.tsx":$n,"../../../../packages/ui/src/components/effects/Beacon/meta.ts":Gn,"../../../../packages/ui/src/components/effects/Equalizer/Equalizer.tsx":Un,"../../../../packages/ui/src/components/effects/Equalizer/example.tsx":Wn,"../../../../packages/ui/src/components/effects/Equalizer/meta.ts":jn,"../../../../packages/ui/src/components/effects/GlowText/GlowText.tsx":Kn,"../../../../packages/ui/src/components/effects/GlowText/example.tsx":qn,"../../../../packages/ui/src/components/effects/GlowText/meta.ts":Yn,"../../../../packages/ui/src/components/effects/Marquee/Marquee.tsx":Xn,"../../../../packages/ui/src/components/effects/Marquee/example.tsx":Zn,"../../../../packages/ui/src/components/effects/Marquee/meta.ts":Jn,"../../../../packages/ui/src/components/effects/Reveal/Reveal.tsx":Qn,"../../../../packages/ui/src/components/effects/Reveal/example.tsx":ne,"../../../../packages/ui/src/components/effects/Reveal/meta.ts":ee,"../../../../packages/ui/src/components/effects/Shimmer/Shimmer.tsx":re,"../../../../packages/ui/src/components/effects/Shimmer/example.tsx":te,"../../../../packages/ui/src/components/effects/Shimmer/meta.ts":oe,"../../../../packages/ui/src/components/effects/Sparkles/Sparkles.tsx":ae,"../../../../packages/ui/src/components/effects/Sparkles/example.tsx":se,"../../../../packages/ui/src/components/effects/Sparkles/meta.ts":ie,"../../../../packages/ui/src/components/effects/Spotlight/Spotlight.tsx":le,"../../../../packages/ui/src/components/effects/Spotlight/example.tsx":ce,"../../../../packages/ui/src/components/effects/Spotlight/meta.ts":pe,"../../../../packages/ui/src/components/effects/Tilt/Tilt.tsx":de,"../../../../packages/ui/src/components/effects/Tilt/example.tsx":ue,"../../../../packages/ui/src/components/effects/Tilt/meta.ts":me,"../../../../packages/ui/src/components/feedback/Badge/Badge.tsx":fe,"../../../../packages/ui/src/components/feedback/Badge/example.tsx":ge,"../../../../packages/ui/src/components/feedback/Badge/meta.ts":ve,"../../../../packages/ui/src/components/feedback/CollapsibleSection/CollapsibleSection.tsx":be,"../../../../packages/ui/src/components/feedback/CollapsibleSection/example.tsx":he,"../../../../packages/ui/src/components/feedback/CollapsibleSection/meta.ts":xe,"../../../../packages/ui/src/components/feedback/DataTable/DataTable.tsx":ye,"../../../../packages/ui/src/components/feedback/DataTable/example.tsx":ke,"../../../../packages/ui/src/components/feedback/DataTable/meta.ts":_e,"../../../../packages/ui/src/components/feedback/Dialog/Dialog.tsx":Pe,"../../../../packages/ui/src/components/feedback/Dialog/example.tsx":Se,"../../../../packages/ui/src/components/feedback/Dialog/meta.ts":we,"../../../../packages/ui/src/components/feedback/EmptyState/EmptyState.tsx":Te,"../../../../packages/ui/src/components/feedback/EmptyState/example.tsx":Ce,"../../../../packages/ui/src/components/feedback/EmptyState/meta.ts":Re,"../../../../packages/ui/src/components/feedback/KeyValueList/KeyValueList.tsx":Me,"../../../../packages/ui/src/components/feedback/KeyValueList/example.tsx":Ee,"../../../../packages/ui/src/components/feedback/KeyValueList/meta.ts":Ae,"../../../../packages/ui/src/components/feedback/Menu/Menu.tsx":Be,"../../../../packages/ui/src/components/feedback/Menu/example.tsx":Ie,"../../../../packages/ui/src/components/feedback/Menu/meta.ts":Ne,"../../../../packages/ui/src/components/feedback/MenuItem/MenuItem.tsx":ze,"../../../../packages/ui/src/components/feedback/MenuItem/example.tsx":Fe,"../../../../packages/ui/src/components/feedback/MenuItem/meta.ts":Le,"../../../../packages/ui/src/components/feedback/MessageBar/MessageBar.tsx":De,"../../../../packages/ui/src/components/feedback/MessageBar/example.tsx":Ve,"../../../../packages/ui/src/components/feedback/MessageBar/meta.ts":He,"../../../../packages/ui/src/components/feedback/Popover/Popover.tsx":Oe,"../../../../packages/ui/src/components/feedback/Popover/example.tsx":$e,"../../../../packages/ui/src/components/feedback/Popover/meta.ts":Ge,"../../../../packages/ui/src/components/feedback/ProgressBar/ProgressBar.tsx":Ue,"../../../../packages/ui/src/components/feedback/ProgressBar/example.tsx":We,"../../../../packages/ui/src/components/feedback/ProgressBar/meta.ts":je,"../../../../packages/ui/src/components/feedback/StatusIndicator/StatusIndicator.tsx":Ke,"../../../../packages/ui/src/components/feedback/StatusIndicator/example.tsx":qe,"../../../../packages/ui/src/components/feedback/StatusIndicator/meta.ts":Ye,"../../../../packages/ui/src/components/feedback/Steps/Steps.tsx":Xe,"../../../../packages/ui/src/components/feedback/Steps/example.tsx":Ze,"../../../../packages/ui/src/components/feedback/Steps/meta.ts":Je,"../../../../packages/ui/src/components/feedback/Toast/Toast.tsx":Qe,"../../../../packages/ui/src/components/feedback/Toast/example.tsx":nr,"../../../../packages/ui/src/components/feedback/Toast/meta.ts":er,"../../../../packages/ui/src/components/feedback/shared.tsx":rr,"../../../../packages/ui/src/components/forms/Form/Form.tsx":tr,"../../../../packages/ui/src/components/forms/Form/example.tsx":or,"../../../../packages/ui/src/components/forms/Form/meta.ts":ar,"../../../../packages/ui/src/components/forms/FormFields/FormFields.tsx":sr,"../../../../packages/ui/src/components/forms/FormFields/example.tsx":ir,"../../../../packages/ui/src/components/forms/FormFields/meta.ts":lr,"../../../../packages/ui/src/components/foundation/ThemeProvider/ThemeProvider.tsx":cr,"../../../../packages/ui/src/components/foundation/ThemeProvider/example.tsx":pr,"../../../../packages/ui/src/components/foundation/ThemeProvider/meta.ts":dr,"../../../../packages/ui/src/components/foundation/Typography/Typography.tsx":ur,"../../../../packages/ui/src/components/foundation/Typography/example.tsx":mr,"../../../../packages/ui/src/components/foundation/Typography/meta.ts":fr,"../../../../packages/ui/src/components/layout/Avatar/Avatar.tsx":gr,"../../../../packages/ui/src/components/layout/Avatar/HostSeal.tsx":vr,"../../../../packages/ui/src/components/layout/Avatar/example.tsx":br,"../../../../packages/ui/src/components/layout/Avatar/meta.ts":hr,"../../../../packages/ui/src/components/layout/BrandMark/BrandMark.tsx":xr,"../../../../packages/ui/src/components/layout/BrandMark/example.tsx":yr,"../../../../packages/ui/src/components/layout/BrandMark/meta.ts":kr,"../../../../packages/ui/src/components/layout/ButtonGroup/ButtonGroup.tsx":_r,"../../../../packages/ui/src/components/layout/ButtonGroup/example.tsx":Pr,"../../../../packages/ui/src/components/layout/ButtonGroup/meta.ts":Sr,"../../../../packages/ui/src/components/layout/Card/Card.tsx":wr,"../../../../packages/ui/src/components/layout/Card/example.tsx":Tr,"../../../../packages/ui/src/components/layout/Card/meta.ts":Cr,"../../../../packages/ui/src/components/layout/DialogActions/DialogActions.tsx":Rr,"../../../../packages/ui/src/components/layout/DialogActions/example.tsx":Mr,"../../../../packages/ui/src/components/layout/DialogActions/meta.ts":Er,"../../../../packages/ui/src/components/layout/DialogBody/DialogBody.tsx":Ar,"../../../../packages/ui/src/components/layout/DialogBody/example.tsx":Br,"../../../../packages/ui/src/components/layout/DialogBody/meta.ts":Ir,"../../../../packages/ui/src/components/layout/Divider/Divider.tsx":Nr,"../../../../packages/ui/src/components/layout/Divider/example.tsx":zr,"../../../../packages/ui/src/components/layout/Divider/meta.ts":Fr,"../../../../packages/ui/src/components/layout/Grid/Grid.tsx":Lr,"../../../../packages/ui/src/components/layout/Grid/example.tsx":Dr,"../../../../packages/ui/src/components/layout/Grid/meta.ts":Vr,"../../../../packages/ui/src/components/layout/Header/Header.tsx":Hr,"../../../../packages/ui/src/components/layout/Header/example.tsx":Or,"../../../../packages/ui/src/components/layout/Header/meta.ts":$r,"../../../../packages/ui/src/components/layout/Icon/Icon.tsx":Gr,"../../../../packages/ui/src/components/layout/Icon/example.tsx":Ur,"../../../../packages/ui/src/components/layout/Icon/meta.ts":Wr,"../../../../packages/ui/src/components/layout/Illustration/Illustration.tsx":jr,"../../../../packages/ui/src/components/layout/Illustration/example.tsx":Kr,"../../../../packages/ui/src/components/layout/Illustration/meta.ts":qr,"../../../../packages/ui/src/components/layout/ScrollArea/ScrollArea.tsx":Yr,"../../../../packages/ui/src/components/layout/ScrollArea/example.tsx":Xr,"../../../../packages/ui/src/components/layout/ScrollArea/meta.ts":Zr,"../../../../packages/ui/src/components/layout/Stack/Stack.tsx":Jr,"../../../../packages/ui/src/components/layout/Stack/example.tsx":Qr,"../../../../packages/ui/src/components/layout/Stack/meta.ts":nt,"../../../../packages/ui/src/components/layout/TabPanel/TabPanel.tsx":et,"../../../../packages/ui/src/components/layout/TabPanel/example.tsx":rt,"../../../../packages/ui/src/components/layout/TabPanel/meta.ts":tt,"../../../../packages/ui/src/components/layout/Text/Text.tsx":ot,"../../../../packages/ui/src/components/layout/Text/example.tsx":at,"../../../../packages/ui/src/components/layout/Text/meta.ts":st,"../../../../packages/ui/src/components/layout/Toolbar/Toolbar.tsx":it,"../../../../packages/ui/src/components/layout/Toolbar/example.tsx":lt,"../../../../packages/ui/src/components/layout/Toolbar/meta.ts":ct,"../../../../packages/ui/src/components/layout/shared.tsx":pt,"../../../../packages/ui/src/components/media/AudioPlayer/AudioPlayer.tsx":dt,"../../../../packages/ui/src/components/media/AudioPlayer/example.tsx":ut,"../../../../packages/ui/src/components/media/AudioPlayer/meta.ts":mt,"../../../../packages/ui/src/components/media/LevelMeter/LevelMeter.tsx":ft,"../../../../packages/ui/src/components/media/LevelMeter/example.tsx":gt,"../../../../packages/ui/src/components/media/LevelMeter/meta.ts":vt,"../../../../packages/ui/src/components/media/RotaryKnob/RotaryKnob.tsx":bt,"../../../../packages/ui/src/components/media/RotaryKnob/example.tsx":ht,"../../../../packages/ui/src/components/media/RotaryKnob/meta.ts":xt,"../../../../packages/ui/src/components/media/Sparkline/Sparkline.tsx":yt,"../../../../packages/ui/src/components/media/Sparkline/example.tsx":kt,"../../../../packages/ui/src/components/media/Sparkline/meta.ts":_t,"../../../../packages/ui/src/components/media/WaveDecoration/WaveDecoration.tsx":Pt,"../../../../packages/ui/src/components/media/WaveDecoration/example.tsx":St,"../../../../packages/ui/src/components/media/WaveDecoration/meta.ts":wt,"../../../../packages/ui/src/components/media/Waveform/Waveform.tsx":Tt,"../../../../packages/ui/src/components/media/Waveform/example.tsx":Ct,"../../../../packages/ui/src/components/media/Waveform/meta.ts":Rt,"../../../../packages/ui/src/components/media/Waveform/useWaveformPeaks.ts":Mt,"../../../../packages/ui/src/components/media/shared.tsx":Et,"../../../../packages/ui/src/components/navigation/Router/Router.tsx":At,"../../../../packages/ui/src/components/navigation/Router/example.tsx":Bt,"../../../../packages/ui/src/components/navigation/Router/meta.ts":It,"../../../../packages/ui/src/core.ts":Nt,"../../../../packages/ui/src/core/artwork.tsx":zt,"../../../../packages/ui/src/core/base.tsx":Ft,"../../../../packages/ui/src/core/motion-engine.d.ts":Lt,"../../../../packages/ui/src/core/motion/hooks.ts":Dt,"../../../../packages/ui/src/core/noise.ts":Vt,"../../../../packages/ui/src/core/providers/context.ts":Ht,"../../../../packages/ui/src/core/responsive.ts":Ot,"../../../../packages/ui/src/dev/exampleHelpers.tsx":$t,"../../../../packages/ui/src/editor.ts":Gt,"../../../../packages/ui/src/forms.ts":Ut,"../../../../packages/ui/src/index.ts":Wt,"../../../../packages/ui/src/router.ts":jt,"../../../../packages/ui/src/theme/typography.ts":Kt})),o=(n,t=`${n}.tsx`)=>l.find(([e])=>e.endsWith(`/${n}/${t}`)),qt=n=>o(n,"example.tsx")?.[1]??`// Нет example.tsx для ${n}`,Yt=n=>o(n)?.[1]??"",Xt=n=>o(n)?.[0].replace(/^.*packages\/ui\/src\//,"src/")??"";function i(n,t){const e=n.indexOf(t);if(e<0)return"";const a=n.indexOf("{",e);if(a<0){const r=n.indexOf(";",e);return n.slice(e,r<0?n.length:r+1).trim()}let s=0;for(let r=a;r<n.length;r+=1)if(n[r]==="{"&&(s+=1),n[r]==="}"&&--s===0)return n.slice(e,r+1).trim();return n.slice(e).trim()}const Zt=n=>{for(const[,t]of l){const e=i(t,`export interface ${n}Props`)||i(t,`export type ${n}Props`);if(e)return e}return`// ${n} не объявляет отдельный Props-интерфейс.
+`,l=Object.entries(Object.assign({"../../../../packages/ui/src/components/artwork/DatabaseArt/DatabaseArt.tsx":c,"../../../../packages/ui/src/components/artwork/DatabaseArt/example.tsx":d,"../../../../packages/ui/src/components/artwork/DatabaseArt/meta.ts":p,"../../../../packages/ui/src/components/artwork/Landscape/Landscape.tsx":u,"../../../../packages/ui/src/components/artwork/Landscape/example.tsx":m,"../../../../packages/ui/src/components/artwork/Landscape/meta.ts":f,"../../../../packages/ui/src/components/artwork/NeonWaves/NeonWaves.tsx":g,"../../../../packages/ui/src/components/artwork/NeonWaves/example.tsx":v,"../../../../packages/ui/src/components/artwork/NeonWaves/meta.ts":h,"../../../../packages/ui/src/components/artwork/Planet/Planet.tsx":b,"../../../../packages/ui/src/components/artwork/Planet/example.tsx":y,"../../../../packages/ui/src/components/artwork/Planet/meta.ts":x,"../../../../packages/ui/src/components/artwork/ServerArt/ServerArt.tsx":k,"../../../../packages/ui/src/components/artwork/ServerArt/example.tsx":_,"../../../../packages/ui/src/components/artwork/ServerArt/meta.ts":w,"../../../../packages/ui/src/components/artwork/Spectrum/Spectrum.tsx":S,"../../../../packages/ui/src/components/artwork/Spectrum/example.tsx":P,"../../../../packages/ui/src/components/artwork/Spectrum/meta.ts":T,"../../../../packages/ui/src/components/artwork/useArtwork.ts":C,"../../../../packages/ui/src/components/controls/Autocomplete/Autocomplete.tsx":R,"../../../../packages/ui/src/components/controls/Autocomplete/example.tsx":M,"../../../../packages/ui/src/components/controls/Autocomplete/meta.ts":E,"../../../../packages/ui/src/components/controls/Button/Button.tsx":A,"../../../../packages/ui/src/components/controls/Button/example.tsx":B,"../../../../packages/ui/src/components/controls/Button/meta.ts":I,"../../../../packages/ui/src/components/controls/Checkbox/Checkbox.tsx":N,"../../../../packages/ui/src/components/controls/Checkbox/example.tsx":z,"../../../../packages/ui/src/components/controls/Checkbox/meta.ts":L,"../../../../packages/ui/src/components/controls/FilePicker/FilePicker.tsx":F,"../../../../packages/ui/src/components/controls/FilePicker/example.tsx":D,"../../../../packages/ui/src/components/controls/FilePicker/meta.ts":V,"../../../../packages/ui/src/components/controls/IconButton/IconButton.tsx":H,"../../../../packages/ui/src/components/controls/IconButton/example.tsx":$,"../../../../packages/ui/src/components/controls/IconButton/meta.ts":O,"../../../../packages/ui/src/components/controls/InputBase/InputBase.tsx":U,"../../../../packages/ui/src/components/controls/InputBase/example.tsx":G,"../../../../packages/ui/src/components/controls/InputBase/meta.ts":W,"../../../../packages/ui/src/components/controls/Link/Link.tsx":j,"../../../../packages/ui/src/components/controls/Link/example.tsx":K,"../../../../packages/ui/src/components/controls/Link/meta.ts":q,"../../../../packages/ui/src/components/controls/NumberField/NumberField.tsx":Y,"../../../../packages/ui/src/components/controls/NumberField/example.tsx":X,"../../../../packages/ui/src/components/controls/NumberField/meta.ts":Z,"../../../../packages/ui/src/components/controls/SegmentedControl/SegmentedControl.tsx":J,"../../../../packages/ui/src/components/controls/SegmentedControl/example.tsx":Q,"../../../../packages/ui/src/components/controls/SegmentedControl/meta.ts":nn,"../../../../packages/ui/src/components/controls/Select/Select.tsx":en,"../../../../packages/ui/src/components/controls/Select/example.tsx":rn,"../../../../packages/ui/src/components/controls/Select/meta.ts":tn,"../../../../packages/ui/src/components/controls/Slider/Slider.tsx":on,"../../../../packages/ui/src/components/controls/Slider/example.tsx":an,"../../../../packages/ui/src/components/controls/Slider/meta.ts":sn,"../../../../packages/ui/src/components/controls/SplitButton/SplitButton.tsx":ln,"../../../../packages/ui/src/components/controls/SplitButton/example.tsx":cn,"../../../../packages/ui/src/components/controls/SplitButton/meta.ts":dn,"../../../../packages/ui/src/components/controls/Switch/Switch.tsx":pn,"../../../../packages/ui/src/components/controls/Switch/example.tsx":un,"../../../../packages/ui/src/components/controls/Switch/meta.ts":mn,"../../../../packages/ui/src/components/controls/Tab/Tab.tsx":fn,"../../../../packages/ui/src/components/controls/Tab/example.tsx":gn,"../../../../packages/ui/src/components/controls/Tab/meta.ts":vn,"../../../../packages/ui/src/components/controls/Tabs/Tabs.tsx":hn,"../../../../packages/ui/src/components/controls/Tabs/example.tsx":bn,"../../../../packages/ui/src/components/controls/Tabs/meta.ts":yn,"../../../../packages/ui/src/components/controls/TextArea/TextArea.tsx":xn,"../../../../packages/ui/src/components/controls/TextArea/example.tsx":kn,"../../../../packages/ui/src/components/controls/TextArea/meta.ts":_n,"../../../../packages/ui/src/components/controls/TextField/TextField.tsx":wn,"../../../../packages/ui/src/components/controls/TextField/example.tsx":Sn,"../../../../packages/ui/src/components/controls/TextField/meta.ts":Pn,"../../../../packages/ui/src/components/controls/ThemePicker/ThemePicker.tsx":Tn,"../../../../packages/ui/src/components/controls/ThemePicker/example.tsx":Cn,"../../../../packages/ui/src/components/controls/ThemePicker/meta.ts":Rn,"../../../../packages/ui/src/components/controls/ToggleButton/ToggleButton.tsx":Mn,"../../../../packages/ui/src/components/controls/ToggleButton/example.tsx":En,"../../../../packages/ui/src/components/controls/ToggleButton/meta.ts":An,"../../../../packages/ui/src/components/controls/internal.tsx":Bn,"../../../../packages/ui/src/components/controls/shared.tsx":In,"../../../../packages/ui/src/components/editor/PianoRollGrid/PianoRollGrid.tsx":Nn,"../../../../packages/ui/src/components/editor/PianoRollGrid/example.tsx":zn,"../../../../packages/ui/src/components/editor/PianoRollGrid/meta.ts":Ln,"../../../../packages/ui/src/components/editor/shared.tsx":Fn,"../../../../packages/ui/src/components/effects/AnimatedBorder/AnimatedBorder.tsx":Dn,"../../../../packages/ui/src/components/effects/AnimatedBorder/example.tsx":Vn,"../../../../packages/ui/src/components/effects/AnimatedBorder/meta.ts":Hn,"../../../../packages/ui/src/components/effects/Beacon/Beacon.tsx":$n,"../../../../packages/ui/src/components/effects/Beacon/example.tsx":On,"../../../../packages/ui/src/components/effects/Beacon/meta.ts":Un,"../../../../packages/ui/src/components/effects/Equalizer/Equalizer.tsx":Gn,"../../../../packages/ui/src/components/effects/Equalizer/example.tsx":Wn,"../../../../packages/ui/src/components/effects/Equalizer/meta.ts":jn,"../../../../packages/ui/src/components/effects/GlowText/GlowText.tsx":Kn,"../../../../packages/ui/src/components/effects/GlowText/example.tsx":qn,"../../../../packages/ui/src/components/effects/GlowText/meta.ts":Yn,"../../../../packages/ui/src/components/effects/Marquee/Marquee.tsx":Xn,"../../../../packages/ui/src/components/effects/Marquee/example.tsx":Zn,"../../../../packages/ui/src/components/effects/Marquee/meta.ts":Jn,"../../../../packages/ui/src/components/effects/Reveal/Reveal.tsx":Qn,"../../../../packages/ui/src/components/effects/Reveal/example.tsx":ne,"../../../../packages/ui/src/components/effects/Reveal/meta.ts":ee,"../../../../packages/ui/src/components/effects/Shimmer/Shimmer.tsx":re,"../../../../packages/ui/src/components/effects/Shimmer/example.tsx":te,"../../../../packages/ui/src/components/effects/Shimmer/meta.ts":oe,"../../../../packages/ui/src/components/effects/Sparkles/Sparkles.tsx":ae,"../../../../packages/ui/src/components/effects/Sparkles/example.tsx":se,"../../../../packages/ui/src/components/effects/Sparkles/meta.ts":ie,"../../../../packages/ui/src/components/effects/Spotlight/Spotlight.tsx":le,"../../../../packages/ui/src/components/effects/Spotlight/example.tsx":ce,"../../../../packages/ui/src/components/effects/Spotlight/meta.ts":de,"../../../../packages/ui/src/components/effects/Tilt/Tilt.tsx":pe,"../../../../packages/ui/src/components/effects/Tilt/example.tsx":ue,"../../../../packages/ui/src/components/effects/Tilt/meta.ts":me,"../../../../packages/ui/src/components/feedback/Badge/Badge.tsx":fe,"../../../../packages/ui/src/components/feedback/Badge/example.tsx":ge,"../../../../packages/ui/src/components/feedback/Badge/meta.ts":ve,"../../../../packages/ui/src/components/feedback/CollapsibleSection/CollapsibleSection.tsx":he,"../../../../packages/ui/src/components/feedback/CollapsibleSection/example.tsx":be,"../../../../packages/ui/src/components/feedback/CollapsibleSection/meta.ts":ye,"../../../../packages/ui/src/components/feedback/DataTable/DataTable.tsx":xe,"../../../../packages/ui/src/components/feedback/DataTable/example.tsx":ke,"../../../../packages/ui/src/components/feedback/DataTable/meta.ts":_e,"../../../../packages/ui/src/components/feedback/Dialog/Dialog.tsx":we,"../../../../packages/ui/src/components/feedback/Dialog/example.tsx":Se,"../../../../packages/ui/src/components/feedback/Dialog/meta.ts":Pe,"../../../../packages/ui/src/components/feedback/EmptyState/EmptyState.tsx":Te,"../../../../packages/ui/src/components/feedback/EmptyState/example.tsx":Ce,"../../../../packages/ui/src/components/feedback/EmptyState/meta.ts":Re,"../../../../packages/ui/src/components/feedback/KeyValueList/KeyValueList.tsx":Me,"../../../../packages/ui/src/components/feedback/KeyValueList/example.tsx":Ee,"../../../../packages/ui/src/components/feedback/KeyValueList/meta.ts":Ae,"../../../../packages/ui/src/components/feedback/Menu/Menu.tsx":Be,"../../../../packages/ui/src/components/feedback/Menu/example.tsx":Ie,"../../../../packages/ui/src/components/feedback/Menu/meta.ts":Ne,"../../../../packages/ui/src/components/feedback/MenuItem/MenuItem.tsx":ze,"../../../../packages/ui/src/components/feedback/MenuItem/example.tsx":Le,"../../../../packages/ui/src/components/feedback/MenuItem/meta.ts":Fe,"../../../../packages/ui/src/components/feedback/MessageBar/MessageBar.tsx":De,"../../../../packages/ui/src/components/feedback/MessageBar/example.tsx":Ve,"../../../../packages/ui/src/components/feedback/MessageBar/meta.ts":He,"../../../../packages/ui/src/components/feedback/Popover/Popover.tsx":$e,"../../../../packages/ui/src/components/feedback/Popover/example.tsx":Oe,"../../../../packages/ui/src/components/feedback/Popover/meta.ts":Ue,"../../../../packages/ui/src/components/feedback/ProgressBar/ProgressBar.tsx":Ge,"../../../../packages/ui/src/components/feedback/ProgressBar/example.tsx":We,"../../../../packages/ui/src/components/feedback/ProgressBar/meta.ts":je,"../../../../packages/ui/src/components/feedback/StatusIndicator/StatusIndicator.tsx":Ke,"../../../../packages/ui/src/components/feedback/StatusIndicator/example.tsx":qe,"../../../../packages/ui/src/components/feedback/StatusIndicator/meta.ts":Ye,"../../../../packages/ui/src/components/feedback/Steps/Steps.tsx":Xe,"../../../../packages/ui/src/components/feedback/Steps/example.tsx":Ze,"../../../../packages/ui/src/components/feedback/Steps/meta.ts":Je,"../../../../packages/ui/src/components/feedback/Toast/Toast.tsx":Qe,"../../../../packages/ui/src/components/feedback/Toast/example.tsx":nr,"../../../../packages/ui/src/components/feedback/Toast/meta.ts":er,"../../../../packages/ui/src/components/feedback/shared.tsx":rr,"../../../../packages/ui/src/components/forms/Form/Form.tsx":tr,"../../../../packages/ui/src/components/forms/Form/example.tsx":or,"../../../../packages/ui/src/components/forms/Form/meta.ts":ar,"../../../../packages/ui/src/components/forms/FormFields/FormFields.tsx":sr,"../../../../packages/ui/src/components/forms/FormFields/example.tsx":ir,"../../../../packages/ui/src/components/forms/FormFields/meta.ts":lr,"../../../../packages/ui/src/components/foundation/ThemeProvider/ThemeProvider.tsx":cr,"../../../../packages/ui/src/components/foundation/ThemeProvider/example.tsx":dr,"../../../../packages/ui/src/components/foundation/ThemeProvider/meta.ts":pr,"../../../../packages/ui/src/components/foundation/Typography/Typography.tsx":ur,"../../../../packages/ui/src/components/foundation/Typography/example.tsx":mr,"../../../../packages/ui/src/components/foundation/Typography/meta.ts":fr,"../../../../packages/ui/src/components/layout/Avatar/Avatar.tsx":gr,"../../../../packages/ui/src/components/layout/Avatar/HostSeal.tsx":vr,"../../../../packages/ui/src/components/layout/Avatar/example.tsx":hr,"../../../../packages/ui/src/components/layout/Avatar/meta.ts":br,"../../../../packages/ui/src/components/layout/BrandMark/BrandMark.tsx":yr,"../../../../packages/ui/src/components/layout/BrandMark/example.tsx":xr,"../../../../packages/ui/src/components/layout/BrandMark/meta.ts":kr,"../../../../packages/ui/src/components/layout/ButtonGroup/ButtonGroup.tsx":_r,"../../../../packages/ui/src/components/layout/ButtonGroup/example.tsx":wr,"../../../../packages/ui/src/components/layout/ButtonGroup/meta.ts":Sr,"../../../../packages/ui/src/components/layout/Card/Card.tsx":Pr,"../../../../packages/ui/src/components/layout/Card/example.tsx":Tr,"../../../../packages/ui/src/components/layout/Card/meta.ts":Cr,"../../../../packages/ui/src/components/layout/DialogActions/DialogActions.tsx":Rr,"../../../../packages/ui/src/components/layout/DialogActions/example.tsx":Mr,"../../../../packages/ui/src/components/layout/DialogActions/meta.ts":Er,"../../../../packages/ui/src/components/layout/DialogBody/DialogBody.tsx":Ar,"../../../../packages/ui/src/components/layout/DialogBody/example.tsx":Br,"../../../../packages/ui/src/components/layout/DialogBody/meta.ts":Ir,"../../../../packages/ui/src/components/layout/Divider/Divider.tsx":Nr,"../../../../packages/ui/src/components/layout/Divider/example.tsx":zr,"../../../../packages/ui/src/components/layout/Divider/meta.ts":Lr,"../../../../packages/ui/src/components/layout/Grid/Grid.tsx":Fr,"../../../../packages/ui/src/components/layout/Grid/example.tsx":Dr,"../../../../packages/ui/src/components/layout/Grid/meta.ts":Vr,"../../../../packages/ui/src/components/layout/Header/Header.tsx":Hr,"../../../../packages/ui/src/components/layout/Header/example.tsx":$r,"../../../../packages/ui/src/components/layout/Header/meta.ts":Or,"../../../../packages/ui/src/components/layout/Icon/Icon.tsx":Ur,"../../../../packages/ui/src/components/layout/Icon/example.tsx":Gr,"../../../../packages/ui/src/components/layout/Icon/meta.ts":Wr,"../../../../packages/ui/src/components/layout/Illustration/Illustration.tsx":jr,"../../../../packages/ui/src/components/layout/Illustration/example.tsx":Kr,"../../../../packages/ui/src/components/layout/Illustration/meta.ts":qr,"../../../../packages/ui/src/components/layout/ScrollArea/ScrollArea.tsx":Yr,"../../../../packages/ui/src/components/layout/ScrollArea/example.tsx":Xr,"../../../../packages/ui/src/components/layout/ScrollArea/meta.ts":Zr,"../../../../packages/ui/src/components/layout/Stack/Stack.tsx":Jr,"../../../../packages/ui/src/components/layout/Stack/example.tsx":Qr,"../../../../packages/ui/src/components/layout/Stack/meta.ts":nt,"../../../../packages/ui/src/components/layout/TabPanel/TabPanel.tsx":et,"../../../../packages/ui/src/components/layout/TabPanel/example.tsx":rt,"../../../../packages/ui/src/components/layout/TabPanel/meta.ts":tt,"../../../../packages/ui/src/components/layout/Text/Text.tsx":ot,"../../../../packages/ui/src/components/layout/Text/example.tsx":at,"../../../../packages/ui/src/components/layout/Text/meta.ts":st,"../../../../packages/ui/src/components/layout/Toolbar/Toolbar.tsx":it,"../../../../packages/ui/src/components/layout/Toolbar/example.tsx":lt,"../../../../packages/ui/src/components/layout/Toolbar/meta.ts":ct,"../../../../packages/ui/src/components/layout/shared.tsx":dt,"../../../../packages/ui/src/components/media/AudioPlayer/AudioPlayer.tsx":pt,"../../../../packages/ui/src/components/media/AudioPlayer/example.tsx":ut,"../../../../packages/ui/src/components/media/AudioPlayer/meta.ts":mt,"../../../../packages/ui/src/components/media/LevelMeter/LevelMeter.tsx":ft,"../../../../packages/ui/src/components/media/LevelMeter/example.tsx":gt,"../../../../packages/ui/src/components/media/LevelMeter/meta.ts":vt,"../../../../packages/ui/src/components/media/RotaryKnob/RotaryKnob.tsx":ht,"../../../../packages/ui/src/components/media/RotaryKnob/example.tsx":bt,"../../../../packages/ui/src/components/media/RotaryKnob/meta.ts":yt,"../../../../packages/ui/src/components/media/Sparkline/Sparkline.tsx":xt,"../../../../packages/ui/src/components/media/Sparkline/example.tsx":kt,"../../../../packages/ui/src/components/media/Sparkline/meta.ts":_t,"../../../../packages/ui/src/components/media/WaveDecoration/WaveDecoration.tsx":wt,"../../../../packages/ui/src/components/media/WaveDecoration/example.tsx":St,"../../../../packages/ui/src/components/media/WaveDecoration/meta.ts":Pt,"../../../../packages/ui/src/components/media/Waveform/Waveform.tsx":Tt,"../../../../packages/ui/src/components/media/Waveform/example.tsx":Ct,"../../../../packages/ui/src/components/media/Waveform/meta.ts":Rt,"../../../../packages/ui/src/components/media/Waveform/useWaveformPeaks.ts":Mt,"../../../../packages/ui/src/components/media/shared.tsx":Et,"../../../../packages/ui/src/components/navigation/Router/Router.tsx":At,"../../../../packages/ui/src/components/navigation/Router/example.tsx":Bt,"../../../../packages/ui/src/components/navigation/Router/meta.ts":It,"../../../../packages/ui/src/core.ts":Nt,"../../../../packages/ui/src/core/artwork.tsx":zt,"../../../../packages/ui/src/core/base.tsx":Lt,"../../../../packages/ui/src/core/motion-engine.d.ts":Ft,"../../../../packages/ui/src/core/motion/hooks.ts":Dt,"../../../../packages/ui/src/core/noise.ts":Vt,"../../../../packages/ui/src/core/providers/context.ts":Ht,"../../../../packages/ui/src/core/responsive.ts":$t,"../../../../packages/ui/src/dev/exampleHelpers.tsx":Ot,"../../../../packages/ui/src/editor.ts":Ut,"../../../../packages/ui/src/forms.ts":Gt,"../../../../packages/ui/src/index.ts":Wt,"../../../../packages/ui/src/router.ts":jt,"../../../../packages/ui/src/theme/typography.ts":Kt})),o=(n,t=`${n}.tsx`)=>l.find(([e])=>e.endsWith(`/${n}/${t}`)),qt=n=>o(n,"example.tsx")?.[1]??`// Нет example.tsx для ${n}`,Yt=n=>o(n)?.[1]??"",Xt=n=>o(n)?.[0].replace(/^.*packages\/ui\/src\//,"src/")??"";function i(n,t){const e=n.indexOf(t);if(e<0)return"";const a=n.indexOf("{",e);if(a<0){const r=n.indexOf(";",e);return n.slice(e,r<0?n.length:r+1).trim()}let s=0;for(let r=a;r<n.length;r+=1)if(n[r]==="{"&&(s+=1),n[r]==="}"&&--s===0)return n.slice(e,r+1).trim();return n.slice(e).trim()}const Zt=n=>{for(const[,t]of l){const e=i(t,`export interface ${n}Props`)||i(t,`export type ${n}Props`);if(e)return e}return`// ${n} не объявляет отдельный Props-интерфейс.
 // Компонент использует общие props или композицию дочерних компонентов.`};export{Zt as getComponentApiSource,Yt as getComponentSource,Xt as getComponentSourcePath,qt as getExampleSource};

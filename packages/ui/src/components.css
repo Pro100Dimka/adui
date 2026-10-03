@@ -20,6 +20,7 @@
 @import "./components/controls/Switch/styles.css";
 @import "./components/controls/Tab/styles.css";
 @import "./components/controls/Tabs/styles.css";
+@import "./components/controls/TextArea/styles.css";
 @import "./components/controls/ThemePicker/styles.css";
 @import "./components/controls/ToggleButton/styles.css";
 @import "./components/editor/PianoRollGrid/styles.css";

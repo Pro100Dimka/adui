@@ -8,11 +8,11 @@
   min-width: 0;
   padding: var(--ad-tabs-pad) var(--ad-tabs-pad)
     calc(var(--ad-tabs-pad) + 0.3rem);
-  border: 0.0625rem solid #86445a3d;
+  border: 0.0625rem solid rgb(from var(--ad-primary-600) r g b / 0.24);
   border-radius: calc(var(--ad-size-radius) + 0.25rem);
   background:
     linear-gradient(180deg, #ffffff06, transparent 40%),
-    linear-gradient(180deg, #0d0a10, #060508);
+    linear-gradient(180deg, var(--ad-neutral-900), var(--ad-neutral-950));
   box-shadow:
     inset 0 0.0625rem 0.1875rem #000c,
     inset 0 -0.0625rem 0 #ffffff08;
@@ -37,8 +37,8 @@
   background: linear-gradient(
     90deg,
     transparent,
-    #ff4a7a30 15%,
-    #ff4a7a30 85%,
+    rgb(from var(--ad-primary) r g b / 0.19) 15%,
+    rgb(from var(--ad-primary) r g b / 0.19) 85%,
     transparent
   );
 }
@@ -77,8 +77,8 @@
 }
 .ad-tabs-indicator {
   z-index: -1;
-  filter: drop-shadow(0 0 0.4rem #ff1f5a66)
-    drop-shadow(0 0.2rem 0.6rem #ff1f5a33);
+  filter: drop-shadow(0 0 0.4rem rgb(from var(--ad-primary) r g b / 0.4))
+    drop-shadow(0 0.2rem 0.6rem rgb(from var(--ad-primary) r g b / 0.2));
   transition:
     transform 0.55s var(--ad-tabs-spring),
     width 0.45s var(--ad-tabs-spring),
@@ -92,11 +92,11 @@
   clip-path: var(--ad-blade);
   background: linear-gradient(
       100deg,
-      #ff6d93 0%,
-      #ff9ab4 38%,
-      #fff3f6 48%,
-      #ff9ab4 58%,
-      #b0103f 100%
+      var(--ad-secondary) 0%,
+      var(--ad-secondary-200) 38%,
+      var(--ad-neutral-200) 48%,
+      var(--ad-secondary-200) 58%,
+      var(--ad-primary-600) 100%
     )
     0 0 / 300% 100%;
   animation: ad-tabs-glint 3.6s linear infinite;
@@ -108,9 +108,9 @@
   inset: 0.0625rem;
   clip-path: var(--ad-blade);
   background:
-    radial-gradient(60% 90% at 50% 120%, #ff3f73aa, transparent 70%),
+    radial-gradient(60% 90% at 50% 120%, rgb(from var(--ad-primary) r g b / 0.67), transparent 70%),
     linear-gradient(180deg, #ffffff22, transparent 35%),
-    linear-gradient(180deg, #8c0f37, #4d0620 62%, #2a030f);
+    linear-gradient(180deg, var(--ad-primary-700), var(--ad-primary-800) 62%, var(--ad-primary-900));
 }
 /* A light sweep crosses the fill now and then. */
 .ad-tabs-blade::after {
@@ -131,7 +131,7 @@
 .ad-tabs-trail {
   z-index: -2;
   border-radius: var(--ad-size-radius);
-  background: radial-gradient(closest-side, #ff2f6a80, transparent);
+  background: radial-gradient(closest-side, rgb(from var(--ad-primary) r g b / 0.5), transparent);
   filter: blur(0.6rem);
   opacity: 0;
   transition:
@@ -149,8 +149,8 @@
   height: 0.1875rem;
   transform: translateX(var(--ad-tabs-x));
   border-radius: 999rem;
-  background: radial-gradient(closest-side, #fff2f5, #ff4f7d 45%, transparent);
-  box-shadow: 0 0 0.75rem 0.15rem #ff2a5f88;
+  background: radial-gradient(closest-side, var(--ad-neutral-200), var(--ad-primary) 45%, transparent);
+  box-shadow: 0 0 0.75rem 0.15rem rgb(from var(--ad-primary) r g b / 0.53);
   pointer-events: none;
   transition:
     transform 0.6s var(--ad-tabs-spring),
@@ -160,7 +160,7 @@
 /* While travelling the blade squashes and flares, the trail shows. */
 .ad-tabs[data-moving] .ad-tabs-indicator {
   scale: 1.04 0.86;
-  filter: drop-shadow(0 0 0.8rem #ff1f5aaa) brightness(1.25);
+  filter: drop-shadow(0 0 0.8rem rgb(from var(--ad-primary) r g b / 0.67)) brightness(1.25);
 }
 .ad-tabs[data-moving] .ad-tabs-trail {
   opacity: 1;
@@ -189,12 +189,12 @@
 @keyframes ad-tabs-breathe {
   0%,
   100% {
-    filter: drop-shadow(0 0 0.35rem #ff1f5a55)
-      drop-shadow(0 0.2rem 0.6rem #ff1f5a2a);
+    filter: drop-shadow(0 0 0.35rem rgb(from var(--ad-primary) r g b / 0.33))
+      drop-shadow(0 0.2rem 0.6rem rgb(from var(--ad-primary) r g b / 0.16));
   }
   50% {
-    filter: drop-shadow(0 0 0.7rem #ff1f5a88)
-      drop-shadow(0 0.2rem 0.9rem #ff1f5a44);
+    filter: drop-shadow(0 0 0.7rem rgb(from var(--ad-primary) r g b / 0.53))
+      drop-shadow(0 0.2rem 0.9rem rgb(from var(--ad-primary) r g b / 0.27));
   }
 }
 @media (prefers-reduced-motion: reduce) {

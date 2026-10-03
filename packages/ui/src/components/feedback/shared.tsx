@@ -70,10 +70,52 @@ export interface EmptyStateProps extends CommonProps {
 export interface KeyValueListProps extends CommonProps {
   items?: Array<[ReactNode, ReactNode]>;
 }
-export interface DataTableProps extends CommonProps {
-  columns?: string[];
-  rows?: ReactNode[][];
-  caption?: string;
+/** A row of a table: named fields, or the cells in column order. */
+export type DataTableRow = Record<string, unknown> | ReactNode[];
+export interface DataTableColumn<T extends DataTableRow = DataTableRow> {
+  /** Field of the row (or the cell index for array rows). */
+  key: string;
+  title: ReactNode;
+  align?: "start" | "center" | "end";
+  width?: string;
+  /** Click the header to sort; on by default. */
+  sortable?: boolean;
+  /** Cell content; the raw field by default. */
+  render?: (row: T, index: number) => ReactNode;
+  /** What sorting and search look at; the raw field by default. */
+  value?: (row: T) => string | number;
+}
+export type DataTableSort = { key: string; direction: "asc" | "desc" };
+export interface DataTableProps<
+  T extends DataTableRow = DataTableRow,
+> extends CommonProps {
+  /** Column titles, or full column descriptions. */
+  columns?: Array<string | DataTableColumn<T>>;
+  rows?: T[];
+  caption?: ReactNode;
+  /** Stable id of a row, for selection; its index by default. */
+  rowKey?: (row: T, index: number) => string;
+  sort?: DataTableSort | null;
+  defaultSort?: DataTableSort | null;
+  onSortChange?: (sort: DataTableSort | null) => void;
+  /** Checkboxes to pick rows, with "select all" in the header. */
+  selectable?: boolean;
+  selected?: string[];
+  defaultSelected?: string[];
+  onSelectionChange?: (keys: string[]) => void;
+  /** A search field over every column. */
+  searchable?: boolean;
+  /** Rows per page; everything on one page by default. */
+  pageSize?: number;
+  /** Scroll inside the table with a sticky header beyond this height. */
+  maxHeight?: string;
+  dense?: boolean;
+  striped?: boolean;
+  /** Placeholder rows while data loads. */
+  loading?: boolean;
+  /** Shown when there are no rows (or none match the search). */
+  empty?: ReactNode;
+  onRowClick?: (row: T, index: number) => void;
 }
 export interface CollapsibleSectionProps extends CommonProps {
   title?: string;

@@ -1,0 +1,15 @@
+/* Styles owned by TextArea: the corner drags vertically by default; `both` lets the field
+   follow the width the reader drags it to, `none` locks it. */
+.ad-text-area--resize-both .ad-input-base {
+  width: fit-content;
+  max-width: 100%;
+}
+.ad-text-area--resize-both textarea {
+  resize: both;
+  width: min(30rem, 100%);
+  min-width: 10rem;
+  max-width: 100%;
+}
+.ad-text-area--resize-none textarea {
+  resize: none;
+}

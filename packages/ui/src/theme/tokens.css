@@ -39,90 +39,114 @@
   --ad-letter-spacing-title: -0.01em;
   --ad-letter-spacing-label: 0.015em;
   --ad-letter-spacing-eyebrow: 0.1em;
-  --ad-red: #ff244c;
-  --ad-pink: #ff7c97;
+  /* Palette: two inputs, everything else is derived from them. Change --ad-primary and
+     --ad-secondary (or any step below) and every component follows. */
+  --ad-primary: #ff244c;
+  --ad-secondary: #ff7c97;
+  --ad-primary-900: oklch(from var(--ad-primary) 0.18 calc(c * 0.42) h);
+  --ad-primary-800: oklch(from var(--ad-primary) 0.27 calc(c * 0.6) h);
+  --ad-primary-700: oklch(from var(--ad-primary) 0.38 calc(c * 0.78) h);
+  --ad-primary-600: oklch(from var(--ad-primary) 0.5 calc(c * 0.92) h);
+  --ad-secondary-200: oklch(from var(--ad-secondary) 0.84 calc(c * 0.62) h);
+  --ad-secondary-100: oklch(from var(--ad-secondary) 0.92 calc(c * 0.32) h);
+  --ad-secondary-50: oklch(from var(--ad-secondary) 0.97 calc(c * 0.12) h);
+  /* Neutrals: near-greys carrying a hint of the primary hue. */
+  --ad-neutral-950: oklch(from var(--ad-primary) 0.1 0.012 h);
+  --ad-neutral-900: oklch(from var(--ad-primary) 0.14 0.016 h);
+  --ad-neutral-850: oklch(from var(--ad-primary) 0.18 0.018 h);
+  --ad-neutral-800: oklch(from var(--ad-primary) 0.23 0.02 h);
+  --ad-neutral-700: oklch(from var(--ad-primary) 0.32 0.02 h);
+  --ad-neutral-600: oklch(from var(--ad-primary) 0.45 0.02 h);
+  --ad-neutral-500: oklch(from var(--ad-primary) 0.58 0.02 h);
+  --ad-neutral-400: oklch(from var(--ad-primary) 0.7 0.018 h);
+  --ad-neutral-300: oklch(from var(--ad-primary) 0.82 0.014 h);
+  --ad-neutral-200: oklch(from var(--ad-primary) 0.92 0.01 h);
+  --ad-info: #6fc8ff;
+  /* Older names, kept as aliases. */
+  --ad-red: var(--ad-primary);
+  --ad-pink: var(--ad-secondary);
   --ad-text: #f7f5f8;
   --ad-muted: #bfc0d9;
   --ad-surface-shell:
-    radial-gradient(ellipse 27.5rem 6.875rem at 37% 0, #460a1828, transparent)
+    radial-gradient(ellipse 27.5rem 6.875rem at 37% 0, rgb(from var(--ad-primary-800) r g b / 0.16), transparent)
       padding-box,
-    radial-gradient(ellipse 9.375rem 28.125rem at 0 65%, #7b132018, transparent)
+    radial-gradient(ellipse 9.375rem 28.125rem at 0 65%, rgb(from var(--ad-primary-700) r g b / 0.09), transparent)
       padding-box,
-    linear-gradient(110deg, #08060a, #050408 47%, #07050a) padding-box,
+    linear-gradient(110deg, var(--ad-neutral-900), var(--ad-neutral-950) 47%, var(--ad-neutral-900)) padding-box,
     linear-gradient(
         118deg,
-        #e0a4a5,
-        #aa304a 14%,
-        #771a35 40%,
-        #ff6d7f 75%,
-        #af304a
+        var(--ad-secondary),
+        var(--ad-primary-600) 14%,
+        var(--ad-primary-700) 40%,
+        var(--ad-secondary) 75%,
+        var(--ad-primary-600)
       )
       border-box;
   --ad-shadow-shell:
-    0 0 0.375rem #ff626a91, 0 0 1.1875rem #ff0d376e, 0 0 2.6875rem #ff153235,
-    0 1.5625rem 5.625rem #000b, inset 0 0 0.1875rem #ff70713b,
-    inset 0 0 1.375rem #ff234323;
+    0 0 0.375rem rgb(from var(--ad-secondary) r g b / 0.57), 0 0 1.1875rem rgb(from var(--ad-primary) r g b / 0.43), 0 0 2.6875rem rgb(from var(--ad-primary) r g b / 0.21),
+    0 1.5625rem 5.625rem #000b, inset 0 0 0.1875rem rgb(from var(--ad-secondary) r g b / 0.23),
+    inset 0 0 1.375rem rgb(from var(--ad-primary) r g b / 0.14);
   --ad-surface-card:
     radial-gradient(
         ellipse 22.1875rem 9.6875rem at 43% -8%,
-        #da44645d,
+        rgb(from var(--ad-primary) r g b / 0.36),
         transparent 78%
       )
       padding-box,
-    radial-gradient(ellipse 43.75rem 22.5rem at 7% 0, #14101958, transparent)
+    radial-gradient(ellipse 43.75rem 22.5rem at 7% 0, rgb(from var(--ad-neutral-850) r g b / 0.35), transparent)
       padding-box,
-    linear-gradient(115deg, #09080d, #070609 61%, #08050a) padding-box,
+    linear-gradient(115deg, var(--ad-neutral-900), var(--ad-neutral-900) 61%, var(--ad-neutral-900)) padding-box,
     linear-gradient(
         145deg,
-        #ff426b,
-        #b01a3b 20%,
-        #92112d 54%,
-        #f7204c 82%,
-        #b80a31
+        var(--ad-primary),
+        var(--ad-primary-600) 20%,
+        var(--ad-primary-700) 54%,
+        var(--ad-primary) 82%,
+        var(--ad-primary-600)
       )
       border-box;
   --ad-shadow-card:
-    inset 0 0.0625rem 0.0625rem #ffc8d31f, inset 0 0 0.875rem #eb153511,
-    0 0 0.6875rem #ed13391a;
+    inset 0 0.0625rem 0.0625rem rgb(from var(--ad-secondary-100) r g b / 0.12), inset 0 0 0.875rem rgb(from var(--ad-primary) r g b / 0.07),
+    0 0 0.6875rem rgb(from var(--ad-primary) r g b / 0.1);
   --ad-surface-glass:
-    radial-gradient(ellipse at 32% 0, #3c192031, transparent 62%) padding-box,
-    linear-gradient(135deg, #0d0b10, #06070a 60%, #101017) padding-box,
-    linear-gradient(125deg, #ff5a81, #714350 18%, #32262d 49%, #ad526a 100%)
+    radial-gradient(ellipse at 32% 0, rgb(from var(--ad-primary-800) r g b / 0.19), transparent 62%) padding-box,
+    linear-gradient(135deg, var(--ad-neutral-900), var(--ad-neutral-900) 60%, var(--ad-neutral-850)) padding-box,
+    linear-gradient(125deg, var(--ad-secondary), var(--ad-primary-600) 18%, var(--ad-neutral-700) 49%, var(--ad-primary-600) 100%)
       border-box;
   --ad-shadow-glass:
-    inset 0 0.0625rem 0.125rem #ffe2ed2b, inset 0 0 0.5rem #e6c3ff06,
+    inset 0 0.0625rem 0.125rem rgb(from var(--ad-neutral-200) r g b / 0.17), inset 0 0 0.5rem rgb(from var(--ad-secondary-200) r g b / 0.02),
     0 0.1875rem 0.4375rem #0005;
   --ad-shadow-glass-hover:
-    0 0 0.875rem #ff254832, inset 0 0.0625rem 0.125rem #ffd4e438;
+    0 0 0.875rem rgb(from var(--ad-primary) r g b / 0.2), inset 0 0.0625rem 0.125rem rgb(from var(--ad-secondary-100) r g b / 0.22);
   --ad-surface-ruby:
-    radial-gradient(ellipse at 35% 0, #b8214540, transparent 70%) padding-box,
-    radial-gradient(ellipse at 100% 100%, #d4214845, transparent 68%)
+    radial-gradient(ellipse at 35% 0, rgb(from var(--ad-primary-600) r g b / 0.25), transparent 70%) padding-box,
+    radial-gradient(ellipse at 100% 100%, rgb(from var(--ad-primary-600) r g b / 0.27), transparent 68%)
       padding-box,
-    linear-gradient(140deg, #780e2c, #370314 55%, #8a0c2b) padding-box,
-    linear-gradient(125deg, #ffb6c7, #db496b 22%, #962e4b 58%, #ff7294)
+    linear-gradient(140deg, var(--ad-primary-700), var(--ad-primary-900) 55%, var(--ad-primary-700)) padding-box,
+    linear-gradient(125deg, var(--ad-secondary-200), var(--ad-primary) 22%, var(--ad-primary-600) 58%, var(--ad-secondary))
       border-box;
   --ad-shadow-ruby:
-    inset 0 0.0625rem 0.125rem #ffe2ed75, inset 0 0 0.9375rem #ff1d4548,
-    0 0 0.3125rem #ff45634c, 0 0 1.1875rem #ff214b30;
+    inset 0 0.0625rem 0.125rem rgb(from var(--ad-neutral-200) r g b / 0.46), inset 0 0 0.9375rem rgb(from var(--ad-primary) r g b / 0.28),
+    0 0 0.3125rem rgb(from var(--ad-primary) r g b / 0.3), 0 0 1.1875rem rgb(from var(--ad-primary) r g b / 0.19);
   --ad-surface-tile:
-    radial-gradient(ellipse at 52% 42%, #78022270, #1a031033 68%) padding-box,
-    linear-gradient(145deg, #240911, #110209 69%, #29040f) padding-box,
-    linear-gradient(135deg, #fd567d, #851b3b 22%, #c71140 68%, #852443)
+    radial-gradient(ellipse at 52% 42%, rgb(from var(--ad-primary-700) r g b / 0.44), rgb(from var(--ad-primary-900) r g b / 0.2) 68%) padding-box,
+    linear-gradient(145deg, var(--ad-primary-900), var(--ad-primary-900) 69%, var(--ad-primary-900)) padding-box,
+    linear-gradient(135deg, var(--ad-primary), var(--ad-primary-700) 22%, var(--ad-primary-600) 68%, var(--ad-primary-700))
       border-box;
   --ad-shadow-tile:
-    inset 0 0 0.5625rem #ec0c3b24, inset 0 0.0625rem 0.0625rem #ff70882b,
-    0 0 0.9375rem #ff164128;
+    inset 0 0 0.5625rem rgb(from var(--ad-primary) r g b / 0.14), inset 0 0.0625rem 0.0625rem rgb(from var(--ad-secondary) r g b / 0.17),
+    0 0 0.9375rem rgb(from var(--ad-primary) r g b / 0.16);
   --ad-surface-input:
-    radial-gradient(ellipse at 75% 0, #73213910, transparent 70%) padding-box,
-    linear-gradient(135deg, #0d0b10, #06070a 60%, #101017) padding-box,
-    linear-gradient(125deg, #ef6385, #714350 18%, #4c2031 49%, #ce4165)
+    radial-gradient(ellipse at 75% 0, rgb(from var(--ad-primary-700) r g b / 0.06), transparent 70%) padding-box,
+    linear-gradient(135deg, var(--ad-neutral-900), var(--ad-neutral-900) 60%, var(--ad-neutral-850)) padding-box,
+    linear-gradient(125deg, var(--ad-primary), var(--ad-primary-600) 18%, var(--ad-primary-800) 49%, var(--ad-primary))
       border-box;
   --ad-shadow-input:
-    inset 0 0.0625rem 0.125rem #ffe2ed22, inset 0 0 0.5rem #e6c3ff06,
+    inset 0 0.0625rem 0.125rem rgb(from var(--ad-neutral-200) r g b / 0.13), inset 0 0 0.5rem rgb(from var(--ad-secondary-200) r g b / 0.02),
     0 0.1875rem 0.4375rem #0005;
   --ad-surface-dialog:
-    radial-gradient(ellipse at 80% 0, #670f2840, transparent 70%), #110b13;
-  --ad-shadow-dialog: 0 0 1.75rem #ff214b30, 0 2.1875rem 6.25rem #000b;
+    radial-gradient(ellipse at 80% 0, rgb(from var(--ad-primary-700) r g b / 0.25), transparent 70%), var(--ad-neutral-850);
+  --ad-shadow-dialog: 0 0 1.75rem rgb(from var(--ad-primary) r g b / 0.19), 0 2.1875rem 6.25rem #000b;
 
   /* Adaptive geometry unit: preserves component proportions while scaling gently with the viewport. */
   --ad-fluid-unit: clamp(0.052rem, 0.043rem + 0.045vw, 0.075rem);
@@ -141,7 +165,7 @@
 
   --ad-radius: clamp(0.6875rem, 0.58rem + 0.28vw, 0.9375rem);
   --ad-control-height: clamp(2.375rem, 2.15rem + 0.6vw, 2.875rem);
-  --ad-focus: #ffd0d9;
+  --ad-focus: var(--ad-secondary-100);
   --ad-success: #11d6a4;
   --ad-warning: #f0c16a;
 }

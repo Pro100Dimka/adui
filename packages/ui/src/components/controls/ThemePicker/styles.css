@@ -9,12 +9,17 @@
 }
 .ad-theme-picker > .ad-button[aria-pressed="true"] {
   --ad-btn-border-a: var(--ad-pink);
-  --ad-btn-glow: #ff37746b;
+  --ad-btn-glow: rgb(from var(--ad-primary) r g b / 0.42);
+}
+/* Names are short, so the label need not clip: the swatch and its glow stay round. */
+.ad-theme-picker .ad-button-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45em;
+  overflow: visible;
 }
 .ad-theme-swatch {
-  display: inline-block;
-  margin-right: 0.45em;
-  vertical-align: -0.1em;
+  flex: none;
   width: 0.9em;
   height: 0.9em;
   border-radius: 50%;

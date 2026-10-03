@@ -2,27 +2,27 @@
 @property --ad-red {
   syntax: "<color>";
   inherits: true;
-  initial-value: #ff244c;
+  initial-value: var(--ad-primary);
 }
 @property --ad-pink {
   syntax: "<color>";
   inherits: true;
-  initial-value: #ff7c97;
+  initial-value: var(--ad-secondary);
 }
 @property --ad-focus {
   syntax: "<color>";
   inherits: true;
-  initial-value: #ffd0d9;
+  initial-value: var(--ad-secondary-100);
 }
 @property --ad-text {
   syntax: "<color>";
   inherits: true;
-  initial-value: #f7f5f8;
+  initial-value: var(--ad-neutral-200);
 }
 @property --ad-muted {
   syntax: "<color>";
   inherits: true;
-  initial-value: #bfc0d9;
+  initial-value: var(--ad-neutral-300);
 }
 .ad-theme {
   transition:

@@ -200,14 +200,14 @@ export function Waveform({
           </clipPath>
           {/* Brushed silver: brightest along the midline, fading to the edges. */}
           <linearGradient id={`${id}-silver`} x1="0" x2="0" y1="0" y2="1">
-            <stop offset="0" stopColor="#d9cfdc" stopOpacity="0.35" />
+            <stop offset="0" stopColor="var(--ad-neutral-300)" stopOpacity="0.35" />
             <stop offset="0.5" stopColor="#fff" stopOpacity="0.95" />
-            <stop offset="1" stopColor="#d9cfdc" stopOpacity="0.35" />
+            <stop offset="1" stopColor="var(--ad-neutral-300)" stopOpacity="0.35" />
           </linearGradient>
           <linearGradient id={`${id}-solid`} x1="0" x2="0" y1="0" y2="1">
-            <stop offset="0" stopColor="#efe6f0" stopOpacity="0.8" />
+            <stop offset="0" stopColor="var(--ad-neutral-200)" stopOpacity="0.8" />
             <stop offset="0.5" stopColor="#fff" />
-            <stop offset="1" stopColor="#efe6f0" stopOpacity="0.8" />
+            <stop offset="1" stopColor="var(--ad-neutral-200)" stopOpacity="0.8" />
           </linearGradient>
           {/* Light builds up along the played part and peaks at the cursor. */}
           <linearGradient
@@ -216,12 +216,12 @@ export function Waveform({
             x1="0"
             x2={Math.max(1, played)}
           >
-            <stop offset="0" stopColor="#6b0b2c" />
+            <stop offset="0" stopColor="var(--ad-primary-700)" />
             <stop
               offset="0.6"
               stopColor="var(--ad-wave-color, var(--ad-red))"
             />
-            <stop offset="1" stopColor="#ffd9e3" />
+            <stop offset="1" stopColor="var(--ad-secondary-100)" />
           </linearGradient>
           <linearGradient id={`${id}-depth`} x1="0" x2="0" y1="0" y2="1">
             {/* Lit from above: the upper half catches light, the lower sinks into shadow. */}
@@ -232,7 +232,7 @@ export function Waveform({
           </linearGradient>
           <radialGradient id={`${id}-spot`}>
             <stop offset="0" stopColor="#fff" stopOpacity="0.9" />
-            <stop offset="1" stopColor="#ff2f6a" stopOpacity="0" />
+            <stop offset="1" stopColor="var(--ad-primary)" stopOpacity="0" />
           </radialGradient>
           <filter
             id={`${id}-bloom`}

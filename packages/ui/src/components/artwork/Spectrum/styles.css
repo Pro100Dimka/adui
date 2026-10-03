@@ -12,7 +12,7 @@
   aspect-ratio: 163 / 140;
 }
 .ad-spectrum[data-variant="segmented"] rect {
-  fill: #c2244a;
+  fill: var(--ad-primary-600);
 }
 .ad-spectrum[data-variant="bars"] rect {
   filter: drop-shadow(

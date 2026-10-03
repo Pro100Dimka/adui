@@ -128,14 +128,14 @@
   border-radius: 999rem;
   background: linear-gradient(
     transparent,
-    #ffd3df 20%,
+    var(--ad-secondary-100) 20%,
     #fff 50%,
-    #ffd3df 80%,
+    var(--ad-secondary-100) 80%,
     transparent
   );
   box-shadow:
-    0 0 0.45rem #ff4a7a,
-    0 0 1.2rem #ff2f6a99;
+    0 0 0.45rem var(--ad-primary),
+    0 0 1.2rem rgb(from var(--ad-primary) r g b / 0.6);
   pointer-events: none;
 }
 .ad-waveform-cursor::after {
@@ -149,8 +149,8 @@
   border-radius: 50%;
   background: #fff;
   box-shadow:
-    0 0 0 0.18rem #ff2f6a55,
-    0 0 0.7rem #ff4a7a;
+    0 0 0 0.18rem rgb(from var(--ad-primary) r g b / 0.33),
+    0 0 0.7rem var(--ad-primary);
   transition: scale 0.25s cubic-bezier(0.34, 1.56, 0.5, 1);
 }
 /* Anamorphic flare: a thin horizontal streak through the cursor, as in film. */
@@ -166,9 +166,9 @@
   background: linear-gradient(
     90deg,
     transparent,
-    #ff5c8799 30%,
+    rgb(from var(--ad-secondary) r g b / 0.6) 30%,
     #fff 50%,
-    #ff5c8799 70%,
+    rgb(from var(--ad-secondary) r g b / 0.6) 70%,
     transparent
   );
   filter: blur(0.04rem);
@@ -199,7 +199,7 @@
   margin: -0.1rem;
   border-radius: 50%;
   background: #fff;
-  box-shadow: 0 0 0.35rem #ff4a7a;
+  box-shadow: 0 0 0.35rem var(--ad-primary);
   opacity: 0;
   animation: ad-waveform-spark 1.6s ease-out infinite;
 }
@@ -285,8 +285,8 @@
   translate: -50% 0;
   padding: 0.1rem 0.4rem;
   border-radius: 0.35rem;
-  background: #140a10e6;
-  box-shadow: inset 0 0 0 0.0625rem #ff608466;
+  background: rgb(from var(--ad-neutral-850) r g b / 0.9);
+  box-shadow: inset 0 0 0 0.0625rem rgb(from var(--ad-secondary) r g b / 0.4);
   color: #fff;
   font-size: var(--ad-font-size-caption);
   font-variant-numeric: tabular-nums;

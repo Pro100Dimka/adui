@@ -14,7 +14,7 @@
   font-size: var(--ad-font-size-label);
   font-weight: 600;
   letter-spacing: 0.01em;
-  color: #e9dde6;
+  color: var(--ad-neutral-200);
 }
 .ad-field-required {
   color: var(--ad-pink);
@@ -28,7 +28,7 @@
   line-height: 1.4;
 }
 .ad-field-message[data-error] {
-  color: #ff8aa6;
+  color: var(--ad-secondary);
 }
 .ad-field-message > .ad-icon {
   --ad-icon-size: 1.15em;
@@ -48,7 +48,7 @@
   width: 100%;
   min-height: var(--ad-size-h);
   padding-inline: var(--ad-size-pad-x);
-  border: 0.0625rem solid #ff78982e;
+  border: 0.0625rem solid rgb(from var(--ad-secondary) r g b / 0.18);
   border-radius: var(--ad-size-radius);
   background: var(--ad-surface-input);
   box-shadow: var(--ad-shadow-input);
@@ -61,14 +61,14 @@
     background 0.18s;
 }
 .ad-input-base:hover:not([data-disabled]) {
-  border-color: #ff78986b;
+  border-color: rgb(from var(--ad-secondary) r g b / 0.42);
 }
 .ad-input-base:focus-within {
   border-color: var(--ad-input-accent);
   box-shadow:
-    0 0 0 0.1875rem #ff4a7024,
-    0 0 1rem #ff214b26,
-    inset 0 0.0625rem 0.125rem #ffe2ed22;
+    0 0 0 0.1875rem rgb(from var(--ad-primary) r g b / 0.14),
+    0 0 1rem rgb(from var(--ad-primary) r g b / 0.15),
+    inset 0 0.0625rem 0.125rem rgb(from var(--ad-neutral-200) r g b / 0.13);
 }
 /* Fluent-style accent line that grows from the centre on focus. */
 .ad-input-base::after {
@@ -92,15 +92,15 @@
   transform: scaleX(1);
 }
 .ad-input-base[data-invalid] {
-  --ad-input-accent: #ff5c84;
-  border-color: #ff527b9c;
+  --ad-input-accent: var(--ad-secondary);
+  border-color: rgb(from var(--ad-primary) r g b / 0.61);
 }
 .ad-input-base[data-disabled] {
   opacity: 0.45;
   cursor: not-allowed;
 }
 .ad-input-base[data-readonly] {
-  background: #0b0a0e;
+  background: var(--ad-neutral-900);
   box-shadow: none;
   border-style: dashed;
 }
@@ -108,28 +108,28 @@
 /* Variants. */
 .ad-input-base[data-ad-variant="filled"] {
   border-color: transparent;
-  border-bottom-color: #ff789866;
+  border-bottom-color: rgb(from var(--ad-secondary) r g b / 0.4);
   border-end-start-radius: 0.25rem;
   border-end-end-radius: 0.25rem;
-  background: linear-gradient(180deg, #2a1b25, #1a1219);
+  background: linear-gradient(180deg, var(--ad-neutral-800), var(--ad-neutral-850));
   box-shadow: inset 0 0.0625rem 0 #ffffff10;
 }
 .ad-input-base[data-ad-variant="filled"]:hover:not([data-disabled]) {
-  background: linear-gradient(180deg, #33202d, #1f141c);
+  background: linear-gradient(180deg, var(--ad-primary-800), var(--ad-neutral-800));
   border-color: transparent;
-  border-bottom-color: #ff7898a8;
+  border-bottom-color: rgb(from var(--ad-secondary) r g b / 0.66);
 }
 .ad-input-base[data-ad-variant="underlined"] {
   padding-inline: 0.125rem;
   border-color: transparent;
-  border-bottom-color: #ff78986b;
+  border-bottom-color: rgb(from var(--ad-secondary) r g b / 0.42);
   border-radius: 0;
   background: transparent;
   box-shadow: none;
 }
 .ad-input-base[data-ad-variant="underlined"]:hover:not([data-disabled]) {
   border-color: transparent;
-  border-bottom-color: #ff7898c4;
+  border-bottom-color: rgb(from var(--ad-secondary) r g b / 0.77);
 }
 .ad-input-base:is(
     [data-ad-variant="filled"],
@@ -172,7 +172,7 @@
 }
 .ad-input-base input::placeholder,
 .ad-input-base textarea::placeholder {
-  color: #8f8698;
+  color: var(--ad-neutral-500);
   opacity: 1;
 }
 .ad-input-base textarea {
@@ -283,7 +283,7 @@
 }
 .ad-field:focus-within .ad-field-label {
   color: var(--ad-pink);
-  text-shadow: 0 0 0.6rem #ff2f6a66;
+  text-shadow: 0 0 0.6rem rgb(from var(--ad-primary) r g b / 0.4);
 }
 .ad-input-base input::placeholder,
 .ad-input-base textarea::placeholder {
@@ -324,7 +324,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  color: #9a8e9c;
+  color: var(--ad-neutral-400);
   font-size: var(--ad-size-font);
   transform-origin: left center;
   translate: 0 -50%;
@@ -345,10 +345,10 @@
 }
 .ad-input-base[data-floating]:focus-within .ad-input-label {
   color: var(--ad-pink);
-  text-shadow: 0 0 0.6rem #ff2f6a66;
+  text-shadow: 0 0 0.6rem rgb(from var(--ad-primary) r g b / 0.4);
 }
 .ad-input-base[data-floating][data-filled]:not(:focus-within) .ad-input-label {
-  color: #c9bcc7;
+  color: var(--ad-neutral-300);
 }
 /* The text sits under the raised label. */
 .ad-input-base[data-floating] :is(input, button.ad-input-control) {

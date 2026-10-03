@@ -15,7 +15,7 @@
   min-width: 14.6875rem;
   max-width: 21.875rem;
   padding: 0.5rem;
-  border: 0.0625rem solid #ad436082 !important;
+  border: 0.0625rem solid rgb(from var(--ad-primary-600) r g b / 0.51) !important;
   border-radius: 0.8125rem;
   z-index: 1000;
   color: var(--ad-text);

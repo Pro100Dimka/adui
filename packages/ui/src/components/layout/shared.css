@@ -67,3 +67,8 @@
 .ad-collapsible-section[open] summary > .ad-icon:last-child {
   transform: rotate(180deg);
 }
+
+/* Vector artwork is drawn in ruby; it turns to the theme hue. */
+:is(.ad-illustration, .ad-brand-mark, .ad-host-seal) svg {
+  filter: hue-rotate(var(--ad-hue-shift, 0deg));
+}

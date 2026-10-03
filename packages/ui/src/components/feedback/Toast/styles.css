@@ -16,7 +16,7 @@
       color-mix(in srgb, var(--ad-tone) 22%, transparent),
       transparent 70%
     ),
-    #0d0a10f2;
+    rgb(from var(--ad-neutral-900) r g b / 0.95);
   box-shadow:
     0 0.8rem 2rem #000b,
     0 0 1.2rem color-mix(in srgb, var(--ad-tone) 25%, transparent);
@@ -42,7 +42,7 @@
 }
 .ad-toast-icon > .ad-icon {
   --ad-icon-size: 1.05rem;
-  color: #0b0609;
+  color: var(--ad-neutral-900);
 }
 .ad-toast-floating {
   position: fixed;

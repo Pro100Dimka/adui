@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import type {
   ButtonHTMLAttributes,
   InputHTMLAttributes,
@@ -173,6 +173,8 @@ export interface TextAreaProps
   endAdornment?: ReactNode;
   variant?: InputVariant;
   labelPlacement?: LabelPlacement;
+  /** Which way the reader may drag the corner; `both` lets the field follow the width too. */
+  resize?: "vertical" | "both" | "none";
 }
 export interface AutocompleteOption {
   value: string;
@@ -214,6 +216,8 @@ export interface BooleanProps extends CommonProps {
   disabled?: boolean;
   name?: string;
   required?: boolean;
+  /** Checkbox only: neither on nor off, e.g. "select all" when some rows are chosen. */
+  indeterminate?: boolean;
 }
 export function BooleanControl({
   kind,
@@ -224,9 +228,14 @@ export function BooleanControl({
     p.defaultChecked ?? false,
     p.onValueChange,
   );
+  const input = useRef<HTMLInputElement>(null);
+  useEffect(() => {
+    if (input.current) input.current.indeterminate = !!p.indeterminate;
+  }, [p.indeterminate]);
   return (
     <label {...mark(kind, p)}>
       <input
+        ref={input}
         name={p.name}
         type="checkbox"
         role={kind === "Switch" ? "switch" : undefined}

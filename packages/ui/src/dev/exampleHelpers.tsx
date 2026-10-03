@@ -11,6 +11,40 @@ import * as Editor from "../editor";
 
 export const U = { ...UI, ...Editor };
 
+/** The docs site's own theme. Theme examples drive it, so the whole site follows them. */
+export interface SiteTheme {
+  theme: UI.ThemeName;
+  primary: string;
+  secondary: string;
+  /** A new theme brings its own pair of colours unless colours are given too. */
+  set: (patch: Partial<Omit<SiteTheme, "set">>) => void;
+}
+export const SiteThemeContext = createContext<SiteTheme | null>(null);
+
+/** The site theme when the docs provide one, otherwise a local theme of the example. */
+export function useSiteTheme(): SiteTheme {
+  const site = useContext(SiteThemeContext);
+  const [local, setLocal] = useState({
+    theme: "ruby" as UI.ThemeName,
+    primary: UI.themes.ruby[0] as string,
+    secondary: UI.themes.ruby[1] as string,
+  });
+  return (
+    site ?? {
+      ...local,
+      set: (patch) =>
+        setLocal((current) => ({
+          ...current,
+          ...(patch.theme && {
+            primary: UI.themes[patch.theme][0],
+            secondary: UI.themes[patch.theme][1],
+          }),
+          ...patch,
+        })),
+    }
+  );
+}
+
 /** True inside overview tiles: a playground shows only its specimens, without controls. */
 export const ExamplePreviewContext = createContext(false);
 
@@ -106,6 +140,12 @@ const knobLabels: Record<string, string> = {
   max: "Наклон, °",
   glare: "Блик",
   floating: "Подпись внутри",
+  resize: "Ресайз",
+  theme: "Тема",
+  selectable: "Выбор строк",
+  searchable: "Поиск",
+  dense: "Плотная",
+  striped: "Зебра",
   strands: "Нити",
   stars: "Звёзды",
   upload: "Облако загрузки",

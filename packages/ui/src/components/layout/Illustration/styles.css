@@ -16,7 +16,7 @@
 }
 .ad-illustration[data-ad-framed="true"] {
   padding: var(--ad-space-3);
-  border: 0.0625rem solid #ff66854d;
+  border: 0.0625rem solid rgb(from var(--ad-secondary) r g b / 0.3);
   border-radius: var(--ad-radius);
   background: var(--ad-surface-glass);
   box-shadow: var(--ad-shadow-glass);
@@ -41,7 +41,7 @@
   background: conic-gradient(
     from var(--ad-art-angle, 0deg),
     transparent 0 70%,
-    #ff8aa6,
+    var(--ad-secondary),
     transparent 85%
   );
   mask:
@@ -67,10 +67,10 @@
 @keyframes ad-art-glow {
   0%,
   100% {
-    filter: drop-shadow(0 0 0.4rem #ff2f6a33);
+    filter: hue-rotate(var(--ad-hue-shift, 0deg)) drop-shadow(0 0 0.4rem rgb(from var(--ad-primary) r g b / 0.2));
   }
   50% {
-    filter: drop-shadow(0 0 1.2rem #ff2f6a77);
+    filter: hue-rotate(var(--ad-hue-shift, 0deg)) drop-shadow(0 0 1.2rem rgb(from var(--ad-primary) r g b / 0.47));
   }
 }
 @keyframes ad-art-edge {

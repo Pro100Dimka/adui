@@ -64,11 +64,11 @@ export function NeonWaves({
     >
       <defs>
         <linearGradient id={`${id}-strand`}>
-          <stop stopColor="#6d112b" stopOpacity="0" />
-          <stop offset=".16" stopColor="#af153d" stopOpacity=".35" />
+          <stop stopColor="var(--ad-primary-700)" stopOpacity="0" />
+          <stop offset=".16" stopColor="var(--ad-primary-600)" stopOpacity=".35" />
           <stop offset=".57" stopColor="var(--ad-red)" stopOpacity=".74" />
           <stop offset=".78" stopColor="var(--ad-pink)" stopOpacity=".85" />
-          <stop offset="1" stopColor="#d91b43" stopOpacity=".44" />
+          <stop offset="1" stopColor="var(--ad-primary-600)" stopOpacity=".44" />
         </linearGradient>
       </defs>
       {Array.from({ length: strands }, (_, i) => (

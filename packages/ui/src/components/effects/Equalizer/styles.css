@@ -9,8 +9,8 @@
   width: 0.22em;
   height: 100%;
   border-radius: 999rem;
-  background: linear-gradient(0deg, #ff2f6a, #ffd3df);
-  box-shadow: 0 0 0.35em #ff2f6a88;
+  background: linear-gradient(0deg, var(--ad-primary), var(--ad-secondary-100));
+  box-shadow: 0 0 0.35em rgb(from var(--ad-primary) r g b / 0.53);
   transform-origin: bottom;
   scale: 1 0.25;
   transition: scale 0.3s;

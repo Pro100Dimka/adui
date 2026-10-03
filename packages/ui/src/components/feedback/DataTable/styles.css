@@ -1,65 +1,179 @@
-/* Styles owned by DataTable: rows cascade in; a hovered row lights up with an accent bar. */
+/* Styles owned by DataTable: a lit header that stays put while the body scrolls, rows that
+   cascade in and light up with an accent bar, sort arrows, a search bar and a pager. */
 .ad-data-table {
-  border-collapse: collapse;
-  width: 100%;
+  display: grid;
+  gap: var(--ad-space-3);
+  min-width: 0;
   font-size: 0.75rem;
-  text-align: left;
 }
-.ad-data-table caption {
-  padding-bottom: 0.6rem;
+.ad-data-table-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ad-space-3);
+  color: var(--ad-neutral-200);
+}
+.ad-data-table-bar > .ad-field {
+  flex: 0 1 16rem;
+}
+.ad-data-table-scroll {
+  overflow: auto;
+  border-radius: var(--ad-radius);
+  scrollbar-width: thin;
+}
+.ad-data-table table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
   text-align: left;
-  font-weight: 700;
-  color: #f1e6ec;
 }
 .ad-data-table th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
   font-weight: 600;
-  color: #bdb4cb;
-  background: linear-gradient(180deg, #2a1220, #1a0c14);
-  box-shadow: inset 0 -0.0625rem 0 #ff2f6a55;
+  color: var(--ad-neutral-300);
+  white-space: nowrap;
+  background: linear-gradient(180deg, var(--ad-primary-900), var(--ad-neutral-850));
+  box-shadow: inset 0 -0.0625rem 0 rgb(from var(--ad-primary) r g b / 0.33);
 }
 .ad-data-table th,
 .ad-data-table td {
-  padding: 0.65rem 0.8rem;
-  border-bottom: 0.0625rem solid #7f334330;
+  padding: 0.55rem 0.8rem;
+  border-bottom: 0.0625rem solid rgb(from var(--ad-primary-700) r g b / 0.19);
+}
+.ad-data-table[data-dense] :is(th, td) {
+  padding: 0.35rem 0.6rem;
+}
+.ad-data-table :is(th, td)[data-align="center"] {
+  text-align: center;
+}
+.ad-data-table :is(th, td)[data-align="end"] {
+  text-align: end;
 }
 .ad-data-table td {
-  color: #d7c3d7;
+  color: var(--ad-secondary-200);
   transition:
     background 0.25s,
-    color 0.25s;
+    color 0.25s,
+    box-shadow 0.25s;
+}
+.ad-data-table[data-striped] tbody tr:nth-child(even) td {
+  background: rgb(from var(--ad-neutral-850) r g b / 0.55);
 }
 .ad-data-table tbody tr {
   animation: ad-table-row 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) both;
 }
 .ad-data-table tbody tr:nth-child(2) {
-  animation-delay: 0.06s;
+  animation-delay: 0.04s;
 }
 .ad-data-table tbody tr:nth-child(3) {
-  animation-delay: 0.12s;
+  animation-delay: 0.08s;
 }
 .ad-data-table tbody tr:nth-child(4) {
-  animation-delay: 0.18s;
+  animation-delay: 0.12s;
 }
 .ad-data-table tbody tr:nth-child(n + 5) {
-  animation-delay: 0.24s;
+  animation-delay: 0.16s;
 }
-.ad-data-table tbody tr:hover td {
-  background: #ff2f6a12;
+.ad-data-table tbody tr:hover td,
+.ad-data-table tbody tr[data-selected] td {
+  background: rgb(from var(--ad-primary) r g b / 0.08);
   color: #fff;
 }
 .ad-data-table tbody tr td:first-child {
-  box-shadow: inset 0 0 0 #ff2f6a;
-  transition:
-    box-shadow 0.25s,
-    background 0.25s,
-    color 0.25s;
+  box-shadow: inset 0 0 0 var(--ad-primary);
 }
-.ad-data-table tbody tr:hover td:first-child {
-  box-shadow: inset 0.1875rem 0 0 #ff2f6a;
+.ad-data-table tbody tr:hover td:first-child,
+.ad-data-table tbody tr[data-selected] td:first-child {
+  box-shadow: inset 0.1875rem 0 0 var(--ad-primary);
+}
+.ad-data-table tbody tr[data-clickable] {
+  cursor: pointer;
+}
+.ad-data-table-check {
+  width: 2.5rem;
+}
+/* Sortable headers: a soft arrow that lights and turns with the direction. */
+.ad-data-table-sort {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+.ad-data-table-sort > .ad-icon {
+  --ad-icon-size: 0.75rem;
+  opacity: 0;
+  transition:
+    opacity 0.2s,
+    rotate 0.3s cubic-bezier(0.34, 1.56, 0.5, 1),
+    color 0.2s;
+}
+.ad-data-table-sort:hover > .ad-icon {
+  opacity: 0.5;
+}
+.ad-data-table-sort[data-direction] {
+  color: #fff;
+}
+.ad-data-table-sort[data-direction] > .ad-icon {
+  opacity: 1;
+  color: var(--ad-secondary);
+}
+.ad-data-table-sort[data-direction="asc"] > .ad-icon {
+  rotate: 180deg;
+}
+.ad-data-table-empty {
+  padding: 2rem 0.8rem !important;
+  text-align: center;
+  color: var(--ad-muted) !important;
+}
+/* Loading: shimmering bars in place of cells. */
+.ad-data-table-loading td > i {
+  display: block;
+  height: 0.6rem;
+  border-radius: 999rem;
+  background: linear-gradient(
+      90deg,
+      transparent,
+      rgb(from var(--ad-secondary) r g b / 0.18),
+      transparent
+    )
+    0 0 / 200% 100%,
+    rgb(from var(--ad-neutral-700) r g b / 0.5);
+  animation: ad-table-shimmer 1.4s linear infinite;
+}
+.ad-data-table-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ad-space-3);
+  color: var(--ad-muted);
+}
+.ad-data-table-pages {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ad-space-2);
+  font-variant-numeric: tabular-nums;
+}
+.ad-data-table-next .ad-icon {
+  rotate: 180deg;
 }
 @keyframes ad-table-row {
   from {
     opacity: 0;
     transform: translateY(0.5rem);
+  }
+}
+@keyframes ad-table-shimmer {
+  to {
+    background-position:
+      -200% 0,
+      0 0;
   }
 }

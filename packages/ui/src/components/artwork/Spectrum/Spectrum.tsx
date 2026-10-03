@@ -83,9 +83,9 @@ export function Spectrum({ variant = "segmented", ...p }: SpectrumProps) {
         <>
           <defs>
             <linearGradient id={`${id}-bar`} x1="0" x2="0" y1="0" y2="1">
-              <stop stopColor="#ffa7b9" />
+              <stop stopColor="var(--ad-secondary-200)" />
               <stop offset=".24" stopColor="var(--ad-red)" />
-              <stop offset="1" stopColor="#b40733" stopOpacity="0" />
+              <stop offset="1" stopColor="var(--ad-primary-600)" stopOpacity="0" />
             </linearGradient>
           </defs>
           {Array.from({ length: BARS }, (_, i) => (

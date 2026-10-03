@@ -4,7 +4,7 @@
   align-items: center;
   gap: 0.55rem;
   font-size: var(--ad-font-size-body-sm);
-  color: #d8ccd5;
+  color: var(--ad-neutral-300);
   white-space: nowrap;
 }
 .ad-status-dot {
@@ -52,7 +52,7 @@
   animation: ad-status-breathe 2.4s ease-in-out infinite;
 }
 [data-ad-tone="offline"] > .ad-status-dot > i {
-  background: #5d5562;
+  background: var(--ad-neutral-600);
   box-shadow: none;
 }
 [data-ad-tone="offline"] {

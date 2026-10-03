@@ -6,7 +6,7 @@
   overscroll-behavior: contain;
   scrollbar-gutter: stable;
   scrollbar-width: thin;
-  scrollbar-color: #f73b66 #100911;
+  scrollbar-color: var(--ad-primary) var(--ad-neutral-900);
   padding-inline-end: clamp(0.4rem, 0.25rem + 0.35vw, 0.75rem);
 }
 .ad-scroll-area::-webkit-scrollbar {
@@ -14,11 +14,11 @@
   height: clamp(0.45rem, 0.3rem + 0.25vw, 0.7rem);
 }
 .ad-scroll-area::-webkit-scrollbar-track {
-  background: #100911;
+  background: var(--ad-neutral-900);
   border-radius: 999rem;
 }
 .ad-scroll-area::-webkit-scrollbar-thumb {
-  background: linear-gradient(#ff5478, #9c2346);
+  background: linear-gradient(var(--ad-primary), var(--ad-primary-600));
   border-radius: 999rem;
 }
 /* Edges fade out only where there is more to scroll (scroll-driven, where supported). */

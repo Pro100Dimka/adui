@@ -131,7 +131,7 @@ U.attachBorder = (element, { shell = false, round = false, scope } = {}) => {
   const defs = U.svg("defs"),
     path = U.svg("path", {
       fill: "none",
-      stroke: shell ? "#ff6373a6" : "#ff335329",
+      stroke: shell ? "rgb(from var(--ad-secondary) r g b / 0.65)" : "rgb(from var(--ad-primary) r g b / 0.16)",
       "stroke-width": shell ? 1.1 : 0.6,
     });
   overlay.append(defs, path);
@@ -144,12 +144,12 @@ U.attachBorder = (element, { shell = false, round = false, scope } = {}) => {
       r: radius,
     });
     for (const [offset, color, opacity] of [
-      [0, "#fff9f0", 1],
-      [0.04, "#ffe2dd", 1],
-      [0.16, "#ff798e", 1],
-      [0.4, "#ff244c", 0.85],
-      [0.72, "#ff1745", 0.32],
-      [1, "#ff1745", 0],
+      [0, "var(--ad-neutral-200)", 1],
+      [0.04, "var(--ad-neutral-200)", 1],
+      [0.16, "var(--ad-secondary)", 1],
+      [0.4, "var(--ad-primary)", 0.85],
+      [0.72, "var(--ad-primary)", 0.32],
+      [1, "var(--ad-primary)", 0],
     ])
       gradient.append(
         U.svg("stop", { offset, "stop-color": color, "stop-opacity": opacity }),
@@ -167,7 +167,7 @@ U.attachBorder = (element, { shell = false, round = false, scope } = {}) => {
       red.append(
         U.svg("stop", {
           offset,
-          "stop-color": "#ff224b",
+          "stop-color": "var(--ad-primary)",
           "stop-opacity": opacity,
         }),
       );
@@ -285,10 +285,10 @@ U.attachTabShape = (button) => {
   const defs = U.svg("defs"),
     grad = U.svg("linearGradient", { id, x1: 0, y1: 0, x2: 0, y2: 1 });
   [
-    [0, "#7d0926", 0.77],
-    [0.38, "#370014", 0.86],
-    [0.76, "#130309", 0.94],
-    [1, "#9b082d", 0.94],
+    [0, "var(--ad-primary-700)", 0.77],
+    [0.38, "var(--ad-primary-900)", 0.86],
+    [0.76, "var(--ad-primary-900)", 0.94],
+    [1, "var(--ad-primary-600)", 0.94],
   ].forEach(([offset, color, opacity]) =>
     grad.append(
       U.svg("stop", { offset, "stop-color": color, "stop-opacity": opacity }),

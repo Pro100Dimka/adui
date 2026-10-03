@@ -6,9 +6,11 @@
   min-height: 7rem;
   aspect-ratio: 1220 / 168;
   border-radius: var(--ad-radius);
-  background: #07060a;
+  background: var(--ad-neutral-900);
 }
 .ad-landscape > canvas {
+  /* Painted in ruby; turned to the theme hue. */
+  filter: hue-rotate(var(--ad-hue-shift, 0deg));
   position: absolute;
   inset: 0;
   width: 100%;
@@ -29,10 +31,10 @@
   z-index: 1;
   background: linear-gradient(
     90deg,
-    #09080df0 0%,
-    #09080daa 32%,
-    #09080d26 70%,
-    #09080d0a
+    rgb(from var(--ad-neutral-900) r g b / 0.94) 0%,
+    rgb(from var(--ad-neutral-900) r g b / 0.67) 32%,
+    rgb(from var(--ad-neutral-900) r g b / 0.15) 70%,
+    rgb(from var(--ad-neutral-900) r g b / 0.04)
   );
   pointer-events: none;
 }
@@ -45,7 +47,7 @@
   width: 28%;
   aspect-ratio: 2;
   border-radius: 50%;
-  background: radial-gradient(closest-side, #ff4a6a55, transparent);
+  background: radial-gradient(closest-side, rgb(from var(--ad-primary) r g b / 0.33), transparent);
   mix-blend-mode: screen;
   animation: ad-landscape-glow 5s ease-in-out infinite;
   pointer-events: none;

@@ -26,7 +26,7 @@ export const Sparkline = (p: SparklineProps) => {
       aria-label={p.label}
       aria-hidden={!p.label}
       style={
-        { ...p.style, "--ad-spark": p.color ?? "#ff416a" } as CSSProperties
+        { ...p.style, "--ad-spark": p.color ?? "var(--ad-primary)" } as CSSProperties
       }
     >
       <defs>

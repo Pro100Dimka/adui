@@ -22,11 +22,11 @@
   width: calc(var(--ad-icon-size) * 1.8);
   height: calc(var(--ad-icon-size) * 1.8);
   padding: calc(var(--ad-icon-size) * 0.34);
-  border: 0.0625rem solid #ff567d5c;
+  border: 0.0625rem solid rgb(from var(--ad-primary) r g b / 0.36);
   border-radius: calc(var(--ad-radius) * 0.85);
   background: var(--ad-surface-tile);
   box-shadow: var(--ad-shadow-tile);
-  color: #fff5f6;
+  color: var(--ad-neutral-200);
 }
 /* Tile icons breathe with light; hovering lifts the tile and rocks the glyph. */
 .ad-icon[data-ad-surface="tile"] {
@@ -40,7 +40,7 @@
 }
 .ad-icon[data-ad-surface="tile"]:hover {
   transform: translateY(-0.125rem) scale(1.06);
-  border-color: #ff8aa6;
+  border-color: var(--ad-secondary);
 }
 .ad-icon[data-ad-surface="tile"]:hover > [data-ad-component="IconAsset"] {
   transform: rotate(-10deg) scale(1.08);
@@ -53,6 +53,6 @@
   50% {
     box-shadow:
       var(--ad-shadow-tile),
-      0 0 1rem #ff2f6a55;
+      0 0 1rem rgb(from var(--ad-primary) r g b / 0.33);
   }
 }

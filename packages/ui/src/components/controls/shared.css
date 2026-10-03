@@ -154,13 +154,13 @@
 .ad-icon-button,
 .ad-toggle-button {
   --ad-btn-radius: calc(var(--ad-size-radius) * 1.08);
-  --ad-btn-bg-top: #302431;
-  --ad-btn-bg-mid: #17111d;
-  --ad-btn-bg-bottom: #09090d;
-  --ad-btn-border-a: #ffd7e3a6;
-  --ad-btn-border-b: #8a36586e;
-  --ad-btn-edge: #ff79a336;
-  --ad-btn-glow: #ff447329;
+  --ad-btn-bg-top: var(--ad-neutral-700);
+  --ad-btn-bg-mid: var(--ad-neutral-850);
+  --ad-btn-bg-bottom: var(--ad-neutral-900);
+  --ad-btn-border-a: rgb(from var(--ad-secondary-100) r g b / 0.65);
+  --ad-btn-border-b: rgb(from var(--ad-primary-600) r g b / 0.43);
+  --ad-btn-edge: rgb(from var(--ad-secondary) r g b / 0.21);
+  --ad-btn-glow: rgb(from var(--ad-primary) r g b / 0.16);
   --ad-btn-inner: #ffffff3d;
   --ad-btn-bottom: #000a;
   --ad-button-x: 50%;
@@ -176,7 +176,7 @@
   padding-inline: calc(var(--ad-size-pad-x) * 1.55);
   border: 0.0625rem solid transparent;
   border-radius: var(--ad-btn-radius);
-  color: #fff9fc;
+  color: var(--ad-neutral-200);
   font-size: var(--ad-size-font);
   font-weight: 700;
   letter-spacing: 0.01em;
@@ -195,7 +195,7 @@
         var(--ad-btn-border-a),
         #ffffff18 18%,
         var(--ad-btn-border-b) 56%,
-        #4f19314f 100%
+        rgb(from var(--ad-primary-800) r g b / 0.31) 100%
       )
       border-box;
   box-shadow:
@@ -227,8 +227,8 @@
     radial-gradient(
       70% 105% at var(--ad-button-x) var(--ad-button-y),
       #ffffff3f 0%,
-      #ffe3ed24 24%,
-      #ffadc515 48%,
+      rgb(from var(--ad-neutral-200) r g b / 0.14) 24%,
+      rgb(from var(--ad-secondary-200) r g b / 0.08) 48%,
       transparent 72%
     ),
     linear-gradient(180deg, #ffffff2f 0%, #ffffff10 18%, transparent 36%),
@@ -252,9 +252,9 @@
   background: linear-gradient(
     90deg,
     transparent,
-    #fff6fa14 18%,
+    rgb(from var(--ad-neutral-200) r g b / 0.08) 18%,
     #fffefecf 48%,
-    #ffd4e34d 62%,
+    rgb(from var(--ad-secondary-100) r g b / 0.3) 62%,
     transparent 80%
   );
   filter: blur(0.08rem);
@@ -297,7 +297,7 @@
 .ad-button:focus-visible,
 .ad-icon-button:focus-visible,
 .ad-toggle-button:focus-visible {
-  outline: 0.125rem solid #ffe1ea;
+  outline: 0.125rem solid var(--ad-neutral-200);
   outline-offset: 0.18rem;
 }
 
@@ -306,15 +306,15 @@
 .ad-icon-button[data-ad-variant="primary"],
 .ad-split-button[data-ad-variant="primary"],
 .ad-toggle-button[aria-pressed="true"] {
-  --ad-btn-bg-top: #f23878;
-  --ad-btn-bg-mid: #a70b45;
-  --ad-btn-bg-bottom: #330412;
-  --ad-btn-border-a: #fff8fb;
-  --ad-btn-border-b: #ff78a4dc;
-  --ad-btn-edge: #ff2f746f;
-  --ad-btn-glow: #ff37746b;
+  --ad-btn-bg-top: var(--ad-primary);
+  --ad-btn-bg-mid: var(--ad-primary-600);
+  --ad-btn-bg-bottom: var(--ad-primary-900);
+  --ad-btn-border-a: var(--ad-neutral-200);
+  --ad-btn-border-b: rgb(from var(--ad-secondary) r g b / 0.86);
+  --ad-btn-edge: rgb(from var(--ad-primary) r g b / 0.44);
+  --ad-btn-glow: rgb(from var(--ad-primary) r g b / 0.42);
   --ad-btn-inner: #fffafca3;
-  --ad-btn-bottom: #4b00196c;
+  --ad-btn-bottom: rgb(from var(--ad-primary-800) r g b / 0.42);
 }
 .ad-button[data-ad-variant="primary"],
 .ad-icon-button[data-ad-variant="primary"],
@@ -331,13 +331,13 @@
 .ad-icon-button[data-ad-variant="secondary"],
 .ad-split-button[data-ad-variant="secondary"],
 .ad-toggle-button[aria-pressed="false"] {
-  --ad-btn-bg-top: #302c36;
-  --ad-btn-bg-mid: #17151c;
-  --ad-btn-bg-bottom: #08090c;
-  --ad-btn-border-a: #d5cbd2a8;
-  --ad-btn-border-b: #6258655c;
-  --ad-btn-edge: #b49aaa2c;
-  --ad-btn-glow: #aa889b1c;
+  --ad-btn-bg-top: var(--ad-neutral-700);
+  --ad-btn-bg-mid: var(--ad-neutral-850);
+  --ad-btn-bg-bottom: var(--ad-neutral-900);
+  --ad-btn-border-a: rgb(from var(--ad-neutral-300) r g b / 0.66);
+  --ad-btn-border-b: rgb(from var(--ad-neutral-600) r g b / 0.36);
+  --ad-btn-edge: rgb(from var(--ad-secondary) r g b / 0.17);
+  --ad-btn-glow: rgb(from var(--ad-primary) r g b / 0.11);
   --ad-btn-inner: #ffffff35;
   --ad-btn-bottom: #000a;
 }
@@ -348,28 +348,28 @@
   --ad-btn-bg-top: #ffffff05;
   --ad-btn-bg-mid: #ffffff02;
   --ad-btn-bg-bottom: #0000000b;
-  --ad-btn-border-a: #d9b7c52e;
-  --ad-btn-border-b: #7d596720;
-  --ad-btn-edge: #ff9bbb0d;
+  --ad-btn-border-a: rgb(from var(--ad-secondary-200) r g b / 0.18);
+  --ad-btn-border-b: rgb(from var(--ad-primary-600) r g b / 0.13);
+  --ad-btn-edge: rgb(from var(--ad-secondary-200) r g b / 0.05);
   --ad-btn-glow: transparent;
   --ad-btn-inner: #ffffff08;
   --ad-btn-bottom: #00000018;
-  color: #d9ced5;
+  color: var(--ad-neutral-300);
 }
 
 .ad-button[data-ad-variant="danger"],
 .ad-icon-button[data-ad-variant="danger"],
 .ad-split-button[data-ad-variant="danger"] {
-  --ad-btn-bg-top: #a31328;
-  --ad-btn-bg-mid: #5b0613;
-  --ad-btn-bg-bottom: #1a0206;
-  --ad-btn-border-a: #ffb8c0d4;
-  --ad-btn-border-b: #d534476e;
-  --ad-btn-edge: #ff263f4d;
-  --ad-btn-glow: #d70d2938;
-  --ad-btn-inner: #ffd6db5e;
-  --ad-btn-bottom: #33000878;
-  color: #fff5f6;
+  --ad-btn-bg-top: var(--ad-primary-600);
+  --ad-btn-bg-mid: var(--ad-primary-800);
+  --ad-btn-bg-bottom: var(--ad-primary-900);
+  --ad-btn-border-a: rgb(from var(--ad-secondary-200) r g b / 0.83);
+  --ad-btn-border-b: rgb(from var(--ad-primary) r g b / 0.43);
+  --ad-btn-edge: rgb(from var(--ad-primary) r g b / 0.3);
+  --ad-btn-glow: rgb(from var(--ad-primary-600) r g b / 0.22);
+  --ad-btn-inner: rgb(from var(--ad-secondary-100) r g b / 0.37);
+  --ad-btn-bottom: rgb(from var(--ad-primary-900) r g b / 0.47);
+  color: var(--ad-neutral-200);
 }
 .ad-button:disabled,
 .ad-icon-button:disabled,
@@ -390,7 +390,7 @@
 .ad-toggle-button > .ad-icon {
   --ad-icon-size: calc(var(--ad-size-font) * 1.45);
   flex: 0 0 auto;
-  filter: drop-shadow(0 0 0.24rem #ffd6e26b);
+  filter: drop-shadow(0 0 0.24rem rgb(from var(--ad-secondary-100) r g b / 0.42));
 }
 .ad-button-label {
   display: block;
@@ -421,7 +421,7 @@
 /* Icons scale with the control: text buttons follow the font, icon-only buttons the height. */
 .ad-icon-button > .ad-icon {
   --ad-icon-size: calc(var(--ad-size-h) * 0.44);
-  filter: drop-shadow(0 0 0.2rem #ffd8e67e);
+  filter: drop-shadow(0 0 0.2rem rgb(from var(--ad-secondary-100) r g b / 0.49));
 }
 
 .ad-switch,
@@ -447,8 +447,8 @@
   height: var(--ad-track-h);
   position: relative;
   border-radius: 999rem;
-  border: 0.0625rem solid #9273868c;
-  background: linear-gradient(180deg, #28212c, #0c0911);
+  border: 0.0625rem solid rgb(from var(--ad-primary) r g b / 0.55);
+  background: linear-gradient(180deg, var(--ad-neutral-800), var(--ad-neutral-900));
   box-shadow: inset 0 0 0.3125rem #000b;
   flex: none;
 }
@@ -459,10 +459,10 @@
   top: var(--ad-thumb-inset);
   width: calc(var(--ad-track-h) - var(--ad-thumb-inset) * 2);
   height: calc(var(--ad-track-h) - var(--ad-thumb-inset) * 2);
-  border: 0.125rem solid #d2c7d8;
+  border: 0.125rem solid var(--ad-neutral-300);
   border-radius: 50%;
-  background: linear-gradient(135deg, #35313d, #141018);
-  box-shadow: 0 0 0.1875rem #ddd1ee40;
+  background: linear-gradient(135deg, var(--ad-neutral-700), var(--ad-neutral-850));
+  box-shadow: 0 0 0.1875rem rgb(from var(--ad-secondary-200) r g b / 0.25);
   transition:
     transform 0.42s cubic-bezier(0.34, 1.56, 0.5, 1),
     scale 0.18s ease-out,
@@ -472,7 +472,7 @@
 }
 .ad-switch input:focus-visible + .ad-toggle-track,
 .ad-checkbox input:focus-visible + .ad-toggle-track {
-  outline: 0.125rem solid #ffd0d9;
+  outline: 0.125rem solid var(--ad-secondary-100);
   outline-offset: 0.1875rem;
 }
 .ad-tab-shape {
@@ -485,27 +485,27 @@
   pointer-events: none;
 }
 .ad-tab-shape .tab-shape__glow {
-  stroke: #ff0b40;
+  stroke: var(--ad-primary);
   stroke-width: 6.5;
   opacity: 0.72;
   filter: blur(0.25rem);
 }
 .ad-tab-shape .tab-shape__edge {
-  stroke: #ff7f9d;
+  stroke: var(--ad-secondary);
   stroke-width: 1.15;
 }
 .ad-tab-shape .tab-shape__glint {
-  stroke: #fff0ec;
+  stroke: var(--ad-neutral-200);
   stroke-width: 1.2;
   stroke-linecap: round;
   stroke-dasharray: 8 92;
   animation: ad-tab-glint 6s linear infinite;
-  filter: drop-shadow(0 0 0.1875rem #ff93a3);
+  filter: drop-shadow(0 0 0.1875rem var(--ad-secondary));
 }
 .ad-tab-shape .tab-shape__floor {
-  stroke: #ff5a7c;
+  stroke: var(--ad-secondary);
   stroke-width: 1.85;
-  filter: drop-shadow(0 0 0.25rem #ff355b);
+  filter: drop-shadow(0 0 0.25rem var(--ad-primary));
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -528,7 +528,7 @@
   border-color: transparent;
   background: transparent;
   box-shadow: none;
-  color: #cdbfca;
+  color: var(--ad-neutral-300);
   animation: none;
 }
 :is(.ad-button, .ad-icon-button)[data-ad-variant="ghost"]::before,
@@ -574,15 +574,15 @@
   inset: -40% -10% -40% 30%;
   background:
     radial-gradient(circle at 72% 30%, #fff 0 1.2%, transparent 2.6%),
-    radial-gradient(circle at 86% 68%, #ffd3df 0 1.4%, transparent 3.2%),
-    radial-gradient(circle at 58% 74%, #ff9ab4 0 1.8%, transparent 4%),
+    radial-gradient(circle at 86% 68%, var(--ad-secondary-100) 0 1.4%, transparent 3.2%),
+    radial-gradient(circle at 58% 74%, var(--ad-secondary-200) 0 1.8%, transparent 4%),
     repeating-conic-gradient(
       from 20deg at 80% 50%,
       transparent 0 7deg,
       #ffffff24 8deg 10deg,
       transparent 12deg 19deg
     ),
-    radial-gradient(ellipse at 80% 50%, #ff6d9370, transparent 65%);
+    radial-gradient(ellipse at 80% 50%, rgb(from var(--ad-secondary) r g b / 0.44), transparent 65%);
   mask-image: linear-gradient(90deg, transparent, #000 40%);
   opacity: 0;
   transition: opacity 0.4s;
@@ -597,7 +597,7 @@
   background: conic-gradient(
     from var(--ad-btn-angle),
     transparent 0 76%,
-    #ff8aa6 84%,
+    var(--ad-secondary) 84%,
     #fff 88%,
     transparent 93%
   );

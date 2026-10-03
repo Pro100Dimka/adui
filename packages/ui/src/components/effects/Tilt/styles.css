@@ -24,7 +24,7 @@
   transition-duration: 0.12s, 0.5s, 0.4s;
   box-shadow:
     0 1.4rem 2.6rem #000c,
-    0 0 1.6rem #ff2f6a33;
+    0 0 1.6rem rgb(from var(--ad-primary) r g b / 0.2);
 }
 .ad-tilt[data-glare]::after {
   content: "";
@@ -35,7 +35,7 @@
   background: radial-gradient(
     circle at var(--ad-glare-x, 50%) var(--ad-glare-y, 50%),
     #ffffff44,
-    #ff9ab41a 30%,
+    rgb(from var(--ad-secondary-200) r g b / 0.1) 30%,
     transparent 60%
   );
   mix-blend-mode: screen;

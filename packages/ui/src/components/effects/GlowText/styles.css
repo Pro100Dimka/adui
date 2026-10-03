@@ -7,17 +7,17 @@
   color: transparent;
   background: linear-gradient(
       100deg,
-      #ff2f6a,
-      #ff9ab4 30%,
+      var(--ad-primary),
+      var(--ad-secondary-200) 30%,
       #fff 45%,
-      #ff9ab4 60%,
-      #ff2f6a 80%,
-      #f243dd
+      var(--ad-secondary-200) 60%,
+      var(--ad-primary) 80%,
+      var(--ad-primary)
     )
     0 0 / 250% 100%;
   background-clip: text;
   -webkit-background-clip: text;
-  filter: drop-shadow(0 0 0.35em #ff2f6a88) drop-shadow(0 0 1em #ff2f6a44);
+  filter: drop-shadow(0 0 0.35em rgb(from var(--ad-primary) r g b / 0.53)) drop-shadow(0 0 1em rgb(from var(--ad-primary) r g b / 0.27));
   animation: ad-glow-flow 5s linear infinite;
 }
 .ad-glow-text[data-flicker] {

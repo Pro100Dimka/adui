@@ -1,6 +1,6 @@
 /* Styles owned by Sparkles. */
 .ad-sparkles {
-  --ad-sparkle: #fff4e8;
+  --ad-sparkle: var(--ad-neutral-200);
   position: relative;
   display: inline-block;
 }
@@ -9,7 +9,7 @@
   aspect-ratio: 1;
   translate: -50% -50%;
   fill: var(--ad-sparkle);
-  filter: drop-shadow(0 0 0.25em #ff4a7a);
+  filter: drop-shadow(0 0 0.25em var(--ad-primary));
   pointer-events: none;
   scale: 0;
   animation: ad-sparkle-twinkle 2.4s ease-in-out infinite;

@@ -1,5 +1,11 @@
-export { ThemeProvider } from "./components/foundation/ThemeProvider/ThemeProvider";
-export type { ThemeProviderProps } from "./components/foundation/ThemeProvider/ThemeProvider";
+export {
+  ThemeProvider,
+  themes,
+} from "./components/foundation/ThemeProvider/ThemeProvider";
+export type {
+  ThemeName,
+  ThemeProviderProps,
+} from "./components/foundation/ThemeProvider/ThemeProvider";
 export { useReducedMotion, useMotion } from "./core/providers/context";
 export {
   useBorder,

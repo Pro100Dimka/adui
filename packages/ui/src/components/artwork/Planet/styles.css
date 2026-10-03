@@ -7,10 +7,12 @@
   aspect-ratio: 515 / 114;
   border-radius: var(--ad-radius);
   background:
-    radial-gradient(ellipse 60% 120% at 100% 100%, #ff2f6a14, transparent 70%),
-    #07060a;
+    radial-gradient(ellipse 60% 120% at 100% 100%, rgb(from var(--ad-primary) r g b / 0.08), transparent 70%),
+    var(--ad-neutral-900);
 }
 .ad-planet > canvas {
+  /* Painted in ruby; turned to the theme hue. */
+  filter: hue-rotate(var(--ad-hue-shift, 0deg));
   position: absolute;
   inset: 0;
   width: 100%;

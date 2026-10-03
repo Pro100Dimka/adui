@@ -8,8 +8,14 @@ export {
   useSmoothWheel,
   useTabShape,
 } from "./core/motion/hooks";
-export { ThemeProvider } from "./components/foundation/ThemeProvider/ThemeProvider";
-export type { ThemeProviderProps } from "./components/foundation/ThemeProvider/ThemeProvider";
+export {
+  ThemeProvider,
+  themes,
+} from "./components/foundation/ThemeProvider/ThemeProvider";
+export type {
+  ThemeName,
+  ThemeProviderProps,
+} from "./components/foundation/ThemeProvider/ThemeProvider";
 export { Typography } from "./components/foundation/Typography/Typography";
 export type {
   TypographyProps,

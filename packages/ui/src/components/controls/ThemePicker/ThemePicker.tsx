@@ -1,6 +1,10 @@
 import { mark, useControllable, type CommonProps } from "../../../core/base";
 import { Button } from "../Button/Button";
-export type ThemeName = "ruby" | "light" | "green" | "violet";
+import {
+  themes,
+  type ThemeName,
+} from "../../foundation/ThemeProvider/ThemeProvider";
+export type { ThemeName };
 export interface ThemePickerProps extends CommonProps {
   value?: ThemeName;
   defaultValue?: ThemeName;
@@ -12,23 +16,26 @@ export const ThemePicker = (p: ThemePickerProps) => {
     p.defaultValue ?? "ruby",
     p.onValueChange,
   );
-  const themes: Array<[ThemeName, string, string]> = [
-    ["ruby", "Ruby", "#ff244c"],
-    ["light", "Light", "#e6c98d"],
-    ["green", "Green", "#10deae"],
-    ["violet", "Violet", "#b680ff"],
-  ];
+  const names: Record<ThemeName, string> = {
+    ruby: "Ruby",
+    light: "Light",
+    green: "Green",
+    violet: "Violet",
+  };
   return (
     <div {...mark("ThemePicker", p)}>
-      {themes.map(([key, name, color]) => (
+      {(Object.keys(names) as ThemeName[]).map((key) => (
         <Button
           key={key}
           size={p.size ?? "sm"}
           aria-pressed={key === value}
           onClick={() => setValue(key)}
         >
-          <span className="ad-theme-swatch" style={{ background: color }} />
-          {name}
+          <span
+            className="ad-theme-swatch"
+            style={{ background: themes[key][0] }}
+          />
+          {names[key]}
         </Button>
       ))}
     </div>

@@ -80,7 +80,7 @@
 }
 .ad-typography[data-ad-tone="accent"] {
   color: var(--ad-pink);
-  text-shadow: 0 0 0.875rem #ff31594d;
+  text-shadow: 0 0 0.875rem rgb(from var(--ad-primary) r g b / 0.3);
 }
 .ad-typography[data-ad-tone="success"] {
   color: var(--ad-success);
@@ -89,7 +89,7 @@
   color: var(--ad-warning);
 }
 .ad-typography[data-ad-tone="danger"] {
-  color: #ff6d8e;
+  color: var(--ad-secondary);
 }
 
 .ad-typography[data-ad-weight="regular"] {

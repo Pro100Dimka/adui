@@ -12,7 +12,7 @@
   border: 0;
   border-radius: var(--ad-size-radius);
   background: transparent;
-  color: #a99aa8;
+  color: var(--ad-neutral-400);
   font: inherit;
   font-size: var(--ad-size-font);
   font-weight: 650;
@@ -43,8 +43,8 @@
   z-index: -1;
   clip-path: var(--ad-blade);
   background:
-    linear-gradient(180deg, #ff6d931c, #ff6d9308),
-    linear-gradient(90deg, #ff6d9300, #ff6d9330, #ff6d9300) 0 100% / 100%
+    linear-gradient(180deg, rgb(from var(--ad-secondary) r g b / 0.11), rgb(from var(--ad-secondary) r g b / 0.03)),
+    linear-gradient(90deg, rgb(from var(--ad-secondary) r g b / 0), rgb(from var(--ad-secondary) r g b / 0.19), rgb(from var(--ad-secondary) r g b / 0)) 0 100% / 100%
       0.0625rem no-repeat;
   opacity: 0;
   scale: 0.92;
@@ -54,7 +54,7 @@
 }
 .ad-tab:hover:not(:disabled):not([aria-selected="true"]) {
   color: #fff;
-  text-shadow: 0 0 0.6rem #ff6d9399;
+  text-shadow: 0 0 0.6rem rgb(from var(--ad-secondary) r g b / 0.6);
 }
 .ad-tab:hover:not(:disabled):not([aria-selected="true"])::before {
   opacity: 1;
@@ -62,16 +62,16 @@
 }
 .ad-tab:hover:not(:disabled):not([aria-selected="true"]) > .ad-icon {
   transform: translateY(-0.0625rem) rotate(-6deg);
-  filter: drop-shadow(0 0 0.3rem #ff6d93aa);
+  filter: drop-shadow(0 0 0.3rem rgb(from var(--ad-secondary) r g b / 0.67));
 }
 
 /* Selected: the label lights up and the icon pops once. */
 .ad-tab[aria-selected="true"] {
   color: #fff;
-  text-shadow: 0 0 0.75rem #ff8aa6aa;
+  text-shadow: 0 0 0.75rem rgb(from var(--ad-secondary) r g b / 0.67);
 }
 .ad-tab[aria-selected="true"] > .ad-icon {
-  filter: drop-shadow(0 0 0.35rem #ff9ab4);
+  filter: drop-shadow(0 0 0.35rem var(--ad-secondary-200));
   animation: ad-tab-pop 0.55s cubic-bezier(0.34, 1.6, 0.5, 1);
 }
 /* A standalone selected tab carries its own blade. */
@@ -79,8 +79,8 @@
   opacity: 1;
   scale: 1;
   background:
-    radial-gradient(60% 90% at 50% 120%, #ff3f73aa, transparent 70%),
-    linear-gradient(180deg, #8c0f37, #4d0620 62%, #2a030f);
+    radial-gradient(60% 90% at 50% 120%, rgb(from var(--ad-primary) r g b / 0.67), transparent 70%),
+    linear-gradient(180deg, var(--ad-primary-700), var(--ad-primary-800) 62%, var(--ad-primary-900));
 }
 
 .ad-tab:disabled {

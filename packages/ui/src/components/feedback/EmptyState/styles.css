@@ -17,7 +17,7 @@
   z-index: -1;
   inset: -55%;
   border-radius: 50%;
-  background: radial-gradient(closest-side, #ff2f6a55, transparent);
+  background: radial-gradient(closest-side, rgb(from var(--ad-primary) r g b / 0.33), transparent);
   animation: ad-empty-halo 4s ease-in-out infinite;
 }
 .ad-empty-state > :not(.ad-icon) {

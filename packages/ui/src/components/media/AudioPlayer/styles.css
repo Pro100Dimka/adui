@@ -6,10 +6,10 @@
   min-width: 0;
   padding: 0.75rem clamp(0.75rem, 2vw, 1.1rem);
   border-radius: calc(var(--ad-radius) * 1.2);
-  border: 0.0625rem solid #ff5c8033;
+  border: 0.0625rem solid rgb(from var(--ad-secondary) r g b / 0.2);
   background:
-    radial-gradient(40% 120% at 0 50%, #ff2f6a1f, transparent 70%),
-    linear-gradient(180deg, #120c12, #08070a);
+    radial-gradient(40% 120% at 0 50%, rgb(from var(--ad-primary) r g b / 0.12), transparent 70%),
+    linear-gradient(180deg, var(--ad-neutral-850), var(--ad-neutral-900));
   box-shadow: inset 0 0.0625rem 0 #ffffff0f;
 }
 .ad-player-play {
@@ -28,7 +28,7 @@
   position: absolute;
   inset: 0;
   border-radius: 50%;
-  border: 0.0625rem solid #ff6d93;
+  border: 0.0625rem solid var(--ad-secondary);
   opacity: 0;
   pointer-events: none;
 }

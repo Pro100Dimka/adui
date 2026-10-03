@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { CopyButton } from "./CopyButton";
 import { DocsExampleBoundary } from "./DocsExampleBoundary";
+import { LiveEditor } from "./LiveEditor";
 import { HeroBackdrop } from "./HeroBackdrop";
 import { ExampleCodeContext } from "../../../../packages/ui/src/dev/exampleHelpers";
 import {
@@ -104,7 +105,7 @@ export function ComponentDocsPage({ item }: { item: CatalogMeta }) {
   const sourcePath = sources?.getComponentSourcePath(item.name);
   const codeViews = {
     example: {
-      title: "код примера",
+      title: "песочница",
       file: "Example.tsx",
       code: liveCode
         ? withImports(liveCode, item.name, getImportPath(item))
@@ -212,7 +213,7 @@ export function ComponentDocsPage({ item }: { item: CatalogMeta }) {
             title="Пример"
             description={
               liveCode
-                ? "Меняйте настройки — в «Коде» будет ровно то, что вы видите."
+                ? "Меняйте настройки, а в «Коде» правьте пример и сразу смотрите результат."
                 : "Живой компонент из текущих исходников."
             }
             actions={
@@ -339,14 +340,18 @@ export function ComponentDocsPage({ item }: { item: CatalogMeta }) {
       </Card>
 
       <Dialog
-        className="docs-code-dialog"
+        className={`docs-code-dialog ${modal === "example" ? "docs-code-dialog--live" : ""}`}
         open={!!modal}
         onOpenChange={(open) => !open && setModal(undefined)}
         title={`${item.name} — ${modal ? codeViews[modal].title : ""}`}
         cancelLabel={false}
         confirmLabel="Готово"
       >
-        {modal && <CodeBlock {...codeViews[modal]} />}
+        {modal === "example" ? (
+          <LiveEditor name={item.name} original={codeViews.example.code} />
+        ) : (
+          modal && <CodeBlock {...codeViews[modal]} />
+        )}
       </Dialog>
     </Stack>
   );

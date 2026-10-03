@@ -9,13 +9,25 @@ Live docs: https://pro100dimka.github.io/adui/
 The package is installed from its GitHub release; React and ReactDOM are peer dependencies.
 
 ```bash
-npm install https://github.com/Pro100Dimka/adui/releases/download/v2.0.0/ad-voice-ui-2.0.0.tgz react react-dom
+npm install https://github.com/Pro100Dimka/adui/releases/download/v2.1.0/ad-voice-ui-2.1.0.tgz react react-dom
 ```
 
 Import the stylesheet once in the app entry point:
 
 ```ts
 import "@ad-voice/ui/styles.css";
+```
+
+## Theme
+
+Two colours build the whole palette (a primary scale, a secondary scale and tinted neutrals):
+
+```tsx
+import { ThemeProvider } from "@ad-voice/ui";
+
+<ThemeProvider theme="violet">…</ThemeProvider>            // a ready pair
+<ThemeProvider primary="#2f7bff" secondary="#9cc4ff">…</ThemeProvider>
+<ThemeProvider tokens={{ "primary-900": "#0a1430" }}>…</ThemeProvider> // any token by hand
 ```
 
 ## Usage

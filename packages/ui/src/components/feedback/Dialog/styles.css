@@ -5,7 +5,7 @@
   width: min(32.5rem, calc(100vw - 2rem));
   max-height: calc(100dvh - 2rem);
   padding: clamp(1.25rem, 3vw, 1.75rem);
-  border: 0.0625rem solid #ff608482 !important;
+  border: 0.0625rem solid rgb(from var(--ad-secondary) r g b / 0.51) !important;
   border-radius: 1.4375rem;
   overflow: auto;
   color: var(--ad-text);
@@ -14,7 +14,7 @@
   animation: ad-dialog-in 0.38s cubic-bezier(0.2, 0.9, 0.3, 1.15) both;
 }
 .ad-dialog::backdrop {
-  background: #030208ab;
+  background: rgb(from var(--ad-neutral-950) r g b / 0.67);
   backdrop-filter: blur(0.4375rem);
   animation: ad-backdrop-in 0.3s ease-out both;
 }
@@ -27,7 +27,7 @@
 }
 @keyframes ad-backdrop-in {
   from {
-    background: #03020800;
+    background: rgb(from var(--ad-neutral-950) r g b / 0);
     backdrop-filter: blur(0);
   }
 }

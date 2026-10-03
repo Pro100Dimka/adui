@@ -9,13 +9,13 @@
   border: 0.0625rem solid transparent;
   border-radius: calc(var(--ad-radius) + 0.32rem);
   background:
-    linear-gradient(180deg, #17121a, #09090d 70%, #07070a) padding-box,
-    linear-gradient(135deg, #d29ab054, #7a304a36 52%, #ff5d852b) border-box;
+    linear-gradient(180deg, var(--ad-neutral-850), var(--ad-neutral-900) 70%, var(--ad-neutral-900)) padding-box,
+    linear-gradient(135deg, rgb(from var(--ad-secondary) r g b / 0.33), rgb(from var(--ad-primary-700) r g b / 0.21) 52%, rgb(from var(--ad-secondary) r g b / 0.17)) border-box;
   box-shadow:
     inset 0 0.075rem 0.15rem #ffffff20,
     inset 0 -0.42rem 0.9rem #0008,
     0 0.38rem 0.9rem #0008,
-    0 0 1rem #ff4f7615;
+    0 0 1rem rgb(from var(--ad-primary) r g b / 0.08);
   isolation: isolate;
 }
 .ad-button-group > .ad {

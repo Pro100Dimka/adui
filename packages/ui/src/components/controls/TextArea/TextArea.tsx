@@ -16,6 +16,7 @@ export const TextArea = ({
   size,
   variant,
   labelPlacement = "top",
+  resize = "vertical",
   tone: _tone,
   material: _material,
   style: _style,
@@ -29,7 +30,7 @@ export const TextArea = ({
   const floating = labelPlacement === "floating" && !!label;
   return (
     <FieldFrame
-      className={`ad-text-area ${className ?? ""}`}
+      className={`ad-text-area ad-text-area--resize-${resize} ${className ?? ""}`}
       label={floating ? undefined : label}
       required={textarea.required}
       description={description}

@@ -5,7 +5,7 @@
   justify-items: center;
   gap: 0.25rem;
   max-width: 100%;
-  color: #f36784;
+  color: var(--ad-secondary);
 }
 .ad-brand-mark > svg {
   width: min(15rem, 100%);
@@ -15,18 +15,18 @@
 .ad-brand-mark > small {
   font-size: 0.5rem;
   letter-spacing: 0.28rem;
-  color: #f1c9db;
+  color: var(--ad-secondary-200);
   animation: ad-brand-spacing 4s ease-in-out infinite;
 }
 @keyframes ad-brand-breathe {
   0%,
   100% {
-    color: #f36784;
-    filter: drop-shadow(0 0 0.3rem #ff154833);
+    color: var(--ad-secondary);
+    filter: hue-rotate(var(--ad-hue-shift, 0deg)) drop-shadow(0 0 0.3rem rgb(from var(--ad-primary) r g b / 0.2));
   }
   50% {
-    color: #ffc2d2;
-    filter: drop-shadow(0 0 0.9rem #ff1548aa);
+    color: var(--ad-secondary-200);
+    filter: hue-rotate(var(--ad-hue-shift, 0deg)) drop-shadow(0 0 0.9rem rgb(from var(--ad-primary) r g b / 0.67));
   }
 }
 @keyframes ad-brand-spacing {

@@ -33,8 +33,8 @@
       0 / 220% 100% no-repeat,
     linear-gradient(
       180deg,
-      color-mix(in srgb, var(--ad-tone) 30%, #120a10),
-      color-mix(in srgb, var(--ad-tone) 14%, #07060a)
+      color-mix(in srgb, var(--ad-tone) 30%, var(--ad-neutral-900)),
+      color-mix(in srgb, var(--ad-tone) 14%, var(--ad-neutral-900))
     );
   box-shadow:
     inset 0 0 0 0.0625rem color-mix(in srgb, var(--ad-tone) 55%, transparent),

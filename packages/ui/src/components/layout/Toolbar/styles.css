@@ -2,6 +2,6 @@
 .ad-toolbar {
   padding: 0.8125rem;
   background: var(--ad-surface-shell);
-  border: 0.0625rem solid #75223e5e;
+  border: 0.0625rem solid rgb(from var(--ad-primary-700) r g b / 0.37);
   border-radius: 0.9375rem;
 }

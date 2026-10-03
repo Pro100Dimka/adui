@@ -39,7 +39,7 @@ export const WaveDecoration = (p: CommonProps) => {
             <stop
               key={offset}
               offset={offset}
-              stopColor="#ff426d"
+              stopColor="var(--ad-primary)"
               stopOpacity={opacity}
             />
           ))}

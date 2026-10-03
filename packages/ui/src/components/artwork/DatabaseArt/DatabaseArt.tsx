@@ -35,34 +35,34 @@ export function DatabaseArt({ label, ...p }: DatabaseArtProps) {
           <feGaussianBlur stdDeviation="3" />
         </filter>
         <linearGradient id={`${id}-body`}>
-          <stop stopColor="#9a1636" />
-          <stop offset=".12" stopColor="#3b0313" />
-          <stop offset=".3" stopColor="#19050d" />
-          <stop offset=".72" stopColor="#090408" />
-          <stop offset="1" stopColor="#5e071e" />
+          <stop stopColor="var(--ad-primary-600)" />
+          <stop offset=".12" stopColor="var(--ad-primary-800)" />
+          <stop offset=".3" stopColor="var(--ad-primary-900)" />
+          <stop offset=".72" stopColor="var(--ad-neutral-950)" />
+          <stop offset="1" stopColor="var(--ad-primary-800)" />
         </linearGradient>
         <radialGradient id={`${id}-top`} cx=".3" cy=".27" r=".9">
-          <stop stopColor="#a72649" />
-          <stop offset=".23" stopColor="#38111d" />
-          <stop offset=".66" stopColor="#10040a" />
-          <stop offset="1" stopColor="#290610" />
+          <stop stopColor="var(--ad-primary-600)" />
+          <stop offset=".23" stopColor="var(--ad-primary-800)" />
+          <stop offset=".66" stopColor="var(--ad-neutral-900)" />
+          <stop offset="1" stopColor="var(--ad-primary-900)" />
         </radialGradient>
         <linearGradient id={`${id}-edge`}>
-          <stop stopColor="#fff1e9" />
-          <stop offset=".16" stopColor="#ff6388" />
-          <stop offset=".47" stopColor="#8b0730" />
-          <stop offset=".8" stopColor="#ff285f" />
-          <stop offset="1" stopColor="#ffabbc" />
+          <stop stopColor="var(--ad-neutral-200)" />
+          <stop offset=".16" stopColor="var(--ad-secondary)" />
+          <stop offset=".47" stopColor="var(--ad-primary-700)" />
+          <stop offset=".8" stopColor="var(--ad-primary)" />
+          <stop offset="1" stopColor="var(--ad-secondary-200)" />
         </linearGradient>
         <radialGradient id={`${id}-aura`}>
-          <stop stopColor="#fd1746" stopOpacity=".3" />
-          <stop offset=".5" stopColor="#ff083c" stopOpacity=".12" />
-          <stop offset="1" stopColor="#ff083c" stopOpacity="0" />
+          <stop stopColor="var(--ad-primary)" stopOpacity=".3" />
+          <stop offset=".5" stopColor="var(--ad-primary)" stopOpacity=".12" />
+          <stop offset="1" stopColor="var(--ad-primary)" stopOpacity="0" />
         </radialGradient>
         <g id={`${id}-spark`}>
-          <path d="M-7 0H7M0-8V8" stroke="#ffafbc" strokeWidth=".7" />
-          <circle r="3.4" fill="#ff4264" filter={ref("bloom")} />
-          <circle r="1.4" fill="#fff1eb" />
+          <path d="M-7 0H7M0-8V8" stroke="var(--ad-secondary-200)" strokeWidth=".7" />
+          <circle r="3.4" fill="var(--ad-primary)" filter={ref("bloom")} />
+          <circle r="1.4" fill="var(--ad-neutral-200)" />
         </g>
       </defs>
       <ellipse
@@ -77,12 +77,12 @@ export function DatabaseArt({ label, ...p }: DatabaseArtProps) {
         <path
           d="M39 57V133C39 156 134 156 134 133V57Z"
           fill={ref("body")}
-          stroke="#ff345b"
+          stroke="var(--ad-primary)"
           strokeWidth=".75"
         />
         <path
           d={rings}
-          stroke="#ff335d"
+          stroke="var(--ad-primary)"
           strokeWidth="3.5"
           opacity=".7"
           filter={ref("bloom")}
@@ -94,7 +94,7 @@ export function DatabaseArt({ label, ...p }: DatabaseArtProps) {
           rx="47.5"
           ry="17"
           fill={ref("top")}
-          stroke="#ff426b"
+          stroke="var(--ad-primary)"
           strokeWidth="1.1"
         />
         <ellipse
@@ -102,7 +102,7 @@ export function DatabaseArt({ label, ...p }: DatabaseArtProps) {
           cy="57"
           rx="47.5"
           ry="17"
-          stroke="#ff2b57"
+          stroke="var(--ad-primary)"
           strokeWidth="5"
           opacity=".75"
           filter={ref("bloom")}
@@ -123,12 +123,12 @@ export function DatabaseArt({ label, ...p }: DatabaseArtProps) {
             cy={cy}
             rx="47.5"
             ry="17"
-            stroke="#e4264f"
+            stroke="var(--ad-primary)"
             strokeWidth=".7"
             opacity=".75"
           />
         ))}
-        <g stroke="#ffe7ed" strokeWidth="1.45">
+        <g stroke="var(--ad-neutral-200)" strokeWidth="1.45">
           {[57, 106, 132].map((cy, i) => (
             <ellipse
               key={cy}
@@ -147,10 +147,10 @@ export function DatabaseArt({ label, ...p }: DatabaseArtProps) {
           cy="53.5"
           rx="5"
           ry="1.6"
-          fill="#ff577b"
+          fill="var(--ad-primary)"
           filter={ref("bloom")}
         />
-        <ellipse cx="86.5" cy="53.5" rx="3.4" ry=".8" fill="#ffb5c3" />
+        <ellipse cx="86.5" cy="53.5" rx="3.4" ry=".8" fill="var(--ad-secondary-200)" />
       </g>
       {SPARKS.map(([x, y, scale, delay]) => (
         <g

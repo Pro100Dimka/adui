@@ -119,9 +119,9 @@ export function LevelMeter({
       >
         <defs>
           <linearGradient id={`${id}-wave`}>
-            <stop stopColor="#8c0d34" />
+            <stop stopColor="var(--ad-primary-700)" />
             <stop offset="0.52" stopColor="var(--ad-red)" />
-            <stop offset="1" stopColor="#ffd3df" />
+            <stop offset="1" stopColor="var(--ad-secondary-100)" />
           </linearGradient>
         </defs>
         <line className="ad-level-meter-axis" x2={WIDTH} y1={MID} y2={MID} />

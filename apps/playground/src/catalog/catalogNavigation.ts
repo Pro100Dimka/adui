@@ -1,12 +1,22 @@
 import { catalog, type CatalogMeta } from "./componentRegistry";
 
-/** `id` matches the `category` field of each component's meta.ts. */
+/**
+ * `id` matches the `category` field of each component's meta.ts. Ordered from the base up:
+ * theme and type first, then layout, controls, feedback, and the specialised parts last.
+ */
 export const catalogCategories = [
   {
-    id: "fields",
-    label: "Поля и ввод",
-    description: "InputBase, текстовые поля, выбор, файлы и контролы значений.",
-    icon: "sliders",
+    id: "typography",
+    label: "Основы и тема",
+    description:
+      "Тема и палитра, типографика, иконки и идентика — то, на чём стоит всё остальное.",
+    icon: "palette",
+  },
+  {
+    id: "layout",
+    label: "Раскладка и поверхности",
+    description: "Раскладка, поверхности, заголовки, диалоги и прокрутка.",
+    icon: "grid",
   },
   {
     id: "buttons",
@@ -15,32 +25,26 @@ export const catalogCategories = [
     icon: "cursor",
   },
   {
+    id: "fields",
+    label: "Поля и ввод",
+    description: "InputBase, текстовые поля, выбор, файлы и контролы значений.",
+    icon: "sliders",
+  },
+  {
     id: "navigation",
     label: "Навигация",
     description: "Tabs, segmented controls, menu и popover.",
     icon: "list",
   },
   {
-    id: "layout",
-    label: "Layout и поверхности",
-    description: "Раскладка, поверхности, заголовки, диалоги и прокрутка.",
-    icon: "grid",
-  },
-  {
-    id: "typography",
-    label: "Типографика и тема",
-    description: "Текст, иконки, идентика и ThemeProvider.",
-    icon: "document",
-  },
-  {
     id: "feedback",
-    label: "Состояния и feedback",
+    label: "Состояния и обратная связь",
     description: "Статусы, сообщения, прогресс, таблицы и empty states.",
     icon: "info",
   },
   {
     id: "audio",
-    label: "Audio и media",
+    label: "Аудио и медиа",
     description: "Аудио-контролы и визуализация сигнала.",
     icon: "audio",
   },

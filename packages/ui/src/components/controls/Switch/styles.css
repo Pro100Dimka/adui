@@ -12,7 +12,7 @@
   border-radius: inherit;
   background:
     linear-gradient(180deg, #ffffff2a, transparent 45%),
-    linear-gradient(90deg, #471223, #931335 60%, #e01f52);
+    linear-gradient(90deg, var(--ad-primary-800), var(--ad-primary-700) 60%, var(--ad-primary));
   clip-path: inset(0 100% 0 0 round 999rem);
   transition: clip-path 0.42s cubic-bezier(0.34, 1.3, 0.5, 1);
 }
@@ -20,35 +20,35 @@
   z-index: 1;
 }
 .ad-switch:hover input:not(:disabled) + .ad-toggle-track {
-  border-color: #ff7898;
+  border-color: var(--ad-secondary);
   box-shadow:
     inset 0 0 0.3125rem #000b,
-    0 0 0.6rem #ff254530;
+    0 0 0.6rem rgb(from var(--ad-primary) r g b / 0.19);
 }
 .ad-switch:active input:not(:disabled) + .ad-toggle-track i {
   scale: 1.22 0.88;
 }
 .ad-switch input:checked + .ad-toggle-track {
-  border-color: #ff476e;
+  border-color: var(--ad-primary);
   animation: ad-switch-flare 0.6s ease-out;
-  box-shadow: 0 0 0.75rem #ff254540;
+  box-shadow: 0 0 0.75rem rgb(from var(--ad-primary) r g b / 0.25);
 }
 .ad-switch input:checked + .ad-toggle-track::before {
   clip-path: inset(0 0 0 0 round 999rem);
 }
 .ad-switch input:checked + .ad-toggle-track i {
   transform: translateX(calc(var(--ad-track-w) - var(--ad-track-h)));
-  background: radial-gradient(circle at 35% 30%, #ffffff, #ffd2de 60%, #ff9ab4);
-  border-color: #ffedf1;
+  background: radial-gradient(circle at 35% 30%, #ffffff, var(--ad-secondary-100) 60%, var(--ad-secondary-200));
+  border-color: var(--ad-neutral-200);
   box-shadow:
     0 0 0.4rem #fff8,
-    0 0 0.9rem #ff4466aa;
+    0 0 0.9rem rgb(from var(--ad-primary) r g b / 0.67);
 }
 .ad-switch input:disabled + .ad-toggle-track {
   opacity: 0.45;
 }
 @keyframes ad-switch-flare {
   40% {
-    box-shadow: 0 0 1.4rem 0.2rem #ff3a68aa;
+    box-shadow: 0 0 1.4rem 0.2rem rgb(from var(--ad-primary) r g b / 0.67);
   }
 }

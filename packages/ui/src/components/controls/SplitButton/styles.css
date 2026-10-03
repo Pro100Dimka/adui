@@ -2,13 +2,13 @@
 .ad-split-button {
   --ad-split-trigger: calc(var(--ad-size-h) * 0.92);
   --ad-btn-radius: calc(var(--ad-size-radius) * 1.08);
-  --ad-btn-bg-top: #38303d;
-  --ad-btn-bg-mid: #19151e;
-  --ad-btn-bg-bottom: #090a0e;
-  --ad-btn-border-a: #d8c3cf9e;
-  --ad-btn-border-b: #69435a66;
-  --ad-btn-edge: #bd769235;
-  --ad-btn-glow: #b85b7d25;
+  --ad-btn-bg-top: var(--ad-neutral-700);
+  --ad-btn-bg-mid: var(--ad-neutral-850);
+  --ad-btn-bg-bottom: var(--ad-neutral-900);
+  --ad-btn-border-a: rgb(from var(--ad-neutral-300) r g b / 0.62);
+  --ad-btn-border-b: rgb(from var(--ad-primary-700) r g b / 0.4);
+  --ad-btn-edge: rgb(from var(--ad-primary) r g b / 0.21);
+  --ad-btn-glow: rgb(from var(--ad-primary) r g b / 0.15);
   --ad-btn-inner: #ffffff3c;
   --ad-btn-bottom: #000a;
   display: inline-grid;
@@ -36,7 +36,7 @@
         var(--ad-btn-border-a),
         #ffffff18 18%,
         var(--ad-btn-border-b) 56%,
-        #4f19314f 100%
+        rgb(from var(--ad-primary-800) r g b / 0.31) 100%
       )
       border-box;
   box-shadow:
@@ -61,8 +61,8 @@
     radial-gradient(
       70% 105% at 50% 20%,
       #ffffff3f 0%,
-      #ffe3ed24 24%,
-      #ffadc515 48%,
+      rgb(from var(--ad-neutral-200) r g b / 0.14) 24%,
+      rgb(from var(--ad-secondary-200) r g b / 0.08) 48%,
       transparent 72%
     ),
     linear-gradient(180deg, #ffffff2f 0%, #ffffff10 18%, transparent 36%),
@@ -99,7 +99,7 @@
 }
 .ad-split-button .ad-split-button-main > .ad-icon {
   flex: 0 0 auto;
-  filter: drop-shadow(0 0 0.24rem #ffd6e26b);
+  filter: drop-shadow(0 0 0.24rem rgb(from var(--ad-secondary-100) r g b / 0.42));
 }
 .ad-split-button .ad-split-button-main > .ad-button-label {
   flex: 1 1 auto;
@@ -117,7 +117,7 @@
 }
 .ad-split-button .ad-split-button-trigger > .ad-icon {
   flex: 0 0 auto;
-  filter: drop-shadow(0 0 0.2rem #ffd8e67e);
+  filter: drop-shadow(0 0 0.2rem rgb(from var(--ad-secondary-100) r g b / 0.49));
 }
 .ad-split-button .ad-split-button-trigger::before {
   display: block;
@@ -130,9 +130,9 @@
   background: linear-gradient(
     180deg,
     transparent,
-    #ffe4eb5c,
+    rgb(from var(--ad-neutral-200) r g b / 0.36),
     #ffffff30,
-    #ffe4eb5c,
+    rgb(from var(--ad-neutral-200) r g b / 0.36),
     transparent
   );
 }
@@ -155,7 +155,7 @@
   background: #00000024;
 }
 .ad-split-button:focus-within {
-  outline: 0.125rem solid #ffe1ea;
+  outline: 0.125rem solid var(--ad-neutral-200);
   outline-offset: 0.18rem;
 }
 

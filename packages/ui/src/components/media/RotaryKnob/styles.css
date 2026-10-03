@@ -24,13 +24,13 @@
   background: radial-gradient(
     circle at 50% 50%,
     transparent 58%,
-    rgba(255, 21, 53, 0.055) 68%,
+    rgb(from var(--ad-primary) r g b / 0.055) 68%,
     transparent 78%
   );
   box-shadow:
-    0 0 1.25rem rgba(255, 18, 49, 0.18),
-    0 0 3.25rem rgba(255, 7, 42, 0.12),
-    0 0 5.375rem rgba(255, 5, 38, 0.06);
+    0 0 1.25rem rgb(from var(--ad-primary) r g b / 0.18),
+    0 0 3.25rem rgb(from var(--ad-primary) r g b / 0.12),
+    0 0 5.375rem rgb(from var(--ad-primary) r g b / 0.06);
   z-index: -1;
   animation: ad-knob-breathe 5s ease-in-out infinite;
 }
@@ -49,10 +49,10 @@
   inset: 8.6%;
   border-radius: 50%;
   pointer-events: none;
-  border: 0.0625rem solid rgba(255, 72, 92, 0.16);
+  border: 0.0625rem solid rgb(from var(--ad-primary) r g b / 0.16);
   box-shadow:
-    inset 0 0 0.9375rem rgba(255, 17, 49, 0.12),
-    0 0 0.75rem rgba(255, 17, 49, 0.1);
+    inset 0 0 0.9375rem rgb(from var(--ad-primary) r g b / 0.12),
+    0 0 0.75rem rgb(from var(--ad-primary) r g b / 0.1);
 }
 .ad-rotary-knob .knob__surface {
   display: block;
@@ -61,8 +61,9 @@
   width: 100%;
   height: 100%;
   pointer-events: none;
-  filter: drop-shadow(0 0 0.4375rem rgba(255, 18, 48, 0.18))
-    drop-shadow(0 0 1.25rem rgba(255, 10, 44, 0.1));
+  filter: hue-rotate(var(--ad-hue-shift, 0deg))
+    drop-shadow(0 0 0.4375rem rgb(from var(--ad-primary) r g b / 0.18))
+    drop-shadow(0 0 1.25rem rgb(from var(--ad-primary) r g b / 0.1));
 }
 .ad-rotary-knob .knob__control {
   position: absolute;
@@ -80,8 +81,9 @@
 }
 .ad-rotary-knob.is-dragging .knob__surface,
 .ad-rotary-knob:hover .knob__surface {
-  filter: drop-shadow(0 0 0.625rem rgba(255, 26, 56, 0.28))
-    drop-shadow(0 0 1.75rem rgba(255, 8, 44, 0.16));
+  filter: hue-rotate(var(--ad-hue-shift, 0deg))
+    drop-shadow(0 0 0.625rem rgb(from var(--ad-primary) r g b / 0.28))
+    drop-shadow(0 0 1.75rem rgb(from var(--ad-primary) r g b / 0.16));
 }
 .ad-rotary-knob .knob__surface {
   transition:
@@ -90,12 +92,14 @@
 }
 /* Depth: the knob stands off the panel and casts a soft shadow; the cap stands off the bezel. */
 .ad-rotary-knob .knob__base {
-  filter: drop-shadow(0 0.9rem 1.1rem #000c)
-    drop-shadow(0 0 0.4375rem rgba(255, 18, 48, 0.18))
-    drop-shadow(0 0 1.25rem rgba(255, 10, 44, 0.1));
+  filter: hue-rotate(var(--ad-hue-shift, 0deg))
+    drop-shadow(0 0.9rem 1.1rem #000c)
+    drop-shadow(0 0 0.4375rem rgb(from var(--ad-primary) r g b / 0.18))
+    drop-shadow(0 0 1.25rem rgb(from var(--ad-primary) r g b / 0.1));
 }
 .ad-rotary-knob .knob__rotor {
-  filter: drop-shadow(0 0.35rem 0.45rem #000b);
+  filter: hue-rotate(var(--ad-hue-shift, 0deg))
+    drop-shadow(0 0.35rem 0.45rem #000b);
 }
 .ad-rotary-knob .knob__rotor {
   transform: rotate(var(--rotation));
@@ -121,7 +125,7 @@
       #ffffff14 30deg,
       transparent 70deg,
       transparent 150deg,
-      #ff6b8a12 200deg,
+      rgb(from var(--ad-secondary) r g b / 0.07) 200deg,
       transparent 240deg,
       transparent 300deg,
       #ffffff10 330deg,
@@ -144,17 +148,17 @@
   min-width: 3.4em;
   padding: 0.12em 0.45em;
   border-radius: 0.4em;
-  color: #ffe9e8;
+  color: var(--ad-neutral-200);
   font: 600 max(0.625rem, calc(var(--size) * 0.068)) / 1.2
     var(--ad-font-family-mono, monospace);
   font-variant-numeric: tabular-nums;
   text-align: center;
   text-shadow:
-    0 0 0.3125rem #fff8f8,
-    0 0 0.875rem #ff385d;
-  background: linear-gradient(#0b0507e6, #170a0ee6);
+    0 0 0.3125rem var(--ad-neutral-200),
+    0 0 0.875rem var(--ad-primary);
+  background: linear-gradient(rgb(from var(--ad-neutral-900) r g b / 0.9), rgb(from var(--ad-neutral-850) r g b / 0.9));
   box-shadow:
-    inset 0 0 0 0.0625rem #ff4a6a3d,
+    inset 0 0 0 0.0625rem rgb(from var(--ad-primary) r g b / 0.24),
     inset 0 0.0625rem 0 #ffffff14,
     0 0.25rem 0.75rem #0009;
   transition:
@@ -166,9 +170,9 @@
 }
 .ad-rotary-knob .knob__value[data-editable]:hover {
   box-shadow:
-    inset 0 0 0 0.0625rem #ff6a86aa,
+    inset 0 0 0 0.0625rem rgb(from var(--ad-secondary) r g b / 0.67),
     inset 0 0.0625rem 0 #ffffff1f,
-    0 0 0.9rem #ff2f6a55;
+    0 0 0.9rem rgb(from var(--ad-primary) r g b / 0.33);
 }
 .ad-rotary-knob .knob__value[data-editing] {
   visibility: hidden;
@@ -178,8 +182,8 @@
   border: 0;
   outline: none;
   box-shadow:
-    inset 0 0 0 0.0625rem #ff6a86,
-    0 0 1rem #ff2f6a77;
+    inset 0 0 0 0.0625rem var(--ad-secondary),
+    0 0 1rem rgb(from var(--ad-primary) r g b / 0.47);
   caret-color: #fff;
 }
 .ad-rotary-knob[data-ad-size="xs"] .knob__value,
@@ -190,12 +194,12 @@
   content: "";
   position: absolute;
   inset: -2%;
-  border: 0.125rem solid #ff626e;
+  border: 0.125rem solid var(--ad-secondary);
   border-radius: inherit;
-  box-shadow: 0 0 0.75rem #ff173e44;
+  box-shadow: 0 0 0.75rem rgb(from var(--ad-primary) r g b / 0.27);
   pointer-events: none;
-  filter: drop-shadow(0 0 0.4375rem rgba(255, 18, 48, 0.18))
-    drop-shadow(0 0 1.25rem rgba(255, 10, 44, 0.1));
+  filter: drop-shadow(0 0 0.4375rem rgb(from var(--ad-primary) r g b / 0.18))
+    drop-shadow(0 0 1.25rem rgb(from var(--ad-primary) r g b / 0.1));
 }
 .ad-rotary-knob .knob__indicator {
   position: absolute;
@@ -214,17 +218,17 @@
   border-radius: 62.4375rem;
   background: linear-gradient(
     90deg,
-    #090203 0%,
-    #170102 25%,
-    #430508 66%,
-    #0e0102 100%
+    var(--ad-neutral-950) 0%,
+    var(--ad-primary-900) 25%,
+    var(--ad-primary-800) 66%,
+    var(--ad-primary-900) 100%
   );
   box-shadow:
-    0 0 0 0.0625rem #0e0000,
-    0 0.0625rem 0.0625rem 0.0625rem #ee7d7b80,
+    0 0 0 0.0625rem var(--ad-primary-900),
+    0 0.0625rem 0.0625rem 0.0625rem rgb(from var(--ad-secondary) r g b / 0.5),
     inset 0.0625rem 0.1875rem 0.3125rem #000,
-    0 0 0.625rem 0.1875rem #ff001f60,
-    0 0 1.5rem 0.375rem #ff001f28;
+    0 0 0.625rem 0.1875rem rgb(from var(--ad-primary) r g b / 0.38),
+    0 0 1.5rem 0.375rem rgb(from var(--ad-primary) r g b / 0.16);
 }
 .ad-rotary-knob .knob__slot::before {
   content: "";
@@ -233,26 +237,26 @@
   border-radius: inherit;
   background: linear-gradient(
     90deg,
-    #fe142a 0%,
-    #ff777a 17%,
-    #fff9ee 47%,
+    var(--ad-primary) 0%,
+    var(--ad-secondary) 17%,
+    var(--ad-neutral-200) 47%,
     #fff 62%,
-    #ff898b 85%,
-    #ff142c 100%
+    var(--ad-secondary) 85%,
+    var(--ad-primary) 100%
   );
   box-shadow:
-    0 0 0.125rem 0.0625rem #fff4ea,
-    0 0 0.3125rem 0.125rem #ff2336,
-    0 0 0.875rem 0.25rem #ff001fd0,
-    0 0 1.875rem 0.5rem #ff001f60,
-    0 0 3.375rem 0.75rem #ed001a28;
+    0 0 0.125rem 0.0625rem var(--ad-neutral-200),
+    0 0 0.3125rem 0.125rem var(--ad-primary),
+    0 0 0.875rem 0.25rem rgb(from var(--ad-primary) r g b / 0.82),
+    0 0 1.875rem 0.5rem rgb(from var(--ad-primary) r g b / 0.38),
+    0 0 3.375rem 0.75rem rgb(from var(--ad-primary) r g b / 0.16);
 }
 .ad-rotary-knob .knob__slot::after {
   content: "";
   position: absolute;
   inset: -7% -40%;
   border-radius: 50%;
-  background: radial-gradient(ellipse, #ff0c1714 20%, transparent 72%);
+  background: radial-gradient(ellipse, rgb(from var(--ad-primary) r g b / 0.08) 20%, transparent 72%);
 }
 .ad-rotary-knob[data-disabled="true"] {
   opacity: 0.45;
@@ -281,10 +285,12 @@
 }
 /* Hover and grab brighten the glow but keep the depth shadows. */
 .ad-rotary-knob:is(:hover, .is-dragging) .knob__base {
-  filter: drop-shadow(0 0.9rem 1.1rem #000c)
-    drop-shadow(0 0 0.625rem rgba(255, 26, 56, 0.28))
-    drop-shadow(0 0 1.75rem rgba(255, 8, 44, 0.16));
+  filter: hue-rotate(var(--ad-hue-shift, 0deg))
+    drop-shadow(0 0.9rem 1.1rem #000c)
+    drop-shadow(0 0 0.625rem rgb(from var(--ad-primary) r g b / 0.28))
+    drop-shadow(0 0 1.75rem rgb(from var(--ad-primary) r g b / 0.16));
 }
 .ad-rotary-knob:is(:hover, .is-dragging) .knob__rotor {
-  filter: drop-shadow(0 0.35rem 0.45rem #000b);
+  filter: hue-rotate(var(--ad-hue-shift, 0deg))
+    drop-shadow(0 0.35rem 0.45rem #000b);
 }

@@ -8,7 +8,7 @@
   padding: 0.7rem 1rem 0.7rem 1.1rem;
   font-size: var(--ad-font-size-body-sm);
   line-height: 1.5;
-  color: #f1e6ec;
+  color: var(--ad-neutral-200);
   border: 0.0625rem solid color-mix(in srgb, var(--ad-tone) 35%, transparent);
   border-radius: calc(var(--ad-radius) * 0.8);
   background:
@@ -17,7 +17,7 @@
       color-mix(in srgb, var(--ad-tone) 16%, transparent),
       transparent 70%
     ),
-    #09070cf2;
+    rgb(from var(--ad-neutral-900) r g b / 0.95);
   overflow: hidden;
   animation: ad-message-in 0.45s cubic-bezier(0.2, 0.9, 0.3, 1.15) both;
 }
@@ -56,7 +56,7 @@
   height: 2rem;
   border-radius: 50%;
   color: var(--ad-tone);
-  background: color-mix(in srgb, var(--ad-tone) 14%, #07060a);
+  background: color-mix(in srgb, var(--ad-tone) 14%, var(--ad-neutral-900));
   box-shadow:
     inset 0 0 0 0.0625rem color-mix(in srgb, var(--ad-tone) 50%, transparent),
     0 0 0.75rem color-mix(in srgb, var(--ad-tone) 30%, transparent);
