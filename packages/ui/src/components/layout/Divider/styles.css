@@ -16,3 +16,51 @@
   height: 1.875rem;
   margin: 0 0.5rem;
 }
+/* A pulse of light travels along the line now and then. */
+.ad-divider {
+  position: relative;
+  overflow: hidden;
+}
+.ad-divider::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+      90deg,
+      transparent,
+      #ffd3df,
+      #ff2f6a,
+      transparent
+    ) -40%
+    0 / 40% 100% no-repeat;
+  animation: ad-divider-pulse 6s ease-in-out infinite;
+}
+.ad-divider[aria-orientation="vertical"]::after {
+  background: linear-gradient(
+      180deg,
+      transparent,
+      #ffd3df,
+      #ff2f6a,
+      transparent
+    )
+    0 -40% / 100% 40% no-repeat;
+  animation-name: ad-divider-pulse-y;
+}
+@keyframes ad-divider-pulse {
+  0%,
+  55% {
+    background-position: -40% 0;
+  }
+  100% {
+    background-position: 140% 0;
+  }
+}
+@keyframes ad-divider-pulse-y {
+  0%,
+  55% {
+    background-position: 0 -40%;
+  }
+  100% {
+    background-position: 0 140%;
+  }
+}

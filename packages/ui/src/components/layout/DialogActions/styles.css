@@ -5,3 +5,17 @@
   gap: 0.625rem;
   align-items: center;
 }
+/* Actions arrive last, one after another. */
+.ad-dialog[open] .ad-dialog-actions > * {
+  animation: ad-dialog-action 0.45s cubic-bezier(0.34, 1.4, 0.5, 1) both;
+  animation-delay: 0.22s;
+}
+.ad-dialog[open] .ad-dialog-actions > :nth-child(2) {
+  animation-delay: 0.3s;
+}
+@keyframes ad-dialog-action {
+  from {
+    opacity: 0;
+    transform: translateY(0.6rem) scale(0.95);
+  }
+}

@@ -22,6 +22,7 @@ export default function AutocompleteExample() {
       knobs={{
         variant: { options: inputVariants, value: "outlined" },
         size: { options: sizes, value: "md" },
+        floating: { value: true },
         clearable: { value: true },
         disabled: { value: false },
       }}
@@ -35,6 +36,7 @@ export default function AutocompleteExample() {
           startAdornment: expr('<Icon name="search" />'),
           variant: c.variant,
           size: c.size,
+          labelPlacement: v.floating ? "floating" : undefined,
           clearable: v.clearable,
           disabled: v.disabled,
         })
@@ -49,6 +51,7 @@ export default function AutocompleteExample() {
           startAdornment={<U.Icon name="search" />}
           variant={v.variant}
           size={v.size}
+          labelPlacement={v.floating ? "floating" : "top"}
           clearable={v.clearable}
           disabled={v.disabled}
         />

@@ -1,5 +1,5 @@
 import { useControllable } from "../../../core/base";
-import { FieldFrame } from "../internal";
+import { FieldFrame, fieldLabel } from "../internal";
 import { InputBase } from "../InputBase/InputBase";
 import type { TextAreaProps } from "../shared";
 
@@ -15,6 +15,7 @@ export const TextArea = ({
   className,
   size,
   variant,
+  labelPlacement = "top",
   tone: _tone,
   material: _material,
   style: _style,
@@ -25,10 +26,11 @@ export const TextArea = ({
     defaultValue,
     onValueChange,
   );
+  const floating = labelPlacement === "floating" && !!label;
   return (
     <FieldFrame
       className={`ad-text-area ${className ?? ""}`}
-      label={label}
+      label={floating ? undefined : label}
       required={textarea.required}
       description={description}
       error={error}
@@ -36,6 +38,8 @@ export const TextArea = ({
       <InputBase
         size={size}
         variant={variant}
+        label={floating ? fieldLabel(label, textarea.required) : undefined}
+        filled={!!current}
         multiline
         disabled={textarea.disabled}
         readOnly={textarea.readOnly}

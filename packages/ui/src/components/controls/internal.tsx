@@ -13,6 +13,18 @@ type Option = { value: string; label: string; disabled?: boolean };
 export const toOption = (option: string | Option): Option =>
   typeof option === "string" ? { value: option, label: option } : option;
 
+/** Field label with the required mark, used above the field or floating inside it. */
+export const fieldLabel = (label: ReactNode, required?: boolean) => (
+  <>
+    {label}
+    {required && (
+      <span className="ad-field-required" aria-hidden="true">
+        *
+      </span>
+    )}
+  </>
+);
+
 /** Label, control and description/error line shared by every text-like field. */
 export function FieldFrame({
   className,
@@ -32,14 +44,7 @@ export function FieldFrame({
   return (
     <label className={`ad-field ${className}`}>
       {label && (
-        <span className="ad-field-label">
-          {label}
-          {required && (
-            <span className="ad-field-required" aria-hidden="true">
-              *
-            </span>
-          )}
-        </span>
+        <span className="ad-field-label">{fieldLabel(label, required)}</span>
       )}
       {children}
       {(description || error) && (

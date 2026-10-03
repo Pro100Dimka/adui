@@ -12,7 +12,13 @@ export const ParticipantCard = (p: ParticipantCardProps) => {
     [muted, setMuted] = useControllable(p.muted, false, p.onMuteChange);
   return (
     <Card {...p} className={classes("ad-participant-card", p.className)}>
-      <Stack direction="row" gap={3} align="center" wrap>
+      <Stack
+        direction="row"
+        gap={3}
+        align="center"
+        wrap
+        data-muted={muted || undefined}
+      >
         <RoleEmblem role={p.role} />
         <Stack gap={1} className="ad-participant-card-info">
           <Typography variant="title" truncate>

@@ -2,11 +2,12 @@ import { useRef, useState } from "react";
 import { assignRef, useControllable } from "../../../core/base";
 import { Popover } from "../../feedback/Popover/Popover";
 import { Icon } from "../../layout/Icon/Icon";
-import { FieldFrame, OptionList, toOption } from "../internal";
+import { FieldFrame, fieldLabel, OptionList, toOption } from "../internal";
 import { InputBase } from "../InputBase/InputBase";
 import type { SelectProps } from "../shared";
 
 export const Select = (p: SelectProps) => {
+  const floating = p.labelPlacement === "floating" && !!p.label;
   const options = (p.options ?? ["Первый вариант", "Второй вариант"]).map(
     toOption,
   );
@@ -27,7 +28,7 @@ export const Select = (p: SelectProps) => {
   return (
     <FieldFrame
       className={`ad-select-shell ${p.className ?? ""}`}
-      label={p.label}
+      label={floating ? undefined : p.label}
       required={p.required}
       description={p.description}
       error={p.error}
@@ -36,6 +37,8 @@ export const Select = (p: SelectProps) => {
         ref={box}
         size={p.size}
         variant={p.variant}
+        label={floating ? fieldLabel(p.label, p.required) : undefined}
+        filled={!!selected}
         disabled={p.disabled}
         error={!!p.error}
         startAdornment={

@@ -275,3 +275,104 @@
     transform: translateX(0.25rem);
   }
 }
+/* Focus lights the label and slides the placeholder aside. */
+.ad-field-label {
+  transition:
+    color 0.25s,
+    text-shadow 0.25s;
+}
+.ad-field:focus-within .ad-field-label {
+  color: var(--ad-pink);
+  text-shadow: 0 0 0.6rem #ff2f6a66;
+}
+.ad-input-base input::placeholder,
+.ad-input-base textarea::placeholder {
+  transition:
+    opacity 0.3s,
+    transform 0.3s;
+}
+.ad-input-base:focus-within input::placeholder,
+.ad-input-base:focus-within textarea::placeholder {
+  opacity: 0.45;
+  transform: translateX(0.35rem);
+}
+.ad-input-adornment[data-position="start"] > .ad-icon {
+  transition:
+    transform 0.35s cubic-bezier(0.34, 1.56, 0.5, 1),
+    color 0.25s;
+}
+.ad-input-base:focus-within
+  .ad-input-adornment[data-position="start"]
+  > .ad-icon {
+  transform: scale(1.12);
+}
+
+/* Floating label (labelPlacement="floating"): rests inside the box like a placeholder,
+   then shrinks and rises to the top edge on focus or once there is a value. */
+.ad-input-base-content {
+  position: relative;
+}
+.ad-input-base[data-floating] {
+  --ad-float-h: calc(var(--ad-size-h) + 0.75rem);
+  min-height: var(--ad-float-h);
+}
+.ad-input-label {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #9a8e9c;
+  font-size: var(--ad-size-font);
+  transform-origin: left center;
+  translate: 0 -50%;
+  pointer-events: none;
+  transition:
+    top 0.3s cubic-bezier(0.2, 0.8, 0.2, 1),
+    translate 0.3s cubic-bezier(0.2, 0.8, 0.2, 1),
+    scale 0.3s cubic-bezier(0.2, 0.8, 0.2, 1),
+    color 0.25s,
+    text-shadow 0.25s,
+    letter-spacing 0.3s;
+}
+.ad-input-base[data-floating]:is(:focus-within, [data-filled]) .ad-input-label {
+  top: 0.45rem;
+  translate: 0 0;
+  scale: 0.76;
+  letter-spacing: 0.03em;
+}
+.ad-input-base[data-floating]:focus-within .ad-input-label {
+  color: var(--ad-pink);
+  text-shadow: 0 0 0.6rem #ff2f6a66;
+}
+.ad-input-base[data-floating][data-filled]:not(:focus-within) .ad-input-label {
+  color: #c9bcc7;
+}
+/* The text sits under the raised label. */
+.ad-input-base[data-floating] :is(input, button.ad-input-control) {
+  min-height: calc(var(--ad-float-h) - 0.125rem);
+  padding-top: 1rem;
+}
+/* While the label rests in its place the placeholder stays hidden, as in Material. */
+.ad-input-base[data-floating]:not(:focus-within):not([data-filled])
+  :is(input, textarea)::placeholder {
+  opacity: 0;
+}
+.ad-input-base[data-floating]:not(:focus-within):not([data-filled])
+  .ad-select-control {
+  color: transparent;
+}
+/* Multiline: the label rests on the first line and rises above it. */
+.ad-input-base[data-floating][data-multiline] .ad-input-label {
+  top: calc(1rem + 0.75em);
+}
+.ad-input-base[data-floating][data-multiline]:is(:focus-within, [data-filled])
+  .ad-input-label {
+  top: -0.05rem;
+  translate: 0 0;
+}
+.ad-input-base[data-floating][data-multiline] textarea {
+  padding-top: 1rem;
+}

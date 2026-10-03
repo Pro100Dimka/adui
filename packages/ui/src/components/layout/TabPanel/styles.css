@@ -1,6 +1,16 @@
-/* Styles owned by TabPanel. */
+/* Styles owned by TabPanel: the content of each newly selected tab glides in. */
 .ad-tab-panel {
   padding: 1.125rem;
   color: var(--ad-muted);
   font-size: 0.8125rem;
+}
+.ad-tab-panel-content {
+  animation: ad-panel-in 0.45s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+@keyframes ad-panel-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.5rem);
+    filter: blur(0.2rem);
+  }
 }

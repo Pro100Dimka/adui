@@ -21,3 +21,41 @@
   background: linear-gradient(#ff5478, #9c2346);
   border-radius: 999rem;
 }
+/* Edges fade out only where there is more to scroll (scroll-driven, where supported). */
+@property --ad-fade-top {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0px;
+}
+@property --ad-fade-bottom {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0px;
+}
+@supports (animation-timeline: scroll()) {
+  .ad-scroll-area {
+    mask: linear-gradient(
+      #0000,
+      #000 var(--ad-fade-top),
+      #000 calc(100% - var(--ad-fade-bottom)),
+      #0000
+    );
+    animation: ad-scroll-fade linear both;
+    animation-timeline: scroll(self);
+  }
+}
+@keyframes ad-scroll-fade {
+  0% {
+    --ad-fade-top: 0px;
+    --ad-fade-bottom: 2rem;
+  }
+  10%,
+  90% {
+    --ad-fade-top: 2rem;
+    --ad-fade-bottom: 2rem;
+  }
+  100% {
+    --ad-fade-top: 2rem;
+    --ad-fade-bottom: 0px;
+  }
+}

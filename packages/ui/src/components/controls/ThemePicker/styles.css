@@ -22,3 +22,26 @@
     0 0 0 0.125rem #0007,
     0 0 0.45em currentColor;
 }
+/* The chosen theme pulses its swatch; swatches hop on hover. */
+.ad-theme-swatch {
+  transition: transform 0.35s cubic-bezier(0.34, 1.6, 0.5, 1);
+}
+.ad-theme-picker > .ad-button:hover .ad-theme-swatch {
+  transform: translateY(-0.15em) scale(1.25);
+}
+.ad-theme-picker > .ad-button[aria-pressed="true"] .ad-theme-swatch {
+  animation: ad-swatch-pulse 2s ease-in-out infinite;
+}
+@keyframes ad-swatch-pulse {
+  0%,
+  100% {
+    box-shadow:
+      0 0 0 0.125rem #0007,
+      0 0 0.45em currentColor;
+  }
+  50% {
+    box-shadow:
+      0 0 0 0.3em #ffffff22,
+      0 0 1em currentColor;
+  }
+}

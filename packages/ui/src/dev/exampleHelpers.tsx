@@ -99,6 +99,7 @@ const knobLabels: Record<string, string> = {
   effect: "Эффект",
   max: "Наклон, °",
   glare: "Блик",
+  floating: "Подпись внутри",
 };
 
 /**

@@ -1,10 +1,33 @@
-/* Styles owned by EmptyState. */
+/* Styles owned by EmptyState: the icon floats in a breathing halo, the text rises in after it. */
 .ad-empty-state {
   padding: 1.5625rem 0.9375rem;
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+.ad-empty-state > .ad-icon {
+  position: relative;
+  isolation: isolate;
+  animation: ad-empty-float 4s ease-in-out infinite;
+}
+.ad-empty-state > .ad-icon::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: -55%;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, #ff2f6a55, transparent);
+  animation: ad-empty-halo 4s ease-in-out infinite;
+}
+.ad-empty-state > :not(.ad-icon) {
+  animation: ad-empty-rise 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+.ad-empty-state > :nth-child(3) {
+  animation-delay: 0.08s;
+}
+.ad-empty-state > :nth-child(4) {
+  animation-delay: 0.16s;
 }
 .ad-empty-state h3 {
   font-size: 1.125rem;
@@ -14,4 +37,30 @@
   font-size: 0.8125rem;
   color: var(--ad-muted);
   margin: 0 0 1.0625rem;
+}
+@keyframes ad-empty-float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-4deg);
+  }
+  50% {
+    transform: translateY(-0.5rem) rotate(4deg);
+  }
+}
+@keyframes ad-empty-halo {
+  0%,
+  100% {
+    opacity: 0.55;
+    scale: 0.85;
+  }
+  50% {
+    opacity: 1;
+    scale: 1.1;
+  }
+}
+@keyframes ad-empty-rise {
+  from {
+    opacity: 0;
+    transform: translateY(0.75rem);
+  }
 }

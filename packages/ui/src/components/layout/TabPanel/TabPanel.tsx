@@ -9,6 +9,9 @@ export const TabPanel = (p: TabPanelProps) => (
     hidden={p.hidden}
     tabIndex={0}
   >
-    {p.children}
+    {/* Keyed by the tab, so the content plays its entrance on every switch. */}
+    <div className="ad-tab-panel-content" key={p.labelledBy}>
+      {p.children}
+    </div>
   </div>
 );
