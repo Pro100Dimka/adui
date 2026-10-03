@@ -1016,7 +1016,8 @@ export default function SpectrumExample() {
     "Живой спектр: сегментные колонки уровня или столбики «колоколом».",\r
   category: "motion",\r
 } as const;\r
-`,C=`import { useEffect, type RefObject } from "react";\r
+`,C=`import { canPaint, createResizeObserver } from "../../core/environment";\r
+import { useEffect, type RefObject } from "react";\r
 import { paintCanvas, type Painting } from "../../core/noise";\r
 \r
 /** Most pixels one picture may take: sharp on large hi-dpi screens, still quick to paint. */\r
@@ -1040,6 +1041,7 @@ export function useArtwork(\r
     let shown = 0;\r
     let alive = true;\r
     const paint = () => {\r
+      if (!canPaint()) return;\r
       const box = canvas.getBoundingClientRect();\r
       const density = window.devicePixelRatio || 1;\r
       const wanted = Math.max(box.width / width, box.height / height) * density;\r
@@ -1058,7 +1060,7 @@ export function useArtwork(\r
         canvas.dataset.ready = "";\r
       });\r
     };\r
-    const observer = new ResizeObserver(paint);\r
+    const observer = createResizeObserver(paint);\r
     observer.observe(canvas);\r
     return () => {\r
       alive = false;\r
@@ -1480,7 +1482,7 @@ export const IconButton = (p: IconButtonProps) =>\r
     },\r
     "IconButton",\r
   );\r
-`,$=`import {\r
+`,O=`import {\r
   Playground,\r
   U,\r
   buttonVariants,\r
@@ -1528,7 +1530,7 @@ export default function IconButtonExample() {\r
     </Playground>\r
   );\r
 }\r
-`,O=`export default {\r
+`,$=`export default {\r
   name: "IconButton",\r
   description: "Компактная кнопка с одной иконкой",\r
   category: "buttons",\r
@@ -1837,23 +1839,26 @@ export default function NumberFieldExample() {\r
   description: "Число с диапазоном и шагом",\r
   category: "fields",\r
 } as const;\r
-`,J=`import { mark } from "../../../core/base";\r
-import { type TabsProps } from "../shared";\r
-import { Tabs } from "../Tabs/Tabs";\r
-\r
-export const SegmentedControl = (p: TabsProps) => (\r
-  <div {...mark("SegmentedControl", p)}>\r
-    <Tabs\r
-      {...p}\r
-      items={\r
-        p.items ?? [\r
-          { value: "list", label: "Список", icon: "list" },\r
-          { value: "grid", label: "Плитка", icon: "grid" },\r
-        ]\r
-      }\r
-    />\r
-  </div>\r
-);\r
+`,J=`import { mark } from "../../../core/base";
+import { type TabItem, type TabsProps } from "../shared";
+import { Tabs } from "../Tabs/Tabs";
+
+export const SegmentedControl = <V extends string = string>(
+  p: TabsProps<V>,
+) => (
+  <div {...mark("SegmentedControl", p)}>
+    <Tabs<V>
+      {...p}
+      items={
+        p.items ??
+        ([
+          { value: "list", label: "Список", icon: "list" },
+          { value: "grid", label: "Плитка", icon: "grid" },
+        ] as TabItem<V>[])
+      }
+    />
+  </div>
+);
 `,Q=`import { useState } from "react";\r
 import { Playground, U, expr, jsx, sizes } from "../../../dev/exampleHelpers";\r
 \r
@@ -2338,120 +2343,123 @@ export default function TabExample() {\r
   description: "Отдельная вкладка с состоянием выбора",\r
   category: "navigation",\r
 } as const;\r
-`,hn=`import { useLayoutEffect, useRef, useState } from "react";\r
-import {\r
-  mark,\r
-  ripple,\r
-  useControllable,\r
-  type TokenStyle,\r
-} from "../../../core/base";\r
-import { type TabsProps } from "../shared";\r
-import { Tab } from "../Tab/Tab";\r
-\r
-export const Tabs = (p: TabsProps) => {\r
-  const items = p.items ?? [\r
-    { value: "appearance", label: "Внешний вид", icon: "palette" },\r
-    { value: "audio", label: "Аудио", icon: "audio" },\r
-    { value: "advanced", label: "Дополнительно", icon: "wrench" },\r
-  ];\r
-  const [value, setValue] = useControllable(\r
-    p.value,\r
-    p.defaultValue ?? items[0]?.value ?? "",\r
-    p.onValueChange,\r
-  );\r
-  const buttons = useRef<Array<HTMLButtonElement | null>>([]);\r
-  const selected = items.findIndex((item) => item.value === value);\r
-\r
-  // The blade follows the selected tab and is told when it is travelling, to squash and flare.\r
-  const [place, setPlace] = useState<TokenStyle>();\r
-  const [moving, setMoving] = useState(false);\r
-  const first = useRef(true);\r
-  useLayoutEffect(() => {\r
-    const tab = buttons.current[selected];\r
-    if (!tab) return setPlace(undefined);\r
-    const update = () =>\r
-      setPlace({\r
-        "--ad-tabs-x": \`\${tab.offsetLeft}px\`,\r
-        "--ad-tabs-w": \`\${tab.offsetWidth}px\`,\r
-      });\r
-    update();\r
-    const observer = new ResizeObserver(update);\r
-    observer.observe(tab);\r
-    if (tab.parentElement) observer.observe(tab.parentElement);\r
-    let timer = 0;\r
-    if (!first.current) {\r
-      setMoving(true);\r
-      timer = window.setTimeout(() => setMoving(false), 420);\r
-    }\r
-    first.current = false;\r
-    return () => {\r
-      observer.disconnect();\r
-      clearTimeout(timer);\r
-    };\r
-  }, [selected, items.length]);\r
-\r
-  return (\r
-    <nav\r
-      {...mark("Tabs", p)}\r
-      role="tablist"\r
-      aria-label={p.label ?? "Разделы"}\r
-      data-moving={moving || undefined}\r
-      onPointerDown={(e) => {\r
-        const tab = (e.target as HTMLElement).closest<HTMLElement>(".ad-tab");\r
-        if (tab && !tab.matches(":disabled")) ripple(tab, e.clientX, e.clientY);\r
-      }}\r
-      onKeyDown={(e) => {\r
-        if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(e.key)) return;\r
-        const available = items\r
-          .map((item, index) => ({ item, index }))\r
-          .filter((x) => !x.item.disabled);\r
-        if (!available.length) return;\r
-        e.preventDefault();\r
-        const current = available.findIndex(\r
-          (x) => buttons.current[x.index] === document.activeElement,\r
-        );\r
-        const next =\r
-          e.key === "Home"\r
-            ? 0\r
-            : e.key === "End"\r
-              ? available.length - 1\r
-              : (current +\r
-                  (e.key === "ArrowRight" ? 1 : -1) +\r
-                  available.length) %\r
-                available.length;\r
-        setValue(available[next].item.value);\r
-        buttons.current[available[next].index]?.focus();\r
-      }}\r
-    >\r
-      {place && (\r
-        <>\r
-          <span className="ad-tabs-trail" style={place} aria-hidden />\r
-          <span className="ad-tabs-indicator" style={place} aria-hidden>\r
-            <span className="ad-tabs-blade" />\r
-          </span>\r
-          <span className="ad-tabs-rail" style={place} aria-hidden />\r
-        </>\r
-      )}\r
-      {items.map((item, index) => (\r
-        <Tab\r
-          key={item.value}\r
-          id={item.id}\r
-          ref={(n) => {\r
-            buttons.current[index] = n;\r
-          }}\r
-          icon={item.icon}\r
-          panelId={item.panelId}\r
-          disabled={item.disabled}\r
-          size={p.size}\r
-          selected={item.value === value}\r
-          onClick={() => setValue(item.value)}\r
-        >\r
-          {item.label}\r
-        </Tab>\r
-      ))}\r
-    </nav>\r
-  );\r
-};\r
+`,hn=`import { createResizeObserver } from "../../../core/environment";
+import { useLayoutEffect, useRef, useState } from "react";
+import {
+  mark,
+  ripple,
+  useControllable,
+  type TokenStyle,
+} from "../../../core/base";
+import { type TabItem, type TabsProps } from "../shared";
+import { Tab } from "../Tab/Tab";
+
+export function Tabs<V extends string = string>(p: TabsProps<V>) {
+  const items =
+    p.items ??
+    ([
+      { value: "appearance", label: "Внешний вид", icon: "palette" },
+      { value: "audio", label: "Аудио", icon: "audio" },
+      { value: "advanced", label: "Дополнительно", icon: "wrench" },
+    ] as TabItem<V>[]);
+  const [value, setValue] = useControllable<V>(
+    p.value,
+    p.defaultValue ?? items[0]?.value ?? ("" as V),
+    p.onValueChange,
+  );
+  const buttons = useRef<Array<HTMLButtonElement | null>>([]);
+  const selected = items.findIndex((item) => item.value === value);
+
+  // The blade follows the selected tab and is told when it is travelling, to squash and flare.
+  const [place, setPlace] = useState<TokenStyle>();
+  const [moving, setMoving] = useState(false);
+  const first = useRef(true);
+  useLayoutEffect(() => {
+    const tab = buttons.current[selected];
+    if (!tab) return setPlace(undefined);
+    const update = () =>
+      setPlace({
+        "--ad-tabs-x": \`\${tab.offsetLeft}px\`,
+        "--ad-tabs-w": \`\${tab.offsetWidth}px\`,
+      });
+    update();
+    const observer = createResizeObserver(update);
+    observer.observe(tab);
+    if (tab.parentElement) observer.observe(tab.parentElement);
+    let timer = 0;
+    if (!first.current) {
+      setMoving(true);
+      timer = window.setTimeout(() => setMoving(false), 420);
+    }
+    first.current = false;
+    return () => {
+      observer.disconnect();
+      clearTimeout(timer);
+    };
+  }, [selected, items.length]);
+
+  return (
+    <nav
+      {...mark("Tabs", p)}
+      role="tablist"
+      aria-label={p.label ?? "Разделы"}
+      data-moving={moving || undefined}
+      onPointerDown={(e) => {
+        const tab = (e.target as HTMLElement).closest<HTMLElement>(".ad-tab");
+        if (tab && !tab.matches(":disabled")) ripple(tab, e.clientX, e.clientY);
+      }}
+      onKeyDown={(e) => {
+        if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(e.key)) return;
+        const available = items
+          .map((item, index) => ({ item, index }))
+          .filter((x) => !x.item.disabled);
+        if (!available.length) return;
+        e.preventDefault();
+        const current = available.findIndex(
+          (x) => buttons.current[x.index] === document.activeElement,
+        );
+        const next =
+          e.key === "Home"
+            ? 0
+            : e.key === "End"
+              ? available.length - 1
+              : (current +
+                  (e.key === "ArrowRight" ? 1 : -1) +
+                  available.length) %
+                available.length;
+        setValue(available[next].item.value);
+        buttons.current[available[next].index]?.focus();
+      }}
+    >
+      {place && (
+        <>
+          <span className="ad-tabs-trail" style={place} aria-hidden />
+          <span className="ad-tabs-indicator" style={place} aria-hidden>
+            <span className="ad-tabs-blade" />
+          </span>
+          <span className="ad-tabs-rail" style={place} aria-hidden />
+        </>
+      )}
+      {items.map((item, index) => (
+        <Tab
+          key={item.value}
+          id={item.id}
+          ref={(n) => {
+            buttons.current[index] = n;
+          }}
+          icon={item.icon}
+          panelId={item.panelId}
+          disabled={item.disabled}
+          size={p.size}
+          selected={item.value === value}
+          onClick={() => setValue(item.value)}
+        >
+          {item.label}
+        </Tab>
+      ))}
+    </nav>
+  );
+}
 `,bn=`import { useState } from "react";\r
 import { Playground, U, expr, jsx, sizes } from "../../../dev/exampleHelpers";\r
 \r
@@ -3044,278 +3052,279 @@ export function OptionList({\r
     </div>\r
   );\r
 }\r
-`,In=`import React, { useEffect, useRef } from "react";
-import type {
-  ButtonHTMLAttributes,
-  InputHTMLAttributes,
-  ReactNode,
-  Ref,
-} from "react";
-import {
-  mark,
-  ripple,
-  useControllable,
-  type CommonProps,
-  type Variant,
-} from "../../core/base";
-import { Icon } from "../layout/Icon/Icon";
-import { variantMaterial } from "./internal";
-
-export interface ButtonProps
-  extends
-    CommonProps,
-    Omit<ButtonHTMLAttributes<HTMLButtonElement>, keyof CommonProps | "color"> {
-  variant?: Variant;
-  icon?: string;
-  endIcon?: string;
-  loading?: boolean;
-  round?: boolean;
-  label?: string;
-  ref?: Ref<HTMLButtonElement>;
-}
-export function buttonView(p: ButtonProps, name = "Button") {
-  const {
-    variant = "secondary",
-    icon,
-    endIcon,
-    loading,
-    round,
-    label,
-    children,
-    ref,
-    onPointerMove,
-    onPointerDown,
-    onPointerLeave,
-    ...rest
-  } = p;
-  const { size: _s, tone: _t, material: _m, ...dom } = rest;
-  const trackLight: React.PointerEventHandler<HTMLButtonElement> = (event) => {
-    const rect = event.currentTarget.getBoundingClientRect();
-    event.currentTarget.style.setProperty(
-      "--ad-button-x",
-      \`\${((event.clientX - rect.left) / Math.max(rect.width, 1)) * 100}%\`,
-    );
-    event.currentTarget.style.setProperty(
-      "--ad-button-y",
-      \`\${((event.clientY - rect.top) / Math.max(rect.height, 1)) * 100}%\`,
-    );
-    onPointerMove?.(event);
-  };
-  const resetLight: React.PointerEventHandler<HTMLButtonElement> = (event) => {
-    event.currentTarget.style.removeProperty("--ad-button-x");
-    event.currentTarget.style.removeProperty("--ad-button-y");
-    onPointerLeave?.(event);
-  };
-  const content = children ?? label;
-  return (
-    <button
-      {...dom}
-      {...mark(name, p, variantMaterial[variant])}
-      ref={ref}
-      type={p.type ?? "button"}
-      disabled={p.disabled || loading}
-      aria-busy={loading || undefined}
-      data-ad-variant={variant}
-      data-ad-round={round || undefined}
-      onPointerDown={(event) => {
-        ripple(event.currentTarget, event.clientX, event.clientY);
-        onPointerDown?.(event);
-      }}
-      onPointerMove={trackLight}
-      onPointerLeave={resetLight}
-    >
-      <span className="ad-button-fx" aria-hidden="true" />
-      {loading && <span className="ad-spinner" aria-hidden="true" />}
-      {icon && <Icon name={icon} />}{" "}
-      {content != null && <span className="ad-button-label">{content}</span>}
-      {endIcon && <Icon name={endIcon} />}
-    </button>
-  );
-}
-export interface IconButtonProps extends ButtonProps {
-  label: string;
-}
-export interface ToggleButtonProps extends ButtonProps {
-  checked?: boolean;
-  defaultChecked?: boolean;
-  onValueChange?: (value: boolean) => void;
-}
-export interface SplitButtonProps extends CommonProps {
-  variant?: Variant;
-  icon?: string;
-  label?: string;
-  items?: any[];
-  onClick?: () => void;
-  children?: ReactNode;
-}
-export interface TabProps extends ButtonProps {
-  selected?: boolean;
-  panelId?: string;
-}
-export interface TabItem {
-  value: string;
-  label: ReactNode;
-  icon?: string;
-  disabled?: boolean;
-  panelId?: string;
-  id?: string;
-}
-export interface TabsProps extends CommonProps {
-  items?: TabItem[];
-  value?: string;
-  defaultValue?: string;
-  onValueChange?: (value: string) => void;
-  label?: string;
-}
-/** Field appearance: boxed outline, tinted fill or a single bottom line. */
-export type InputVariant = "outlined" | "filled" | "underlined";
-/** Label above the field, or inside it rising on focus like Material inputs. */
-export type LabelPlacement = "top" | "floating";
-export interface FieldProps
-  extends
-    CommonProps,
-    Omit<
-      InputHTMLAttributes<HTMLInputElement>,
-      keyof CommonProps | "size" | "value" | "defaultValue" | "onChange"
-    > {
-  value?: string;
-  defaultValue?: string;
-  onValueChange?: (value: string) => void;
-  startAdornment?: ReactNode;
-  endAdornment?: ReactNode;
-  inputRef?: Ref<HTMLInputElement>;
-  variant?: InputVariant;
-  labelPlacement?: LabelPlacement;
-}
-export interface TextFieldProps extends FieldProps {
-  label?: ReactNode;
-  description?: ReactNode;
-  error?: ReactNode;
-  clearable?: boolean;
-  type?: InputHTMLAttributes<HTMLInputElement>["type"];
-}
-export interface NumberFieldProps extends Omit<
-  TextFieldProps,
-  "value" | "defaultValue" | "onValueChange" | "type"
-> {
-  value?: number | "";
-  defaultValue?: number | "";
-  onValueChange?: (value: number | "") => void;
-}
-export interface TextAreaProps
-  extends
-    Omit<CommonProps, "children">,
-    Omit<
-      React.TextareaHTMLAttributes<HTMLTextAreaElement>,
-      keyof CommonProps | "value" | "defaultValue" | "onChange"
-    > {
-  value?: string;
-  defaultValue?: string;
-  onValueChange?: (value: string) => void;
-  label?: ReactNode;
-  description?: ReactNode;
-  error?: ReactNode;
-  startAdornment?: ReactNode;
-  endAdornment?: ReactNode;
-  variant?: InputVariant;
-  labelPlacement?: LabelPlacement;
-  /** Which way the reader may drag the corner; \`both\` lets the field follow the width too. */
-  resize?: "vertical" | "both" | "none";
-}
-export interface AutocompleteOption {
-  value: string;
-  label: string;
-}
-export interface AutocompleteProps extends TextFieldProps {
-  options?: Array<string | AutocompleteOption>;
-  onOptionSelect?: (value: string) => void;
-}
-export interface SelectOption {
-  value: string;
-  label: string;
-  disabled?: boolean;
-}
-export interface SelectProps extends CommonProps {
-  label?: ReactNode;
-  description?: ReactNode;
-  error?: ReactNode;
-  placeholder?: string;
-  startAdornment?: ReactNode;
-  endAdornment?: ReactNode;
-  options?: Array<string | SelectOption>;
-  value?: string;
-  defaultValue?: string;
-  onValueChange?: (value: string) => void;
-  icon?: string;
-  disabled?: boolean;
-  required?: boolean;
-  name?: string;
-  ref?: Ref<HTMLButtonElement>;
-  variant?: InputVariant;
-  labelPlacement?: LabelPlacement;
-}
-export interface BooleanProps extends CommonProps {
-  checked?: boolean;
-  defaultChecked?: boolean;
-  onValueChange?: (value: boolean) => void;
-  label?: ReactNode;
-  disabled?: boolean;
-  name?: string;
-  required?: boolean;
-  /** Checkbox only: neither on nor off, e.g. "select all" when some rows are chosen. */
-  indeterminate?: boolean;
-}
-export function BooleanControl({
-  kind,
-  ...p
-}: BooleanProps & { kind: "Switch" | "Checkbox" }) {
-  const [checked, setChecked] = useControllable(
-    p.checked,
-    p.defaultChecked ?? false,
-    p.onValueChange,
-  );
-  const input = useRef<HTMLInputElement>(null);
-  useEffect(() => {
-    if (input.current) input.current.indeterminate = !!p.indeterminate;
-  }, [p.indeterminate]);
-  return (
-    <label {...mark(kind, p)}>
-      <input
-        ref={input}
-        name={p.name}
-        type="checkbox"
-        role={kind === "Switch" ? "switch" : undefined}
-        checked={checked}
-        disabled={p.disabled}
-        required={p.required}
-        onChange={(e) => setChecked(e.currentTarget.checked)}
-      />
-      <span className="ad-toggle-track" aria-hidden="true">
-        <i />
-      </span>
-      <span>{p.label}</span>
-    </label>
-  );
-}
-export interface SliderProps extends CommonProps {
-  value?: number;
-  defaultValue?: number;
-  min?: number;
-  max?: number;
-  step?: number;
-  label?: string;
-  disabled?: boolean;
-  onValueChange?: (value: number) => void;
-  ref?: Ref<HTMLInputElement>;
-}
-export interface FilePickerProps extends CommonProps {
-  label?: string;
-  description?: string;
-  icon?: string;
-  accept?: string;
-  multiple?: boolean;
-  onFiles?: (files: File[]) => void;
-}
+`,In=`import React, { useEffect, useRef } from "react";\r
+import type {\r
+  ButtonHTMLAttributes,\r
+  InputHTMLAttributes,\r
+  ReactNode,\r
+  Ref,\r
+} from "react";\r
+import {\r
+  mark,\r
+  ripple,\r
+  useControllable,\r
+  type CommonProps,\r
+  type Variant,\r
+} from "../../core/base";\r
+import { Icon } from "../layout/Icon/Icon";\r
+import { variantMaterial } from "./internal";\r
+\r
+export interface ButtonProps\r
+  extends\r
+    CommonProps,\r
+    Omit<ButtonHTMLAttributes<HTMLButtonElement>, keyof CommonProps | "color"> {\r
+  variant?: Variant;\r
+  icon?: string;\r
+  endIcon?: string;\r
+  loading?: boolean;\r
+  round?: boolean;\r
+  label?: string;\r
+  ref?: Ref<HTMLButtonElement>;\r
+}\r
+export function buttonView(p: ButtonProps, name = "Button") {\r
+  const {\r
+    variant = "secondary",\r
+    icon,\r
+    endIcon,\r
+    loading,\r
+    round,\r
+    label,\r
+    children,\r
+    ref,\r
+    onPointerMove,\r
+    onPointerDown,\r
+    onPointerLeave,\r
+    ...rest\r
+  } = p;\r
+  const { size: _s, tone: _t, material: _m, ...dom } = rest;\r
+  const trackLight: React.PointerEventHandler<HTMLButtonElement> = (event) => {\r
+    const rect = event.currentTarget.getBoundingClientRect();\r
+    event.currentTarget.style.setProperty(\r
+      "--ad-button-x",\r
+      \`\${((event.clientX - rect.left) / Math.max(rect.width, 1)) * 100}%\`,\r
+    );\r
+    event.currentTarget.style.setProperty(\r
+      "--ad-button-y",\r
+      \`\${((event.clientY - rect.top) / Math.max(rect.height, 1)) * 100}%\`,\r
+    );\r
+    onPointerMove?.(event);\r
+  };\r
+  const resetLight: React.PointerEventHandler<HTMLButtonElement> = (event) => {\r
+    event.currentTarget.style.removeProperty("--ad-button-x");\r
+    event.currentTarget.style.removeProperty("--ad-button-y");\r
+    onPointerLeave?.(event);\r
+  };\r
+  const content = children ?? label;\r
+  return (\r
+    <button\r
+      {...dom}\r
+      {...mark(name, p, variantMaterial[variant])}\r
+      ref={ref}\r
+      type={p.type ?? "button"}\r
+      disabled={p.disabled || loading}\r
+      aria-busy={loading || undefined}\r
+      data-ad-variant={variant}\r
+      data-ad-round={round || undefined}\r
+      onPointerDown={(event) => {\r
+        ripple(event.currentTarget, event.clientX, event.clientY);\r
+        onPointerDown?.(event);\r
+      }}\r
+      onPointerMove={trackLight}\r
+      onPointerLeave={resetLight}\r
+    >\r
+      <span className="ad-button-fx" aria-hidden="true" />\r
+      {loading && <span className="ad-spinner" aria-hidden="true" />}\r
+      {icon && <Icon name={icon} />}{" "}\r
+      {content != null && <span className="ad-button-label">{content}</span>}\r
+      {endIcon && <Icon name={endIcon} />}\r
+    </button>\r
+  );\r
+}\r
+export interface IconButtonProps extends ButtonProps {\r
+  label: string;\r
+}\r
+export interface ToggleButtonProps extends ButtonProps {\r
+  checked?: boolean;\r
+  defaultChecked?: boolean;\r
+  onValueChange?: (value: boolean) => void;\r
+}\r
+export interface SplitButtonProps extends CommonProps {\r
+  variant?: Variant;\r
+  icon?: string;\r
+  label?: string;\r
+  items?: any[];\r
+  onClick?: () => void;\r
+  children?: ReactNode;\r
+}\r
+export interface TabProps extends ButtonProps {\r
+  selected?: boolean;\r
+  panelId?: string;\r
+}\r
+export interface TabItem<V extends string = string> {\r
+  value: V;\r
+  label: ReactNode;\r
+  icon?: string;\r
+  disabled?: boolean;\r
+  panelId?: string;\r
+  id?: string;\r
+}\r
+/** \`V\` narrows the values, e.g. \`Tabs<"audio" | "video">\`, so handlers get the exact type. */\r
+export interface TabsProps<V extends string = string> extends CommonProps {\r
+  items?: TabItem<V>[];\r
+  value?: V;\r
+  defaultValue?: V;\r
+  onValueChange?: (value: V) => void;\r
+  label?: string;\r
+}\r
+/** Field appearance: boxed outline, tinted fill or a single bottom line. */\r
+export type InputVariant = "outlined" | "filled" | "underlined";\r
+/** Label above the field, or inside it rising on focus like Material inputs. */\r
+export type LabelPlacement = "top" | "floating";\r
+export interface FieldProps\r
+  extends\r
+    CommonProps,\r
+    Omit<\r
+      InputHTMLAttributes<HTMLInputElement>,\r
+      keyof CommonProps | "size" | "value" | "defaultValue" | "onChange"\r
+    > {\r
+  value?: string;\r
+  defaultValue?: string;\r
+  onValueChange?: (value: string) => void;\r
+  startAdornment?: ReactNode;\r
+  endAdornment?: ReactNode;\r
+  inputRef?: Ref<HTMLInputElement>;\r
+  variant?: InputVariant;\r
+  labelPlacement?: LabelPlacement;\r
+}\r
+export interface TextFieldProps extends FieldProps {\r
+  label?: ReactNode;\r
+  description?: ReactNode;\r
+  error?: ReactNode;\r
+  clearable?: boolean;\r
+  type?: InputHTMLAttributes<HTMLInputElement>["type"];\r
+}\r
+export interface NumberFieldProps extends Omit<\r
+  TextFieldProps,\r
+  "value" | "defaultValue" | "onValueChange" | "type"\r
+> {\r
+  value?: number | "";\r
+  defaultValue?: number | "";\r
+  onValueChange?: (value: number | "") => void;\r
+}\r
+export interface TextAreaProps\r
+  extends\r
+    Omit<CommonProps, "children">,\r
+    Omit<\r
+      React.TextareaHTMLAttributes<HTMLTextAreaElement>,\r
+      keyof CommonProps | "value" | "defaultValue" | "onChange"\r
+    > {\r
+  value?: string;\r
+  defaultValue?: string;\r
+  onValueChange?: (value: string) => void;\r
+  label?: ReactNode;\r
+  description?: ReactNode;\r
+  error?: ReactNode;\r
+  startAdornment?: ReactNode;\r
+  endAdornment?: ReactNode;\r
+  variant?: InputVariant;\r
+  labelPlacement?: LabelPlacement;\r
+  /** Which way the reader may drag the corner; \`both\` lets the field follow the width too. */\r
+  resize?: "vertical" | "both" | "none";\r
+}\r
+export interface AutocompleteOption {\r
+  value: string;\r
+  label: string;\r
+}\r
+export interface AutocompleteProps extends TextFieldProps {\r
+  options?: Array<string | AutocompleteOption>;\r
+  onOptionSelect?: (value: string) => void;\r
+}\r
+export interface SelectOption {\r
+  value: string;\r
+  label: string;\r
+  disabled?: boolean;\r
+}\r
+export interface SelectProps extends CommonProps {\r
+  label?: ReactNode;\r
+  description?: ReactNode;\r
+  error?: ReactNode;\r
+  placeholder?: string;\r
+  startAdornment?: ReactNode;\r
+  endAdornment?: ReactNode;\r
+  options?: Array<string | SelectOption>;\r
+  value?: string;\r
+  defaultValue?: string;\r
+  onValueChange?: (value: string) => void;\r
+  icon?: string;\r
+  disabled?: boolean;\r
+  required?: boolean;\r
+  name?: string;\r
+  ref?: Ref<HTMLButtonElement>;\r
+  variant?: InputVariant;\r
+  labelPlacement?: LabelPlacement;\r
+}\r
+export interface BooleanProps extends CommonProps {\r
+  checked?: boolean;\r
+  defaultChecked?: boolean;\r
+  onValueChange?: (value: boolean) => void;\r
+  label?: ReactNode;\r
+  disabled?: boolean;\r
+  name?: string;\r
+  required?: boolean;\r
+  /** Checkbox only: neither on nor off, e.g. "select all" when some rows are chosen. */\r
+  indeterminate?: boolean;\r
+}\r
+export function BooleanControl({\r
+  kind,\r
+  ...p\r
+}: BooleanProps & { kind: "Switch" | "Checkbox" }) {\r
+  const [checked, setChecked] = useControllable(\r
+    p.checked,\r
+    p.defaultChecked ?? false,\r
+    p.onValueChange,\r
+  );\r
+  const input = useRef<HTMLInputElement>(null);\r
+  useEffect(() => {\r
+    if (input.current) input.current.indeterminate = !!p.indeterminate;\r
+  }, [p.indeterminate]);\r
+  return (\r
+    <label {...mark(kind, p)}>\r
+      <input\r
+        ref={input}\r
+        name={p.name}\r
+        type="checkbox"\r
+        role={kind === "Switch" ? "switch" : undefined}\r
+        checked={checked}\r
+        disabled={p.disabled}\r
+        required={p.required}\r
+        onChange={(e) => setChecked(e.currentTarget.checked)}\r
+      />\r
+      <span className="ad-toggle-track" aria-hidden="true">\r
+        <i />\r
+      </span>\r
+      <span>{p.label}</span>\r
+    </label>\r
+  );\r
+}\r
+export interface SliderProps extends CommonProps {\r
+  value?: number;\r
+  defaultValue?: number;\r
+  min?: number;\r
+  max?: number;\r
+  step?: number;\r
+  label?: string;\r
+  disabled?: boolean;\r
+  onValueChange?: (value: number) => void;\r
+  ref?: Ref<HTMLInputElement>;\r
+}\r
+export interface FilePickerProps extends CommonProps {\r
+  label?: string;\r
+  description?: string;\r
+  icon?: string;\r
+  accept?: string;\r
+  multiple?: boolean;\r
+  onFiles?: (files: File[]) => void;\r
+}\r
 `,Nn=`import { useEffect, useRef, useState, type CSSProperties } from "react";\r
 import { clamp, mark, useControllable } from "../../../core/base";\r
 import { Toolbar } from "../../layout/Toolbar/Toolbar";\r
@@ -3655,7 +3664,7 @@ export default function AnimatedBorderExample() {\r
     "Анимированная неоновая обводка для любого контейнера, не только Card.",\r
   category: "motion",\r
 };\r
-`,$n=`import type { CSSProperties } from "react";\r
+`,On=`import type { CSSProperties } from "react";\r
 import { mark, type CommonProps } from "../../../core/base";\r
 \r
 export interface BeaconProps extends CommonProps {\r
@@ -3686,7 +3695,7 @@ export function Beacon({\r
     </span>\r
   );\r
 }\r
-`,On=`import { Playground, U, expr, jsx } from "../../../dev/exampleHelpers";\r
+`,$n=`import { Playground, U, expr, jsx } from "../../../dev/exampleHelpers";\r
 \r
 export default function BeaconExample() {\r
   return (\r
@@ -3903,79 +3912,82 @@ export default function MarqueeExample() {\r
     "Бесконечная бегущая строка с затуханием краёв, пауза при наведении.",\r
   category: "motion",\r
 } as const;\r
-`,Qn=`import {\r
-  Children,\r
-  cloneElement,\r
-  createElement,\r
-  isValidElement,\r
-  useEffect,\r
-  useRef,\r
-  useState,\r
-  type CSSProperties,\r
-  type ElementType,\r
-  type ReactElement,\r
-} from "react";\r
-import { mark, type CommonProps } from "../../../core/base";\r
-\r
-export interface RevealProps extends CommonProps {\r
-  as?: ElementType;\r
-  /** How children arrive. */\r
-  effect?: "rise" | "fade" | "zoom" | "blur";\r
-  /** Delay between consecutive children, ms. */\r
-  stagger?: number;\r
-  /** Play again every time the block re-enters the viewport. */\r
-  repeat?: boolean;\r
-}\r
-\r
-/** Children arrive one after another when the block scrolls into view. */\r
-export function Reveal({\r
-  as = "div",\r
-  effect = "rise",\r
-  stagger = 90,\r
-  repeat = false,\r
-  style,\r
-  children,\r
-  ...p\r
-}: RevealProps) {\r
-  const ref = useRef<HTMLElement>(null);\r
-  const [shown, setShown] = useState(false);\r
-  useEffect(() => {\r
-    const node = ref.current;\r
-    if (!node) return;\r
-    const observer = new IntersectionObserver(\r
-      ([entry]) => {\r
-        if (entry.isIntersecting) {\r
-          setShown(true);\r
-          if (!repeat) observer.disconnect();\r
-        } else if (repeat) setShown(false);\r
-      },\r
-      { threshold: 0.15 },\r
-    );\r
-    observer.observe(node);\r
-    return () => observer.disconnect();\r
-  }, [repeat]);\r
-  return createElement(\r
-    as,\r
-    {\r
-      ...mark("Reveal", p),\r
-      ref,\r
-      style: { ...style, "--ad-reveal-stagger": \`\${stagger}ms\` },\r
-      "data-effect": effect,\r
-      "data-shown": shown || undefined,\r
-    },\r
-    // Each child learns its order so the CSS can delay it.\r
-    Children.map(children, (child, index) =>\r
-      isValidElement(child)\r
-        ? cloneElement(child as ReactElement<{ style?: CSSProperties }>, {\r
-            style: {\r
-              ...(child.props as { style?: CSSProperties }).style,\r
-              "--ad-reveal-i": index,\r
-            } as CSSProperties,\r
-          })\r
-        : child,\r
-    ),\r
-  );\r
-}\r
+`,Qn=`import { canObserveIntersection } from "../../../core/environment";
+import {
+  Children,
+  cloneElement,
+  createElement,
+  isValidElement,
+  useEffect,
+  useRef,
+  useState,
+  type CSSProperties,
+  type ElementType,
+  type ReactElement,
+} from "react";
+import { mark, type CommonProps } from "../../../core/base";
+
+export interface RevealProps extends CommonProps {
+  as?: ElementType;
+  /** How children arrive. */
+  effect?: "rise" | "fade" | "zoom" | "blur";
+  /** Delay between consecutive children, ms. */
+  stagger?: number;
+  /** Play again every time the block re-enters the viewport. */
+  repeat?: boolean;
+}
+
+/** Children arrive one after another when the block scrolls into view. */
+export function Reveal({
+  as = "div",
+  effect = "rise",
+  stagger = 90,
+  repeat = false,
+  style,
+  children,
+  ...p
+}: RevealProps) {
+  const ref = useRef<HTMLElement>(null);
+  const [shown, setShown] = useState(false);
+  useEffect(() => {
+    const node = ref.current;
+    if (!node) return;
+    // Without visibility tracking there is no "scrolled into view": show at once.
+    if (!canObserveIntersection()) return setShown(true);
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setShown(true);
+          if (!repeat) observer.disconnect();
+        } else if (repeat) setShown(false);
+      },
+      { threshold: 0.15 },
+    );
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, [repeat]);
+  return createElement(
+    as,
+    {
+      ...mark("Reveal", p),
+      ref,
+      style: { ...style, "--ad-reveal-stagger": \`\${stagger}ms\` },
+      "data-effect": effect,
+      "data-shown": shown || undefined,
+    },
+    // Each child learns its order so the CSS can delay it.
+    Children.map(children, (child, index) =>
+      isValidElement(child)
+        ? cloneElement(child as ReactElement<{ style?: CSSProperties }>, {
+            style: {
+              ...(child.props as { style?: CSSProperties }).style,
+              "--ad-reveal-i": index,
+            } as CSSProperties,
+          })
+        : child,
+    ),
+  );
+}
 `,ne=`import { useEffect, useState } from "react";\r
 import { Playground, U, jsx } from "../../../dev/exampleHelpers";\r
 \r
@@ -4289,92 +4301,92 @@ export default function TiltExample() {\r
   description: "3D-наклон к курсору с бликом и пружинным возвратом.",\r
   category: "motion",\r
 } as const;\r
-`,fe=`import { mark } from "../../../core/base";\r
-import { type BadgeProps } from "../shared";\r
-\r
-/** A tone adds a live status dot in front of the label. */\r
-export const Badge = (p: BadgeProps) => (\r
-  <span {...mark("Badge", p)}>\r
-    {p.tone && <i className="ad-badge-dot" aria-hidden />}\r
-    {p.children ?? p.label ?? "GPU"}\r
-  </span>\r
-);\r
-`,ge=`import { Playground, U, jsx, sizes } from "../../../dev/exampleHelpers";\r
-\r
-const tones = ["none", "success", "warning", "error", "info"] as const;\r
-\r
-export default function BadgeExample() {\r
-  return (\r
-    <Playground\r
-      knobs={{\r
-        tone: { options: tones, value: "success" },\r
-        size: { options: sizes, value: "md" },\r
-      }}\r
-      code={(v, c) =>\r
-        jsx(\r
-          "Badge",\r
-          { tone: v.tone === "none" ? undefined : v.tone, size: c.size },\r
-          "Готово",\r
-        )\r
-      }\r
-    >\r
-      {(v) => (\r
-        <U.Badge tone={v.tone === "none" ? undefined : v.tone} size={v.size}>\r
-          Готово\r
-        </U.Badge>\r
-      )}\r
-    </Playground>\r
-  );\r
-}\r
+`,fe=`import { mark } from "../../../core/base";
+import { type BadgeProps } from "../shared";
+
+/** A tone adds a live status dot in front of the label. */
+export const Badge = (p: BadgeProps) => (
+  <span {...mark("Badge", p)}>
+    {p.tone && <i className="ad-badge-dot" aria-hidden />}
+    {p.children ?? p.label ?? "GPU"}
+  </span>
+);
+`,ge=`import { Playground, U, jsx, sizes } from "../../../dev/exampleHelpers";
+
+const tones = ["none", "success", "warning", "error", "info"] as const;
+
+export default function BadgeExample() {
+  return (
+    <Playground
+      knobs={{
+        tone: { options: tones, value: "success" },
+        size: { options: sizes, value: "md" },
+      }}
+      code={(v, c) =>
+        jsx(
+          "Badge",
+          { tone: v.tone === "none" ? undefined : v.tone, size: c.size },
+          "Готово",
+        )
+      }
+    >
+      {(v) => (
+        <U.Badge tone={v.tone === "none" ? undefined : v.tone} size={v.size}>
+          Готово
+        </U.Badge>
+      )}
+    </Playground>
+  );
+}
 `,ve=`export default {\r
   name: "Badge",\r
   description: "Короткая метка или роль",\r
   category: "feedback",\r
 } as const;\r
-`,he=`import { mark, useControllable } from "../../../core/base";\r
-import { Icon } from "../../layout/Icon/Icon";\r
-import { type CollapsibleSectionProps } from "../shared";\r
-\r
-export const CollapsibleSection = (p: CollapsibleSectionProps) => {\r
-  const [open, setOpen] = useControllable(\r
-    p.open,\r
-    p.defaultOpen ?? false,\r
-    p.onOpenChange,\r
-  );\r
-  return (\r
-    <details\r
-      {...mark("CollapsibleSection", p, "card")}\r
-      open={open}\r
-      onToggle={(e) => {\r
-        if (e.currentTarget.open !== open) setOpen(e.currentTarget.open);\r
-      }}\r
-    >\r
-      <summary>\r
-        <Icon name={p.icon ?? "braces"} />\r
-        <span>{p.title ?? "Технический JSON"}</span>\r
-        <Icon name="chevron" size={18} />\r
-      </summary>\r
-      <div className="ad-collapse-content">\r
-        {p.children ?? "Содержимое раскрывающегося раздела."}\r
-      </div>\r
-    </details>\r
-  );\r
-};\r
-`,be=`import { CollapsibleSection, KeyValueList } from "@ad-voice/ui";\r
-\r
-export default function CollapsibleSectionExample() {\r
-  return (\r
-    <CollapsibleSection title="Технические детали" icon="braces">\r
-      <KeyValueList\r
-        items={[\r
-          ["Частота", "48 kHz"],\r
-          ["Буфер", "128 сэмплов"],\r
-          ["Задержка", "6.7 мс"],\r
-        ]}\r
-      />\r
-    </CollapsibleSection>\r
-  );\r
-}\r
+`,he=`import { mark, useControllable } from "../../../core/base";
+import { Icon } from "../../layout/Icon/Icon";
+import { type CollapsibleSectionProps } from "../shared";
+
+export const CollapsibleSection = (p: CollapsibleSectionProps) => {
+  const [open, setOpen] = useControllable(
+    p.open,
+    p.defaultOpen ?? false,
+    p.onOpenChange,
+  );
+  return (
+    <details
+      {...mark("CollapsibleSection", p, "card")}
+      open={open}
+      onToggle={(e) => {
+        if (e.currentTarget.open !== open) setOpen(e.currentTarget.open);
+      }}
+    >
+      <summary>
+        <Icon name={p.icon ?? "braces"} />
+        <span>{p.title ?? "Технический JSON"}</span>
+        <Icon name="chevron" size={18} />
+      </summary>
+      <div className="ad-collapse-content">
+        {p.children ?? "Содержимое раскрывающегося раздела."}
+      </div>
+    </details>
+  );
+};
+`,be=`import { CollapsibleSection, KeyValueList } from "@ad-voice/ui";
+
+export default function CollapsibleSectionExample() {
+  return (
+    <CollapsibleSection title="Технические детали" icon="braces">
+      <KeyValueList
+        items={[
+          ["Частота", "48 kHz"],
+          ["Буфер", "128 сэмплов"],
+          ["Задержка", "6.7 мс"],
+        ]}
+      />
+    </CollapsibleSection>
+  );
+}
 `,ye=`export default {\r
   name: "CollapsibleSection",\r
   description: "Раскрывающийся раздел",\r
@@ -4789,867 +4801,1012 @@ export default function DataTableExample() {
   category: "feedback",\r
   wide: true,\r
 } as const;\r
-`,we=`import { useId, useLayoutEffect, useRef, useState } from "react";\r
-import { mark, useControllable } from "../../../core/base";\r
-import { Button } from "../../controls/Button/Button";\r
-import { IconButton } from "../../controls/IconButton/IconButton";\r
-import { Header } from "../../layout/Header/Header";\r
-import { DialogBody } from "../../layout/DialogBody/DialogBody";\r
-import { DialogActions } from "../../layout/DialogActions/DialogActions";\r
-import { MessageBar } from "../MessageBar/MessageBar";\r
-import type { DialogProps } from "../shared";\r
-export const Dialog = (p: DialogProps) => {\r
-  const [open, setOpen] = useControllable(\r
-      p.open,\r
-      p.defaultOpen ?? false,\r
-      p.onOpenChange,\r
-    ),\r
-    [pending, setPending] = useState(false),\r
-    [error, setError] = useState<string>();\r
-  const ref = useRef<HTMLDialogElement>(null),\r
-    titleId = useId(),\r
-    descId = useId();\r
-  useLayoutEffect(() => {\r
-    const d = ref.current;\r
-    if (!d) return;\r
-    if (open && !d.open) d.showModal();\r
-    else if (!open && d.open) d.close();\r
-    return () => {\r
-      if (d.open) d.close();\r
-    };\r
-  }, [open]);\r
-  return (\r
-    <dialog\r
-      {...mark("Dialog", p, "dialog")}\r
-      ref={ref}\r
-      aria-labelledby={titleId}\r
-      aria-describedby={p.description ? descId : undefined}\r
-      onCancel={(e) => {\r
-        e.preventDefault();\r
-        if (!pending) setOpen(false);\r
-      }}\r
-    >\r
-      <Header\r
-        title={<span id={titleId}>{p.title ?? "Подтверждение"}</span>}\r
-        level={2}\r
-        actions={\r
-          <IconButton\r
-            variant="ghost"\r
-            icon="close"\r
-            label="Закрыть"\r
-            disabled={pending}\r
-            onClick={() => setOpen(false)}\r
-          />\r
-        }\r
-      />\r
-      <DialogBody>\r
-        {p.description && <p id={descId}>{p.description}</p>}\r
-        {p.children}\r
-        {error && <MessageBar tone="error">{error}</MessageBar>}\r
-      </DialogBody>\r
-      <DialogActions>\r
-        {p.cancelLabel !== false && (\r
-          <Button disabled={pending} onClick={() => setOpen(false)}>\r
-            {p.cancelLabel ?? "Отмена"}\r
-          </Button>\r
-        )}\r
-        <Button\r
-          variant={p.danger ? "danger" : "primary"}\r
-          loading={pending}\r
-          onClick={async () => {\r
-            setPending(true);\r
-            setError(undefined);\r
-            try {\r
-              const result = await p.onConfirm?.();\r
-              if (result !== false) setOpen(false);\r
-            } catch (e) {\r
-              setError(\r
-                e instanceof Error\r
-                  ? e.message\r
-                  : "Не удалось выполнить действие",\r
-              );\r
-            } finally {\r
-              setPending(false);\r
-            }\r
-          }}\r
-        >\r
-          {p.confirmLabel ?? "Готово"}\r
-        </Button>\r
-      </DialogActions>\r
-    </dialog>\r
-  );\r
-};\r
-`,Se=`import { useState } from "react";\r
-import { Button, Dialog } from "@ad-voice/ui";\r
-\r
-export default function DialogExample() {\r
-  const [open, setOpen] = useState(false);\r
-  return (\r
-    <>\r
-      <Button variant="danger" icon="trash" onClick={() => setOpen(true)}>\r
-        Удалить запись\r
-      </Button>\r
-      <Dialog\r
-        open={open}\r
-        onOpenChange={setOpen}\r
-        danger\r
-        title="Удалить запись?"\r
-        description="Файл и результаты анализа будут удалены без возможности восстановления."\r
-        confirmLabel="Удалить"\r
-        onConfirm={() => new Promise((done) => setTimeout(done, 800))}\r
-      />\r
-    </>\r
-  );\r
-}\r
+`,we=`import { useId, useLayoutEffect, useRef, useState } from "react";
+import { mark, useControllable } from "../../../core/base";
+import { Button } from "../../controls/Button/Button";
+import { IconButton } from "../../controls/IconButton/IconButton";
+import { Header } from "../../layout/Header/Header";
+import { DialogBody } from "../../layout/DialogBody/DialogBody";
+import { DialogActions } from "../../layout/DialogActions/DialogActions";
+import { MessageBar } from "../MessageBar/MessageBar";
+import type { DialogProps } from "../shared";
+export const Dialog = (p: DialogProps) => {
+  const [open, setOpen] = useControllable(
+      p.open,
+      p.defaultOpen ?? false,
+      p.onOpenChange,
+    ),
+    [pending, setPending] = useState(false),
+    [error, setError] = useState<string>();
+  const ref = useRef<HTMLDialogElement>(null),
+    titleId = useId(),
+    descId = useId();
+  useLayoutEffect(() => {
+    const d = ref.current;
+    if (!d) return;
+    // Environments without the modal dialog API (jsdom) just toggle the open attribute.
+    const modal = typeof d.showModal === "function";
+    if (open && !d.open) {
+      if (modal) d.showModal();
+      else d.setAttribute("open", "");
+    } else if (!open && d.open) {
+      if (modal) d.close();
+      else d.removeAttribute("open");
+    }
+    return () => {
+      if (d.open && modal) d.close();
+      else d.removeAttribute("open");
+    };
+  }, [open]);
+  return (
+    <dialog
+      {...mark("Dialog", p, "dialog")}
+      ref={ref}
+      aria-labelledby={titleId}
+      aria-describedby={p.description ? descId : undefined}
+      onCancel={(e) => {
+        e.preventDefault();
+        if (!pending) setOpen(false);
+      }}
+    >
+      <Header
+        title={<span id={titleId}>{p.title ?? "Подтверждение"}</span>}
+        icon={p.icon}
+        level={2}
+        actions={
+          <IconButton
+            variant="ghost"
+            icon="close"
+            label={p.closeLabel ?? "Закрыть"}
+            disabled={pending}
+            onClick={() => setOpen(false)}
+          />
+        }
+      />
+      <DialogBody>
+        {p.description && <p id={descId}>{p.description}</p>}
+        {p.children}
+        {error && <MessageBar tone="error">{error}</MessageBar>}
+      </DialogBody>
+      {(p.cancelLabel !== false || p.confirmLabel !== false) && (
+        <DialogActions>
+          {p.cancelLabel !== false && (
+            <Button disabled={pending} onClick={() => setOpen(false)}>
+              {p.cancelLabel ?? "Отмена"}
+            </Button>
+          )}
+          {p.confirmLabel !== false && (
+            <Button
+              variant={p.danger ? "danger" : "primary"}
+              loading={pending}
+              onClick={async () => {
+                setPending(true);
+                setError(undefined);
+                try {
+                  const result = await p.onConfirm?.();
+                  if (result !== false) setOpen(false);
+                } catch (e) {
+                  setError(
+                    e instanceof Error
+                      ? e.message
+                      : "Не удалось выполнить действие",
+                  );
+                } finally {
+                  setPending(false);
+                }
+              }}
+            >
+              {p.confirmLabel ?? "Готово"}
+            </Button>
+          )}
+        </DialogActions>
+      )}
+    </dialog>
+  );
+};
+`,Se=`import { useState } from "react";
+import { Button, Dialog } from "@ad-voice/ui";
+
+export default function DialogExample() {
+  const [open, setOpen] = useState(false);
+  return (
+    <>
+      <Button variant="danger" icon="trash" onClick={() => setOpen(true)}>
+        Удалить запись
+      </Button>
+      <Dialog
+        open={open}
+        onOpenChange={setOpen}
+        danger
+        title="Удалить запись?"
+        description="Файл и результаты анализа будут удалены без возможности восстановления."
+        confirmLabel="Удалить"
+        onConfirm={() => new Promise((done) => setTimeout(done, 800))}
+      />
+    </>
+  );
+}
 `,Pe=`export default {\r
   name: "Dialog",\r
   description: "Модальное окно и управление фокусом",\r
   category: "layout",\r
 } as const;\r
-`,Te=`import { mark } from "../../../core/base";\r
-import { Icon } from "../../layout/Icon/Icon";\r
-import { type EmptyStateProps } from "../shared";\r
-\r
-export const EmptyState = (p: EmptyStateProps) => (\r
-  <div {...mark("EmptyState", p)}>\r
-    <Icon name={p.icon ?? "music"} size={44} />\r
-    <h3>{p.title ?? "Пока нет записей"}</h3>\r
-    <p>{p.description ?? "Добавьте запись, чтобы начать."}</p>\r
-    {p.action}\r
-  </div>\r
-);\r
-`,Ce=`import { Button, EmptyState } from "@ad-voice/ui";\r
-\r
-export default function EmptyStateExample() {\r
-  return (\r
-    <EmptyState\r
-      icon="music"\r
-      title="Пока нет записей"\r
-      description="Спойте первую песню — запись появится здесь."\r
-      action={\r
-        <Button variant="primary" icon="plus">\r
-          Новое выступление\r
-        </Button>\r
-      }\r
-    />\r
-  );\r
-}\r
+`,Te=`import { mark } from "../../../core/base";
+import { Icon } from "../../layout/Icon/Icon";
+import { type EmptyStateProps } from "../shared";
+
+export const EmptyState = (p: EmptyStateProps) => (
+  <div {...mark("EmptyState", p)}>
+    <Icon name={p.icon ?? "music"} size={44} />
+    <h3>{p.title ?? "Пока нет записей"}</h3>
+    <p>{p.description ?? "Добавьте запись, чтобы начать."}</p>
+    {p.action}
+  </div>
+);
+`,Ce=`import { Button, EmptyState } from "@ad-voice/ui";
+
+export default function EmptyStateExample() {
+  return (
+    <EmptyState
+      icon="music"
+      title="Пока нет записей"
+      description="Спойте первую песню — запись появится здесь."
+      action={
+        <Button variant="primary" icon="plus">
+          Новое выступление
+        </Button>
+      }
+    />
+  );
+}
 `,Re=`export default {\r
   name: "EmptyState",\r
   description: "Пустой список и действие для начала",\r
   category: "feedback",\r
 } as const;\r
-`,Me=`import { mark } from "../../../core/base";\r
-import { type KeyValueListProps } from "../shared";\r
-\r
-export const KeyValueList = (p: KeyValueListProps) => (\r
-  <dl {...mark("KeyValueList", p)}>\r
-    {(\r
-      p.items ?? [\r
-        ["Python Backend", "Ready"],\r
-        ["AudioService", "Running"],\r
-        ["База данных", "Исправно"],\r
-      ]\r
-    ).map(([key, value], i) => (\r
-      <div key={i}>\r
-        <dt>{key}</dt>\r
-        <dd>{value}</dd>\r
-      </div>\r
-    ))}\r
-  </dl>\r
-);\r
-`,Ee=`import { KeyValueList, StatusIndicator } from "@ad-voice/ui";\r
-\r
-export default function KeyValueListExample() {\r
-  return (\r
-    <KeyValueList\r
-      items={[\r
-        [\r
-          "Python backend",\r
-          <StatusIndicator status="success" label="Работает" />,\r
-        ],\r
-        ["Аудиосервис", <StatusIndicator status="processing" label="Запуск" />],\r
-        ["База данных", <StatusIndicator status="success" label="Исправна" />],\r
-      ]}\r
-    />\r
-  );\r
-}\r
+`,Me=`import { mark } from "../../../core/base";
+import { type KeyValueListProps } from "../shared";
+
+export const KeyValueList = (p: KeyValueListProps) => (
+  <dl {...mark("KeyValueList", p)}>
+    {(
+      p.items ?? [
+        ["Python Backend", "Ready"],
+        ["AudioService", "Running"],
+        ["База данных", "Исправно"],
+      ]
+    ).map(([key, value], i) => (
+      <div key={i}>
+        <dt>{key}</dt>
+        <dd>{value}</dd>
+      </div>
+    ))}
+  </dl>
+);
+`,Ee=`import { KeyValueList, StatusIndicator } from "@ad-voice/ui";
+
+export default function KeyValueListExample() {
+  return (
+    <KeyValueList
+      items={[
+        [
+          "Python backend",
+          <StatusIndicator status="success" label="Работает" />,
+        ],
+        ["Аудиосервис", <StatusIndicator status="processing" label="Запуск" />],
+        ["База данных", <StatusIndicator status="success" label="Исправна" />],
+      ]}
+    />
+  );
+}
 `,Ae=`export default {\r
   name: "KeyValueList",\r
   description: "Пары названий и значений",\r
   category: "feedback",\r
 } as const;\r
-`,Be=`import { Divider } from "../../layout/Divider/Divider";\r
-import { Popover } from "../Popover/Popover";\r
-import { MenuItem } from "../MenuItem/MenuItem";\r
-import type { MenuProps } from "../shared";\r
-export const Menu = (p: MenuProps) => (\r
-  <Popover\r
-    {...p}\r
-    role="menu"\r
-    className={\`ad-menu \${p.className ?? ""}\`}\r
-    onKeyDown={(e) => {\r
-      if (!["ArrowDown", "ArrowUp", "Home", "End", "Tab"].includes(e.key))\r
-        return;\r
-      if (e.key === "Tab") {\r
-        p.onOpenChange?.(false);\r
-        return;\r
-      }\r
-      e.preventDefault();\r
-      const buttons = Array.from(\r
-        e.currentTarget.querySelectorAll("button:not(:disabled)"),\r
-      ) as HTMLButtonElement[];\r
-      const i = buttons.indexOf(document.activeElement as HTMLButtonElement);\r
-      const next =\r
-        e.key === "Home"\r
-          ? 0\r
-          : e.key === "End"\r
-            ? buttons.length - 1\r
-            : (i + (e.key === "ArrowDown" ? 1 : -1) + buttons.length) %\r
-              buttons.length;\r
-      buttons[next]?.focus();\r
-    }}\r
-  >\r
-    {(p.items ?? []).map((item, i) =>\r
-      item.separator ? (\r
-        <Divider key={item.id ?? String(i)} />\r
-      ) : (\r
-        <MenuItem\r
-          key={item.id ?? String(i)}\r
-          {...item}\r
-          onSelect={() => {\r
-            p.onOpenChange?.(false);\r
-            p.anchorRef?.current?.focus();\r
-            item.onSelect?.();\r
-          }}\r
-        />\r
-      ),\r
-    )}\r
-  </Popover>\r
-);\r
-`,Ie=`import { useRef, useState } from "react";\r
-import { Button, Menu } from "@ad-voice/ui";\r
-\r
-export default function MenuExample() {\r
-  const [open, setOpen] = useState(false);\r
-  const anchor = useRef<HTMLButtonElement>(null);\r
-  return (\r
-    <>\r
-      <Button\r
-        ref={anchor}\r
-        icon="more"\r
-        aria-haspopup="menu"\r
-        aria-expanded={open}\r
-        onClick={() => setOpen((v) => !v)}\r
-      >\r
-        Действия\r
-      </Button>\r
-      <Menu\r
-        open={open}\r
-        onOpenChange={setOpen}\r
-        anchorRef={anchor}\r
-        items={[\r
-          { label: "Переименовать", icon: "pencil" },\r
-          { label: "Скачать", icon: "download" },\r
-          { separator: true },\r
-          { label: "Удалить", icon: "trash", danger: true },\r
-        ]}\r
-      />\r
-    </>\r
-  );\r
-}\r
+`,Be=`import { Divider } from "../../layout/Divider/Divider";
+import { Popover } from "../Popover/Popover";
+import { MenuItem } from "../MenuItem/MenuItem";
+import type { MenuProps } from "../shared";
+export const Menu = (p: MenuProps) => (
+  <Popover
+    {...p}
+    role="menu"
+    className={\`ad-menu \${p.className ?? ""}\`}
+    onKeyDown={(e) => {
+      if (!["ArrowDown", "ArrowUp", "Home", "End", "Tab"].includes(e.key))
+        return;
+      if (e.key === "Tab") {
+        p.onOpenChange?.(false);
+        return;
+      }
+      e.preventDefault();
+      const buttons = Array.from(
+        e.currentTarget.querySelectorAll("button:not(:disabled)"),
+      ) as HTMLButtonElement[];
+      const i = buttons.indexOf(document.activeElement as HTMLButtonElement);
+      const next =
+        e.key === "Home"
+          ? 0
+          : e.key === "End"
+            ? buttons.length - 1
+            : (i + (e.key === "ArrowDown" ? 1 : -1) + buttons.length) %
+              buttons.length;
+      buttons[next]?.focus();
+    }}
+  >
+    {(p.items ?? []).map((item, i) =>
+      item.separator ? (
+        <Divider key={item.id ?? String(i)} />
+      ) : (
+        <MenuItem
+          key={item.id ?? String(i)}
+          {...item}
+          onSelect={() => {
+            p.onOpenChange?.(false);
+            p.anchorRef?.current?.focus();
+            item.onSelect?.();
+          }}
+        />
+      ),
+    )}
+  </Popover>
+);
+`,Ie=`import { useRef, useState } from "react";
+import { Button, Menu } from "@ad-voice/ui";
+
+export default function MenuExample() {
+  const [open, setOpen] = useState(false);
+  const anchor = useRef<HTMLButtonElement>(null);
+  return (
+    <>
+      <Button
+        ref={anchor}
+        icon="more"
+        aria-haspopup="menu"
+        aria-expanded={open}
+        onClick={() => setOpen((v) => !v)}
+      >
+        Действия
+      </Button>
+      <Menu
+        open={open}
+        onOpenChange={setOpen}
+        anchorRef={anchor}
+        items={[
+          { label: "Переименовать", icon: "pencil" },
+          { label: "Скачать", icon: "download" },
+          { separator: true },
+          { label: "Удалить", icon: "trash", danger: true },
+        ]}
+      />
+    </>
+  );
+}
 `,Ne=`export default {\r
   name: "Menu",\r
   description: "Меню действий с клавиатурной навигацией",\r
   category: "navigation",\r
 } as const;\r
-`,ze=`import { mark } from "../../../core/base";\r
-import { Icon } from "../../layout/Icon/Icon";\r
-import type { MenuItemProps } from "../shared";\r
-\r
-export const MenuItem = (p: MenuItemProps) => {\r
-  const label = p.label ?? p.children ?? "Действие";\r
-  return (\r
-    <button\r
-      {...mark("MenuItem", { ...p, tone: p.danger ? "error" : p.tone })}\r
-      type="button"\r
-      role="menuitem"\r
-      disabled={p.disabled}\r
-      onClick={p.onSelect}\r
-    >\r
-      <span className="ad-menu-item-icon" aria-hidden="true">\r
-        <Icon name={p.icon ?? "more"} />\r
-      </span>\r
-      <span className="ad-menu-item-label">{label}</span>\r
-      {p.endIcon && (\r
-        <span className="ad-menu-item-end" aria-hidden="true">\r
-          <Icon name={p.endIcon} />\r
-        </span>\r
-      )}\r
-    </button>\r
-  );\r
-};\r
-`,Le=`import { Card, Divider, MenuItem, Stack } from "@ad-voice/ui";\r
-\r
-/** MenuItem is what Menu renders for each entry; use it to build a custom menu surface. */\r
-export default function MenuItemExample() {\r
-  return (\r
-    <Card material="dialog" padding="sm">\r
-      <Stack role="menu" aria-label="Действия с записью" gap={1}>\r
-        <MenuItem label="Переименовать" icon="pencil" />\r
-        <MenuItem label="Скачать" icon="download" />\r
-        <Divider />\r
-        <MenuItem label="Удалить" icon="trash" danger />\r
-      </Stack>\r
-    </Card>\r
-  );\r
-}\r
+`,ze=`import { mark } from "../../../core/base";
+import { Icon } from "../../layout/Icon/Icon";
+import type { MenuItemProps } from "../shared";
+
+export const MenuItem = (p: MenuItemProps) => {
+  const label = p.label ?? p.children ?? "Действие";
+  return (
+    <button
+      {...mark("MenuItem", { ...p, tone: p.danger ? "error" : p.tone })}
+      type="button"
+      role="menuitem"
+      disabled={p.disabled}
+      onClick={p.onSelect}
+    >
+      <span className="ad-menu-item-icon" aria-hidden="true">
+        <Icon name={p.icon ?? "more"} />
+      </span>
+      <span className="ad-menu-item-label">{label}</span>
+      {p.endIcon && (
+        <span className="ad-menu-item-end" aria-hidden="true">
+          <Icon name={p.endIcon} />
+        </span>
+      )}
+    </button>
+  );
+};
+`,Le=`import { Card, Divider, MenuItem, Stack } from "@ad-voice/ui";
+
+/** MenuItem is what Menu renders for each entry; use it to build a custom menu surface. */
+export default function MenuItemExample() {
+  return (
+    <Card material="dialog" padding="sm">
+      <Stack role="menu" aria-label="Действия с записью" gap={1}>
+        <MenuItem label="Переименовать" icon="pencil" />
+        <MenuItem label="Скачать" icon="download" />
+        <Divider />
+        <MenuItem label="Удалить" icon="trash" danger />
+      </Stack>
+    </Card>
+  );
+}
 `,Fe=`export default {\r
   name: "MenuItem",\r
   description: "Действие меню, иконка и опасное состояние",\r
   category: "navigation",\r
 } as const;\r
-`,De=`import { mark, type CommonProps } from "../../../core/base";\r
-import { Icon } from "../../layout/Icon/Icon";\r
-\r
-const icons = { success: "check", error: "warning", warning: "warning" };\r
-\r
-export const MessageBar = (p: CommonProps) => (\r
-  <div\r
-    {...mark("MessageBar", { ...p, tone: p.tone ?? "warning" })}\r
-    role={p.tone === "error" ? "alert" : "status"}\r
-  >\r
-    <span className="ad-message-bar-icon" aria-hidden>\r
-      <Icon name={icons[p.tone as keyof typeof icons] ?? "info"} />\r
-    </span>\r
-    <span className="ad-message-bar-text">\r
-      {p.children ?? "Для операции нужно больше свободного места."}\r
-    </span>\r
-  </div>\r
-);\r
-`,Ve=`import { Playground, U, jsx } from "../../../dev/exampleHelpers";\r
-\r
-const tones = ["warning", "error", "success", "info"] as const;\r
-const text = {\r
-  warning: "Осталось меньше 1 ГБ свободного места",\r
-  error: "Не удалось сохранить запись",\r
-  success: "Все параметры сохранены",\r
-  info: "Новая версия модели доступна",\r
-};\r
-\r
-export default function MessageBarExample() {\r
-  return (\r
-    <Playground\r
-      stretch\r
-      knobs={{ tone: { options: tones, value: "warning" } }}\r
-      code={(v) => jsx("MessageBar", { tone: v.tone }, text[v.tone])}\r
-    >\r
-      {(v) => <U.MessageBar tone={v.tone}>{text[v.tone]}</U.MessageBar>}\r
-    </Playground>\r
-  );\r
-}\r
+`,De=`import { mark } from "../../../core/base";
+import type { MessageBarProps } from "../shared";
+import { Icon } from "../../layout/Icon/Icon";
+
+const icons = { success: "check", error: "warning", warning: "warning" };
+
+export const MessageBar = ({ action, ...p }: MessageBarProps) => (
+  <div
+    {...mark("MessageBar", { ...p, tone: p.tone ?? "warning" })}
+    role={p.tone === "error" ? "alert" : "status"}
+  >
+    <span className="ad-message-bar-icon" aria-hidden>
+      <Icon name={icons[p.tone as keyof typeof icons] ?? "info"} />
+    </span>
+    <span className="ad-message-bar-text">
+      {p.children ?? "Для операции нужно больше свободного места."}
+    </span>
+    {action && <span className="ad-message-bar-action">{action}</span>}
+  </div>
+);
+`,Ve=`import { Playground, U, jsx } from "../../../dev/exampleHelpers";
+
+const tones = ["warning", "error", "success", "info"] as const;
+const text = {
+  warning: "Осталось меньше 1 ГБ свободного места",
+  error: "Не удалось сохранить запись",
+  success: "Все параметры сохранены",
+  info: "Новая версия модели доступна",
+};
+
+export default function MessageBarExample() {
+  return (
+    <Playground
+      stretch
+      knobs={{ tone: { options: tones, value: "warning" } }}
+      code={(v) => jsx("MessageBar", { tone: v.tone }, text[v.tone])}
+    >
+      {(v) => <U.MessageBar tone={v.tone}>{text[v.tone]}</U.MessageBar>}
+    </Playground>
+  );
+}
 `,He=`export default {\r
   name: "MessageBar",\r
   description: "Сообщение внутри карточки",\r
   category: "feedback",\r
 } as const;\r
-`,$e=`import { useLayoutEffect, useRef } from "react";\r
-import { cssRem, mark } from "../../../core/base";\r
-import { type PopoverProps } from "../shared";\r
-\r
-export const Popover = (p: PopoverProps) => {\r
-  const ref = useRef<HTMLDivElement>(null);\r
-  const change = useRef(p.onOpenChange);\r
-  change.current = p.onOpenChange;\r
-  useLayoutEffect(() => {\r
-    const node = ref.current;\r
-    if (!node || !p.open) return;\r
-    const position = () => {\r
-      const target = p.anchorRef?.current?.getBoundingClientRect();\r
-      const gap = 8;\r
-      if (target && p.matchAnchorWidth)\r
-        node.style.minWidth = cssRem(target.width);\r
-      const r = node.getBoundingClientRect();\r
-      const desired = target\r
-        ? p.align === "start"\r
-          ? target.left\r
-          : target.right - r.width\r
-        : innerWidth / 2 - r.width / 2;\r
-      const left = Math.max(8, Math.min(innerWidth - r.width - 8, desired));\r
-      const roomBelow = target ? innerHeight - target.bottom : innerHeight / 2;\r
-      const roomAbove = target ? target.top : innerHeight / 2;\r
-      const placeAbove =\r
-        !!target && roomBelow < r.height + gap + 8 && roomAbove > roomBelow;\r
-      const rawTop = target\r
-        ? placeAbove\r
-          ? target.top - r.height - gap\r
-          : target.bottom + gap\r
-        : innerHeight / 2 - r.height / 2;\r
-      const top = Math.max(8, Math.min(innerHeight - r.height - 8, rawTop));\r
-      node.style.left = cssRem(left);\r
-      node.style.top = cssRem(top);\r
-      node.dataset.adSide = placeAbove ? "above" : "below";\r
-      if (target) {\r
-        const anchorX = Math.max(\r
-          24,\r
-          Math.min(r.width - 24, target.left + target.width / 2 - left),\r
-        );\r
-        node.style.setProperty("--ad-popover-anchor-x", cssRem(anchorX));\r
-      } else {\r
-        node.style.removeProperty("--ad-popover-anchor-x");\r
-      }\r
-    };\r
-    const supports = typeof node.showPopover === "function";\r
-    if (supports) node.showPopover();\r
-    position();\r
-    if (p.autoFocus !== false)\r
-      (\r
-        node.querySelector<HTMLElement>(\r
-          '[aria-selected="true"]:not(:disabled)',\r
-        ) ??\r
-        node.querySelector<HTMLElement>(\r
-          'button:not(:disabled),input,[tabindex="0"]',\r
-        )\r
-      )?.focus();\r
-    const dismiss = (e: PointerEvent) => {\r
-      const path = e.composedPath();\r
-      if (\r
-        !path.includes(node) &&\r
-        !path.includes(p.anchorRef?.current as EventTarget)\r
-      )\r
-        change.current?.(false);\r
-    };\r
-    const key = (e: KeyboardEvent) => {\r
-      if (e.key === "Escape") {\r
-        e.preventDefault();\r
-        change.current?.(false);\r
-        p.anchorRef?.current?.focus();\r
-      }\r
-    };\r
-    document.addEventListener("pointerdown", dismiss);\r
-    document.addEventListener("keydown", key);\r
-    window.addEventListener("resize", position);\r
-    window.addEventListener("scroll", position, true);\r
-    return () => {\r
-      document.removeEventListener("pointerdown", dismiss);\r
-      document.removeEventListener("keydown", key);\r
-      window.removeEventListener("resize", position);\r
-      window.removeEventListener("scroll", position, true);\r
-      if (supports && node.matches(":popover-open")) node.hidePopover();\r
-    };\r
-  }, [p.open, p.anchorRef]);\r
-  if (!p.open) return null;\r
-  return (\r
-    <div\r
-      {...mark("Popover", p, "dialog")}\r
-      ref={ref}\r
-      role={p.role ?? "dialog"}\r
-      aria-label={p.label}\r
-      popover="manual"\r
-      onKeyDown={p.onKeyDown}\r
-      style={{ margin: 0, position: "fixed", ...p.style }}\r
-    >\r
-      {p.children}\r
-    </div>\r
-  );\r
-};\r
-`,Oe=`import { useRef, useState } from "react";\r
-import { Button, Popover, Slider, Stack, Typography } from "@ad-voice/ui";\r
-\r
-export default function PopoverExample() {\r
-  const [open, setOpen] = useState(false);\r
-  const [volume, setVolume] = useState(65);\r
-  const anchor = useRef<HTMLButtonElement>(null);\r
-  return (\r
-    <>\r
-      <Button ref={anchor} icon="volume" onClick={() => setOpen((v) => !v)}>\r
-        Громкость {volume}%\r
-      </Button>\r
-      <Popover\r
-        open={open}\r
-        onOpenChange={setOpen}\r
-        anchorRef={anchor}\r
-        label="Громкость"\r
-      >\r
-        <Stack gap={2}>\r
-          <Typography variant="label">Громкость</Typography>\r
-          <Slider value={volume} onValueChange={setVolume} label="Громкость" />\r
-        </Stack>\r
-      </Popover>\r
-    </>\r
-  );\r
-}\r
+`,Oe=`import { useLayoutEffect, useRef } from "react";
+import { cssRem, mark } from "../../../core/base";
+import { type PopoverProps } from "../shared";
+
+export const Popover = (p: PopoverProps) => {
+  const ref = useRef<HTMLDivElement>(null);
+  const change = useRef(p.onOpenChange);
+  change.current = p.onOpenChange;
+  useLayoutEffect(() => {
+    const node = ref.current;
+    if (!node || !p.open) return;
+    const position = () => {
+      const target = p.anchorRef?.current?.getBoundingClientRect();
+      const gap = 8;
+      if (target && p.matchAnchorWidth)
+        node.style.minWidth = cssRem(target.width);
+      const r = node.getBoundingClientRect();
+      const desired = target
+        ? p.align === "start"
+          ? target.left
+          : target.right - r.width
+        : innerWidth / 2 - r.width / 2;
+      const left = Math.max(8, Math.min(innerWidth - r.width - 8, desired));
+      const roomBelow = target ? innerHeight - target.bottom : innerHeight / 2;
+      const roomAbove = target ? target.top : innerHeight / 2;
+      const placeAbove =
+        !!target && roomBelow < r.height + gap + 8 && roomAbove > roomBelow;
+      const rawTop = target
+        ? placeAbove
+          ? target.top - r.height - gap
+          : target.bottom + gap
+        : innerHeight / 2 - r.height / 2;
+      const top = Math.max(8, Math.min(innerHeight - r.height - 8, rawTop));
+      node.style.left = cssRem(left);
+      node.style.top = cssRem(top);
+      node.dataset.adSide = placeAbove ? "above" : "below";
+      if (target) {
+        const anchorX = Math.max(
+          24,
+          Math.min(r.width - 24, target.left + target.width / 2 - left),
+        );
+        node.style.setProperty("--ad-popover-anchor-x", cssRem(anchorX));
+      } else {
+        node.style.removeProperty("--ad-popover-anchor-x");
+      }
+    };
+    const supports = typeof node.showPopover === "function";
+    if (supports) node.showPopover();
+    position();
+    if (p.autoFocus !== false)
+      (
+        node.querySelector<HTMLElement>(
+          '[aria-selected="true"]:not(:disabled)',
+        ) ??
+        node.querySelector<HTMLElement>(
+          'button:not(:disabled),input,[tabindex="0"]',
+        )
+      )?.focus();
+    const dismiss = (e: PointerEvent) => {
+      const path = e.composedPath();
+      if (
+        !path.includes(node) &&
+        !path.includes(p.anchorRef?.current as EventTarget)
+      )
+        change.current?.(false);
+    };
+    const key = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        e.preventDefault();
+        change.current?.(false);
+        p.anchorRef?.current?.focus();
+      }
+    };
+    document.addEventListener("pointerdown", dismiss);
+    document.addEventListener("keydown", key);
+    window.addEventListener("resize", position);
+    window.addEventListener("scroll", position, true);
+    return () => {
+      document.removeEventListener("pointerdown", dismiss);
+      document.removeEventListener("keydown", key);
+      window.removeEventListener("resize", position);
+      window.removeEventListener("scroll", position, true);
+      if (supports && node.matches(":popover-open")) node.hidePopover();
+    };
+  }, [p.open, p.anchorRef]);
+  if (!p.open) return null;
+  return (
+    <div
+      {...mark("Popover", p, "dialog")}
+      ref={ref}
+      role={p.role ?? "dialog"}
+      aria-label={p.label}
+      popover="manual"
+      onKeyDown={p.onKeyDown}
+      style={{ margin: 0, position: "fixed", ...p.style }}
+    >
+      {p.children}
+    </div>
+  );
+};
+`,$e=`import { useRef, useState } from "react";
+import { Button, Popover, Slider, Stack, Typography } from "@ad-voice/ui";
+
+export default function PopoverExample() {
+  const [open, setOpen] = useState(false);
+  const [volume, setVolume] = useState(65);
+  const anchor = useRef<HTMLButtonElement>(null);
+  return (
+    <>
+      <Button ref={anchor} icon="volume" onClick={() => setOpen((v) => !v)}>
+        Громкость {volume}%
+      </Button>
+      <Popover
+        open={open}
+        onOpenChange={setOpen}
+        anchorRef={anchor}
+        label="Громкость"
+      >
+        <Stack gap={2}>
+          <Typography variant="label">Громкость</Typography>
+          <Slider value={volume} onValueChange={setVolume} label="Громкость" />
+        </Stack>
+      </Popover>
+    </>
+  );
+}
 `,Ue=`export default {\r
   name: "Popover",\r
   description: "Привязанная всплывающая поверхность",\r
   category: "navigation",\r
 } as const;\r
-`,Ge=`import { clamp, mark } from "../../../core/base";\r
-import { type ProgressBarProps } from "../shared";\r
-\r
-export const ProgressBar = (p: ProgressBarProps) => {\r
-  const max = Math.max(0.0001, p.max ?? 100);\r
-  const value = clamp(p.value ?? 56, 0, max);\r
-  return (\r
-    <div\r
-      {...mark("ProgressBar", p)}\r
-      role="progressbar"\r
-      aria-label={p.label ?? "Прогресс"}\r
-      aria-valuemin={0}\r
-      aria-valuemax={max}\r
-      aria-valuenow={p.indeterminate ? undefined : value}\r
-      data-indeterminate={p.indeterminate || undefined}\r
-    >\r
-      <span\r
-        style={{ width: p.indeterminate ? "35%" : \`\${(value / max) * 100}%\` }}\r
-      />\r
-    </div>\r
-  );\r
-};\r
-`,We=`import { Playground, U, jsx } from "../../../dev/exampleHelpers";\r
-\r
-export default function ProgressBarExample() {\r
-  return (\r
-    <Playground\r
-      stretch\r
-      knobs={{\r
-        value: { options: ["0", "35", "70", "100"], value: "35" },\r
-        indeterminate: { value: false },\r
-      }}\r
-      code={(v) =>\r
-        jsx("ProgressBar", {\r
-          label: "Обработка записи",\r
-          value: v.indeterminate ? undefined : Number(v.value),\r
-          indeterminate: v.indeterminate,\r
-        })\r
-      }\r
-    >\r
-      {(v) => (\r
-        <U.Stack gap={2}>\r
-          <U.Stack direction="row" justify="between">\r
-            <U.Typography variant="label">Обработка записи</U.Typography>\r
-            <U.Typography variant="mono" tone="muted">\r
-              {v.indeterminate ? "…" : \`\${v.value}%\`}\r
-            </U.Typography>\r
-          </U.Stack>\r
-          <U.ProgressBar\r
-            label="Обработка записи"\r
-            value={Number(v.value)}\r
-            indeterminate={v.indeterminate}\r
-          />\r
-        </U.Stack>\r
-      )}\r
-    </Playground>\r
-  );\r
-}\r
+`,Ge=`import { clamp, mark } from "../../../core/base";
+import { type ProgressBarProps } from "../shared";
+
+export const ProgressBar = (p: ProgressBarProps) => {
+  const max = Math.max(0.0001, p.max ?? 100);
+  const value = clamp(p.value ?? 56, 0, max);
+  return (
+    <div
+      {...mark("ProgressBar", p)}
+      role="progressbar"
+      aria-label={p.label ?? "Прогресс"}
+      aria-valuemin={0}
+      aria-valuemax={max}
+      aria-valuenow={p.indeterminate ? undefined : value}
+      data-indeterminate={p.indeterminate || undefined}
+    >
+      <span
+        style={{ width: p.indeterminate ? "35%" : \`\${(value / max) * 100}%\` }}
+      />
+    </div>
+  );
+};
+`,We=`import { Playground, U, jsx } from "../../../dev/exampleHelpers";
+
+export default function ProgressBarExample() {
+  return (
+    <Playground
+      stretch
+      knobs={{
+        value: { options: ["0", "35", "70", "100"], value: "35" },
+        indeterminate: { value: false },
+      }}
+      code={(v) =>
+        jsx("ProgressBar", {
+          label: "Обработка записи",
+          value: v.indeterminate ? undefined : Number(v.value),
+          indeterminate: v.indeterminate,
+        })
+      }
+    >
+      {(v) => (
+        <U.Stack gap={2}>
+          <U.Stack direction="row" justify="between">
+            <U.Typography variant="label">Обработка записи</U.Typography>
+            <U.Typography variant="mono" tone="muted">
+              {v.indeterminate ? "…" : \`\${v.value}%\`}
+            </U.Typography>
+          </U.Stack>
+          <U.ProgressBar
+            label="Обработка записи"
+            value={Number(v.value)}
+            indeterminate={v.indeterminate}
+          />
+        </U.Stack>
+      )}
+    </Playground>
+  );
+}
 `,je=`export default {\r
   name: "ProgressBar",\r
   description: "Отображение выполнения операции",\r
   category: "feedback",\r
 } as const;\r
-`,Ke=`import { mark, type Tone } from "../../../core/base";\r
-import type { StatusIndicatorProps } from "../shared";\r
-export const StatusIndicator = ({\r
-  status = "success",\r
-  ...p\r
-}: StatusIndicatorProps) => {\r
-  const labels: Record<Tone, string> = {\r
-    success: "Готово",\r
-    error: "Ошибка",\r
-    warning: "Внимание",\r
-    processing: "Обработка",\r
-    pending: "В очереди",\r
-    offline: "Не подключено",\r
-    info: "Информация",\r
-  };\r
-  return (\r
-    <span {...mark("StatusIndicator", { ...p, tone: status })}>\r
-      <span className="ad-status-dot" aria-hidden>\r
-        <i />\r
-      </span>\r
-      <span>{p.label ?? labels[status]}</span>\r
-    </span>\r
-  );\r
-};\r
-`,qe=`import { Playground, U, jsx } from "../../../dev/exampleHelpers";\r
-\r
-const statuses = [\r
-  "success",\r
-  "processing",\r
-  "pending",\r
-  "warning",\r
-  "error",\r
-  "offline",\r
-  "info",\r
-] as const;\r
-\r
-export default function StatusIndicatorExample() {\r
-  return (\r
-    <Playground\r
-      knobs={{ status: { options: statuses, value: "processing" } }}\r
-      code={(v) => jsx("StatusIndicator", { status: v.status })}\r
-    >\r
-      {(v) => <U.StatusIndicator status={v.status} />}\r
-    </Playground>\r
-  );\r
-}\r
+`,Ke=`import { mark, type Tone } from "../../../core/base";
+import type { StatusIndicatorProps } from "../shared";
+export const StatusIndicator = ({
+  status = "success",
+  ...p
+}: StatusIndicatorProps) => {
+  const labels: Record<Tone, string> = {
+    success: "Готово",
+    error: "Ошибка",
+    warning: "Внимание",
+    processing: "Обработка",
+    pending: "В очереди",
+    offline: "Не подключено",
+    info: "Информация",
+  };
+  return (
+    <span {...mark("StatusIndicator", { ...p, tone: status })}>
+      <span className="ad-status-dot" aria-hidden>
+        <i />
+      </span>
+      <span>{p.label ?? labels[status]}</span>
+    </span>
+  );
+};
+`,qe=`import { Playground, U, jsx } from "../../../dev/exampleHelpers";
+
+const statuses = [
+  "success",
+  "processing",
+  "pending",
+  "warning",
+  "error",
+  "offline",
+  "info",
+] as const;
+
+export default function StatusIndicatorExample() {
+  return (
+    <Playground
+      knobs={{ status: { options: statuses, value: "processing" } }}
+      code={(v) => jsx("StatusIndicator", { status: v.status })}
+    >
+      {(v) => <U.StatusIndicator status={v.status} />}
+    </Playground>
+  );
+}
 `,Ye=`export default {\r
   name: "StatusIndicator",\r
   description: "Готовность, обработка, очередь и ошибка",\r
   category: "feedback",\r
 } as const;\r
-`,Xe=`import { mark } from "../../../core/base";\r
-import { Icon } from "../../layout/Icon/Icon";\r
-import { type StepsProps } from "../shared";\r
-\r
-export const Steps = (p: StepsProps) => {\r
-  const steps = p.steps ?? [\r
-    "Подготовка",\r
-    "Анализ",\r
-    "Модель",\r
-    "Обработка",\r
-    "Проверка",\r
-  ];\r
-  const current = p.current ?? 3;\r
-  return (\r
-    <ol {...mark("Steps", p)}>\r
-      {steps.map((label, i) => {\r
-        const state = i < current ? "done" : i === current ? "current" : "todo";\r
-        return (\r
-          <li\r
-            key={\`\${i}-\${label}\`}\r
-            data-state={state}\r
-            aria-current={state === "current" ? "step" : undefined}\r
-          >\r
-            <span className="ad-step-node" aria-hidden>\r
-              {state === "done" ? <Icon name="check" /> : i + 1}\r
-            </span>\r
-            <span className="ad-step-label">{label}</span>\r
-          </li>\r
-        );\r
-      })}\r
-    </ol>\r
-  );\r
-};\r
-`,Ze=`import { Steps } from "@ad-voice/ui";\r
-\r
-export default function StepsExample() {\r
-  return (\r
-    <Steps\r
-      steps={["Загрузка", "Анализ", "Модель", "Обработка", "Готово"]}\r
-      current={2}\r
-    />\r
-  );\r
-}\r
+`,Xe=`import { mark } from "../../../core/base";
+import { Icon } from "../../layout/Icon/Icon";
+import { type StepsProps } from "../shared";
+
+export const Steps = (p: StepsProps) => {
+  const steps = p.steps ?? [
+    "Подготовка",
+    "Анализ",
+    "Модель",
+    "Обработка",
+    "Проверка",
+  ];
+  const current = p.current ?? 3;
+  return (
+    <ol {...mark("Steps", p)}>
+      {steps.map((label, i) => {
+        const state = i < current ? "done" : i === current ? "current" : "todo";
+        return (
+          <li
+            key={\`\${i}-\${label}\`}
+            data-state={state}
+            aria-current={state === "current" ? "step" : undefined}
+          >
+            <span className="ad-step-node" aria-hidden>
+              {state === "done" ? <Icon name="check" /> : i + 1}
+            </span>
+            <span className="ad-step-label">{label}</span>
+          </li>
+        );
+      })}
+    </ol>
+  );
+};
+`,Ze=`import { Steps } from "@ad-voice/ui";
+
+export default function StepsExample() {
+  return (
+    <Steps
+      steps={["Загрузка", "Анализ", "Модель", "Обработка", "Готово"]}
+      current={2}
+    />
+  );
+}
 `,Je=`export default {\r
   name: "Steps",\r
   description: "Этапы с завершённым, активным и ожидающим состояниями",\r
   category: "feedback",\r
   wide: true,\r
 } as const;\r
-`,Qe=`import { useEffect, useRef } from "react";\r
-import { mark } from "../../../core/base";\r
-import { Icon } from "../../layout/Icon/Icon";\r
-import { type ToastProps } from "../shared";\r
-\r
-export const Toast = ({\r
-  open = true,\r
-  duration = 3600,\r
-  onClose,\r
-  ...p\r
-}: ToastProps) => {\r
-  const close = useRef(onClose);\r
-  close.current = onClose;\r
-  useEffect(() => {\r
-    if (!open || !onClose || duration <= 0) return;\r
-    const id = window.setTimeout(() => close.current?.(), duration);\r
-    return () => clearTimeout(id);\r
-  }, [open, duration, !!onClose]);\r
-  if (!open) return null;\r
-  return (\r
-    <div\r
-      {...mark(\r
-        "Toast",\r
-        { ...p, tone: p.tone ?? "success" },\r
-        "dialog",\r
-        p.floating ? "ad-toast-floating" : undefined,\r
-      )}\r
-      role={p.tone === "error" ? "alert" : "status"}\r
-      aria-live={p.tone === "error" ? "assertive" : "polite"}\r
-    >\r
-      <span className="ad-toast-icon" aria-hidden>\r
-        <Icon\r
-          name={\r
-            p.tone === "error" || p.tone === "warning"\r
-              ? "warning"\r
-              : p.tone === "info"\r
-                ? "info"\r
-                : "check"\r
-          }\r
-        />\r
-      </span>\r
-      <span>{p.message ?? p.children ?? "Настройки сохранены"}</span>\r
-      {onClose && duration > 0 && (\r
-        <span\r
-          className="ad-toast-timer"\r
-          style={{ animationDuration: \`\${duration}ms\` }}\r
-          aria-hidden\r
-        />\r
-      )}\r
-    </div>\r
-  );\r
-};\r
-`,nr=`import { useState } from "react";\r
-import { Button, Toast } from "@ad-voice/ui";\r
-\r
-export default function ToastExample() {\r
-  const [open, setOpen] = useState(false);\r
-  return (\r
-    <>\r
-      <Button icon="save" onClick={() => setOpen(true)}>\r
-        Сохранить\r
-      </Button>\r
-      <Toast\r
-        floating\r
-        open={open}\r
-        message="Настройки сохранены"\r
-        onClose={() => setOpen(false)}\r
-      />\r
-    </>\r
-  );\r
-}\r
+`,Qe=`import { useEffect, useRef } from "react";
+import { mark } from "../../../core/base";
+import { Icon } from "../../layout/Icon/Icon";
+import { type ToastProps } from "../shared";
+
+export const Toast = ({
+  open = true,
+  duration = 3600,
+  onClose,
+  ...p
+}: ToastProps) => {
+  const close = useRef(onClose);
+  close.current = onClose;
+  useEffect(() => {
+    if (!open || !onClose || duration <= 0) return;
+    const id = window.setTimeout(() => close.current?.(), duration);
+    return () => clearTimeout(id);
+  }, [open, duration, !!onClose]);
+  if (!open) return null;
+  return (
+    <div
+      {...mark(
+        "Toast",
+        { ...p, tone: p.tone ?? "success" },
+        "dialog",
+        p.floating ? "ad-toast-floating" : undefined,
+      )}
+      role={p.tone === "error" ? "alert" : "status"}
+      aria-live={p.tone === "error" ? "assertive" : "polite"}
+    >
+      <span className="ad-toast-icon" aria-hidden>
+        <Icon
+          name={
+            p.tone === "error" || p.tone === "warning"
+              ? "warning"
+              : p.tone === "info"
+                ? "info"
+                : "check"
+          }
+        />
+      </span>
+      <span>{p.message ?? p.children ?? "Настройки сохранены"}</span>
+      {onClose && duration > 0 && (
+        <span
+          className="ad-toast-timer"
+          style={{ animationDuration: \`\${duration}ms\` }}
+          aria-hidden
+        />
+      )}
+    </div>
+  );
+};
+`,nr=`import { useState } from "react";
+import { Button, Toast } from "@ad-voice/ui";
+
+export default function ToastExample() {
+  const [open, setOpen] = useState(false);
+  return (
+    <>
+      <Button icon="save" onClick={() => setOpen(true)}>
+        Сохранить
+      </Button>
+      <Toast
+        floating
+        open={open}
+        message="Настройки сохранены"
+        onClose={() => setOpen(false)}
+      />
+    </>
+  );
+}
 `,er=`export default {\r
   name: "Toast",\r
   description: "Короткое уведомление без изменения разметки",\r
   category: "feedback",\r
 } as const;\r
-`,rr=`import type { ReactNode, RefObject, KeyboardEventHandler } from "react";
-import type { CommonProps, Tone } from "../../core/base";
-export interface DialogProps extends CommonProps {
-  open?: boolean;
-  defaultOpen?: boolean;
-  onOpenChange?: (open: boolean) => void;
-  title?: ReactNode;
-  description?: ReactNode;
-  confirmLabel?: string;
-  cancelLabel?: string | false;
-  danger?: boolean;
-  onConfirm?: () => boolean | void | Promise<boolean | void>;
+`,rr=`import {
+  cloneElement,
+  isValidElement,
+  useId,
+  useLayoutEffect,
+  useRef,
+  useState,
+  type ReactElement,
+  type ReactNode,
+} from "react";
+import { cssRem, mark, type CommonProps } from "../../../core/base";
+
+export interface TooltipProps extends CommonProps {
+  /** What the tooltip says. */
+  content: ReactNode;
+  /** The element it explains; it gets \`aria-describedby\`. */
+  children: ReactElement;
+  /** Preferred side; it flips when there is no room. */
+  placement?: "top" | "bottom";
 }
-export interface PopoverProps extends CommonProps {
-  open?: boolean;
-  onOpenChange?: (open: boolean) => void;
-  anchorRef?: RefObject<HTMLElement | null>;
-  label?: string;
-  role?: "dialog" | "menu" | "listbox";
-  onKeyDown?: KeyboardEventHandler<HTMLDivElement>;
-  align?: "start" | "end";
-  matchAnchorWidth?: boolean;
-  /** Move focus into the popover when it opens (default). Off for comboboxes that keep typing focus. */
-  autoFocus?: boolean;
+
+/**
+ * A short explanation that appears on hover or keyboard focus. It lives in the top layer, so
+ * no scrolling or clipping container can cut it off, and it flips to the side with room.
+ */
+export function Tooltip({
+  content,
+  children,
+  placement = "top",
+  ...p
+}: TooltipProps) {
+  const id = useId();
+  const trigger = useRef<HTMLSpanElement>(null);
+  const tip = useRef<HTMLSpanElement>(null);
+  const [open, setOpen] = useState(false);
+
+  useLayoutEffect(() => {
+    const node = tip.current;
+    const anchor = trigger.current?.getBoundingClientRect();
+    if (!open || !node || !anchor) return;
+    if (typeof node.showPopover === "function") node.showPopover();
+    const box = node.getBoundingClientRect();
+    const gap = 8;
+    const above =
+      placement === "top"
+        ? anchor.top > box.height + gap * 2
+        : innerHeight - anchor.bottom < box.height + gap * 2;
+    const left = Math.max(
+      gap,
+      Math.min(
+        innerWidth - box.width - gap,
+        anchor.left + anchor.width / 2 - box.width / 2,
+      ),
+    );
+    node.style.left = cssRem(left);
+    node.style.top = cssRem(
+      above ? anchor.top - box.height - gap : anchor.bottom + gap,
+    );
+    node.dataset.adSide = above ? "above" : "below";
+    return () => {
+      if (
+        typeof node.hidePopover === "function" &&
+        node.matches(":popover-open")
+      )
+        node.hidePopover();
+    };
+  }, [open, placement]);
+
+  const show = () => setOpen(true);
+  const hide = () => setOpen(false);
+  return (
+    <span
+      ref={trigger}
+      className="ad-tooltip-trigger"
+      onMouseEnter={show}
+      onMouseLeave={hide}
+      onFocus={show}
+      onBlur={hide}
+      onKeyDown={(event) => event.key === "Escape" && hide()}
+    >
+      {isValidElement(children)
+        ? cloneElement(
+            children as ReactElement<{ "aria-describedby"?: string }>,
+            {
+              "aria-describedby": id,
+            },
+          )
+        : children}
+      {open && (
+        <span
+          {...mark("Tooltip", p)}
+          ref={tip}
+          id={id}
+          role="tooltip"
+          popover="manual"
+        >
+          {content}
+        </span>
+      )}
+    </span>
+  );
 }
-export interface MenuItemData {
-  id?: string;
-  label?: string;
-  icon?: string;
-  endIcon?: string;
-  disabled?: boolean;
-  danger?: boolean;
-  separator?: boolean;
-  onSelect?: () => void;
+`,tr=`import { IconButton, Stack, Tooltip } from "@ad-voice/ui";
+
+export default function TooltipExample() {
+  return (
+    <Stack direction="row" gap={4} align="center">
+      <Tooltip content="Оценка без физической задержки колонок и микрофона">
+        <IconButton icon="info" label="Что это" variant="ghost" />
+      </Tooltip>
+      <Tooltip content="Сохранить запись" placement="bottom">
+        <IconButton icon="save" label="Сохранить" />
+      </Tooltip>
+    </Stack>
+  );
 }
-export interface MenuItemProps extends CommonProps, MenuItemData {}
-export interface MenuProps extends PopoverProps {
-  items?: MenuItemData[];
-}
-export interface ToastProps extends CommonProps {
-  message?: ReactNode;
-  open?: boolean;
-  duration?: number;
-  onClose?: () => void;
-  floating?: boolean;
-}
-export interface BadgeProps extends CommonProps {
-  label?: string;
-}
-export interface StatusIndicatorProps extends CommonProps {
-  status?: Tone;
-  label?: ReactNode;
-}
-export interface ProgressBarProps extends CommonProps {
-  value?: number;
-  max?: number;
-  label?: string;
-  indeterminate?: boolean;
-}
-export interface StepsProps extends CommonProps {
-  steps?: string[];
-  current?: number;
-}
-export interface EmptyStateProps extends CommonProps {
-  title?: string;
-  description?: string;
-  icon?: string;
-  action?: ReactNode;
-}
-export interface KeyValueListProps extends CommonProps {
-  items?: Array<[ReactNode, ReactNode]>;
-}
-/** A row of a table: named fields, or the cells in column order. */
-export type DataTableRow = Record<string, unknown> | ReactNode[];
-export interface DataTableColumn<T extends DataTableRow = DataTableRow> {
-  /** Field of the row (or the cell index for array rows). */
-  key: string;
-  title: ReactNode;
-  align?: "start" | "center" | "end";
-  width?: string;
-  /** Click the header to sort; on by default. */
-  sortable?: boolean;
-  /** Cell content; the raw field by default. */
-  render?: (row: T, index: number) => ReactNode;
-  /** What sorting and search look at; the raw field by default. */
-  value?: (row: T) => string | number;
-}
-export type DataTableSort = { key: string; direction: "asc" | "desc" };
-export interface DataTableProps<
-  T extends DataTableRow = DataTableRow,
-> extends CommonProps {
-  /** Column titles, or full column descriptions. */
-  columns?: Array<string | DataTableColumn<T>>;
-  rows?: T[];
-  caption?: ReactNode;
-  /** Stable id of a row, for selection; its index by default. */
-  rowKey?: (row: T, index: number) => string;
-  sort?: DataTableSort | null;
-  defaultSort?: DataTableSort | null;
-  onSortChange?: (sort: DataTableSort | null) => void;
-  /** Checkboxes to pick rows, with "select all" in the header. */
-  selectable?: boolean;
-  selected?: string[];
-  defaultSelected?: string[];
-  onSelectionChange?: (keys: string[]) => void;
-  /** A search field over every column. */
-  searchable?: boolean;
-  /** Rows per page; everything on one page by default. */
-  pageSize?: number;
-  /** Scroll inside the table with a sticky header beyond this height. */
-  maxHeight?: string;
-  dense?: boolean;
-  striped?: boolean;
-  /** Placeholder rows while data loads. */
-  loading?: boolean;
-  /** Shown when there are no rows (or none match the search). */
-  empty?: ReactNode;
-  onRowClick?: (row: T, index: number) => void;
-}
-export interface CollapsibleSectionProps extends CommonProps {
-  title?: string;
-  icon?: string;
-  open?: boolean;
-  defaultOpen?: boolean;
-  onOpenChange?: (open: boolean) => void;
-}
-`,tr=`import {\r
+`,or=`export default {
+  name: "Tooltip",
+  description: "Подсказка при наведении и фокусе; не обрезается контейнерами",
+  category: "feedback",
+} as const;
+`,ar=`import type { ReactNode, RefObject, KeyboardEventHandler } from "react";\r
+import type { CommonProps, Tone } from "../../core/base";\r
+export interface DialogProps extends CommonProps {\r
+  open?: boolean;\r
+  defaultOpen?: boolean;\r
+  onOpenChange?: (open: boolean) => void;\r
+  title?: ReactNode;\r
+  description?: ReactNode;\r
+  /** \`false\` (with \`cancelLabel={false}\`) leaves the dialog without a footer, e.g. for settings that apply at once. */\r
+  confirmLabel?: string | false;\r
+  cancelLabel?: string | false;\r
+  /** Icon tile beside the title. */\r
+  icon?: string;\r
+  /** Label of the close button, for localisation. */\r
+  closeLabel?: string;\r
+  danger?: boolean;\r
+  onConfirm?: () => boolean | void | Promise<boolean | void>;\r
+}\r
+export interface PopoverProps extends CommonProps {\r
+  open?: boolean;\r
+  onOpenChange?: (open: boolean) => void;\r
+  anchorRef?: RefObject<HTMLElement | null>;\r
+  label?: string;\r
+  role?: "dialog" | "menu" | "listbox";\r
+  onKeyDown?: KeyboardEventHandler<HTMLDivElement>;\r
+  align?: "start" | "end";\r
+  matchAnchorWidth?: boolean;\r
+  /** Move focus into the popover when it opens (default). Off for comboboxes that keep typing focus. */\r
+  autoFocus?: boolean;\r
+}\r
+export interface MenuItemData {\r
+  id?: string;\r
+  label?: string;\r
+  icon?: string;\r
+  endIcon?: string;\r
+  disabled?: boolean;\r
+  danger?: boolean;\r
+  separator?: boolean;\r
+  onSelect?: () => void;\r
+}\r
+export interface MenuItemProps extends CommonProps, MenuItemData {}\r
+export interface MenuProps extends PopoverProps {\r
+  items?: MenuItemData[];\r
+}\r
+export interface ToastProps extends CommonProps {\r
+  message?: ReactNode;\r
+  open?: boolean;\r
+  duration?: number;\r
+  onClose?: () => void;\r
+  floating?: boolean;\r
+}\r
+export interface BadgeProps extends CommonProps {\r
+  label?: string;\r
+}\r
+export interface MessageBarProps extends CommonProps {\r
+  /** A button or link that resolves the message, e.g. "Повторить". */\r
+  action?: ReactNode;\r
+}\r
+export interface StatusIndicatorProps extends CommonProps {\r
+  status?: Tone;\r
+  label?: ReactNode;\r
+}\r
+export interface ProgressBarProps extends CommonProps {\r
+  value?: number;\r
+  max?: number;\r
+  label?: string;\r
+  indeterminate?: boolean;\r
+}\r
+export interface StepsProps extends CommonProps {\r
+  steps?: string[];\r
+  current?: number;\r
+}\r
+export interface EmptyStateProps extends CommonProps {\r
+  title?: string;\r
+  description?: string;\r
+  icon?: string;\r
+  action?: ReactNode;\r
+}\r
+export interface KeyValueListProps extends CommonProps {\r
+  items?: Array<[ReactNode, ReactNode]>;\r
+}\r
+/** A row of a table: named fields, or the cells in column order. */\r
+export type DataTableRow = Record<string, unknown> | ReactNode[];\r
+export interface DataTableColumn<T extends DataTableRow = DataTableRow> {\r
+  /** Field of the row (or the cell index for array rows). */\r
+  key: string;\r
+  title: ReactNode;\r
+  align?: "start" | "center" | "end";\r
+  width?: string;\r
+  /** Click the header to sort; on by default. */\r
+  sortable?: boolean;\r
+  /** Cell content; the raw field by default. */\r
+  render?: (row: T, index: number) => ReactNode;\r
+  /** What sorting and search look at; the raw field by default. */\r
+  value?: (row: T) => string | number;\r
+}\r
+export type DataTableSort = { key: string; direction: "asc" | "desc" };\r
+export interface DataTableProps<\r
+  T extends DataTableRow = DataTableRow,\r
+> extends CommonProps {\r
+  /** Column titles, or full column descriptions. */\r
+  columns?: Array<string | DataTableColumn<T>>;\r
+  rows?: T[];\r
+  caption?: ReactNode;\r
+  /** Stable id of a row, for selection; its index by default. */\r
+  rowKey?: (row: T, index: number) => string;\r
+  sort?: DataTableSort | null;\r
+  defaultSort?: DataTableSort | null;\r
+  onSortChange?: (sort: DataTableSort | null) => void;\r
+  /** Checkboxes to pick rows, with "select all" in the header. */\r
+  selectable?: boolean;\r
+  selected?: string[];\r
+  defaultSelected?: string[];\r
+  onSelectionChange?: (keys: string[]) => void;\r
+  /** A search field over every column. */\r
+  searchable?: boolean;\r
+  /** Rows per page; everything on one page by default. */\r
+  pageSize?: number;\r
+  /** Scroll inside the table with a sticky header beyond this height. */\r
+  maxHeight?: string;\r
+  dense?: boolean;\r
+  striped?: boolean;\r
+  /** Placeholder rows while data loads. */\r
+  loading?: boolean;\r
+  /** Shown when there are no rows (or none match the search). */\r
+  empty?: ReactNode;\r
+  onRowClick?: (row: T, index: number) => void;\r
+}\r
+export interface CollapsibleSectionProps extends CommonProps {\r
+  title?: string;\r
+  icon?: string;\r
+  open?: boolean;\r
+  defaultOpen?: boolean;\r
+  onOpenChange?: (open: boolean) => void;\r
+}\r
+`,sr=`import {\r
   createContext,\r
   useContext,\r
   useEffect,\r
@@ -5789,7 +5946,7 @@ export function useFormContext<T extends Record<string, unknown>>() {\r
   if (!value) throw new Error("useFormContext must be used inside <Form>");\r
   return value as FormApi<T>;\r
 }\r
-`,or=`import { Button, Stack, TextField } from "@ad-voice/ui";\r
+`,ir=`import { Button, Stack, TextField } from "@ad-voice/ui";\r
 import { Form, useForm } from "@ad-voice/ui/forms";\r
 \r
 export default function FormExample() {\r
@@ -5817,13 +5974,13 @@ export default function FormExample() {\r
     </Form>\r
   );\r
 }\r
-`,ar=`export default {\r
+`,lr=`export default {\r
   name: "Form",\r
   description:\r
     "Typed form state, validation, submit and field bindings without coupling controls to Formik.",\r
   category: "fields",\r
 };\r
-`,sr=`import { type ComponentType, type ReactNode } from "react";\r
+`,cr=`import { type ComponentType, type ReactNode } from "react";\r
 import { Grid, type GridResponsive } from "../../layout/Grid/Grid";\r
 import { TextField } from "../../controls/TextField/TextField";\r
 import { NumberField } from "../../controls/NumberField/NumberField";\r
@@ -5915,7 +6072,7 @@ function Slot<T extends Record<string, unknown>>({\r
     </Grid>\r
   );\r
 }\r
-`,ir=`import { Button, Stack } from "@ad-voice/ui";\r
+`,dr=`import { Button, Stack } from "@ad-voice/ui";\r
 import {\r
   Form,\r
   FormFields,\r
@@ -5969,14 +6126,14 @@ export default function FormFieldsExample() {\r
     </Form>\r
   );\r
 }\r
-`,lr=`export default {\r
+`,pr=`export default {\r
   name: "FormFields",\r
   description:\r
     "Declarative field schema renderer with registry, conditional visibility and responsive Grid spans.",\r
   category: "fields",\r
   wide: true,\r
 };\r
-`,cr=`import { type CommonProps, type TokenStyle } from "../../../core/base";
+`,ur=`import { type CommonProps, type TokenStyle } from "../../../core/base";
 
 /** Ready colour pairs: [primary, secondary]. Everything else is derived from the pair. */
 export const themes = {
@@ -6054,7 +6211,7 @@ export const ThemeProvider = ({
     </div>
   );
 };
-`,dr=`import { useEffect } from "react";
+`,mr=`import { useEffect } from "react";
 import { Playground, U, jsx, useSiteTheme } from "../../../dev/exampleHelpers";
 
 const names = ["ruby", "light", "green", "violet"] as const;
@@ -6102,14 +6259,14 @@ export default function ThemeProviderExample() {
     </Playground>
   );
 }
-`,pr=`export default {
+`,fr=`export default {
   name: "ThemeProvider",
   description:
     "Тема и цветовые токены; находится рядом с типографикой как часть foundation.",
   category: "typography",
   wide: true,
 };
-`,ur=`import { createElement } from "react";\r
+`,gr=`import { createElement } from "react";\r
 import type { CSSProperties, ElementType, ReactNode } from "react";\r
 import { mark, type CommonProps } from "../../../core/base";\r
 \r
@@ -6181,7 +6338,7 @@ export function Typography({\r
     children ?? text,\r
   );\r
 }\r
-`,mr=`import { Grid, Stack, Typography } from "@ad-voice/ui";\r
+`,vr=`import { Grid, Stack, Typography } from "@ad-voice/ui";\r
 \r
 const headings = [\r
   ["display", "Neo UI"],\r
@@ -6233,14 +6390,14 @@ export default function TypographyExample() {\r
     </Stack>\r
   );\r
 }\r
-`,fr=`export default {\r
+`,hr=`export default {\r
   name: "Typography",\r
   description:\r
     "Единая шкала шрифтов, заголовков, подписей, цветов и весов текста",\r
   category: "typography",\r
   wide: true,\r
 } as const;\r
-`,gr=`import { mark } from "../../../core/base";\r
+`,br=`import { mark } from "../../../core/base";\r
 import { type AvatarProps } from "../shared";\r
 import { HostSeal } from "./HostSeal";\r
 \r
@@ -6258,7 +6415,7 @@ export const Avatar = ({ variant = "initials", ...p }: AvatarProps) => (\r
     )}\r
   </div>\r
 );\r
-`,vr=`import { useRef } from "react";\r
+`,yr=`import { useRef } from "react";\r
 import { SvgAsset } from "../../../core/artwork";\r
 import { useDecoration } from "../../../core/motion/hooks";\r
 import { illustrations } from "../shared";\r
@@ -6285,7 +6442,7 @@ export function HostSeal() {\r
     </span>\r
   );\r
 }\r
-`,hr=`import { Playground, U, jsx, sizes } from "../../../dev/exampleHelpers";\r
+`,xr=`import { Playground, U, jsx, sizes } from "../../../dev/exampleHelpers";\r
 \r
 export default function AvatarExample() {\r
   return (\r
@@ -6306,12 +6463,12 @@ export default function AvatarExample() {\r
     </Playground>\r
   );\r
 }\r
-`,br=`export default {\r
+`,kr=`export default {\r
   name: "Avatar",\r
   description: "Инициалы в неоновом кольце или анимированная печать ведущего с короной",\r
   category: "typography",\r
 } as const;\r
-`,yr=`import { mark, type CommonProps } from "../../../core/base";\r
+`,_r=`import { mark, type CommonProps } from "../../../core/base";\r
 import { SvgAsset } from "../../../core/artwork";\r
 import { illustrations } from "../shared";\r
 \r
@@ -6321,20 +6478,20 @@ export const BrandMark = (p: CommonProps) => (\r
     <small>KARAOKE STUDIO</small>\r
   </div>\r
 );\r
-`,xr=`import { BrandMark } from "@ad-voice/ui";\r
+`,wr=`import { BrandMark } from "@ad-voice/ui";\r
 \r
 export default function BrandMarkExample() {\r
   return <BrandMark />;\r
 }\r
-`,kr=`export default {\r
+`,Sr=`export default {\r
   name: "BrandMark",\r
   description: "Фирменная надпись и подпись студии",\r
   category: "typography",\r
 } as const;\r
-`,_r=`import { part } from "../../../core/base";\r
+`,Pr=`import { part } from "../../../core/base";\r
 \r
 export const ButtonGroup = part("ButtonGroup", "div");\r
-`,wr=`import { Playground, U, jsx, sizes } from "../../../dev/exampleHelpers";\r
+`,Tr=`import { Playground, U, jsx, sizes } from "../../../dev/exampleHelpers";\r
 \r
 export default function ButtonGroupExample() {\r
   return (\r
@@ -6372,12 +6529,12 @@ export default function ButtonGroupExample() {\r
     </Playground>\r
   );\r
 }\r
-`,Sr=`export default {\r
+`,Cr=`export default {\r
   name: "ButtonGroup",\r
   description: "Согласованная группа кнопок",\r
   category: "buttons",\r
 } as const;\r
-`,Pr=`import React, { createElement, useRef } from "react";\r
+`,Rr=`import React, { createElement, useRef } from "react";\r
 import { mark } from "../../../core/base";\r
 import { useBorder } from "../../../core/motion/hooks";\r
 import { Header } from "../Header/Header";\r
@@ -6436,7 +6593,7 @@ export const Card = ({\r
     children,\r
   );\r
 };\r
-`,Tr=`import { Playground, U, jsx } from "../../../dev/exampleHelpers";\r
+`,Mr=`import { Playground, U, jsx } from "../../../dev/exampleHelpers";\r
 \r
 const materials = ["card", "glass", "ruby", "tile", "shell"] as const;\r
 \r
@@ -6476,17 +6633,17 @@ export default function CardExample() {\r
     </Playground>\r
   );\r
 }\r
-`,Cr=`export default {
+`,Er=`export default {
   name: "Card",
   description:
     "Единая поверхность: card/glass/ruby/tile/shell через material и анимированная рамка через border.",
   category: "layout",
   wide: true,
 };
-`,Rr=`import { part } from "../../../core/base";\r
+`,Ar=`import { part } from "../../../core/base";\r
 \r
 export const DialogActions = part("DialogActions", "footer");\r
-`,Mr=`import { Button, DialogActions } from "@ad-voice/ui";\r
+`,Br=`import { Button, DialogActions } from "@ad-voice/ui";\r
 \r
 /** Footer row of a dialog; Dialog renders one for you, use it in custom dialogs. */\r
 export default function DialogActionsExample() {\r
@@ -6497,15 +6654,15 @@ export default function DialogActionsExample() {\r
     </DialogActions>\r
   );\r
 }\r
-`,Er=`export default {\r
+`,Ir=`export default {\r
   name: "DialogActions",\r
   description: "Группа действий внизу диалога",\r
   category: "layout",\r
 } as const;\r
-`,Ar=`import { part } from "../../../core/base";\r
+`,Nr=`import { part } from "../../../core/base";\r
 \r
 export const DialogBody = part("DialogBody", "div");\r
-`,Br=`import { DialogBody, TextField } from "@ad-voice/ui";\r
+`,zr=`import { DialogBody, TextField } from "@ad-voice/ui";\r
 \r
 /** Content area of a dialog with the standard spacing. */\r
 export default function DialogBodyExample() {\r
@@ -6515,12 +6672,12 @@ export default function DialogBodyExample() {\r
     </DialogBody>\r
   );\r
 }\r
-`,Ir=`export default {\r
+`,Lr=`export default {\r
   name: "DialogBody",\r
   description: "Область содержимого диалога",\r
   category: "layout",\r
 } as const;\r
-`,Nr=`import { mark } from "../../../core/base";\r
+`,Fr=`import { mark } from "../../../core/base";\r
 import { type DividerProps } from "../shared";\r
 \r
 export const Divider = (p: DividerProps) => (\r
@@ -6530,7 +6687,7 @@ export const Divider = (p: DividerProps) => (\r
     aria-orientation={p.vertical ? "vertical" : "horizontal"}\r
   />\r
 );\r
-`,zr=`import { Divider, Stack, Typography } from "@ad-voice/ui";\r
+`,Dr=`import { Divider, Stack, Typography } from "@ad-voice/ui";\r
 \r
 export default function DividerExample() {\r
   return (\r
@@ -6545,12 +6702,12 @@ export default function DividerExample() {\r
     </Stack>\r
   );\r
 }\r
-`,Lr=`export default {\r
+`,Vr=`export default {\r
   name: "Divider",\r
   description: "Разделитель по горизонтали или вертикали",\r
   category: "layout",\r
 } as const;\r
-`,Fr=`import type { ElementType, HTMLAttributes } from "react";
+`,Hr=`import type { ElementType, HTMLAttributes } from "react";
 import { classes } from "../../../core/base";
 import {
   responsiveVars,
@@ -6672,7 +6829,7 @@ export function Grid({
     />
   );
 }
-`,Dr=`import { Card, Grid } from "@ad-voice/ui";
+`,Or=`import { Card, Grid } from "@ad-voice/ui";
 
 export default function GridExample() {
   return (
@@ -6693,13 +6850,13 @@ export default function GridExample() {
     </Grid>
   );
 }
-`,Vr=`export default {
+`,$r=`export default {
   name: "Grid",
   description: "Responsive CSS Grid для колонок, span и auto-fit раскладок",
   category: "layout",
   wide: true,
 } as const;
-`,Hr=`import { mark } from "../../../core/base";\r
+`,Ur=`import { mark } from "../../../core/base";\r
 import { Icon } from "../Icon/Icon";\r
 import {\r
   Typography,\r
@@ -6754,7 +6911,7 @@ export const Header = ({\r
     </Component>\r
   );\r
 };\r
-`,$r=`import { Playground, U, jsx } from "../../../dev/exampleHelpers";\r
+`,Gr=`import { Playground, U, jsx } from "../../../dev/exampleHelpers";\r
 \r
 export default function HeaderExample() {\r
   return (\r
@@ -6791,12 +6948,12 @@ export default function HeaderExample() {\r
     </Playground>\r
   );\r
 }\r
-`,Or=`export default {\r
+`,Wr=`export default {\r
   name: "Header",\r
   description: "Единый заголовок для страницы, секции, карточки и диалога.",\r
   category: "layout",\r
 };\r
-`,Ur=`import React from "react";\r
+`,jr=`import React from "react";\r
 import { mark } from "../../../core/base";\r
 import { SvgAsset } from "../../../core/artwork";\r
 import { icons, type IconProps } from "../shared";\r
@@ -6828,7 +6985,7 @@ export const Icon = ({\r
     />\r
   </span>\r
 );\r
-`,Gr=`import { Compare, Playground, U, jsx } from "../../../dev/exampleHelpers";\r
+`,Kr=`import { Compare, Playground, U, jsx } from "../../../dev/exampleHelpers";\r
 \r
 const names = ["mic", "headphones", "music", "wave", "settings", "trash"];\r
 \r
@@ -6865,13 +7022,13 @@ export default function IconExample() {\r
     </Playground>\r
   );\r
 }\r
-`,Wr=`export default {\r
+`,qr=`export default {\r
   name: "Icon",\r
   description:\r
     'Иконка; surface="tile" добавляет контейнер вместо отдельного IconTile.',\r
   category: "typography",\r
 };\r
-`,jr=`import { mark } from "../../../core/base";\r
+`,Yr=`import { mark } from "../../../core/base";\r
 import { SvgAsset } from "../../../core/artwork";\r
 import { illustrations } from "../shared";\r
 import type { IllustrationProps } from "../shared";\r
@@ -6894,7 +7051,7 @@ export const Illustration = ({\r
     />\r
   </div>\r
 );\r
-`,Kr=`import { Grid, Illustration } from "@ad-voice/ui";\r
+`,Xr=`import { Grid, Illustration } from "@ad-voice/ui";\r
 \r
 const height = { height: "clamp(9rem, 26dvh, 15rem)" };\r
 \r
@@ -6906,13 +7063,13 @@ export default function IllustrationExample() {\r
     </Grid>\r
   );\r
 }\r
-`,qr=`export default {
+`,Zr=`export default {
   name: "Illustration",
   description: "SVG-иллюстрация; framed заменяет отдельный ArtworkFrame.",
   category: "layout",
   wide: true,
 };
-`,Yr=`import { useRef } from "react";\r
+`,Jr=`import { useRef } from "react";\r
 import { mark } from "../../../core/base";\r
 import { useSmoothWheel } from "../../../core/motion/hooks";\r
 import { type ScrollAreaProps } from "../shared";\r
@@ -6937,7 +7094,7 @@ export function ScrollArea(p: ScrollAreaProps) {\r
     </div>\r
   );\r
 }\r
-`,Xr=`import { Badge, ScrollArea, Stack, Typography } from "@ad-voice/ui";\r
+`,Qr=`import { Badge, ScrollArea, Stack, Typography } from "@ad-voice/ui";\r
 \r
 export default function ScrollAreaExample() {\r
   return (\r
@@ -6953,12 +7110,12 @@ export default function ScrollAreaExample() {\r
     </ScrollArea>\r
   );\r
 }\r
-`,Zr=`export default {\r
+`,nt=`export default {\r
   name: "ScrollArea",\r
   description: "Прокрутка с согласованным оформлением",\r
   category: "layout",\r
 } as const;\r
-`,Jr=`import { Children, Fragment } from "react";
+`,et=`import { Children, Fragment } from "react";
 import type { ElementType, HTMLAttributes, ReactNode, Ref } from "react";
 import { classes } from "../../../core/base";
 import {
@@ -7045,7 +7202,7 @@ export function Stack({
     </Component>
   );
 }
-`,Qr=`import { Button, Stack } from "@ad-voice/ui";
+`,rt=`import { Button, Stack } from "@ad-voice/ui";
 
 /** Column on phones, row from md: one prop instead of media queries. */
 export default function StackExample() {
@@ -7063,14 +7220,14 @@ export default function StackExample() {
     </Stack>
   );
 }
-`,nt=`export default {
+`,tt=`export default {
   name: "Stack",
   description:
     "Flex-layout для вертикальных и горизонтальных групп с responsive-настройками",
   category: "layout",
   wide: true,
 } as const;
-`,et=`import { mark } from "../../../core/base";\r
+`,ot=`import { mark } from "../../../core/base";\r
 import { type TabPanelProps } from "../shared";\r
 \r
 export const TabPanel = (p: TabPanelProps) => (\r
@@ -7087,7 +7244,7 @@ export const TabPanel = (p: TabPanelProps) => (\r
     </div>\r
   </div>\r
 );\r
-`,rt=`import { TabPanel, Typography } from "@ad-voice/ui";\r
+`,at=`import { TabPanel, Typography } from "@ad-voice/ui";\r
 \r
 /** Content of one tab; pair it with Tabs (see the Tabs page for the full pattern). */\r
 export default function TabPanelExample() {\r
@@ -7099,12 +7256,12 @@ export default function TabPanelExample() {\r
     </TabPanel>\r
   );\r
 }\r
-`,tt=`export default {\r
+`,st=`export default {\r
   name: "TabPanel",\r
   description: "Содержимое выбранной вкладки",\r
   category: "navigation",\r
 } as const;\r
-`,ot=`import { createElement } from "react";\r
+`,it=`import { createElement } from "react";\r
 import { mark } from "../../../core/base";\r
 import { type TextProps } from "../shared";\r
 \r
@@ -7114,7 +7271,7 @@ export const Text = ({ as = "span", ...p }: TextProps) =>\r
     { ...mark("Text", p), "data-ad-variant": p.variant },\r
     p.children ?? p.text,\r
   );\r
-`,at=`import { Stack, Text } from "@ad-voice/ui";\r
+`,lt=`import { Stack, Text } from "@ad-voice/ui";\r
 \r
 /** Lightweight text; Typography covers the full type scale. */\r
 export default function TextExample() {\r
@@ -7129,15 +7286,15 @@ export default function TextExample() {\r
     </Stack>\r
   );\r
 }\r
-`,st=`export default {\r
+`,ct=`export default {\r
   name: "Text",\r
   description: "Иерархия заголовков, подписей и описаний",\r
   category: "typography",\r
 } as const;\r
-`,it=`import { part } from "../../../core/base";\r
+`,dt=`import { part } from "../../../core/base";\r
 \r
 export const Toolbar = part("Toolbar", "div");\r
-`,lt=`import {\r
+`,pt=`import {\r
   Button,\r
   ButtonGroup,\r
   Divider,\r
@@ -7168,13 +7325,13 @@ export default function ToolbarExample() {\r
     </Toolbar>\r
   );\r
 }\r
-`,ct=`export default {
+`,ut=`export default {
   name: "Toolbar",
   description: "Группы инструментов в общей панели",
   category: "layout",
   wide: true,
 } as const;
-`,dt=`import type { ElementType, ReactNode } from "react";\r
+`,mt=`import type { ElementType, ReactNode } from "react";\r
 import {\r
   type CommonProps,\r
   type Material,\r
@@ -7240,7 +7397,7 @@ export interface IllustrationProps extends CommonProps {\r
   framed?: boolean;\r
   fit?: "contain" | "cover";\r
 }\r
-`,pt=`import { useEffect, useRef, useState } from "react";
+`,ft=`import { useEffect, useRef, useState } from "react";
 import { clamp, mark, timeText, useControllable } from "../../../core/base";
 import { IconButton } from "../../controls/IconButton/IconButton";
 import { Slider } from "../../controls/Slider/Slider";
@@ -7368,19 +7525,19 @@ export const AudioPlayer = (p: AudioPlayerProps) => {
     </div>
   );
 };
-`,ut=`import { AudioPlayer } from "@ad-voice/ui";
+`,gt=`import { AudioPlayer } from "@ad-voice/ui";
 
 /** Pass \`src\` to play a file; without it the player shows its timeline only. */
 export default function AudioPlayerExample() {
   return <AudioPlayer duration={51} defaultVolume={0.7} />;
 }
-`,mt=`export default {\r
+`,vt=`export default {\r
   name: "AudioPlayer",\r
   description: "Воспроизведение, позиция, время и звук",\r
   category: "audio",\r
   wide: true,\r
 } as const;\r
-`,ft=`import { useSvgId } from "../../../core/artwork";
+`,ht=`import { useSvgId } from "../../../core/artwork";
 import { useEffect, useRef } from "react";
 import { clamp, mark } from "../../../core/base";
 import { type LevelMeterProps } from "../shared";
@@ -7516,7 +7673,7 @@ export function LevelMeter({
     </div>
   );
 }
-`,gt=`import { useEffect, useState } from "react";
+`,bt=`import { useEffect, useState } from "react";
 import { Playground, U, expr, jsx } from "../../../dev/exampleHelpers";
 
 /** A voice-like level: syllables rise and fall, with short pauses between phrases. */
@@ -7594,12 +7751,17 @@ export default function LevelMeterExample() {
     </Playground>
   );
 }
-`,vt=`export default {
+`,yt=`export default {
   name: "LevelMeter",
   description: "Живой уровень сигнала: бегущая зеркальная волна, слушает микрофон сам",
   category: "audio",
 } as const;
-`,ht=`import React, {
+`,xt=`import {
+  canPaint,
+  createResizeObserver,
+  reducedMotionQuery,
+} from "../../../core/environment";
+import React, {
   useEffect,
   useLayoutEffect,
   useMemo,
@@ -7649,10 +7811,13 @@ export const RotaryKnob = (p: RotaryKnobProps) => {
     const control = controlRef.current!;
     if (!root || !canvas || !rotor || !feedback || !readout || !control) return;
 
-    const rotorCtx = rotor.getContext("2d")!;
-    const feedbackCtx = feedback.getContext("2d")!;
-    const ctx = canvas.getContext("2d", { alpha: true })!;
-    if (!rotorCtx || !feedbackCtx || !ctx) return;
+    // Without a 2D canvas (tests, server rendering) only the painting is skipped; the value,
+    // keys, wheel and typed input keep working.
+    const paintable = canPaint();
+    const rotorCtx = (paintable ? rotor.getContext("2d") : null)!;
+    const feedbackCtx = (paintable ? feedback.getContext("2d") : null)!;
+    const ctx = (paintable ? canvas.getContext("2d", { alpha: true }) : null)!;
+    const painted = Boolean(rotorCtx && feedbackCtx && ctx);
 
     const TAU = Math.PI * 2;
     const localClamp = (value: number, min = 0, max = 1) =>
@@ -7668,7 +7833,7 @@ export const RotaryKnob = (p: RotaryKnobProps) => {
       startAngle + (value * sweepAngle) / 100;
     const initialAngle = valueAngle(defaultValue);
     const degrees = 180 / Math.PI;
-    const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)");
+    const reducedMotion = reducedMotionQuery();
     const listeners = new AbortController();
     let value = defaultValue;
     let visualValue = value;
@@ -7691,7 +7856,7 @@ export const RotaryKnob = (p: RotaryKnobProps) => {
     let disposed = false;
 
     function render() {
-      if (disposed) return;
+      if (disposed || !painted) return;
       const cssSize = root.getBoundingClientRect().width;
       const size = Math.round(
         Math.min(
@@ -7989,7 +8154,7 @@ export const RotaryKnob = (p: RotaryKnobProps) => {
     }
 
     function paintFeedback() {
-      if (!feedbackCtx || !feedback.width || disposed) return;
+      if (!painted || !feedback.width || disposed) return;
       const scale = feedback.width * 0.445;
       const start = (startAngle - 90) / degrees;
       const end = (valueAngle(visualValue) - 90) / degrees;
@@ -8354,7 +8519,7 @@ export const RotaryKnob = (p: RotaryKnobProps) => {
     window.addEventListener("resize", scheduleRender, {
       signal: listeners.signal,
     });
-    const observer = new ResizeObserver(scheduleRender);
+    const observer = createResizeObserver(scheduleRender);
     observer.observe(root);
 
     controllerRef.current = {
@@ -8501,7 +8666,7 @@ export const RotaryKnob = (p: RotaryKnobProps) => {
     </div>
   );
 };
-`,bt=`import { Playground, U, expr, jsx, sizes } from "../../../dev/exampleHelpers";
+`,kt=`import { Playground, U, expr, jsx, sizes } from "../../../dev/exampleHelpers";
 
 export default function RotaryKnobExample() {
   return (
@@ -8534,13 +8699,13 @@ export default function RotaryKnobExample() {
     </Playground>
   );
 }
-`,yt=`export default {\r
+`,_t=`export default {\r
   name: "RotaryKnob",\r
   description:\r
     "Студийная ручка: вращение, клик по шкале, ввод числа, колесо и клавиши",\r
   category: "audio",\r
 } as const;\r
-`,xt=`import { useSvgId } from "../../../core/artwork";
+`,wt=`import { useSvgId } from "../../../core/artwork";
 import { type CSSProperties } from "react";
 import { mark } from "../../../core/base";
 import { type SparklineProps } from "../shared";
@@ -8588,7 +8753,7 @@ export const Sparkline = (p: SparklineProps) => {
     </svg>
   );
 };
-`,kt=`import { Sparkline, Stack, Typography } from "@ad-voice/ui";
+`,St=`import { Sparkline, Stack, Typography } from "@ad-voice/ui";
 
 export default function SparklineExample() {
   return (
@@ -8601,12 +8766,12 @@ export default function SparklineExample() {
     </Stack>
   );
 }
-`,_t=`export default {\r
+`,Pt=`export default {\r
   name: "Sparkline",\r
   description: "Небольшой график без осей",\r
   category: "audio",\r
 } as const;\r
-`,wt=`import { useSvgId } from "../../../core/artwork";
+`,Tt=`import { useSvgId } from "../../../core/artwork";
 import { useRef } from "react";
 import { mark, type CommonProps } from "../../../core/base";
 import { useDecoration } from "../../../core/motion/hooks";
@@ -8666,18 +8831,18 @@ export const WaveDecoration = (p: CommonProps) => {
     </svg>
   );
 };
-`,St=`import { WaveDecoration } from "@ad-voice/ui";
+`,Ct=`import { WaveDecoration } from "@ad-voice/ui";
 
 /** Decorative animated waves for hero areas; hidden from assistive tech. */
 export default function WaveDecorationExample() {
   return <WaveDecoration />;
 }
-`,Pt=`export default {\r
+`,Rt=`export default {\r
   name: "WaveDecoration",\r
   description: "Декоративные линии с меняющейся формой",\r
   category: "motion",\r
 } as const;\r
-`,Tt=`import { useSvgId } from "../../../core/artwork";
+`,Mt=`import { useSvgId } from "../../../core/artwork";
 import { useEffect, useMemo, useRef, useState, type PointerEvent } from "react";
 import { clamp, mark, timeText, useControllable } from "../../../core/base";
 import { seeded } from "../../../core/noise";
@@ -8996,7 +9161,7 @@ export function Waveform({
     </div>
   );
 }
-`,Ct=`import { useEffect, useState } from "react";
+`,Et=`import { useEffect, useState } from "react";
 import { Playground, U, expr, jsx } from "../../../dev/exampleHelpers";
 
 const DURATION = 231;
@@ -9072,12 +9237,12 @@ export default function WaveformExample() {
     </Playground>
   );
 }
-`,Rt=`export default {\r
+`,At=`export default {\r
   name: "Waveform",\r
   description: "Геометрия сигнала и позиция воспроизведения",\r
   category: "audio",\r
 } as const;\r
-`,Mt=`import { useEffect, useState } from "react";\r
+`,Bt=`import { useEffect, useState } from "react";\r
 \r
 /** Per slice of the track: the loudest sample (peak) and the average loudness (RMS), 0..1. */\r
 export interface WaveformData {\r
@@ -9140,7 +9305,7 @@ export function useWaveformPeaks(src?: string | Blob | null, bins = 600) {\r
   }, [src, bins]);\r
   return src ? data : null;\r
 }\r
-`,Et=`import type { CommonProps } from "../../core/base";\r
+`,It=`import type { CommonProps } from "../../core/base";\r
 export interface WaveformProps extends CommonProps {\r
   duration?: number;\r
   position?: number;\r
@@ -9201,7 +9366,7 @@ export interface SparklineProps extends CommonProps {\r
   color?: string;\r
   label?: string;\r
 }\r
-`,At=`import {\r
+`,Nt=`import {\r
   createContext,\r
   useContext,\r
   useEffect,\r
@@ -9328,7 +9493,7 @@ export function useRouter() {\r
   if (!value) throw new Error("useRouter must be used inside <Router>");\r
   return value;\r
 }\r
-`,Bt=`import { Typography } from "@ad-voice/ui";\r
+`,zt=`import { Typography } from "@ad-voice/ui";\r
 import { matchRoute, type RouteDefinition } from "@ad-voice/ui/router";\r
 \r
 const routes: RouteDefinition[] = [\r
@@ -9346,13 +9511,13 @@ export default function RouterExample() {\r
     </Typography>\r
   );\r
 }\r
-`,It=`export default {
+`,Lt=`export default {
   name: "Router",
   description:
     "Typed universal routing with params, redirects and an optional access predicate — without project-specific role keys.",
   category: "navigation",
 };
-`,Nt=`export {\r
+`,Ft=`export {\r
   ThemeProvider,\r
   themes,\r
 } from "./components/foundation/ThemeProvider/ThemeProvider";\r
@@ -9368,7 +9533,7 @@ export {\r
   useTabShape,\r
 } from "./core/motion/hooks";\r
 export { getMotionStats } from "./core/motion-engine.js";\r
-`,zt=`import React, { createElement, useId, useMemo } from "react";
+`,Dt=`import React, { createElement, useId, useMemo } from "react";
 
 /** React's id made safe for SVG references such as \`url(#id)\`. */
 export const useSvgId = () => useId().replace(/[^a-zA-Z0-9_-]/g, "");
@@ -9429,212 +9594,251 @@ export function SvgAsset({
     ...(component ? { "data-ad-component": component } : {}),
   });
 }
-`,Lt=`import { createElement, useCallback, useRef, useState } from "react";\r
-import type { CSSProperties, ReactNode, Ref } from "react";\r
+`,Vt=`import { createElement, useCallback, useRef, useState } from "react";
+import type { AriaRole, CSSProperties, ReactNode, Ref } from "react";
+
+export type Material =
+  | "shell"
+  | "card"
+  | "glass"
+  | "ruby"
+  | "tile"
+  | "input"
+  | "dialog"
+  | "ghost"
+  | "danger";
+export type Variant = "primary" | "secondary" | "ghost" | "danger";
+export type ControlSize = "xs" | "sm" | "md" | "lg";
+export type LegacySize = "small" | "medium" | "large";
+export type Size = ControlSize | LegacySize;
+export type Tone =
+  | "success"
+  | "warning"
+  | "error"
+  | "processing"
+  | "pending"
+  | "offline"
+  | "info";
+export type TokenStyle = CSSProperties & {
+  [key: \`--\${string}\`]: string | number | undefined;
+};
+export interface CommonProps {
+  children?: ReactNode;
+  className?: string;
+  style?: TokenStyle;
+  id?: string;
+  material?: Material;
+  size?: Size;
+  tone?: Tone;
+  /** Accessibility and test hooks reach the root element of every component. */
+  role?: AriaRole;
+  "aria-label"?: string;
+  "aria-labelledby"?: string;
+  "aria-describedby"?: string;
+  "aria-live"?: "off" | "polite" | "assertive";
+  [data: \`data-\${string}\`]: string | number | boolean | undefined;
+}
+export interface VectorNode {
+  tag: string;
+  props?: Record<string, unknown>;
+  children?: Array<VectorNode | string>;
+}
+
+export function classes(...values: (string | undefined | false)[]): string {
+  return values.filter(Boolean).join(" ");
+}
+export function normalizeSize(size?: Size): ControlSize | undefined {
+  if (!size) return undefined;
+  return (
+    ({ small: "sm", medium: "md", large: "lg" } as const)[size as LegacySize] ??
+    (size as ControlSize)
+  );
+}
+
+/** Root attributes shared by every component: \`ad ad-<kebab-name>\` class and data-ad-* hooks for CSS. */
+export function mark(
+  name: string,
+  p: CommonProps,
+  material?: Material,
+  extra?: string,
+) {
+  const passed: Record<string, unknown> = {};
+  for (const key in p)
+    if (key === "role" || key.startsWith("aria-") || key.startsWith("data-"))
+      passed[key] = p[key as keyof CommonProps];
+  return {
+    ...passed,
+    id: p.id,
+    className: classes(
+      "ad",
+      "ad-" +
+        name.replace(/[A-Z]/g, (v, i) => (i ? "-" : "") + v.toLowerCase()),
+      extra,
+      p.className,
+    ),
+    style: p.style,
+    "data-ad-component": name,
+    "data-ad-material": p.material ?? material,
+    "data-ad-size": normalizeSize(p.size),
+    "data-ad-tone": p.tone,
+  };
+}
+
+/** Plain structural element with the standard component marks. */
+export function part(name: string, tag: "header" | "div" | "footer") {
+  const Part = (p: CommonProps) =>
+    createElement(tag, mark(name, p), p.children);
+  Part.displayName = name;
+  return Part;
+}
+
+export function useControllable<T>(
+  value: T | undefined,
+  initial: T,
+  onChange?: (value: T) => void,
+) {
+  const [internal, setInternal] = useState(initial);
+  const current = value === undefined ? internal : value;
+  const latest = useRef({ current, value, onChange });
+  latest.current = { current, value, onChange };
+  const update = useCallback((next: T | ((value: T) => T)) => {
+    const old = latest.current;
+    const resolved =
+      typeof next === "function"
+        ? (next as (value: T) => T)(old.current)
+        : next;
+    if (old.value === undefined) setInternal(resolved);
+    if (!Object.is(resolved, old.current)) old.onChange?.(resolved);
+    latest.current.current = resolved;
+  }, []);
+  return [current, update] as const;
+}
+export function assignRef<T>(ref: Ref<T> | undefined, value: T | null) {
+  if (typeof ref === "function") ref(value);
+  else if (ref) (ref as { current: T | null }).current = value;
+}
+export const clamp = (v: number, min = 0, max = 100) =>
+  Math.max(min, Math.min(max, Number.isFinite(v) ? v : min));
+export const cssRem = (value: number) =>
+  \`\${value / (parseFloat(getComputedStyle(document.documentElement).fontSize) || 16)}rem\`;
+export const timeText = (value: number) =>
+  \`\${Math.floor(Math.max(0, value) / 60)}:\${String(Math.floor(Math.max(0, value)) % 60).padStart(2, "0")}\`;
+export async function copyText(text: string): Promise<boolean> {
+  try {
+    await navigator.clipboard.writeText(text);
+    return true;
+  } catch {
+    const field = document.createElement("textarea");
+    field.value = text;
+    field.style.cssText = "position:fixed;left:-100vw;top:0";
+    const focus = document.activeElement as HTMLElement | null;
+    document.body.append(field);
+    field.select();
+    try {
+      return document.execCommand("copy");
+    } catch {
+      return false;
+    } finally {
+      field.remove();
+      focus?.focus();
+    }
+  }
+}
+export function downloadFile(
+  name: string,
+  content: string,
+  type = "application/json",
+) {
+  const url = URL.createObjectURL(new Blob([content], { type }));
+  const link = document.createElement("a");
+  link.download = name;
+  link.href = url;
+  link.click();
+  window.setTimeout(() => URL.revokeObjectURL(url), 1500);
+}
+
+/** Spreads a ring of light from the pointer inside \`host\` (which should clip its overflow). */
+export function ripple(host: HTMLElement, clientX: number, clientY: number) {
+  const rect = host.getBoundingClientRect();
+  const ring = document.createElement("span");
+  ring.className = "ad-ripple";
+  ring.style.left = \`\${clientX - rect.left}px\`;
+  ring.style.top = \`\${clientY - rect.top}px\`;
+  ring.addEventListener("animationend", () => ring.remove());
+  host.append(ring);
+}
+`,Ht=`/**\r
+ * Browser APIs that tests (jsdom) and server rendering lack. Without them components lose\r
+ * only the extra (re-measuring on resize, pausing off-screen, following the motion setting)\r
+ * and keep working.\r
+ */\r
+const inert = { observe() {}, unobserve() {}, disconnect() {} };\r
 \r
-export type Material =\r
-  | "shell"\r
-  | "card"\r
-  | "glass"\r
-  | "ruby"\r
-  | "tile"\r
-  | "input"\r
-  | "dialog"\r
-  | "ghost"\r
-  | "danger";\r
-export type Variant = "primary" | "secondary" | "ghost" | "danger";\r
-export type ControlSize = "xs" | "sm" | "md" | "lg";\r
-export type LegacySize = "small" | "medium" | "large";\r
-export type Size = ControlSize | LegacySize;\r
-export type Tone =\r
-  | "success"\r
-  | "warning"\r
-  | "error"\r
-  | "processing"\r
-  | "pending"\r
-  | "offline"\r
-  | "info";\r
-export type TokenStyle = CSSProperties & {\r
-  [key: \`--\${string}\`]: string | number | undefined;\r
-};\r
-export interface CommonProps {\r
-  children?: ReactNode;\r
-  className?: string;\r
-  style?: TokenStyle;\r
-  id?: string;\r
-  material?: Material;\r
-  size?: Size;\r
-  tone?: Tone;\r
-}\r
-export interface VectorNode {\r
-  tag: string;\r
-  props?: Record<string, unknown>;\r
-  children?: Array<VectorNode | string>;\r
-}\r
+export const createResizeObserver = (callback: ResizeObserverCallback) =>\r
+  typeof ResizeObserver === "undefined"\r
+    ? (inert as unknown as ResizeObserver)\r
+    : new ResizeObserver(callback);\r
 \r
-export function classes(...values: (string | undefined | false)[]): string {\r
-  return values.filter(Boolean).join(" ");\r
-}\r
-export function normalizeSize(size?: Size): ControlSize | undefined {\r
-  if (!size) return undefined;\r
-  return (\r
-    ({ small: "sm", medium: "md", large: "lg" } as const)[size as LegacySize] ??\r
-    (size as ControlSize)\r
-  );\r
-}\r
+export const canObserveIntersection = () =>\r
+  typeof IntersectionObserver !== "undefined";\r
 \r
-/** Root attributes shared by every component: \`ad ad-<kebab-name>\` class and data-ad-* hooks for CSS. */\r
-export function mark(\r
-  name: string,\r
-  p: CommonProps,\r
-  material?: Material,\r
-  extra?: string,\r
-) {\r
-  return {\r
-    id: p.id,\r
-    className: classes(\r
-      "ad",\r
-      "ad-" +\r
-        name.replace(/[A-Z]/g, (v, i) => (i ? "-" : "") + v.toLowerCase()),\r
-      extra,\r
-      p.className,\r
-    ),\r
-    style: p.style,\r
-    "data-ad-component": name,\r
-    "data-ad-material": p.material ?? material,\r
-    "data-ad-size": normalizeSize(p.size),\r
-    "data-ad-tone": p.tone,\r
-  };\r
-}\r
+export const reducedMotionQuery = (): MediaQueryList =>\r
+  typeof matchMedia === "function"\r
+    ? matchMedia("(prefers-reduced-motion: reduce)")\r
+    : ({\r
+        matches: false,\r
+        addEventListener() {},\r
+        removeEventListener() {},\r
+      } as unknown as MediaQueryList);\r
 \r
-/** Plain structural element with the standard component marks. */\r
-export function part(name: string, tag: "header" | "div" | "footer") {\r
-  const Part = (p: CommonProps) =>\r
-    createElement(tag, mark(name, p), p.children);\r
-  Part.displayName = name;\r
-  return Part;\r
-}\r
-\r
-export function useControllable<T>(\r
-  value: T | undefined,\r
-  initial: T,\r
-  onChange?: (value: T) => void,\r
-) {\r
-  const [internal, setInternal] = useState(initial);\r
-  const current = value === undefined ? internal : value;\r
-  const latest = useRef({ current, value, onChange });\r
-  latest.current = { current, value, onChange };\r
-  const update = useCallback((next: T | ((value: T) => T)) => {\r
-    const old = latest.current;\r
-    const resolved =\r
-      typeof next === "function"\r
-        ? (next as (value: T) => T)(old.current)\r
-        : next;\r
-    if (old.value === undefined) setInternal(resolved);\r
-    if (!Object.is(resolved, old.current)) old.onChange?.(resolved);\r
-    latest.current.current = resolved;\r
-  }, []);\r
-  return [current, update] as const;\r
-}\r
-export function assignRef<T>(ref: Ref<T> | undefined, value: T | null) {\r
-  if (typeof ref === "function") ref(value);\r
-  else if (ref) (ref as { current: T | null }).current = value;\r
-}\r
-export const clamp = (v: number, min = 0, max = 100) =>\r
-  Math.max(min, Math.min(max, Number.isFinite(v) ? v : min));\r
-export const cssRem = (value: number) =>\r
-  \`\${value / (parseFloat(getComputedStyle(document.documentElement).fontSize) || 16)}rem\`;\r
-export const timeText = (value: number) =>\r
-  \`\${Math.floor(Math.max(0, value) / 60)}:\${String(Math.floor(Math.max(0, value)) % 60).padStart(2, "0")}\`;\r
-export async function copyText(text: string): Promise<boolean> {\r
-  try {\r
-    await navigator.clipboard.writeText(text);\r
-    return true;\r
-  } catch {\r
-    const field = document.createElement("textarea");\r
-    field.value = text;\r
-    field.style.cssText = "position:fixed;left:-100vw;top:0";\r
-    const focus = document.activeElement as HTMLElement | null;\r
-    document.body.append(field);\r
-    field.select();\r
-    try {\r
-      return document.execCommand("copy");\r
-    } catch {\r
-      return false;\r
-    } finally {\r
-      field.remove();\r
-      focus?.focus();\r
-    }\r
-  }\r
-}\r
-export function downloadFile(\r
-  name: string,\r
-  content: string,\r
-  type = "application/json",\r
-) {\r
-  const url = URL.createObjectURL(new Blob([content], { type }));\r
-  const link = document.createElement("a");\r
-  link.download = name;\r
-  link.href = url;\r
-  link.click();\r
-  window.setTimeout(() => URL.revokeObjectURL(url), 1500);\r
-}\r
-\r
-/** Spreads a ring of light from the pointer inside \`host\` (which should clip its overflow). */\r
-export function ripple(host: HTMLElement, clientX: number, clientY: number) {\r
-  const rect = host.getBoundingClientRect();\r
-  const ring = document.createElement("span");\r
-  ring.className = "ad-ripple";\r
-  ring.style.left = \`\${clientX - rect.left}px\`;\r
-  ring.style.top = \`\${clientY - rect.top}px\`;\r
-  ring.addEventListener("animationend", () => ring.remove());\r
-  host.append(ring);\r
-}\r
-`,Ft=`export interface MotionScope {\r
-  root: Document | ShadowRoot | Element;\r
-  enabled: boolean;\r
-  time: number;\r
-  previous: number | null;\r
-  disposed?: boolean;\r
-  callbacks: Map<Element, (time: number) => void>;\r
-  add(node: Element, callback: (time: number) => void): () => void;\r
-  set(enabled: boolean, explicit?: boolean): boolean;\r
-  dispose(): void;\r
-}\r
-export interface BorderEffect {\r
-  element: HTMLElement;\r
-  overlay: SVGSVGElement;\r
-  path: SVGPathElement;\r
-  length: number;\r
-  observer: ResizeObserver;\r
-  sync(): void;\r
-  paint(seconds: number): void;\r
-  destroy(): void;\r
-}\r
-export function createMotion(\r
-  root?: Document | ShadowRoot | Element,\r
-): MotionScope;\r
-export function attachBorder(\r
-  element: HTMLElement,\r
-  options: {\r
-    shell?: boolean;\r
-    round?: boolean;\r
-    scope: MotionScope;\r
-  },\r
-): BorderEffect;\r
-export function attachTabShape(element: HTMLButtonElement): {\r
-  shape: SVGSVGElement;\r
-  observer: ResizeObserver;\r
-  sync(): void;\r
-  destroy(): void;\r
-};\r
-export function getMotionStats(): {\r
-  scopes: number;\r
-  running: number;\r
-  scheduled: boolean;\r
-  callbacks: number;\r
-};\r
-`,Dt=`import React, { useEffect, useLayoutEffect, useRef } from "react";\r
+/** jsdom has canvas elements but no 2D context unless the native canvas package is added. */\r
+export const canPaint = () => typeof CanvasRenderingContext2D !== "undefined";\r
+`,Ot=`export interface MotionScope {
+  root: Document | ShadowRoot | Element;
+  enabled: boolean;
+  time: number;
+  previous: number | null;
+  disposed?: boolean;
+  callbacks: Map<Element, (time: number) => void>;
+  add(node: Element, callback: (time: number) => void): () => void;
+  set(enabled: boolean, explicit?: boolean): boolean;
+  dispose(): void;
+}
+export interface BorderEffect {
+  element: HTMLElement;
+  overlay: SVGSVGElement;
+  path: SVGPathElement;
+  length: number;
+  observer: ResizeObserver;
+  sync(): void;
+  paint(seconds: number): void;
+  destroy(): void;
+}
+export function createMotion(
+  root?: Document | ShadowRoot | Element,
+): MotionScope;
+export function attachBorder(
+  element: HTMLElement,
+  options: {
+    shell?: boolean;
+    round?: boolean;
+    scope: MotionScope;
+  },
+): BorderEffect;
+export function attachTabShape(element: HTMLButtonElement): {
+  shape: SVGSVGElement;
+  observer: ResizeObserver;
+  sync(): void;
+  destroy(): void;
+};
+export function getMotionStats(): {
+  scopes: number;
+  running: number;
+  scheduled: boolean;
+  callbacks: number;
+};
+`,$t=`import { reducedMotionQuery } from "../environment";\r
+import React, { useEffect, useLayoutEffect, useRef } from "react";\r
 import {\r
   attachBorder,\r
   attachTabShape,\r
@@ -9723,7 +9927,7 @@ export function useSmoothWheel(ref: React.RefObject<HTMLElement | null>) {\r
     if (\r
       !element ||\r
       !enabled ||\r
-      matchMedia("(prefers-reduced-motion: reduce)").matches\r
+      reducedMotionQuery().matches\r
     )\r
       return;\r
     let target = element.scrollTop;\r
@@ -9796,157 +10000,154 @@ export function useSmoothWheel(ref: React.RefObject<HTMLElement | null>) {\r
     };\r
   }, [ref, enabled]);\r
 }\r
-`,Vt=`/** Deterministic randomness and value noise for procedural artwork (same picture on every render). */\r
-\r
-export const clamp01 = (value: number, minimum = 0, maximum = 1) =>\r
-  Math.min(maximum, Math.max(minimum, value));\r
-\r
-/** Seeded generator (mulberry32): returns a function giving numbers in [0, 1). */\r
-export function seeded(initialSeed: number) {\r
-  let seed = initialSeed;\r
-  return () => {\r
-    seed |= 0;\r
-    seed = (seed + 0x6d2b79f5) | 0;\r
-    let value = Math.imul(seed ^ (seed >>> 15), 1 | seed);\r
-    value ^= value + Math.imul(value ^ (value >>> 7), 61 | value);\r
-    return ((value ^ (value >>> 14)) >>> 0) / 4294967296;\r
-  };\r
-}\r
-\r
-let table: Float32Array | null = null;\r
-\r
-/** Smooth 2D value noise in [0, 1]. */\r
-export function noise(x: number, y: number) {\r
-  table ??= Float32Array.from({ length: 65536 }, seeded(7149));\r
-  const ix = Math.floor(x),\r
-    iy = Math.floor(y);\r
-  let fx = x - ix,\r
-    fy = y - iy;\r
-  fx = fx * fx * (3 - 2 * fx);\r
-  fy = fy * fy * (3 - 2 * fy);\r
-  const at = (a: number, b: number) => table![(a & 255) + ((b & 255) << 8)];\r
-  const a = at(ix, iy),\r
-    b = at(ix + 1, iy),\r
-    c = at(ix, iy + 1),\r
-    d = at(ix + 1, iy + 1);\r
-  return (a + (b - a) * fx) * (1 - fy) + (c + (d - c) * fx) * fy;\r
-}\r
-\r
-/** Fractal noise: several octaves of value noise. */\r
-export function fbm(initialX: number, initialY: number, octaves = 5) {\r
-  let x = initialX,\r
-    y = initialY,\r
-    value = 0,\r
-    amplitude = 0.5;\r
-  for (let i = 0; i < octaves; i += 1) {\r
-    value += noise(x, y) * amplitude;\r
-    x = x * 2.03 + 13.2;\r
-    y = y * 2.07 - 7.4;\r
-    amplitude *= 0.5;\r
-  }\r
-  return value;\r
-}\r
-\r
-/** A procedural picture: rows of pixels computed one by one, then optional vector strokes. */\r
-export interface Painting {\r
-  /** Fill rows \`from\`..\`to\` of the image; scale from \`image.width\` to stay resolution-free. */\r
-  pixels(image: ImageData, from: number, to: number): void;\r
-  /** Draw on top of the pixels (stars, glows, outlines). */\r
-  finish?(\r
-    context: CanvasRenderingContext2D,\r
-    width: number,\r
-    height: number,\r
-  ): void;\r
-}\r
-\r
-const paintings = new Map<string, Promise<HTMLCanvasElement>>();\r
-const pause = () => new Promise<void>((resume) => setTimeout(resume));\r
-\r
-/**\r
- * Paints a picture into an offscreen canvas in ~8 ms slices, so even a large one never\r
- * freezes the page, and keeps it: every instance of the same size reuses the result.\r
- */\r
-export function paintCanvas(\r
-  key: string,\r
-  width: number,\r
-  height: number,\r
-  painting: Painting,\r
-) {\r
-  const id = \`\${key}:\${width}x\${height}\`;\r
-  let done = paintings.get(id);\r
-  if (!done) {\r
-    done = (async () => {\r
-      const canvas = document.createElement("canvas");\r
-      canvas.width = width;\r
-      canvas.height = height;\r
-      const context = canvas.getContext("2d");\r
-      if (!context) return canvas;\r
-      const image = context.createImageData(width, height);\r
-      for (let row = 0; row < height;) {\r
-        const started = performance.now();\r
-        while (row < height && performance.now() - started < 8) {\r
-          painting.pixels(image, row, row + 1);\r
-          row += 1;\r
-        }\r
-        if (row < height) await pause();\r
-      }\r
-      context.putImageData(image, 0, 0);\r
-      painting.finish?.(context, width, height);\r
-      return canvas;\r
-    })();\r
-    paintings.set(id, done);\r
-  }\r
-  return done;\r
-}\r
-`,Ht=`import { useEffect, useState } from "react";
-export function useReducedMotion() {
-  const [reduced, setReduced] = useState(
-    () =>
-      typeof matchMedia === "function" &&
-      matchMedia("(prefers-reduced-motion: reduce)").matches,
-  );
-  useEffect(() => {
-    const media = matchMedia("(prefers-reduced-motion: reduce)"),
-      update = () => setReduced(media.matches);
-    media.addEventListener("change", update);
-    update();
-    return () => media.removeEventListener("change", update);
-  }, []);
-  return reduced;
+`,Ut=`/** Deterministic randomness and value noise for procedural artwork (same picture on every render). */
+
+export const clamp01 = (value: number, minimum = 0, maximum = 1) =>
+  Math.min(maximum, Math.max(minimum, value));
+
+/** Seeded generator (mulberry32): returns a function giving numbers in [0, 1). */
+export function seeded(initialSeed: number) {
+  let seed = initialSeed;
+  return () => {
+    seed |= 0;
+    seed = (seed + 0x6d2b79f5) | 0;
+    let value = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+    value ^= value + Math.imul(value ^ (value >>> 7), 61 | value);
+    return ((value ^ (value >>> 14)) >>> 0) / 4294967296;
+  };
 }
-export function useMotion() {
-  const reduced = useReducedMotion();
-  const [explicit, setExplicit] = useState<boolean | undefined>(() =>
-    typeof document === "undefined"
-      ? undefined
-      : document.documentElement.dataset.adMotion === "off"
-        ? false
-        : document.documentElement.dataset.adMotion === "on"
-          ? true
-          : undefined,
-  );
-  useEffect(() => {
-    if (typeof document === "undefined") return;
-    const root = document.documentElement,
-      update = () =>
-        setExplicit(
-          root.dataset.adMotion === "off"
-            ? false
-            : root.dataset.adMotion === "on"
-              ? true
-              : undefined,
-        );
-    const observer = new MutationObserver(update);
-    observer.observe(root, {
-      attributes: true,
-      attributeFilter: ["data-ad-motion"],
-    });
-    update();
-    return () => observer.disconnect();
-  }, []);
-  return explicit ?? !reduced;
+
+let table: Float32Array | null = null;
+
+/** Smooth 2D value noise in [0, 1]. */
+export function noise(x: number, y: number) {
+  table ??= Float32Array.from({ length: 65536 }, seeded(7149));
+  const ix = Math.floor(x),
+    iy = Math.floor(y);
+  let fx = x - ix,
+    fy = y - iy;
+  fx = fx * fx * (3 - 2 * fx);
+  fy = fy * fy * (3 - 2 * fy);
+  const at = (a: number, b: number) => table![(a & 255) + ((b & 255) << 8)];
+  const a = at(ix, iy),
+    b = at(ix + 1, iy),
+    c = at(ix, iy + 1),
+    d = at(ix + 1, iy + 1);
+  return (a + (b - a) * fx) * (1 - fy) + (c + (d - c) * fx) * fy;
 }
-`,$t=`import type { CSSProperties } from "react";
+
+/** Fractal noise: several octaves of value noise. */
+export function fbm(initialX: number, initialY: number, octaves = 5) {
+  let x = initialX,
+    y = initialY,
+    value = 0,
+    amplitude = 0.5;
+  for (let i = 0; i < octaves; i += 1) {
+    value += noise(x, y) * amplitude;
+    x = x * 2.03 + 13.2;
+    y = y * 2.07 - 7.4;
+    amplitude *= 0.5;
+  }
+  return value;
+}
+
+/** A procedural picture: rows of pixels computed one by one, then optional vector strokes. */
+export interface Painting {
+  /** Fill rows \`from\`..\`to\` of the image; scale from \`image.width\` to stay resolution-free. */
+  pixels(image: ImageData, from: number, to: number): void;
+  /** Draw on top of the pixels (stars, glows, outlines). */
+  finish?(
+    context: CanvasRenderingContext2D,
+    width: number,
+    height: number,
+  ): void;
+}
+
+const paintings = new Map<string, Promise<HTMLCanvasElement>>();
+const pause = () => new Promise<void>((resume) => setTimeout(resume));
+
+/**
+ * Paints a picture into an offscreen canvas in ~8 ms slices, so even a large one never
+ * freezes the page, and keeps it: every instance of the same size reuses the result.
+ */
+export function paintCanvas(
+  key: string,
+  width: number,
+  height: number,
+  painting: Painting,
+) {
+  const id = \`\${key}:\${width}x\${height}\`;
+  let done = paintings.get(id);
+  if (!done) {
+    done = (async () => {
+      const canvas = document.createElement("canvas");
+      canvas.width = width;
+      canvas.height = height;
+      const context = canvas.getContext("2d");
+      if (!context) return canvas;
+      const image = context.createImageData(width, height);
+      for (let row = 0; row < height;) {
+        const started = performance.now();
+        while (row < height && performance.now() - started < 8) {
+          painting.pixels(image, row, row + 1);
+          row += 1;
+        }
+        if (row < height) await pause();
+      }
+      context.putImageData(image, 0, 0);
+      painting.finish?.(context, width, height);
+      return canvas;
+    })();
+    paintings.set(id, done);
+  }
+  return done;
+}
+`,Gt=`import { reducedMotionQuery } from "../environment";\r
+import { useEffect, useState } from "react";\r
+export function useReducedMotion() {\r
+  const [reduced, setReduced] = useState(() => reducedMotionQuery().matches);\r
+  useEffect(() => {\r
+    const media = reducedMotionQuery(),\r
+      update = () => setReduced(media.matches);\r
+    media.addEventListener("change", update);\r
+    update();\r
+    return () => media.removeEventListener("change", update);\r
+  }, []);\r
+  return reduced;\r
+}\r
+export function useMotion() {\r
+  const reduced = useReducedMotion();\r
+  const [explicit, setExplicit] = useState<boolean | undefined>(() =>\r
+    typeof document === "undefined"\r
+      ? undefined\r
+      : document.documentElement.dataset.adMotion === "off"\r
+        ? false\r
+        : document.documentElement.dataset.adMotion === "on"\r
+          ? true\r
+          : undefined,\r
+  );\r
+  useEffect(() => {\r
+    if (typeof document === "undefined") return;\r
+    const root = document.documentElement,\r
+      update = () =>\r
+        setExplicit(\r
+          root.dataset.adMotion === "off"\r
+            ? false\r
+            : root.dataset.adMotion === "on"\r
+              ? true\r
+              : undefined,\r
+        );\r
+    const observer = new MutationObserver(update);\r
+    observer.observe(root, {\r
+      attributes: true,\r
+      attributeFilter: ["data-ad-motion"],\r
+    });\r
+    update();\r
+    return () => observer.disconnect();\r
+  }, []);\r
+  return explicit ?? !reduced;\r
+}\r
+`,Wt=`import type { CSSProperties } from "react";
 
 export type Breakpoint = "base" | "sm" | "md" | "lg" | "xl";
 export type Responsive<T> = T | Partial<Record<Breakpoint, T>>;
@@ -9986,7 +10187,7 @@ export function responsiveVars<T>(
   }
   return result as CSSProperties;
 }
-`,Ot=`import {
+`,jt=`import {
   createContext,
   useContext,
   useEffect,
@@ -10265,12 +10466,12 @@ export const buttonVariants = [
   "danger",
 ] as const;
 export const inputVariants = ["outlined", "filled", "underlined"] as const;
-`,Ut=`export { PianoRollGrid } from "./components/editor/PianoRollGrid/PianoRollGrid";
+`,Kt=`export { PianoRollGrid } from "./components/editor/PianoRollGrid/PianoRollGrid";
 export type {
   PianoRollGridProps,
   NoteGeometry,
 } from "./components/editor/shared";
-`,Gt=`export { Form, useForm, useFormContext } from "./components/forms/Form/Form";
+`,qt=`export { Form, useForm, useFormContext } from "./components/forms/Form/Form";
 export type {
   FormApi,
   FormErrors,
@@ -10287,7 +10488,7 @@ export type {
   FieldKind,
   FieldRegistry,
 } from "./components/forms/FormFields/FormFields";
-`,Wt=`export { copyText } from "./core/base";\r
+`,Yt=`export { copyText } from "./core/base";\r
 export * from "./core/base";\r
 export * from "./core/artwork";\r
 export { useReducedMotion, useMotion } from "./core/providers/context";\r
@@ -10361,6 +10562,8 @@ export { KeyValueList } from "./components/feedback/KeyValueList/KeyValueList";\
 export { Menu } from "./components/feedback/Menu/Menu";\r
 export { MenuItem } from "./components/feedback/MenuItem/MenuItem";\r
 export { MessageBar } from "./components/feedback/MessageBar/MessageBar";\r
+export { Tooltip } from "./components/feedback/Tooltip/Tooltip";\r
+export type { TooltipProps } from "./components/feedback/Tooltip/Tooltip";\r
 export { Popover } from "./components/feedback/Popover/Popover";\r
 export { ProgressBar } from "./components/feedback/ProgressBar/ProgressBar";\r
 export { StatusIndicator } from "./components/feedback/StatusIndicator/StatusIndicator";\r
@@ -10435,7 +10638,7 @@ export type {\r
   FieldKind,\r
   FieldRegistry,\r
 } from "./components/forms/FormFields/FormFields";\r
-`,jt=`export {
+`,Xt=`export {
   Router,
   useRouter,
   matchRoute,
@@ -10447,7 +10650,7 @@ export type {
   RouteMatch,
   RouteAccessContext,
 } from "./components/navigation/Router/Router";
-`,Kt=`export const typography = {
+`,Zt=`export const typography = {
   fontFamily: {
     sans: "var(--ad-font-family-sans)",
     mono: "var(--ad-font-family-mono)",
@@ -10471,5 +10674,5 @@ export type {
     bold: 700,
   },
 } as const;
-`,l=Object.entries(Object.assign({"../../../../packages/ui/src/components/artwork/DatabaseArt/DatabaseArt.tsx":c,"../../../../packages/ui/src/components/artwork/DatabaseArt/example.tsx":d,"../../../../packages/ui/src/components/artwork/DatabaseArt/meta.ts":p,"../../../../packages/ui/src/components/artwork/Landscape/Landscape.tsx":u,"../../../../packages/ui/src/components/artwork/Landscape/example.tsx":m,"../../../../packages/ui/src/components/artwork/Landscape/meta.ts":f,"../../../../packages/ui/src/components/artwork/NeonWaves/NeonWaves.tsx":g,"../../../../packages/ui/src/components/artwork/NeonWaves/example.tsx":v,"../../../../packages/ui/src/components/artwork/NeonWaves/meta.ts":h,"../../../../packages/ui/src/components/artwork/Planet/Planet.tsx":b,"../../../../packages/ui/src/components/artwork/Planet/example.tsx":y,"../../../../packages/ui/src/components/artwork/Planet/meta.ts":x,"../../../../packages/ui/src/components/artwork/ServerArt/ServerArt.tsx":k,"../../../../packages/ui/src/components/artwork/ServerArt/example.tsx":_,"../../../../packages/ui/src/components/artwork/ServerArt/meta.ts":w,"../../../../packages/ui/src/components/artwork/Spectrum/Spectrum.tsx":S,"../../../../packages/ui/src/components/artwork/Spectrum/example.tsx":P,"../../../../packages/ui/src/components/artwork/Spectrum/meta.ts":T,"../../../../packages/ui/src/components/artwork/useArtwork.ts":C,"../../../../packages/ui/src/components/controls/Autocomplete/Autocomplete.tsx":R,"../../../../packages/ui/src/components/controls/Autocomplete/example.tsx":M,"../../../../packages/ui/src/components/controls/Autocomplete/meta.ts":E,"../../../../packages/ui/src/components/controls/Button/Button.tsx":A,"../../../../packages/ui/src/components/controls/Button/example.tsx":B,"../../../../packages/ui/src/components/controls/Button/meta.ts":I,"../../../../packages/ui/src/components/controls/Checkbox/Checkbox.tsx":N,"../../../../packages/ui/src/components/controls/Checkbox/example.tsx":z,"../../../../packages/ui/src/components/controls/Checkbox/meta.ts":L,"../../../../packages/ui/src/components/controls/FilePicker/FilePicker.tsx":F,"../../../../packages/ui/src/components/controls/FilePicker/example.tsx":D,"../../../../packages/ui/src/components/controls/FilePicker/meta.ts":V,"../../../../packages/ui/src/components/controls/IconButton/IconButton.tsx":H,"../../../../packages/ui/src/components/controls/IconButton/example.tsx":$,"../../../../packages/ui/src/components/controls/IconButton/meta.ts":O,"../../../../packages/ui/src/components/controls/InputBase/InputBase.tsx":U,"../../../../packages/ui/src/components/controls/InputBase/example.tsx":G,"../../../../packages/ui/src/components/controls/InputBase/meta.ts":W,"../../../../packages/ui/src/components/controls/Link/Link.tsx":j,"../../../../packages/ui/src/components/controls/Link/example.tsx":K,"../../../../packages/ui/src/components/controls/Link/meta.ts":q,"../../../../packages/ui/src/components/controls/NumberField/NumberField.tsx":Y,"../../../../packages/ui/src/components/controls/NumberField/example.tsx":X,"../../../../packages/ui/src/components/controls/NumberField/meta.ts":Z,"../../../../packages/ui/src/components/controls/SegmentedControl/SegmentedControl.tsx":J,"../../../../packages/ui/src/components/controls/SegmentedControl/example.tsx":Q,"../../../../packages/ui/src/components/controls/SegmentedControl/meta.ts":nn,"../../../../packages/ui/src/components/controls/Select/Select.tsx":en,"../../../../packages/ui/src/components/controls/Select/example.tsx":rn,"../../../../packages/ui/src/components/controls/Select/meta.ts":tn,"../../../../packages/ui/src/components/controls/Slider/Slider.tsx":on,"../../../../packages/ui/src/components/controls/Slider/example.tsx":an,"../../../../packages/ui/src/components/controls/Slider/meta.ts":sn,"../../../../packages/ui/src/components/controls/SplitButton/SplitButton.tsx":ln,"../../../../packages/ui/src/components/controls/SplitButton/example.tsx":cn,"../../../../packages/ui/src/components/controls/SplitButton/meta.ts":dn,"../../../../packages/ui/src/components/controls/Switch/Switch.tsx":pn,"../../../../packages/ui/src/components/controls/Switch/example.tsx":un,"../../../../packages/ui/src/components/controls/Switch/meta.ts":mn,"../../../../packages/ui/src/components/controls/Tab/Tab.tsx":fn,"../../../../packages/ui/src/components/controls/Tab/example.tsx":gn,"../../../../packages/ui/src/components/controls/Tab/meta.ts":vn,"../../../../packages/ui/src/components/controls/Tabs/Tabs.tsx":hn,"../../../../packages/ui/src/components/controls/Tabs/example.tsx":bn,"../../../../packages/ui/src/components/controls/Tabs/meta.ts":yn,"../../../../packages/ui/src/components/controls/TextArea/TextArea.tsx":xn,"../../../../packages/ui/src/components/controls/TextArea/example.tsx":kn,"../../../../packages/ui/src/components/controls/TextArea/meta.ts":_n,"../../../../packages/ui/src/components/controls/TextField/TextField.tsx":wn,"../../../../packages/ui/src/components/controls/TextField/example.tsx":Sn,"../../../../packages/ui/src/components/controls/TextField/meta.ts":Pn,"../../../../packages/ui/src/components/controls/ThemePicker/ThemePicker.tsx":Tn,"../../../../packages/ui/src/components/controls/ThemePicker/example.tsx":Cn,"../../../../packages/ui/src/components/controls/ThemePicker/meta.ts":Rn,"../../../../packages/ui/src/components/controls/ToggleButton/ToggleButton.tsx":Mn,"../../../../packages/ui/src/components/controls/ToggleButton/example.tsx":En,"../../../../packages/ui/src/components/controls/ToggleButton/meta.ts":An,"../../../../packages/ui/src/components/controls/internal.tsx":Bn,"../../../../packages/ui/src/components/controls/shared.tsx":In,"../../../../packages/ui/src/components/editor/PianoRollGrid/PianoRollGrid.tsx":Nn,"../../../../packages/ui/src/components/editor/PianoRollGrid/example.tsx":zn,"../../../../packages/ui/src/components/editor/PianoRollGrid/meta.ts":Ln,"../../../../packages/ui/src/components/editor/shared.tsx":Fn,"../../../../packages/ui/src/components/effects/AnimatedBorder/AnimatedBorder.tsx":Dn,"../../../../packages/ui/src/components/effects/AnimatedBorder/example.tsx":Vn,"../../../../packages/ui/src/components/effects/AnimatedBorder/meta.ts":Hn,"../../../../packages/ui/src/components/effects/Beacon/Beacon.tsx":$n,"../../../../packages/ui/src/components/effects/Beacon/example.tsx":On,"../../../../packages/ui/src/components/effects/Beacon/meta.ts":Un,"../../../../packages/ui/src/components/effects/Equalizer/Equalizer.tsx":Gn,"../../../../packages/ui/src/components/effects/Equalizer/example.tsx":Wn,"../../../../packages/ui/src/components/effects/Equalizer/meta.ts":jn,"../../../../packages/ui/src/components/effects/GlowText/GlowText.tsx":Kn,"../../../../packages/ui/src/components/effects/GlowText/example.tsx":qn,"../../../../packages/ui/src/components/effects/GlowText/meta.ts":Yn,"../../../../packages/ui/src/components/effects/Marquee/Marquee.tsx":Xn,"../../../../packages/ui/src/components/effects/Marquee/example.tsx":Zn,"../../../../packages/ui/src/components/effects/Marquee/meta.ts":Jn,"../../../../packages/ui/src/components/effects/Reveal/Reveal.tsx":Qn,"../../../../packages/ui/src/components/effects/Reveal/example.tsx":ne,"../../../../packages/ui/src/components/effects/Reveal/meta.ts":ee,"../../../../packages/ui/src/components/effects/Shimmer/Shimmer.tsx":re,"../../../../packages/ui/src/components/effects/Shimmer/example.tsx":te,"../../../../packages/ui/src/components/effects/Shimmer/meta.ts":oe,"../../../../packages/ui/src/components/effects/Sparkles/Sparkles.tsx":ae,"../../../../packages/ui/src/components/effects/Sparkles/example.tsx":se,"../../../../packages/ui/src/components/effects/Sparkles/meta.ts":ie,"../../../../packages/ui/src/components/effects/Spotlight/Spotlight.tsx":le,"../../../../packages/ui/src/components/effects/Spotlight/example.tsx":ce,"../../../../packages/ui/src/components/effects/Spotlight/meta.ts":de,"../../../../packages/ui/src/components/effects/Tilt/Tilt.tsx":pe,"../../../../packages/ui/src/components/effects/Tilt/example.tsx":ue,"../../../../packages/ui/src/components/effects/Tilt/meta.ts":me,"../../../../packages/ui/src/components/feedback/Badge/Badge.tsx":fe,"../../../../packages/ui/src/components/feedback/Badge/example.tsx":ge,"../../../../packages/ui/src/components/feedback/Badge/meta.ts":ve,"../../../../packages/ui/src/components/feedback/CollapsibleSection/CollapsibleSection.tsx":he,"../../../../packages/ui/src/components/feedback/CollapsibleSection/example.tsx":be,"../../../../packages/ui/src/components/feedback/CollapsibleSection/meta.ts":ye,"../../../../packages/ui/src/components/feedback/DataTable/DataTable.tsx":xe,"../../../../packages/ui/src/components/feedback/DataTable/example.tsx":ke,"../../../../packages/ui/src/components/feedback/DataTable/meta.ts":_e,"../../../../packages/ui/src/components/feedback/Dialog/Dialog.tsx":we,"../../../../packages/ui/src/components/feedback/Dialog/example.tsx":Se,"../../../../packages/ui/src/components/feedback/Dialog/meta.ts":Pe,"../../../../packages/ui/src/components/feedback/EmptyState/EmptyState.tsx":Te,"../../../../packages/ui/src/components/feedback/EmptyState/example.tsx":Ce,"../../../../packages/ui/src/components/feedback/EmptyState/meta.ts":Re,"../../../../packages/ui/src/components/feedback/KeyValueList/KeyValueList.tsx":Me,"../../../../packages/ui/src/components/feedback/KeyValueList/example.tsx":Ee,"../../../../packages/ui/src/components/feedback/KeyValueList/meta.ts":Ae,"../../../../packages/ui/src/components/feedback/Menu/Menu.tsx":Be,"../../../../packages/ui/src/components/feedback/Menu/example.tsx":Ie,"../../../../packages/ui/src/components/feedback/Menu/meta.ts":Ne,"../../../../packages/ui/src/components/feedback/MenuItem/MenuItem.tsx":ze,"../../../../packages/ui/src/components/feedback/MenuItem/example.tsx":Le,"../../../../packages/ui/src/components/feedback/MenuItem/meta.ts":Fe,"../../../../packages/ui/src/components/feedback/MessageBar/MessageBar.tsx":De,"../../../../packages/ui/src/components/feedback/MessageBar/example.tsx":Ve,"../../../../packages/ui/src/components/feedback/MessageBar/meta.ts":He,"../../../../packages/ui/src/components/feedback/Popover/Popover.tsx":$e,"../../../../packages/ui/src/components/feedback/Popover/example.tsx":Oe,"../../../../packages/ui/src/components/feedback/Popover/meta.ts":Ue,"../../../../packages/ui/src/components/feedback/ProgressBar/ProgressBar.tsx":Ge,"../../../../packages/ui/src/components/feedback/ProgressBar/example.tsx":We,"../../../../packages/ui/src/components/feedback/ProgressBar/meta.ts":je,"../../../../packages/ui/src/components/feedback/StatusIndicator/StatusIndicator.tsx":Ke,"../../../../packages/ui/src/components/feedback/StatusIndicator/example.tsx":qe,"../../../../packages/ui/src/components/feedback/StatusIndicator/meta.ts":Ye,"../../../../packages/ui/src/components/feedback/Steps/Steps.tsx":Xe,"../../../../packages/ui/src/components/feedback/Steps/example.tsx":Ze,"../../../../packages/ui/src/components/feedback/Steps/meta.ts":Je,"../../../../packages/ui/src/components/feedback/Toast/Toast.tsx":Qe,"../../../../packages/ui/src/components/feedback/Toast/example.tsx":nr,"../../../../packages/ui/src/components/feedback/Toast/meta.ts":er,"../../../../packages/ui/src/components/feedback/shared.tsx":rr,"../../../../packages/ui/src/components/forms/Form/Form.tsx":tr,"../../../../packages/ui/src/components/forms/Form/example.tsx":or,"../../../../packages/ui/src/components/forms/Form/meta.ts":ar,"../../../../packages/ui/src/components/forms/FormFields/FormFields.tsx":sr,"../../../../packages/ui/src/components/forms/FormFields/example.tsx":ir,"../../../../packages/ui/src/components/forms/FormFields/meta.ts":lr,"../../../../packages/ui/src/components/foundation/ThemeProvider/ThemeProvider.tsx":cr,"../../../../packages/ui/src/components/foundation/ThemeProvider/example.tsx":dr,"../../../../packages/ui/src/components/foundation/ThemeProvider/meta.ts":pr,"../../../../packages/ui/src/components/foundation/Typography/Typography.tsx":ur,"../../../../packages/ui/src/components/foundation/Typography/example.tsx":mr,"../../../../packages/ui/src/components/foundation/Typography/meta.ts":fr,"../../../../packages/ui/src/components/layout/Avatar/Avatar.tsx":gr,"../../../../packages/ui/src/components/layout/Avatar/HostSeal.tsx":vr,"../../../../packages/ui/src/components/layout/Avatar/example.tsx":hr,"../../../../packages/ui/src/components/layout/Avatar/meta.ts":br,"../../../../packages/ui/src/components/layout/BrandMark/BrandMark.tsx":yr,"../../../../packages/ui/src/components/layout/BrandMark/example.tsx":xr,"../../../../packages/ui/src/components/layout/BrandMark/meta.ts":kr,"../../../../packages/ui/src/components/layout/ButtonGroup/ButtonGroup.tsx":_r,"../../../../packages/ui/src/components/layout/ButtonGroup/example.tsx":wr,"../../../../packages/ui/src/components/layout/ButtonGroup/meta.ts":Sr,"../../../../packages/ui/src/components/layout/Card/Card.tsx":Pr,"../../../../packages/ui/src/components/layout/Card/example.tsx":Tr,"../../../../packages/ui/src/components/layout/Card/meta.ts":Cr,"../../../../packages/ui/src/components/layout/DialogActions/DialogActions.tsx":Rr,"../../../../packages/ui/src/components/layout/DialogActions/example.tsx":Mr,"../../../../packages/ui/src/components/layout/DialogActions/meta.ts":Er,"../../../../packages/ui/src/components/layout/DialogBody/DialogBody.tsx":Ar,"../../../../packages/ui/src/components/layout/DialogBody/example.tsx":Br,"../../../../packages/ui/src/components/layout/DialogBody/meta.ts":Ir,"../../../../packages/ui/src/components/layout/Divider/Divider.tsx":Nr,"../../../../packages/ui/src/components/layout/Divider/example.tsx":zr,"../../../../packages/ui/src/components/layout/Divider/meta.ts":Lr,"../../../../packages/ui/src/components/layout/Grid/Grid.tsx":Fr,"../../../../packages/ui/src/components/layout/Grid/example.tsx":Dr,"../../../../packages/ui/src/components/layout/Grid/meta.ts":Vr,"../../../../packages/ui/src/components/layout/Header/Header.tsx":Hr,"../../../../packages/ui/src/components/layout/Header/example.tsx":$r,"../../../../packages/ui/src/components/layout/Header/meta.ts":Or,"../../../../packages/ui/src/components/layout/Icon/Icon.tsx":Ur,"../../../../packages/ui/src/components/layout/Icon/example.tsx":Gr,"../../../../packages/ui/src/components/layout/Icon/meta.ts":Wr,"../../../../packages/ui/src/components/layout/Illustration/Illustration.tsx":jr,"../../../../packages/ui/src/components/layout/Illustration/example.tsx":Kr,"../../../../packages/ui/src/components/layout/Illustration/meta.ts":qr,"../../../../packages/ui/src/components/layout/ScrollArea/ScrollArea.tsx":Yr,"../../../../packages/ui/src/components/layout/ScrollArea/example.tsx":Xr,"../../../../packages/ui/src/components/layout/ScrollArea/meta.ts":Zr,"../../../../packages/ui/src/components/layout/Stack/Stack.tsx":Jr,"../../../../packages/ui/src/components/layout/Stack/example.tsx":Qr,"../../../../packages/ui/src/components/layout/Stack/meta.ts":nt,"../../../../packages/ui/src/components/layout/TabPanel/TabPanel.tsx":et,"../../../../packages/ui/src/components/layout/TabPanel/example.tsx":rt,"../../../../packages/ui/src/components/layout/TabPanel/meta.ts":tt,"../../../../packages/ui/src/components/layout/Text/Text.tsx":ot,"../../../../packages/ui/src/components/layout/Text/example.tsx":at,"../../../../packages/ui/src/components/layout/Text/meta.ts":st,"../../../../packages/ui/src/components/layout/Toolbar/Toolbar.tsx":it,"../../../../packages/ui/src/components/layout/Toolbar/example.tsx":lt,"../../../../packages/ui/src/components/layout/Toolbar/meta.ts":ct,"../../../../packages/ui/src/components/layout/shared.tsx":dt,"../../../../packages/ui/src/components/media/AudioPlayer/AudioPlayer.tsx":pt,"../../../../packages/ui/src/components/media/AudioPlayer/example.tsx":ut,"../../../../packages/ui/src/components/media/AudioPlayer/meta.ts":mt,"../../../../packages/ui/src/components/media/LevelMeter/LevelMeter.tsx":ft,"../../../../packages/ui/src/components/media/LevelMeter/example.tsx":gt,"../../../../packages/ui/src/components/media/LevelMeter/meta.ts":vt,"../../../../packages/ui/src/components/media/RotaryKnob/RotaryKnob.tsx":ht,"../../../../packages/ui/src/components/media/RotaryKnob/example.tsx":bt,"../../../../packages/ui/src/components/media/RotaryKnob/meta.ts":yt,"../../../../packages/ui/src/components/media/Sparkline/Sparkline.tsx":xt,"../../../../packages/ui/src/components/media/Sparkline/example.tsx":kt,"../../../../packages/ui/src/components/media/Sparkline/meta.ts":_t,"../../../../packages/ui/src/components/media/WaveDecoration/WaveDecoration.tsx":wt,"../../../../packages/ui/src/components/media/WaveDecoration/example.tsx":St,"../../../../packages/ui/src/components/media/WaveDecoration/meta.ts":Pt,"../../../../packages/ui/src/components/media/Waveform/Waveform.tsx":Tt,"../../../../packages/ui/src/components/media/Waveform/example.tsx":Ct,"../../../../packages/ui/src/components/media/Waveform/meta.ts":Rt,"../../../../packages/ui/src/components/media/Waveform/useWaveformPeaks.ts":Mt,"../../../../packages/ui/src/components/media/shared.tsx":Et,"../../../../packages/ui/src/components/navigation/Router/Router.tsx":At,"../../../../packages/ui/src/components/navigation/Router/example.tsx":Bt,"../../../../packages/ui/src/components/navigation/Router/meta.ts":It,"../../../../packages/ui/src/core.ts":Nt,"../../../../packages/ui/src/core/artwork.tsx":zt,"../../../../packages/ui/src/core/base.tsx":Lt,"../../../../packages/ui/src/core/motion-engine.d.ts":Ft,"../../../../packages/ui/src/core/motion/hooks.ts":Dt,"../../../../packages/ui/src/core/noise.ts":Vt,"../../../../packages/ui/src/core/providers/context.ts":Ht,"../../../../packages/ui/src/core/responsive.ts":$t,"../../../../packages/ui/src/dev/exampleHelpers.tsx":Ot,"../../../../packages/ui/src/editor.ts":Ut,"../../../../packages/ui/src/forms.ts":Gt,"../../../../packages/ui/src/index.ts":Wt,"../../../../packages/ui/src/router.ts":jt,"../../../../packages/ui/src/theme/typography.ts":Kt})),o=(n,t=`${n}.tsx`)=>l.find(([e])=>e.endsWith(`/${n}/${t}`)),qt=n=>o(n,"example.tsx")?.[1]??`// Нет example.tsx для ${n}`,Yt=n=>o(n)?.[1]??"",Xt=n=>o(n)?.[0].replace(/^.*packages\/ui\/src\//,"src/")??"";function i(n,t){const e=n.indexOf(t);if(e<0)return"";const a=n.indexOf("{",e);if(a<0){const r=n.indexOf(";",e);return n.slice(e,r<0?n.length:r+1).trim()}let s=0;for(let r=a;r<n.length;r+=1)if(n[r]==="{"&&(s+=1),n[r]==="}"&&--s===0)return n.slice(e,r+1).trim();return n.slice(e).trim()}const Zt=n=>{for(const[,t]of l){const e=i(t,`export interface ${n}Props`)||i(t,`export type ${n}Props`);if(e)return e}return`// ${n} не объявляет отдельный Props-интерфейс.
-// Компонент использует общие props или композицию дочерних компонентов.`};export{Zt as getComponentApiSource,Yt as getComponentSource,Xt as getComponentSourcePath,qt as getExampleSource};
+`,l=Object.entries(Object.assign({"../../../../packages/ui/src/components/artwork/DatabaseArt/DatabaseArt.tsx":c,"../../../../packages/ui/src/components/artwork/DatabaseArt/example.tsx":d,"../../../../packages/ui/src/components/artwork/DatabaseArt/meta.ts":p,"../../../../packages/ui/src/components/artwork/Landscape/Landscape.tsx":u,"../../../../packages/ui/src/components/artwork/Landscape/example.tsx":m,"../../../../packages/ui/src/components/artwork/Landscape/meta.ts":f,"../../../../packages/ui/src/components/artwork/NeonWaves/NeonWaves.tsx":g,"../../../../packages/ui/src/components/artwork/NeonWaves/example.tsx":v,"../../../../packages/ui/src/components/artwork/NeonWaves/meta.ts":h,"../../../../packages/ui/src/components/artwork/Planet/Planet.tsx":b,"../../../../packages/ui/src/components/artwork/Planet/example.tsx":y,"../../../../packages/ui/src/components/artwork/Planet/meta.ts":x,"../../../../packages/ui/src/components/artwork/ServerArt/ServerArt.tsx":k,"../../../../packages/ui/src/components/artwork/ServerArt/example.tsx":_,"../../../../packages/ui/src/components/artwork/ServerArt/meta.ts":w,"../../../../packages/ui/src/components/artwork/Spectrum/Spectrum.tsx":S,"../../../../packages/ui/src/components/artwork/Spectrum/example.tsx":P,"../../../../packages/ui/src/components/artwork/Spectrum/meta.ts":T,"../../../../packages/ui/src/components/artwork/useArtwork.ts":C,"../../../../packages/ui/src/components/controls/Autocomplete/Autocomplete.tsx":R,"../../../../packages/ui/src/components/controls/Autocomplete/example.tsx":M,"../../../../packages/ui/src/components/controls/Autocomplete/meta.ts":E,"../../../../packages/ui/src/components/controls/Button/Button.tsx":A,"../../../../packages/ui/src/components/controls/Button/example.tsx":B,"../../../../packages/ui/src/components/controls/Button/meta.ts":I,"../../../../packages/ui/src/components/controls/Checkbox/Checkbox.tsx":N,"../../../../packages/ui/src/components/controls/Checkbox/example.tsx":z,"../../../../packages/ui/src/components/controls/Checkbox/meta.ts":L,"../../../../packages/ui/src/components/controls/FilePicker/FilePicker.tsx":F,"../../../../packages/ui/src/components/controls/FilePicker/example.tsx":D,"../../../../packages/ui/src/components/controls/FilePicker/meta.ts":V,"../../../../packages/ui/src/components/controls/IconButton/IconButton.tsx":H,"../../../../packages/ui/src/components/controls/IconButton/example.tsx":O,"../../../../packages/ui/src/components/controls/IconButton/meta.ts":$,"../../../../packages/ui/src/components/controls/InputBase/InputBase.tsx":U,"../../../../packages/ui/src/components/controls/InputBase/example.tsx":G,"../../../../packages/ui/src/components/controls/InputBase/meta.ts":W,"../../../../packages/ui/src/components/controls/Link/Link.tsx":j,"../../../../packages/ui/src/components/controls/Link/example.tsx":K,"../../../../packages/ui/src/components/controls/Link/meta.ts":q,"../../../../packages/ui/src/components/controls/NumberField/NumberField.tsx":Y,"../../../../packages/ui/src/components/controls/NumberField/example.tsx":X,"../../../../packages/ui/src/components/controls/NumberField/meta.ts":Z,"../../../../packages/ui/src/components/controls/SegmentedControl/SegmentedControl.tsx":J,"../../../../packages/ui/src/components/controls/SegmentedControl/example.tsx":Q,"../../../../packages/ui/src/components/controls/SegmentedControl/meta.ts":nn,"../../../../packages/ui/src/components/controls/Select/Select.tsx":en,"../../../../packages/ui/src/components/controls/Select/example.tsx":rn,"../../../../packages/ui/src/components/controls/Select/meta.ts":tn,"../../../../packages/ui/src/components/controls/Slider/Slider.tsx":on,"../../../../packages/ui/src/components/controls/Slider/example.tsx":an,"../../../../packages/ui/src/components/controls/Slider/meta.ts":sn,"../../../../packages/ui/src/components/controls/SplitButton/SplitButton.tsx":ln,"../../../../packages/ui/src/components/controls/SplitButton/example.tsx":cn,"../../../../packages/ui/src/components/controls/SplitButton/meta.ts":dn,"../../../../packages/ui/src/components/controls/Switch/Switch.tsx":pn,"../../../../packages/ui/src/components/controls/Switch/example.tsx":un,"../../../../packages/ui/src/components/controls/Switch/meta.ts":mn,"../../../../packages/ui/src/components/controls/Tab/Tab.tsx":fn,"../../../../packages/ui/src/components/controls/Tab/example.tsx":gn,"../../../../packages/ui/src/components/controls/Tab/meta.ts":vn,"../../../../packages/ui/src/components/controls/Tabs/Tabs.tsx":hn,"../../../../packages/ui/src/components/controls/Tabs/example.tsx":bn,"../../../../packages/ui/src/components/controls/Tabs/meta.ts":yn,"../../../../packages/ui/src/components/controls/TextArea/TextArea.tsx":xn,"../../../../packages/ui/src/components/controls/TextArea/example.tsx":kn,"../../../../packages/ui/src/components/controls/TextArea/meta.ts":_n,"../../../../packages/ui/src/components/controls/TextField/TextField.tsx":wn,"../../../../packages/ui/src/components/controls/TextField/example.tsx":Sn,"../../../../packages/ui/src/components/controls/TextField/meta.ts":Pn,"../../../../packages/ui/src/components/controls/ThemePicker/ThemePicker.tsx":Tn,"../../../../packages/ui/src/components/controls/ThemePicker/example.tsx":Cn,"../../../../packages/ui/src/components/controls/ThemePicker/meta.ts":Rn,"../../../../packages/ui/src/components/controls/ToggleButton/ToggleButton.tsx":Mn,"../../../../packages/ui/src/components/controls/ToggleButton/example.tsx":En,"../../../../packages/ui/src/components/controls/ToggleButton/meta.ts":An,"../../../../packages/ui/src/components/controls/internal.tsx":Bn,"../../../../packages/ui/src/components/controls/shared.tsx":In,"../../../../packages/ui/src/components/editor/PianoRollGrid/PianoRollGrid.tsx":Nn,"../../../../packages/ui/src/components/editor/PianoRollGrid/example.tsx":zn,"../../../../packages/ui/src/components/editor/PianoRollGrid/meta.ts":Ln,"../../../../packages/ui/src/components/editor/shared.tsx":Fn,"../../../../packages/ui/src/components/effects/AnimatedBorder/AnimatedBorder.tsx":Dn,"../../../../packages/ui/src/components/effects/AnimatedBorder/example.tsx":Vn,"../../../../packages/ui/src/components/effects/AnimatedBorder/meta.ts":Hn,"../../../../packages/ui/src/components/effects/Beacon/Beacon.tsx":On,"../../../../packages/ui/src/components/effects/Beacon/example.tsx":$n,"../../../../packages/ui/src/components/effects/Beacon/meta.ts":Un,"../../../../packages/ui/src/components/effects/Equalizer/Equalizer.tsx":Gn,"../../../../packages/ui/src/components/effects/Equalizer/example.tsx":Wn,"../../../../packages/ui/src/components/effects/Equalizer/meta.ts":jn,"../../../../packages/ui/src/components/effects/GlowText/GlowText.tsx":Kn,"../../../../packages/ui/src/components/effects/GlowText/example.tsx":qn,"../../../../packages/ui/src/components/effects/GlowText/meta.ts":Yn,"../../../../packages/ui/src/components/effects/Marquee/Marquee.tsx":Xn,"../../../../packages/ui/src/components/effects/Marquee/example.tsx":Zn,"../../../../packages/ui/src/components/effects/Marquee/meta.ts":Jn,"../../../../packages/ui/src/components/effects/Reveal/Reveal.tsx":Qn,"../../../../packages/ui/src/components/effects/Reveal/example.tsx":ne,"../../../../packages/ui/src/components/effects/Reveal/meta.ts":ee,"../../../../packages/ui/src/components/effects/Shimmer/Shimmer.tsx":re,"../../../../packages/ui/src/components/effects/Shimmer/example.tsx":te,"../../../../packages/ui/src/components/effects/Shimmer/meta.ts":oe,"../../../../packages/ui/src/components/effects/Sparkles/Sparkles.tsx":ae,"../../../../packages/ui/src/components/effects/Sparkles/example.tsx":se,"../../../../packages/ui/src/components/effects/Sparkles/meta.ts":ie,"../../../../packages/ui/src/components/effects/Spotlight/Spotlight.tsx":le,"../../../../packages/ui/src/components/effects/Spotlight/example.tsx":ce,"../../../../packages/ui/src/components/effects/Spotlight/meta.ts":de,"../../../../packages/ui/src/components/effects/Tilt/Tilt.tsx":pe,"../../../../packages/ui/src/components/effects/Tilt/example.tsx":ue,"../../../../packages/ui/src/components/effects/Tilt/meta.ts":me,"../../../../packages/ui/src/components/feedback/Badge/Badge.tsx":fe,"../../../../packages/ui/src/components/feedback/Badge/example.tsx":ge,"../../../../packages/ui/src/components/feedback/Badge/meta.ts":ve,"../../../../packages/ui/src/components/feedback/CollapsibleSection/CollapsibleSection.tsx":he,"../../../../packages/ui/src/components/feedback/CollapsibleSection/example.tsx":be,"../../../../packages/ui/src/components/feedback/CollapsibleSection/meta.ts":ye,"../../../../packages/ui/src/components/feedback/DataTable/DataTable.tsx":xe,"../../../../packages/ui/src/components/feedback/DataTable/example.tsx":ke,"../../../../packages/ui/src/components/feedback/DataTable/meta.ts":_e,"../../../../packages/ui/src/components/feedback/Dialog/Dialog.tsx":we,"../../../../packages/ui/src/components/feedback/Dialog/example.tsx":Se,"../../../../packages/ui/src/components/feedback/Dialog/meta.ts":Pe,"../../../../packages/ui/src/components/feedback/EmptyState/EmptyState.tsx":Te,"../../../../packages/ui/src/components/feedback/EmptyState/example.tsx":Ce,"../../../../packages/ui/src/components/feedback/EmptyState/meta.ts":Re,"../../../../packages/ui/src/components/feedback/KeyValueList/KeyValueList.tsx":Me,"../../../../packages/ui/src/components/feedback/KeyValueList/example.tsx":Ee,"../../../../packages/ui/src/components/feedback/KeyValueList/meta.ts":Ae,"../../../../packages/ui/src/components/feedback/Menu/Menu.tsx":Be,"../../../../packages/ui/src/components/feedback/Menu/example.tsx":Ie,"../../../../packages/ui/src/components/feedback/Menu/meta.ts":Ne,"../../../../packages/ui/src/components/feedback/MenuItem/MenuItem.tsx":ze,"../../../../packages/ui/src/components/feedback/MenuItem/example.tsx":Le,"../../../../packages/ui/src/components/feedback/MenuItem/meta.ts":Fe,"../../../../packages/ui/src/components/feedback/MessageBar/MessageBar.tsx":De,"../../../../packages/ui/src/components/feedback/MessageBar/example.tsx":Ve,"../../../../packages/ui/src/components/feedback/MessageBar/meta.ts":He,"../../../../packages/ui/src/components/feedback/Popover/Popover.tsx":Oe,"../../../../packages/ui/src/components/feedback/Popover/example.tsx":$e,"../../../../packages/ui/src/components/feedback/Popover/meta.ts":Ue,"../../../../packages/ui/src/components/feedback/ProgressBar/ProgressBar.tsx":Ge,"../../../../packages/ui/src/components/feedback/ProgressBar/example.tsx":We,"../../../../packages/ui/src/components/feedback/ProgressBar/meta.ts":je,"../../../../packages/ui/src/components/feedback/StatusIndicator/StatusIndicator.tsx":Ke,"../../../../packages/ui/src/components/feedback/StatusIndicator/example.tsx":qe,"../../../../packages/ui/src/components/feedback/StatusIndicator/meta.ts":Ye,"../../../../packages/ui/src/components/feedback/Steps/Steps.tsx":Xe,"../../../../packages/ui/src/components/feedback/Steps/example.tsx":Ze,"../../../../packages/ui/src/components/feedback/Steps/meta.ts":Je,"../../../../packages/ui/src/components/feedback/Toast/Toast.tsx":Qe,"../../../../packages/ui/src/components/feedback/Toast/example.tsx":nr,"../../../../packages/ui/src/components/feedback/Toast/meta.ts":er,"../../../../packages/ui/src/components/feedback/Tooltip/Tooltip.tsx":rr,"../../../../packages/ui/src/components/feedback/Tooltip/example.tsx":tr,"../../../../packages/ui/src/components/feedback/Tooltip/meta.ts":or,"../../../../packages/ui/src/components/feedback/shared.tsx":ar,"../../../../packages/ui/src/components/forms/Form/Form.tsx":sr,"../../../../packages/ui/src/components/forms/Form/example.tsx":ir,"../../../../packages/ui/src/components/forms/Form/meta.ts":lr,"../../../../packages/ui/src/components/forms/FormFields/FormFields.tsx":cr,"../../../../packages/ui/src/components/forms/FormFields/example.tsx":dr,"../../../../packages/ui/src/components/forms/FormFields/meta.ts":pr,"../../../../packages/ui/src/components/foundation/ThemeProvider/ThemeProvider.tsx":ur,"../../../../packages/ui/src/components/foundation/ThemeProvider/example.tsx":mr,"../../../../packages/ui/src/components/foundation/ThemeProvider/meta.ts":fr,"../../../../packages/ui/src/components/foundation/Typography/Typography.tsx":gr,"../../../../packages/ui/src/components/foundation/Typography/example.tsx":vr,"../../../../packages/ui/src/components/foundation/Typography/meta.ts":hr,"../../../../packages/ui/src/components/layout/Avatar/Avatar.tsx":br,"../../../../packages/ui/src/components/layout/Avatar/HostSeal.tsx":yr,"../../../../packages/ui/src/components/layout/Avatar/example.tsx":xr,"../../../../packages/ui/src/components/layout/Avatar/meta.ts":kr,"../../../../packages/ui/src/components/layout/BrandMark/BrandMark.tsx":_r,"../../../../packages/ui/src/components/layout/BrandMark/example.tsx":wr,"../../../../packages/ui/src/components/layout/BrandMark/meta.ts":Sr,"../../../../packages/ui/src/components/layout/ButtonGroup/ButtonGroup.tsx":Pr,"../../../../packages/ui/src/components/layout/ButtonGroup/example.tsx":Tr,"../../../../packages/ui/src/components/layout/ButtonGroup/meta.ts":Cr,"../../../../packages/ui/src/components/layout/Card/Card.tsx":Rr,"../../../../packages/ui/src/components/layout/Card/example.tsx":Mr,"../../../../packages/ui/src/components/layout/Card/meta.ts":Er,"../../../../packages/ui/src/components/layout/DialogActions/DialogActions.tsx":Ar,"../../../../packages/ui/src/components/layout/DialogActions/example.tsx":Br,"../../../../packages/ui/src/components/layout/DialogActions/meta.ts":Ir,"../../../../packages/ui/src/components/layout/DialogBody/DialogBody.tsx":Nr,"../../../../packages/ui/src/components/layout/DialogBody/example.tsx":zr,"../../../../packages/ui/src/components/layout/DialogBody/meta.ts":Lr,"../../../../packages/ui/src/components/layout/Divider/Divider.tsx":Fr,"../../../../packages/ui/src/components/layout/Divider/example.tsx":Dr,"../../../../packages/ui/src/components/layout/Divider/meta.ts":Vr,"../../../../packages/ui/src/components/layout/Grid/Grid.tsx":Hr,"../../../../packages/ui/src/components/layout/Grid/example.tsx":Or,"../../../../packages/ui/src/components/layout/Grid/meta.ts":$r,"../../../../packages/ui/src/components/layout/Header/Header.tsx":Ur,"../../../../packages/ui/src/components/layout/Header/example.tsx":Gr,"../../../../packages/ui/src/components/layout/Header/meta.ts":Wr,"../../../../packages/ui/src/components/layout/Icon/Icon.tsx":jr,"../../../../packages/ui/src/components/layout/Icon/example.tsx":Kr,"../../../../packages/ui/src/components/layout/Icon/meta.ts":qr,"../../../../packages/ui/src/components/layout/Illustration/Illustration.tsx":Yr,"../../../../packages/ui/src/components/layout/Illustration/example.tsx":Xr,"../../../../packages/ui/src/components/layout/Illustration/meta.ts":Zr,"../../../../packages/ui/src/components/layout/ScrollArea/ScrollArea.tsx":Jr,"../../../../packages/ui/src/components/layout/ScrollArea/example.tsx":Qr,"../../../../packages/ui/src/components/layout/ScrollArea/meta.ts":nt,"../../../../packages/ui/src/components/layout/Stack/Stack.tsx":et,"../../../../packages/ui/src/components/layout/Stack/example.tsx":rt,"../../../../packages/ui/src/components/layout/Stack/meta.ts":tt,"../../../../packages/ui/src/components/layout/TabPanel/TabPanel.tsx":ot,"../../../../packages/ui/src/components/layout/TabPanel/example.tsx":at,"../../../../packages/ui/src/components/layout/TabPanel/meta.ts":st,"../../../../packages/ui/src/components/layout/Text/Text.tsx":it,"../../../../packages/ui/src/components/layout/Text/example.tsx":lt,"../../../../packages/ui/src/components/layout/Text/meta.ts":ct,"../../../../packages/ui/src/components/layout/Toolbar/Toolbar.tsx":dt,"../../../../packages/ui/src/components/layout/Toolbar/example.tsx":pt,"../../../../packages/ui/src/components/layout/Toolbar/meta.ts":ut,"../../../../packages/ui/src/components/layout/shared.tsx":mt,"../../../../packages/ui/src/components/media/AudioPlayer/AudioPlayer.tsx":ft,"../../../../packages/ui/src/components/media/AudioPlayer/example.tsx":gt,"../../../../packages/ui/src/components/media/AudioPlayer/meta.ts":vt,"../../../../packages/ui/src/components/media/LevelMeter/LevelMeter.tsx":ht,"../../../../packages/ui/src/components/media/LevelMeter/example.tsx":bt,"../../../../packages/ui/src/components/media/LevelMeter/meta.ts":yt,"../../../../packages/ui/src/components/media/RotaryKnob/RotaryKnob.tsx":xt,"../../../../packages/ui/src/components/media/RotaryKnob/example.tsx":kt,"../../../../packages/ui/src/components/media/RotaryKnob/meta.ts":_t,"../../../../packages/ui/src/components/media/Sparkline/Sparkline.tsx":wt,"../../../../packages/ui/src/components/media/Sparkline/example.tsx":St,"../../../../packages/ui/src/components/media/Sparkline/meta.ts":Pt,"../../../../packages/ui/src/components/media/WaveDecoration/WaveDecoration.tsx":Tt,"../../../../packages/ui/src/components/media/WaveDecoration/example.tsx":Ct,"../../../../packages/ui/src/components/media/WaveDecoration/meta.ts":Rt,"../../../../packages/ui/src/components/media/Waveform/Waveform.tsx":Mt,"../../../../packages/ui/src/components/media/Waveform/example.tsx":Et,"../../../../packages/ui/src/components/media/Waveform/meta.ts":At,"../../../../packages/ui/src/components/media/Waveform/useWaveformPeaks.ts":Bt,"../../../../packages/ui/src/components/media/shared.tsx":It,"../../../../packages/ui/src/components/navigation/Router/Router.tsx":Nt,"../../../../packages/ui/src/components/navigation/Router/example.tsx":zt,"../../../../packages/ui/src/components/navigation/Router/meta.ts":Lt,"../../../../packages/ui/src/core.ts":Ft,"../../../../packages/ui/src/core/artwork.tsx":Dt,"../../../../packages/ui/src/core/base.tsx":Vt,"../../../../packages/ui/src/core/environment.ts":Ht,"../../../../packages/ui/src/core/motion-engine.d.ts":Ot,"../../../../packages/ui/src/core/motion/hooks.ts":$t,"../../../../packages/ui/src/core/noise.ts":Ut,"../../../../packages/ui/src/core/providers/context.ts":Gt,"../../../../packages/ui/src/core/responsive.ts":Wt,"../../../../packages/ui/src/dev/exampleHelpers.tsx":jt,"../../../../packages/ui/src/editor.ts":Kt,"../../../../packages/ui/src/forms.ts":qt,"../../../../packages/ui/src/index.ts":Yt,"../../../../packages/ui/src/router.ts":Xt,"../../../../packages/ui/src/theme/typography.ts":Zt})),o=(n,t=`${n}.tsx`)=>l.find(([e])=>e.endsWith(`/${n}/${t}`)),Jt=n=>o(n,"example.tsx")?.[1]??`// Нет example.tsx для ${n}`,Qt=n=>o(n)?.[1]??"",no=n=>o(n)?.[0].replace(/^.*packages\/ui\/src\//,"src/")??"";function i(n,t){const e=n.indexOf(t);if(e<0)return"";const a=n.indexOf("{",e);if(a<0){const r=n.indexOf(";",e);return n.slice(e,r<0?n.length:r+1).trim()}let s=0;for(let r=a;r<n.length;r+=1)if(n[r]==="{"&&(s+=1),n[r]==="}"&&--s===0)return n.slice(e,r+1).trim();return n.slice(e).trim()}const eo=n=>{for(const[,t]of l){const e=i(t,`export interface ${n}Props`)||i(t,`export type ${n}Props`);if(e)return e}return`// ${n} не объявляет отдельный Props-интерфейс.
+// Компонент использует общие props или композицию дочерних компонентов.`};export{eo as getComponentApiSource,Qt as getComponentSource,no as getComponentSourcePath,Jt as getExampleSource};
