@@ -1,4 +1,5 @@
-import { useId, useMemo, useRef } from "react";
+import { useSvgId } from "../../../core/artwork";
+import { useMemo, useRef } from "react";
 import { mark, type CommonProps } from "../../../core/base";
 import { useDecoration } from "../../../core/motion/hooks";
 import { seeded } from "../../../core/noise";
@@ -23,7 +24,7 @@ export function NeonWaves({
   ...p
 }: NeonWavesProps) {
   const ref = useRef<SVGSVGElement>(null);
-  const id = useId().replace(/[^a-zA-Z0-9_-]/g, "");
+  const id = useSvgId();
   const dots = useMemo(() => {
     if (!stars) return [];
     const next = seeded(7913 + Math.floor(phase * 713));

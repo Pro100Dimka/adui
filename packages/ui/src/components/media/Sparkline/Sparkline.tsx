@@ -1,4 +1,5 @@
-import { useId, type CSSProperties } from "react";
+import { useSvgId } from "../../../core/artwork";
+import { type CSSProperties } from "react";
 import { mark } from "../../../core/base";
 import { type SparklineProps } from "../shared";
 
@@ -7,7 +8,7 @@ export const Sparkline = (p: SparklineProps) => {
   const values = p.values ?? [
     12, 23, 17, 31, 43, 24, 28, 20, 41, 29, 51, 34, 38, 22, 31, 16, 23,
   ];
-  const id = useId().replace(/[^a-zA-Z0-9_-]/g, "");
+  const id = useSvgId();
   const max = Math.max(...values, 1);
   const min = Math.min(...values, 0);
   const points = values.map((v, i) => [

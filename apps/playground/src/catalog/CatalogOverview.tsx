@@ -1,10 +1,13 @@
 import { ExamplePreviewContext } from "../../../../packages/ui/src/dev/exampleHelpers";
 import { Badge, Card, Header, Icon, Stack, Typography } from "@ad-voice/ui";
 import { useLayoutEffect, useRef } from "react";
+import { CopyButton } from "./CopyButton";
 import {
   catalog,
   componentHref,
   getExample,
+  installCommand,
+  packageVersion,
   type CatalogMeta,
 } from "./componentRegistry";
 import { catalogCategories } from "./catalogNavigation";
@@ -33,10 +36,32 @@ export function CatalogOverview() {
             description="Здесь вся библиотека вживую. Наведите на понравившийся компонент и откройте его: там настройки, код и API."
           />
           <Stack direction="row" gap={2} wrap>
-            <Badge tone="success">{catalog.length} компонентов</Badge>
+            <Badge tone="success">v{packageVersion}</Badge>
+            <Badge>{catalog.length} компонентов</Badge>
             <Badge>{catalogCategories.length} категорий</Badge>
             <Badge>TypeScript</Badge>
           </Stack>
+          <Card className="docs-install" material="glass" padding="sm">
+            <Stack gap={2}>
+              <Typography variant="eyebrow" tone="muted">
+                Установка
+              </Typography>
+              {[installCommand, 'import "@ad-voice/ui/styles.css";'].map(
+                (line) => (
+                  <Stack key={line} direction="row" align="center" gap={3}>
+                    <Typography
+                      as="code"
+                      variant="mono"
+                      className="docs-install-line"
+                    >
+                      {line}
+                    </Typography>
+                    <CopyButton text={line} />
+                  </Stack>
+                ),
+              )}
+            </Stack>
+          </Card>
         </Stack>
       </Card>
 
@@ -67,8 +92,9 @@ export function CatalogOverview() {
   );
 }
 
-/** True when a wrapping row inside the specimen has spilled onto a second line. */
+/** How many extra lines the wrapping rows inside the specimen have spilled onto. */
 function wraps(root: HTMLElement) {
+  let extra = 0;
   for (const node of root.querySelectorAll<HTMLElement>("*")) {
     const style = getComputedStyle(node);
     if (!style.display.includes("flex") || style.flexWrap === "nowrap")
@@ -81,9 +107,9 @@ function wraps(root: HTMLElement) {
         })
         .map((child) => (child as HTMLElement).offsetTop),
     );
-    if (tops.size > 1) return true;
+    extra += tops.size - 1;
   }
-  return false;
+  return extra;
 }
 
 /**
@@ -111,11 +137,16 @@ function ShowcaseTile({ item }: { item: CatalogMeta }) {
       while (span < columns) {
         const wide = preview.scrollWidth > preview.clientWidth + 1;
         const tall = preview.scrollHeight > preview.clientHeight + 1;
-        const broken = wraps(preview);
-        if (!wide && !tall && !broken) break;
+        const lines = wraps(preview);
+        if (!wide && !tall && !lines) break;
         const height = preview.scrollHeight;
         tile.style.gridColumn = `span ${span + 1}`;
-        if (!wide && !broken && preview.scrollHeight >= height - 1) {
+        // Widening must help: fewer wrapped lines or a shorter specimen, else stay narrow.
+        if (
+          !wide &&
+          wraps(preview) >= lines &&
+          preview.scrollHeight >= height - 1
+        ) {
           tile.style.gridColumn = `span ${span}`;
           break;
         }

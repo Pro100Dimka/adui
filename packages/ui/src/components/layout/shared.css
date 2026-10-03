@@ -53,11 +53,6 @@
 .ad-header-actions {
   margin-left: auto;
 }
-.ad-icon-tile > .ad-icon {
-  color: #fff5f6;
-  filter: drop-shadow(0 0 0.1875rem #ff829a)
-    drop-shadow(0 0 0.5625rem #ff164f90);
-}
 .ad-toolbar,
 .ad-button-group {
   display: flex;

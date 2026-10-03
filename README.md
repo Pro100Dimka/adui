@@ -2,6 +2,8 @@
 
 Библиотека React-компонентов `@ad-voice/ui` и документация к ней (playground).
 
+Документация: https://pro100dimka.github.io/adui/
+
 ```text
 packages/ui/       — библиотека (публикуется как npm-пакет)
 apps/playground/   — сайт документации: по странице на компонент
@@ -44,15 +46,25 @@ npm run check
 
 ## npm-пакет
 
+Установка в любой проект — из GitHub Release:
+
 ```bash
-npm run package          # release/ad-voice-ui-<версия>.tgz
-npm run release:patch    # поднять patch-версию и собрать .tgz
+npm install https://github.com/Pro100Dimka/adui/releases/download/v2.0.0/ad-voice-ui-2.0.0.tgz
 ```
 
-Установка в другой проект:
+Новая версия:
 
 ```bash
-npm install ../adui/release/ad-voice-ui-1.2.0.tgz
+npm run release:patch          # или release:minor / release:major — поднимает версию
+git commit -am "v<версия>" && git tag v<версия> && git push --follow-tags
+```
+
+По тегу GitHub Actions сам собирает `.tgz` и публикует релиз.
+
+## Документация
+
+```bash
+npm run docs     # собирает сайт в docs/, его раздаёт GitHub Pages
 ```
 
 Использование — в [packages/ui/README.md](packages/ui/README.md).

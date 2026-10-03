@@ -3,3 +3,4 @@ packages/ui/dist/
 apps/playground/dist/
 *.log
 .DS_Store
+release/

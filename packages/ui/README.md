@@ -4,10 +4,12 @@ Neo UI — React + TypeScript UI kit: glass/ruby surfaces, animated neon borders
 
 ## Install
 
-React and ReactDOM are peer dependencies.
+Live docs: https://pro100dimka.github.io/adui/
+
+The package is installed from its GitHub release; React and ReactDOM are peer dependencies.
 
 ```bash
-npm install @ad-voice/ui react react-dom
+npm install https://github.com/Pro100Dimka/adui/releases/download/v2.0.0/ad-voice-ui-2.0.0.tgz react react-dom
 ```
 
 Import the stylesheet once in the app entry point:

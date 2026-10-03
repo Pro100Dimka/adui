@@ -1,6 +1,6 @@
 {
   "name": "ad-voice-ui-workspace",
-  "version": "1.2.0",
+  "version": "2.0.0",
   "private": true,
   "type": "module",
   "workspaces": [
@@ -14,10 +14,11 @@
     "build": "npm run build --workspace @ad-voice/ui && npm run build --workspace @ad-voice/playground",
     "preview": "npm run preview --workspace @ad-voice/playground",
     "check": "npm run typecheck && npm run build",
+    "docs": "npm run build && node -e \"const fs=require('fs');fs.rmSync('docs',{recursive:true,force:true});fs.cpSync('apps/playground/dist','docs',{recursive:true});fs.writeFileSync('docs/.nojekyll','')\"",
     "package": "npm run build --workspace @ad-voice/ui && node -e \"require('fs').mkdirSync('release',{recursive:true})\" && npm pack ./packages/ui --pack-destination release",
-    "release:patch": "npm version patch --workspace @ad-voice/ui --no-git-tag-version && npm run package",
-    "release:minor": "npm version minor --workspace @ad-voice/ui --no-git-tag-version && npm run package",
-    "release:major": "npm version major --workspace @ad-voice/ui --no-git-tag-version && npm run package"
+    "release:patch": "npm version patch --workspace @ad-voice/ui --no-git-tag-version",
+    "release:minor": "npm version minor --workspace @ad-voice/ui --no-git-tag-version",
+    "release:major": "npm version major --workspace @ad-voice/ui --no-git-tag-version"
   },
   "engines": {
     "node": ">=20"

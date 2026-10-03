@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { CopyButton } from "./CopyButton";
 import { DocsExampleBoundary } from "./DocsExampleBoundary";
 import { HeroBackdrop } from "./HeroBackdrop";
 import { ExampleCodeContext } from "../../../../packages/ui/src/dev/exampleHelpers";
@@ -14,7 +15,6 @@ import {
   Link,
   Stack,
   Typography,
-  copyText,
 } from "@ad-voice/ui";
 import {
   catalog,
@@ -36,7 +36,6 @@ function CodeBlock({
   code: string;
   language?: string;
 }) {
-  const [copied, setCopied] = useState(false);
   return (
     <Card className="docs-code-block" material="glass" padding="none">
       <Stack
@@ -57,18 +56,7 @@ function CodeBlock({
             {file}
           </Typography>
         </Stack>
-        <Button
-          size="xs"
-          variant={copied ? "primary" : "secondary"}
-          icon={copied ? "check" : "copy"}
-          onClick={() => {
-            void copyText(code);
-            setCopied(true);
-            window.setTimeout(() => setCopied(false), 1600);
-          }}
-        >
-          {copied ? "Скопировано" : "Копировать"}
-        </Button>
+        <CopyButton text={code} />
       </Stack>
       <Divider />
       <div className="docs-code-body">

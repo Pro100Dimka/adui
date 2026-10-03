@@ -1,10 +1,11 @@
-import { useId, useRef } from "react";
+import { useSvgId } from "../../../core/artwork";
+import { useRef } from "react";
 import { mark, type CommonProps } from "../../../core/base";
 import { useDecoration } from "../../../core/motion/hooks";
 
 export const WaveDecoration = (p: CommonProps) => {
   const ref = useRef<SVGSVGElement>(null);
-  const uid = useId().replace(/:/g, "");
+  const uid = useSvgId();
   const paint = (t: number) =>
     ref.current?.querySelectorAll("path").forEach((path, j) => {
       let d = "";

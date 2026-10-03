@@ -1,4 +1,5 @@
 import type React from "react";
+import { version } from "../../../../packages/ui/package.json";
 
 export type CatalogMeta = {
   name: string;
@@ -37,6 +38,10 @@ export const getCatalogItemBySlug = (slug?: string) =>
 export const getExample = (name: string) => examples.get(name);
 /** Raw sources for the code dialogs live in their own chunk, fetched after the page shows. */
 export const loadSources = () => import("./sources");
+
+/** The package installs straight from its GitHub release, no registry account needed. */
+export const installCommand = `npm install https://github.com/Pro100Dimka/adui/releases/download/v${version}/ad-voice-ui-${version}.tgz`;
+export const packageVersion = version;
 
 export const getImportPath = (item: CatalogMeta) =>
   item.category === "editor" ? "@ad-voice/ui/editor" : "@ad-voice/ui";

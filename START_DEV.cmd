@@ -5,7 +5,7 @@ if not exist node_modules (
   call npm install
   if errorlevel 1 goto :error
 )
-echo Starting A^&D UI Playground...
+echo Starting Neo UI docs...
 call npm run dev
 exit /b %errorlevel%
 :error

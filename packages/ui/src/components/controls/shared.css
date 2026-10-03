@@ -665,3 +665,9 @@
 :is(.ad-input-adornment, .ad-split-button) .ad-button-fx {
   display: none;
 }
+
+@keyframes ad-tab-glint {
+  to {
+    stroke-dashoffset: -100;
+  }
+}

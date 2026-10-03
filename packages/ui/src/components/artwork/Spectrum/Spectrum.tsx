@@ -1,4 +1,5 @@
-import { useId, useRef } from "react";
+import { useSvgId } from "../../../core/artwork";
+import { useRef } from "react";
 import { mark, type CommonProps } from "../../../core/base";
 import { useDecoration } from "../../../core/motion/hooks";
 
@@ -14,7 +15,7 @@ const BARS = 23;
 /** A living audio spectrum used as decoration behind level and monitoring panels. */
 export function Spectrum({ variant = "segmented", ...p }: SpectrumProps) {
   const ref = useRef<SVGSVGElement>(null);
-  const id = useId().replace(/[^a-zA-Z0-9_-]/g, "");
+  const id = useSvgId();
 
   useDecoration(ref, (time) => {
     const svg = ref.current;

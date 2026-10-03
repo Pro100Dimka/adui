@@ -658,3 +658,13 @@ a {
 .docs-code-dialog.ad-dialog {
   width: min(56rem, calc(100vw - 2rem));
 }
+
+/* Install block on the overview: one command per line, long ones scroll instead of wrapping. */
+.docs-install-line.ad-typography {
+  flex: 1;
+  min-width: 0;
+  overflow-x: auto;
+  white-space: nowrap;
+  scrollbar-width: none;
+  color: #ffd9e3;
+}

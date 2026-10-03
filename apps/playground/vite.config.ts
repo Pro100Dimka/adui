@@ -18,5 +18,5 @@ export default defineConfig({
     ],
   },
   // The docs embed every component source as raw text, so the bundle is intentionally large.
-  build: { target: "es2022", sourcemap: true, chunkSizeWarningLimit: 1500 },
+  build: { target: "es2022", chunkSizeWarningLimit: 1500 },
 });

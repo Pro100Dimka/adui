@@ -1,465 +1,466 @@
-const c=`import { useId, type CSSProperties } from "react";\r
-import { mark, type CommonProps } from "../../../core/base";\r
-\r
-export interface DatabaseArtProps extends CommonProps {\r
-  label?: string;\r
-}\r
-\r
-const SPARKS = [\r
-  [42, 84, 1, -1],\r
-  [44, 111, 1, -2.7],\r
-  [132, 143, 1, -0.6],\r
-  [15, 135, 0.75, -2],\r
-  [64, 151, 0.8, -3],\r
-  [156, 147, 0.75, -1.5],\r
-];\r
-\r
-/** Neon database cylinder: light orbits run along its rings, sparks twinkle around it. */\r
-export function DatabaseArt({ label, ...p }: DatabaseArtProps) {\r
-  const id = useId().replace(/[^a-zA-Z0-9_-]/g, "");\r
-  const ref = (name: string) => \`url(#\${id}-\${name})\`;\r
-  const rings =\r
-    "M39 83C39 106 134 106 134 83M39 108C39 132 134 132 134 108M39 133C39 155 134 155 134 133";\r
-  return (\r
-    <svg\r
-      {...mark("DatabaseArt", p)}\r
-      viewBox="0 0 170 179"\r
-      fill="none"\r
-      role={label ? "img" : undefined}\r
-      aria-label={label}\r
-      aria-hidden={!label}\r
-    >\r
-      <defs>\r
-        <filter id={\`\${id}-bloom\`} x="-50%" y="-50%" width="200%" height="200%">\r
-          <feGaussianBlur stdDeviation="3" />\r
-        </filter>\r
-        <linearGradient id={\`\${id}-body\`}>\r
-          <stop stopColor="#9a1636" />\r
-          <stop offset=".12" stopColor="#3b0313" />\r
-          <stop offset=".3" stopColor="#19050d" />\r
-          <stop offset=".72" stopColor="#090408" />\r
-          <stop offset="1" stopColor="#5e071e" />\r
-        </linearGradient>\r
-        <radialGradient id={\`\${id}-top\`} cx=".3" cy=".27" r=".9">\r
-          <stop stopColor="#a72649" />\r
-          <stop offset=".23" stopColor="#38111d" />\r
-          <stop offset=".66" stopColor="#10040a" />\r
-          <stop offset="1" stopColor="#290610" />\r
-        </radialGradient>\r
-        <linearGradient id={\`\${id}-edge\`}>\r
-          <stop stopColor="#fff1e9" />\r
-          <stop offset=".16" stopColor="#ff6388" />\r
-          <stop offset=".47" stopColor="#8b0730" />\r
-          <stop offset=".8" stopColor="#ff285f" />\r
-          <stop offset="1" stopColor="#ffabbc" />\r
-        </linearGradient>\r
-        <radialGradient id={\`\${id}-aura\`}>\r
-          <stop stopColor="#fd1746" stopOpacity=".3" />\r
-          <stop offset=".5" stopColor="#ff083c" stopOpacity=".12" />\r
-          <stop offset="1" stopColor="#ff083c" stopOpacity="0" />\r
-        </radialGradient>\r
-        <g id={\`\${id}-spark\`}>\r
-          <path d="M-7 0H7M0-8V8" stroke="#ffafbc" strokeWidth=".7" />\r
-          <circle r="3.4" fill="#ff4264" filter={ref("bloom")} />\r
-          <circle r="1.4" fill="#fff1eb" />\r
-        </g>\r
-      </defs>\r
-      <ellipse\r
-        cx="85"\r
-        cy="120"\r
-        rx="83"\r
-        ry="71"\r
-        fill={ref("aura")}\r
-        className="ad-art-aura"\r
-      />\r
-      <g transform="translate(0 2)">\r
-        <path\r
-          d="M39 57V133C39 156 134 156 134 133V57Z"\r
-          fill={ref("body")}\r
-          stroke="#ff345b"\r
-          strokeWidth=".75"\r
-        />\r
-        <path\r
-          d={rings}\r
-          stroke="#ff335d"\r
-          strokeWidth="3.5"\r
-          opacity=".7"\r
-          filter={ref("bloom")}\r
-        />\r
-        <path d={rings} stroke={ref("edge")} strokeWidth="1.4" />\r
-        <ellipse\r
-          cx="86.5"\r
-          cy="57"\r
-          rx="47.5"\r
-          ry="17"\r
-          fill={ref("top")}\r
-          stroke="#ff426b"\r
-          strokeWidth="1.1"\r
-        />\r
-        <ellipse\r
-          cx="86.5"\r
-          cy="57"\r
-          rx="47.5"\r
-          ry="17"\r
-          stroke="#ff2b57"\r
-          strokeWidth="5"\r
-          opacity=".75"\r
-          filter={ref("bloom")}\r
-        />\r
-        <ellipse\r
-          cx="86.5"\r
-          cy="57"\r
-          rx="42"\r
-          ry="13.8"\r
-          stroke={ref("edge")}\r
-          strokeWidth=".5"\r
-          opacity=".8"\r
-        />\r
-        {[81, 106, 132].map((cy) => (\r
-          <ellipse\r
-            key={cy}\r
-            cx="86.5"\r
-            cy={cy}\r
-            rx="47.5"\r
-            ry="17"\r
-            stroke="#e4264f"\r
-            strokeWidth=".7"\r
-            opacity=".75"\r
-          />\r
-        ))}\r
-        <g stroke="#ffe7ed" strokeWidth="1.45">\r
-          {[57, 106, 132].map((cy, i) => (\r
-            <ellipse\r
-              key={cy}\r
-              className="ad-art-orbit"\r
-              cx="86.5"\r
-              cy={cy}\r
-              rx="47.5"\r
-              ry="17"\r
-              pathLength="100"\r
-              style={{ animationDelay: \`\${-i * 1.3}s\` }}\r
-            />\r
-          ))}\r
-        </g>\r
-        <ellipse\r
-          cx="86.5"\r
-          cy="53.5"\r
-          rx="5"\r
-          ry="1.6"\r
-          fill="#ff577b"\r
-          filter={ref("bloom")}\r
-        />\r
-        <ellipse cx="86.5" cy="53.5" rx="3.4" ry=".8" fill="#ffb5c3" />\r
-      </g>\r
-      {SPARKS.map(([x, y, scale, delay]) => (\r
-        <g\r
-          key={\`\${x}-\${y}\`}\r
-          className="ad-art-spark"\r
-          style={{ "--ad-delay": \`\${delay}s\` } as CSSProperties}\r
-        >\r
-          <use\r
-            href={\`#\${id}-spark\`}\r
-            transform={\`translate(\${x} \${y}) scale(\${scale})\`}\r
-          />\r
-        </g>\r
-      ))}\r
-    </svg>\r
-  );\r
-}\r
-`,p=`import { DatabaseArt } from "@ad-voice/ui";\r
-\r
-export default function DatabaseArtExample() {\r
-  return <DatabaseArt label="Хранилище записей" />;\r
-}\r
+const c=`import { useSvgId } from "../../../core/artwork";
+import { type CSSProperties } from "react";
+import { mark, type CommonProps } from "../../../core/base";
+
+export interface DatabaseArtProps extends CommonProps {
+  label?: string;
+}
+
+const SPARKS = [
+  [42, 84, 1, -1],
+  [44, 111, 1, -2.7],
+  [132, 143, 1, -0.6],
+  [15, 135, 0.75, -2],
+  [64, 151, 0.8, -3],
+  [156, 147, 0.75, -1.5],
+];
+
+/** Neon database cylinder: light orbits run along its rings, sparks twinkle around it. */
+export function DatabaseArt({ label, ...p }: DatabaseArtProps) {
+  const id = useSvgId();
+  const ref = (name: string) => \`url(#\${id}-\${name})\`;
+  const rings =
+    "M39 83C39 106 134 106 134 83M39 108C39 132 134 132 134 108M39 133C39 155 134 155 134 133";
+  return (
+    <svg
+      {...mark("DatabaseArt", p)}
+      viewBox="0 0 170 179"
+      fill="none"
+      role={label ? "img" : undefined}
+      aria-label={label}
+      aria-hidden={!label}
+    >
+      <defs>
+        <filter id={\`\${id}-bloom\`} x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur stdDeviation="3" />
+        </filter>
+        <linearGradient id={\`\${id}-body\`}>
+          <stop stopColor="#9a1636" />
+          <stop offset=".12" stopColor="#3b0313" />
+          <stop offset=".3" stopColor="#19050d" />
+          <stop offset=".72" stopColor="#090408" />
+          <stop offset="1" stopColor="#5e071e" />
+        </linearGradient>
+        <radialGradient id={\`\${id}-top\`} cx=".3" cy=".27" r=".9">
+          <stop stopColor="#a72649" />
+          <stop offset=".23" stopColor="#38111d" />
+          <stop offset=".66" stopColor="#10040a" />
+          <stop offset="1" stopColor="#290610" />
+        </radialGradient>
+        <linearGradient id={\`\${id}-edge\`}>
+          <stop stopColor="#fff1e9" />
+          <stop offset=".16" stopColor="#ff6388" />
+          <stop offset=".47" stopColor="#8b0730" />
+          <stop offset=".8" stopColor="#ff285f" />
+          <stop offset="1" stopColor="#ffabbc" />
+        </linearGradient>
+        <radialGradient id={\`\${id}-aura\`}>
+          <stop stopColor="#fd1746" stopOpacity=".3" />
+          <stop offset=".5" stopColor="#ff083c" stopOpacity=".12" />
+          <stop offset="1" stopColor="#ff083c" stopOpacity="0" />
+        </radialGradient>
+        <g id={\`\${id}-spark\`}>
+          <path d="M-7 0H7M0-8V8" stroke="#ffafbc" strokeWidth=".7" />
+          <circle r="3.4" fill="#ff4264" filter={ref("bloom")} />
+          <circle r="1.4" fill="#fff1eb" />
+        </g>
+      </defs>
+      <ellipse
+        cx="85"
+        cy="120"
+        rx="83"
+        ry="71"
+        fill={ref("aura")}
+        className="ad-art-aura"
+      />
+      <g transform="translate(0 2)">
+        <path
+          d="M39 57V133C39 156 134 156 134 133V57Z"
+          fill={ref("body")}
+          stroke="#ff345b"
+          strokeWidth=".75"
+        />
+        <path
+          d={rings}
+          stroke="#ff335d"
+          strokeWidth="3.5"
+          opacity=".7"
+          filter={ref("bloom")}
+        />
+        <path d={rings} stroke={ref("edge")} strokeWidth="1.4" />
+        <ellipse
+          cx="86.5"
+          cy="57"
+          rx="47.5"
+          ry="17"
+          fill={ref("top")}
+          stroke="#ff426b"
+          strokeWidth="1.1"
+        />
+        <ellipse
+          cx="86.5"
+          cy="57"
+          rx="47.5"
+          ry="17"
+          stroke="#ff2b57"
+          strokeWidth="5"
+          opacity=".75"
+          filter={ref("bloom")}
+        />
+        <ellipse
+          cx="86.5"
+          cy="57"
+          rx="42"
+          ry="13.8"
+          stroke={ref("edge")}
+          strokeWidth=".5"
+          opacity=".8"
+        />
+        {[81, 106, 132].map((cy) => (
+          <ellipse
+            key={cy}
+            cx="86.5"
+            cy={cy}
+            rx="47.5"
+            ry="17"
+            stroke="#e4264f"
+            strokeWidth=".7"
+            opacity=".75"
+          />
+        ))}
+        <g stroke="#ffe7ed" strokeWidth="1.45">
+          {[57, 106, 132].map((cy, i) => (
+            <ellipse
+              key={cy}
+              className="ad-art-orbit"
+              cx="86.5"
+              cy={cy}
+              rx="47.5"
+              ry="17"
+              pathLength="100"
+              style={{ animationDelay: \`\${-i * 1.3}s\` }}
+            />
+          ))}
+        </g>
+        <ellipse
+          cx="86.5"
+          cy="53.5"
+          rx="5"
+          ry="1.6"
+          fill="#ff577b"
+          filter={ref("bloom")}
+        />
+        <ellipse cx="86.5" cy="53.5" rx="3.4" ry=".8" fill="#ffb5c3" />
+      </g>
+      {SPARKS.map(([x, y, scale, delay]) => (
+        <g
+          key={\`\${x}-\${y}\`}
+          className="ad-art-spark"
+          style={{ "--ad-delay": \`\${delay}s\` } as CSSProperties}
+        >
+          <use
+            href={\`#\${id}-spark\`}
+            transform={\`translate(\${x} \${y}) scale(\${scale})\`}
+          />
+        </g>
+      ))}
+    </svg>
+  );
+}
+`,p=`import { DatabaseArt } from "@ad-voice/ui";
+
+export default function DatabaseArtExample() {
+  return <DatabaseArt label="Хранилище записей" />;
+}
 `,d=`export default {\r
   name: "DatabaseArt",\r
   description:\r
     "Неоновая база данных с бегущими орбитами и искрами — для хранилища и данных.",\r
   category: "motion",\r
 } as const;\r
-`,u=`import { useRef } from "react";\r
-import { mark, type CommonProps } from "../../../core/base";\r
-import { clamp01, fbm, seeded, type Painting } from "../../../core/noise";\r
-import { useArtwork } from "../useArtwork";\r
-\r
-export interface LandscapeProps extends CommonProps {\r
-  /** Darken the left side so text placed over it stays readable. */\r
-  shade?: boolean;\r
-}\r
-\r
-type Point = readonly [number, number];\r
-const W = 1220;\r
-const H = 168;\r
-\r
-const centerX = 1129,\r
-  centerY = 309,\r
-  radius = 346;\r
-\r
-/** Night nebula, a ruby-rimmed planet and two mountain ridges, painted procedurally. */\r
-const landscape: Painting = {\r
-  pixels(image, from, to) {\r
-    const { width } = image;\r
-    const scale = width / W;\r
-    for (let py = from; py < to; py += 1)\r
-      for (let px = 0; px < width; px += 1) {\r
-        const x = px / scale,\r
-          y = py / scale;\r
-        const n = fbm(x * 0.012, y * 0.013 + 20),\r
-          warp = fbm(x * 0.004, y * 0.005) * 70;\r
-        const f = fbm(x * 0.025 + warp * 0.03, y * 0.032 + warp * 0.02);\r
-        const ridge =\r
-          1 - Math.abs(2 * fbm(x * 0.026 + n * 5, y * 0.034 + n * 5, 5) - 1);\r
-        const threads =\r
-          Math.pow(clamp01((ridge - 0.61) * 2.7), 4) *\r
-          Math.pow(clamp01((f - 0.33) * 3), 1.3);\r
-        const horizon = Math.exp(\r
-          -(((x - 820) / 160) ** 2 + ((y - 171) / 40) ** 2),\r
-        );\r
-        const cloud =\r
-          Math.exp(-(((x - 830) / 340) ** 2)) *\r
-          (8 + 32 * n ** 2 + 95 * threads);\r
-        let red = 6 + cloud + horizon * 170,\r
-          green = 8 + cloud * 0.19 + horizon * 32,\r
-          blue = 14 + cloud * 0.3 + horizon * 44;\r
-        const dx = (x - centerX) / radius,\r
-          dy = (y - centerY) / radius,\r
-          radial = Math.hypot(dx, dy),\r
-          edge = (1 - radial) * radius;\r
-        const sideLight = clamp01(0.18 - dx * 0.98 - dy * 0.15, 0.08, 1.3);\r
-        if (radial <= 1) {\r
-          const z = Math.sqrt(Math.max(0, 1 - dx * dx - dy * dy));\r
-          const terrain = fbm(dx * 22 + z * 9, dy * 26 + z * 4, 6);\r
-          const geology = fbm(dx * 78 + terrain * 9, dy * 82 + terrain * 7, 3);\r
-          const vein =\r
-            1 -\r
-            Math.abs(\r
-              fbm(dx * 83 + geology * 5, dy * 97 + geology * 5, 3) * 2 - 1,\r
-            );\r
-          const lava =\r
-            Math.pow(clamp01((vein - 0.66) * 2.9), 5) *\r
-            Math.pow(clamp01((terrain - 0.34) * 3.3), 1.6);\r
-          const rim = Math.exp(-Math.max(0, edge) / 2.15) * sideLight;\r
-          const atmosphere = Math.exp(-Math.max(0, edge) / 23) * sideLight;\r
-          const face = clamp01(0.5 - dx * 0.32 - z * 0.5, 0.12, 0.6);\r
-          red =\r
-            7 +\r
-            face * (26 + 46 * terrain) +\r
-            lava * 82 +\r
-            rim * 238 +\r
-            atmosphere * 166;\r
-          green =\r
-            8 +\r
-            face * (17 + 12 * terrain) +\r
-            lava * 5 +\r
-            rim * 202 +\r
-            atmosphere * 38;\r
-          blue =\r
-            16 +\r
-            face * (21 + 18 * terrain) +\r
-            lava * 14 +\r
-            rim * 211 +\r
-            atmosphere * 62;\r
-        } else if (radial < 1.12) {\r
-          const halo = Math.exp(edge / 13) * sideLight;\r
-          red += halo * 142;\r
-          green += halo * 18;\r
-          blue += halo * 34;\r
-        }\r
-        const pixel = (py * width + px) * 4;\r
-        image.data[pixel] = red;\r
-        image.data[pixel + 1] = green;\r
-        image.data[pixel + 2] = blue;\r
-        image.data[pixel + 3] = 255;\r
-      }\r
-  },\r
-  finish(context, width) {\r
-    context.save();\r
-    context.scale(width / W, width / W);\r
-\r
-    // Stars above the ridge line.\r
-    const next = seeded(840);\r
-    for (let i = 0; i < 350; i += 1) {\r
-      const x = 410 + next() * 810,\r
-        y = next() * 168;\r
-      if (Math.hypot(x - centerX, y - centerY) < radius) continue;\r
-      context.fillStyle = \`rgba(255,\${55 + Math.round(next() * 68)},\${75 + Math.round(next() * 70)},\${0.1 + next() * 0.4})\`;\r
-      context.beginPath();\r
-      context.arc(x, y, 0.15 + next() * 0.57, 0, Math.PI * 2);\r
-      context.fill();\r
-    }\r
-    glow(context, 828, 156, 96, "255,98,96", 0.26);\r
-    glow(context, 828, 156, 38, "255,168,132", 0.4);\r
-    mountain(context, FAR_RIDGE, 180, "#451320", "#ef56667a", 716);\r
-    mountain(context, NEAR_RIDGE, 181, "#080a10", "#7f2635a0", 282);\r
-    context.restore();\r
-  },\r
-};\r
-\r
-function glow(\r
-  context: CanvasRenderingContext2D,\r
-  x: number,\r
-  y: number,\r
-  radius: number,\r
-  color: string,\r
-  alpha: number,\r
-) {\r
-  const gradient = context.createRadialGradient(x, y, 0, x, y, radius);\r
-  gradient.addColorStop(0, \`rgba(\${color},\${alpha})\`);\r
-  gradient.addColorStop(1, \`rgba(\${color},0)\`);\r
-  context.fillStyle = gradient;\r
-  context.fillRect(x - radius, y - radius, radius * 2, radius * 2);\r
-}\r
-\r
-function polygon(\r
-  context: CanvasRenderingContext2D,\r
-  points: readonly Point[],\r
-  fill: string,\r
-) {\r
-  context.beginPath();\r
-  points.forEach(([x, y], i) =>\r
-    i ? context.lineTo(x, y) : context.moveTo(x, y),\r
-  );\r
-  context.closePath();\r
-  context.fillStyle = fill;\r
-  context.fill();\r
-}\r
-\r
-/** A ridge with jittered detail, a glowing crest line and faceted slopes. */\r
-function mountain(\r
-  context: CanvasRenderingContext2D,\r
-  points: readonly Point[],\r
-  base: number,\r
-  color: string,\r
-  line: string,\r
-  seed: number,\r
-) {\r
-  const rand = seeded(seed),\r
-    fine: Point[] = [];\r
-  for (let i = 0; i < points.length - 1; i += 1) {\r
-    const [x1, y1] = points[i],\r
-      [x2, y2] = points[i + 1];\r
-    fine.push([x1, y1]);\r
-    for (let d = 1; d <= 3; d += 1) {\r
-      const t = d / 4;\r
-      fine.push([x1 + (x2 - x1) * t, y1 + (y2 - y1) * t + (rand() - 0.5) * 6]);\r
-    }\r
-  }\r
-  fine.push(points[points.length - 1]);\r
-  polygon(context, [...fine, [W, base], [0, base]], color);\r
-  context.beginPath();\r
-  fine.forEach(([x, y], i) =>\r
-    i ? context.lineTo(x, y) : context.moveTo(x, y),\r
-  );\r
-  context.strokeStyle = line;\r
-  context.lineWidth = 0.8;\r
-  context.stroke();\r
-  for (let i = 1; i < fine.length - 1; i += 1) {\r
-    const [x, y] = fine[i];\r
-    if (fine[i - 1][1] < y || fine[i + 1][1] < y) continue;\r
-    const foot: Point = [\r
-      x + 8 + rand() * 27,\r
-      Math.min(base + 8, y + 20 + rand() * 32),\r
-    ];\r
-    polygon(\r
-      context,\r
-      [fine[i - 1], [x, y], foot],\r
-      \`rgba(52,33,45,\${0.12 + rand() * 0.26})\`,\r
-    );\r
-    context.beginPath();\r
-    context.moveTo(x, y);\r
-    context.lineTo(x + 5 + rand() * 8, y + 12 + rand() * 8);\r
-    context.lineTo(...foot);\r
-    context.strokeStyle = \`rgba(192,49,69,\${0.1 + rand() * 0.26})\`;\r
-    context.lineWidth = 0.6;\r
-    context.stroke();\r
-  }\r
-}\r
-\r
-const FAR_RIDGE: Point[] = [\r
-  [0, 168],\r
-  [410, 166],\r
-  [475, 155],\r
-  [518, 149],\r
-  [548, 151],\r
-  [582, 138],\r
-  [610, 135],\r
-  [650, 148],\r
-  [697, 144],\r
-  [725, 135],\r
-  [749, 146],\r
-  [768, 143],\r
-  [788, 152],\r
-  [825, 143],\r
-  [843, 150],\r
-  [868, 145],\r
-  [891, 147],\r
-  [918, 141],\r
-  [945, 148],\r
-  [989, 153],\r
-  [1025, 149],\r
-  [1100, 155],\r
-  [1175, 144],\r
-  [1220, 163],\r
-];\r
-const NEAR_RIDGE: Point[] = [\r
-  [0, 169],\r
-  [440, 168],\r
-  [475, 153],\r
-  [497, 151],\r
-  [516, 138],\r
-  [534, 123],\r
-  [546, 128],\r
-  [561, 114],\r
-  [574, 112],\r
-  [585, 100],\r
-  [597, 94],\r
-  [608, 96],\r
-  [622, 113],\r
-  [633, 113],\r
-  [650, 132],\r
-  [663, 121],\r
-  [678, 117],\r
-  [690, 129],\r
-  [701, 141],\r
-  [722, 145],\r
-  [739, 155],\r
-  [779, 158],\r
-  [803, 148],\r
-  [821, 153],\r
-  [844, 149],\r
-  [863, 145],\r
-  [874, 135],\r
-  [887, 129],\r
-  [899, 128],\r
-  [913, 140],\r
-  [927, 145],\r
-  [939, 144],\r
-  [956, 151],\r
-  [976, 154],\r
-  [995, 164],\r
-  [1110, 168],\r
-  [1180, 152],\r
-  [1202, 130],\r
-  [1220, 132],\r
-];\r
-\r
-/** Procedural night landscape with a planet; children are laid over it. */\r
-export function Landscape({ shade = true, children, ...p }: LandscapeProps) {\r
-  const ref = useRef<HTMLCanvasElement>(null);\r
-  useArtwork(ref, "landscape", W, H, landscape);\r
-  return (\r
-    <div {...mark("Landscape", p)} data-shade={shade || undefined}>\r
-      <canvas ref={ref} aria-hidden />\r
-      <span className="ad-landscape-glow" aria-hidden />\r
-      {children && <div className="ad-landscape-content">{children}</div>}\r
-    </div>\r
-  );\r
-}\r
-`,m=`import { Landscape } from "@ad-voice/ui";\r
-\r
-export default function LandscapeExample() {\r
-  return <Landscape />;\r
-}\r
+`,u=`import { useRef } from "react";
+import { mark, type CommonProps } from "../../../core/base";
+import { clamp01, fbm, seeded, type Painting } from "../../../core/noise";
+import { useArtwork } from "../useArtwork";
+
+export interface LandscapeProps extends CommonProps {
+  /** Darken the left side so text placed over it stays readable. */
+  shade?: boolean;
+}
+
+type Point = readonly [number, number];
+const W = 1220;
+const H = 168;
+
+const centerX = 1129,
+  centerY = 309,
+  radius = 346;
+
+/** Night nebula, a ruby-rimmed planet and two mountain ridges, painted procedurally. */
+const landscape: Painting = {
+  pixels(image, from, to) {
+    const { width } = image;
+    const scale = width / W;
+    for (let py = from; py < to; py += 1)
+      for (let px = 0; px < width; px += 1) {
+        const x = px / scale,
+          y = py / scale;
+        const n = fbm(x * 0.012, y * 0.013 + 20),
+          warp = fbm(x * 0.004, y * 0.005) * 70;
+        const f = fbm(x * 0.025 + warp * 0.03, y * 0.032 + warp * 0.02);
+        const ridge =
+          1 - Math.abs(2 * fbm(x * 0.026 + n * 5, y * 0.034 + n * 5, 5) - 1);
+        const threads =
+          Math.pow(clamp01((ridge - 0.61) * 2.7), 4) *
+          Math.pow(clamp01((f - 0.33) * 3), 1.3);
+        const horizon = Math.exp(
+          -(((x - 820) / 160) ** 2 + ((y - 171) / 40) ** 2),
+        );
+        const cloud =
+          Math.exp(-(((x - 830) / 340) ** 2)) *
+          (8 + 32 * n ** 2 + 95 * threads);
+        let red = 6 + cloud + horizon * 170,
+          green = 8 + cloud * 0.19 + horizon * 32,
+          blue = 14 + cloud * 0.3 + horizon * 44;
+        const dx = (x - centerX) / radius,
+          dy = (y - centerY) / radius,
+          radial = Math.hypot(dx, dy),
+          edge = (1 - radial) * radius;
+        const sideLight = clamp01(0.18 - dx * 0.98 - dy * 0.15, 0.08, 1.3);
+        if (radial <= 1) {
+          const z = Math.sqrt(Math.max(0, 1 - dx * dx - dy * dy));
+          const terrain = fbm(dx * 22 + z * 9, dy * 26 + z * 4, 6);
+          const geology = fbm(dx * 78 + terrain * 9, dy * 82 + terrain * 7, 3);
+          const vein =
+            1 -
+            Math.abs(
+              fbm(dx * 83 + geology * 5, dy * 97 + geology * 5, 3) * 2 - 1,
+            );
+          const lava =
+            Math.pow(clamp01((vein - 0.66) * 2.9), 5) *
+            Math.pow(clamp01((terrain - 0.34) * 3.3), 1.6);
+          const rim = Math.exp(-Math.max(0, edge) / 2.15) * sideLight;
+          const atmosphere = Math.exp(-Math.max(0, edge) / 23) * sideLight;
+          const face = clamp01(0.5 - dx * 0.32 - z * 0.5, 0.12, 0.6);
+          red =
+            7 +
+            face * (26 + 46 * terrain) +
+            lava * 82 +
+            rim * 238 +
+            atmosphere * 166;
+          green =
+            8 +
+            face * (17 + 12 * terrain) +
+            lava * 5 +
+            rim * 202 +
+            atmosphere * 38;
+          blue =
+            16 +
+            face * (21 + 18 * terrain) +
+            lava * 14 +
+            rim * 211 +
+            atmosphere * 62;
+        } else if (radial < 1.12) {
+          const halo = Math.exp(edge / 13) * sideLight;
+          red += halo * 142;
+          green += halo * 18;
+          blue += halo * 34;
+        }
+        const pixel = (py * width + px) * 4;
+        image.data[pixel] = red;
+        image.data[pixel + 1] = green;
+        image.data[pixel + 2] = blue;
+        image.data[pixel + 3] = 255;
+      }
+  },
+  finish(context, width) {
+    context.save();
+    context.scale(width / W, width / W);
+
+    // Stars above the ridge line.
+    const next = seeded(840);
+    for (let i = 0; i < 350; i += 1) {
+      const x = 410 + next() * 810,
+        y = next() * 168;
+      if (Math.hypot(x - centerX, y - centerY) < radius) continue;
+      context.fillStyle = \`rgba(255,\${55 + Math.round(next() * 68)},\${75 + Math.round(next() * 70)},\${0.1 + next() * 0.4})\`;
+      context.beginPath();
+      context.arc(x, y, 0.15 + next() * 0.57, 0, Math.PI * 2);
+      context.fill();
+    }
+    glow(context, 828, 156, 96, "255,98,96", 0.26);
+    glow(context, 828, 156, 38, "255,168,132", 0.4);
+    mountain(context, FAR_RIDGE, 180, "#451320", "#ef56667a", 716);
+    mountain(context, NEAR_RIDGE, 181, "#080a10", "#7f2635a0", 282);
+    context.restore();
+  },
+};
+
+function glow(
+  context: CanvasRenderingContext2D,
+  x: number,
+  y: number,
+  radius: number,
+  color: string,
+  alpha: number,
+) {
+  const gradient = context.createRadialGradient(x, y, 0, x, y, radius);
+  gradient.addColorStop(0, \`rgba(\${color},\${alpha})\`);
+  gradient.addColorStop(1, \`rgba(\${color},0)\`);
+  context.fillStyle = gradient;
+  context.fillRect(x - radius, y - radius, radius * 2, radius * 2);
+}
+
+function polygon(
+  context: CanvasRenderingContext2D,
+  points: readonly Point[],
+  fill: string,
+) {
+  context.beginPath();
+  points.forEach(([x, y], i) =>
+    i ? context.lineTo(x, y) : context.moveTo(x, y),
+  );
+  context.closePath();
+  context.fillStyle = fill;
+  context.fill();
+}
+
+/** A ridge with jittered detail, a glowing crest line and faceted slopes. */
+function mountain(
+  context: CanvasRenderingContext2D,
+  points: readonly Point[],
+  base: number,
+  color: string,
+  line: string,
+  seed: number,
+) {
+  const rand = seeded(seed),
+    fine: Point[] = [];
+  for (let i = 0; i < points.length - 1; i += 1) {
+    const [x1, y1] = points[i],
+      [x2, y2] = points[i + 1];
+    fine.push([x1, y1]);
+    for (let d = 1; d <= 3; d += 1) {
+      const t = d / 4;
+      fine.push([x1 + (x2 - x1) * t, y1 + (y2 - y1) * t + (rand() - 0.5) * 6]);
+    }
+  }
+  fine.push(points[points.length - 1]);
+  polygon(context, [...fine, [W, base], [0, base]], color);
+  context.beginPath();
+  fine.forEach(([x, y], i) =>
+    i ? context.lineTo(x, y) : context.moveTo(x, y),
+  );
+  context.strokeStyle = line;
+  context.lineWidth = 0.8;
+  context.stroke();
+  for (let i = 1; i < fine.length - 1; i += 1) {
+    const [x, y] = fine[i];
+    if (fine[i - 1][1] < y || fine[i + 1][1] < y) continue;
+    const foot: Point = [
+      x + 8 + rand() * 27,
+      Math.min(base + 8, y + 20 + rand() * 32),
+    ];
+    polygon(
+      context,
+      [fine[i - 1], [x, y], foot],
+      \`rgba(52,33,45,\${0.12 + rand() * 0.26})\`,
+    );
+    context.beginPath();
+    context.moveTo(x, y);
+    context.lineTo(x + 5 + rand() * 8, y + 12 + rand() * 8);
+    context.lineTo(...foot);
+    context.strokeStyle = \`rgba(192,49,69,\${0.1 + rand() * 0.26})\`;
+    context.lineWidth = 0.6;
+    context.stroke();
+  }
+}
+
+const FAR_RIDGE: Point[] = [
+  [0, 168],
+  [410, 166],
+  [475, 155],
+  [518, 149],
+  [548, 151],
+  [582, 138],
+  [610, 135],
+  [650, 148],
+  [697, 144],
+  [725, 135],
+  [749, 146],
+  [768, 143],
+  [788, 152],
+  [825, 143],
+  [843, 150],
+  [868, 145],
+  [891, 147],
+  [918, 141],
+  [945, 148],
+  [989, 153],
+  [1025, 149],
+  [1100, 155],
+  [1175, 144],
+  [1220, 163],
+];
+const NEAR_RIDGE: Point[] = [
+  [0, 169],
+  [440, 168],
+  [475, 153],
+  [497, 151],
+  [516, 138],
+  [534, 123],
+  [546, 128],
+  [561, 114],
+  [574, 112],
+  [585, 100],
+  [597, 94],
+  [608, 96],
+  [622, 113],
+  [633, 113],
+  [650, 132],
+  [663, 121],
+  [678, 117],
+  [690, 129],
+  [701, 141],
+  [722, 145],
+  [739, 155],
+  [779, 158],
+  [803, 148],
+  [821, 153],
+  [844, 149],
+  [863, 145],
+  [874, 135],
+  [887, 129],
+  [899, 128],
+  [913, 140],
+  [927, 145],
+  [939, 144],
+  [956, 151],
+  [976, 154],
+  [995, 164],
+  [1110, 168],
+  [1180, 152],
+  [1202, 130],
+  [1220, 132],
+];
+
+/** Procedural night landscape with a planet; children are laid over it. */
+export function Landscape({ shade = true, children, ...p }: LandscapeProps) {
+  const ref = useRef<HTMLCanvasElement>(null);
+  useArtwork(ref, "landscape", W, H, landscape);
+  return (
+    <div {...mark("Landscape", p)} data-shade={shade || undefined}>
+      <canvas ref={ref} aria-hidden />
+      <span className="ad-landscape-glow" aria-hidden />
+      {children && <div className="ad-landscape-content">{children}</div>}
+    </div>
+  );
+}
+`,m=`import { Landscape } from "@ad-voice/ui";
+
+export default function LandscapeExample() {
+  return <Landscape />;
+}
 `,f=`export default {\r
   name: "Landscape",\r
   description:\r
@@ -467,123 +468,124 @@ export default function LandscapeExample() {\r
   category: "motion",\r
   wide: true,\r
 } as const;\r
-`,g=`import { useId, useMemo, useRef } from "react";\r
-import { mark, type CommonProps } from "../../../core/base";\r
-import { useDecoration } from "../../../core/motion/hooks";\r
-import { seeded } from "../../../core/noise";\r
-\r
-export interface NeonWavesProps extends CommonProps {\r
-  /** Number of strands in the bundle. */\r
-  strands?: number;\r
-  /** Scatter faint stars around the strands. */\r
-  stars?: boolean;\r
-  /** Shifts the wave shape, so neighbouring instances do not move in step. */\r
-  phase?: number;\r
-}\r
-\r
-const W = 600;\r
-const H = 120;\r
-\r
-/** A bundle of neon strands that flow and twist slowly, with faint stars around them. */\r
-export function NeonWaves({\r
-  strands = 22,\r
-  stars = true,\r
-  phase = 0.9,\r
-  ...p\r
-}: NeonWavesProps) {\r
-  const ref = useRef<SVGSVGElement>(null);\r
-  const id = useId().replace(/[^a-zA-Z0-9_-]/g, "");\r
-  const dots = useMemo(() => {\r
-    if (!stars) return [];\r
-    const next = seeded(7913 + Math.floor(phase * 713));\r
-    return Array.from({ length: 60 }, () => ({\r
-      x: next() * W,\r
-      y: next() * H,\r
-      r: 0.25 + next() * 0.55,\r
-      o: 0.16 + next() * 0.42,\r
-    }));\r
-  }, [stars, phase]);\r
-\r
-  useDecoration(ref, (time) => {\r
-    const paths = ref.current?.querySelectorAll("path");\r
-    paths?.forEach((path, i) => {\r
-      const t = i / Math.max(1, paths.length - 1);\r
-      const drift = time * 0.42 + phase;\r
-      const a = Math.sin(drift + t * 1.4) * H * 0.095;\r
-      const b = Math.cos(drift * 0.8 + t * 1.8) * H * 0.08;\r
-      const y = H * (0.38 + t * 0.58);\r
-      // Most strands form the main twist; the rest run as a lower counter-current.\r
-      path.setAttribute(\r
-        "d",\r
-        i < paths.length * 0.68\r
-          ? \`M-12 \${y + a} C\${W * 0.2} \${H * 1.28 - t * H * 0.27 + a} \${W * 0.32} \${H * 0.34 + t * H * 0.21 + b} \${W * 0.46} \${H * 0.62 + t * H * 0.12} S\${W * 0.67} \${H * 1.14 - t * H * 0.09 + a} \${W * 0.8} \${H * 0.69 - t * H * 0.22 + b} S\${W * 0.94} \${H * 0.43 - t * H * 0.44 + a} \${W + 8} \${H * 0.21 + t * H * 0.45}\`\r
-          : \`M-12 \${H * (0.9 + t * 0.12) + b} C\${W * 0.21} \${H * 0.98 + a} \${W * 0.33} \${H * 0.24 + t * H * 0.2 + a} \${W * 0.52} \${H * 0.75 + t * H * 0.25 + b} S\${W * 0.82} \${H * 0.38 + t * H * 0.27 + a} \${W + 8} \${H * (0.48 + t * 0.5) + b}\`,\r
-      );\r
-    });\r
-  });\r
-\r
-  return (\r
-    <svg\r
-      {...mark("NeonWaves", p)}\r
-      ref={ref}\r
-      viewBox={\`0 0 \${W} \${H}\`}\r
-      preserveAspectRatio="none"\r
-      aria-hidden="true"\r
-    >\r
-      <defs>\r
-        <linearGradient id={\`\${id}-strand\`}>\r
-          <stop stopColor="#6d112b" stopOpacity="0" />\r
-          <stop offset=".16" stopColor="#af153d" stopOpacity=".35" />\r
-          <stop offset=".57" stopColor="var(--ad-red)" stopOpacity=".74" />\r
-          <stop offset=".78" stopColor="var(--ad-pink)" stopOpacity=".85" />\r
-          <stop offset="1" stopColor="#d91b43" stopOpacity=".44" />\r
-        </linearGradient>\r
-      </defs>\r
-      {Array.from({ length: strands }, (_, i) => (\r
-        <path\r
-          key={i}\r
-          fill="none"\r
-          stroke={\`url(#\${id}-strand)\`}\r
-          strokeWidth={i === 5 ? 1 : 0.55}\r
-          opacity={i === 5 ? 0.95 : 0.52}\r
-          vectorEffect="non-scaling-stroke"\r
-        />\r
-      ))}\r
-      {dots.map((d, i) => (\r
-        <circle\r
-          key={i}\r
-          className="ad-neon-waves-star"\r
-          cx={d.x}\r
-          cy={d.y}\r
-          r={d.r}\r
-          opacity={d.o}\r
-          style={{ animationDelay: \`\${-(i % 9) * 0.45}s\` }}\r
-        />\r
-      ))}\r
-    </svg>\r
-  );\r
-}\r
-`,v=`import { Playground, U, jsx } from "../../../dev/exampleHelpers";\r
-\r
-export default function NeonWavesExample() {\r
-  return (\r
-    <Playground\r
-      stretch\r
-      knobs={{\r
-        strands: { options: ["12", "22", "34"], value: "22" },\r
-        stars: { value: true },\r
-      }}\r
-      code={(v) =>\r
-        jsx("NeonWaves", {\r
-          strands: v.strands === "22" ? undefined : Number(v.strands),\r
-          stars: v.stars ? undefined : { expr: "false" },\r
-        })\r
-      }\r
-    >\r
-      {(v) => <U.NeonWaves strands={Number(v.strands)} stars={v.stars} />}\r
-    </Playground>\r
-  );\r
-}\r
+`,g=`import { useSvgId } from "../../../core/artwork";
+import { useMemo, useRef } from "react";
+import { mark, type CommonProps } from "../../../core/base";
+import { useDecoration } from "../../../core/motion/hooks";
+import { seeded } from "../../../core/noise";
+
+export interface NeonWavesProps extends CommonProps {
+  /** Number of strands in the bundle. */
+  strands?: number;
+  /** Scatter faint stars around the strands. */
+  stars?: boolean;
+  /** Shifts the wave shape, so neighbouring instances do not move in step. */
+  phase?: number;
+}
+
+const W = 600;
+const H = 120;
+
+/** A bundle of neon strands that flow and twist slowly, with faint stars around them. */
+export function NeonWaves({
+  strands = 22,
+  stars = true,
+  phase = 0.9,
+  ...p
+}: NeonWavesProps) {
+  const ref = useRef<SVGSVGElement>(null);
+  const id = useSvgId();
+  const dots = useMemo(() => {
+    if (!stars) return [];
+    const next = seeded(7913 + Math.floor(phase * 713));
+    return Array.from({ length: 60 }, () => ({
+      x: next() * W,
+      y: next() * H,
+      r: 0.25 + next() * 0.55,
+      o: 0.16 + next() * 0.42,
+    }));
+  }, [stars, phase]);
+
+  useDecoration(ref, (time) => {
+    const paths = ref.current?.querySelectorAll("path");
+    paths?.forEach((path, i) => {
+      const t = i / Math.max(1, paths.length - 1);
+      const drift = time * 0.42 + phase;
+      const a = Math.sin(drift + t * 1.4) * H * 0.095;
+      const b = Math.cos(drift * 0.8 + t * 1.8) * H * 0.08;
+      const y = H * (0.38 + t * 0.58);
+      // Most strands form the main twist; the rest run as a lower counter-current.
+      path.setAttribute(
+        "d",
+        i < paths.length * 0.68
+          ? \`M-12 \${y + a} C\${W * 0.2} \${H * 1.28 - t * H * 0.27 + a} \${W * 0.32} \${H * 0.34 + t * H * 0.21 + b} \${W * 0.46} \${H * 0.62 + t * H * 0.12} S\${W * 0.67} \${H * 1.14 - t * H * 0.09 + a} \${W * 0.8} \${H * 0.69 - t * H * 0.22 + b} S\${W * 0.94} \${H * 0.43 - t * H * 0.44 + a} \${W + 8} \${H * 0.21 + t * H * 0.45}\`
+          : \`M-12 \${H * (0.9 + t * 0.12) + b} C\${W * 0.21} \${H * 0.98 + a} \${W * 0.33} \${H * 0.24 + t * H * 0.2 + a} \${W * 0.52} \${H * 0.75 + t * H * 0.25 + b} S\${W * 0.82} \${H * 0.38 + t * H * 0.27 + a} \${W + 8} \${H * (0.48 + t * 0.5) + b}\`,
+      );
+    });
+  });
+
+  return (
+    <svg
+      {...mark("NeonWaves", p)}
+      ref={ref}
+      viewBox={\`0 0 \${W} \${H}\`}
+      preserveAspectRatio="none"
+      aria-hidden="true"
+    >
+      <defs>
+        <linearGradient id={\`\${id}-strand\`}>
+          <stop stopColor="#6d112b" stopOpacity="0" />
+          <stop offset=".16" stopColor="#af153d" stopOpacity=".35" />
+          <stop offset=".57" stopColor="var(--ad-red)" stopOpacity=".74" />
+          <stop offset=".78" stopColor="var(--ad-pink)" stopOpacity=".85" />
+          <stop offset="1" stopColor="#d91b43" stopOpacity=".44" />
+        </linearGradient>
+      </defs>
+      {Array.from({ length: strands }, (_, i) => (
+        <path
+          key={i}
+          fill="none"
+          stroke={\`url(#\${id}-strand)\`}
+          strokeWidth={i === 5 ? 1 : 0.55}
+          opacity={i === 5 ? 0.95 : 0.52}
+          vectorEffect="non-scaling-stroke"
+        />
+      ))}
+      {dots.map((d, i) => (
+        <circle
+          key={i}
+          className="ad-neon-waves-star"
+          cx={d.x}
+          cy={d.y}
+          r={d.r}
+          opacity={d.o}
+          style={{ animationDelay: \`\${-(i % 9) * 0.45}s\` }}
+        />
+      ))}
+    </svg>
+  );
+}
+`,v=`import { Playground, U, jsx } from "../../../dev/exampleHelpers";
+
+export default function NeonWavesExample() {
+  return (
+    <Playground
+      stretch
+      knobs={{
+        strands: { options: ["12", "22", "34"], value: "22" },
+        stars: { value: true },
+      }}
+      code={(v) =>
+        jsx("NeonWaves", {
+          strands: v.strands === "22" ? undefined : Number(v.strands),
+          stars: v.stars ? undefined : { expr: "false" },
+        })
+      }
+    >
+      {(v) => <U.NeonWaves strands={Number(v.strands)} stars={v.stars} />}
+    </Playground>
+  );
+}
 `,b=`export default {\r
   name: "NeonWaves",\r
   description:\r
@@ -591,82 +593,82 @@ export default function NeonWavesExample() {\r
   category: "motion",\r
   wide: true,\r
 } as const;\r
-`,h=`import { useRef } from "react";\r
-import { mark, type CommonProps } from "../../../core/base";\r
-import { clamp01, fbm, noise, type Painting } from "../../../core/noise";\r
-import { useArtwork } from "../useArtwork";\r
-\r
-export type PlanetProps = CommonProps;\r
-\r
-/** Size of the picture in its own units; it is painted at whatever resolution it is shown. */\r
-const W = 515;\r
-const H = 114;\r
-\r
-/** The rim of a dark planet rising from the bottom right, lit by a ruby atmosphere. */\r
-const planet: Painting = {\r
-  pixels(image, from, to) {\r
-    const { width } = image;\r
-    const scale = width / W,\r
-      centerX = 344 * scale,\r
-      centerY = 290 * scale,\r
-      radius = 302 * scale;\r
-    for (let y = from; y < to; y += 1)\r
-      for (let x = 0; x < width; x += 1) {\r
-        const dx = (x - centerX) / radius,\r
-          dy = (y - centerY) / radius,\r
-          radial = Math.hypot(dx, dy),\r
-          edge = (1 - radial) * radius;\r
-        const pixel = (y * width + x) * 4;\r
-        if (radial > 1.12) continue;\r
-        const light = clamp01(0.48 - dx * 0.8 - dy * 0.3, 0.08, 1.2);\r
-        if (radial > 1) {\r
-          const alpha = Math.exp(-(radial - 1) * 88) * 0.58 * light;\r
-          image.data[pixel] = 255;\r
-          image.data[pixel + 1] = 40;\r
-          image.data[pixel + 2] = 82;\r
-          image.data[pixel + 3] = 255 * alpha;\r
-          continue;\r
-        }\r
-        const z = Math.sqrt(1 - dx * dx - dy * dy);\r
-        const terrainNoise = fbm(dx * 18 + z * 7, dy * 21 + z * 5, 6);\r
-        const crust = Math.pow(\r
-          1 -\r
-            Math.abs(\r
-              noise(dx * 80 + 8 * terrainNoise, dy * 80 + 8 * terrainNoise) *\r
-                2 -\r
-                1,\r
-            ),\r
-          4,\r
-        );\r
-        const ridge = clamp01((terrainNoise - 0.38) * 5) * crust;\r
-        const rim = Math.exp(-Math.max(0, edge) / (2.2 * scale)) * light;\r
-        const bloom = Math.exp(-Math.max(0, edge) / (15 * scale)) * light;\r
-        const shade = clamp01(0.48 - dx * 0.78 - z * 0.55, 0.07, 0.95);\r
-        const terrain = (10 + 61 * ridge + 26 * terrainNoise) * shade;\r
-        image.data[pixel] = terrain + rim * 239 + bloom * 75;\r
-        image.data[pixel + 1] = terrain * 0.14 + rim * 165 + bloom * 8;\r
-        image.data[pixel + 2] = terrain * 0.34 + rim * 183 + bloom * 25;\r
-        image.data[pixel + 3] = 255;\r
-      }\r
-  },\r
-};\r
-\r
-/** Planet horizon banner; children are laid over the dark side. */\r
-export function Planet({ children, ...p }: PlanetProps) {\r
-  const ref = useRef<HTMLCanvasElement>(null);\r
-  useArtwork(ref, "planet", W, H, planet);\r
-  return (\r
-    <div {...mark("Planet", p)}>\r
-      <canvas ref={ref} aria-hidden />\r
-      {children && <div className="ad-planet-content">{children}</div>}\r
-    </div>\r
-  );\r
-}\r
-`,x=`import { Planet } from "@ad-voice/ui";\r
-\r
-export default function PlanetExample() {\r
-  return <Planet />;\r
-}\r
+`,h=`import { useRef } from "react";
+import { mark, type CommonProps } from "../../../core/base";
+import { clamp01, fbm, noise, type Painting } from "../../../core/noise";
+import { useArtwork } from "../useArtwork";
+
+export type PlanetProps = CommonProps;
+
+/** Size of the picture in its own units; it is painted at whatever resolution it is shown. */
+const W = 515;
+const H = 114;
+
+/** The rim of a dark planet rising from the bottom right, lit by a ruby atmosphere. */
+const planet: Painting = {
+  pixels(image, from, to) {
+    const { width } = image;
+    const scale = width / W,
+      centerX = 344 * scale,
+      centerY = 290 * scale,
+      radius = 302 * scale;
+    for (let y = from; y < to; y += 1)
+      for (let x = 0; x < width; x += 1) {
+        const dx = (x - centerX) / radius,
+          dy = (y - centerY) / radius,
+          radial = Math.hypot(dx, dy),
+          edge = (1 - radial) * radius;
+        const pixel = (y * width + x) * 4;
+        if (radial > 1.12) continue;
+        const light = clamp01(0.48 - dx * 0.8 - dy * 0.3, 0.08, 1.2);
+        if (radial > 1) {
+          const alpha = Math.exp(-(radial - 1) * 88) * 0.58 * light;
+          image.data[pixel] = 255;
+          image.data[pixel + 1] = 40;
+          image.data[pixel + 2] = 82;
+          image.data[pixel + 3] = 255 * alpha;
+          continue;
+        }
+        const z = Math.sqrt(1 - dx * dx - dy * dy);
+        const terrainNoise = fbm(dx * 18 + z * 7, dy * 21 + z * 5, 6);
+        const crust = Math.pow(
+          1 -
+            Math.abs(
+              noise(dx * 80 + 8 * terrainNoise, dy * 80 + 8 * terrainNoise) *
+                2 -
+                1,
+            ),
+          4,
+        );
+        const ridge = clamp01((terrainNoise - 0.38) * 5) * crust;
+        const rim = Math.exp(-Math.max(0, edge) / (2.2 * scale)) * light;
+        const bloom = Math.exp(-Math.max(0, edge) / (15 * scale)) * light;
+        const shade = clamp01(0.48 - dx * 0.78 - z * 0.55, 0.07, 0.95);
+        const terrain = (10 + 61 * ridge + 26 * terrainNoise) * shade;
+        image.data[pixel] = terrain + rim * 239 + bloom * 75;
+        image.data[pixel + 1] = terrain * 0.14 + rim * 165 + bloom * 8;
+        image.data[pixel + 2] = terrain * 0.34 + rim * 183 + bloom * 25;
+        image.data[pixel + 3] = 255;
+      }
+  },
+};
+
+/** Planet horizon banner; children are laid over the dark side. */
+export function Planet({ children, ...p }: PlanetProps) {
+  const ref = useRef<HTMLCanvasElement>(null);
+  useArtwork(ref, "planet", W, H, planet);
+  return (
+    <div {...mark("Planet", p)}>
+      <canvas ref={ref} aria-hidden />
+      {children && <div className="ad-planet-content">{children}</div>}
+    </div>
+  );
+}
+`,x=`import { Planet } from "@ad-voice/ui";
+
+export default function PlanetExample() {
+  return <Planet />;
+}
 `,y=`export default {\r
   name: "Planet",\r
   description:\r
@@ -674,338 +676,340 @@ export default function PlanetExample() {\r
   category: "motion",\r
   wide: true,\r
 } as const;\r
-`,k=`import { useId } from "react";\r
-import { mark, type CommonProps } from "../../../core/base";\r
-\r
-export interface ServerArtProps extends CommonProps {\r
-  /** Show an upload cloud above the rack (deployment scenes). */\r
-  upload?: boolean;\r
-  label?: string;\r
-}\r
-\r
-/** Neon server rack: LEDs blink, a light runs along its edge, a spark twinkles above. */\r
-export function ServerArt({ upload = false, label, ...p }: ServerArtProps) {\r
-  const id = useId().replace(/[^a-zA-Z0-9_-]/g, "");\r
-  const url = (name: string) => \`url(#\${id}-\${name})\`;\r
-  return (\r
-    <svg\r
-      {...mark("ServerArt", p)}\r
-      viewBox="0 0 180 170"\r
-      fill="none"\r
-      role={label ? "img" : undefined}\r
-      aria-label={label}\r
-      aria-hidden={!label}\r
-    >\r
-      <defs>\r
-        <linearGradient id={\`\${id}-front\`} x1="0" y1="0" x2="1" y2="1">\r
-          <stop stopColor="#592034" />\r
-          <stop offset=".22" stopColor="#1b0611" />\r
-          <stop offset=".72" stopColor="#0d040b" />\r
-          <stop offset="1" stopColor="#360a1d" />\r
-        </linearGradient>\r
-        <linearGradient id={\`\${id}-side\`} x1="0" y1="0" x2=".9" y2="1">\r
-          <stop stopColor="#481023" />\r
-          <stop offset=".27" stopColor="#14040d" />\r
-          <stop offset="1" stopColor="#020208" />\r
-        </linearGradient>\r
-        <linearGradient id={\`\${id}-top\`} x1="0" y1="0" x2=".7" y2="1">\r
-          <stop stopColor="#ffa0c2" />\r
-          <stop offset=".23" stopColor="#b1375f" />\r
-          <stop offset=".57" stopColor="#481029" />\r
-          <stop offset="1" stopColor="#16060f" />\r
-        </linearGradient>\r
-        <linearGradient id={\`\${id}-edge\`} x1="0" y1="0" x2="1" y2="1">\r
-          <stop stopColor="#ffb0d3" />\r
-          <stop offset=".29" stopColor="#c94367" />\r
-          <stop offset=".52" stopColor="#6d1530" />\r
-          <stop offset=".8" stopColor="#fc2451" />\r
-          <stop offset="1" stopColor="#79213a" />\r
-        </linearGradient>\r
-        <radialGradient id={\`\${id}-aura\`}>\r
-          <stop stopColor="#ff234d" stopOpacity=".28" />\r
-          <stop offset=".6" stopColor="#ff1238" stopOpacity=".06" />\r
-          <stop offset="1" stopColor="#ff1238" stopOpacity="0" />\r
-        </radialGradient>\r
-        <filter id={\`\${id}-bloom\`} x="-35%" y="-35%" width="170%" height="170%">\r
-          <feGaussianBlur stdDeviation="2.4" />\r
-        </filter>\r
-      </defs>\r
-      {upload && (\r
-        <g className="ad-server-cloud">\r
-          <path\r
-            d="M57 40C37 42 40 16 58 20 63-5 96-4 102 18 120 13 132 32 117 42Z"\r
-            fill="#260815"\r
-            stroke="#ff7a9b"\r
-            strokeOpacity=".65"\r
-            strokeWidth=".7"\r
-          />\r
-          <path d="M80 37V18m-7 7 7-7 7 7" stroke="#ed6b91" strokeWidth="1.5" />\r
-        </g>\r
-      )}\r
-      <g transform={upload ? "translate(0 15)" : undefined}>\r
-        <ellipse\r
-          cx="89"\r
-          cy="124"\r
-          rx="76"\r
-          ry="22"\r
-          fill={url("aura")}\r
-          className="ad-art-aura"\r
-        />\r
-        <path\r
-          d="M26 43 98 29 150 45 75 61Z"\r
-          fill={url("top")}\r
-          stroke={url("edge")}\r
-          strokeWidth=".75"\r
-        />\r
-        <path\r
-          d="M98 29 150 45 150 119 98 107Z"\r
-          fill={url("side")}\r
-          stroke="#741932"\r
-          strokeWidth=".7"\r
-        />\r
-        <path\r
-          d="M26 43 98 29 98 107 26 121Z"\r
-          fill={url("front")}\r
-          stroke={url("edge")}\r
-          strokeWidth="1"\r
-        />\r
-        <path\r
-          d="M29 46 94 33 94 105 29 117Z"\r
-          fill="#0d050d"\r
-          stroke="#9d3654"\r
-          strokeOpacity=".45"\r
-          strokeWidth=".65"\r
-        />\r
-        {Array.from({ length: 15 }, (_, row) => (\r
-          <g key={row}>\r
-            <path\r
-              d={\`M33 \${50 + row * 3.35} 90 \${38.8 + row * 3.35}\`}\r
-              stroke="#7e2844"\r
-              strokeOpacity=".58"\r
-            />\r
-            {Array.from({ length: 9 }, (__, col) => (\r
-              <path\r
-                key={col}\r
-                d={\`M\${34 + col * 6.15} \${49.8 + row * 3.35 - col * 1.205}l2.6-.51\`}\r
-                stroke="#01040a"\r
-                strokeWidth="1.65"\r
-              />\r
-            ))}\r
-          </g>\r
-        ))}\r
-        <path\r
-          d="M27 44 98 30 147 45"\r
-          stroke="#ffc0d5"\r
-          strokeWidth="3"\r
-          opacity=".35"\r
-          filter={url("bloom")}\r
-        />\r
-        <path d="M27 44 98 30 147 45" stroke="#ffc0d5" strokeWidth=".75" />\r
-        {Array.from({ length: 8 }, (_, i) => (\r
-          <g key={i}>\r
-            <path\r
-              d={\`M107 \${52 + i * 7.5}l34 9v4l-34-9Z\`}\r
-              fill="#040309"\r
-              stroke="#34101f"\r
-              strokeWidth=".55"\r
-            />\r
-            <path\r
-              d={\`M109 \${54 + i * 7.5}l3 .8\`}\r
-              className="ad-server-led"\r
-              strokeWidth="1.4"\r
-              style={{ animationDelay: \`\${-i * 0.34}s\` }}\r
-            />\r
-          </g>\r
-        ))}\r
-        <path\r
-          d="M31 108 93 96v8l-62 12Z"\r
-          fill="#17050e"\r
-          stroke="#5b1a2b"\r
-          strokeWidth=".55"\r
-        />\r
-        <path d="M35 110l20-4" className="ad-server-glow" strokeWidth="1.1" />\r
-        <circle cx="85" cy="103.5" r="1.5" className="ad-server-dot" />\r
-        <path\r
-          d="M27 43 98 29 98 107 27 121Z"\r
-          pathLength="100"\r
-          className="ad-server-orbit"\r
-        />\r
-        <path\r
-          d="M26 125 98 112 150 126v14l-73 10-51-10Z"\r
-          fill={url("side")}\r
-          stroke="#65142f"\r
-          strokeWidth=".6"\r
-        />\r
-        <path\r
-          d="M26 125 98 112v15l-72 13Z"\r
-          fill={url("front")}\r
-          stroke="#9d2f4a"\r
-          strokeWidth=".65"\r
-        />\r
-        <path\r
-          d="M33 130 83 121m-50 13 41-7"\r
-          stroke="#78273f"\r
-          strokeWidth=".8"\r
-        />\r
-        <circle\r
-          cx="91"\r
-          cy="121.5"\r
-          r="1.3"\r
-          className="ad-server-dot"\r
-          style={{ animationDelay: "-1.7s" }}\r
-        />\r
-      </g>\r
-      <g className="ad-art-spark">\r
-        <path d="M114 27h14m-7-10v20" stroke="#ffc6d5" strokeWidth=".65" />\r
-        <circle cx="121" cy="27" r="2.6" fill="#fff6eb" />\r
-      </g>\r
-    </svg>\r
-  );\r
-}\r
-`,_=`import { Playground, U, jsx } from "../../../dev/exampleHelpers";\r
-\r
-export default function ServerArtExample() {\r
-  return (\r
-    <Playground\r
-      knobs={{ upload: { value: false } }}\r
-      code={(v) =>\r
-        jsx("ServerArt", { label: "Сервер комнат", upload: v.upload })\r
-      }\r
-    >\r
-      {(v) => <U.ServerArt label="Сервер комнат" upload={v.upload} />}\r
-    </Playground>\r
-  );\r
-}\r
+`,k=`import { useSvgId } from "../../../core/artwork";
+
+import { mark, type CommonProps } from "../../../core/base";
+
+export interface ServerArtProps extends CommonProps {
+  /** Show an upload cloud above the rack (deployment scenes). */
+  upload?: boolean;
+  label?: string;
+}
+
+/** Neon server rack: LEDs blink, a light runs along its edge, a spark twinkles above. */
+export function ServerArt({ upload = false, label, ...p }: ServerArtProps) {
+  const id = useSvgId();
+  const url = (name: string) => \`url(#\${id}-\${name})\`;
+  return (
+    <svg
+      {...mark("ServerArt", p)}
+      viewBox="0 0 180 170"
+      fill="none"
+      role={label ? "img" : undefined}
+      aria-label={label}
+      aria-hidden={!label}
+    >
+      <defs>
+        <linearGradient id={\`\${id}-front\`} x1="0" y1="0" x2="1" y2="1">
+          <stop stopColor="#592034" />
+          <stop offset=".22" stopColor="#1b0611" />
+          <stop offset=".72" stopColor="#0d040b" />
+          <stop offset="1" stopColor="#360a1d" />
+        </linearGradient>
+        <linearGradient id={\`\${id}-side\`} x1="0" y1="0" x2=".9" y2="1">
+          <stop stopColor="#481023" />
+          <stop offset=".27" stopColor="#14040d" />
+          <stop offset="1" stopColor="#020208" />
+        </linearGradient>
+        <linearGradient id={\`\${id}-top\`} x1="0" y1="0" x2=".7" y2="1">
+          <stop stopColor="#ffa0c2" />
+          <stop offset=".23" stopColor="#b1375f" />
+          <stop offset=".57" stopColor="#481029" />
+          <stop offset="1" stopColor="#16060f" />
+        </linearGradient>
+        <linearGradient id={\`\${id}-edge\`} x1="0" y1="0" x2="1" y2="1">
+          <stop stopColor="#ffb0d3" />
+          <stop offset=".29" stopColor="#c94367" />
+          <stop offset=".52" stopColor="#6d1530" />
+          <stop offset=".8" stopColor="#fc2451" />
+          <stop offset="1" stopColor="#79213a" />
+        </linearGradient>
+        <radialGradient id={\`\${id}-aura\`}>
+          <stop stopColor="#ff234d" stopOpacity=".28" />
+          <stop offset=".6" stopColor="#ff1238" stopOpacity=".06" />
+          <stop offset="1" stopColor="#ff1238" stopOpacity="0" />
+        </radialGradient>
+        <filter id={\`\${id}-bloom\`} x="-35%" y="-35%" width="170%" height="170%">
+          <feGaussianBlur stdDeviation="2.4" />
+        </filter>
+      </defs>
+      {upload && (
+        <g className="ad-server-cloud">
+          <path
+            d="M57 40C37 42 40 16 58 20 63-5 96-4 102 18 120 13 132 32 117 42Z"
+            fill="#260815"
+            stroke="#ff7a9b"
+            strokeOpacity=".65"
+            strokeWidth=".7"
+          />
+          <path d="M80 37V18m-7 7 7-7 7 7" stroke="#ed6b91" strokeWidth="1.5" />
+        </g>
+      )}
+      <g transform={upload ? "translate(0 15)" : undefined}>
+        <ellipse
+          cx="89"
+          cy="124"
+          rx="76"
+          ry="22"
+          fill={url("aura")}
+          className="ad-art-aura"
+        />
+        <path
+          d="M26 43 98 29 150 45 75 61Z"
+          fill={url("top")}
+          stroke={url("edge")}
+          strokeWidth=".75"
+        />
+        <path
+          d="M98 29 150 45 150 119 98 107Z"
+          fill={url("side")}
+          stroke="#741932"
+          strokeWidth=".7"
+        />
+        <path
+          d="M26 43 98 29 98 107 26 121Z"
+          fill={url("front")}
+          stroke={url("edge")}
+          strokeWidth="1"
+        />
+        <path
+          d="M29 46 94 33 94 105 29 117Z"
+          fill="#0d050d"
+          stroke="#9d3654"
+          strokeOpacity=".45"
+          strokeWidth=".65"
+        />
+        {Array.from({ length: 15 }, (_, row) => (
+          <g key={row}>
+            <path
+              d={\`M33 \${50 + row * 3.35} 90 \${38.8 + row * 3.35}\`}
+              stroke="#7e2844"
+              strokeOpacity=".58"
+            />
+            {Array.from({ length: 9 }, (__, col) => (
+              <path
+                key={col}
+                d={\`M\${34 + col * 6.15} \${49.8 + row * 3.35 - col * 1.205}l2.6-.51\`}
+                stroke="#01040a"
+                strokeWidth="1.65"
+              />
+            ))}
+          </g>
+        ))}
+        <path
+          d="M27 44 98 30 147 45"
+          stroke="#ffc0d5"
+          strokeWidth="3"
+          opacity=".35"
+          filter={url("bloom")}
+        />
+        <path d="M27 44 98 30 147 45" stroke="#ffc0d5" strokeWidth=".75" />
+        {Array.from({ length: 8 }, (_, i) => (
+          <g key={i}>
+            <path
+              d={\`M107 \${52 + i * 7.5}l34 9v4l-34-9Z\`}
+              fill="#040309"
+              stroke="#34101f"
+              strokeWidth=".55"
+            />
+            <path
+              d={\`M109 \${54 + i * 7.5}l3 .8\`}
+              className="ad-server-led"
+              strokeWidth="1.4"
+              style={{ animationDelay: \`\${-i * 0.34}s\` }}
+            />
+          </g>
+        ))}
+        <path
+          d="M31 108 93 96v8l-62 12Z"
+          fill="#17050e"
+          stroke="#5b1a2b"
+          strokeWidth=".55"
+        />
+        <path d="M35 110l20-4" className="ad-server-glow" strokeWidth="1.1" />
+        <circle cx="85" cy="103.5" r="1.5" className="ad-server-dot" />
+        <path
+          d="M27 43 98 29 98 107 27 121Z"
+          pathLength="100"
+          className="ad-server-orbit"
+        />
+        <path
+          d="M26 125 98 112 150 126v14l-73 10-51-10Z"
+          fill={url("side")}
+          stroke="#65142f"
+          strokeWidth=".6"
+        />
+        <path
+          d="M26 125 98 112v15l-72 13Z"
+          fill={url("front")}
+          stroke="#9d2f4a"
+          strokeWidth=".65"
+        />
+        <path
+          d="M33 130 83 121m-50 13 41-7"
+          stroke="#78273f"
+          strokeWidth=".8"
+        />
+        <circle
+          cx="91"
+          cy="121.5"
+          r="1.3"
+          className="ad-server-dot"
+          style={{ animationDelay: "-1.7s" }}
+        />
+      </g>
+      <g className="ad-art-spark">
+        <path d="M114 27h14m-7-10v20" stroke="#ffc6d5" strokeWidth=".65" />
+        <circle cx="121" cy="27" r="2.6" fill="#fff6eb" />
+      </g>
+    </svg>
+  );
+}
+`,_=`import { Playground, U, jsx } from "../../../dev/exampleHelpers";
+
+export default function ServerArtExample() {
+  return (
+    <Playground
+      knobs={{ upload: { value: false } }}
+      code={(v) =>
+        jsx("ServerArt", { label: "Сервер комнат", upload: v.upload })
+      }
+    >
+      {(v) => <U.ServerArt label="Сервер комнат" upload={v.upload} />}
+    </Playground>
+  );
+}
 `,P=`export default {\r
   name: "ServerArt",\r
   description:\r
     "Неоновая серверная стойка с мигающими светодиодами — для сервисов и развёртывания.",\r
   category: "motion",\r
 } as const;\r
-`,w=`import { useId, useRef } from "react";\r
-import { mark, type CommonProps } from "../../../core/base";\r
-import { useDecoration } from "../../../core/motion/hooks";\r
-\r
-export interface SpectrumProps extends CommonProps {\r
-  /** Segmented level columns, or smooth glowing bars in a bell shape. */\r
-  variant?: "segmented" | "bars";\r
-}\r
-\r
-const COLUMNS = 27;\r
-const ROWS = 29;\r
-const BARS = 23;\r
-\r
-/** A living audio spectrum used as decoration behind level and monitoring panels. */\r
-export function Spectrum({ variant = "segmented", ...p }: SpectrumProps) {\r
-  const ref = useRef<SVGSVGElement>(null);\r
-  const id = useId().replace(/[^a-zA-Z0-9_-]/g, "");\r
-\r
-  useDecoration(ref, (time) => {\r
-    const svg = ref.current;\r
-    if (!svg) return;\r
-    if (variant === "segmented") {\r
-      // Columns rise more towards the edges, each on its own beat.\r
-      svg.querySelectorAll<SVGRectElement>("[data-mask]").forEach((mask, i) => {\r
-        const edge = Math.abs(i - 13) / 13;\r
-        const height =\r
-          12 +\r
-          edge *\r
-            (37 + (0.5 + 0.5 * Math.sin(time * 1.8 + i * 0.59)) ** 1.7 * 142);\r
-        mask.setAttribute("y", (232 - height).toFixed(1));\r
-        mask.setAttribute("height", height.toFixed(1));\r
-      });\r
-      return;\r
-    }\r
-    svg.querySelectorAll<SVGRectElement>("[data-bar]").forEach((bar, i) => {\r
-      const envelope = Math.exp(-(((i - 16) / 6) ** 2));\r
-      const rhythm = 0.55 + 0.45 * Math.sin(time * 1.7 + i * 0.61);\r
-      const height =\r
-        9 +\r
-        100 * envelope * (0.53 + 0.47 * rhythm) +\r
-        15 * Math.sin(i * 0.67 + time * 0.58) ** 2;\r
-      bar.setAttribute("y", (134 - height).toFixed(2));\r
-      bar.setAttribute("height", height.toFixed(2));\r
-    });\r
-  });\r
-\r
-  return (\r
-    <svg\r
-      {...mark("Spectrum", p)}\r
-      ref={ref}\r
-      data-variant={variant}\r
-      viewBox={variant === "segmented" ? "0 0 325 232" : "0 0 163 140"}\r
-      preserveAspectRatio="none"\r
-      aria-hidden="true"\r
-    >\r
-      {variant === "segmented" ? (\r
-        <>\r
-          <defs>\r
-            {Array.from({ length: COLUMNS }, (_, i) => (\r
-              <clipPath key={i} id={\`\${id}-c\${i}\`}>\r
-                <rect data-mask x={i * 12 + 3} y="232" width="8" height="0" />\r
-              </clipPath>\r
-            ))}\r
-          </defs>\r
-          {Array.from({ length: COLUMNS }, (_, i) => (\r
-            <g key={i} clipPath={\`url(#\${id}-c\${i})\`}>\r
-              {Array.from({ length: ROWS }, (__, row) => (\r
-                <rect\r
-                  key={row}\r
-                  x={i * 12 + 3}\r
-                  y={224 - row * 7}\r
-                  width="8"\r
-                  height="5"\r
-                  rx=".35"\r
-                  opacity={0.17 + row / 35}\r
-                />\r
-              ))}\r
-            </g>\r
-          ))}\r
-        </>\r
-      ) : (\r
-        <>\r
-          <defs>\r
-            <linearGradient id={\`\${id}-bar\`} x1="0" x2="0" y1="0" y2="1">\r
-              <stop stopColor="#ffa7b9" />\r
-              <stop offset=".24" stopColor="var(--ad-red)" />\r
-              <stop offset="1" stopColor="#b40733" stopOpacity="0" />\r
-            </linearGradient>\r
-          </defs>\r
-          {Array.from({ length: BARS }, (_, i) => (\r
-            <rect\r
-              key={i}\r
-              data-bar\r
-              x={4 + i * 6.75}\r
-              y="40"\r
-              width="2.8"\r
-              height="100"\r
-              rx="1.3"\r
-              fill={\`url(#\${id}-bar)\`}\r
-              opacity={0.55 + i / 55}\r
-            />\r
-          ))}\r
-        </>\r
-      )}\r
-    </svg>\r
-  );\r
-}\r
-`,S=`import { Playground, U, jsx } from "../../../dev/exampleHelpers";\r
-\r
-export default function SpectrumExample() {\r
-  return (\r
-    <Playground\r
-      knobs={{\r
-        variant: {\r
-          options: ["segmented", "bars"] as const,\r
-          value: "segmented",\r
-        },\r
-      }}\r
-      code={(_, c) => jsx("Spectrum", { variant: c.variant })}\r
-    >\r
-      {(v) => <U.Spectrum variant={v.variant} />}\r
-    </Playground>\r
-  );\r
-}\r
+`,S=`import { useSvgId } from "../../../core/artwork";
+import { useRef } from "react";
+import { mark, type CommonProps } from "../../../core/base";
+import { useDecoration } from "../../../core/motion/hooks";
+
+export interface SpectrumProps extends CommonProps {
+  /** Segmented level columns, or smooth glowing bars in a bell shape. */
+  variant?: "segmented" | "bars";
+}
+
+const COLUMNS = 27;
+const ROWS = 29;
+const BARS = 23;
+
+/** A living audio spectrum used as decoration behind level and monitoring panels. */
+export function Spectrum({ variant = "segmented", ...p }: SpectrumProps) {
+  const ref = useRef<SVGSVGElement>(null);
+  const id = useSvgId();
+
+  useDecoration(ref, (time) => {
+    const svg = ref.current;
+    if (!svg) return;
+    if (variant === "segmented") {
+      // Columns rise more towards the edges, each on its own beat.
+      svg.querySelectorAll<SVGRectElement>("[data-mask]").forEach((mask, i) => {
+        const edge = Math.abs(i - 13) / 13;
+        const height =
+          12 +
+          edge *
+            (37 + (0.5 + 0.5 * Math.sin(time * 1.8 + i * 0.59)) ** 1.7 * 142);
+        mask.setAttribute("y", (232 - height).toFixed(1));
+        mask.setAttribute("height", height.toFixed(1));
+      });
+      return;
+    }
+    svg.querySelectorAll<SVGRectElement>("[data-bar]").forEach((bar, i) => {
+      const envelope = Math.exp(-(((i - 16) / 6) ** 2));
+      const rhythm = 0.55 + 0.45 * Math.sin(time * 1.7 + i * 0.61);
+      const height =
+        9 +
+        100 * envelope * (0.53 + 0.47 * rhythm) +
+        15 * Math.sin(i * 0.67 + time * 0.58) ** 2;
+      bar.setAttribute("y", (134 - height).toFixed(2));
+      bar.setAttribute("height", height.toFixed(2));
+    });
+  });
+
+  return (
+    <svg
+      {...mark("Spectrum", p)}
+      ref={ref}
+      data-variant={variant}
+      viewBox={variant === "segmented" ? "0 0 325 232" : "0 0 163 140"}
+      preserveAspectRatio="none"
+      aria-hidden="true"
+    >
+      {variant === "segmented" ? (
+        <>
+          <defs>
+            {Array.from({ length: COLUMNS }, (_, i) => (
+              <clipPath key={i} id={\`\${id}-c\${i}\`}>
+                <rect data-mask x={i * 12 + 3} y="232" width="8" height="0" />
+              </clipPath>
+            ))}
+          </defs>
+          {Array.from({ length: COLUMNS }, (_, i) => (
+            <g key={i} clipPath={\`url(#\${id}-c\${i})\`}>
+              {Array.from({ length: ROWS }, (__, row) => (
+                <rect
+                  key={row}
+                  x={i * 12 + 3}
+                  y={224 - row * 7}
+                  width="8"
+                  height="5"
+                  rx=".35"
+                  opacity={0.17 + row / 35}
+                />
+              ))}
+            </g>
+          ))}
+        </>
+      ) : (
+        <>
+          <defs>
+            <linearGradient id={\`\${id}-bar\`} x1="0" x2="0" y1="0" y2="1">
+              <stop stopColor="#ffa7b9" />
+              <stop offset=".24" stopColor="var(--ad-red)" />
+              <stop offset="1" stopColor="#b40733" stopOpacity="0" />
+            </linearGradient>
+          </defs>
+          {Array.from({ length: BARS }, (_, i) => (
+            <rect
+              key={i}
+              data-bar
+              x={4 + i * 6.75}
+              y="40"
+              width="2.8"
+              height="100"
+              rx="1.3"
+              fill={\`url(#\${id}-bar)\`}
+              opacity={0.55 + i / 55}
+            />
+          ))}
+        </>
+      )}
+    </svg>
+  );
+}
+`,w=`import { Playground, U, jsx } from "../../../dev/exampleHelpers";
+
+export default function SpectrumExample() {
+  return (
+    <Playground
+      knobs={{
+        variant: {
+          options: ["segmented", "bars"] as const,
+          value: "segmented",
+        },
+      }}
+      code={(_, c) => jsx("Spectrum", { variant: c.variant })}
+    >
+      {(v) => <U.Spectrum variant={v.variant} />}
+    </Playground>
+  );
+}
 `,T=`export default {\r
   name: "Spectrum",\r
   description:\r
@@ -1892,7 +1896,7 @@ export default function SegmentedControlExample() {\r
   description: "Выбор представления или инструмента",\r
   category: "navigation",\r
 } as const;\r
-`,rn=`import { useRef, useState } from "react";\r
+`,en=`import { useRef, useState } from "react";\r
 import { assignRef, useControllable } from "../../../core/base";\r
 import { Popover } from "../../feedback/Popover/Popover";\r
 import { Icon } from "../../layout/Icon/Icon";\r
@@ -1981,7 +1985,7 @@ export const Select = (p: SelectProps) => {\r
     </FieldFrame>\r
   );\r
 };\r
-`,en=`import {\r
+`,rn=`import {\r
   Playground,\r
   U,\r
   expr,\r
@@ -2695,7 +2699,7 @@ export const TextField = ({\r
     </FieldFrame>\r
   );\r
 };\r
-`,wn=`import {\r
+`,Sn=`import {\r
   Playground,\r
   U,\r
   expr,\r
@@ -2753,7 +2757,7 @@ export default function TextFieldExample() {\r
     </Playground>\r
   );\r
 }\r
-`,Sn=`export default {\r
+`,wn=`export default {\r
   name: "TextField",\r
   description:\r
     "Основное текстовое поле с label, helper/error и start/end adornments.",\r
@@ -3936,7 +3940,7 @@ export function Reveal({\r
     ),\r
   );\r
 }\r
-`,nr=`import { useEffect, useState } from "react";\r
+`,ne=`import { useEffect, useState } from "react";\r
 import { Playground, U, jsx } from "../../../dev/exampleHelpers";\r
 \r
 const effects = ["rise", "fade", "zoom", "blur"] as const;\r
@@ -3971,12 +3975,12 @@ export default function RevealExample() {\r
     </Playground>\r
   );\r
 }\r
-`,rr=`export default {\r
+`,ee=`export default {\r
   name: "Reveal",\r
   description: "Каскадное появление содержимого при прокрутке к нему.",\r
   category: "motion",\r
 } as const;\r
-`,er=`import { mark, type CommonProps } from "../../../core/base";\r
+`,re=`import { mark, type CommonProps } from "../../../core/base";\r
 \r
 export interface ShimmerProps extends CommonProps {\r
   /** Text lines to imitate. */\r
@@ -4012,7 +4016,7 @@ export function Shimmer({\r
     </div>\r
   );\r
 }\r
-`,tr=`import { Playground, U, jsx } from "../../../dev/exampleHelpers";\r
+`,te=`import { Playground, U, jsx } from "../../../dev/exampleHelpers";\r
 \r
 export default function ShimmerExample() {\r
   return (\r
@@ -4033,12 +4037,12 @@ export default function ShimmerExample() {\r
     </Playground>\r
   );\r
 }\r
-`,or=`export default {\r
+`,oe=`export default {\r
   name: "Shimmer",\r
   description: "Заглушка загрузки: форма будущего контента и бегущий блик.",\r
   category: "motion",\r
 } as const;\r
-`,ar=`import type { CSSProperties } from "react";\r
+`,ae=`import type { CSSProperties } from "react";\r
 import { mark, type CommonProps } from "../../../core/base";\r
 \r
 export interface SparklesProps extends CommonProps {\r
@@ -4086,7 +4090,7 @@ export function Sparkles({\r
     </span>\r
   );\r
 }\r
-`,sr=`import { Badge, Sparkles, Stack, Typography } from "@ad-voice/ui";\r
+`,se=`import { Badge, Sparkles, Stack, Typography } from "@ad-voice/ui";\r
 \r
 export default function SparklesExample() {\r
   return (\r
@@ -4100,12 +4104,12 @@ export default function SparklesExample() {\r
     </Stack>\r
   );\r
 }\r
-`,ir=`export default {\r
+`,ie=`export default {\r
   name: "Sparkles",\r
   description: "Мерцающие искры вокруг значка, награды или заголовка.",\r
   category: "motion",\r
 } as const;\r
-`,lr=`import { createElement, type ElementType } from "react";\r
+`,le=`import { createElement, type ElementType } from "react";\r
 import { mark, type CommonProps } from "../../../core/base";\r
 \r
 export interface SpotlightProps extends CommonProps {\r
@@ -4145,7 +4149,7 @@ export function Spotlight({\r
     children,\r
   );\r
 }\r
-`,cr=`import { Card, Grid, Spotlight, Typography } from "@ad-voice/ui";\r
+`,ce=`import { Card, Grid, Spotlight, Typography } from "@ad-voice/ui";\r
 \r
 export default function SpotlightExample() {\r
   return (\r
@@ -4162,12 +4166,12 @@ export default function SpotlightExample() {\r
     </Grid>\r
   );\r
 }\r
-`,pr=`export default {\r
+`,pe=`export default {\r
   name: "Spotlight",\r
   description: "Свет и подсветка кромки, которые следуют за курсором.",\r
   category: "motion",\r
 } as const;\r
-`,dr=`import { createElement, type ElementType } from "react";\r
+`,de=`import { createElement, type ElementType } from "react";\r
 import { mark, type CommonProps } from "../../../core/base";\r
 \r
 export interface TiltProps extends CommonProps {\r
@@ -4211,7 +4215,7 @@ export function Tilt({\r
     children,\r
   );\r
 }\r
-`,ur=`import { Playground, U, expr, jsx } from "../../../dev/exampleHelpers";\r
+`,ue=`import { Playground, U, expr, jsx } from "../../../dev/exampleHelpers";\r
 \r
 export default function TiltExample() {\r
   return (\r
@@ -4244,12 +4248,12 @@ export default function TiltExample() {\r
     </Playground>\r
   );\r
 }\r
-`,mr=`export default {\r
+`,me=`export default {\r
   name: "Tilt",\r
   description: "3D-наклон к курсору с бликом и пружинным возвратом.",\r
   category: "motion",\r
 } as const;\r
-`,fr=`import { mark } from "../../../core/base";\r
+`,fe=`import { mark } from "../../../core/base";\r
 import { type BadgeProps } from "../shared";\r
 \r
 /** A tone adds a live status dot in front of the label. */\r
@@ -4259,7 +4263,7 @@ export const Badge = (p: BadgeProps) => (\r
     {p.children ?? p.label ?? "GPU"}\r
   </span>\r
 );\r
-`,gr=`import { Playground, U, jsx, sizes } from "../../../dev/exampleHelpers";\r
+`,ge=`import { Playground, U, jsx, sizes } from "../../../dev/exampleHelpers";\r
 \r
 const tones = ["none", "success", "warning", "error", "info"] as const;\r
 \r
@@ -4286,12 +4290,12 @@ export default function BadgeExample() {\r
     </Playground>\r
   );\r
 }\r
-`,vr=`export default {\r
+`,ve=`export default {\r
   name: "Badge",\r
   description: "Короткая метка или роль",\r
   category: "feedback",\r
 } as const;\r
-`,br=`import { mark, useControllable } from "../../../core/base";\r
+`,be=`import { mark, useControllable } from "../../../core/base";\r
 import { Icon } from "../../layout/Icon/Icon";\r
 import { type CollapsibleSectionProps } from "../shared";\r
 \r
@@ -4320,7 +4324,7 @@ export const CollapsibleSection = (p: CollapsibleSectionProps) => {\r
     </details>\r
   );\r
 };\r
-`,hr=`import { CollapsibleSection, KeyValueList } from "@ad-voice/ui";\r
+`,he=`import { CollapsibleSection, KeyValueList } from "@ad-voice/ui";\r
 \r
 export default function CollapsibleSectionExample() {\r
   return (\r
@@ -4335,12 +4339,12 @@ export default function CollapsibleSectionExample() {\r
     </CollapsibleSection>\r
   );\r
 }\r
-`,xr=`export default {\r
+`,xe=`export default {\r
   name: "CollapsibleSection",\r
   description: "Раскрывающийся раздел",\r
   category: "feedback",\r
 } as const;\r
-`,yr=`import { mark } from "../../../core/base";\r
+`,ye=`import { mark } from "../../../core/base";\r
 import { type DataTableProps } from "../shared";\r
 \r
 export const DataTable = (p: DataTableProps) => (\r
@@ -4371,7 +4375,7 @@ export const DataTable = (p: DataTableProps) => (\r
     </tbody>\r
   </table>\r
 );\r
-`,kr=`import { DataTable } from "@ad-voice/ui";\r
+`,ke=`import { DataTable } from "@ad-voice/ui";\r
 \r
 export default function DataTableExample() {\r
   return (\r
@@ -4386,13 +4390,13 @@ export default function DataTableExample() {\r
     />\r
   );\r
 }\r
-`,_r=`export default {\r
+`,_e=`export default {\r
   name: "DataTable",\r
   description: "Таблица истории и состояния данных",\r
   category: "feedback",\r
   wide: true,\r
 } as const;\r
-`,Pr=`import { useId, useLayoutEffect, useRef, useState } from "react";\r
+`,Pe=`import { useId, useLayoutEffect, useRef, useState } from "react";\r
 import { mark, useControllable } from "../../../core/base";\r
 import { Button } from "../../controls/Button/Button";\r
 import { IconButton } from "../../controls/IconButton/IconButton";\r
@@ -4482,7 +4486,7 @@ export const Dialog = (p: DialogProps) => {\r
     </dialog>\r
   );\r
 };\r
-`,wr=`import { useState } from "react";\r
+`,Se=`import { useState } from "react";\r
 import { Button, Dialog } from "@ad-voice/ui";\r
 \r
 export default function DialogExample() {\r
@@ -4504,12 +4508,12 @@ export default function DialogExample() {\r
     </>\r
   );\r
 }\r
-`,Sr=`export default {\r
+`,we=`export default {\r
   name: "Dialog",\r
   description: "Модальное окно и управление фокусом",\r
   category: "layout",\r
 } as const;\r
-`,Tr=`import { mark } from "../../../core/base";\r
+`,Te=`import { mark } from "../../../core/base";\r
 import { Icon } from "../../layout/Icon/Icon";\r
 import { type EmptyStateProps } from "../shared";\r
 \r
@@ -4521,7 +4525,7 @@ export const EmptyState = (p: EmptyStateProps) => (\r
     {p.action}\r
   </div>\r
 );\r
-`,Cr=`import { Button, EmptyState } from "@ad-voice/ui";\r
+`,Ce=`import { Button, EmptyState } from "@ad-voice/ui";\r
 \r
 export default function EmptyStateExample() {\r
   return (\r
@@ -4537,12 +4541,12 @@ export default function EmptyStateExample() {\r
     />\r
   );\r
 }\r
-`,Rr=`export default {\r
+`,Re=`export default {\r
   name: "EmptyState",\r
   description: "Пустой список и действие для начала",\r
   category: "feedback",\r
 } as const;\r
-`,Mr=`import { mark } from "../../../core/base";\r
+`,Me=`import { mark } from "../../../core/base";\r
 import { type KeyValueListProps } from "../shared";\r
 \r
 export const KeyValueList = (p: KeyValueListProps) => (\r
@@ -4561,7 +4565,7 @@ export const KeyValueList = (p: KeyValueListProps) => (\r
     ))}\r
   </dl>\r
 );\r
-`,Er=`import { KeyValueList, StatusIndicator } from "@ad-voice/ui";\r
+`,Ee=`import { KeyValueList, StatusIndicator } from "@ad-voice/ui";\r
 \r
 export default function KeyValueListExample() {\r
   return (\r
@@ -4577,12 +4581,12 @@ export default function KeyValueListExample() {\r
     />\r
   );\r
 }\r
-`,Ar=`export default {\r
+`,Ae=`export default {\r
   name: "KeyValueList",\r
   description: "Пары названий и значений",\r
   category: "feedback",\r
 } as const;\r
-`,Br=`import { Divider } from "../../layout/Divider/Divider";\r
+`,Be=`import { Divider } from "../../layout/Divider/Divider";\r
 import { Popover } from "../Popover/Popover";\r
 import { MenuItem } from "../MenuItem/MenuItem";\r
 import type { MenuProps } from "../shared";\r
@@ -4630,7 +4634,7 @@ export const Menu = (p: MenuProps) => (\r
     )}\r
   </Popover>\r
 );\r
-`,Ir=`import { useRef, useState } from "react";\r
+`,Ie=`import { useRef, useState } from "react";\r
 import { Button, Menu } from "@ad-voice/ui";\r
 \r
 export default function MenuExample() {\r
@@ -4661,12 +4665,12 @@ export default function MenuExample() {\r
     </>\r
   );\r
 }\r
-`,Nr=`export default {\r
+`,Ne=`export default {\r
   name: "Menu",\r
   description: "Меню действий с клавиатурной навигацией",\r
   category: "navigation",\r
 } as const;\r
-`,zr=`import { mark } from "../../../core/base";\r
+`,ze=`import { mark } from "../../../core/base";\r
 import { Icon } from "../../layout/Icon/Icon";\r
 import type { MenuItemProps } from "../shared";\r
 \r
@@ -4692,7 +4696,7 @@ export const MenuItem = (p: MenuItemProps) => {\r
     </button>\r
   );\r
 };\r
-`,Fr=`import { Card, Divider, MenuItem, Stack } from "@ad-voice/ui";\r
+`,Fe=`import { Card, Divider, MenuItem, Stack } from "@ad-voice/ui";\r
 \r
 /** MenuItem is what Menu renders for each entry; use it to build a custom menu surface. */\r
 export default function MenuItemExample() {\r
@@ -4707,12 +4711,12 @@ export default function MenuItemExample() {\r
     </Card>\r
   );\r
 }\r
-`,Lr=`export default {\r
+`,Le=`export default {\r
   name: "MenuItem",\r
   description: "Действие меню, иконка и опасное состояние",\r
   category: "navigation",\r
 } as const;\r
-`,Dr=`import { mark, type CommonProps } from "../../../core/base";\r
+`,De=`import { mark, type CommonProps } from "../../../core/base";\r
 import { Icon } from "../../layout/Icon/Icon";\r
 \r
 const icons = { success: "check", error: "warning", warning: "warning" };\r
@@ -4730,7 +4734,7 @@ export const MessageBar = (p: CommonProps) => (\r
     </span>\r
   </div>\r
 );\r
-`,Vr=`import { Playground, U, jsx } from "../../../dev/exampleHelpers";\r
+`,Ve=`import { Playground, U, jsx } from "../../../dev/exampleHelpers";\r
 \r
 const tones = ["warning", "error", "success", "info"] as const;\r
 const text = {\r
@@ -4751,12 +4755,12 @@ export default function MessageBarExample() {\r
     </Playground>\r
   );\r
 }\r
-`,Hr=`export default {\r
+`,He=`export default {\r
   name: "MessageBar",\r
   description: "Сообщение внутри карточки",\r
   category: "feedback",\r
 } as const;\r
-`,Or=`import { useLayoutEffect, useRef } from "react";\r
+`,Oe=`import { useLayoutEffect, useRef } from "react";\r
 import { cssRem, mark } from "../../../core/base";\r
 import { type PopoverProps } from "../shared";\r
 \r
@@ -4856,7 +4860,7 @@ export const Popover = (p: PopoverProps) => {\r
     </div>\r
   );\r
 };\r
-`,$r=`import { useRef, useState } from "react";\r
+`,$e=`import { useRef, useState } from "react";\r
 import { Button, Popover, Slider, Stack, Typography } from "@ad-voice/ui";\r
 \r
 export default function PopoverExample() {\r
@@ -4882,12 +4886,12 @@ export default function PopoverExample() {\r
     </>\r
   );\r
 }\r
-`,Gr=`export default {\r
+`,Ge=`export default {\r
   name: "Popover",\r
   description: "Привязанная всплывающая поверхность",\r
   category: "navigation",\r
 } as const;\r
-`,Ur=`import { clamp, mark } from "../../../core/base";\r
+`,Ue=`import { clamp, mark } from "../../../core/base";\r
 import { type ProgressBarProps } from "../shared";\r
 \r
 export const ProgressBar = (p: ProgressBarProps) => {\r
@@ -4909,7 +4913,7 @@ export const ProgressBar = (p: ProgressBarProps) => {\r
     </div>\r
   );\r
 };\r
-`,Wr=`import { Playground, U, jsx } from "../../../dev/exampleHelpers";\r
+`,We=`import { Playground, U, jsx } from "../../../dev/exampleHelpers";\r
 \r
 export default function ProgressBarExample() {\r
   return (\r
@@ -4945,12 +4949,12 @@ export default function ProgressBarExample() {\r
     </Playground>\r
   );\r
 }\r
-`,jr=`export default {\r
+`,je=`export default {\r
   name: "ProgressBar",\r
   description: "Отображение выполнения операции",\r
   category: "feedback",\r
 } as const;\r
-`,Kr=`import { mark, type Tone } from "../../../core/base";\r
+`,Ke=`import { mark, type Tone } from "../../../core/base";\r
 import type { StatusIndicatorProps } from "../shared";\r
 export const StatusIndicator = ({\r
   status = "success",\r
@@ -4974,7 +4978,7 @@ export const StatusIndicator = ({\r
     </span>\r
   );\r
 };\r
-`,qr=`import { Playground, U, jsx } from "../../../dev/exampleHelpers";\r
+`,qe=`import { Playground, U, jsx } from "../../../dev/exampleHelpers";\r
 \r
 const statuses = [\r
   "success",\r
@@ -4996,12 +5000,12 @@ export default function StatusIndicatorExample() {\r
     </Playground>\r
   );\r
 }\r
-`,Yr=`export default {\r
+`,Ye=`export default {\r
   name: "StatusIndicator",\r
   description: "Готовность, обработка, очередь и ошибка",\r
   category: "feedback",\r
 } as const;\r
-`,Xr=`import { mark } from "../../../core/base";\r
+`,Xe=`import { mark } from "../../../core/base";\r
 import { Icon } from "../../layout/Icon/Icon";\r
 import { type StepsProps } from "../shared";\r
 \r
@@ -5034,7 +5038,7 @@ export const Steps = (p: StepsProps) => {\r
     </ol>\r
   );\r
 };\r
-`,Zr=`import { Steps } from "@ad-voice/ui";\r
+`,Ze=`import { Steps } from "@ad-voice/ui";\r
 \r
 export default function StepsExample() {\r
   return (\r
@@ -5044,13 +5048,13 @@ export default function StepsExample() {\r
     />\r
   );\r
 }\r
-`,Jr=`export default {\r
+`,Je=`export default {\r
   name: "Steps",\r
   description: "Этапы с завершённым, активным и ожидающим состояниями",\r
   category: "feedback",\r
   wide: true,\r
 } as const;\r
-`,Qr=`import { useEffect, useRef } from "react";\r
+`,Qe=`import { useEffect, useRef } from "react";\r
 import { mark } from "../../../core/base";\r
 import { Icon } from "../../layout/Icon/Icon";\r
 import { type ToastProps } from "../shared";\r
@@ -5102,7 +5106,7 @@ export const Toast = ({\r
     </div>\r
   );\r
 };\r
-`,ne=`import { useState } from "react";\r
+`,nr=`import { useState } from "react";\r
 import { Button, Toast } from "@ad-voice/ui";\r
 \r
 export default function ToastExample() {\r
@@ -5121,12 +5125,12 @@ export default function ToastExample() {\r
     </>\r
   );\r
 }\r
-`,re=`export default {\r
+`,er=`export default {\r
   name: "Toast",\r
   description: "Короткое уведомление без изменения разметки",\r
   category: "feedback",\r
 } as const;\r
-`,ee=`import type { ReactNode, RefObject, KeyboardEventHandler } from "react";\r
+`,rr=`import type { ReactNode, RefObject, KeyboardEventHandler } from "react";\r
 import type { CommonProps, Tone } from "../../core/base";\r
 export interface DialogProps extends CommonProps {\r
   open?: boolean;\r
@@ -5210,7 +5214,7 @@ export interface CollapsibleSectionProps extends CommonProps {\r
   defaultOpen?: boolean;\r
   onOpenChange?: (open: boolean) => void;\r
 }\r
-`,te=`import {\r
+`,tr=`import {\r
   createContext,\r
   useContext,\r
   useEffect,\r
@@ -5350,7 +5354,7 @@ export function useFormContext<T extends Record<string, unknown>>() {\r
   if (!value) throw new Error("useFormContext must be used inside <Form>");\r
   return value as FormApi<T>;\r
 }\r
-`,oe=`import { Button, Stack, TextField } from "@ad-voice/ui";\r
+`,or=`import { Button, Stack, TextField } from "@ad-voice/ui";\r
 import { Form, useForm } from "@ad-voice/ui/forms";\r
 \r
 export default function FormExample() {\r
@@ -5378,13 +5382,13 @@ export default function FormExample() {\r
     </Form>\r
   );\r
 }\r
-`,ae=`export default {\r
+`,ar=`export default {\r
   name: "Form",\r
   description:\r
     "Typed form state, validation, submit and field bindings without coupling controls to Formik.",\r
   category: "fields",\r
 };\r
-`,se=`import { type ComponentType, type ReactNode } from "react";\r
+`,sr=`import { type ComponentType, type ReactNode } from "react";\r
 import { Grid, type GridResponsive } from "../../layout/Grid/Grid";\r
 import { TextField } from "../../controls/TextField/TextField";\r
 import { NumberField } from "../../controls/NumberField/NumberField";\r
@@ -5476,7 +5480,7 @@ function Slot<T extends Record<string, unknown>>({\r
     </Grid>\r
   );\r
 }\r
-`,ie=`import { Button, Stack } from "@ad-voice/ui";\r
+`,ir=`import { Button, Stack } from "@ad-voice/ui";\r
 import {\r
   Form,\r
   FormFields,\r
@@ -5530,14 +5534,14 @@ export default function FormFieldsExample() {\r
     </Form>\r
   );\r
 }\r
-`,le=`export default {\r
+`,lr=`export default {\r
   name: "FormFields",\r
   description:\r
     "Declarative field schema renderer with registry, conditional visibility and responsive Grid spans.",\r
   category: "fields",\r
   wide: true,\r
 };\r
-`,ce=`import { type CommonProps, type TokenStyle } from "../../../core/base";\r
+`,cr=`import { type CommonProps, type TokenStyle } from "../../../core/base";\r
 export interface ThemeProviderProps extends CommonProps {\r
   theme?: "ruby" | "green" | "violet" | "light";\r
   accent?: string;\r
@@ -5571,7 +5575,7 @@ export const ThemeProvider = ({\r
     </div>\r
   );\r
 };\r
-`,pe=`import { useState } from "react";\r
+`,pr=`import { useState } from "react";\r
 import {\r
   Button,\r
   Card,\r
@@ -5599,14 +5603,14 @@ export default function ThemeProviderExample() {\r
     </ThemeProvider>\r
   );\r
 }\r
-`,de=`export default {
+`,dr=`export default {
   name: "ThemeProvider",
   description:
     "Тема и цветовые токены; находится рядом с типографикой как часть foundation.",
   category: "typography",
   wide: true,
 };
-`,ue=`import { createElement } from "react";\r
+`,ur=`import { createElement } from "react";\r
 import type { CSSProperties, ElementType, ReactNode } from "react";\r
 import { mark, type CommonProps } from "../../../core/base";\r
 \r
@@ -5678,7 +5682,7 @@ export function Typography({\r
     children ?? text,\r
   );\r
 }\r
-`,me=`import { Grid, Stack, Typography } from "@ad-voice/ui";\r
+`,mr=`import { Grid, Stack, Typography } from "@ad-voice/ui";\r
 \r
 const headings = [\r
   ["display", "Neo UI"],\r
@@ -5730,14 +5734,14 @@ export default function TypographyExample() {\r
     </Stack>\r
   );\r
 }\r
-`,fe=`export default {\r
+`,fr=`export default {\r
   name: "Typography",\r
   description:\r
     "Единая шкала шрифтов, заголовков, подписей, цветов и весов текста",\r
   category: "typography",\r
   wide: true,\r
 } as const;\r
-`,ge=`import { mark } from "../../../core/base";\r
+`,gr=`import { mark } from "../../../core/base";\r
 import { type AvatarProps } from "../shared";\r
 import { HostSeal } from "./HostSeal";\r
 \r
@@ -5755,7 +5759,7 @@ export const Avatar = ({ variant = "initials", ...p }: AvatarProps) => (\r
     )}\r
   </div>\r
 );\r
-`,ve=`import { useRef } from "react";\r
+`,vr=`import { useRef } from "react";\r
 import { SvgAsset } from "../../../core/artwork";\r
 import { useDecoration } from "../../../core/motion/hooks";\r
 import { illustrations } from "../shared";\r
@@ -5782,7 +5786,7 @@ export function HostSeal() {\r
     </span>\r
   );\r
 }\r
-`,be=`import { Playground, U, jsx, sizes } from "../../../dev/exampleHelpers";\r
+`,br=`import { Playground, U, jsx, sizes } from "../../../dev/exampleHelpers";\r
 \r
 export default function AvatarExample() {\r
   return (\r
@@ -5803,12 +5807,12 @@ export default function AvatarExample() {\r
     </Playground>\r
   );\r
 }\r
-`,he=`export default {\r
+`,hr=`export default {\r
   name: "Avatar",\r
   description: "Инициалы в неоновом кольце или анимированная печать ведущего с короной",\r
   category: "typography",\r
 } as const;\r
-`,xe=`import { mark, type CommonProps } from "../../../core/base";\r
+`,xr=`import { mark, type CommonProps } from "../../../core/base";\r
 import { SvgAsset } from "../../../core/artwork";\r
 import { illustrations } from "../shared";\r
 \r
@@ -5818,20 +5822,20 @@ export const BrandMark = (p: CommonProps) => (\r
     <small>KARAOKE STUDIO</small>\r
   </div>\r
 );\r
-`,ye=`import { BrandMark } from "@ad-voice/ui";\r
+`,yr=`import { BrandMark } from "@ad-voice/ui";\r
 \r
 export default function BrandMarkExample() {\r
   return <BrandMark />;\r
 }\r
-`,ke=`export default {\r
+`,kr=`export default {\r
   name: "BrandMark",\r
   description: "Фирменная надпись и подпись студии",\r
   category: "typography",\r
 } as const;\r
-`,_e=`import { part } from "../../../core/base";\r
+`,_r=`import { part } from "../../../core/base";\r
 \r
 export const ButtonGroup = part("ButtonGroup", "div");\r
-`,Pe=`import { Playground, U, jsx, sizes } from "../../../dev/exampleHelpers";\r
+`,Pr=`import { Playground, U, jsx, sizes } from "../../../dev/exampleHelpers";\r
 \r
 export default function ButtonGroupExample() {\r
   return (\r
@@ -5869,12 +5873,12 @@ export default function ButtonGroupExample() {\r
     </Playground>\r
   );\r
 }\r
-`,we=`export default {\r
+`,Sr=`export default {\r
   name: "ButtonGroup",\r
   description: "Согласованная группа кнопок",\r
   category: "buttons",\r
 } as const;\r
-`,Se=`import React, { createElement, useRef } from "react";\r
+`,wr=`import React, { createElement, useRef } from "react";\r
 import { mark } from "../../../core/base";\r
 import { useBorder } from "../../../core/motion/hooks";\r
 import { Header } from "../Header/Header";\r
@@ -5933,7 +5937,7 @@ export const Card = ({\r
     children,\r
   );\r
 };\r
-`,Te=`import { Playground, U, jsx } from "../../../dev/exampleHelpers";\r
+`,Tr=`import { Playground, U, jsx } from "../../../dev/exampleHelpers";\r
 \r
 const materials = ["card", "glass", "ruby", "tile", "shell"] as const;\r
 \r
@@ -5973,17 +5977,17 @@ export default function CardExample() {\r
     </Playground>\r
   );\r
 }\r
-`,Ce=`export default {
+`,Cr=`export default {
   name: "Card",
   description:
     "Единая поверхность: card/glass/ruby/tile/shell через material и анимированная рамка через border.",
   category: "layout",
   wide: true,
 };
-`,Re=`import { part } from "../../../core/base";\r
+`,Rr=`import { part } from "../../../core/base";\r
 \r
 export const DialogActions = part("DialogActions", "footer");\r
-`,Me=`import { Button, DialogActions } from "@ad-voice/ui";\r
+`,Mr=`import { Button, DialogActions } from "@ad-voice/ui";\r
 \r
 /** Footer row of a dialog; Dialog renders one for you, use it in custom dialogs. */\r
 export default function DialogActionsExample() {\r
@@ -5994,15 +5998,15 @@ export default function DialogActionsExample() {\r
     </DialogActions>\r
   );\r
 }\r
-`,Ee=`export default {\r
+`,Er=`export default {\r
   name: "DialogActions",\r
   description: "Группа действий внизу диалога",\r
   category: "layout",\r
 } as const;\r
-`,Ae=`import { part } from "../../../core/base";\r
+`,Ar=`import { part } from "../../../core/base";\r
 \r
 export const DialogBody = part("DialogBody", "div");\r
-`,Be=`import { DialogBody, TextField } from "@ad-voice/ui";\r
+`,Br=`import { DialogBody, TextField } from "@ad-voice/ui";\r
 \r
 /** Content area of a dialog with the standard spacing. */\r
 export default function DialogBodyExample() {\r
@@ -6012,12 +6016,12 @@ export default function DialogBodyExample() {\r
     </DialogBody>\r
   );\r
 }\r
-`,Ie=`export default {\r
+`,Ir=`export default {\r
   name: "DialogBody",\r
   description: "Область содержимого диалога",\r
   category: "layout",\r
 } as const;\r
-`,Ne=`import { mark } from "../../../core/base";\r
+`,Nr=`import { mark } from "../../../core/base";\r
 import { type DividerProps } from "../shared";\r
 \r
 export const Divider = (p: DividerProps) => (\r
@@ -6027,7 +6031,7 @@ export const Divider = (p: DividerProps) => (\r
     aria-orientation={p.vertical ? "vertical" : "horizontal"}\r
   />\r
 );\r
-`,ze=`import { Divider, Stack, Typography } from "@ad-voice/ui";\r
+`,zr=`import { Divider, Stack, Typography } from "@ad-voice/ui";\r
 \r
 export default function DividerExample() {\r
   return (\r
@@ -6042,12 +6046,12 @@ export default function DividerExample() {\r
     </Stack>\r
   );\r
 }\r
-`,Fe=`export default {\r
+`,Fr=`export default {\r
   name: "Divider",\r
   description: "Разделитель по горизонтали или вертикали",\r
   category: "layout",\r
 } as const;\r
-`,Le=`import type { ElementType, HTMLAttributes } from "react";
+`,Lr=`import type { ElementType, HTMLAttributes } from "react";
 import { classes } from "../../../core/base";
 import {
   responsiveVars,
@@ -6169,7 +6173,7 @@ export function Grid({
     />
   );
 }
-`,De=`import { Card, Grid } from "@ad-voice/ui";
+`,Dr=`import { Card, Grid } from "@ad-voice/ui";
 
 export default function GridExample() {
   return (
@@ -6190,13 +6194,13 @@ export default function GridExample() {
     </Grid>
   );
 }
-`,Ve=`export default {
+`,Vr=`export default {
   name: "Grid",
   description: "Responsive CSS Grid для колонок, span и auto-fit раскладок",
   category: "layout",
   wide: true,
 } as const;
-`,He=`import { mark } from "../../../core/base";\r
+`,Hr=`import { mark } from "../../../core/base";\r
 import { Icon } from "../Icon/Icon";\r
 import {\r
   Typography,\r
@@ -6251,7 +6255,7 @@ export const Header = ({\r
     </Component>\r
   );\r
 };\r
-`,Oe=`import { Playground, U, jsx } from "../../../dev/exampleHelpers";\r
+`,Or=`import { Playground, U, jsx } from "../../../dev/exampleHelpers";\r
 \r
 export default function HeaderExample() {\r
   return (\r
@@ -6288,12 +6292,12 @@ export default function HeaderExample() {\r
     </Playground>\r
   );\r
 }\r
-`,$e=`export default {\r
+`,$r=`export default {\r
   name: "Header",\r
   description: "Единый заголовок для страницы, секции, карточки и диалога.",\r
   category: "layout",\r
 };\r
-`,Ge=`import React from "react";\r
+`,Gr=`import React from "react";\r
 import { mark } from "../../../core/base";\r
 import { SvgAsset } from "../../../core/artwork";\r
 import { icons, type IconProps } from "../shared";\r
@@ -6325,7 +6329,7 @@ export const Icon = ({\r
     />\r
   </span>\r
 );\r
-`,Ue=`import { Compare, Playground, U, jsx } from "../../../dev/exampleHelpers";\r
+`,Ur=`import { Compare, Playground, U, jsx } from "../../../dev/exampleHelpers";\r
 \r
 const names = ["mic", "headphones", "music", "wave", "settings", "trash"];\r
 \r
@@ -6362,13 +6366,13 @@ export default function IconExample() {\r
     </Playground>\r
   );\r
 }\r
-`,We=`export default {\r
+`,Wr=`export default {\r
   name: "Icon",\r
   description:\r
     'Иконка; surface="tile" добавляет контейнер вместо отдельного IconTile.',\r
   category: "typography",\r
 };\r
-`,je=`import { mark } from "../../../core/base";\r
+`,jr=`import { mark } from "../../../core/base";\r
 import { SvgAsset } from "../../../core/artwork";\r
 import { illustrations } from "../shared";\r
 import type { IllustrationProps } from "../shared";\r
@@ -6391,7 +6395,7 @@ export const Illustration = ({\r
     />\r
   </div>\r
 );\r
-`,Ke=`import { Grid, Illustration } from "@ad-voice/ui";\r
+`,Kr=`import { Grid, Illustration } from "@ad-voice/ui";\r
 \r
 const height = { height: "clamp(9rem, 26dvh, 15rem)" };\r
 \r
@@ -6403,13 +6407,13 @@ export default function IllustrationExample() {\r
     </Grid>\r
   );\r
 }\r
-`,qe=`export default {
+`,qr=`export default {
   name: "Illustration",
   description: "SVG-иллюстрация; framed заменяет отдельный ArtworkFrame.",
   category: "layout",
   wide: true,
 };
-`,Ye=`import { useRef } from "react";\r
+`,Yr=`import { useRef } from "react";\r
 import { mark } from "../../../core/base";\r
 import { useSmoothWheel } from "../../../core/motion/hooks";\r
 import { type ScrollAreaProps } from "../shared";\r
@@ -6434,7 +6438,7 @@ export function ScrollArea(p: ScrollAreaProps) {\r
     </div>\r
   );\r
 }\r
-`,Xe=`import { Badge, ScrollArea, Stack, Typography } from "@ad-voice/ui";\r
+`,Xr=`import { Badge, ScrollArea, Stack, Typography } from "@ad-voice/ui";\r
 \r
 export default function ScrollAreaExample() {\r
   return (\r
@@ -6450,12 +6454,12 @@ export default function ScrollAreaExample() {\r
     </ScrollArea>\r
   );\r
 }\r
-`,Ze=`export default {\r
+`,Zr=`export default {\r
   name: "ScrollArea",\r
   description: "Прокрутка с согласованным оформлением",\r
   category: "layout",\r
 } as const;\r
-`,Je=`import { Children, Fragment } from "react";
+`,Jr=`import { Children, Fragment } from "react";
 import type { ElementType, HTMLAttributes, ReactNode, Ref } from "react";
 import { classes } from "../../../core/base";
 import {
@@ -6542,7 +6546,7 @@ export function Stack({
     </Component>
   );
 }
-`,Qe=`import { Button, Stack } from "@ad-voice/ui";
+`,Qr=`import { Button, Stack } from "@ad-voice/ui";
 
 /** Column on phones, row from md: one prop instead of media queries. */
 export default function StackExample() {
@@ -6567,7 +6571,7 @@ export default function StackExample() {
   category: "layout",
   wide: true,
 } as const;
-`,rt=`import { mark } from "../../../core/base";\r
+`,et=`import { mark } from "../../../core/base";\r
 import { type TabPanelProps } from "../shared";\r
 \r
 export const TabPanel = (p: TabPanelProps) => (\r
@@ -6584,7 +6588,7 @@ export const TabPanel = (p: TabPanelProps) => (\r
     </div>\r
   </div>\r
 );\r
-`,et=`import { TabPanel, Typography } from "@ad-voice/ui";\r
+`,rt=`import { TabPanel, Typography } from "@ad-voice/ui";\r
 \r
 /** Content of one tab; pair it with Tabs (see the Tabs page for the full pattern). */\r
 export default function TabPanelExample() {\r
@@ -6737,1841 +6741,1838 @@ export interface IllustrationProps extends CommonProps {\r
   framed?: boolean;\r
   fit?: "contain" | "cover";\r
 }\r
-`,dt=`import { useEffect, useRef, useState } from "react";\r
-import { clamp, mark, timeText, useControllable } from "../../../core/base";\r
-import { IconButton } from "../../controls/IconButton/IconButton";\r
-import { Slider } from "../../controls/Slider/Slider";\r
-import { Waveform } from "../Waveform/Waveform";\r
-import type { AudioPlayerProps } from "../shared";\r
-export const AudioPlayer = (p: AudioPlayerProps) => {\r
-  const audio = useRef<HTMLAudioElement | null>(null);\r
-  const [playing, setPlaying] = useState(false),\r
-    [position, setPosition] = useState(0),\r
-    [muted, setMuted] = useState(false);\r
-  const [volume, setVolume] = useControllable(p.volume, p.defaultVolume ?? 0.7);\r
-  const [fileDuration, setFileDuration] = useState<number>();\r
-  const duration = p.duration ?? fileDuration ?? 51;\r
-  useEffect(() => {\r
-    if (!p.src) return;\r
-    const media = new Audio(p.src);\r
-    audio.current = media;\r
-    const meta = () =>\r
-      Number.isFinite(media.duration) && setFileDuration(media.duration);\r
-    const ended = () => {\r
-      setPlaying(false);\r
-      p.onPlayingChange?.(false);\r
-    };\r
-    media.addEventListener("loadedmetadata", meta);\r
-    media.addEventListener("ended", ended);\r
-    return () => {\r
-      media.pause();\r
-      media.removeEventListener("loadedmetadata", meta);\r
-      media.removeEventListener("ended", ended);\r
-      audio.current = null;\r
-      setFileDuration(undefined);\r
-    };\r
-  }, [p.src]);\r
-  // While playing, the position is read every display refresh (timeupdate fires only ~4\r
-  // times a second), so the cursor glides. Without a source the timeline runs on its own,\r
-  // so the player can be shown alive in demos.\r
-  useEffect(() => {\r
-    if (!playing) return;\r
-    let last = performance.now();\r
-    let frame = requestAnimationFrame(function tick(now) {\r
-      const media = audio.current;\r
-      if (media) {\r
-        setPosition(media.currentTime);\r
-        p.onTimeChange?.(media.currentTime);\r
-      } else\r
-        setPosition((v) => {\r
-          const next = v + (now - last) / 1000;\r
-          if (next < duration) return next;\r
-          setPlaying(false);\r
-          return 0;\r
-        });\r
-      last = now;\r
-      frame = requestAnimationFrame(tick);\r
-    });\r
-    return () => cancelAnimationFrame(frame);\r
-  }, [playing, duration]);\r
-  useEffect(() => {\r
-    if (audio.current) {\r
-      audio.current.muted = muted;\r
-      audio.current.volume = clamp(volume, 0, 1);\r
-    }\r
-  }, [muted, volume]);\r
-  const toggle = () => {\r
-    const next = !playing;\r
-    setPlaying(next);\r
-    p.onPlayingChange?.(next);\r
-    if (audio.current) {\r
-      if (next) void audio.current.play();\r
-      else audio.current.pause();\r
-    }\r
-  };\r
-  const seek = (v: number) => {\r
-    setPosition(v);\r
-    if (audio.current) audio.current.currentTime = v;\r
-    p.onTimeChange?.(v);\r
-  };\r
-  return (\r
-    <div {...mark("AudioPlayer", p)} data-playing={playing || undefined}>\r
-      <span className="ad-player-play">\r
-        <IconButton\r
-          variant="primary"\r
-          round\r
-          icon={playing ? "pause" : "play"}\r
-          label={playing ? "Пауза" : "Воспроизвести"}\r
-          onClick={toggle}\r
-        />\r
-      </span>\r
-      <div className="ad-player-track">\r
-        <Waveform\r
-          duration={duration}\r
-          position={position}\r
-          onSeek={seek}\r
-          points={p.points}\r
-          src={p.points ? undefined : p.src}\r
-        />\r
-        <div className="ad-player-times">\r
-          <span className="ad-time">{timeText(position)}</span>\r
-          <span className="ad-time">−{timeText(duration - position)}</span>\r
-        </div>\r
-      </div>\r
-      <div className="ad-player-volume">\r
-        <IconButton\r
-          variant="ghost"\r
-          icon="volume"\r
-          label={muted ? "Включить звук" : "Выключить звук"}\r
-          aria-pressed={muted}\r
-          data-muted={muted || undefined}\r
-          onClick={() => setMuted((v) => !v)}\r
-        />\r
-        {p.showVolume !== false && (\r
-          <Slider\r
-            size="sm"\r
-            min={0}\r
-            max={1}\r
-            step={0.01}\r
-            value={muted ? 0 : volume}\r
-            onValueChange={(v) => {\r
-              setMuted(false);\r
-              setVolume(v);\r
-            }}\r
-            label="Громкость"\r
-          />\r
-        )}\r
-      </div>\r
-    </div>\r
-  );\r
-};\r
-`,ut=`import { AudioPlayer } from "@ad-voice/ui";\r
-\r
-/** Pass \`src\` to play a file; without it the player shows its timeline only. */\r
-export default function AudioPlayerExample() {\r
-  return <AudioPlayer duration={51} defaultVolume={0.7} />;\r
-}\r
+`,dt=`import { useEffect, useRef, useState } from "react";
+import { clamp, mark, timeText, useControllable } from "../../../core/base";
+import { IconButton } from "../../controls/IconButton/IconButton";
+import { Slider } from "../../controls/Slider/Slider";
+import { Waveform } from "../Waveform/Waveform";
+import type { AudioPlayerProps } from "../shared";
+export const AudioPlayer = (p: AudioPlayerProps) => {
+  const audio = useRef<HTMLAudioElement | null>(null);
+  const [playing, setPlaying] = useState(false),
+    [position, setPosition] = useState(0),
+    [muted, setMuted] = useState(false);
+  const [volume, setVolume] = useControllable(p.volume, p.defaultVolume ?? 0.7);
+  const [fileDuration, setFileDuration] = useState<number>();
+  const duration = p.duration ?? fileDuration ?? 51;
+  useEffect(() => {
+    if (!p.src) return;
+    const media = new Audio(p.src);
+    audio.current = media;
+    const meta = () =>
+      Number.isFinite(media.duration) && setFileDuration(media.duration);
+    const ended = () => {
+      setPlaying(false);
+      p.onPlayingChange?.(false);
+    };
+    media.addEventListener("loadedmetadata", meta);
+    media.addEventListener("ended", ended);
+    return () => {
+      media.pause();
+      media.removeEventListener("loadedmetadata", meta);
+      media.removeEventListener("ended", ended);
+      audio.current = null;
+      setFileDuration(undefined);
+    };
+  }, [p.src]);
+  // While playing, the position is read every display refresh (timeupdate fires only ~4
+  // times a second), so the cursor glides. Without a source the timeline runs on its own,
+  // so the player can be shown alive in demos.
+  useEffect(() => {
+    if (!playing) return;
+    let last = performance.now();
+    let frame = requestAnimationFrame(function tick(now) {
+      const media = audio.current;
+      if (media) {
+        setPosition(media.currentTime);
+        p.onTimeChange?.(media.currentTime);
+      } else
+        setPosition((v) => {
+          const next = v + (now - last) / 1000;
+          if (next < duration) return next;
+          setPlaying(false);
+          return 0;
+        });
+      last = now;
+      frame = requestAnimationFrame(tick);
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [playing, duration]);
+  useEffect(() => {
+    if (audio.current) {
+      audio.current.muted = muted;
+      audio.current.volume = clamp(volume, 0, 1);
+    }
+  }, [muted, volume]);
+  const toggle = () => {
+    const next = !playing;
+    setPlaying(next);
+    p.onPlayingChange?.(next);
+    if (audio.current) {
+      if (next) void audio.current.play();
+      else audio.current.pause();
+    }
+  };
+  const seek = (v: number) => {
+    setPosition(v);
+    if (audio.current) audio.current.currentTime = v;
+    p.onTimeChange?.(v);
+  };
+  return (
+    <div {...mark("AudioPlayer", p)} data-playing={playing || undefined}>
+      <span className="ad-player-play">
+        <IconButton
+          variant="primary"
+          round
+          icon={playing ? "pause" : "play"}
+          label={playing ? "Пауза" : "Воспроизвести"}
+          onClick={toggle}
+        />
+      </span>
+      <div className="ad-player-track">
+        <Waveform
+          duration={duration}
+          position={position}
+          onSeek={seek}
+          points={p.points}
+          src={p.points ? undefined : p.src}
+        />
+        <div className="ad-player-times">
+          <span className="ad-time">{timeText(position)}</span>
+          <span className="ad-time">−{timeText(duration - position)}</span>
+        </div>
+      </div>
+      <div className="ad-player-volume">
+        <IconButton
+          variant="ghost"
+          icon="volume"
+          label={muted ? "Включить звук" : "Выключить звук"}
+          aria-pressed={muted}
+          data-muted={muted || undefined}
+          onClick={() => setMuted((v) => !v)}
+        />
+        {p.showVolume !== false && (
+          <Slider
+            size="sm"
+            min={0}
+            max={1}
+            step={0.01}
+            value={muted ? 0 : volume}
+            onValueChange={(v) => {
+              setMuted(false);
+              setVolume(v);
+            }}
+            label="Громкость"
+          />
+        )}
+      </div>
+    </div>
+  );
+};
+`,ut=`import { AudioPlayer } from "@ad-voice/ui";
+
+/** Pass \`src\` to play a file; without it the player shows its timeline only. */
+export default function AudioPlayerExample() {
+  return <AudioPlayer duration={51} defaultVolume={0.7} />;
+}
 `,mt=`export default {\r
   name: "AudioPlayer",\r
   description: "Воспроизведение, позиция, время и звук",\r
   category: "audio",\r
   wide: true,\r
 } as const;\r
-`,ft=`import { useEffect, useId, useRef } from "react";\r
-import { clamp, mark } from "../../../core/base";\r
-import { type LevelMeterProps } from "../shared";\r
-\r
-const SAMPLES = 64;\r
-const WIDTH = 256;\r
-const HEIGHT = 24;\r
-const MID = HEIGHT / 2;\r
-const STEP = WIDTH / (SAMPLES - 1);\r
-/** A new sample enters every 28 ms; between samples the wave slides sub-pixel. */\r
-const SAMPLE_MS = 28;\r
-\r
-/** Mirrored outline of the samples around the midline; quiet parts keep a thin line. */\r
-const wavePath = (samples: readonly number[]) => {\r
-  const point = (i: number, level: number, side: 1 | -1) =>\r
-    \`\${(i * STEP).toFixed(2)} \${(MID + side * (1 + level ** 0.68 * (MID - 3))).toFixed(2)}\`;\r
-  const upper = samples.map((level, i) => point(i, level, -1));\r
-  const lower = samples.map((level, i) => point(i, level, 1)).reverse();\r
-  return \`M\${upper.join("L")}L\${lower.join("L")}Z\`;\r
-};\r
-\r
-/** Root-mean-square loudness of an analyser's current window, scaled to 0..1. */\r
-const loudness = (\r
-  analyser: AnalyserNode,\r
-  buffer: Float32Array<ArrayBuffer>,\r
-) => {\r
-  analyser.getFloatTimeDomainData(buffer);\r
-  let sum = 0;\r
-  for (const sample of buffer) sum += sample * sample;\r
-  return Math.min(1, Math.sqrt(sum / buffer.length) * 4);\r
-};\r
-\r
-/**\r
- * Live input level as a scrolling mirrored wave. Feed it a changing \`value\` (0–100) or hand\r
- * it a \`stream\` (e.g. from getUserMedia) and it listens by itself. The wave is redrawn\r
- * outside React on every display refresh, so it never re-renders at the animation rate.\r
- */\r
-export function LevelMeter({\r
-  value = 0,\r
-  stream,\r
-  active = true,\r
-  compact = false,\r
-  label,\r
-  ...p\r
-}: LevelMeterProps) {\r
-  const id = useId().replace(/[^a-zA-Z0-9_-]/g, "");\r
-  const path = useRef<SVGPathElement>(null);\r
-  const target = useRef(0);\r
-  const level = clamp(value) / 100;\r
-\r
-  useEffect(() => {\r
-    target.current = active ? level : 0;\r
-  }, [active, level]);\r
-\r
-  useEffect(() => {\r
-    const shape = path.current;\r
-    if (!shape) return;\r
-    const samples = Array.from({ length: SAMPLES + 1 }, () => 0);\r
-    shape.setAttribute("d", wavePath(samples));\r
-    if (!active) return;\r
-\r
-    let context: AudioContext | undefined;\r
-    let analyser: AnalyserNode | undefined;\r
-    let source: MediaStreamAudioSourceNode | undefined;\r
-    if (stream) {\r
-      context = new AudioContext();\r
-      analyser = context.createAnalyser();\r
-      analyser.fftSize = 1024;\r
-      source = context.createMediaStreamSource(stream);\r
-      source.connect(analyser);\r
-    }\r
-    const buffer = new Float32Array(analyser?.fftSize ?? 0);\r
-\r
-    let envelope = 0;\r
-    let carry = 0;\r
-    let last = performance.now();\r
-    let frame = requestAnimationFrame(function draw(now) {\r
-      carry += Math.min(250, now - last);\r
-      last = now;\r
-      const input = analyser ? loudness(analyser, buffer) : target.current;\r
-      while (carry >= SAMPLE_MS) {\r
-        carry -= SAMPLE_MS;\r
-        // Fast attack, slow release, like a real meter's ballistics.\r
-        envelope += (input - envelope) * (input > envelope ? 0.3 : 0.11);\r
-        if (envelope < 0.001) envelope = 0;\r
-        samples.shift();\r
-        samples.push(envelope);\r
-        shape.setAttribute("d", wavePath(samples));\r
-      }\r
-      shape.setAttribute(\r
-        "transform",\r
-        \`translate(\${(-(carry / SAMPLE_MS) * STEP).toFixed(3)} 0)\`,\r
-      );\r
-      frame = requestAnimationFrame(draw);\r
-    });\r
-    return () => {\r
-      cancelAnimationFrame(frame);\r
-      source?.disconnect();\r
-      void context?.close();\r
-    };\r
-  }, [active, stream]);\r
-\r
-  return (\r
-    <div\r
-      {...mark("LevelMeter", p)}\r
-      role="meter"\r
-      aria-label={label ?? "Уровень сигнала"}\r
-      aria-valuemin={0}\r
-      aria-valuemax={100}\r
-      aria-valuenow={stream ? undefined : Math.round(active ? level * 100 : 0)}\r
-      data-active={active}\r
-      data-compact={compact || undefined}\r
-    >\r
-      <svg\r
-        viewBox={\`0 0 \${WIDTH} \${HEIGHT}\`}\r
-        preserveAspectRatio="none"\r
-        aria-hidden="true"\r
-      >\r
-        <defs>\r
-          <linearGradient id={\`\${id}-wave\`}>\r
-            <stop stopColor="#8c0d34" />\r
-            <stop offset="0.52" stopColor="var(--ad-red)" />\r
-            <stop offset="1" stopColor="#ffd3df" />\r
-          </linearGradient>\r
-        </defs>\r
-        <line className="ad-level-meter-axis" x2={WIDTH} y1={MID} y2={MID} />\r
-        <path\r
-          ref={path}\r
-          className="ad-level-meter-wave"\r
-          fill={\`url(#\${id}-wave)\`}\r
-        />\r
-      </svg>\r
-    </div>\r
-  );\r
-}\r
-`,gt=`import { useEffect, useState } from "react";\r
-import { Playground, U, expr, jsx } from "../../../dev/exampleHelpers";\r
-\r
-/** A voice-like level: syllables rise and fall, with short pauses between phrases. */\r
-function useDemoVoice(enabled: boolean) {\r
-  const [level, setLevel] = useState(0);\r
-  useEffect(() => {\r
-    if (!enabled) return;\r
-    const start = performance.now();\r
-    const timer = setInterval(() => {\r
-      const t = (performance.now() - start) / 1000;\r
-      const phrase = Math.sin(t * 0.9) > -0.35 ? 1 : 0.05;\r
-      const syllable =\r
-        Math.abs(Math.sin(t * 7.3)) * (0.55 + 0.45 * Math.sin(t * 2.1));\r
-      setLevel(Math.round(phrase * syllable * 90 + Math.random() * 8));\r
-    }, 60);\r
-    return () => clearInterval(timer);\r
-  }, [enabled]);\r
-  return level;\r
-}\r
-\r
-export default function LevelMeterExample() {\r
-  const [stream, setStream] = useState<MediaStream | null>(null);\r
-  const [error, setError] = useState<string>();\r
-  const level = useDemoVoice(!stream);\r
-  useEffect(() => () => stream?.getTracks().forEach((t) => t.stop()), [stream]);\r
-\r
-  const toggleMicrophone = async () => {\r
-    if (stream) return setStream(null);\r
-    try {\r
-      setError(undefined);\r
-      setStream(await navigator.mediaDevices.getUserMedia({ audio: true }));\r
-    } catch {\r
-      setError("Нет доступа к микрофону");\r
-    }\r
-  };\r
-\r
-  return (\r
-    <Playground\r
-      stretch\r
-      knobs={{ active: { value: true }, compact: { value: false } }}\r
-      code={(v) =>\r
-        jsx("LevelMeter", {\r
-          label: "Микрофон",\r
-          ...(stream ? { stream: expr("stream") } : { value: expr("level") }),\r
-          active: v.active ? undefined : expr("false"),\r
-          compact: v.compact,\r
-        })\r
-      }\r
-      extra={\r
-        <U.Stack direction="row" gap={3} align="center" wrap>\r
-          <U.Button\r
-            size="sm"\r
-            icon="mic"\r
-            variant={stream ? "primary" : "secondary"}\r
-            onClick={toggleMicrophone}\r
-          >\r
-            {stream ? "Отключить микрофон" : "Подключить микрофон"}\r
-          </U.Button>\r
-          <U.Typography variant="caption" tone={error ? "danger" : "muted"}>\r
-            {error ??\r
-              (stream ? "Слушаю ваш микрофон" : "Сейчас — симуляция голоса")}\r
-          </U.Typography>\r
-        </U.Stack>\r
-      }\r
-    >\r
-      {(v) => (\r
-        <U.LevelMeter\r
-          label="Микрофон"\r
-          value={level}\r
-          stream={stream}\r
-          active={v.active}\r
-          compact={v.compact}\r
-        />\r
-      )}\r
-    </Playground>\r
-  );\r
-}\r
+`,ft=`import { useSvgId } from "../../../core/artwork";
+import { useEffect, useRef } from "react";
+import { clamp, mark } from "../../../core/base";
+import { type LevelMeterProps } from "../shared";
+
+const SAMPLES = 64;
+const WIDTH = 256;
+const HEIGHT = 24;
+const MID = HEIGHT / 2;
+const STEP = WIDTH / (SAMPLES - 1);
+/** A new sample enters every 28 ms; between samples the wave slides sub-pixel. */
+const SAMPLE_MS = 28;
+
+/** Mirrored outline of the samples around the midline; quiet parts keep a thin line. */
+const wavePath = (samples: readonly number[]) => {
+  const point = (i: number, level: number, side: 1 | -1) =>
+    \`\${(i * STEP).toFixed(2)} \${(MID + side * (1 + level ** 0.68 * (MID - 3))).toFixed(2)}\`;
+  const upper = samples.map((level, i) => point(i, level, -1));
+  const lower = samples.map((level, i) => point(i, level, 1)).reverse();
+  return \`M\${upper.join("L")}L\${lower.join("L")}Z\`;
+};
+
+/** Root-mean-square loudness of an analyser's current window, scaled to 0..1. */
+const loudness = (
+  analyser: AnalyserNode,
+  buffer: Float32Array<ArrayBuffer>,
+) => {
+  analyser.getFloatTimeDomainData(buffer);
+  let sum = 0;
+  for (const sample of buffer) sum += sample * sample;
+  return Math.min(1, Math.sqrt(sum / buffer.length) * 4);
+};
+
+/**
+ * Live input level as a scrolling mirrored wave. Feed it a changing \`value\` (0–100) or hand
+ * it a \`stream\` (e.g. from getUserMedia) and it listens by itself. The wave is redrawn
+ * outside React on every display refresh, so it never re-renders at the animation rate.
+ */
+export function LevelMeter({
+  value = 0,
+  stream,
+  active = true,
+  compact = false,
+  label,
+  ...p
+}: LevelMeterProps) {
+  const id = useSvgId();
+  const path = useRef<SVGPathElement>(null);
+  const target = useRef(0);
+  const level = clamp(value) / 100;
+
+  useEffect(() => {
+    target.current = active ? level : 0;
+  }, [active, level]);
+
+  useEffect(() => {
+    const shape = path.current;
+    if (!shape) return;
+    const samples = Array.from({ length: SAMPLES + 1 }, () => 0);
+    shape.setAttribute("d", wavePath(samples));
+    if (!active) return;
+
+    let context: AudioContext | undefined;
+    let analyser: AnalyserNode | undefined;
+    let source: MediaStreamAudioSourceNode | undefined;
+    if (stream) {
+      context = new AudioContext();
+      analyser = context.createAnalyser();
+      analyser.fftSize = 1024;
+      source = context.createMediaStreamSource(stream);
+      source.connect(analyser);
+    }
+    const buffer = new Float32Array(analyser?.fftSize ?? 0);
+
+    let envelope = 0;
+    let carry = 0;
+    let last = performance.now();
+    let frame = requestAnimationFrame(function draw(now) {
+      carry += Math.min(250, now - last);
+      last = now;
+      const input = analyser ? loudness(analyser, buffer) : target.current;
+      while (carry >= SAMPLE_MS) {
+        carry -= SAMPLE_MS;
+        // Fast attack, slow release, like a real meter's ballistics.
+        envelope += (input - envelope) * (input > envelope ? 0.3 : 0.11);
+        if (envelope < 0.001) envelope = 0;
+        samples.shift();
+        samples.push(envelope);
+        shape.setAttribute("d", wavePath(samples));
+      }
+      shape.setAttribute(
+        "transform",
+        \`translate(\${(-(carry / SAMPLE_MS) * STEP).toFixed(3)} 0)\`,
+      );
+      frame = requestAnimationFrame(draw);
+    });
+    return () => {
+      cancelAnimationFrame(frame);
+      source?.disconnect();
+      void context?.close();
+    };
+  }, [active, stream]);
+
+  return (
+    <div
+      {...mark("LevelMeter", p)}
+      role="meter"
+      aria-label={label ?? "Уровень сигнала"}
+      aria-valuemin={0}
+      aria-valuemax={100}
+      aria-valuenow={stream ? undefined : Math.round(active ? level * 100 : 0)}
+      data-active={active}
+      data-compact={compact || undefined}
+    >
+      <svg
+        viewBox={\`0 0 \${WIDTH} \${HEIGHT}\`}
+        preserveAspectRatio="none"
+        aria-hidden="true"
+      >
+        <defs>
+          <linearGradient id={\`\${id}-wave\`}>
+            <stop stopColor="#8c0d34" />
+            <stop offset="0.52" stopColor="var(--ad-red)" />
+            <stop offset="1" stopColor="#ffd3df" />
+          </linearGradient>
+        </defs>
+        <line className="ad-level-meter-axis" x2={WIDTH} y1={MID} y2={MID} />
+        <path
+          ref={path}
+          className="ad-level-meter-wave"
+          fill={\`url(#\${id}-wave)\`}
+        />
+      </svg>
+    </div>
+  );
+}
+`,gt=`import { useEffect, useState } from "react";
+import { Playground, U, expr, jsx } from "../../../dev/exampleHelpers";
+
+/** A voice-like level: syllables rise and fall, with short pauses between phrases. */
+function useDemoVoice(enabled: boolean) {
+  const [level, setLevel] = useState(0);
+  useEffect(() => {
+    if (!enabled) return;
+    const start = performance.now();
+    const timer = setInterval(() => {
+      const t = (performance.now() - start) / 1000;
+      const phrase = Math.sin(t * 0.9) > -0.35 ? 1 : 0.05;
+      const syllable =
+        Math.abs(Math.sin(t * 7.3)) * (0.55 + 0.45 * Math.sin(t * 2.1));
+      setLevel(Math.round(phrase * syllable * 90 + Math.random() * 8));
+    }, 60);
+    return () => clearInterval(timer);
+  }, [enabled]);
+  return level;
+}
+
+export default function LevelMeterExample() {
+  const [stream, setStream] = useState<MediaStream | null>(null);
+  const [error, setError] = useState<string>();
+  const level = useDemoVoice(!stream);
+  useEffect(() => () => stream?.getTracks().forEach((t) => t.stop()), [stream]);
+
+  const toggleMicrophone = async () => {
+    if (stream) return setStream(null);
+    try {
+      setError(undefined);
+      setStream(await navigator.mediaDevices.getUserMedia({ audio: true }));
+    } catch {
+      setError("Нет доступа к микрофону");
+    }
+  };
+
+  return (
+    <Playground
+      stretch
+      knobs={{ active: { value: true }, compact: { value: false } }}
+      code={(v) =>
+        jsx("LevelMeter", {
+          label: "Микрофон",
+          ...(stream ? { stream: expr("stream") } : { value: expr("level") }),
+          active: v.active ? undefined : expr("false"),
+          compact: v.compact,
+        })
+      }
+      extra={
+        <U.Stack direction="row" gap={3} align="center" wrap>
+          <U.Button
+            size="sm"
+            icon="mic"
+            variant={stream ? "primary" : "secondary"}
+            onClick={toggleMicrophone}
+          >
+            {stream ? "Отключить микрофон" : "Подключить микрофон"}
+          </U.Button>
+          <U.Typography variant="caption" tone={error ? "danger" : "muted"}>
+            {error ??
+              (stream ? "Слушаю ваш микрофон" : "Сейчас — симуляция голоса")}
+          </U.Typography>
+        </U.Stack>
+      }
+    >
+      {(v) => (
+        <U.LevelMeter
+          label="Микрофон"
+          value={level}
+          stream={stream}
+          active={v.active}
+          compact={v.compact}
+        />
+      )}
+    </Playground>
+  );
+}
 `,vt=`export default {\r
   name: "LevelMeter",\r
   description: "Сегментированный индикатор уровня",\r
   category: "audio",\r
 } as const;\r
-`,bt=`import React, {\r
-  useEffect,\r
-  useLayoutEffect,\r
-  useMemo,\r
-  useRef,\r
-  useState,\r
-} from "react";\r
-import { clamp, mark, normalizeSize } from "../../../core/base";\r
-import { type RotaryKnobProps, type RotaryKnobController } from "../shared";\r
-\r
-export const RotaryKnob = (p: RotaryKnobProps) => {\r
-  const rootRef = useRef<HTMLDivElement>(null);\r
-  const baseRef = useRef<HTMLCanvasElement>(null);\r
-  const feedbackRef = useRef<HTMLCanvasElement>(null);\r
-  const rotorRef = useRef<HTMLCanvasElement>(null);\r
-  const controlRef = useRef<HTMLDivElement>(null);\r
-  const readoutRef = useRef<HTMLDivElement>(null);\r
-  const controllerRef = useRef<RotaryKnobController | null>(null);\r
-  const onChangeRef = useRef(p.onValueChange);\r
-  const onCommitRef = useRef(p.onValueCommit);\r
-  const disabledRef = useRef(!!p.disabled);\r
-  const readOnlyRef = useRef(!!p.readOnly);\r
-  const stepRef = useRef(Math.max(0.001, p.step ?? 1));\r
-  const fineStepRef = useRef(Math.max(0.001, p.fineStep ?? 0.1));\r
-  onChangeRef.current = p.onValueChange;\r
-  onCommitRef.current = p.onValueCommit;\r
-  disabledRef.current = !!p.disabled;\r
-  readOnlyRef.current = !!p.readOnly;\r
-  stepRef.current = Math.max(0.001, p.step ?? 1);\r
-  fineStepRef.current = Math.max(0.001, p.fineStep ?? 0.1);\r
-\r
-  const initial = clamp(p.defaultValue ?? p.value ?? 67);\r
-  const initialRef = useRef(initial);\r
-  const diameter =\r
-    p.diameter ??\r
-    { xs: 84, sm: 124, md: 220, lg: 320 }[normalizeSize(p.size) ?? "md"];\r
-  const numberFormat = useMemo(\r
-    () => new Intl.NumberFormat("ru-RU", { maximumFractionDigits: 1 }),\r
-    [],\r
-  );\r
-\r
-  useLayoutEffect(() => {\r
-    const root = rootRef.current!;\r
-    const canvas = baseRef.current!;\r
-    const rotor = rotorRef.current!;\r
-    const feedback = feedbackRef.current!;\r
-    const readout = readoutRef.current!;\r
-    const control = controlRef.current!;\r
-    if (!root || !canvas || !rotor || !feedback || !readout || !control) return;\r
-\r
-    const rotorCtx = rotor.getContext("2d")!;\r
-    const feedbackCtx = feedback.getContext("2d")!;\r
-    const ctx = canvas.getContext("2d", { alpha: true })!;\r
-    if (!rotorCtx || !feedbackCtx || !ctx) return;\r
-\r
-    const TAU = Math.PI * 2;\r
-    const localClamp = (value: number, min = 0, max = 1) =>\r
-      Math.max(min, Math.min(max, value));\r
-    const mix = (a: number, b: number, amount: number) => a + (b - a) * amount;\r
-    const fract = (value: number) => value - Math.floor(value);\r
-    const noise = (value: number) =>\r
-      fract(Math.sin(value * 127.1 + 311.7) * 43758.5453123);\r
-    const defaultValue = localClamp(Number(initialRef.current) || 0, 0, 100);\r
-    const startAngle = -135;\r
-    const sweepAngle = 270;\r
-    const valueAngle = (value: number) =>\r
-      startAngle + (value * sweepAngle) / 100;\r
-    const initialAngle = valueAngle(defaultValue);\r
-    const degrees = 180 / Math.PI;\r
-    const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)");\r
-    const listeners = new AbortController();\r
-    let value = defaultValue;\r
-    let visualValue = value;\r
-    let drag: null | {\r
-      id: number;\r
-      x: number;\r
-      y: number;\r
-      center: { x: number; y: number; radius: number };\r
-      angle: number | null;\r
-      mode: "circular" | "linear";\r
-      value: number;\r
-      start: number;\r
-      /** Set by a click on the scale: the knob glides to the spot instead of snapping. */\r
-      glide: boolean;\r
-      distance: number;\r
-    } = null;\r
-    let renderTimer = 0;\r
-    let animationFrame = 0;\r
-    let previousFrame = 0;\r
-    let disposed = false;\r
-\r
-    function render() {\r
-      if (disposed) return;\r
-      const cssSize = root.getBoundingClientRect().width;\r
-      const size = Math.round(\r
-        Math.min(\r
-          1800,\r
-          cssSize * Math.max(2, Math.min(devicePixelRatio || 1, 2.5)),\r
-        ),\r
-      );\r
-      if (!size || (canvas.width === size && canvas.height === size)) return;\r
-      canvas.width = canvas.height = size;\r
-      const center = size / 2;\r
-      const radius = size * 0.445;\r
-      const pixels = ctx.createImageData(size, size);\r
-      const data = pixels.data;\r
-      const brush = new Float32Array(Math.ceil(radius * 5) + 8);\r
-      for (let i = 0; i < brush.length; i++) brush[i] = noise(i + 17) - 0.5;\r
-\r
-      for (let y = 0; y < size; y++) {\r
-        const yy = (y + 0.5 - center) / radius;\r
-        for (let x = 0; x < size; x++) {\r
-          const xx = (x + 0.5 - center) / radius;\r
-          const r = Math.hypot(xx, yy);\r
-          if (r > 1.055) continue;\r
-          const index = (y * size + x) * 4;\r
-          if (r > 1) {\r
-            const a = Math.exp(-(r - 1) * 135) * 0.09;\r
-            data[index] = 130;\r
-            data[index + 1] = 0;\r
-            data[index + 2] = 9;\r
-            data[index + 3] = a * 255;\r
-            continue;\r
-          }\r
-\r
-          const angle = Math.atan2(yy, xx);\r
-          const ringPosition = r * radius * 1.8;\r
-          const bi = Math.floor(ringPosition);\r
-          const grain = mix(\r
-            brush[bi] ?? 0,\r
-            brush[bi + 1] ?? 0,\r
-            ringPosition - bi,\r
-          );\r
-          const grain2 = Math.sin(\r
-            r * radius * 4.8 + Math.sin(angle * 17) * 0.3,\r
-          );\r
-          const directional = Math.pow(Math.abs(Math.cos(angle + 0.77)), 16);\r
-          const broad = Math.pow(Math.abs(Math.cos(angle - 0.86)), 5);\r
-          const edgeLight = 0.5 + 0.5 * Math.cos(angle + 2.15);\r
-          const grainAmount = grain * 9.5 + grain2 * 2.2;\r
-          let red = 0,\r
-            green = 0,\r
-            blue = 0,\r
-            v = 0;\r
-\r
-          if (r < 0.704) {\r
-            const radialLight = 0.7 + 0.3 * Math.sqrt(r / 0.704);\r
-            const satin =\r
-              84 * Math.max(0, Math.cos(angle - 1.01)) ** 28 +\r
-              76 * Math.max(0, Math.cos(angle - 2.23)) ** 27 +\r
-              116 * Math.max(0, Math.cos(angle - 4.07)) ** 29 +\r
-              108 * Math.max(0, Math.cos(angle - 5.31)) ** 30;\r
-            v = 7 + radialLight * satin + 11 * Math.abs(Math.cos(angle)) ** 14;\r
-            v += grainAmount * (0.48 + v / 55);\r
-            v += 9 * Math.exp(-r * 90);\r
-            v *= 1 - 0.35 * Math.exp(-Math.pow((r - 0.699) / 0.009, 2));\r
-            red = v;\r
-            green = v * 0.995;\r
-            blue = v * 1.025;\r
-          } else if (r < 0.709) {\r
-            v = 8 + 17 * edgeLight;\r
-            red = v;\r
-            green = v;\r
-            blue = v;\r
-          } else if (r < 0.715) {\r
-            v = 85 + 133 * edgeLight + 25 * directional;\r
-            red = v;\r
-            green = v * 0.96;\r
-            blue = v * 0.93;\r
-          } else if (r < 0.729) {\r
-            const t = (r - 0.715) / 0.014;\r
-            v =\r
-              (21 + 111 * directional + 55 * broad) * (1 - t * 0.55) +\r
-              grainAmount;\r
-            red = v + 5;\r
-            green = v;\r
-            blue = v * 0.98;\r
-          } else if (r < 0.735) {\r
-            v = 100 + 106 * edgeLight;\r
-            red = v;\r
-            green = v * 0.96;\r
-            blue = v * 0.94;\r
-          } else if (r < 0.743) {\r
-            v = 5 + 11 * edgeLight;\r
-            red = v + 10;\r
-            green = v;\r
-            blue = v;\r
-          } else if (r < 0.814) {\r
-            v = 9 + 8 * edgeLight + grainAmount;\r
-            red = v + 8;\r
-            green = v;\r
-            blue = v;\r
-          } else if (r < 0.819) {\r
-            v = 72 + 115 * directional + 49 * edgeLight;\r
-            red = v;\r
-            green = v * 0.87;\r
-            blue = v * 0.85;\r
-          } else if (r < 0.872) {\r
-            const t = (r - 0.819) / 0.053;\r
-            const arc = Math.exp(-Math.pow((t - 0.39) / 0.16, 2));\r
-            const thin = Math.exp(-Math.pow((t - 0.39) / 0.025, 2));\r
-            const outerRim = Math.exp(-Math.pow((t - 0.94) / 0.035, 2));\r
-            const bright = 0.4 + 0.6 * Math.pow(Math.abs(Math.sin(angle)), 12);\r
-            const side = Math.pow(Math.abs(Math.cos(angle)), 34) * 0.65;\r
-            const reflection = localClamp(bright + side);\r
-            red = 29 + arc * 197 * reflection + thin * 83 + outerRim * 148;\r
-            green =\r
-              1 + arc * 11 * reflection + thin * 95 * reflection + outerRim * 2;\r
-            blue =\r
-              4 + arc * 13 * reflection + thin * 94 * reflection + outerRim * 6;\r
-          } else if (r < 0.882) {\r
-            v = 2 + 8 * edgeLight;\r
-            red = v + 8;\r
-            green = v;\r
-            blue = v;\r
-          } else if (r < 0.988) {\r
-            v = 12 + 22 * directional + 11 * broad + grainAmount * 0.7;\r
-            const innerEdge = Math.exp(-Math.pow((r - 0.885) / 0.003, 2));\r
-            red = v + 9 * innerEdge;\r
-            green = v;\r
-            blue = v * 1.035;\r
-          } else if (r < 0.9965) {\r
-            v = 12 + 24 * edgeLight + 22 * directional;\r
-            red = v;\r
-            green = v;\r
-            blue = v;\r
-          } else {\r
-            const t = (r - 0.9965) / 0.0035;\r
-            v = (50 + 140 * edgeLight) * (1 - t);\r
-            red = v;\r
-            green = v;\r
-            blue = v;\r
-          }\r
-\r
-          data[index] = localClamp(red, 0, 255);\r
-          data[index + 1] = localClamp(green, 0, 255);\r
-          data[index + 2] = localClamp(blue, 0, 255);\r
-          data[index + 3] = 255;\r
-        }\r
-      }\r
-      ctx.putImageData(pixels, 0, 0);\r
-      ctx.save();\r
-      ctx.translate(center, center);\r
-      ctx.scale(radius, radius);\r
-      drawKnurl();\r
-      drawReflections();\r
-      drawTicks();\r
-      ctx.restore();\r
-\r
-      rotor.width = rotor.height = size;\r
-      feedback.width = feedback.height = size;\r
-      rotorCtx.save();\r
-      rotorCtx.beginPath();\r
-      rotorCtx.arc(center, center, radius * 0.819, 0, TAU);\r
-      rotorCtx.clip();\r
-      rotorCtx.drawImage(canvas, 0, 0);\r
-      rotorCtx.restore();\r
-      paintFeedback();\r
-    }\r
-\r
-    function drawKnurl() {\r
-      const columns = 184;\r
-      const rows = 6;\r
-      const start = 0.744;\r
-      const end = 0.813;\r
-      const step = (end - start) / rows;\r
-      const pitch = TAU / columns;\r
-      const point = (radius: number, angle: number): [number, number] => [\r
-        Math.cos(angle) * radius,\r
-        Math.sin(angle) * radius,\r
-      ];\r
-      ctx.save();\r
-      ctx.beginPath();\r
-      ctx.arc(0, 0, end, 0, TAU);\r
-      ctx.arc(0, 0, start, TAU, 0, true);\r
-      ctx.clip("evenodd");\r
-      for (let row = -1; row <= rows; row++) {\r
-        const r = start + (row + 0.5) * step;\r
-        for (let column = 0; column < columns; column++) {\r
-          const a = (column + (row % 2 ? 0.5 : 0)) * pitch;\r
-          const middle = point(r, a);\r
-          const vertices = [\r
-            point(r - step * 0.94, a),\r
-            point(r, a + pitch * 0.47),\r
-            point(r + step * 0.94, a),\r
-            point(r, a - pitch * 0.47),\r
-          ];\r
-          const globalLight = 0.52 + 0.48 * Math.cos(a + 1.9);\r
-          const variation = 0.88 + noise(column * 19 + row * 317) * 0.2;\r
-          for (let side = 0; side < 4; side++) {\r
-            const p1 = vertices[side];\r
-            const p2 = vertices[(side + 1) % 4];\r
-            const direction = a + [-2.36, -0.78, 0.78, 2.36][side];\r
-            const light = Math.max(0, Math.cos(direction + 2.15));\r
-            const metal = (6 + light ** 5 * 228 + globalLight * 10) * variation;\r
-            const ruby = Math.pow(Math.max(0, Math.sin(a)), 3) * 27;\r
-            ctx.fillStyle = \`rgb(\${metal + ruby},\${metal * 0.96},\${metal * 0.93})\`;\r
-            ctx.beginPath();\r
-            ctx.moveTo(...middle);\r
-            ctx.lineTo(...p1);\r
-            ctx.lineTo(...p2);\r
-            ctx.closePath();\r
-            ctx.fill();\r
-          }\r
-        }\r
-      }\r
-      ctx.restore();\r
-    }\r
-\r
-    function drawReflections() {\r
-      const r = 0.8395;\r
-      const glow = ctx.createRadialGradient(0, 0, 0.809, 0, 0, 0.896);\r
-      glow.addColorStop(0, "#ff001800");\r
-      glow.addColorStop(0.3, "#f8002020");\r
-      glow.addColorStop(0.47, "#ff123f55");\r
-      glow.addColorStop(0.7, "#d900141d");\r
-      glow.addColorStop(1, "#ff001800");\r
-      ctx.fillStyle = glow;\r
-      ctx.beginPath();\r
-      ctx.arc(0, 0, 0.896, 0, TAU);\r
-      ctx.arc(0, 0, 0.809, TAU, 0, true);\r
-      ctx.fill("evenodd");\r
-      for (const angle of [-Math.PI / 2, Math.PI / 2, Math.PI, 0]) {\r
-        const pointX = Math.cos(angle) * r;\r
-        const py = Math.sin(angle) * r;\r
-        const halo = ctx.createRadialGradient(pointX, py, 0, pointX, py, 0.055);\r
-        halo.addColorStop(0, "#fff1f1b8");\r
-        halo.addColorStop(0.2, "#ff315b72");\r
-        halo.addColorStop(1, "#ff001800");\r
-        ctx.fillStyle = halo;\r
-        ctx.beginPath();\r
-        ctx.arc(pointX, py, 0.055, 0, TAU);\r
-        ctx.fill();\r
-      }\r
-    }\r
-\r
-    function roundRect(\r
-      x: number,\r
-      y: number,\r
-      width: number,\r
-      height: number,\r
-      radius: number,\r
-    ) {\r
-      ctx.beginPath();\r
-      ctx.roundRect(x, y, width, height, radius);\r
-      ctx.fill();\r
-    }\r
-\r
-    function drawTicks() {\r
-      const scale = canvas.width * 0.445;\r
-      for (let i = 0; i < 16; i++) {\r
-        const major = i % 4 === 0;\r
-        const width = major ? 0.012 : 0.01;\r
-        const length = major ? 0.078 : 0.066;\r
-        ctx.save();\r
-        ctx.rotate((i * TAU) / 16);\r
-        ctx.fillStyle = "#020101";\r
-        roundRect(\r
-          -width / 2 - 0.004,\r
-          -0.933 - length / 2 - 0.004,\r
-          width + 0.008,\r
-          length + 0.008,\r
-          0.006,\r
-        );\r
-        ctx.strokeStyle = "#71312c";\r
-        ctx.lineWidth = 0.0017;\r
-        ctx.stroke();\r
-        ctx.shadowColor = major ? "#ff1029" : "#e9152470";\r
-        ctx.shadowBlur = scale * (major ? 0.034 : 0.01);\r
-        ctx.fillStyle = major ? "#ff2447" : "#ff6c7d";\r
-        roundRect(-width / 2, -0.933 - length / 2, width, length, 0.003);\r
-        ctx.shadowBlur = 0;\r
-        const fill = ctx.createLinearGradient(-width / 2, 0, width / 2, 0);\r
-        fill.addColorStop(0, "#ff2539");\r
-        fill.addColorStop(0.38, major ? "#fff8eb" : "#ffa19c");\r
-        fill.addColorStop(0.7, major ? "#fff6e9" : "#ff938d");\r
-        fill.addColorStop(1, "#f82538");\r
-        ctx.fillStyle = fill;\r
-        roundRect(\r
-          -width * 0.34,\r
-          -0.933 - length * 0.47,\r
-          width * 0.68,\r
-          length * 0.94,\r
-          0.002,\r
-        );\r
-        ctx.restore();\r
-      }\r
-    }\r
-\r
-    function paintFeedback() {\r
-      if (!feedbackCtx || !feedback.width || disposed) return;\r
-      const scale = feedback.width * 0.445;\r
-      const start = (startAngle - 90) / degrees;\r
-      const end = (valueAngle(visualValue) - 90) / degrees;\r
-      feedbackCtx.clearRect(0, 0, feedback.width, feedback.height);\r
-      feedbackCtx.save();\r
-      feedbackCtx.translate(feedback.width / 2, feedback.height / 2);\r
-      feedbackCtx.scale(scale, scale);\r
-      feedbackCtx.beginPath();\r
-      feedbackCtx.arc(0, 0, 0.846, end, start + TAU);\r
-      feedbackCtx.strokeStyle = "rgba(0, 0, 0, 0.78)";\r
-      feedbackCtx.lineWidth = 0.052;\r
-      feedbackCtx.stroke();\r
-      if (visualValue > 0) paintValue(start, end, scale);\r
-      feedbackCtx.restore();\r
-    }\r
-\r
-    /**\r
-     * The value as a neon tube: deep ruby at the start heating up to white at the end,\r
-     * a comet head of light on its tip, and every scale tick it has passed lit up.\r
-     */\r
-    function paintValue(start: number, end: number, scale: number) {\r
-      const sweep = Math.max(0.0001, (end - start) / TAU);\r
-      const tube = feedbackCtx.createConicGradient(start, 0, 0);\r
-      tube.addColorStop(0, "rgba(110, 0, 22, 0.9)");\r
-      tube.addColorStop(sweep * 0.65, "rgba(255, 36, 72, 1)");\r
-      tube.addColorStop(sweep, "rgba(255, 238, 242, 1)");\r
-      tube.addColorStop(Math.min(1, sweep + 0.0001), "rgba(255, 238, 242, 0)");\r
-      const stroke = (width: number, alpha: number, blur: number) => {\r
-        feedbackCtx.beginPath();\r
-        feedbackCtx.arc(0, 0, 0.8395, start, end);\r
-        feedbackCtx.lineCap = "round";\r
-        feedbackCtx.lineWidth = width;\r
-        feedbackCtx.globalAlpha = alpha;\r
-        feedbackCtx.shadowColor = "#ff163d";\r
-        feedbackCtx.shadowBlur = scale * blur;\r
-        feedbackCtx.strokeStyle = tube;\r
-        feedbackCtx.stroke();\r
-      };\r
-      stroke(0.05, 0.35, 0.06);\r
-      stroke(0.017, 0.95, 0.03);\r
-      stroke(0.006, 1, 0.012);\r
-      feedbackCtx.globalAlpha = 1;\r
-      feedbackCtx.shadowBlur = 0;\r
-\r
-      const tipX = Math.cos(end) * 0.8395;\r
-      const tipY = Math.sin(end) * 0.8395;\r
-      const head = feedbackCtx.createRadialGradient(\r
-        tipX,\r
-        tipY,\r
-        0,\r
-        tipX,\r
-        tipY,\r
-        0.12,\r
-      );\r
-      head.addColorStop(0, "rgba(255, 255, 255, 1)");\r
-      head.addColorStop(0.12, "rgba(255, 220, 228, 0.9)");\r
-      head.addColorStop(0.35, "rgba(255, 60, 100, 0.45)");\r
-      head.addColorStop(1, "rgba(255, 0, 40, 0)");\r
-      feedbackCtx.fillStyle = head;\r
-      feedbackCtx.beginPath();\r
-      feedbackCtx.arc(tipX, tipY, 0.12, 0, TAU);\r
-      feedbackCtx.fill();\r
-\r
-      const reached = valueAngle(visualValue);\r
-      for (let i = 0; i < 16; i += 1) {\r
-        const angle = normalizeAngle(i * 22.5);\r
-        if (angle < startAngle || angle > -startAngle) continue;\r
-        const x = Math.sin(angle / degrees) * 0.933;\r
-        const y = -Math.cos(angle / degrees) * 0.933;\r
-        // Ticks still ahead of the value are dimmed, so the passed ones read as lit.\r
-        if (angle > reached - 0.5) {\r
-          const shade = feedbackCtx.createRadialGradient(x, y, 0, x, y, 0.05);\r
-          shade.addColorStop(0, "rgba(8, 3, 4, 0.72)");\r
-          shade.addColorStop(0.55, "rgba(8, 3, 4, 0.55)");\r
-          shade.addColorStop(1, "rgba(8, 3, 4, 0)");\r
-          feedbackCtx.fillStyle = shade;\r
-          feedbackCtx.beginPath();\r
-          feedbackCtx.arc(x, y, 0.05, 0, TAU);\r
-          feedbackCtx.fill();\r
-          continue;\r
-        }\r
-        const heat = 0.5 + 0.5 * Math.exp(-(reached - angle) / 28);\r
-        const glow = feedbackCtx.createRadialGradient(x, y, 0, x, y, 0.075);\r
-        glow.addColorStop(0, \`rgba(255, 255, 255, \${heat})\`);\r
-        glow.addColorStop(0.16, \`rgba(255, 210, 220, \${0.85 * heat})\`);\r
-        glow.addColorStop(0.42, \`rgba(255, 40, 76, \${0.55 * heat})\`);\r
-        glow.addColorStop(1, "rgba(255, 0, 40, 0)");\r
-        feedbackCtx.fillStyle = glow;\r
-        feedbackCtx.beginPath();\r
-        feedbackCtx.arc(x, y, 0.075, 0, TAU);\r
-        feedbackCtx.fill();\r
-      }\r
-    }\r
-\r
-    function paint() {\r
-      root.style.setProperty("--angle", \`\${valueAngle(visualValue)}deg\`);\r
-      root.style.setProperty(\r
-        "--rotation",\r
-        \`\${valueAngle(visualValue) - initialAngle}deg\`,\r
-      );\r
-      paintFeedback();\r
-    }\r
-\r
-    function animate(timestamp: number) {\r
-      animationFrame = 0;\r
-      if (disposed) return;\r
-      const elapsed = previousFrame\r
-        ? Math.min(64, timestamp - previousFrame)\r
-        : 16;\r
-      previousFrame = timestamp;\r
-      const immediate = (!!drag && !drag.glide) || reducedMotion.matches;\r
-      visualValue = immediate\r
-        ? value\r
-        : visualValue + (value - visualValue) * (1 - Math.exp(-elapsed / 42));\r
-      if (Math.abs(value - visualValue) < 0.005) visualValue = value;\r
-      paint();\r
-      if (visualValue !== value)\r
-        animationFrame = requestAnimationFrame(animate);\r
-      else previousFrame = 0;\r
-    }\r
-\r
-    function schedulePaint() {\r
-      if (!animationFrame && !disposed)\r
-        animationFrame = requestAnimationFrame(animate);\r
-    }\r
-\r
-    function setValue(next: number, notify = true) {\r
-      if (disposed) return false;\r
-      const numeric = Number(next);\r
-      if (!Number.isFinite(numeric)) return false;\r
-      const nextValue = Math.round(localClamp(numeric, 0, 100) * 1000) / 1000;\r
-      const changed = nextValue !== value;\r
-      value = nextValue;\r
-      root.dataset.value = String(value);\r
-      control.setAttribute("aria-valuenow", String(value));\r
-      control.setAttribute(\r
-        "aria-valuetext",\r
-        \`\${numberFormat.format(value)} процентов\`,\r
-      );\r
-      control.title = \`\${p.label ?? "Громкость"}: \${numberFormat.format(value)}% · ведите по кругу или тяните за центр\`;\r
-      readout.textContent = \`\${numberFormat.format(value)}%\`;\r
-      schedulePaint();\r
-      if (changed && notify) onChangeRef.current?.(value);\r
-      return changed;\r
-    }\r
-\r
-    function commit() {\r
-      if (!disposed) onCommitRef.current?.(value);\r
-    }\r
-\r
-    function geometry() {\r
-      const rect = control.getBoundingClientRect();\r
-      return {\r
-        x: rect.left + rect.width / 2,\r
-        y: rect.top + rect.height / 2,\r
-        radius: rect.width / 2,\r
-      };\r
-    }\r
-    function polar(event: PointerEvent, center: ReturnType<typeof geometry>) {\r
-      return (\r
-        Math.atan2(event.clientY - center.y, event.clientX - center.x) * degrees\r
-      );\r
-    }\r
-    function normalizeAngle(angle: number) {\r
-      return ((((angle + 180) % 360) + 360) % 360) - 180;\r
-    }\r
-\r
-    function pointerDown(event: PointerEvent) {\r
-      if (\r
-        disabledRef.current ||\r
-        readOnlyRef.current ||\r
-        event.button !== 0 ||\r
-        !event.isPrimary ||\r
-        drag ||\r
-        disposed\r
-      )\r
-        return;\r
-      const center = geometry();\r
-      const distance =\r
-        Math.hypot(event.clientX - center.x, event.clientY - center.y) /\r
-        center.radius;\r
-      if (distance > 1.04) return;\r
-      event.preventDefault();\r
-      control.focus({ preventScroll: true });\r
-      drag = {\r
-        id: event.pointerId,\r
-        x: event.clientX,\r
-        y: event.clientY,\r
-        center,\r
-        angle: polar(event, center),\r
-        mode: distance >= 0.36 ? "circular" : "linear",\r
-        value,\r
-        start: value,\r
-        distance: localClamp(center.radius * 1.2, 160, 420),\r
-        glide: false,\r
-      };\r
-      control.setPointerCapture(event.pointerId);\r
-      root.classList.add("is-dragging");\r
-      tilt(0, 0);\r
-      // A press on the glowing scale ring or the ticks sets the value right there.\r
-      if (distance >= 0.8) {\r
-        drag.glide = true;\r
-        let angle = normalizeAngle((drag.angle ?? 0) + 90);\r
-        if (Math.abs(angle) > 179.99) angle = value >= 50 ? 180 : -180;\r
-        drag.value = localClamp(\r
-          ((angle - startAngle) / sweepAngle) * 100,\r
-          0,\r
-          100,\r
-        );\r
-        setValue(drag.value);\r
-      }\r
-    }\r
-\r
-    /** The knob leans a little towards the pointer, like a real object under a light. */\r
-    function tilt(x: number, y: number) {\r
-      root.style.setProperty("--tilt-x", \`\${(-y * 7).toFixed(2)}deg\`);\r
-      root.style.setProperty("--tilt-y", \`\${(x * 7).toFixed(2)}deg\`);\r
-    }\r
-    function hover(event: PointerEvent) {\r
-      if (\r
-        drag ||\r
-        disabledRef.current ||\r
-        reducedMotion.matches ||\r
-        document.documentElement.dataset.adMotion === "off"\r
-      )\r
-        return;\r
-      const center = geometry();\r
-      tilt(\r
-        localClamp((event.clientX - center.x) / center.radius, -1, 1),\r
-        localClamp((event.clientY - center.y) / center.radius, -1, 1),\r
-      );\r
-    }\r
-\r
-    function pointerMove(event: PointerEvent) {\r
-      if (!drag || event.pointerId !== drag.id) return;\r
-      drag.glide = false;\r
-      event.preventDefault();\r
-      const precision = event.shiftKey ? 0.1 : 1;\r
-      const angle = polar(event, drag.center);\r
-      const radius = Math.hypot(\r
-        event.clientX - drag.center.x,\r
-        event.clientY - drag.center.y,\r
-      );\r
-      let delta = 0;\r
-      if (drag.mode === "circular") {\r
-        if (radius > drag.center.radius * 0.12 && drag.angle !== null)\r
-          delta = (normalizeAngle(angle - drag.angle) / sweepAngle) * 100;\r
-        drag.angle = radius > drag.center.radius * 0.12 ? angle : null;\r
-      } else {\r
-        delta =\r
-          ((event.clientX - drag.x - (event.clientY - drag.y)) /\r
-            drag.distance) *\r
-          100;\r
-      }\r
-      drag.x = event.clientX;\r
-      drag.y = event.clientY;\r
-      drag.value = localClamp(drag.value + delta * precision, 0, 100);\r
-      const step = event.shiftKey ? fineStepRef.current : stepRef.current;\r
-      setValue(Math.round(drag.value / step) * step);\r
-    }\r
-\r
-    function finishDrag(cancelled = false) {\r
-      if (!drag) return;\r
-      const gesture = drag;\r
-      drag = null;\r
-      root.classList.remove("is-dragging");\r
-      if (control.hasPointerCapture(gesture.id))\r
-        control.releasePointerCapture(gesture.id);\r
-      if (cancelled) setValue(gesture.start);\r
-      else if (value !== gesture.start) commit();\r
-    }\r
-\r
-    function pointerEnd(event: PointerEvent) {\r
-      if (!drag || event.pointerId !== drag.id) return;\r
-      finishDrag(event.type === "pointercancel");\r
-    }\r
-\r
-    function keyDown(event: KeyboardEvent) {\r
-      if (disabledRef.current || readOnlyRef.current) return;\r
-      if (event.key === "Escape" && drag) {\r
-        event.preventDefault();\r
-        finishDrag(true);\r
-        return;\r
-      }\r
-      if (drag || event.ctrlKey || event.altKey || event.metaKey) return;\r
-      const step = event.shiftKey ? fineStepRef.current : stepRef.current;\r
-      const keys: Record<string, number> = {\r
-        ArrowUp: value + step,\r
-        ArrowRight: value + step,\r
-        ArrowDown: value - step,\r
-        ArrowLeft: value - step,\r
-        PageUp: value + 10,\r
-        PageDown: value - 10,\r
-        Home: 0,\r
-        End: 100,\r
-      };\r
-      if (!Object.hasOwn(keys, event.key)) return;\r
-      event.preventDefault();\r
-      if (setValue(keys[event.key])) commit();\r
-    }\r
-\r
-    function wheel(event: WheelEvent) {\r
-      if (\r
-        disabledRef.current ||\r
-        readOnlyRef.current ||\r
-        event.ctrlKey ||\r
-        event.metaKey ||\r
-        event.deltaY === 0 ||\r
-        drag ||\r
-        disposed\r
-      )\r
-        return;\r
-      event.preventDefault();\r
-      control.focus({ preventScroll: true });\r
-      const step = event.shiftKey ? fineStepRef.current : stepRef.current;\r
-      if (setValue(value - Math.sign(event.deltaY) * step)) commit();\r
-    }\r
-\r
-    function doubleClick(event: MouseEvent) {\r
-      if (disabledRef.current || readOnlyRef.current) return;\r
-      event.preventDefault();\r
-      finishDrag();\r
-      if (setValue(p.resetValue ?? defaultValue)) commit();\r
-    }\r
-\r
-    function scheduleRender() {\r
-      clearTimeout(renderTimer);\r
-      if (!disposed) renderTimer = window.setTimeout(render, 80);\r
-    }\r
-\r
-    const events: Record<string, EventListener> = {\r
-      pointerdown: pointerDown as EventListener,\r
-      pointermove: pointerMove as EventListener,\r
-      pointerup: pointerEnd as EventListener,\r
-      pointercancel: pointerEnd as EventListener,\r
-      lostpointercapture: pointerEnd as EventListener,\r
-      keydown: keyDown as EventListener,\r
-      dblclick: doubleClick as EventListener,\r
-    };\r
-    for (const [event, handler] of Object.entries(events))\r
-      control.addEventListener(event, handler, { signal: listeners.signal });\r
-    control.addEventListener("wheel", wheel, {\r
-      passive: false,\r
-      signal: listeners.signal,\r
-    });\r
-    root.addEventListener("pointermove", hover as EventListener, {\r
-      signal: listeners.signal,\r
-    });\r
-    root.addEventListener("pointerleave", () => tilt(0, 0), {\r
-      signal: listeners.signal,\r
-    });\r
-    window.addEventListener("blur", () => finishDrag(true), {\r
-      signal: listeners.signal,\r
-    });\r
-    document.addEventListener(\r
-      "visibilitychange",\r
-      () => {\r
-        if (document.hidden) finishDrag(true);\r
-      },\r
-      { signal: listeners.signal },\r
-    );\r
-    window.addEventListener("resize", scheduleRender, {\r
-      signal: listeners.signal,\r
-    });\r
-    const observer = new ResizeObserver(scheduleRender);\r
-    observer.observe(root);\r
-\r
-    controllerRef.current = {\r
-      get value() {\r
-        return value;\r
-      },\r
-      setValue(next: number, notify = false) {\r
-        setValue(next, notify);\r
-      },\r
-      reset() {\r
-        if (setValue(p.resetValue ?? defaultValue)) commit();\r
-      },\r
-    };\r
-    setValue(value, false);\r
-    render();\r
-    paint();\r
-\r
-    return () => {\r
-      finishDrag();\r
-      disposed = true;\r
-      listeners.abort();\r
-      observer.disconnect();\r
-      clearTimeout(renderTimer);\r
-      cancelAnimationFrame(animationFrame);\r
-      animationFrame = 0;\r
-      controllerRef.current = null;\r
-    };\r
-  }, []);\r
-\r
-  useEffect(() => {\r
-    if (p.value !== undefined)\r
-      controllerRef.current?.setValue(clamp(p.value), false);\r
-  }, [p.value]);\r
-\r
-  // Typing a value, as in studio plug-ins: click the readout, Enter applies, Escape cancels.\r
-  const [draft, setDraft] = useState<string | null>(null);\r
-  const cancelled = useRef(false);\r
-  const editable = !p.disabled && !p.readOnly;\r
-  const applyDraft = () => {\r
-    if (cancelled.current) return;\r
-    const next = Number(draft?.replace(",", ".").replace("%", ""));\r
-    setDraft(null);\r
-    const controller = controllerRef.current;\r
-    if (!controller || !Number.isFinite(next)) return;\r
-    const before = controller.value;\r
-    controller.setValue(clamp(next), true);\r
-    if (controller.value !== before) p.onValueCommit?.(controller.value);\r
-  };\r
-\r
-  const rootProps = mark("RotaryKnob", p, undefined, "knob");\r
-  return (\r
-    <div\r
-      {...rootProps}\r
-      ref={rootRef}\r
-      data-value={initial}\r
-      data-disabled={p.disabled || undefined}\r
-      data-readonly={p.readOnly || undefined}\r
-      style={\r
-        {\r
-          ...p.style,\r
-          "--size": \`\${diameter / 16}rem\`,\r
-          "--angle": \`\${-135 + initial * 2.7}deg\`,\r
-          "--rotation": "0deg",\r
-        } as React.CSSProperties\r
-      }\r
-    >\r
-      <canvas\r
-        className="knob__surface knob__base"\r
-        aria-hidden="true"\r
-        ref={baseRef}\r
-      />\r
-      <canvas\r
-        className="knob__surface knob__feedback"\r
-        aria-hidden="true"\r
-        ref={feedbackRef}\r
-      />\r
-      <canvas\r
-        className="knob__surface knob__rotor"\r
-        aria-hidden="true"\r
-        ref={rotorRef}\r
-      />\r
-      <span className="knob__sheen" aria-hidden="true" />\r
-      <div\r
-        ref={controlRef}\r
-        className="knob__control"\r
-        role={p.readOnly ? "meter" : "slider"}\r
-        tabIndex={p.disabled || p.readOnly ? -1 : 0}\r
-        aria-disabled={p.disabled || undefined}\r
-        aria-readonly={p.readOnly || undefined}\r
-        aria-label={p.label ?? "Громкость"}\r
-        aria-valuemin={0}\r
-        aria-valuemax={100}\r
-        aria-valuenow={initial}\r
-        aria-valuetext={\`\${numberFormat.format(initial)} процентов\`}\r
-        aria-orientation={p.readOnly ? undefined : "vertical"}\r
-      >\r
-        <div className="knob__indicator" aria-hidden="true">\r
-          <div className="knob__slot" />\r
-        </div>\r
-      </div>\r
-      {p.showValue !== false && (\r
-        <div\r
-          ref={readoutRef}\r
-          className="knob__value"\r
-          data-editable={editable || undefined}\r
-          data-editing={draft !== null || undefined}\r
-          title={editable ? "Нажмите, чтобы ввести значение" : undefined}\r
-          onClick={() => {\r
-            if (!editable) return;\r
-            cancelled.current = false;\r
-            setDraft(\r
-              numberFormat.format(controllerRef.current?.value ?? initial),\r
-            );\r
-          }}\r
-        >\r
-          {numberFormat.format(initial)}%\r
-        </div>\r
-      )}\r
-      {draft !== null && (\r
-        <input\r
-          className="knob__input"\r
-          aria-label={\`\${p.label ?? "Громкость"}, значение\`}\r
-          inputMode="decimal"\r
-          autoFocus\r
-          value={draft}\r
-          onFocus={(event) => event.currentTarget.select()}\r
-          onChange={(event) => setDraft(event.currentTarget.value)}\r
-          onBlur={applyDraft}\r
-          onKeyDown={(event) => {\r
-            if (event.key === "Enter") event.currentTarget.blur();\r
-            if (event.key === "Escape") {\r
-              cancelled.current = true;\r
-              setDraft(null);\r
-            }\r
-          }}\r
-        />\r
-      )}\r
-      <span className="ad-sr-only">\r
-        Зажмите ручку ближе к краю и ведите мышью по кругу. За центр можно\r
-        тянуть вверх или вниз. Нажатие на внешнюю шкалу устанавливает значение.\r
-        Колесо мыши и стрелки меняют громкость. Shift — точная регулировка.\r
-        Двойной щелчок — исходное значение.\r
-      </span>\r
-    </div>\r
-  );\r
-};\r
-`,ht=`import { Playground, U, expr, jsx, sizes } from "../../../dev/exampleHelpers";\r
-\r
-export default function RotaryKnobExample() {\r
-  return (\r
-    <Playground\r
-      knobs={{\r
-        size: { options: sizes, value: "md" },\r
-        readOnly: { value: false },\r
-        disabled: { value: false },\r
-      }}\r
-      code={(v, c) =>\r
-        jsx("RotaryKnob", {\r
-          label: "Громкость",\r
-          value: expr("volume"),\r
-          onValueChange: expr("setVolume"),\r
-          size: c.size,\r
-          readOnly: v.readOnly,\r
-          disabled: v.disabled,\r
-        })\r
-      }\r
-    >\r
-      {(v) => (\r
-        <U.RotaryKnob\r
-          label="Громкость"\r
-          defaultValue={65}\r
-          size={v.size}\r
-          readOnly={v.readOnly}\r
-          disabled={v.disabled}\r
-        />\r
-      )}\r
-    </Playground>\r
-  );\r
-}\r
+`,bt=`import React, {
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
+import { clamp, mark, normalizeSize } from "../../../core/base";
+import { type RotaryKnobProps, type RotaryKnobController } from "../shared";
+
+export const RotaryKnob = (p: RotaryKnobProps) => {
+  const rootRef = useRef<HTMLDivElement>(null);
+  const baseRef = useRef<HTMLCanvasElement>(null);
+  const feedbackRef = useRef<HTMLCanvasElement>(null);
+  const rotorRef = useRef<HTMLCanvasElement>(null);
+  const controlRef = useRef<HTMLDivElement>(null);
+  const readoutRef = useRef<HTMLDivElement>(null);
+  const controllerRef = useRef<RotaryKnobController | null>(null);
+  const onChangeRef = useRef(p.onValueChange);
+  const onCommitRef = useRef(p.onValueCommit);
+  const disabledRef = useRef(!!p.disabled);
+  const readOnlyRef = useRef(!!p.readOnly);
+  const stepRef = useRef(Math.max(0.001, p.step ?? 1));
+  const fineStepRef = useRef(Math.max(0.001, p.fineStep ?? 0.1));
+  onChangeRef.current = p.onValueChange;
+  onCommitRef.current = p.onValueCommit;
+  disabledRef.current = !!p.disabled;
+  readOnlyRef.current = !!p.readOnly;
+  stepRef.current = Math.max(0.001, p.step ?? 1);
+  fineStepRef.current = Math.max(0.001, p.fineStep ?? 0.1);
+
+  const initial = clamp(p.defaultValue ?? p.value ?? 67);
+  const initialRef = useRef(initial);
+  const diameter =
+    p.diameter ??
+    { xs: 84, sm: 124, md: 220, lg: 320 }[normalizeSize(p.size) ?? "md"];
+  const numberFormat = useMemo(
+    () => new Intl.NumberFormat("ru-RU", { maximumFractionDigits: 1 }),
+    [],
+  );
+
+  useLayoutEffect(() => {
+    const root = rootRef.current!;
+    const canvas = baseRef.current!;
+    const rotor = rotorRef.current!;
+    const feedback = feedbackRef.current!;
+    const readout = readoutRef.current!;
+    const control = controlRef.current!;
+    if (!root || !canvas || !rotor || !feedback || !readout || !control) return;
+
+    const rotorCtx = rotor.getContext("2d")!;
+    const feedbackCtx = feedback.getContext("2d")!;
+    const ctx = canvas.getContext("2d", { alpha: true })!;
+    if (!rotorCtx || !feedbackCtx || !ctx) return;
+
+    const TAU = Math.PI * 2;
+    const localClamp = (value: number, min = 0, max = 1) =>
+      Math.max(min, Math.min(max, value));
+    const mix = (a: number, b: number, amount: number) => a + (b - a) * amount;
+    const fract = (value: number) => value - Math.floor(value);
+    const noise = (value: number) =>
+      fract(Math.sin(value * 127.1 + 311.7) * 43758.5453123);
+    const defaultValue = localClamp(Number(initialRef.current) || 0, 0, 100);
+    const startAngle = -135;
+    const sweepAngle = 270;
+    const valueAngle = (value: number) =>
+      startAngle + (value * sweepAngle) / 100;
+    const initialAngle = valueAngle(defaultValue);
+    const degrees = 180 / Math.PI;
+    const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)");
+    const listeners = new AbortController();
+    let value = defaultValue;
+    let visualValue = value;
+    let drag: null | {
+      id: number;
+      x: number;
+      y: number;
+      center: { x: number; y: number; radius: number };
+      angle: number | null;
+      mode: "circular" | "linear";
+      value: number;
+      start: number;
+      /** Set by a click on the scale: the knob glides to the spot instead of snapping. */
+      glide: boolean;
+      distance: number;
+    } = null;
+    let renderTimer = 0;
+    let animationFrame = 0;
+    let previousFrame = 0;
+    let disposed = false;
+
+    function render() {
+      if (disposed) return;
+      const cssSize = root.getBoundingClientRect().width;
+      const size = Math.round(
+        Math.min(
+          1800,
+          cssSize * Math.max(2, Math.min(devicePixelRatio || 1, 2.5)),
+        ),
+      );
+      if (!size || (canvas.width === size && canvas.height === size)) return;
+      canvas.width = canvas.height = size;
+      const center = size / 2;
+      const radius = size * 0.445;
+      const pixels = ctx.createImageData(size, size);
+      const data = pixels.data;
+      const brush = new Float32Array(Math.ceil(radius * 5) + 8);
+      for (let i = 0; i < brush.length; i++) brush[i] = noise(i + 17) - 0.5;
+
+      for (let y = 0; y < size; y++) {
+        const yy = (y + 0.5 - center) / radius;
+        for (let x = 0; x < size; x++) {
+          const xx = (x + 0.5 - center) / radius;
+          const r = Math.hypot(xx, yy);
+          if (r > 1.055) continue;
+          const index = (y * size + x) * 4;
+          if (r > 1) {
+            const a = Math.exp(-(r - 1) * 135) * 0.09;
+            data[index] = 130;
+            data[index + 1] = 0;
+            data[index + 2] = 9;
+            data[index + 3] = a * 255;
+            continue;
+          }
+
+          const angle = Math.atan2(yy, xx);
+          const ringPosition = r * radius * 1.8;
+          const bi = Math.floor(ringPosition);
+          const grain = mix(
+            brush[bi] ?? 0,
+            brush[bi + 1] ?? 0,
+            ringPosition - bi,
+          );
+          const grain2 = Math.sin(
+            r * radius * 4.8 + Math.sin(angle * 17) * 0.3,
+          );
+          const directional = Math.pow(Math.abs(Math.cos(angle + 0.77)), 16);
+          const broad = Math.pow(Math.abs(Math.cos(angle - 0.86)), 5);
+          const edgeLight = 0.5 + 0.5 * Math.cos(angle + 2.15);
+          const grainAmount = grain * 9.5 + grain2 * 2.2;
+          let red = 0,
+            green = 0,
+            blue = 0,
+            v = 0;
+
+          if (r < 0.704) {
+            const radialLight = 0.7 + 0.3 * Math.sqrt(r / 0.704);
+            const satin =
+              84 * Math.max(0, Math.cos(angle - 1.01)) ** 28 +
+              76 * Math.max(0, Math.cos(angle - 2.23)) ** 27 +
+              116 * Math.max(0, Math.cos(angle - 4.07)) ** 29 +
+              108 * Math.max(0, Math.cos(angle - 5.31)) ** 30;
+            v = 7 + radialLight * satin + 11 * Math.abs(Math.cos(angle)) ** 14;
+            v += grainAmount * (0.48 + v / 55);
+            v += 9 * Math.exp(-r * 90);
+            v *= 1 - 0.35 * Math.exp(-Math.pow((r - 0.699) / 0.009, 2));
+            red = v;
+            green = v * 0.995;
+            blue = v * 1.025;
+          } else if (r < 0.709) {
+            v = 8 + 17 * edgeLight;
+            red = v;
+            green = v;
+            blue = v;
+          } else if (r < 0.715) {
+            v = 85 + 133 * edgeLight + 25 * directional;
+            red = v;
+            green = v * 0.96;
+            blue = v * 0.93;
+          } else if (r < 0.729) {
+            const t = (r - 0.715) / 0.014;
+            v =
+              (21 + 111 * directional + 55 * broad) * (1 - t * 0.55) +
+              grainAmount;
+            red = v + 5;
+            green = v;
+            blue = v * 0.98;
+          } else if (r < 0.735) {
+            v = 100 + 106 * edgeLight;
+            red = v;
+            green = v * 0.96;
+            blue = v * 0.94;
+          } else if (r < 0.743) {
+            v = 5 + 11 * edgeLight;
+            red = v + 10;
+            green = v;
+            blue = v;
+          } else if (r < 0.814) {
+            v = 9 + 8 * edgeLight + grainAmount;
+            red = v + 8;
+            green = v;
+            blue = v;
+          } else if (r < 0.819) {
+            v = 72 + 115 * directional + 49 * edgeLight;
+            red = v;
+            green = v * 0.87;
+            blue = v * 0.85;
+          } else if (r < 0.872) {
+            const t = (r - 0.819) / 0.053;
+            const arc = Math.exp(-Math.pow((t - 0.39) / 0.16, 2));
+            const thin = Math.exp(-Math.pow((t - 0.39) / 0.025, 2));
+            const outerRim = Math.exp(-Math.pow((t - 0.94) / 0.035, 2));
+            const bright = 0.4 + 0.6 * Math.pow(Math.abs(Math.sin(angle)), 12);
+            const side = Math.pow(Math.abs(Math.cos(angle)), 34) * 0.65;
+            const reflection = localClamp(bright + side);
+            red = 29 + arc * 197 * reflection + thin * 83 + outerRim * 148;
+            green =
+              1 + arc * 11 * reflection + thin * 95 * reflection + outerRim * 2;
+            blue =
+              4 + arc * 13 * reflection + thin * 94 * reflection + outerRim * 6;
+          } else if (r < 0.882) {
+            v = 2 + 8 * edgeLight;
+            red = v + 8;
+            green = v;
+            blue = v;
+          } else if (r < 0.988) {
+            v = 12 + 22 * directional + 11 * broad + grainAmount * 0.7;
+            const innerEdge = Math.exp(-Math.pow((r - 0.885) / 0.003, 2));
+            red = v + 9 * innerEdge;
+            green = v;
+            blue = v * 1.035;
+          } else if (r < 0.9965) {
+            v = 12 + 24 * edgeLight + 22 * directional;
+            red = v;
+            green = v;
+            blue = v;
+          } else {
+            const t = (r - 0.9965) / 0.0035;
+            v = (50 + 140 * edgeLight) * (1 - t);
+            red = v;
+            green = v;
+            blue = v;
+          }
+
+          data[index] = localClamp(red, 0, 255);
+          data[index + 1] = localClamp(green, 0, 255);
+          data[index + 2] = localClamp(blue, 0, 255);
+          data[index + 3] = 255;
+        }
+      }
+      ctx.putImageData(pixels, 0, 0);
+      ctx.save();
+      ctx.translate(center, center);
+      ctx.scale(radius, radius);
+      drawKnurl();
+      drawReflections();
+      drawTicks();
+      ctx.restore();
+
+      rotor.width = rotor.height = size;
+      feedback.width = feedback.height = size;
+      rotorCtx.save();
+      rotorCtx.beginPath();
+      rotorCtx.arc(center, center, radius * 0.819, 0, TAU);
+      rotorCtx.clip();
+      rotorCtx.drawImage(canvas, 0, 0);
+      rotorCtx.restore();
+      paintFeedback();
+    }
+
+    function drawKnurl() {
+      const columns = 184;
+      const rows = 6;
+      const start = 0.744;
+      const end = 0.813;
+      const step = (end - start) / rows;
+      const pitch = TAU / columns;
+      const point = (radius: number, angle: number): [number, number] => [
+        Math.cos(angle) * radius,
+        Math.sin(angle) * radius,
+      ];
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(0, 0, end, 0, TAU);
+      ctx.arc(0, 0, start, TAU, 0, true);
+      ctx.clip("evenodd");
+      for (let row = -1; row <= rows; row++) {
+        const r = start + (row + 0.5) * step;
+        for (let column = 0; column < columns; column++) {
+          const a = (column + (row % 2 ? 0.5 : 0)) * pitch;
+          const middle = point(r, a);
+          const vertices = [
+            point(r - step * 0.94, a),
+            point(r, a + pitch * 0.47),
+            point(r + step * 0.94, a),
+            point(r, a - pitch * 0.47),
+          ];
+          const globalLight = 0.52 + 0.48 * Math.cos(a + 1.9);
+          const variation = 0.88 + noise(column * 19 + row * 317) * 0.2;
+          for (let side = 0; side < 4; side++) {
+            const p1 = vertices[side];
+            const p2 = vertices[(side + 1) % 4];
+            const direction = a + [-2.36, -0.78, 0.78, 2.36][side];
+            const light = Math.max(0, Math.cos(direction + 2.15));
+            const metal = (6 + light ** 5 * 228 + globalLight * 10) * variation;
+            const ruby = Math.pow(Math.max(0, Math.sin(a)), 3) * 27;
+            ctx.fillStyle = \`rgb(\${metal + ruby},\${metal * 0.96},\${metal * 0.93})\`;
+            ctx.beginPath();
+            ctx.moveTo(...middle);
+            ctx.lineTo(...p1);
+            ctx.lineTo(...p2);
+            ctx.closePath();
+            ctx.fill();
+          }
+        }
+      }
+      ctx.restore();
+    }
+
+    function drawReflections() {
+      const r = 0.8395;
+      const glow = ctx.createRadialGradient(0, 0, 0.809, 0, 0, 0.896);
+      glow.addColorStop(0, "#ff001800");
+      glow.addColorStop(0.3, "#f8002020");
+      glow.addColorStop(0.47, "#ff123f55");
+      glow.addColorStop(0.7, "#d900141d");
+      glow.addColorStop(1, "#ff001800");
+      ctx.fillStyle = glow;
+      ctx.beginPath();
+      ctx.arc(0, 0, 0.896, 0, TAU);
+      ctx.arc(0, 0, 0.809, TAU, 0, true);
+      ctx.fill("evenodd");
+      for (const angle of [-Math.PI / 2, Math.PI / 2, Math.PI, 0]) {
+        const pointX = Math.cos(angle) * r;
+        const py = Math.sin(angle) * r;
+        const halo = ctx.createRadialGradient(pointX, py, 0, pointX, py, 0.055);
+        halo.addColorStop(0, "#fff1f1b8");
+        halo.addColorStop(0.2, "#ff315b72");
+        halo.addColorStop(1, "#ff001800");
+        ctx.fillStyle = halo;
+        ctx.beginPath();
+        ctx.arc(pointX, py, 0.055, 0, TAU);
+        ctx.fill();
+      }
+    }
+
+    function roundRect(
+      x: number,
+      y: number,
+      width: number,
+      height: number,
+      radius: number,
+    ) {
+      ctx.beginPath();
+      ctx.roundRect(x, y, width, height, radius);
+      ctx.fill();
+    }
+
+    function drawTicks() {
+      const scale = canvas.width * 0.445;
+      for (let i = 0; i < 16; i++) {
+        const major = i % 4 === 0;
+        const width = major ? 0.012 : 0.01;
+        const length = major ? 0.078 : 0.066;
+        ctx.save();
+        ctx.rotate((i * TAU) / 16);
+        ctx.fillStyle = "#020101";
+        roundRect(
+          -width / 2 - 0.004,
+          -0.933 - length / 2 - 0.004,
+          width + 0.008,
+          length + 0.008,
+          0.006,
+        );
+        ctx.strokeStyle = "#71312c";
+        ctx.lineWidth = 0.0017;
+        ctx.stroke();
+        ctx.shadowColor = major ? "#ff1029" : "#e9152470";
+        ctx.shadowBlur = scale * (major ? 0.034 : 0.01);
+        ctx.fillStyle = major ? "#ff2447" : "#ff6c7d";
+        roundRect(-width / 2, -0.933 - length / 2, width, length, 0.003);
+        ctx.shadowBlur = 0;
+        const fill = ctx.createLinearGradient(-width / 2, 0, width / 2, 0);
+        fill.addColorStop(0, "#ff2539");
+        fill.addColorStop(0.38, major ? "#fff8eb" : "#ffa19c");
+        fill.addColorStop(0.7, major ? "#fff6e9" : "#ff938d");
+        fill.addColorStop(1, "#f82538");
+        ctx.fillStyle = fill;
+        roundRect(
+          -width * 0.34,
+          -0.933 - length * 0.47,
+          width * 0.68,
+          length * 0.94,
+          0.002,
+        );
+        ctx.restore();
+      }
+    }
+
+    function paintFeedback() {
+      if (!feedbackCtx || !feedback.width || disposed) return;
+      const scale = feedback.width * 0.445;
+      const start = (startAngle - 90) / degrees;
+      const end = (valueAngle(visualValue) - 90) / degrees;
+      feedbackCtx.clearRect(0, 0, feedback.width, feedback.height);
+      feedbackCtx.save();
+      feedbackCtx.translate(feedback.width / 2, feedback.height / 2);
+      feedbackCtx.scale(scale, scale);
+      feedbackCtx.beginPath();
+      feedbackCtx.arc(0, 0, 0.846, end, start + TAU);
+      feedbackCtx.strokeStyle = "rgba(0, 0, 0, 0.78)";
+      feedbackCtx.lineWidth = 0.052;
+      feedbackCtx.stroke();
+      if (visualValue > 0) paintValue(start, end, scale);
+      feedbackCtx.restore();
+    }
+
+    /**
+     * The value as a neon tube: deep ruby at the start heating up to white at the end,
+     * a comet head of light on its tip, and every scale tick it has passed lit up.
+     */
+    function paintValue(start: number, end: number, scale: number) {
+      const sweep = Math.max(0.0001, (end - start) / TAU);
+      const tube = feedbackCtx.createConicGradient(start, 0, 0);
+      tube.addColorStop(0, "rgba(110, 0, 22, 0.9)");
+      tube.addColorStop(sweep * 0.65, "rgba(255, 36, 72, 1)");
+      tube.addColorStop(sweep, "rgba(255, 238, 242, 1)");
+      tube.addColorStop(Math.min(1, sweep + 0.0001), "rgba(255, 238, 242, 0)");
+      const stroke = (width: number, alpha: number, blur: number) => {
+        feedbackCtx.beginPath();
+        feedbackCtx.arc(0, 0, 0.8395, start, end);
+        feedbackCtx.lineCap = "round";
+        feedbackCtx.lineWidth = width;
+        feedbackCtx.globalAlpha = alpha;
+        feedbackCtx.shadowColor = "#ff163d";
+        feedbackCtx.shadowBlur = scale * blur;
+        feedbackCtx.strokeStyle = tube;
+        feedbackCtx.stroke();
+      };
+      stroke(0.05, 0.35, 0.06);
+      stroke(0.017, 0.95, 0.03);
+      stroke(0.006, 1, 0.012);
+      feedbackCtx.globalAlpha = 1;
+      feedbackCtx.shadowBlur = 0;
+
+      const tipX = Math.cos(end) * 0.8395;
+      const tipY = Math.sin(end) * 0.8395;
+      const head = feedbackCtx.createRadialGradient(
+        tipX,
+        tipY,
+        0,
+        tipX,
+        tipY,
+        0.12,
+      );
+      head.addColorStop(0, "rgba(255, 255, 255, 1)");
+      head.addColorStop(0.12, "rgba(255, 220, 228, 0.9)");
+      head.addColorStop(0.35, "rgba(255, 60, 100, 0.45)");
+      head.addColorStop(1, "rgba(255, 0, 40, 0)");
+      feedbackCtx.fillStyle = head;
+      feedbackCtx.beginPath();
+      feedbackCtx.arc(tipX, tipY, 0.12, 0, TAU);
+      feedbackCtx.fill();
+
+      const reached = valueAngle(visualValue);
+      for (let i = 0; i < 16; i += 1) {
+        const angle = normalizeAngle(i * 22.5);
+        if (angle < startAngle || angle > -startAngle) continue;
+        const x = Math.sin(angle / degrees) * 0.933;
+        const y = -Math.cos(angle / degrees) * 0.933;
+        // Ticks still ahead of the value are dimmed, so the passed ones read as lit.
+        if (angle > reached - 0.5) {
+          const shade = feedbackCtx.createRadialGradient(x, y, 0, x, y, 0.05);
+          shade.addColorStop(0, "rgba(8, 3, 4, 0.72)");
+          shade.addColorStop(0.55, "rgba(8, 3, 4, 0.55)");
+          shade.addColorStop(1, "rgba(8, 3, 4, 0)");
+          feedbackCtx.fillStyle = shade;
+          feedbackCtx.beginPath();
+          feedbackCtx.arc(x, y, 0.05, 0, TAU);
+          feedbackCtx.fill();
+          continue;
+        }
+        const heat = 0.5 + 0.5 * Math.exp(-(reached - angle) / 28);
+        const glow = feedbackCtx.createRadialGradient(x, y, 0, x, y, 0.075);
+        glow.addColorStop(0, \`rgba(255, 255, 255, \${heat})\`);
+        glow.addColorStop(0.16, \`rgba(255, 210, 220, \${0.85 * heat})\`);
+        glow.addColorStop(0.42, \`rgba(255, 40, 76, \${0.55 * heat})\`);
+        glow.addColorStop(1, "rgba(255, 0, 40, 0)");
+        feedbackCtx.fillStyle = glow;
+        feedbackCtx.beginPath();
+        feedbackCtx.arc(x, y, 0.075, 0, TAU);
+        feedbackCtx.fill();
+      }
+    }
+
+    function paint() {
+      root.style.setProperty("--angle", \`\${valueAngle(visualValue)}deg\`);
+      root.style.setProperty(
+        "--rotation",
+        \`\${valueAngle(visualValue) - initialAngle}deg\`,
+      );
+      paintFeedback();
+    }
+
+    function animate(timestamp: number) {
+      animationFrame = 0;
+      if (disposed) return;
+      const elapsed = previousFrame
+        ? Math.min(64, timestamp - previousFrame)
+        : 16;
+      previousFrame = timestamp;
+      const immediate = (!!drag && !drag.glide) || reducedMotion.matches;
+      visualValue = immediate
+        ? value
+        : visualValue + (value - visualValue) * (1 - Math.exp(-elapsed / 42));
+      if (Math.abs(value - visualValue) < 0.005) visualValue = value;
+      paint();
+      if (visualValue !== value)
+        animationFrame = requestAnimationFrame(animate);
+      else previousFrame = 0;
+    }
+
+    function schedulePaint() {
+      if (!animationFrame && !disposed)
+        animationFrame = requestAnimationFrame(animate);
+    }
+
+    function setValue(next: number, notify = true) {
+      if (disposed) return false;
+      const numeric = Number(next);
+      if (!Number.isFinite(numeric)) return false;
+      const nextValue = Math.round(localClamp(numeric, 0, 100) * 1000) / 1000;
+      const changed = nextValue !== value;
+      value = nextValue;
+      root.dataset.value = String(value);
+      control.setAttribute("aria-valuenow", String(value));
+      control.setAttribute(
+        "aria-valuetext",
+        \`\${numberFormat.format(value)} процентов\`,
+      );
+      control.title = \`\${p.label ?? "Громкость"}: \${numberFormat.format(value)}% · ведите по кругу или тяните за центр\`;
+      readout.textContent = \`\${numberFormat.format(value)}%\`;
+      schedulePaint();
+      if (changed && notify) onChangeRef.current?.(value);
+      return changed;
+    }
+
+    function commit() {
+      if (!disposed) onCommitRef.current?.(value);
+    }
+
+    function geometry() {
+      const rect = control.getBoundingClientRect();
+      return {
+        x: rect.left + rect.width / 2,
+        y: rect.top + rect.height / 2,
+        radius: rect.width / 2,
+      };
+    }
+    function polar(event: PointerEvent, center: ReturnType<typeof geometry>) {
+      return (
+        Math.atan2(event.clientY - center.y, event.clientX - center.x) * degrees
+      );
+    }
+    function normalizeAngle(angle: number) {
+      return ((((angle + 180) % 360) + 360) % 360) - 180;
+    }
+
+    function pointerDown(event: PointerEvent) {
+      if (
+        disabledRef.current ||
+        readOnlyRef.current ||
+        event.button !== 0 ||
+        !event.isPrimary ||
+        drag ||
+        disposed
+      )
+        return;
+      const center = geometry();
+      const distance =
+        Math.hypot(event.clientX - center.x, event.clientY - center.y) /
+        center.radius;
+      if (distance > 1.04) return;
+      event.preventDefault();
+      control.focus({ preventScroll: true });
+      drag = {
+        id: event.pointerId,
+        x: event.clientX,
+        y: event.clientY,
+        center,
+        angle: polar(event, center),
+        mode: distance >= 0.36 ? "circular" : "linear",
+        value,
+        start: value,
+        distance: localClamp(center.radius * 1.2, 160, 420),
+        glide: false,
+      };
+      control.setPointerCapture(event.pointerId);
+      root.classList.add("is-dragging");
+      tilt(0, 0);
+      // A press on the glowing scale ring or the ticks sets the value right there.
+      if (distance >= 0.8) {
+        drag.glide = true;
+        let angle = normalizeAngle((drag.angle ?? 0) + 90);
+        if (Math.abs(angle) > 179.99) angle = value >= 50 ? 180 : -180;
+        drag.value = localClamp(
+          ((angle - startAngle) / sweepAngle) * 100,
+          0,
+          100,
+        );
+        setValue(drag.value);
+      }
+    }
+
+    /** The knob leans a little towards the pointer, like a real object under a light. */
+    function tilt(x: number, y: number) {
+      root.style.setProperty("--tilt-x", \`\${(-y * 7).toFixed(2)}deg\`);
+      root.style.setProperty("--tilt-y", \`\${(x * 7).toFixed(2)}deg\`);
+    }
+    function hover(event: PointerEvent) {
+      if (
+        drag ||
+        disabledRef.current ||
+        reducedMotion.matches ||
+        document.documentElement.dataset.adMotion === "off"
+      )
+        return;
+      const center = geometry();
+      tilt(
+        localClamp((event.clientX - center.x) / center.radius, -1, 1),
+        localClamp((event.clientY - center.y) / center.radius, -1, 1),
+      );
+    }
+
+    function pointerMove(event: PointerEvent) {
+      if (!drag || event.pointerId !== drag.id) return;
+      drag.glide = false;
+      event.preventDefault();
+      const precision = event.shiftKey ? 0.1 : 1;
+      const angle = polar(event, drag.center);
+      const radius = Math.hypot(
+        event.clientX - drag.center.x,
+        event.clientY - drag.center.y,
+      );
+      let delta = 0;
+      if (drag.mode === "circular") {
+        if (radius > drag.center.radius * 0.12 && drag.angle !== null)
+          delta = (normalizeAngle(angle - drag.angle) / sweepAngle) * 100;
+        drag.angle = radius > drag.center.radius * 0.12 ? angle : null;
+      } else {
+        delta =
+          ((event.clientX - drag.x - (event.clientY - drag.y)) /
+            drag.distance) *
+          100;
+      }
+      drag.x = event.clientX;
+      drag.y = event.clientY;
+      drag.value = localClamp(drag.value + delta * precision, 0, 100);
+      const step = event.shiftKey ? fineStepRef.current : stepRef.current;
+      setValue(Math.round(drag.value / step) * step);
+    }
+
+    function finishDrag(cancelled = false) {
+      if (!drag) return;
+      const gesture = drag;
+      drag = null;
+      root.classList.remove("is-dragging");
+      if (control.hasPointerCapture(gesture.id))
+        control.releasePointerCapture(gesture.id);
+      if (cancelled) setValue(gesture.start);
+      else if (value !== gesture.start) commit();
+    }
+
+    function pointerEnd(event: PointerEvent) {
+      if (!drag || event.pointerId !== drag.id) return;
+      finishDrag(event.type === "pointercancel");
+    }
+
+    function keyDown(event: KeyboardEvent) {
+      if (disabledRef.current || readOnlyRef.current) return;
+      if (event.key === "Escape" && drag) {
+        event.preventDefault();
+        finishDrag(true);
+        return;
+      }
+      if (drag || event.ctrlKey || event.altKey || event.metaKey) return;
+      const step = event.shiftKey ? fineStepRef.current : stepRef.current;
+      const keys: Record<string, number> = {
+        ArrowUp: value + step,
+        ArrowRight: value + step,
+        ArrowDown: value - step,
+        ArrowLeft: value - step,
+        PageUp: value + 10,
+        PageDown: value - 10,
+        Home: 0,
+        End: 100,
+      };
+      if (!Object.hasOwn(keys, event.key)) return;
+      event.preventDefault();
+      if (setValue(keys[event.key])) commit();
+    }
+
+    function wheel(event: WheelEvent) {
+      if (
+        disabledRef.current ||
+        readOnlyRef.current ||
+        event.ctrlKey ||
+        event.metaKey ||
+        event.deltaY === 0 ||
+        drag ||
+        disposed
+      )
+        return;
+      event.preventDefault();
+      control.focus({ preventScroll: true });
+      const step = event.shiftKey ? fineStepRef.current : stepRef.current;
+      if (setValue(value - Math.sign(event.deltaY) * step)) commit();
+    }
+
+    function doubleClick(event: MouseEvent) {
+      if (disabledRef.current || readOnlyRef.current) return;
+      event.preventDefault();
+      finishDrag();
+      if (setValue(p.resetValue ?? defaultValue)) commit();
+    }
+
+    function scheduleRender() {
+      clearTimeout(renderTimer);
+      if (!disposed) renderTimer = window.setTimeout(render, 80);
+    }
+
+    const events: Record<string, EventListener> = {
+      pointerdown: pointerDown as EventListener,
+      pointermove: pointerMove as EventListener,
+      pointerup: pointerEnd as EventListener,
+      pointercancel: pointerEnd as EventListener,
+      lostpointercapture: pointerEnd as EventListener,
+      keydown: keyDown as EventListener,
+      dblclick: doubleClick as EventListener,
+    };
+    for (const [event, handler] of Object.entries(events))
+      control.addEventListener(event, handler, { signal: listeners.signal });
+    control.addEventListener("wheel", wheel, {
+      passive: false,
+      signal: listeners.signal,
+    });
+    root.addEventListener("pointermove", hover as EventListener, {
+      signal: listeners.signal,
+    });
+    root.addEventListener("pointerleave", () => tilt(0, 0), {
+      signal: listeners.signal,
+    });
+    window.addEventListener("blur", () => finishDrag(true), {
+      signal: listeners.signal,
+    });
+    document.addEventListener(
+      "visibilitychange",
+      () => {
+        if (document.hidden) finishDrag(true);
+      },
+      { signal: listeners.signal },
+    );
+    window.addEventListener("resize", scheduleRender, {
+      signal: listeners.signal,
+    });
+    const observer = new ResizeObserver(scheduleRender);
+    observer.observe(root);
+
+    controllerRef.current = {
+      get value() {
+        return value;
+      },
+      setValue(next: number, notify = false) {
+        setValue(next, notify);
+      },
+      reset() {
+        if (setValue(p.resetValue ?? defaultValue)) commit();
+      },
+    };
+    setValue(value, false);
+    render();
+    paint();
+
+    return () => {
+      finishDrag();
+      disposed = true;
+      listeners.abort();
+      observer.disconnect();
+      clearTimeout(renderTimer);
+      cancelAnimationFrame(animationFrame);
+      animationFrame = 0;
+      controllerRef.current = null;
+    };
+  }, []);
+
+  useEffect(() => {
+    if (p.value !== undefined)
+      controllerRef.current?.setValue(clamp(p.value), false);
+  }, [p.value]);
+
+  // Typing a value, as in studio plug-ins: click the readout, Enter applies, Escape cancels.
+  const [draft, setDraft] = useState<string | null>(null);
+  const cancelled = useRef(false);
+  const editable = !p.disabled && !p.readOnly;
+  const applyDraft = () => {
+    if (cancelled.current) return;
+    const next = Number(draft?.replace(",", ".").replace("%", ""));
+    setDraft(null);
+    const controller = controllerRef.current;
+    if (!controller || !Number.isFinite(next)) return;
+    const before = controller.value;
+    controller.setValue(clamp(next), true);
+    if (controller.value !== before) p.onValueCommit?.(controller.value);
+  };
+
+  const rootProps = mark("RotaryKnob", p, undefined, "knob");
+  return (
+    <div
+      {...rootProps}
+      ref={rootRef}
+      data-value={initial}
+      data-disabled={p.disabled || undefined}
+      data-readonly={p.readOnly || undefined}
+      style={
+        {
+          ...p.style,
+          "--size": \`\${diameter / 16}rem\`,
+          "--angle": \`\${-135 + initial * 2.7}deg\`,
+          "--rotation": "0deg",
+        } as React.CSSProperties
+      }
+    >
+      <canvas
+        className="knob__surface knob__base"
+        aria-hidden="true"
+        ref={baseRef}
+      />
+      <canvas
+        className="knob__surface knob__feedback"
+        aria-hidden="true"
+        ref={feedbackRef}
+      />
+      <canvas
+        className="knob__surface knob__rotor"
+        aria-hidden="true"
+        ref={rotorRef}
+      />
+      <span className="knob__sheen" aria-hidden="true" />
+      <div
+        ref={controlRef}
+        className="knob__control"
+        role={p.readOnly ? "meter" : "slider"}
+        tabIndex={p.disabled || p.readOnly ? -1 : 0}
+        aria-disabled={p.disabled || undefined}
+        aria-readonly={p.readOnly || undefined}
+        aria-label={p.label ?? "Громкость"}
+        aria-valuemin={0}
+        aria-valuemax={100}
+        aria-valuenow={initial}
+        aria-valuetext={\`\${numberFormat.format(initial)} процентов\`}
+        aria-orientation={p.readOnly ? undefined : "vertical"}
+      >
+        <div className="knob__indicator" aria-hidden="true">
+          <div className="knob__slot" />
+        </div>
+      </div>
+      {p.showValue !== false && (
+        <div
+          ref={readoutRef}
+          className="knob__value"
+          data-editable={editable || undefined}
+          data-editing={draft !== null || undefined}
+          title={editable ? "Нажмите, чтобы ввести значение" : undefined}
+          onClick={() => {
+            if (!editable) return;
+            cancelled.current = false;
+            setDraft(
+              numberFormat.format(controllerRef.current?.value ?? initial),
+            );
+          }}
+        >
+          {numberFormat.format(initial)}%
+        </div>
+      )}
+      {draft !== null && (
+        <input
+          className="knob__input"
+          aria-label={\`\${p.label ?? "Громкость"}, значение\`}
+          inputMode="decimal"
+          autoFocus
+          value={draft}
+          onFocus={(event) => event.currentTarget.select()}
+          onChange={(event) => setDraft(event.currentTarget.value)}
+          onBlur={applyDraft}
+          onKeyDown={(event) => {
+            if (event.key === "Enter") event.currentTarget.blur();
+            if (event.key === "Escape") {
+              cancelled.current = true;
+              setDraft(null);
+            }
+          }}
+        />
+      )}
+      <span className="ad-sr-only">
+        Зажмите ручку ближе к краю и ведите мышью по кругу. За центр можно
+        тянуть вверх или вниз. Нажатие на внешнюю шкалу устанавливает значение.
+        Колесо мыши и стрелки меняют громкость. Shift — точная регулировка.
+        Двойной щелчок — исходное значение.
+      </span>
+    </div>
+  );
+};
+`,ht=`import { Playground, U, expr, jsx, sizes } from "../../../dev/exampleHelpers";
+
+export default function RotaryKnobExample() {
+  return (
+    <Playground
+      knobs={{
+        size: { options: sizes, value: "md" },
+        readOnly: { value: false },
+        disabled: { value: false },
+      }}
+      code={(v, c) =>
+        jsx("RotaryKnob", {
+          label: "Громкость",
+          value: expr("volume"),
+          onValueChange: expr("setVolume"),
+          size: c.size,
+          readOnly: v.readOnly,
+          disabled: v.disabled,
+        })
+      }
+    >
+      {(v) => (
+        <U.RotaryKnob
+          label="Громкость"
+          defaultValue={65}
+          size={v.size}
+          readOnly={v.readOnly}
+          disabled={v.disabled}
+        />
+      )}
+    </Playground>
+  );
+}
 `,xt=`export default {\r
   name: "RotaryKnob",\r
   description:\r
     "Точный интерактивный React-порт premium-knob-interactive-neon(2).html.",\r
   category: "audio",\r
 } as const;\r
-`,yt=`import { useId, type CSSProperties } from "react";\r
-import { mark } from "../../../core/base";\r
-import { type SparklineProps } from "../shared";\r
-\r
-/** Line that draws itself in, an area glow below it and a beacon on the latest value. */\r
-export const Sparkline = (p: SparklineProps) => {\r
-  const values = p.values ?? [\r
-    12, 23, 17, 31, 43, 24, 28, 20, 41, 29, 51, 34, 38, 22, 31, 16, 23,\r
-  ];\r
-  const id = useId().replace(/[^a-zA-Z0-9_-]/g, "");\r
-  const max = Math.max(...values, 1);\r
-  const min = Math.min(...values, 0);\r
-  const points = values.map((v, i) => [\r
-    (i / Math.max(1, values.length - 1)) * 240,\r
-    66 - ((v - min) / (max - min || 1)) * 58,\r
-  ]);\r
-  const line = points.map(([x, y], i) => \`\${i ? "L" : "M"}\${x},\${y}\`).join("");\r
-  const [lastX, lastY] = points[points.length - 1];\r
-  return (\r
-    <svg\r
-      {...mark("Sparkline", p)}\r
-      viewBox="0 0 240 70"\r
-      preserveAspectRatio="none"\r
-      role={p.label ? "img" : undefined}\r
-      aria-label={p.label}\r
-      aria-hidden={!p.label}\r
-      style={\r
-        { ...p.style, "--ad-spark": p.color ?? "#ff416a" } as CSSProperties\r
-      }\r
-    >\r
-      <defs>\r
-        <linearGradient id={\`\${id}-area\`} x1="0" y1="0" x2="0" y2="1">\r
-          <stop offset="0" stopColor="var(--ad-spark)" stopOpacity="0.45" />\r
-          <stop offset="1" stopColor="var(--ad-spark)" stopOpacity="0" />\r
-        </linearGradient>\r
-      </defs>\r
-      <path\r
-        className="ad-sparkline-area"\r
-        d={\`\${line}L240,70L0,70Z\`}\r
-        fill={\`url(#\${id}-area)\`}\r
-      />\r
-      <path className="ad-sparkline-line" d={line} pathLength={1} />\r
-      <circle className="ad-sparkline-ping" cx={lastX} cy={lastY} r="3" />\r
-      <circle className="ad-sparkline-dot" cx={lastX} cy={lastY} r="3" />\r
-    </svg>\r
-  );\r
-};\r
-`,kt=`import { Sparkline, Stack, Typography } from "@ad-voice/ui";\r
-\r
-export default function SparklineExample() {\r
-  return (\r
-    <Stack gap={1}>\r
-      <Typography variant="label">Задержка сети, мс</Typography>\r
-      <Sparkline\r
-        label="Задержка сети"\r
-        values={[18, 22, 19, 31, 44, 26, 24, 21, 38, 27, 23, 20]}\r
-      />\r
-    </Stack>\r
-  );\r
-}\r
+`,yt=`import { useSvgId } from "../../../core/artwork";
+import { type CSSProperties } from "react";
+import { mark } from "../../../core/base";
+import { type SparklineProps } from "../shared";
+
+/** Line that draws itself in, an area glow below it and a beacon on the latest value. */
+export const Sparkline = (p: SparklineProps) => {
+  const values = p.values ?? [
+    12, 23, 17, 31, 43, 24, 28, 20, 41, 29, 51, 34, 38, 22, 31, 16, 23,
+  ];
+  const id = useSvgId();
+  const max = Math.max(...values, 1);
+  const min = Math.min(...values, 0);
+  const points = values.map((v, i) => [
+    (i / Math.max(1, values.length - 1)) * 240,
+    66 - ((v - min) / (max - min || 1)) * 58,
+  ]);
+  const line = points.map(([x, y], i) => \`\${i ? "L" : "M"}\${x},\${y}\`).join("");
+  const [lastX, lastY] = points[points.length - 1];
+  return (
+    <svg
+      {...mark("Sparkline", p)}
+      viewBox="0 0 240 70"
+      preserveAspectRatio="none"
+      role={p.label ? "img" : undefined}
+      aria-label={p.label}
+      aria-hidden={!p.label}
+      style={
+        { ...p.style, "--ad-spark": p.color ?? "#ff416a" } as CSSProperties
+      }
+    >
+      <defs>
+        <linearGradient id={\`\${id}-area\`} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stopColor="var(--ad-spark)" stopOpacity="0.45" />
+          <stop offset="1" stopColor="var(--ad-spark)" stopOpacity="0" />
+        </linearGradient>
+      </defs>
+      <path
+        className="ad-sparkline-area"
+        d={\`\${line}L240,70L0,70Z\`}
+        fill={\`url(#\${id}-area)\`}
+      />
+      <path className="ad-sparkline-line" d={line} pathLength={1} />
+      <circle className="ad-sparkline-ping" cx={lastX} cy={lastY} r="3" />
+      <circle className="ad-sparkline-dot" cx={lastX} cy={lastY} r="3" />
+    </svg>
+  );
+};
+`,kt=`import { Sparkline, Stack, Typography } from "@ad-voice/ui";
+
+export default function SparklineExample() {
+  return (
+    <Stack gap={1}>
+      <Typography variant="label">Задержка сети, мс</Typography>
+      <Sparkline
+        label="Задержка сети"
+        values={[18, 22, 19, 31, 44, 26, 24, 21, 38, 27, 23, 20]}
+      />
+    </Stack>
+  );
+}
 `,_t=`export default {\r
   name: "Sparkline",\r
   description: "Небольшой график без осей",\r
   category: "audio",\r
 } as const;\r
-`,Pt=`import { useId, useRef } from "react";\r
-import { mark, type CommonProps } from "../../../core/base";\r
-import { useDecoration } from "../../../core/motion/hooks";\r
-\r
-export const WaveDecoration = (p: CommonProps) => {\r
-  const ref = useRef<SVGSVGElement>(null);\r
-  const uid = useId().replace(/:/g, "");\r
-  const paint = (t: number) =>\r
-    ref.current?.querySelectorAll("path").forEach((path, j) => {\r
-      let d = "";\r
-      for (let i = 0; i <= 65; i++) {\r
-        const x = (i / 65) * 600,\r
-          y =\r
-            65 +\r
-            (j - 11) * 2.5 +\r
-            Math.sin(i * 0.115 + t * 0.6 + j * 0.08) * 24 +\r
-            Math.sin(i * 0.19 - t * 0.31) * 9;\r
-        d += \`\${i ? "L" : "M"}\${x.toFixed(2)} \${y.toFixed(2)}\`;\r
-      }\r
-      path.setAttribute("d", d);\r
-    });\r
-  useDecoration(ref, paint);\r
-  return (\r
-    <svg\r
-      {...mark("WaveDecoration", p)}\r
-      ref={ref}\r
-      viewBox="0 0 600 130"\r
-      aria-hidden="true"\r
-    >\r
-      <defs>\r
-        <linearGradient id={\`wave-\${uid}\`}>\r
-          {[\r
-            [0, 0],\r
-            [0.2, 0.3],\r
-            [0.7, 1],\r
-            [1, 0.35],\r
-          ].map(([offset, opacity]) => (\r
-            <stop\r
-              key={offset}\r
-              offset={offset}\r
-              stopColor="#ff426d"\r
-              stopOpacity={opacity}\r
-            />\r
-          ))}\r
-        </linearGradient>\r
-      </defs>\r
-      {Array.from({ length: 22 }, (_, j) => (\r
-        <path\r
-          key={j}\r
-          d="M0 65H600"\r
-          fill="none"\r
-          stroke={\`url(#wave-\${uid})\`}\r
-          strokeWidth={j % 7 === 0 ? 1.2 : 0.65}\r
-          opacity={0.5 + (j % 4) * 0.13}\r
-        />\r
-      ))}\r
-    </svg>\r
-  );\r
-};\r
-`,wt=`import { WaveDecoration } from "@ad-voice/ui";\r
-\r
-/** Decorative animated waves for hero areas; hidden from assistive tech. */\r
-export default function WaveDecorationExample() {\r
-  return <WaveDecoration />;\r
-}\r
-`,St=`export default {\r
+`,Pt=`import { useSvgId } from "../../../core/artwork";
+import { useRef } from "react";
+import { mark, type CommonProps } from "../../../core/base";
+import { useDecoration } from "../../../core/motion/hooks";
+
+export const WaveDecoration = (p: CommonProps) => {
+  const ref = useRef<SVGSVGElement>(null);
+  const uid = useSvgId();
+  const paint = (t: number) =>
+    ref.current?.querySelectorAll("path").forEach((path, j) => {
+      let d = "";
+      for (let i = 0; i <= 65; i++) {
+        const x = (i / 65) * 600,
+          y =
+            65 +
+            (j - 11) * 2.5 +
+            Math.sin(i * 0.115 + t * 0.6 + j * 0.08) * 24 +
+            Math.sin(i * 0.19 - t * 0.31) * 9;
+        d += \`\${i ? "L" : "M"}\${x.toFixed(2)} \${y.toFixed(2)}\`;
+      }
+      path.setAttribute("d", d);
+    });
+  useDecoration(ref, paint);
+  return (
+    <svg
+      {...mark("WaveDecoration", p)}
+      ref={ref}
+      viewBox="0 0 600 130"
+      aria-hidden="true"
+    >
+      <defs>
+        <linearGradient id={\`wave-\${uid}\`}>
+          {[
+            [0, 0],
+            [0.2, 0.3],
+            [0.7, 1],
+            [1, 0.35],
+          ].map(([offset, opacity]) => (
+            <stop
+              key={offset}
+              offset={offset}
+              stopColor="#ff426d"
+              stopOpacity={opacity}
+            />
+          ))}
+        </linearGradient>
+      </defs>
+      {Array.from({ length: 22 }, (_, j) => (
+        <path
+          key={j}
+          d="M0 65H600"
+          fill="none"
+          stroke={\`url(#wave-\${uid})\`}
+          strokeWidth={j % 7 === 0 ? 1.2 : 0.65}
+          opacity={0.5 + (j % 4) * 0.13}
+        />
+      ))}
+    </svg>
+  );
+};
+`,St=`import { WaveDecoration } from "@ad-voice/ui";
+
+/** Decorative animated waves for hero areas; hidden from assistive tech. */
+export default function WaveDecorationExample() {
+  return <WaveDecoration />;
+}
+`,wt=`export default {\r
   name: "WaveDecoration",\r
   description: "Декоративные линии с меняющейся формой",\r
   category: "motion",\r
 } as const;\r
-`,Tt=`import {\r
-  useEffect,\r
-  useId,\r
-  useMemo,\r
-  useRef,\r
-  useState,\r
-  type PointerEvent,\r
-} from "react";\r
-import { clamp, mark, timeText, useControllable } from "../../../core/base";\r
-import { seeded } from "../../../core/noise";\r
-import { type WaveformProps } from "../shared";\r
-import { useWaveformPeaks } from "./useWaveformPeaks";\r
-\r
-/** Drawing space: a symmetric track around the midline, like a studio editor shows it. */\r
-const W = 1000;\r
-const H = 100;\r
-const MID = H / 2;\r
-const COLUMNS = 400;\r
-const KEY_STEP = 5;\r
-\r
-/**\r
- * A believable song for when no audio is given: intro, verses and louder choruses, a\r
- * kick on every beat, and sample-level detail in between.\r
- */\r
-const demoSong = (() => {\r
-  const random = seeded(2741);\r
-  return Array.from({ length: 600 }, (_, i) => {\r
-    const t = i / 600;\r
-    const section = 0.4 + 0.6 * Math.sin(t * Math.PI * 3.2) ** 2;\r
-    const fade = Math.min(1, i / 24, (600 - i) / 30);\r
-    const kick = Math.exp(-(i % 12) / 2.2);\r
-    const detail = random() ** 0.7;\r
-    return section * fade * (0.3 + 0.7 * (0.5 * kick + 0.5 * detail));\r
-  });\r
-})();\r
-\r
-/**\r
- * Resamples to fixed columns: an outer outline and a core of average loudness. Mastered\r
- * tracks hit full scale almost everywhere, so drawing raw peaks gives a flat brick; like\r
- * streaming players, the outline follows loudness (never above the real peak) and the\r
- * range between quiet and loud passages is stretched, while true silence stays a line.\r
- */\r
-function columns(peaks: readonly number[], rms?: readonly number[]) {\r
-  const outer: number[] = [];\r
-  const ratio: number[] = [];\r
-  for (let c = 0; c < COLUMNS; c += 1) {\r
-    const from = Math.floor((c / COLUMNS) * peaks.length);\r
-    const to = Math.max(\r
-      from + 1,\r
-      Math.floor(((c + 1) / COLUMNS) * peaks.length),\r
-    );\r
-    let peak = 0;\r
-    let mean = 0;\r
-    for (let i = from; i < to; i += 1) {\r
-      peak = Math.max(peak, Math.abs(peaks[i]));\r
-      mean += rms ? rms[i] : Math.abs(peaks[i]) * 0.58;\r
-    }\r
-    mean /= to - from;\r
-    const level = Math.min(peak, mean * 1.9);\r
-    outer.push(level);\r
-    ratio.push(level > 0 ? Math.min(1, mean / level) : 0);\r
-  }\r
-  const sorted = [...outer].sort((a, b) => a - b);\r
-  const high = sorted[sorted.length - 1] || 0.0001;\r
-  const low = Math.min(\r
-    sorted[Math.floor(sorted.length * 0.05)] * 0.7,\r
-    high * 0.6,\r
-  );\r
-  const top = outer.map((v) => clamp((v - low) / (high - low), 0, 1));\r
-  return { top, core: top.map((v, i) => v * ratio[i]) };\r
-}\r
-\r
-/** A filled outline of the levels, mirrored above and below the midline. */\r
-function mirrored(levels: readonly number[]) {\r
-  const x = (i: number) => ((i / (levels.length - 1)) * W).toFixed(1);\r
-  const y = (v: number, side: 1 | -1) =>\r
-    (MID + side * (0.6 + v * (MID - 3))).toFixed(1);\r
-  const upper = levels.map((v, i) => \`\${x(i)} \${y(v, -1)}\`);\r
-  const lower = levels.map((v, i) => \`\${x(i)} \${y(v, 1)}\`).reverse();\r
-  return \`M\${upper.join("L")}L\${lower.join("L")}Z\`;\r
-}\r
-\r
-/**\r
- * Seekable waveform drawn the way studio editors show audio: a dense, symmetric track with\r
- * translucent peaks around a solid core of average loudness. The played part burns ruby\r
- * and brightens towards the light-beam cursor; hovering previews the seek point and its\r
- * time. Click or drag to seek, arrows step 5 s, Home/End jump to the edges. Peaks come\r
- * from \`points\` or are decoded from \`src\`.\r
- */\r
-export function Waveform({\r
-  duration: total,\r
-  position: controlled,\r
-  defaultPosition = 0,\r
-  onSeek,\r
-  points,\r
-  src,\r
-  bins = 600,\r
-  color,\r
-  label,\r
-  disabled = false,\r
-  ...p\r
-}: WaveformProps) {\r
-  const id = useId().replace(/[^a-zA-Z0-9_-]/g, "");\r
-  const surface = useRef<HTMLDivElement>(null);\r
-  const [hover, setHover] = useState<number | null>(null);\r
-  const decoded = useWaveformPeaks(points ? null : src, bins);\r
-  const loading = !points && !!src && decoded === null;\r
-  const { peaksPath, corePath } = useMemo(() => {\r
-    const { top, core } = points?.length\r
-      ? columns(points)\r
-      : decoded?.peaks.length\r
-        ? columns(decoded.peaks, decoded.rms)\r
-        : columns(demoSong);\r
-    return { peaksPath: mirrored(top), corePath: mirrored(core) };\r
-  }, [points, decoded]);\r
-  const duration = Math.max(0.001, total ?? 231);\r
-  const [position, seek] = useControllable(controlled, defaultPosition, onSeek);\r
-  const progress = clamp(position / duration, 0, 1);\r
-  const played = progress * W;\r
-  const ahead = Math.max(0, (hover ?? 0) * W - played);\r
-  // Playing = the position keeps creeping forward; sparks fly only then.\r
-  const [playing, setPlaying] = useState(false);\r
-  const previous = useRef(position);\r
-  useEffect(() => {\r
-    const step = position - previous.current;\r
-    previous.current = position;\r
-    if (step <= 0 || step > 1.5) return;\r
-    setPlaying(true);\r
-    const timer = setTimeout(() => setPlaying(false), 300);\r
-    return () => clearTimeout(timer);\r
-  }, [position]);\r
-  const shape = points?.length\r
-    ? "points"\r
-    : decoded?.peaks.length\r
-      ? "file"\r
-      : "demo";\r
-\r
-  const ratio = (event: PointerEvent<HTMLDivElement>) => {\r
-    const box = surface.current?.getBoundingClientRect();\r
-    return box?.width ? clamp((event.clientX - box.left) / box.width, 0, 1) : 0;\r
-  };\r
-\r
-  return (\r
-    <div\r
-      {...mark("Waveform", p)}\r
-      ref={surface}\r
-      role="slider"\r
-      tabIndex={disabled ? -1 : 0}\r
-      aria-label={label ?? "Позиция воспроизведения"}\r
-      aria-valuemin={0}\r
-      aria-valuemax={Math.round(duration)}\r
-      aria-valuenow={Math.round(position)}\r
-      aria-valuetext={timeText(position)}\r
-      aria-disabled={disabled || undefined}\r
-      data-loading={loading || undefined}\r
-      data-playing={playing || undefined}\r
-      style={\r
-        {\r
-          ...p.style,\r
-          "--ad-wave-played": \`\${progress * 100}%\`,\r
-          "--ad-wave-hover": hover === null ? undefined : \`\${hover * 100}%\`,\r
-          ...(color ? { "--ad-wave-color": color } : {}),\r
-        } as React.CSSProperties\r
-      }\r
-      onPointerDown={(event) => {\r
-        if (disabled) return;\r
-        event.currentTarget.setPointerCapture(event.pointerId);\r
-        seek(ratio(event) * duration);\r
-      }}\r
-      onPointerMove={(event) => {\r
-        if (disabled) return;\r
-        setHover(ratio(event));\r
-        if (event.currentTarget.hasPointerCapture(event.pointerId))\r
-          seek(ratio(event) * duration);\r
-      }}\r
-      onPointerLeave={() => setHover(null)}\r
-      onKeyDown={(event) => {\r
-        if (disabled) return;\r
-        const next = {\r
-          ArrowRight: position + KEY_STEP,\r
-          ArrowLeft: position - KEY_STEP,\r
-          Home: 0,\r
-          End: duration,\r
-        }[event.key];\r
-        if (next === undefined) return;\r
-        event.preventDefault();\r
-        seek(clamp(next, 0, duration));\r
-      }}\r
-    >\r
-      <span className="ad-waveform-floor" aria-hidden />\r
-      <svg\r
-        key={shape}\r
-        viewBox={\`0 0 \${W} \${H}\`}\r
-        preserveAspectRatio="none"\r
-        aria-hidden="true"\r
-      >\r
-        <defs>\r
-          <clipPath id={\`\${id}-track\`}>\r
-            <path d={peaksPath} />\r
-          </clipPath>\r
-          <clipPath id={\`\${id}-played\`}>\r
-            <rect width={played} height={H} />\r
-          </clipPath>\r
-          <clipPath id={\`\${id}-ahead\`}>\r
-            <rect x={played} width={ahead} height={H} />\r
-          </clipPath>\r
-          {/* Brushed silver: brightest along the midline, fading to the edges. */}\r
-          <linearGradient id={\`\${id}-silver\`} x1="0" x2="0" y1="0" y2="1">\r
-            <stop offset="0" stopColor="#d9cfdc" stopOpacity="0.35" />\r
-            <stop offset="0.5" stopColor="#fff" stopOpacity="0.95" />\r
-            <stop offset="1" stopColor="#d9cfdc" stopOpacity="0.35" />\r
-          </linearGradient>\r
-          <linearGradient id={\`\${id}-solid\`} x1="0" x2="0" y1="0" y2="1">\r
-            <stop offset="0" stopColor="#efe6f0" stopOpacity="0.8" />\r
-            <stop offset="0.5" stopColor="#fff" />\r
-            <stop offset="1" stopColor="#efe6f0" stopOpacity="0.8" />\r
-          </linearGradient>\r
-          {/* Light builds up along the played part and peaks at the cursor. */}\r
-          <linearGradient\r
-            id={\`\${id}-lit\`}\r
-            gradientUnits="userSpaceOnUse"\r
-            x1="0"\r
-            x2={Math.max(1, played)}\r
-          >\r
-            <stop offset="0" stopColor="#6b0b2c" />\r
-            <stop\r
-              offset="0.6"\r
-              stopColor="var(--ad-wave-color, var(--ad-red))"\r
-            />\r
-            <stop offset="1" stopColor="#ffd9e3" />\r
-          </linearGradient>\r
-          <linearGradient id={\`\${id}-depth\`} x1="0" x2="0" y1="0" y2="1">\r
-            {/* Lit from above: the upper half catches light, the lower sinks into shadow. */}\r
-            <stop offset="0" stopColor="#fff" stopOpacity="0.16" />\r
-            <stop offset="0.42" stopColor="#fff" stopOpacity="0" />\r
-            <stop offset="0.56" stopColor="#000" stopOpacity="0" />\r
-            <stop offset="1" stopColor="#000" stopOpacity="0.6" />\r
-          </linearGradient>\r
-          <radialGradient id={\`\${id}-spot\`}>\r
-            <stop offset="0" stopColor="#fff" stopOpacity="0.9" />\r
-            <stop offset="1" stopColor="#ff2f6a" stopOpacity="0" />\r
-          </radialGradient>\r
-          <filter\r
-            id={\`\${id}-bloom\`}\r
-            x="-5%"\r
-            y="-50%"\r
-            width="110%"\r
-            height="200%"\r
-          >\r
-            <feGaussianBlur stdDeviation="4" />\r
-          </filter>\r
-        </defs>\r
-\r
-        <line className="ad-waveform-axis" x2={W} y1={MID} y2={MID} />\r
-        <path\r
-          className="ad-waveform-peaks"\r
-          d={peaksPath}\r
-          fill={\`url(#\${id}-silver)\`}\r
-        />\r
-        <path\r
-          className="ad-waveform-core"\r
-          d={corePath}\r
-          fill={\`url(#\${id}-solid)\`}\r
-        />\r
-        <path className="ad-waveform-edge" d={peaksPath} />\r
-\r
-        <g clipPath={\`url(#\${id}-ahead)\`} className="ad-waveform-ahead">\r
-          <path d={peaksPath} />\r
-          <path d={corePath} />\r
-        </g>\r
-\r
-        <g clipPath={\`url(#\${id}-played)\`}>\r
-          <path\r
-            className="ad-waveform-bloom"\r
-            d={corePath}\r
-            fill={\`url(#\${id}-lit)\`}\r
-            filter={\`url(#\${id}-bloom)\`}\r
-          />\r
-          <path\r
-            className="ad-waveform-lit-peaks"\r
-            d={peaksPath}\r
-            fill={\`url(#\${id}-lit)\`}\r
-          />\r
-          <path\r
-            className="ad-waveform-lit-core"\r
-            d={corePath}\r
-            fill={\`url(#\${id}-lit)\`}\r
-          />\r
-          <g clipPath={\`url(#\${id}-track)\`}>\r
-            <rect className="ad-waveform-sheen" width="160" height={H} />\r
-          </g>\r
-        </g>\r
-\r
-        <rect\r
-          className="ad-waveform-depth"\r
-          width={W}\r
-          height={H}\r
-          fill={\`url(#\${id}-depth)\`}\r
-          clipPath={\`url(#\${id}-track)\`}\r
-        />\r
-        <ellipse\r
-          className="ad-waveform-spot"\r
-          cx={played}\r
-          cy={MID}\r
-          rx="60"\r
-          ry={H}\r
-          fill={\`url(#\${id}-spot)\`}\r
-          clipPath={\`url(#\${id}-track)\`}\r
-        />\r
-      </svg>\r
-      <span className="ad-waveform-cursor" aria-hidden>\r
-        <span className="ad-waveform-sparks">\r
-          {Array.from({ length: 8 }, (_, i) => (\r
-            <i key={i} />\r
-          ))}\r
-        </span>\r
-      </span>\r
-      {hover !== null && !disabled && (\r
-        <span className="ad-waveform-hover" aria-hidden>\r
-          <span className="ad-waveform-tip">{timeText(hover * duration)}</span>\r
-        </span>\r
-      )}\r
-    </div>\r
-  );\r
-}\r
-`,Ct=`import { useEffect, useState } from "react";\r
-import { Playground, U, expr, jsx } from "../../../dev/exampleHelpers";\r
-\r
-const DURATION = 231;\r
-\r
-/** Plays along on its own, a frame at a time, so the cursor glides; seeking moves it. */\r
-function PlayingWaveform({\r
-  playing,\r
-  disabled,\r
-  file,\r
-}: {\r
-  playing: boolean;\r
-  disabled: boolean;\r
-  file: File | null;\r
-}) {\r
-  const [position, setPosition] = useState(64);\r
-  useEffect(() => {\r
-    if (!playing) return;\r
-    let last = performance.now();\r
-    let frame = requestAnimationFrame(function tick(now) {\r
-      setPosition((v) => (v + (now - last) / 1000) % DURATION);\r
-      last = now;\r
-      frame = requestAnimationFrame(tick);\r
-    });\r
-    return () => cancelAnimationFrame(frame);\r
-  }, [playing]);\r
-  return (\r
-    <U.Waveform\r
-      style={{ width: "min(100%, 52rem)" }}\r
-      label="Позиция в записи"\r
-      src={file}\r
-      duration={DURATION}\r
-      position={position}\r
-      onSeek={setPosition}\r
-      disabled={disabled}\r
-    />\r
-  );\r
-}\r
-\r
-export default function WaveformExample() {\r
-  const [file, setFile] = useState<File | null>(null);\r
-  return (\r
-    <Playground\r
-      stretch\r
-      knobs={{ playing: { value: true }, disabled: { value: false } }}\r
-      code={(v) =>\r
-        jsx("Waveform", {\r
-          label: "Позиция в записи",\r
-          src: file ? expr("file") : undefined,\r
-          duration: DURATION,\r
-          position: expr("position"),\r
-          onSeek: expr("setPosition"),\r
-          disabled: v.disabled,\r
-        })\r
-      }\r
-      extra={\r
-        <U.FilePicker\r
-          size="sm"\r
-          label="Свой трек"\r
-          description={file ? file.name : "Волна построится прямо в браузере"}\r
-          icon="music"\r
-          accept="audio/*"\r
-          onFiles={([next]) => next && setFile(next)}\r
-        />\r
-      }\r
-    >\r
-      {(v) => (\r
-        <PlayingWaveform\r
-          playing={v.playing}\r
-          disabled={v.disabled}\r
-          file={file}\r
-        />\r
-      )}\r
-    </Playground>\r
-  );\r
-}\r
+`,Tt=`import { useSvgId } from "../../../core/artwork";
+import { useEffect, useMemo, useRef, useState, type PointerEvent } from "react";
+import { clamp, mark, timeText, useControllable } from "../../../core/base";
+import { seeded } from "../../../core/noise";
+import { type WaveformProps } from "../shared";
+import { useWaveformPeaks } from "./useWaveformPeaks";
+
+/** Drawing space: a symmetric track around the midline, like a studio editor shows it. */
+const W = 1000;
+const H = 100;
+const MID = H / 2;
+const COLUMNS = 400;
+const KEY_STEP = 5;
+
+/**
+ * A believable song for when no audio is given: intro, verses and louder choruses, a
+ * kick on every beat, and sample-level detail in between.
+ */
+const demoSong = (() => {
+  const random = seeded(2741);
+  return Array.from({ length: 600 }, (_, i) => {
+    const t = i / 600;
+    const section = 0.4 + 0.6 * Math.sin(t * Math.PI * 3.2) ** 2;
+    const fade = Math.min(1, i / 24, (600 - i) / 30);
+    const kick = Math.exp(-(i % 12) / 2.2);
+    const detail = random() ** 0.7;
+    return section * fade * (0.3 + 0.7 * (0.5 * kick + 0.5 * detail));
+  });
+})();
+
+/**
+ * Resamples to fixed columns: an outer outline and a core of average loudness. Mastered
+ * tracks hit full scale almost everywhere, so drawing raw peaks gives a flat brick; like
+ * streaming players, the outline follows loudness (never above the real peak) and the
+ * range between quiet and loud passages is stretched, while true silence stays a line.
+ */
+function columns(peaks: readonly number[], rms?: readonly number[]) {
+  const outer: number[] = [];
+  const ratio: number[] = [];
+  for (let c = 0; c < COLUMNS; c += 1) {
+    const from = Math.floor((c / COLUMNS) * peaks.length);
+    const to = Math.max(
+      from + 1,
+      Math.floor(((c + 1) / COLUMNS) * peaks.length),
+    );
+    let peak = 0;
+    let mean = 0;
+    for (let i = from; i < to; i += 1) {
+      peak = Math.max(peak, Math.abs(peaks[i]));
+      mean += rms ? rms[i] : Math.abs(peaks[i]) * 0.58;
+    }
+    mean /= to - from;
+    const level = Math.min(peak, mean * 1.9);
+    outer.push(level);
+    ratio.push(level > 0 ? Math.min(1, mean / level) : 0);
+  }
+  const sorted = [...outer].sort((a, b) => a - b);
+  const high = sorted[sorted.length - 1] || 0.0001;
+  const low = Math.min(
+    sorted[Math.floor(sorted.length * 0.05)] * 0.7,
+    high * 0.6,
+  );
+  const top = outer.map((v) => clamp((v - low) / (high - low), 0, 1));
+  return { top, core: top.map((v, i) => v * ratio[i]) };
+}
+
+/** A filled outline of the levels, mirrored above and below the midline. */
+function mirrored(levels: readonly number[]) {
+  const x = (i: number) => ((i / (levels.length - 1)) * W).toFixed(1);
+  const y = (v: number, side: 1 | -1) =>
+    (MID + side * (0.6 + v * (MID - 3))).toFixed(1);
+  const upper = levels.map((v, i) => \`\${x(i)} \${y(v, -1)}\`);
+  const lower = levels.map((v, i) => \`\${x(i)} \${y(v, 1)}\`).reverse();
+  return \`M\${upper.join("L")}L\${lower.join("L")}Z\`;
+}
+
+/**
+ * Seekable waveform drawn the way studio editors show audio: a dense, symmetric track with
+ * translucent peaks around a solid core of average loudness. The played part burns ruby
+ * and brightens towards the light-beam cursor; hovering previews the seek point and its
+ * time. Click or drag to seek, arrows step 5 s, Home/End jump to the edges. Peaks come
+ * from \`points\` or are decoded from \`src\`.
+ */
+export function Waveform({
+  duration: total,
+  position: controlled,
+  defaultPosition = 0,
+  onSeek,
+  points,
+  src,
+  bins = 600,
+  color,
+  label,
+  disabled = false,
+  ...p
+}: WaveformProps) {
+  const id = useSvgId();
+  const surface = useRef<HTMLDivElement>(null);
+  const [hover, setHover] = useState<number | null>(null);
+  const decoded = useWaveformPeaks(points ? null : src, bins);
+  const loading = !points && !!src && decoded === null;
+  const { peaksPath, corePath } = useMemo(() => {
+    const { top, core } = points?.length
+      ? columns(points)
+      : decoded?.peaks.length
+        ? columns(decoded.peaks, decoded.rms)
+        : columns(demoSong);
+    return { peaksPath: mirrored(top), corePath: mirrored(core) };
+  }, [points, decoded]);
+  const duration = Math.max(0.001, total ?? 231);
+  const [position, seek] = useControllable(controlled, defaultPosition, onSeek);
+  const progress = clamp(position / duration, 0, 1);
+  const played = progress * W;
+  const ahead = Math.max(0, (hover ?? 0) * W - played);
+  // Playing = the position keeps creeping forward; sparks fly only then.
+  const [playing, setPlaying] = useState(false);
+  const previous = useRef(position);
+  useEffect(() => {
+    const step = position - previous.current;
+    previous.current = position;
+    if (step <= 0 || step > 1.5) return;
+    setPlaying(true);
+    const timer = setTimeout(() => setPlaying(false), 300);
+    return () => clearTimeout(timer);
+  }, [position]);
+  const shape = points?.length
+    ? "points"
+    : decoded?.peaks.length
+      ? "file"
+      : "demo";
+
+  const ratio = (event: PointerEvent<HTMLDivElement>) => {
+    const box = surface.current?.getBoundingClientRect();
+    return box?.width ? clamp((event.clientX - box.left) / box.width, 0, 1) : 0;
+  };
+
+  return (
+    <div
+      {...mark("Waveform", p)}
+      ref={surface}
+      role="slider"
+      tabIndex={disabled ? -1 : 0}
+      aria-label={label ?? "Позиция воспроизведения"}
+      aria-valuemin={0}
+      aria-valuemax={Math.round(duration)}
+      aria-valuenow={Math.round(position)}
+      aria-valuetext={timeText(position)}
+      aria-disabled={disabled || undefined}
+      data-loading={loading || undefined}
+      data-playing={playing || undefined}
+      style={
+        {
+          ...p.style,
+          "--ad-wave-played": \`\${progress * 100}%\`,
+          "--ad-wave-hover": hover === null ? undefined : \`\${hover * 100}%\`,
+          ...(color ? { "--ad-wave-color": color } : {}),
+        } as React.CSSProperties
+      }
+      onPointerDown={(event) => {
+        if (disabled) return;
+        event.currentTarget.setPointerCapture(event.pointerId);
+        seek(ratio(event) * duration);
+      }}
+      onPointerMove={(event) => {
+        if (disabled) return;
+        setHover(ratio(event));
+        if (event.currentTarget.hasPointerCapture(event.pointerId))
+          seek(ratio(event) * duration);
+      }}
+      onPointerLeave={() => setHover(null)}
+      onKeyDown={(event) => {
+        if (disabled) return;
+        const next = {
+          ArrowRight: position + KEY_STEP,
+          ArrowLeft: position - KEY_STEP,
+          Home: 0,
+          End: duration,
+        }[event.key];
+        if (next === undefined) return;
+        event.preventDefault();
+        seek(clamp(next, 0, duration));
+      }}
+    >
+      <span className="ad-waveform-floor" aria-hidden />
+      <svg
+        key={shape}
+        viewBox={\`0 0 \${W} \${H}\`}
+        preserveAspectRatio="none"
+        aria-hidden="true"
+      >
+        <defs>
+          <clipPath id={\`\${id}-track\`}>
+            <path d={peaksPath} />
+          </clipPath>
+          <clipPath id={\`\${id}-played\`}>
+            <rect width={played} height={H} />
+          </clipPath>
+          <clipPath id={\`\${id}-ahead\`}>
+            <rect x={played} width={ahead} height={H} />
+          </clipPath>
+          {/* Brushed silver: brightest along the midline, fading to the edges. */}
+          <linearGradient id={\`\${id}-silver\`} x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0" stopColor="#d9cfdc" stopOpacity="0.35" />
+            <stop offset="0.5" stopColor="#fff" stopOpacity="0.95" />
+            <stop offset="1" stopColor="#d9cfdc" stopOpacity="0.35" />
+          </linearGradient>
+          <linearGradient id={\`\${id}-solid\`} x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0" stopColor="#efe6f0" stopOpacity="0.8" />
+            <stop offset="0.5" stopColor="#fff" />
+            <stop offset="1" stopColor="#efe6f0" stopOpacity="0.8" />
+          </linearGradient>
+          {/* Light builds up along the played part and peaks at the cursor. */}
+          <linearGradient
+            id={\`\${id}-lit\`}
+            gradientUnits="userSpaceOnUse"
+            x1="0"
+            x2={Math.max(1, played)}
+          >
+            <stop offset="0" stopColor="#6b0b2c" />
+            <stop
+              offset="0.6"
+              stopColor="var(--ad-wave-color, var(--ad-red))"
+            />
+            <stop offset="1" stopColor="#ffd9e3" />
+          </linearGradient>
+          <linearGradient id={\`\${id}-depth\`} x1="0" x2="0" y1="0" y2="1">
+            {/* Lit from above: the upper half catches light, the lower sinks into shadow. */}
+            <stop offset="0" stopColor="#fff" stopOpacity="0.16" />
+            <stop offset="0.42" stopColor="#fff" stopOpacity="0" />
+            <stop offset="0.56" stopColor="#000" stopOpacity="0" />
+            <stop offset="1" stopColor="#000" stopOpacity="0.6" />
+          </linearGradient>
+          <radialGradient id={\`\${id}-spot\`}>
+            <stop offset="0" stopColor="#fff" stopOpacity="0.9" />
+            <stop offset="1" stopColor="#ff2f6a" stopOpacity="0" />
+          </radialGradient>
+          <filter
+            id={\`\${id}-bloom\`}
+            x="-5%"
+            y="-50%"
+            width="110%"
+            height="200%"
+          >
+            <feGaussianBlur stdDeviation="4" />
+          </filter>
+        </defs>
+
+        <line className="ad-waveform-axis" x2={W} y1={MID} y2={MID} />
+        <path
+          className="ad-waveform-peaks"
+          d={peaksPath}
+          fill={\`url(#\${id}-silver)\`}
+        />
+        <path
+          className="ad-waveform-core"
+          d={corePath}
+          fill={\`url(#\${id}-solid)\`}
+        />
+        <path className="ad-waveform-edge" d={peaksPath} />
+
+        <g clipPath={\`url(#\${id}-ahead)\`} className="ad-waveform-ahead">
+          <path d={peaksPath} />
+          <path d={corePath} />
+        </g>
+
+        <g clipPath={\`url(#\${id}-played)\`}>
+          <path
+            className="ad-waveform-bloom"
+            d={corePath}
+            fill={\`url(#\${id}-lit)\`}
+            filter={\`url(#\${id}-bloom)\`}
+          />
+          <path
+            className="ad-waveform-lit-peaks"
+            d={peaksPath}
+            fill={\`url(#\${id}-lit)\`}
+          />
+          <path
+            className="ad-waveform-lit-core"
+            d={corePath}
+            fill={\`url(#\${id}-lit)\`}
+          />
+          <g clipPath={\`url(#\${id}-track)\`}>
+            <rect className="ad-waveform-sheen" width="160" height={H} />
+          </g>
+        </g>
+
+        <rect
+          className="ad-waveform-depth"
+          width={W}
+          height={H}
+          fill={\`url(#\${id}-depth)\`}
+          clipPath={\`url(#\${id}-track)\`}
+        />
+        <ellipse
+          className="ad-waveform-spot"
+          cx={played}
+          cy={MID}
+          rx="60"
+          ry={H}
+          fill={\`url(#\${id}-spot)\`}
+          clipPath={\`url(#\${id}-track)\`}
+        />
+      </svg>
+      <span className="ad-waveform-cursor" aria-hidden>
+        <span className="ad-waveform-sparks">
+          {Array.from({ length: 8 }, (_, i) => (
+            <i key={i} />
+          ))}
+        </span>
+      </span>
+      {hover !== null && !disabled && (
+        <span className="ad-waveform-hover" aria-hidden>
+          <span className="ad-waveform-tip">{timeText(hover * duration)}</span>
+        </span>
+      )}
+    </div>
+  );
+}
+`,Ct=`import { useEffect, useState } from "react";
+import { Playground, U, expr, jsx } from "../../../dev/exampleHelpers";
+
+const DURATION = 231;
+
+/** Plays along on its own, a frame at a time, so the cursor glides; seeking moves it. */
+function PlayingWaveform({
+  playing,
+  disabled,
+  file,
+}: {
+  playing: boolean;
+  disabled: boolean;
+  file: File | null;
+}) {
+  const [position, setPosition] = useState(64);
+  useEffect(() => {
+    if (!playing) return;
+    let last = performance.now();
+    let frame = requestAnimationFrame(function tick(now) {
+      setPosition((v) => (v + (now - last) / 1000) % DURATION);
+      last = now;
+      frame = requestAnimationFrame(tick);
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [playing]);
+  return (
+    <U.Waveform
+      style={{ width: "min(100%, 52rem)" }}
+      label="Позиция в записи"
+      src={file}
+      duration={DURATION}
+      position={position}
+      onSeek={setPosition}
+      disabled={disabled}
+    />
+  );
+}
+
+export default function WaveformExample() {
+  const [file, setFile] = useState<File | null>(null);
+  return (
+    <Playground
+      stretch
+      knobs={{ playing: { value: true }, disabled: { value: false } }}
+      code={(v) =>
+        jsx("Waveform", {
+          label: "Позиция в записи",
+          src: file ? expr("file") : undefined,
+          duration: DURATION,
+          position: expr("position"),
+          onSeek: expr("setPosition"),
+          disabled: v.disabled,
+        })
+      }
+      extra={
+        <U.FilePicker
+          size="sm"
+          label="Свой трек"
+          description={file ? file.name : "Волна построится прямо в браузере"}
+          icon="music"
+          accept="audio/*"
+          onFiles={([next]) => next && setFile(next)}
+        />
+      }
+    >
+      {(v) => (
+        <PlayingWaveform
+          playing={v.playing}
+          disabled={v.disabled}
+          file={file}
+        />
+      )}
+    </Playground>
+  );
+}
 `,Rt=`export default {\r
   name: "Waveform",\r
   description: "Геометрия сигнала и позиция воспроизведения",\r
@@ -8862,64 +8863,67 @@ export {\r
   useTabShape,\r
 } from "./core/motion/hooks";\r
 export { getMotionStats } from "./core/motion-engine.js";\r
-`,zt=`import React, { createElement, useId, useMemo } from "react";\r
-import type { VectorNode } from "./base";\r
-\r
-/** Prefixes ids and their #references so several copies of one SVG can coexist on a page. */\r
-function scopeIds(value: unknown, prefix: string, key: string): unknown {\r
-  if (typeof value !== "string") return value;\r
-  if (key === "id") return prefix + value;\r
-  if (key === "href" && value.startsWith("#"))\r
-    return "#" + prefix + value.slice(1);\r
-  return value.replace(/url\\(#([^)]*)\\)/g, \`url(#\${prefix}$1)\`);\r
-}\r
-\r
-/** Artwork JSON already stores React-ready SVG props; only ids are rewritten. */\r
-export function vectorElement(\r
-  node: VectorNode | string,\r
-  prefix: string,\r
-  key?: string | number,\r
-): React.ReactNode {\r
-  if (typeof node === "string") return node;\r
-  const props: Record<string, unknown> = { key };\r
-  for (const [name, value] of Object.entries(node.props ?? {}))\r
-    props[name] = scopeIds(value, prefix, name);\r
-  return createElement(\r
-    node.tag,\r
-    props,\r
-    node.children?.map((child, i) => vectorElement(child, prefix, i)),\r
-  );\r
-}\r
-export function SvgAsset({\r
-  node,\r
-  className,\r
-  style,\r
-  label,\r
-  component,\r
-}: {\r
-  node: VectorNode;\r
-  className?: string;\r
-  style?: React.CSSProperties;\r
-  label?: string;\r
-  component?: string;\r
-}) {\r
-  const prefix = \`svg-\${useId().replace(/[^a-zA-Z0-9_-]/g, "")}-\`;\r
-  const element = useMemo(\r
-    () =>\r
-      vectorElement(node, prefix) as React.ReactElement<\r
-        Record<string, unknown>\r
-      >,\r
-    [node, prefix],\r
-  );\r
-  return React.cloneElement(element, {\r
-    ...(className ? { className } : {}),\r
-    ...(style ? { style } : {}),\r
-    ...(label\r
-      ? { role: "img", "aria-label": label, "aria-hidden": undefined }\r
-      : {}),\r
-    ...(component ? { "data-ad-component": component } : {}),\r
-  });\r
-}\r
+`,zt=`import React, { createElement, useId, useMemo } from "react";
+
+/** React's id made safe for SVG references such as \`url(#id)\`. */
+export const useSvgId = () => useId().replace(/[^a-zA-Z0-9_-]/g, "");
+import type { VectorNode } from "./base";
+
+/** Prefixes ids and their #references so several copies of one SVG can coexist on a page. */
+function scopeIds(value: unknown, prefix: string, key: string): unknown {
+  if (typeof value !== "string") return value;
+  if (key === "id") return prefix + value;
+  if (key === "href" && value.startsWith("#"))
+    return "#" + prefix + value.slice(1);
+  return value.replace(/url\\(#([^)]*)\\)/g, \`url(#\${prefix}$1)\`);
+}
+
+/** Artwork JSON already stores React-ready SVG props; only ids are rewritten. */
+export function vectorElement(
+  node: VectorNode | string,
+  prefix: string,
+  key?: string | number,
+): React.ReactNode {
+  if (typeof node === "string") return node;
+  const props: Record<string, unknown> = { key };
+  for (const [name, value] of Object.entries(node.props ?? {}))
+    props[name] = scopeIds(value, prefix, name);
+  return createElement(
+    node.tag,
+    props,
+    node.children?.map((child, i) => vectorElement(child, prefix, i)),
+  );
+}
+export function SvgAsset({
+  node,
+  className,
+  style,
+  label,
+  component,
+}: {
+  node: VectorNode;
+  className?: string;
+  style?: React.CSSProperties;
+  label?: string;
+  component?: string;
+}) {
+  const prefix = \`svg-\${useSvgId()}-\`;
+  const element = useMemo(
+    () =>
+      vectorElement(node, prefix) as React.ReactElement<
+        Record<string, unknown>
+      >,
+    [node, prefix],
+  );
+  return React.cloneElement(element, {
+    ...(className ? { className } : {}),
+    ...(style ? { style } : {}),
+    ...(label
+      ? { role: "img", "aria-label": label, "aria-hidden": undefined }
+      : {}),
+    ...(component ? { "data-ad-component": component } : {}),
+  });
+}
 `,Ft=`import { createElement, useCallback, useRef, useState } from "react";\r
 import type { CSSProperties, ReactNode, Ref } from "react";\r
 \r
@@ -9916,6 +9920,5 @@ export type {
     bold: 700,
   },
 } as const;
-`,l=Object.entries(Object.assign({"../../../../packages/ui/src/components/artwork/DatabaseArt/DatabaseArt.tsx":c,"../../../../packages/ui/src/components/artwork/DatabaseArt/example.tsx":p,"../../../../packages/ui/src/components/artwork/DatabaseArt/meta.ts":d,"../../../../packages/ui/src/components/artwork/Landscape/Landscape.tsx":u,"../../../../packages/ui/src/components/artwork/Landscape/example.tsx":m,"../../../../packages/ui/src/components/artwork/Landscape/meta.ts":f,"../../../../packages/ui/src/components/artwork/NeonWaves/NeonWaves.tsx":g,"../../../../packages/ui/src/components/artwork/NeonWaves/example.tsx":v,"../../../../packages/ui/src/components/artwork/NeonWaves/meta.ts":b,"../../../../packages/ui/src/components/artwork/Planet/Planet.tsx":h,"../../../../packages/ui/src/components/artwork/Planet/example.tsx":x,"../../../../packages/ui/src/components/artwork/Planet/meta.ts":y,"../../../../packages/ui/src/components/artwork/ServerArt/ServerArt.tsx":k,"../../../../packages/ui/src/components/artwork/ServerArt/example.tsx":_,"../../../../packages/ui/src/components/artwork/ServerArt/meta.ts":P,"../../../../packages/ui/src/components/artwork/Spectrum/Spectrum.tsx":w,"../../../../packages/ui/src/components/artwork/Spectrum/example.tsx":S,"../../../../packages/ui/src/components/artwork/Spectrum/meta.ts":T,"../../../../packages/ui/src/components/artwork/useArtwork.ts":C,"../../../../packages/ui/src/components/controls/Autocomplete/Autocomplete.tsx":R,"../../../../packages/ui/src/components/controls/Autocomplete/example.tsx":M,"../../../../packages/ui/src/components/controls/Autocomplete/meta.ts":E,"../../../../packages/ui/src/components/controls/Button/Button.tsx":A,"../../../../packages/ui/src/components/controls/Button/example.tsx":B,"../../../../packages/ui/src/components/controls/Button/meta.ts":I,"../../../../packages/ui/src/components/controls/Checkbox/Checkbox.tsx":N,"../../../../packages/ui/src/components/controls/Checkbox/example.tsx":z,"../../../../packages/ui/src/components/controls/Checkbox/meta.ts":F,"../../../../packages/ui/src/components/controls/FilePicker/FilePicker.tsx":L,"../../../../packages/ui/src/components/controls/FilePicker/example.tsx":D,"../../../../packages/ui/src/components/controls/FilePicker/meta.ts":V,"../../../../packages/ui/src/components/controls/IconButton/IconButton.tsx":H,"../../../../packages/ui/src/components/controls/IconButton/example.tsx":O,"../../../../packages/ui/src/components/controls/IconButton/meta.ts":$,"../../../../packages/ui/src/components/controls/InputBase/InputBase.tsx":G,"../../../../packages/ui/src/components/controls/InputBase/example.tsx":U,"../../../../packages/ui/src/components/controls/InputBase/meta.ts":W,"../../../../packages/ui/src/components/controls/Link/Link.tsx":j,"../../../../packages/ui/src/components/controls/Link/example.tsx":K,"../../../../packages/ui/src/components/controls/Link/meta.ts":q,"../../../../packages/ui/src/components/controls/NumberField/NumberField.tsx":Y,"../../../../packages/ui/src/components/controls/NumberField/example.tsx":X,"../../../../packages/ui/src/components/controls/NumberField/meta.ts":Z,"../../../../packages/ui/src/components/controls/SegmentedControl/SegmentedControl.tsx":J,"../../../../packages/ui/src/components/controls/SegmentedControl/example.tsx":Q,"../../../../packages/ui/src/components/controls/SegmentedControl/meta.ts":nn,"../../../../packages/ui/src/components/controls/Select/Select.tsx":rn,"../../../../packages/ui/src/components/controls/Select/example.tsx":en,"../../../../packages/ui/src/components/controls/Select/meta.ts":tn,"../../../../packages/ui/src/components/controls/Slider/Slider.tsx":on,"../../../../packages/ui/src/components/controls/Slider/example.tsx":an,"../../../../packages/ui/src/components/controls/Slider/meta.ts":sn,"../../../../packages/ui/src/components/controls/SplitButton/SplitButton.tsx":ln,"../../../../packages/ui/src/components/controls/SplitButton/example.tsx":cn,"../../../../packages/ui/src/components/controls/SplitButton/meta.ts":pn,"../../../../packages/ui/src/components/controls/Switch/Switch.tsx":dn,"../../../../packages/ui/src/components/controls/Switch/example.tsx":un,"../../../../packages/ui/src/components/controls/Switch/meta.ts":mn,"../../../../packages/ui/src/components/controls/Tab/Tab.tsx":fn,"../../../../packages/ui/src/components/controls/Tab/example.tsx":gn,"../../../../packages/ui/src/components/controls/Tab/meta.ts":vn,"../../../../packages/ui/src/components/controls/Tabs/Tabs.tsx":bn,"../../../../packages/ui/src/components/controls/Tabs/example.tsx":hn,"../../../../packages/ui/src/components/controls/Tabs/meta.ts":xn,"../../../../packages/ui/src/components/controls/TextArea/TextArea.tsx":yn,"../../../../packages/ui/src/components/controls/TextArea/example.tsx":kn,"../../../../packages/ui/src/components/controls/TextArea/meta.ts":_n,"../../../../packages/ui/src/components/controls/TextField/TextField.tsx":Pn,"../../../../packages/ui/src/components/controls/TextField/example.tsx":wn,"../../../../packages/ui/src/components/controls/TextField/meta.ts":Sn,"../../../../packages/ui/src/components/controls/ThemePicker/ThemePicker.tsx":Tn,"../../../../packages/ui/src/components/controls/ThemePicker/example.tsx":Cn,"../../../../packages/ui/src/components/controls/ThemePicker/meta.ts":Rn,"../../../../packages/ui/src/components/controls/ToggleButton/ToggleButton.tsx":Mn,"../../../../packages/ui/src/components/controls/ToggleButton/example.tsx":En,"../../../../packages/ui/src/components/controls/ToggleButton/meta.ts":An,"../../../../packages/ui/src/components/controls/internal.tsx":Bn,"../../../../packages/ui/src/components/controls/shared.tsx":In,"../../../../packages/ui/src/components/editor/PianoRollGrid/PianoRollGrid.tsx":Nn,"../../../../packages/ui/src/components/editor/PianoRollGrid/example.tsx":zn,"../../../../packages/ui/src/components/editor/PianoRollGrid/meta.ts":Fn,"../../../../packages/ui/src/components/editor/shared.tsx":Ln,"../../../../packages/ui/src/components/effects/AnimatedBorder/AnimatedBorder.tsx":Dn,"../../../../packages/ui/src/components/effects/AnimatedBorder/example.tsx":Vn,"../../../../packages/ui/src/components/effects/AnimatedBorder/meta.ts":Hn,"../../../../packages/ui/src/components/effects/Beacon/Beacon.tsx":On,"../../../../packages/ui/src/components/effects/Beacon/example.tsx":$n,"../../../../packages/ui/src/components/effects/Beacon/meta.ts":Gn,"../../../../packages/ui/src/components/effects/Equalizer/Equalizer.tsx":Un,"../../../../packages/ui/src/components/effects/Equalizer/example.tsx":Wn,"../../../../packages/ui/src/components/effects/Equalizer/meta.ts":jn,"../../../../packages/ui/src/components/effects/GlowText/GlowText.tsx":Kn,"../../../../packages/ui/src/components/effects/GlowText/example.tsx":qn,"../../../../packages/ui/src/components/effects/GlowText/meta.ts":Yn,"../../../../packages/ui/src/components/effects/Marquee/Marquee.tsx":Xn,"../../../../packages/ui/src/components/effects/Marquee/example.tsx":Zn,"../../../../packages/ui/src/components/effects/Marquee/meta.ts":Jn,"../../../../packages/ui/src/components/effects/Reveal/Reveal.tsx":Qn,"../../../../packages/ui/src/components/effects/Reveal/example.tsx":nr,"../../../../packages/ui/src/components/effects/Reveal/meta.ts":rr,"../../../../packages/ui/src/components/effects/Shimmer/Shimmer.tsx":er,"../../../../packages/ui/src/components/effects/Shimmer/example.tsx":tr,"../../../../packages/ui/src/components/effects/Shimmer/meta.ts":or,"../../../../packages/ui/src/components/effects/Sparkles/Sparkles.tsx":ar,"../../../../packages/ui/src/components/effects/Sparkles/example.tsx":sr,"../../../../packages/ui/src/components/effects/Sparkles/meta.ts":ir,"../../../../packages/ui/src/components/effects/Spotlight/Spotlight.tsx":lr,"../../../../packages/ui/src/components/effects/Spotlight/example.tsx":cr,"../../../../packages/ui/src/components/effects/Spotlight/meta.ts":pr,"../../../../packages/ui/src/components/effects/Tilt/Tilt.tsx":dr,"../../../../packages/ui/src/components/effects/Tilt/example.tsx":ur,"../../../../packages/ui/src/components/effects/Tilt/meta.ts":mr,"../../../../packages/ui/src/components/feedback/Badge/Badge.tsx":fr,"../../../../packages/ui/src/components/feedback/Badge/example.tsx":gr,"../../../../packages/ui/src/components/feedback/Badge/meta.ts":vr,"../../../../packages/ui/src/components/feedback/CollapsibleSection/CollapsibleSection.tsx":br,"../../../../packages/ui/src/components/feedback/CollapsibleSection/example.tsx":hr,"../../../../packages/ui/src/components/feedback/CollapsibleSection/meta.ts":xr,"../../../../packages/ui/src/components/feedback/DataTable/DataTable.tsx":yr,"../../../../packages/ui/src/components/feedback/DataTable/example.tsx":kr,"../../../../packages/ui/src/components/feedback/DataTable/meta.ts":_r,"../../../../packages/ui/src/components/feedback/Dialog/Dialog.tsx":Pr,"../../../../packages/ui/src/components/feedback/Dialog/example.tsx":wr,"../../../../packages/ui/src/components/feedback/Dialog/meta.ts":Sr,"../../../../packages/ui/src/components/feedback/EmptyState/EmptyState.tsx":Tr,"../../../../packages/ui/src/components/feedback/EmptyState/example.tsx":Cr,"../../../../packages/ui/src/components/feedback/EmptyState/meta.ts":Rr,"../../../../packages/ui/src/components/feedback/KeyValueList/KeyValueList.tsx":Mr,"../../../../packages/ui/src/components/feedback/KeyValueList/example.tsx":Er,"../../../../packages/ui/src/components/feedback/KeyValueList/meta.ts":Ar,"../../../../packages/ui/src/components/feedback/Menu/Menu.tsx":Br,"../../../../packages/ui/src/components/feedback/Menu/example.tsx":Ir,"../../../../packages/ui/src/components/feedback/Menu/meta.ts":Nr,"../../../../packages/ui/src/components/feedback/MenuItem/MenuItem.tsx":zr,"../../../../packages/ui/src/components/feedback/MenuItem/example.tsx":Fr,"../../../../packages/ui/src/components/feedback/MenuItem/meta.ts":Lr,"../../../../packages/ui/src/components/feedback/MessageBar/MessageBar.tsx":Dr,"../../../../packages/ui/src/components/feedback/MessageBar/example.tsx":Vr,"../../../../packages/ui/src/components/feedback/MessageBar/meta.ts":Hr,"../../../../packages/ui/src/components/feedback/Popover/Popover.tsx":Or,"../../../../packages/ui/src/components/feedback/Popover/example.tsx":$r,"../../../../packages/ui/src/components/feedback/Popover/meta.ts":Gr,"../../../../packages/ui/src/components/feedback/ProgressBar/ProgressBar.tsx":Ur,"../../../../packages/ui/src/components/feedback/ProgressBar/example.tsx":Wr,"../../../../packages/ui/src/components/feedback/ProgressBar/meta.ts":jr,"../../../../packages/ui/src/components/feedback/StatusIndicator/StatusIndicator.tsx":Kr,"../../../../packages/ui/src/components/feedback/StatusIndicator/example.tsx":qr,"../../../../packages/ui/src/components/feedback/StatusIndicator/meta.ts":Yr,"../../../../packages/ui/src/components/feedback/Steps/Steps.tsx":Xr,"../../../../packages/ui/src/components/feedback/Steps/example.tsx":Zr,"../../../../packages/ui/src/components/feedback/Steps/meta.ts":Jr,"../../../../packages/ui/src/components/feedback/Toast/Toast.tsx":Qr,"../../../../packages/ui/src/components/feedback/Toast/example.tsx":ne,"../../../../packages/ui/src/components/feedback/Toast/meta.ts":re,"../../../../packages/ui/src/components/feedback/shared.tsx":ee,"../../../../packages/ui/src/components/forms/Form/Form.tsx":te,"../../../../packages/ui/src/components/forms/Form/example.tsx":oe,"../../../../packages/ui/src/components/forms/Form/meta.ts":ae,"../../../../packages/ui/src/components/forms/FormFields/FormFields.tsx":se,"../../../../packages/ui/src/components/forms/FormFields/example.tsx":ie,"../../../../packages/ui/src/components/forms/FormFields/meta.ts":le,"../../../../packages/ui/src/components/foundation/ThemeProvider/ThemeProvider.tsx":ce,"../../../../packages/ui/src/components/foundation/ThemeProvider/example.tsx":pe,"../../../../packages/ui/src/components/foundation/ThemeProvider/meta.ts":de,"../../../../packages/ui/src/components/foundation/Typography/Typography.tsx":ue,"../../../../packages/ui/src/components/foundation/Typography/example.tsx":me,"../../../../packages/ui/src/components/foundation/Typography/meta.ts":fe,"../../../../packages/ui/src/components/layout/Avatar/Avatar.tsx":ge,"../../../../packages/ui/src/components/layout/Avatar/HostSeal.tsx":ve,"../../../../packages/ui/src/components/layout/Avatar/example.tsx":be,"../../../../packages/ui/src/components/layout/Avatar/meta.ts":he,"../../../../packages/ui/src/components/layout/BrandMark/BrandMark.tsx":xe,"../../../../packages/ui/src/components/layout/BrandMark/example.tsx":ye,"../../../../packages/ui/src/components/layout/BrandMark/meta.ts":ke,"../../../../packages/ui/src/components/layout/ButtonGroup/ButtonGroup.tsx":_e,"../../../../packages/ui/src/components/layout/ButtonGroup/example.tsx":Pe,"../../../../packages/ui/src/components/layout/ButtonGroup/meta.ts":we,"../../../../packages/ui/src/components/layout/Card/Card.tsx":Se,"../../../../packages/ui/src/components/layout/Card/example.tsx":Te,"../../../../packages/ui/src/components/layout/Card/meta.ts":Ce,"../../../../packages/ui/src/components/layout/DialogActions/DialogActions.tsx":Re,"../../../../packages/ui/src/components/layout/DialogActions/example.tsx":Me,"../../../../packages/ui/src/components/layout/DialogActions/meta.ts":Ee,"../../../../packages/ui/src/components/layout/DialogBody/DialogBody.tsx":Ae,"../../../../packages/ui/src/components/layout/DialogBody/example.tsx":Be,"../../../../packages/ui/src/components/layout/DialogBody/meta.ts":Ie,"../../../../packages/ui/src/components/layout/Divider/Divider.tsx":Ne,"../../../../packages/ui/src/components/layout/Divider/example.tsx":ze,"../../../../packages/ui/src/components/layout/Divider/meta.ts":Fe,"../../../../packages/ui/src/components/layout/Grid/Grid.tsx":Le,"../../../../packages/ui/src/components/layout/Grid/example.tsx":De,"../../../../packages/ui/src/components/layout/Grid/meta.ts":Ve,"../../../../packages/ui/src/components/layout/Header/Header.tsx":He,"../../../../packages/ui/src/components/layout/Header/example.tsx":Oe,"../../../../packages/ui/src/components/layout/Header/meta.ts":$e,"../../../../packages/ui/src/components/layout/Icon/Icon.tsx":Ge,"../../../../packages/ui/src/components/layout/Icon/example.tsx":Ue,"../../../../packages/ui/src/components/layout/Icon/meta.ts":We,"../../../../packages/ui/src/components/layout/Illustration/Illustration.tsx":je,"../../../../packages/ui/src/components/layout/Illustration/example.tsx":Ke,"../../../../packages/ui/src/components/layout/Illustration/meta.ts":qe,"../../../../packages/ui/src/components/layout/ScrollArea/ScrollArea.tsx":Ye,"../../../../packages/ui/src/components/layout/ScrollArea/example.tsx":Xe,"../../../../packages/ui/src/components/layout/ScrollArea/meta.ts":Ze,"../../../../packages/ui/src/components/layout/Stack/Stack.tsx":Je,"../../../../packages/ui/src/components/layout/Stack/example.tsx":Qe,"../../../../packages/ui/src/components/layout/Stack/meta.ts":nt,"../../../../packages/ui/src/components/layout/TabPanel/TabPanel.tsx":rt,"../../../../packages/ui/src/components/layout/TabPanel/example.tsx":et,"../../../../packages/ui/src/components/layout/TabPanel/meta.ts":tt,"../../../../packages/ui/src/components/layout/Text/Text.tsx":ot,"../../../../packages/ui/src/components/layout/Text/example.tsx":at,"../../../../packages/ui/src/components/layout/Text/meta.ts":st,"../../../../packages/ui/src/components/layout/Toolbar/Toolbar.tsx":it,"../../../../packages/ui/src/components/layout/Toolbar/example.tsx":lt,"../../../../packages/ui/src/components/layout/Toolbar/meta.ts":ct,"../../../../packages/ui/src/components/layout/shared.tsx":pt,"../../../../packages/ui/src/components/media/AudioPlayer/AudioPlayer.tsx":dt,"../../../../packages/ui/src/components/media/AudioPlayer/example.tsx":ut,"../../../../packages/ui/src/components/media/AudioPlayer/meta.ts":mt,"../../../../packages/ui/src/components/media/LevelMeter/LevelMeter.tsx":ft,"../../../../packages/ui/src/components/media/LevelMeter/example.tsx":gt,"../../../../packages/ui/src/components/media/LevelMeter/meta.ts":vt,"../../../../packages/ui/src/components/media/RotaryKnob/RotaryKnob.tsx":bt,"../../../../packages/ui/src/components/media/RotaryKnob/example.tsx":ht,"../../../../packages/ui/src/components/media/RotaryKnob/meta.ts":xt,"../../../../packages/ui/src/components/media/Sparkline/Sparkline.tsx":yt,"../../../../packages/ui/src/components/media/Sparkline/example.tsx":kt,"../../../../packages/ui/src/components/media/Sparkline/meta.ts":_t,"../../../../packages/ui/src/components/media/WaveDecoration/WaveDecoration.tsx":Pt,"../../../../packages/ui/src/components/media/WaveDecoration/example.tsx":wt,"../../../../packages/ui/src/components/media/WaveDecoration/meta.ts":St,"../../../../packages/ui/src/components/media/Waveform/Waveform.tsx":Tt,"../../../../packages/ui/src/components/media/Waveform/example.tsx":Ct,"../../../../packages/ui/src/components/media/Waveform/meta.ts":Rt,"../../../../packages/ui/src/components/media/Waveform/useWaveformPeaks.ts":Mt,"../../../../packages/ui/src/components/media/shared.tsx":Et,"../../../../packages/ui/src/components/navigation/Router/Router.tsx":At,"../../../../packages/ui/src/components/navigation/Router/example.tsx":Bt,"../../../../packages/ui/src/components/navigation/Router/meta.ts":It,"../../../../packages/ui/src/core.ts":Nt,"../../../../packages/ui/src/core/artwork.tsx":zt,"../../../../packages/ui/src/core/base.tsx":Ft,"../../../../packages/ui/src/core/motion-engine.d.ts":Lt,"../../../../packages/ui/src/core/motion/hooks.ts":Dt,"../../../../packages/ui/src/core/noise.ts":Vt,"../../../../packages/ui/src/core/providers/context.ts":Ht,"../../../../packages/ui/src/core/responsive.ts":Ot,"../../../../packages/ui/src/dev/exampleHelpers.tsx":$t,"../../../../packages/ui/src/editor.ts":Gt,"../../../../packages/ui/src/forms.ts":Ut,"../../../../packages/ui/src/index.ts":Wt,"../../../../packages/ui/src/router.ts":jt,"../../../../packages/ui/src/theme/typography.ts":Kt})),o=(n,t=`${n}.tsx`)=>l.find(([r])=>r.endsWith(`/${n}/${t}`)),qt=n=>o(n,"example.tsx")?.[1]??`// Нет example.tsx для ${n}`,Yt=n=>o(n)?.[1]??"",Xt=n=>o(n)?.[0].replace(/^.*packages\/ui\/src\//,"src/")??"";function i(n,t){const r=n.indexOf(t);if(r<0)return"";const a=n.indexOf("{",r);if(a<0){const e=n.indexOf(";",r);return n.slice(r,e<0?n.length:e+1).trim()}let s=0;for(let e=a;e<n.length;e+=1)if(n[e]==="{"&&(s+=1),n[e]==="}"&&--s===0)return n.slice(r,e+1).trim();return n.slice(r).trim()}const Zt=n=>{for(const[,t]of l){const r=i(t,`export interface ${n}Props`)||i(t,`export type ${n}Props`);if(r)return r}return`// ${n} не объявляет отдельный Props-интерфейс.
+`,l=Object.entries(Object.assign({"../../../../packages/ui/src/components/artwork/DatabaseArt/DatabaseArt.tsx":c,"../../../../packages/ui/src/components/artwork/DatabaseArt/example.tsx":p,"../../../../packages/ui/src/components/artwork/DatabaseArt/meta.ts":d,"../../../../packages/ui/src/components/artwork/Landscape/Landscape.tsx":u,"../../../../packages/ui/src/components/artwork/Landscape/example.tsx":m,"../../../../packages/ui/src/components/artwork/Landscape/meta.ts":f,"../../../../packages/ui/src/components/artwork/NeonWaves/NeonWaves.tsx":g,"../../../../packages/ui/src/components/artwork/NeonWaves/example.tsx":v,"../../../../packages/ui/src/components/artwork/NeonWaves/meta.ts":b,"../../../../packages/ui/src/components/artwork/Planet/Planet.tsx":h,"../../../../packages/ui/src/components/artwork/Planet/example.tsx":x,"../../../../packages/ui/src/components/artwork/Planet/meta.ts":y,"../../../../packages/ui/src/components/artwork/ServerArt/ServerArt.tsx":k,"../../../../packages/ui/src/components/artwork/ServerArt/example.tsx":_,"../../../../packages/ui/src/components/artwork/ServerArt/meta.ts":P,"../../../../packages/ui/src/components/artwork/Spectrum/Spectrum.tsx":S,"../../../../packages/ui/src/components/artwork/Spectrum/example.tsx":w,"../../../../packages/ui/src/components/artwork/Spectrum/meta.ts":T,"../../../../packages/ui/src/components/artwork/useArtwork.ts":C,"../../../../packages/ui/src/components/controls/Autocomplete/Autocomplete.tsx":R,"../../../../packages/ui/src/components/controls/Autocomplete/example.tsx":M,"../../../../packages/ui/src/components/controls/Autocomplete/meta.ts":E,"../../../../packages/ui/src/components/controls/Button/Button.tsx":A,"../../../../packages/ui/src/components/controls/Button/example.tsx":B,"../../../../packages/ui/src/components/controls/Button/meta.ts":I,"../../../../packages/ui/src/components/controls/Checkbox/Checkbox.tsx":N,"../../../../packages/ui/src/components/controls/Checkbox/example.tsx":z,"../../../../packages/ui/src/components/controls/Checkbox/meta.ts":F,"../../../../packages/ui/src/components/controls/FilePicker/FilePicker.tsx":L,"../../../../packages/ui/src/components/controls/FilePicker/example.tsx":D,"../../../../packages/ui/src/components/controls/FilePicker/meta.ts":V,"../../../../packages/ui/src/components/controls/IconButton/IconButton.tsx":H,"../../../../packages/ui/src/components/controls/IconButton/example.tsx":O,"../../../../packages/ui/src/components/controls/IconButton/meta.ts":$,"../../../../packages/ui/src/components/controls/InputBase/InputBase.tsx":G,"../../../../packages/ui/src/components/controls/InputBase/example.tsx":U,"../../../../packages/ui/src/components/controls/InputBase/meta.ts":W,"../../../../packages/ui/src/components/controls/Link/Link.tsx":j,"../../../../packages/ui/src/components/controls/Link/example.tsx":K,"../../../../packages/ui/src/components/controls/Link/meta.ts":q,"../../../../packages/ui/src/components/controls/NumberField/NumberField.tsx":Y,"../../../../packages/ui/src/components/controls/NumberField/example.tsx":X,"../../../../packages/ui/src/components/controls/NumberField/meta.ts":Z,"../../../../packages/ui/src/components/controls/SegmentedControl/SegmentedControl.tsx":J,"../../../../packages/ui/src/components/controls/SegmentedControl/example.tsx":Q,"../../../../packages/ui/src/components/controls/SegmentedControl/meta.ts":nn,"../../../../packages/ui/src/components/controls/Select/Select.tsx":en,"../../../../packages/ui/src/components/controls/Select/example.tsx":rn,"../../../../packages/ui/src/components/controls/Select/meta.ts":tn,"../../../../packages/ui/src/components/controls/Slider/Slider.tsx":on,"../../../../packages/ui/src/components/controls/Slider/example.tsx":an,"../../../../packages/ui/src/components/controls/Slider/meta.ts":sn,"../../../../packages/ui/src/components/controls/SplitButton/SplitButton.tsx":ln,"../../../../packages/ui/src/components/controls/SplitButton/example.tsx":cn,"../../../../packages/ui/src/components/controls/SplitButton/meta.ts":pn,"../../../../packages/ui/src/components/controls/Switch/Switch.tsx":dn,"../../../../packages/ui/src/components/controls/Switch/example.tsx":un,"../../../../packages/ui/src/components/controls/Switch/meta.ts":mn,"../../../../packages/ui/src/components/controls/Tab/Tab.tsx":fn,"../../../../packages/ui/src/components/controls/Tab/example.tsx":gn,"../../../../packages/ui/src/components/controls/Tab/meta.ts":vn,"../../../../packages/ui/src/components/controls/Tabs/Tabs.tsx":bn,"../../../../packages/ui/src/components/controls/Tabs/example.tsx":hn,"../../../../packages/ui/src/components/controls/Tabs/meta.ts":xn,"../../../../packages/ui/src/components/controls/TextArea/TextArea.tsx":yn,"../../../../packages/ui/src/components/controls/TextArea/example.tsx":kn,"../../../../packages/ui/src/components/controls/TextArea/meta.ts":_n,"../../../../packages/ui/src/components/controls/TextField/TextField.tsx":Pn,"../../../../packages/ui/src/components/controls/TextField/example.tsx":Sn,"../../../../packages/ui/src/components/controls/TextField/meta.ts":wn,"../../../../packages/ui/src/components/controls/ThemePicker/ThemePicker.tsx":Tn,"../../../../packages/ui/src/components/controls/ThemePicker/example.tsx":Cn,"../../../../packages/ui/src/components/controls/ThemePicker/meta.ts":Rn,"../../../../packages/ui/src/components/controls/ToggleButton/ToggleButton.tsx":Mn,"../../../../packages/ui/src/components/controls/ToggleButton/example.tsx":En,"../../../../packages/ui/src/components/controls/ToggleButton/meta.ts":An,"../../../../packages/ui/src/components/controls/internal.tsx":Bn,"../../../../packages/ui/src/components/controls/shared.tsx":In,"../../../../packages/ui/src/components/editor/PianoRollGrid/PianoRollGrid.tsx":Nn,"../../../../packages/ui/src/components/editor/PianoRollGrid/example.tsx":zn,"../../../../packages/ui/src/components/editor/PianoRollGrid/meta.ts":Fn,"../../../../packages/ui/src/components/editor/shared.tsx":Ln,"../../../../packages/ui/src/components/effects/AnimatedBorder/AnimatedBorder.tsx":Dn,"../../../../packages/ui/src/components/effects/AnimatedBorder/example.tsx":Vn,"../../../../packages/ui/src/components/effects/AnimatedBorder/meta.ts":Hn,"../../../../packages/ui/src/components/effects/Beacon/Beacon.tsx":On,"../../../../packages/ui/src/components/effects/Beacon/example.tsx":$n,"../../../../packages/ui/src/components/effects/Beacon/meta.ts":Gn,"../../../../packages/ui/src/components/effects/Equalizer/Equalizer.tsx":Un,"../../../../packages/ui/src/components/effects/Equalizer/example.tsx":Wn,"../../../../packages/ui/src/components/effects/Equalizer/meta.ts":jn,"../../../../packages/ui/src/components/effects/GlowText/GlowText.tsx":Kn,"../../../../packages/ui/src/components/effects/GlowText/example.tsx":qn,"../../../../packages/ui/src/components/effects/GlowText/meta.ts":Yn,"../../../../packages/ui/src/components/effects/Marquee/Marquee.tsx":Xn,"../../../../packages/ui/src/components/effects/Marquee/example.tsx":Zn,"../../../../packages/ui/src/components/effects/Marquee/meta.ts":Jn,"../../../../packages/ui/src/components/effects/Reveal/Reveal.tsx":Qn,"../../../../packages/ui/src/components/effects/Reveal/example.tsx":ne,"../../../../packages/ui/src/components/effects/Reveal/meta.ts":ee,"../../../../packages/ui/src/components/effects/Shimmer/Shimmer.tsx":re,"../../../../packages/ui/src/components/effects/Shimmer/example.tsx":te,"../../../../packages/ui/src/components/effects/Shimmer/meta.ts":oe,"../../../../packages/ui/src/components/effects/Sparkles/Sparkles.tsx":ae,"../../../../packages/ui/src/components/effects/Sparkles/example.tsx":se,"../../../../packages/ui/src/components/effects/Sparkles/meta.ts":ie,"../../../../packages/ui/src/components/effects/Spotlight/Spotlight.tsx":le,"../../../../packages/ui/src/components/effects/Spotlight/example.tsx":ce,"../../../../packages/ui/src/components/effects/Spotlight/meta.ts":pe,"../../../../packages/ui/src/components/effects/Tilt/Tilt.tsx":de,"../../../../packages/ui/src/components/effects/Tilt/example.tsx":ue,"../../../../packages/ui/src/components/effects/Tilt/meta.ts":me,"../../../../packages/ui/src/components/feedback/Badge/Badge.tsx":fe,"../../../../packages/ui/src/components/feedback/Badge/example.tsx":ge,"../../../../packages/ui/src/components/feedback/Badge/meta.ts":ve,"../../../../packages/ui/src/components/feedback/CollapsibleSection/CollapsibleSection.tsx":be,"../../../../packages/ui/src/components/feedback/CollapsibleSection/example.tsx":he,"../../../../packages/ui/src/components/feedback/CollapsibleSection/meta.ts":xe,"../../../../packages/ui/src/components/feedback/DataTable/DataTable.tsx":ye,"../../../../packages/ui/src/components/feedback/DataTable/example.tsx":ke,"../../../../packages/ui/src/components/feedback/DataTable/meta.ts":_e,"../../../../packages/ui/src/components/feedback/Dialog/Dialog.tsx":Pe,"../../../../packages/ui/src/components/feedback/Dialog/example.tsx":Se,"../../../../packages/ui/src/components/feedback/Dialog/meta.ts":we,"../../../../packages/ui/src/components/feedback/EmptyState/EmptyState.tsx":Te,"../../../../packages/ui/src/components/feedback/EmptyState/example.tsx":Ce,"../../../../packages/ui/src/components/feedback/EmptyState/meta.ts":Re,"../../../../packages/ui/src/components/feedback/KeyValueList/KeyValueList.tsx":Me,"../../../../packages/ui/src/components/feedback/KeyValueList/example.tsx":Ee,"../../../../packages/ui/src/components/feedback/KeyValueList/meta.ts":Ae,"../../../../packages/ui/src/components/feedback/Menu/Menu.tsx":Be,"../../../../packages/ui/src/components/feedback/Menu/example.tsx":Ie,"../../../../packages/ui/src/components/feedback/Menu/meta.ts":Ne,"../../../../packages/ui/src/components/feedback/MenuItem/MenuItem.tsx":ze,"../../../../packages/ui/src/components/feedback/MenuItem/example.tsx":Fe,"../../../../packages/ui/src/components/feedback/MenuItem/meta.ts":Le,"../../../../packages/ui/src/components/feedback/MessageBar/MessageBar.tsx":De,"../../../../packages/ui/src/components/feedback/MessageBar/example.tsx":Ve,"../../../../packages/ui/src/components/feedback/MessageBar/meta.ts":He,"../../../../packages/ui/src/components/feedback/Popover/Popover.tsx":Oe,"../../../../packages/ui/src/components/feedback/Popover/example.tsx":$e,"../../../../packages/ui/src/components/feedback/Popover/meta.ts":Ge,"../../../../packages/ui/src/components/feedback/ProgressBar/ProgressBar.tsx":Ue,"../../../../packages/ui/src/components/feedback/ProgressBar/example.tsx":We,"../../../../packages/ui/src/components/feedback/ProgressBar/meta.ts":je,"../../../../packages/ui/src/components/feedback/StatusIndicator/StatusIndicator.tsx":Ke,"../../../../packages/ui/src/components/feedback/StatusIndicator/example.tsx":qe,"../../../../packages/ui/src/components/feedback/StatusIndicator/meta.ts":Ye,"../../../../packages/ui/src/components/feedback/Steps/Steps.tsx":Xe,"../../../../packages/ui/src/components/feedback/Steps/example.tsx":Ze,"../../../../packages/ui/src/components/feedback/Steps/meta.ts":Je,"../../../../packages/ui/src/components/feedback/Toast/Toast.tsx":Qe,"../../../../packages/ui/src/components/feedback/Toast/example.tsx":nr,"../../../../packages/ui/src/components/feedback/Toast/meta.ts":er,"../../../../packages/ui/src/components/feedback/shared.tsx":rr,"../../../../packages/ui/src/components/forms/Form/Form.tsx":tr,"../../../../packages/ui/src/components/forms/Form/example.tsx":or,"../../../../packages/ui/src/components/forms/Form/meta.ts":ar,"../../../../packages/ui/src/components/forms/FormFields/FormFields.tsx":sr,"../../../../packages/ui/src/components/forms/FormFields/example.tsx":ir,"../../../../packages/ui/src/components/forms/FormFields/meta.ts":lr,"../../../../packages/ui/src/components/foundation/ThemeProvider/ThemeProvider.tsx":cr,"../../../../packages/ui/src/components/foundation/ThemeProvider/example.tsx":pr,"../../../../packages/ui/src/components/foundation/ThemeProvider/meta.ts":dr,"../../../../packages/ui/src/components/foundation/Typography/Typography.tsx":ur,"../../../../packages/ui/src/components/foundation/Typography/example.tsx":mr,"../../../../packages/ui/src/components/foundation/Typography/meta.ts":fr,"../../../../packages/ui/src/components/layout/Avatar/Avatar.tsx":gr,"../../../../packages/ui/src/components/layout/Avatar/HostSeal.tsx":vr,"../../../../packages/ui/src/components/layout/Avatar/example.tsx":br,"../../../../packages/ui/src/components/layout/Avatar/meta.ts":hr,"../../../../packages/ui/src/components/layout/BrandMark/BrandMark.tsx":xr,"../../../../packages/ui/src/components/layout/BrandMark/example.tsx":yr,"../../../../packages/ui/src/components/layout/BrandMark/meta.ts":kr,"../../../../packages/ui/src/components/layout/ButtonGroup/ButtonGroup.tsx":_r,"../../../../packages/ui/src/components/layout/ButtonGroup/example.tsx":Pr,"../../../../packages/ui/src/components/layout/ButtonGroup/meta.ts":Sr,"../../../../packages/ui/src/components/layout/Card/Card.tsx":wr,"../../../../packages/ui/src/components/layout/Card/example.tsx":Tr,"../../../../packages/ui/src/components/layout/Card/meta.ts":Cr,"../../../../packages/ui/src/components/layout/DialogActions/DialogActions.tsx":Rr,"../../../../packages/ui/src/components/layout/DialogActions/example.tsx":Mr,"../../../../packages/ui/src/components/layout/DialogActions/meta.ts":Er,"../../../../packages/ui/src/components/layout/DialogBody/DialogBody.tsx":Ar,"../../../../packages/ui/src/components/layout/DialogBody/example.tsx":Br,"../../../../packages/ui/src/components/layout/DialogBody/meta.ts":Ir,"../../../../packages/ui/src/components/layout/Divider/Divider.tsx":Nr,"../../../../packages/ui/src/components/layout/Divider/example.tsx":zr,"../../../../packages/ui/src/components/layout/Divider/meta.ts":Fr,"../../../../packages/ui/src/components/layout/Grid/Grid.tsx":Lr,"../../../../packages/ui/src/components/layout/Grid/example.tsx":Dr,"../../../../packages/ui/src/components/layout/Grid/meta.ts":Vr,"../../../../packages/ui/src/components/layout/Header/Header.tsx":Hr,"../../../../packages/ui/src/components/layout/Header/example.tsx":Or,"../../../../packages/ui/src/components/layout/Header/meta.ts":$r,"../../../../packages/ui/src/components/layout/Icon/Icon.tsx":Gr,"../../../../packages/ui/src/components/layout/Icon/example.tsx":Ur,"../../../../packages/ui/src/components/layout/Icon/meta.ts":Wr,"../../../../packages/ui/src/components/layout/Illustration/Illustration.tsx":jr,"../../../../packages/ui/src/components/layout/Illustration/example.tsx":Kr,"../../../../packages/ui/src/components/layout/Illustration/meta.ts":qr,"../../../../packages/ui/src/components/layout/ScrollArea/ScrollArea.tsx":Yr,"../../../../packages/ui/src/components/layout/ScrollArea/example.tsx":Xr,"../../../../packages/ui/src/components/layout/ScrollArea/meta.ts":Zr,"../../../../packages/ui/src/components/layout/Stack/Stack.tsx":Jr,"../../../../packages/ui/src/components/layout/Stack/example.tsx":Qr,"../../../../packages/ui/src/components/layout/Stack/meta.ts":nt,"../../../../packages/ui/src/components/layout/TabPanel/TabPanel.tsx":et,"../../../../packages/ui/src/components/layout/TabPanel/example.tsx":rt,"../../../../packages/ui/src/components/layout/TabPanel/meta.ts":tt,"../../../../packages/ui/src/components/layout/Text/Text.tsx":ot,"../../../../packages/ui/src/components/layout/Text/example.tsx":at,"../../../../packages/ui/src/components/layout/Text/meta.ts":st,"../../../../packages/ui/src/components/layout/Toolbar/Toolbar.tsx":it,"../../../../packages/ui/src/components/layout/Toolbar/example.tsx":lt,"../../../../packages/ui/src/components/layout/Toolbar/meta.ts":ct,"../../../../packages/ui/src/components/layout/shared.tsx":pt,"../../../../packages/ui/src/components/media/AudioPlayer/AudioPlayer.tsx":dt,"../../../../packages/ui/src/components/media/AudioPlayer/example.tsx":ut,"../../../../packages/ui/src/components/media/AudioPlayer/meta.ts":mt,"../../../../packages/ui/src/components/media/LevelMeter/LevelMeter.tsx":ft,"../../../../packages/ui/src/components/media/LevelMeter/example.tsx":gt,"../../../../packages/ui/src/components/media/LevelMeter/meta.ts":vt,"../../../../packages/ui/src/components/media/RotaryKnob/RotaryKnob.tsx":bt,"../../../../packages/ui/src/components/media/RotaryKnob/example.tsx":ht,"../../../../packages/ui/src/components/media/RotaryKnob/meta.ts":xt,"../../../../packages/ui/src/components/media/Sparkline/Sparkline.tsx":yt,"../../../../packages/ui/src/components/media/Sparkline/example.tsx":kt,"../../../../packages/ui/src/components/media/Sparkline/meta.ts":_t,"../../../../packages/ui/src/components/media/WaveDecoration/WaveDecoration.tsx":Pt,"../../../../packages/ui/src/components/media/WaveDecoration/example.tsx":St,"../../../../packages/ui/src/components/media/WaveDecoration/meta.ts":wt,"../../../../packages/ui/src/components/media/Waveform/Waveform.tsx":Tt,"../../../../packages/ui/src/components/media/Waveform/example.tsx":Ct,"../../../../packages/ui/src/components/media/Waveform/meta.ts":Rt,"../../../../packages/ui/src/components/media/Waveform/useWaveformPeaks.ts":Mt,"../../../../packages/ui/src/components/media/shared.tsx":Et,"../../../../packages/ui/src/components/navigation/Router/Router.tsx":At,"../../../../packages/ui/src/components/navigation/Router/example.tsx":Bt,"../../../../packages/ui/src/components/navigation/Router/meta.ts":It,"../../../../packages/ui/src/core.ts":Nt,"../../../../packages/ui/src/core/artwork.tsx":zt,"../../../../packages/ui/src/core/base.tsx":Ft,"../../../../packages/ui/src/core/motion-engine.d.ts":Lt,"../../../../packages/ui/src/core/motion/hooks.ts":Dt,"../../../../packages/ui/src/core/noise.ts":Vt,"../../../../packages/ui/src/core/providers/context.ts":Ht,"../../../../packages/ui/src/core/responsive.ts":Ot,"../../../../packages/ui/src/dev/exampleHelpers.tsx":$t,"../../../../packages/ui/src/editor.ts":Gt,"../../../../packages/ui/src/forms.ts":Ut,"../../../../packages/ui/src/index.ts":Wt,"../../../../packages/ui/src/router.ts":jt,"../../../../packages/ui/src/theme/typography.ts":Kt})),o=(n,t=`${n}.tsx`)=>l.find(([e])=>e.endsWith(`/${n}/${t}`)),qt=n=>o(n,"example.tsx")?.[1]??`// Нет example.tsx для ${n}`,Yt=n=>o(n)?.[1]??"",Xt=n=>o(n)?.[0].replace(/^.*packages\/ui\/src\//,"src/")??"";function i(n,t){const e=n.indexOf(t);if(e<0)return"";const a=n.indexOf("{",e);if(a<0){const r=n.indexOf(";",e);return n.slice(e,r<0?n.length:r+1).trim()}let s=0;for(let r=a;r<n.length;r+=1)if(n[r]==="{"&&(s+=1),n[r]==="}"&&--s===0)return n.slice(e,r+1).trim();return n.slice(e).trim()}const Zt=n=>{for(const[,t]of l){const e=i(t,`export interface ${n}Props`)||i(t,`export type ${n}Props`);if(e)return e}return`// ${n} не объявляет отдельный Props-интерфейс.
 // Компонент использует общие props или композицию дочерних компонентов.`};export{Zt as getComponentApiSource,Yt as getComponentSource,Xt as getComponentSourcePath,qt as getExampleSource};
-//# sourceMappingURL=sources-CqsKQ2aB.js.map

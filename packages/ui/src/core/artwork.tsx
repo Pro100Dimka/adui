@@ -1,4 +1,7 @@
 import React, { createElement, useId, useMemo } from "react";
+
+/** React's id made safe for SVG references such as `url(#id)`. */
+export const useSvgId = () => useId().replace(/[^a-zA-Z0-9_-]/g, "");
 import type { VectorNode } from "./base";
 
 /** Prefixes ids and their #references so several copies of one SVG can coexist on a page. */
@@ -39,7 +42,7 @@ export function SvgAsset({
   label?: string;
   component?: string;
 }) {
-  const prefix = `svg-${useId().replace(/[^a-zA-Z0-9_-]/g, "")}-`;
+  const prefix = `svg-${useSvgId()}-`;
   const element = useMemo(
     () =>
       vectorElement(node, prefix) as React.ReactElement<

@@ -1,4 +1,5 @@
-import { useEffect, useId, useRef } from "react";
+import { useSvgId } from "../../../core/artwork";
+import { useEffect, useRef } from "react";
 import { clamp, mark } from "../../../core/base";
 import { type LevelMeterProps } from "../shared";
 
@@ -43,7 +44,7 @@ export function LevelMeter({
   label,
   ...p
 }: LevelMeterProps) {
-  const id = useId().replace(/[^a-zA-Z0-9_-]/g, "");
+  const id = useSvgId();
   const path = useRef<SVGPathElement>(null);
   const target = useRef(0);
   const level = clamp(value) / 100;

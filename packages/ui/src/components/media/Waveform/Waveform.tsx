@@ -1,11 +1,5 @@
-import {
-  useEffect,
-  useId,
-  useMemo,
-  useRef,
-  useState,
-  type PointerEvent,
-} from "react";
+import { useSvgId } from "../../../core/artwork";
+import { useEffect, useMemo, useRef, useState, type PointerEvent } from "react";
 import { clamp, mark, timeText, useControllable } from "../../../core/base";
 import { seeded } from "../../../core/noise";
 import { type WaveformProps } from "../shared";
@@ -100,7 +94,7 @@ export function Waveform({
   disabled = false,
   ...p
 }: WaveformProps) {
-  const id = useId().replace(/[^a-zA-Z0-9_-]/g, "");
+  const id = useSvgId();
   const surface = useRef<HTMLDivElement>(null);
   const [hover, setHover] = useState<number | null>(null);
   const decoded = useWaveformPeaks(points ? null : src, bins);

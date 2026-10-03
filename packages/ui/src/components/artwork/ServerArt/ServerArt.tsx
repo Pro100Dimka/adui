@@ -1,4 +1,5 @@
-import { useId } from "react";
+import { useSvgId } from "../../../core/artwork";
+
 import { mark, type CommonProps } from "../../../core/base";
 
 export interface ServerArtProps extends CommonProps {
@@ -9,7 +10,7 @@ export interface ServerArtProps extends CommonProps {
 
 /** Neon server rack: LEDs blink, a light runs along its edge, a spark twinkles above. */
 export function ServerArt({ upload = false, label, ...p }: ServerArtProps) {
-  const id = useId().replace(/[^a-zA-Z0-9_-]/g, "");
+  const id = useSvgId();
   const url = (name: string) => `url(#${id}-${name})`;
   return (
     <svg

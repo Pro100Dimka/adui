@@ -1,4 +1,5 @@
-import { useId, type CSSProperties } from "react";
+import { useSvgId } from "../../../core/artwork";
+import { type CSSProperties } from "react";
 import { mark, type CommonProps } from "../../../core/base";
 
 export interface DatabaseArtProps extends CommonProps {
@@ -16,7 +17,7 @@ const SPARKS = [
 
 /** Neon database cylinder: light orbits run along its rings, sparks twinkle around it. */
 export function DatabaseArt({ label, ...p }: DatabaseArtProps) {
-  const id = useId().replace(/[^a-zA-Z0-9_-]/g, "");
+  const id = useSvgId();
   const ref = (name: string) => `url(#${id}-${name})`;
   const rings =
     "M39 83C39 106 134 106 134 83M39 108C39 132 134 132 134 108M39 133C39 155 134 155 134 133";

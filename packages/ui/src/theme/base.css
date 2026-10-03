@@ -117,17 +117,6 @@ button.ad:focus-visible {
     transition: none !important;
   }
 }
-@keyframes ad-tab-glint {
-  to {
-    stroke-dashoffset: -100;
-  }
-}
-.ad-role-guest > .ad-icon {
-  width: 2.625rem;
-  height: 2.625rem;
-  margin-top: -0.75rem;
-  filter: drop-shadow(0 0 0.4375rem #64d4ff66);
-}
 /* Ring of light spread from the press point; hosts clip it with overflow: hidden. */
 .ad-ripple {
   position: absolute;
