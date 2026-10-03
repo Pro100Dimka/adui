@@ -35,9 +35,9 @@
 @keyframes ad-planet-rim {
   0%,
   100% {
-    filter: brightness(0.92) saturate(1);
+    filter: hue-rotate(var(--ad-hue-shift, 0deg)) brightness(0.92) saturate(1);
   }
   50% {
-    filter: brightness(1.18) saturate(1.2);
+    filter: hue-rotate(var(--ad-hue-shift, 0deg)) brightness(1.18) saturate(1.2);
   }
 }

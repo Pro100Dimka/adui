@@ -461,13 +461,13 @@ export function Landscape({ shade = true, children, ...p }: LandscapeProps) {
 export default function LandscapeExample() {
   return <Landscape />;
 }
-`,f=`export default {\r
-  name: "Landscape",\r
-  description:\r
-    "Процедурный ночной пейзаж: туманность, планета с рубиновой кромкой и горные хребты.",\r
-  category: "motion",\r
-  wide: true,\r
-} as const;\r
+`,f=`export default {
+  name: "Landscape",
+  description:
+    "Процедурный ночной пейзаж: туманность, планета со светящейся кромкой цвета темы и горные хребты.",
+  category: "motion",
+  wide: true,
+} as const;
 `,g=`import { useSvgId } from "../../../core/artwork";
 import { useMemo, useRef } from "react";
 import { mark, type CommonProps } from "../../../core/base";
@@ -669,13 +669,13 @@ export function Planet({ children, ...p }: PlanetProps) {
 export default function PlanetExample() {
   return <Planet />;
 }
-`,x=`export default {\r
-  name: "Planet",\r
-  description:\r
-    "Кромка планеты в рубиновой атмосфере — фон для баннеров и слоганов.",\r
-  category: "motion",\r
-  wide: true,\r
-} as const;\r
+`,x=`export default {
+  name: "Planet",
+  description:
+    "Кромка планеты в светящейся атмосфере цвета темы — фон для баннеров и слоганов.",
+  category: "motion",
+  wide: true,
+} as const;
 `,k=`import { useSvgId } from "../../../core/artwork";
 
 import { mark, type CommonProps } from "../../../core/base";
