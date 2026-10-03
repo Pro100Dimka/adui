@@ -73,11 +73,11 @@ export function Stack({
       {...props}
       className={classes("ad-stack", inline && "ad-stack--inline", className)}
       style={{
-        ...responsiveVars("stack-direction", direction),
-        ...responsiveVars("stack-gap", gap, spacing),
-        ...responsiveVars("stack-align", align, flex),
-        ...responsiveVars("stack-justify", justify, flex),
-        ...responsiveVars("stack-wrap", wrap, wrapValue),
+        ...responsiveVars("stack-direction", direction, String, "column"),
+        ...responsiveVars("stack-gap", gap, spacing, 0),
+        ...responsiveVars("stack-align", align, flex, "stretch"),
+        ...responsiveVars("stack-justify", justify, flex, "start"),
+        ...responsiveVars("stack-wrap", wrap, wrapValue, "nowrap"),
         ...style,
       }}
     >

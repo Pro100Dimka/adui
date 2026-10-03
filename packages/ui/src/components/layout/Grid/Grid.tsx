@@ -38,6 +38,19 @@ const justifyValue = (value: GridJustify) =>
 const columnsValue = (value: number | string) =>
   typeof value === "number" ? `repeat(${value}, minmax(0, 1fr))` : value;
 
+/** Grid placement; anything not given is `auto`. */
+const place = <T,>(
+  name: string,
+  value: GridResponsive<T> | undefined,
+  format: (item: T) => string,
+) =>
+  responsiveVars<T | "auto">(
+    name,
+    value,
+    (v) => (v === "auto" ? "auto" : format(v as T)),
+    "auto",
+  );
+
 /** A Grid with placement props and no columns renders as a grid item, not a container. */
 export function Grid({
   as: Component = "div",
@@ -68,13 +81,26 @@ export function Grid({
   const container = isItem
     ? {}
     : {
-        ...responsiveVars("grid-columns", columns ?? 12, columnsValue),
-        ...responsiveVars("grid-gap", gap ?? 0, spacing),
-        ...responsiveVars("grid-row-gap", rowGap, spacing),
-        ...responsiveVars("grid-column-gap", columnGap, spacing),
-        ...responsiveVars("grid-align", align ?? "stretch"),
-        ...responsiveVars("grid-justify", justify ?? "stretch", justifyValue),
+        ...responsiveVars("grid-columns", columns, columnsValue, 12),
+        ...responsiveVars("grid-row-gap", rowGap ?? gap, spacing, 0),
+        ...responsiveVars("grid-column-gap", columnGap ?? gap, spacing, 0),
+        ...responsiveVars("grid-align", align, String, "stretch"),
+        ...responsiveVars("grid-justify", justify, justifyValue, "stretch"),
       };
+  const item = isItem
+    ? {
+        ...(columnStart != null
+          ? place("grid-column-start", columnStart, String)
+          : place("grid-column-start", span, (v) =>
+              v === "full" ? "1" : "auto",
+            )),
+        ...place("grid-column-end", span, (v) =>
+          v === "full" ? "-1" : `span ${v}`,
+        ),
+        ...place("grid-row-start", rowStart, String),
+        ...place("grid-row-end", rowSpan, (v) => `span ${v}`),
+      }
+    : {};
 
   return (
     <Component
@@ -87,15 +113,7 @@ export function Grid({
       )}
       style={{
         ...container,
-        ...responsiveVars("grid-column-start", span, (v) =>
-          v === "full" ? "1" : "auto",
-        ),
-        ...responsiveVars("grid-column-end", span, (v) =>
-          v === "full" ? "-1" : `span ${v}`,
-        ),
-        ...responsiveVars("grid-row-end", rowSpan, (v) => `span ${v}`),
-        ...responsiveVars("grid-column-start", columnStart),
-        ...responsiveVars("grid-row-start", rowStart),
+        ...item,
         ...(minChildWidth && { "--ad-grid-min-child-width": minChildWidth }),
         ...style,
       }}

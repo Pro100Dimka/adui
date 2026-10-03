@@ -1,242 +1,53 @@
-/* Responsive inputs belong to one element only; nested layouts must not inherit them. */
-@property --ad-stack-direction {
-  syntax: "*";
-  inherits: false;
-}
-@property --ad-stack-direction-sm {
-  syntax: "*";
-  inherits: false;
-}
-@property --ad-stack-direction-md {
-  syntax: "*";
-  inherits: false;
-}
-@property --ad-stack-direction-lg {
-  syntax: "*";
-  inherits: false;
-}
-@property --ad-stack-direction-xl {
-  syntax: "*";
-  inherits: false;
-}
-@property --ad-stack-gap {
-  syntax: "*";
-  inherits: false;
-}
-@property --ad-stack-gap-sm {
-  syntax: "*";
-  inherits: false;
-}
-@property --ad-stack-gap-md {
-  syntax: "*";
-  inherits: false;
-}
-@property --ad-stack-gap-lg {
-  syntax: "*";
-  inherits: false;
-}
-@property --ad-stack-gap-xl {
-  syntax: "*";
-  inherits: false;
-}
-@property --ad-stack-align {
-  syntax: "*";
-  inherits: false;
-}
-@property --ad-stack-align-sm {
-  syntax: "*";
-  inherits: false;
-}
-@property --ad-stack-align-md {
-  syntax: "*";
-  inherits: false;
-}
-@property --ad-stack-align-lg {
-  syntax: "*";
-  inherits: false;
-}
-@property --ad-stack-align-xl {
-  syntax: "*";
-  inherits: false;
-}
-@property --ad-stack-justify {
-  syntax: "*";
-  inherits: false;
-}
-@property --ad-stack-justify-sm {
-  syntax: "*";
-  inherits: false;
-}
-@property --ad-stack-justify-md {
-  syntax: "*";
-  inherits: false;
-}
-@property --ad-stack-justify-lg {
-  syntax: "*";
-  inherits: false;
-}
-@property --ad-stack-justify-xl {
-  syntax: "*";
-  inherits: false;
-}
-@property --ad-stack-wrap {
-  syntax: "*";
-  inherits: false;
-}
-@property --ad-stack-wrap-sm {
-  syntax: "*";
-  inherits: false;
-}
-@property --ad-stack-wrap-md {
-  syntax: "*";
-  inherits: false;
-}
-@property --ad-stack-wrap-lg {
-  syntax: "*";
-  inherits: false;
-}
-@property --ad-stack-wrap-xl {
-  syntax: "*";
-  inherits: false;
-}
-
+/* Styles owned by Stack. The component sets every variable for every breakpoint itself,
+   so each rule reads one variable and nested stacks never inherit a parent's values. */
 .ad-stack {
   display: flex;
   min-width: 0;
-  flex-direction: var(--ad-stack-direction, column);
-  gap: var(--ad-stack-gap, 0);
-  align-items: var(--ad-stack-align, stretch);
-  justify-content: var(--ad-stack-justify, flex-start);
-  flex-wrap: var(--ad-stack-wrap, nowrap);
+  flex-direction: var(--ad-stack-direction);
+  gap: var(--ad-stack-gap);
+  align-items: var(--ad-stack-align);
+  justify-content: var(--ad-stack-justify);
+  flex-wrap: var(--ad-stack-wrap);
 }
-
 .ad-stack--inline {
   display: inline-flex;
 }
 .ad-stack__divider {
   display: contents;
 }
-
 @media (min-width: 40rem) {
   .ad-stack {
-    flex-direction: var(
-      --ad-stack-direction-sm,
-      var(--ad-stack-direction, column)
-    );
-    gap: var(--ad-stack-gap-sm, var(--ad-stack-gap, 0));
-    align-items: var(--ad-stack-align-sm, var(--ad-stack-align, stretch));
-    justify-content: var(
-      --ad-stack-justify-sm,
-      var(--ad-stack-justify, flex-start)
-    );
-    flex-wrap: var(--ad-stack-wrap-sm, var(--ad-stack-wrap, nowrap));
+    flex-direction: var(--ad-stack-direction-sm);
+    gap: var(--ad-stack-gap-sm);
+    align-items: var(--ad-stack-align-sm);
+    justify-content: var(--ad-stack-justify-sm);
+    flex-wrap: var(--ad-stack-wrap-sm);
   }
 }
 @media (min-width: 56.25rem) {
   .ad-stack {
-    flex-direction: var(
-      --ad-stack-direction-md,
-      var(--ad-stack-direction-sm, var(--ad-stack-direction, column))
-    );
-    gap: var(--ad-stack-gap-md, var(--ad-stack-gap-sm, var(--ad-stack-gap, 0)));
-    align-items: var(
-      --ad-stack-align-md,
-      var(--ad-stack-align-sm, var(--ad-stack-align, stretch))
-    );
-    justify-content: var(
-      --ad-stack-justify-md,
-      var(--ad-stack-justify-sm, var(--ad-stack-justify, flex-start))
-    );
-    flex-wrap: var(
-      --ad-stack-wrap-md,
-      var(--ad-stack-wrap-sm, var(--ad-stack-wrap, nowrap))
-    );
+    flex-direction: var(--ad-stack-direction-md);
+    gap: var(--ad-stack-gap-md);
+    align-items: var(--ad-stack-align-md);
+    justify-content: var(--ad-stack-justify-md);
+    flex-wrap: var(--ad-stack-wrap-md);
   }
 }
 @media (min-width: 75rem) {
   .ad-stack {
-    flex-direction: var(
-      --ad-stack-direction-lg,
-      var(
-        --ad-stack-direction-md,
-        var(--ad-stack-direction-sm, var(--ad-stack-direction, column))
-      )
-    );
-    gap: var(
-      --ad-stack-gap-lg,
-      var(--ad-stack-gap-md, var(--ad-stack-gap-sm, var(--ad-stack-gap, 0)))
-    );
-    align-items: var(
-      --ad-stack-align-lg,
-      var(
-        --ad-stack-align-md,
-        var(--ad-stack-align-sm, var(--ad-stack-align, stretch))
-      )
-    );
-    justify-content: var(
-      --ad-stack-justify-lg,
-      var(
-        --ad-stack-justify-md,
-        var(--ad-stack-justify-sm, var(--ad-stack-justify, flex-start))
-      )
-    );
-    flex-wrap: var(
-      --ad-stack-wrap-lg,
-      var(
-        --ad-stack-wrap-md,
-        var(--ad-stack-wrap-sm, var(--ad-stack-wrap, nowrap))
-      )
-    );
+    flex-direction: var(--ad-stack-direction-lg);
+    gap: var(--ad-stack-gap-lg);
+    align-items: var(--ad-stack-align-lg);
+    justify-content: var(--ad-stack-justify-lg);
+    flex-wrap: var(--ad-stack-wrap-lg);
   }
 }
 @media (min-width: 96rem) {
   .ad-stack {
-    flex-direction: var(
-      --ad-stack-direction-xl,
-      var(
-        --ad-stack-direction-lg,
-        var(
-          --ad-stack-direction-md,
-          var(--ad-stack-direction-sm, var(--ad-stack-direction, column))
-        )
-      )
-    );
-    gap: var(
-      --ad-stack-gap-xl,
-      var(
-        --ad-stack-gap-lg,
-        var(--ad-stack-gap-md, var(--ad-stack-gap-sm, var(--ad-stack-gap, 0)))
-      )
-    );
-    align-items: var(
-      --ad-stack-align-xl,
-      var(
-        --ad-stack-align-lg,
-        var(
-          --ad-stack-align-md,
-          var(--ad-stack-align-sm, var(--ad-stack-align, stretch))
-        )
-      )
-    );
-    justify-content: var(
-      --ad-stack-justify-xl,
-      var(
-        --ad-stack-justify-lg,
-        var(
-          --ad-stack-justify-md,
-          var(--ad-stack-justify-sm, var(--ad-stack-justify, flex-start))
-        )
-      )
-    );
-    flex-wrap: var(
-      --ad-stack-wrap-xl,
-      var(
-        --ad-stack-wrap-lg,
-        var(
-          --ad-stack-wrap-md,
-          var(--ad-stack-wrap-sm, var(--ad-stack-wrap, nowrap))
-        )
-      )
-    );
+    flex-direction: var(--ad-stack-direction-xl);
+    gap: var(--ad-stack-gap-xl);
+    align-items: var(--ad-stack-align-xl);
+    justify-content: var(--ad-stack-justify-xl);
+    flex-wrap: var(--ad-stack-wrap-xl);
   }
 }

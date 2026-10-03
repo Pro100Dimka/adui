@@ -1,12 +1,15 @@
+/* When the actions do not fit beside the title, they wrap below it instead of squeezing it. */
 .ad-header {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: var(--ad-space-3);
   min-width: 0;
 }
 .ad-header-copy {
+  flex: 1 1 12rem;
   min-width: 0;
-  flex: 1;
+  overflow-wrap: break-word;
 }
 .ad-header-copy h1,
 .ad-header-copy h2,
@@ -28,8 +31,4 @@
 }
 .ad-header[data-ad-compact="true"] {
   gap: var(--ad-space-2);
-}
-.ad-header-copy {
-  min-width: 0;
-  overflow-wrap: anywhere;
 }

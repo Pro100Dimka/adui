@@ -13,22 +13,28 @@ export function spacing(value: Spacing): string {
   return `var(--ad-space-${value}, calc(var(--ad-space-unit, 0.25rem) * ${value}))`;
 }
 
-/** `--ad-<name>` for base and `--ad-<name>-<bp>` for each breakpoint present in `value`. */
+/**
+ * `--ad-<name>` plus `--ad-<name>-<bp>` for every breakpoint, each carrying the nearest
+ * smaller value forward (starting from `fallback`). Every layout sets all of its own
+ * variables, so nested layouts never inherit a parent's and CSS reads one variable per
+ * breakpoint without fallback chains.
+ */
 export function responsiveVars<T>(
   name: string,
   value: Responsive<T> | undefined,
   format: (item: T) => string = String,
+  fallback?: T,
 ): CSSProperties {
-  if (value == null) return {};
   const values: Partial<Record<Breakpoint, T>> =
-    typeof value === "object" && !Array.isArray(value)
+    value != null && typeof value === "object" && !Array.isArray(value)
       ? (value as Partial<Record<Breakpoint, T>>)
-      : { base: value as T };
+      : { base: (value ?? fallback) as T };
   const result: Record<string, string> = {};
+  let current = values.base ?? fallback;
   for (const bp of BREAKPOINTS) {
-    const item = values[bp];
-    if (item != null)
-      result[`--ad-${name}${bp === "base" ? "" : `-${bp}`}`] = format(item);
+    current = values[bp] ?? current;
+    if (current != null)
+      result[`--ad-${name}${bp === "base" ? "" : `-${bp}`}`] = format(current);
   }
   return result as CSSProperties;
 }

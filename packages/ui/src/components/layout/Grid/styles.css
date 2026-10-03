@@ -1,559 +1,85 @@
-/* Responsive inputs belong to one element only; nested layouts must not inherit them. */
-@property --ad-grid-columns {
-  syntax: "*";
-  inherits: false;
-}
-@property --ad-grid-columns-sm {
-  syntax: "*";
-  inherits: false;
-}
-@property --ad-grid-columns-md {
-  syntax: "*";
-  inherits: false;
-}
-@property --ad-grid-columns-lg {
-  syntax: "*";
-  inherits: false;
-}
-@property --ad-grid-columns-xl {
-  syntax: "*";
-  inherits: false;
-}
-@property --ad-grid-gap {
-  syntax: "*";
-  inherits: false;
-}
-@property --ad-grid-gap-sm {
-  syntax: "*";
-  inherits: false;
-}
-@property --ad-grid-gap-md {
-  syntax: "*";
-  inherits: false;
-}
-@property --ad-grid-gap-lg {
-  syntax: "*";
-  inherits: false;
-}
-@property --ad-grid-gap-xl {
-  syntax: "*";
-  inherits: false;
-}
-@property --ad-grid-row-gap {
-  syntax: "*";
-  inherits: false;
-}
-@property --ad-grid-row-gap-sm {
-  syntax: "*";
-  inherits: false;
-}
-@property --ad-grid-row-gap-md {
-  syntax: "*";
-  inherits: false;
-}
-@property --ad-grid-row-gap-lg {
-  syntax: "*";
-  inherits: false;
-}
-@property --ad-grid-row-gap-xl {
-  syntax: "*";
-  inherits: false;
-}
-@property --ad-grid-column-gap {
-  syntax: "*";
-  inherits: false;
-}
-@property --ad-grid-column-gap-sm {
-  syntax: "*";
-  inherits: false;
-}
-@property --ad-grid-column-gap-md {
-  syntax: "*";
-  inherits: false;
-}
-@property --ad-grid-column-gap-lg {
-  syntax: "*";
-  inherits: false;
-}
-@property --ad-grid-column-gap-xl {
-  syntax: "*";
-  inherits: false;
-}
-@property --ad-grid-align {
-  syntax: "*";
-  inherits: false;
-}
-@property --ad-grid-align-sm {
-  syntax: "*";
-  inherits: false;
-}
-@property --ad-grid-align-md {
-  syntax: "*";
-  inherits: false;
-}
-@property --ad-grid-align-lg {
-  syntax: "*";
-  inherits: false;
-}
-@property --ad-grid-align-xl {
-  syntax: "*";
-  inherits: false;
-}
-@property --ad-grid-justify {
-  syntax: "*";
-  inherits: false;
-}
-@property --ad-grid-justify-sm {
-  syntax: "*";
-  inherits: false;
-}
-@property --ad-grid-justify-md {
-  syntax: "*";
-  inherits: false;
-}
-@property --ad-grid-justify-lg {
-  syntax: "*";
-  inherits: false;
-}
-@property --ad-grid-justify-xl {
-  syntax: "*";
-  inherits: false;
-}
-@property --ad-grid-column-start {
-  syntax: "*";
-  inherits: false;
-}
-@property --ad-grid-column-start-sm {
-  syntax: "*";
-  inherits: false;
-}
-@property --ad-grid-column-start-md {
-  syntax: "*";
-  inherits: false;
-}
-@property --ad-grid-column-start-lg {
-  syntax: "*";
-  inherits: false;
-}
-@property --ad-grid-column-start-xl {
-  syntax: "*";
-  inherits: false;
-}
-@property --ad-grid-column-end {
-  syntax: "*";
-  inherits: false;
-}
-@property --ad-grid-column-end-sm {
-  syntax: "*";
-  inherits: false;
-}
-@property --ad-grid-column-end-md {
-  syntax: "*";
-  inherits: false;
-}
-@property --ad-grid-column-end-lg {
-  syntax: "*";
-  inherits: false;
-}
-@property --ad-grid-column-end-xl {
-  syntax: "*";
-  inherits: false;
-}
-@property --ad-grid-row-start {
-  syntax: "*";
-  inherits: false;
-}
-@property --ad-grid-row-start-sm {
-  syntax: "*";
-  inherits: false;
-}
-@property --ad-grid-row-start-md {
-  syntax: "*";
-  inherits: false;
-}
-@property --ad-grid-row-start-lg {
-  syntax: "*";
-  inherits: false;
-}
-@property --ad-grid-row-start-xl {
-  syntax: "*";
-  inherits: false;
-}
-@property --ad-grid-row-end {
-  syntax: "*";
-  inherits: false;
-}
-@property --ad-grid-row-end-sm {
-  syntax: "*";
-  inherits: false;
-}
-@property --ad-grid-row-end-md {
-  syntax: "*";
-  inherits: false;
-}
-@property --ad-grid-row-end-lg {
-  syntax: "*";
-  inherits: false;
-}
-@property --ad-grid-row-end-xl {
-  syntax: "*";
-  inherits: false;
-}
-@property --ad-grid-min-child-width {
-  syntax: "*";
-  inherits: false;
-}
-
+/* Styles owned by Grid. The component sets every variable for every breakpoint itself,
+   so each rule reads one variable and nested grids never inherit a parent's values. */
 .ad-grid {
   display: grid;
   min-width: 0;
-  --ad-grid-current-gap: var(--ad-grid-gap, 0);
-  --ad-grid-current-row-gap: var(--ad-grid-row-gap, var(--ad-grid-current-gap));
-  --ad-grid-current-column-gap: var(
-    --ad-grid-column-gap,
-    var(--ad-grid-current-gap)
-  );
-  --ad-grid-current-align: var(--ad-grid-align, stretch);
-  --ad-grid-current-justify: var(--ad-grid-justify, stretch);
-  grid-template-columns: var(--ad-grid-columns, repeat(12, minmax(0, 1fr)));
-  gap: var(--ad-grid-current-gap);
-  row-gap: var(--ad-grid-current-row-gap);
-  column-gap: var(--ad-grid-current-column-gap);
-  align-items: var(--ad-grid-current-align);
-  justify-items: var(--ad-grid-current-justify);
+  grid-template-columns: var(--ad-grid-columns);
+  row-gap: var(--ad-grid-row-gap);
+  column-gap: var(--ad-grid-column-gap);
+  align-items: var(--ad-grid-align);
+  justify-items: var(--ad-grid-justify);
 }
-
-.ad-grid-item {
-  min-width: 0;
-  --ad-grid-current-column-start: var(--ad-grid-column-start, auto);
-  --ad-grid-current-column-end: var(--ad-grid-column-end, auto);
-  --ad-grid-current-row-start: var(--ad-grid-row-start, auto);
-  --ad-grid-current-row-end: var(--ad-grid-row-end, auto);
-  grid-column-start: var(--ad-grid-current-column-start);
-  grid-column-end: var(--ad-grid-current-column-end);
-  grid-row-start: var(--ad-grid-current-row-start);
-  grid-row-end: var(--ad-grid-current-row-end);
-}
-
 .ad-grid--auto-fit {
   grid-template-columns: repeat(
     auto-fit,
     minmax(min(100%, var(--ad-grid-min-child-width)), 1fr)
   );
 }
-
 .ad-grid--dense {
   grid-auto-flow: dense;
 }
-
+.ad-grid-item {
+  min-width: 0;
+  grid-column: var(--ad-grid-column-start) / var(--ad-grid-column-end);
+  grid-row: var(--ad-grid-row-start) / var(--ad-grid-row-end);
+}
 @media (min-width: 40rem) {
-  .ad-grid {
-    --ad-grid-current-gap: var(--ad-grid-gap-sm, var(--ad-grid-gap, 0));
-    --ad-grid-current-row-gap: var(
-      --ad-grid-row-gap-sm,
-      var(--ad-grid-row-gap, var(--ad-grid-current-gap))
-    );
-    --ad-grid-current-column-gap: var(
-      --ad-grid-column-gap-sm,
-      var(--ad-grid-column-gap, var(--ad-grid-current-gap))
-    );
-    --ad-grid-current-align: var(
-      --ad-grid-align-sm,
-      var(--ad-grid-align, stretch)
-    );
-    --ad-grid-current-justify: var(
-      --ad-grid-justify-sm,
-      var(--ad-grid-justify, stretch)
-    );
-  }
-
   .ad-grid:not(.ad-grid--auto-fit) {
-    grid-template-columns: var(
-      --ad-grid-columns-sm,
-      var(--ad-grid-columns, repeat(12, minmax(0, 1fr)))
-    );
+    grid-template-columns: var(--ad-grid-columns-sm);
   }
-
+  .ad-grid {
+    row-gap: var(--ad-grid-row-gap-sm);
+    column-gap: var(--ad-grid-column-gap-sm);
+    align-items: var(--ad-grid-align-sm);
+    justify-items: var(--ad-grid-justify-sm);
+  }
   .ad-grid-item {
-    --ad-grid-current-column-start: var(
-      --ad-grid-column-start-sm,
-      var(--ad-grid-column-start, auto)
-    );
-    --ad-grid-current-column-end: var(
-      --ad-grid-column-end-sm,
-      var(--ad-grid-column-end, auto)
-    );
-    --ad-grid-current-row-start: var(
-      --ad-grid-row-start-sm,
-      var(--ad-grid-row-start, auto)
-    );
-    --ad-grid-current-row-end: var(
-      --ad-grid-row-end-sm,
-      var(--ad-grid-row-end, auto)
-    );
+    grid-column: var(--ad-grid-column-start-sm) / var(--ad-grid-column-end-sm);
+    grid-row: var(--ad-grid-row-start-sm) / var(--ad-grid-row-end-sm);
   }
 }
-
 @media (min-width: 56.25rem) {
-  .ad-grid {
-    --ad-grid-current-gap: var(
-      --ad-grid-gap-md,
-      var(--ad-grid-gap-sm, var(--ad-grid-gap, 0))
-    );
-    --ad-grid-current-row-gap: var(
-      --ad-grid-row-gap-md,
-      var(
-        --ad-grid-row-gap-sm,
-        var(--ad-grid-row-gap, var(--ad-grid-current-gap))
-      )
-    );
-    --ad-grid-current-column-gap: var(
-      --ad-grid-column-gap-md,
-      var(
-        --ad-grid-column-gap-sm,
-        var(--ad-grid-column-gap, var(--ad-grid-current-gap))
-      )
-    );
-    --ad-grid-current-align: var(
-      --ad-grid-align-md,
-      var(--ad-grid-align-sm, var(--ad-grid-align, stretch))
-    );
-    --ad-grid-current-justify: var(
-      --ad-grid-justify-md,
-      var(--ad-grid-justify-sm, var(--ad-grid-justify, stretch))
-    );
-  }
-
   .ad-grid:not(.ad-grid--auto-fit) {
-    grid-template-columns: var(
-      --ad-grid-columns-md,
-      var(
-        --ad-grid-columns-sm,
-        var(--ad-grid-columns, repeat(12, minmax(0, 1fr)))
-      )
-    );
+    grid-template-columns: var(--ad-grid-columns-md);
   }
-
+  .ad-grid {
+    row-gap: var(--ad-grid-row-gap-md);
+    column-gap: var(--ad-grid-column-gap-md);
+    align-items: var(--ad-grid-align-md);
+    justify-items: var(--ad-grid-justify-md);
+  }
   .ad-grid-item {
-    --ad-grid-current-column-start: var(
-      --ad-grid-column-start-md,
-      var(--ad-grid-column-start-sm, var(--ad-grid-column-start, auto))
-    );
-    --ad-grid-current-column-end: var(
-      --ad-grid-column-end-md,
-      var(--ad-grid-column-end-sm, var(--ad-grid-column-end, auto))
-    );
-    --ad-grid-current-row-start: var(
-      --ad-grid-row-start-md,
-      var(--ad-grid-row-start-sm, var(--ad-grid-row-start, auto))
-    );
-    --ad-grid-current-row-end: var(
-      --ad-grid-row-end-md,
-      var(--ad-grid-row-end-sm, var(--ad-grid-row-end, auto))
-    );
+    grid-column: var(--ad-grid-column-start-md) / var(--ad-grid-column-end-md);
+    grid-row: var(--ad-grid-row-start-md) / var(--ad-grid-row-end-md);
   }
 }
-
 @media (min-width: 75rem) {
-  .ad-grid {
-    --ad-grid-current-gap: var(
-      --ad-grid-gap-lg,
-      var(--ad-grid-gap-md, var(--ad-grid-gap-sm, var(--ad-grid-gap, 0)))
-    );
-    --ad-grid-current-row-gap: var(
-      --ad-grid-row-gap-lg,
-      var(
-        --ad-grid-row-gap-md,
-        var(
-          --ad-grid-row-gap-sm,
-          var(--ad-grid-row-gap, var(--ad-grid-current-gap))
-        )
-      )
-    );
-    --ad-grid-current-column-gap: var(
-      --ad-grid-column-gap-lg,
-      var(
-        --ad-grid-column-gap-md,
-        var(
-          --ad-grid-column-gap-sm,
-          var(--ad-grid-column-gap, var(--ad-grid-current-gap))
-        )
-      )
-    );
-    --ad-grid-current-align: var(
-      --ad-grid-align-lg,
-      var(
-        --ad-grid-align-md,
-        var(--ad-grid-align-sm, var(--ad-grid-align, stretch))
-      )
-    );
-    --ad-grid-current-justify: var(
-      --ad-grid-justify-lg,
-      var(
-        --ad-grid-justify-md,
-        var(--ad-grid-justify-sm, var(--ad-grid-justify, stretch))
-      )
-    );
-  }
-
   .ad-grid:not(.ad-grid--auto-fit) {
-    grid-template-columns: var(
-      --ad-grid-columns-lg,
-      var(
-        --ad-grid-columns-md,
-        var(
-          --ad-grid-columns-sm,
-          var(--ad-grid-columns, repeat(12, minmax(0, 1fr)))
-        )
-      )
-    );
+    grid-template-columns: var(--ad-grid-columns-lg);
   }
-
+  .ad-grid {
+    row-gap: var(--ad-grid-row-gap-lg);
+    column-gap: var(--ad-grid-column-gap-lg);
+    align-items: var(--ad-grid-align-lg);
+    justify-items: var(--ad-grid-justify-lg);
+  }
   .ad-grid-item {
-    --ad-grid-current-column-start: var(
-      --ad-grid-column-start-lg,
-      var(
-        --ad-grid-column-start-md,
-        var(--ad-grid-column-start-sm, var(--ad-grid-column-start, auto))
-      )
-    );
-    --ad-grid-current-column-end: var(
-      --ad-grid-column-end-lg,
-      var(
-        --ad-grid-column-end-md,
-        var(--ad-grid-column-end-sm, var(--ad-grid-column-end, auto))
-      )
-    );
-    --ad-grid-current-row-start: var(
-      --ad-grid-row-start-lg,
-      var(
-        --ad-grid-row-start-md,
-        var(--ad-grid-row-start-sm, var(--ad-grid-row-start, auto))
-      )
-    );
-    --ad-grid-current-row-end: var(
-      --ad-grid-row-end-lg,
-      var(
-        --ad-grid-row-end-md,
-        var(--ad-grid-row-end-sm, var(--ad-grid-row-end, auto))
-      )
-    );
+    grid-column: var(--ad-grid-column-start-lg) / var(--ad-grid-column-end-lg);
+    grid-row: var(--ad-grid-row-start-lg) / var(--ad-grid-row-end-lg);
   }
 }
-
 @media (min-width: 96rem) {
-  .ad-grid {
-    --ad-grid-current-gap: var(
-      --ad-grid-gap-xl,
-      var(
-        --ad-grid-gap-lg,
-        var(--ad-grid-gap-md, var(--ad-grid-gap-sm, var(--ad-grid-gap, 0)))
-      )
-    );
-    --ad-grid-current-row-gap: var(
-      --ad-grid-row-gap-xl,
-      var(
-        --ad-grid-row-gap-lg,
-        var(
-          --ad-grid-row-gap-md,
-          var(
-            --ad-grid-row-gap-sm,
-            var(--ad-grid-row-gap, var(--ad-grid-current-gap))
-          )
-        )
-      )
-    );
-    --ad-grid-current-column-gap: var(
-      --ad-grid-column-gap-xl,
-      var(
-        --ad-grid-column-gap-lg,
-        var(
-          --ad-grid-column-gap-md,
-          var(
-            --ad-grid-column-gap-sm,
-            var(--ad-grid-column-gap, var(--ad-grid-current-gap))
-          )
-        )
-      )
-    );
-    --ad-grid-current-align: var(
-      --ad-grid-align-xl,
-      var(
-        --ad-grid-align-lg,
-        var(
-          --ad-grid-align-md,
-          var(--ad-grid-align-sm, var(--ad-grid-align, stretch))
-        )
-      )
-    );
-    --ad-grid-current-justify: var(
-      --ad-grid-justify-xl,
-      var(
-        --ad-grid-justify-lg,
-        var(
-          --ad-grid-justify-md,
-          var(--ad-grid-justify-sm, var(--ad-grid-justify, stretch))
-        )
-      )
-    );
-  }
-
   .ad-grid:not(.ad-grid--auto-fit) {
-    grid-template-columns: var(
-      --ad-grid-columns-xl,
-      var(
-        --ad-grid-columns-lg,
-        var(
-          --ad-grid-columns-md,
-          var(
-            --ad-grid-columns-sm,
-            var(--ad-grid-columns, repeat(12, minmax(0, 1fr)))
-          )
-        )
-      )
-    );
+    grid-template-columns: var(--ad-grid-columns-xl);
   }
-
+  .ad-grid {
+    row-gap: var(--ad-grid-row-gap-xl);
+    column-gap: var(--ad-grid-column-gap-xl);
+    align-items: var(--ad-grid-align-xl);
+    justify-items: var(--ad-grid-justify-xl);
+  }
   .ad-grid-item {
-    --ad-grid-current-column-start: var(
-      --ad-grid-column-start-xl,
-      var(
-        --ad-grid-column-start-lg,
-        var(
-          --ad-grid-column-start-md,
-          var(--ad-grid-column-start-sm, var(--ad-grid-column-start, auto))
-        )
-      )
-    );
-    --ad-grid-current-column-end: var(
-      --ad-grid-column-end-xl,
-      var(
-        --ad-grid-column-end-lg,
-        var(
-          --ad-grid-column-end-md,
-          var(--ad-grid-column-end-sm, var(--ad-grid-column-end, auto))
-        )
-      )
-    );
-    --ad-grid-current-row-start: var(
-      --ad-grid-row-start-xl,
-      var(
-        --ad-grid-row-start-lg,
-        var(
-          --ad-grid-row-start-md,
-          var(--ad-grid-row-start-sm, var(--ad-grid-row-start, auto))
-        )
-      )
-    );
-    --ad-grid-current-row-end: var(
-      --ad-grid-row-end-xl,
-      var(
-        --ad-grid-row-end-lg,
-        var(
-          --ad-grid-row-end-md,
-          var(--ad-grid-row-end-sm, var(--ad-grid-row-end, auto))
-        )
-      )
-    );
+    grid-column: var(--ad-grid-column-start-xl) / var(--ad-grid-column-end-xl);
+    grid-row: var(--ad-grid-row-start-xl) / var(--ad-grid-row-end-xl);
   }
 }

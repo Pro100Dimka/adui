@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { DocsExampleBoundary } from "./DocsExampleBoundary";
 import { HeroBackdrop } from "./HeroBackdrop";
 import { ExampleCodeContext } from "../../../../packages/ui/src/dev/exampleHelpers";
@@ -19,12 +19,9 @@ import {
 import {
   catalog,
   componentHref,
-  getComponentApiSource,
-  getComponentSource,
-  getComponentSourcePath,
   getExample,
-  getExampleSource,
   getImportPath,
+  loadSources,
   type CatalogMeta,
 } from "./componentRegistry";
 import { getCategoryForItem } from "./catalogNavigation";
@@ -104,28 +101,39 @@ function withImports(code: string, name: string, path: string) {
 export function ComponentDocsPage({ item }: { item: CatalogMeta }) {
   const category = getCategoryForItem(item);
   const LiveExample = getExample(item.name);
-  const exampleSource = getExampleSource(item.name);
   const [liveCode, setLiveCode] = useState<string>();
   const [modal, setModal] = useState<"example" | "api" | "source">();
-  const apiSource = getComponentApiSource(item.name);
-  const componentSource = getComponentSource(item.name);
-  const sourcePath = getComponentSourcePath(item.name);
-  const importPath = getImportPath(item);
-  const usage = liveCode
-    ? withImports(liveCode, item.name, importPath)
-    : exampleSource;
+  const [sources, setSources] =
+    useState<Awaited<ReturnType<typeof loadSources>>>();
+  useEffect(() => {
+    let alive = true;
+    void loadSources().then((module) => alive && setSources(module));
+    return () => {
+      alive = false;
+    };
+  }, []);
+  const loading = "// Загрузка…";
+  const sourcePath = sources?.getComponentSourcePath(item.name);
   const codeViews = {
-    example: { title: "код примера", file: "Example.tsx", code: usage },
+    example: {
+      title: "код примера",
+      file: "Example.tsx",
+      code: liveCode
+        ? withImports(liveCode, item.name, getImportPath(item))
+        : (sources?.getExampleSource(item.name) ?? loading),
+    },
     api: {
       title: "API",
       file: `${item.name}Props`,
-      code: apiSource,
+      code: sources?.getComponentApiSource(item.name) ?? loading,
       language: "ts",
     },
     source: {
       title: "исходник",
       file: sourcePath || `${item.name}.tsx`,
-      code: componentSource || "// Исходник не найден",
+      code: sources
+        ? sources.getComponentSource(item.name) || "// Исходник не найден"
+        : loading,
     },
   };
   const categoryItems = category?.items ?? catalog;
