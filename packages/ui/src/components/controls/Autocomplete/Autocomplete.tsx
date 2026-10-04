@@ -46,7 +46,7 @@ export const Autocomplete = ({
   const filtered = all.filter(
     (o) =>
       !query ||
-      o.label.toLocaleLowerCase().includes(query) ||
+      String(o.label).toLocaleLowerCase().includes(query) ||
       o.value.toLocaleLowerCase().includes(query),
   );
   const listId = `${input.id ?? "ad-autocomplete"}-listbox`;

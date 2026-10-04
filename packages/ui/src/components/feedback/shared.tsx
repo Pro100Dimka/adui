@@ -99,10 +99,25 @@ export interface DataTableColumn<T extends DataTableRow = DataTableRow> {
   sortable?: boolean;
   /** Cell content; the raw field by default. */
   render?: (row: T, index: number) => ReactNode;
-  /** What sorting and search look at; the raw field by default. */
+  /** What sorting, search, filters and groups look at; the raw field by default. */
   value?: (row: T) => string | number;
+  /**
+   * A filter in the header: "text" (contains), "values" (pick from the column's values),
+   * "range" (numbers from–to). With `filterable` on the table every column gets one: values
+   * for short lists, range for numbers, text otherwise; `false` turns it off.
+   */
+  filter?: "text" | "values" | "range" | false;
+  /** Rows can be grouped by this column; on by default. */
+  groupable?: boolean;
+  /** A summary of a group's rows shown in its header row (a count, a sum, an average…). */
+  aggregate?: (rows: T[]) => ReactNode;
 }
 export type DataTableSort = { key: string; direction: "asc" | "desc" };
+/** One column's filter: text it contains, values it is one of, or a number range. */
+export type DataTableFilter =
+  | { kind: "text"; text: string }
+  | { kind: "values"; values: string[] }
+  | { kind: "range"; min?: number; max?: number };
 export interface DataTableProps<
   T extends DataTableRow = DataTableRow,
 > extends CommonProps {
@@ -122,6 +137,16 @@ export interface DataTableProps<
   onSelectionChange?: (keys: string[]) => void;
   /** A search field over every column. */
   searchable?: boolean;
+  /** Filters in every column header (see `DataTableColumn.filter`). */
+  filterable?: boolean;
+  filters?: Record<string, DataTableFilter>;
+  defaultFilters?: Record<string, DataTableFilter>;
+  onFiltersChange?: (filters: Record<string, DataTableFilter>) => void;
+  /** Group rows by a column; `groupable` adds a "group by" choice to the toolbar. */
+  groupable?: boolean;
+  groupBy?: string | null;
+  defaultGroupBy?: string | null;
+  onGroupByChange?: (key: string | null) => void;
   /** Rows per page; everything on one page by default. */
   pageSize?: number;
   /** Scroll inside the table with a sticky header beyond this height. */

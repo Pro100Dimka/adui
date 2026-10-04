@@ -188,23 +188,49 @@ export interface AutocompleteProps extends TextFieldProps {
   options?: Array<string | AutocompleteOption>;
   onOptionSelect?: (value: string) => void;
 }
-export interface SelectOption {
-  value: string;
-  label: string;
+/** One choice of a Select: any value, shown with rich content. */
+export interface SelectOption<V = string> {
+  value: V;
+  /** What the option shows; any content (text, badges, markup). */
+  label: ReactNode;
+  /** Plain text of the option for search, screen readers and the form value; defaults to the label when it is text. */
+  text?: string;
+  /** Icon before the label. */
+  icon?: string;
+  /** A person or item picture before the label: initials from `name`, or a photo. */
+  avatar?: { name: string; src?: string };
+  /** A second, quieter line under the label. */
+  description?: ReactNode;
+  /** Options with the same group are listed together under its name. */
+  group?: string;
   disabled?: boolean;
 }
-/** `V` narrows the values, e.g. `Select<"asc" | "desc">`, so the handler gets the exact type. */
-export interface SelectProps<V extends string = string> extends CommonProps {
+/**
+ * `V` is the type of the values: strings, numbers or whole objects, e.g. `Select<User>`;
+ * the handler gets that exact type back.
+ */
+export interface SelectProps<V = string> extends CommonProps {
   label?: ReactNode;
   description?: ReactNode;
   error?: ReactNode;
   placeholder?: string;
   startAdornment?: ReactNode;
   endAdornment?: ReactNode;
-  options?: Array<V | (SelectOption & { value: V })>;
+  /** Plain strings or numbers, or options with labels, icons, avatars, descriptions and groups. */
+  options?: Array<(V & (string | number)) | SelectOption<V>>;
   value?: V;
   defaultValue?: V;
   onValueChange?: (value: V) => void;
+  /** Identity of a value, for values that are objects (default: the value itself, or its JSON). */
+  getKey?: (value: V) => string;
+  /** Your own content for an option in the list. */
+  renderOption?: (option: SelectOption<V>, state: { selected: boolean }) => ReactNode;
+  /** Your own content for the chosen value in the field. */
+  renderValue?: (option: SelectOption<V>) => ReactNode;
+  /** A search box above the list, for long lists. */
+  searchable?: boolean;
+  /** Placeholder of the search box. */
+  searchPlaceholder?: string;
   icon?: string;
   disabled?: boolean;
   required?: boolean;

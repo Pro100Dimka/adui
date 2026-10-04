@@ -18,7 +18,7 @@ import { CatalogPage } from "./catalog/CatalogPage";
 import { catalog } from "./catalog/componentRegistry";
 import { SettingsPanel } from "./app/SettingsPanel";
 import { SiteThemeContext } from "../../../packages/ui/src/dev/exampleHelpers";
-import { themeTokens, useSiteSettings } from "./app/siteSettings";
+import { siteThemeProps, useSiteSettings } from "./app/siteSettings";
 
 const routes: RouteDefinition[] = [
   {
@@ -34,30 +34,25 @@ export default function App() {
   const motion = explicit ?? !reduced;
   const [settings, update, reset] = useSiteSettings();
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const themed = siteThemeProps(settings);
   // Theme examples in the docs drive the site theme through this.
   const siteTheme = {
-    theme: settings.theme,
-    primary: settings.primary ?? themes[settings.theme][0],
-    secondary: settings.secondary ?? themes[settings.theme][1],
+    theme: themed.theme,
+    primary: themed.primary,
+    secondary: themed.secondary,
     set: ({
       theme,
       ...colors
     }: {
-      theme?: typeof settings.theme;
+      theme?: typeof themed.theme;
       primary?: string;
       secondary?: string;
     }) =>
-      update(
-        theme
-          ? {
-              theme,
-              primary: undefined,
-              secondary: undefined,
-              tokens: {},
-              ...colors,
-            }
-          : colors,
-      ),
+      update({
+        themeConfig: theme
+          ? { version: 1, mode: "simple", theme, ...colors }
+          : { ...settings.themeConfig, autoSecondary: false, ...colors },
+      }),
   };
 
   useEffect(() => {
@@ -72,12 +67,7 @@ export default function App() {
   }, [siteTheme.primary, siteTheme.secondary]);
 
   return (
-    <ThemeProvider
-      theme={settings.theme}
-      primary={settings.primary}
-      secondary={settings.secondary}
-      tokens={themeTokens(settings)}
-    >
+    <ThemeProvider {...themed}>
       <SiteThemeContext.Provider value={siteTheme}>
         <Stack id="app" gap={0}>
           <Toolbar className="site-top">

@@ -1,0 +1,69 @@
+/* Styles owned by DatePicker: a month grid; today glows, the chosen day is a lit disc. */
+.ad-date-picker {
+  min-width: 0;
+}
+.ad-date-popover {
+  width: 18rem;
+}
+.ad-calendar {
+  display: grid;
+  gap: 0.5rem;
+}
+.ad-calendar-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-transform: capitalize;
+}
+.ad-calendar-next .ad-icon {
+  rotate: 180deg;
+}
+.ad-calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.15rem;
+}
+.ad-calendar-weekday {
+  padding-block: 0.25rem;
+  color: var(--ad-muted);
+  font-size: var(--ad-font-size-caption);
+  text-align: center;
+  text-transform: capitalize;
+}
+.ad-calendar-day {
+  aspect-ratio: 1;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  color: var(--ad-neutral-200);
+  font: inherit;
+  font-size: var(--ad-font-size-body-sm);
+  cursor: pointer;
+  transition: background var(--ad-duration-fast), color var(--ad-duration-fast);
+}
+.ad-calendar-day:hover:not(:disabled) {
+  background: rgb(from var(--ad-primary) r g b / 0.2);
+  color: #fff;
+}
+.ad-calendar-day[data-outside] {
+  color: var(--ad-neutral-600);
+}
+.ad-calendar-day[data-today] {
+  box-shadow: inset 0 0 0 0.0625rem var(--ad-secondary);
+  color: var(--ad-secondary-100);
+}
+.ad-calendar-day[aria-pressed="true"] {
+  background: radial-gradient(circle at 35% 30%, var(--ad-secondary), var(--ad-primary));
+  color: #fff;
+  font-weight: 700;
+  box-shadow: 0 0 0.7rem rgb(from var(--ad-primary) r g b / 0.6);
+}
+.ad-calendar-day:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+.ad-calendar-foot {
+  display: flex;
+  justify-content: space-between;
+}

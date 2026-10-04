@@ -177,3 +177,112 @@
       0 0;
   }
 }
+/* Header cell: the sort button and the filter funnel side by side. */
+.ad-data-table-head {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.15rem;
+}
+th[data-align="end"] > .ad-data-table-head {
+  flex-direction: row-reverse;
+}
+.ad-data-table-filter.ad-icon-button {
+  opacity: 0.45;
+  transition: opacity var(--ad-duration-fast);
+}
+th:hover .ad-data-table-filter.ad-icon-button,
+.ad-data-table-filter.ad-icon-button[data-active],
+.ad-data-table-filter.ad-icon-button[aria-expanded="true"] {
+  opacity: 1;
+}
+.ad-data-table-filter.ad-icon-button[data-active] {
+  color: var(--ad-secondary-100);
+  filter: drop-shadow(0 0 0.35rem var(--ad-primary));
+}
+.ad-data-table-filter-popover {
+  min-width: 14rem;
+}
+.ad-data-table-values,
+.ad-data-table-values-list {
+  display: grid;
+  gap: 0.35rem;
+}
+.ad-data-table-values-list {
+  max-height: 14rem;
+  padding-inline-start: 0.6rem;
+  overflow: auto;
+}
+.ad-data-table-range {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--ad-space-2);
+}
+/* Active filters as chips above the table. */
+.ad-data-table-chips {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--ad-space-2);
+}
+.ad-data-table-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.2rem 0.3rem 0.2rem 0.65rem;
+  border: 0.0625rem solid rgb(from var(--ad-primary) r g b / 0.45);
+  border-radius: var(--ad-radius-pill);
+  background: rgb(from var(--ad-primary) r g b / 0.12);
+  color: var(--ad-neutral-200);
+}
+.ad-data-table-chip > strong {
+  color: var(--ad-secondary-100);
+}
+.ad-data-table-chip > button {
+  display: grid;
+  place-items: center;
+  padding: 0.15rem;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+  --ad-icon-size: 0.7rem;
+}
+.ad-data-table-chip > button:hover {
+  background: rgb(from var(--ad-primary) r g b / 0.3);
+}
+/* Group header rows: a lit band with the group's value, its count and summaries. */
+.ad-data-table-group-by {
+  flex: 0 1 13rem;
+}
+.ad-data-table tr.ad-data-table-group td {
+  background: linear-gradient(90deg, rgb(from var(--ad-primary-700) r g b / 0.35), rgb(from var(--ad-neutral-850) r g b / 0.6));
+  color: var(--ad-text);
+  font-weight: 600;
+}
+.ad-data-table-group-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  --ad-icon-size: 0.85rem;
+}
+.ad-data-table-group-toggle > .ad-icon {
+  transition: rotate var(--ad-duration-normal) var(--ad-ease-spring);
+}
+.ad-data-table-group[data-collapsed] .ad-data-table-group-toggle > .ad-icon {
+  rotate: -90deg;
+}
+.ad-data-table-group-count {
+  min-width: 1.4rem;
+  padding: 0 0.4rem;
+  border-radius: var(--ad-radius-pill);
+  background: rgb(from var(--ad-primary) r g b / 0.35);
+  font-size: var(--ad-font-size-caption);
+  text-align: center;
+}

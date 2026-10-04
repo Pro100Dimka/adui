@@ -1,0 +1,74 @@
+/* Styles owned by Chip: a glassy pill that pops in; the × lights up under the pointer. */
+.ad-chip {
+  display: inline-flex;
+  align-items: center;
+  max-width: 100%;
+  min-height: 1.75rem;
+  border: 0.0625rem solid rgb(from var(--ad-primary) r g b / 0.45);
+  border-radius: var(--ad-radius-pill);
+  background: linear-gradient(180deg, rgb(from var(--ad-primary) r g b / 0.2), rgb(from var(--ad-primary-900) r g b / 0.35));
+  color: var(--ad-neutral-200);
+  font-size: var(--ad-font-size-body-sm);
+  line-height: 1.2;
+  animation: ad-chip-in 0.28s var(--ad-ease-spring) both;
+}
+.ad-chip[data-selected] {
+  border-color: var(--ad-secondary);
+  background: linear-gradient(180deg, var(--ad-primary-700), var(--ad-primary-900));
+  color: #fff;
+  box-shadow: 0 0 0.6rem rgb(from var(--ad-primary) r g b / 0.4);
+}
+.ad-chip[data-disabled] {
+  opacity: 0.5;
+}
+.ad-chip-body {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  min-width: 0;
+  padding: 0.15rem 0.65rem;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  --ad-icon-size: 0.9rem;
+}
+button.ad-chip-body {
+  cursor: pointer;
+}
+.ad-chip-body:has(> .ad-avatar) {
+  padding-inline-start: 0.15rem;
+}
+.ad-chip-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.ad-chip:has(> .ad-chip-remove) > .ad-chip-body {
+  padding-inline-end: 0.2rem;
+}
+.ad-chip-remove {
+  display: grid;
+  place-items: center;
+  margin-inline-end: 0.2rem;
+  padding: 0.2rem;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+  --ad-icon-size: 0.65rem;
+  transition: background var(--ad-duration-fast), color var(--ad-duration-fast);
+}
+.ad-chip-remove:hover,
+.ad-chip-remove:focus-visible {
+  background: rgb(from var(--ad-primary) r g b / 0.45);
+  color: #fff;
+  outline: none;
+}
+@keyframes ad-chip-in {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+}

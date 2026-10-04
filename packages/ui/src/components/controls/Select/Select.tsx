@@ -1,31 +1,85 @@
-import { useRef, useState } from "react";
+import { useMemo, useRef, useState, type ReactNode } from "react";
 import { assignRef, useControllable } from "../../../core/base";
 import { Popover } from "../../feedback/Popover/Popover";
+import { Avatar } from "../../layout/Avatar/Avatar";
 import { Icon } from "../../layout/Icon/Icon";
-import { FieldFrame, fieldLabel, useFieldIds, OptionList, toOption } from "../internal";
+import { FieldFrame, fieldLabel, useFieldIds, OptionList, type Option } from "../internal";
 import { InputBase } from "../InputBase/InputBase";
-import type { SelectProps } from "../shared";
+import type { SelectOption, SelectProps } from "../shared";
 
-export function Select<V extends string = string>(p: SelectProps<V>) {
+const defaultKey = (value: unknown) =>
+  typeof value === "object" && value !== null ? JSON.stringify(value) : String(value);
+
+const textOf = (option: SelectOption<unknown>) =>
+  option.text ?? (typeof option.label === "string" || typeof option.label === "number" ? String(option.label) : "");
+
+/**
+ * A choice from a list. Values can be strings, numbers or whole objects; options can carry an
+ * icon, an avatar, a description and a group, or be drawn by `renderOption`; long lists get a
+ * search box with `searchable`.
+ */
+export function Select<V = string>(p: SelectProps<V>) {
   const ids = useFieldIds(p.label, p.description || p.error);
   const floating = p.labelPlacement === "floating" && !!p.label;
-  const options = (p.options ?? ["Первый вариант", "Второй вариант"]).map(
-    toOption,
+  const keyOf = (p.getKey ?? defaultKey) as (value: V) => string;
+  const options = useMemo<SelectOption<V>[]>(
+    () =>
+      (p.options ?? (["Первый вариант", "Второй вариант"] as unknown as V[])).map((option) =>
+        typeof option === "object" && option !== null && "value" in (option as object)
+          ? (option as SelectOption<V>)
+          : { value: option as V, label: String(option) },
+      ),
+    [p.options],
   );
-  const [value, setValue] = useControllable<string>(
+  const [value, setValue] = useControllable<V | undefined>(
     p.value,
-    p.defaultValue ?? (p.placeholder ? "" : (options[0]?.value ?? "")),
-    p.onValueChange as ((value: string) => void) | undefined,
+    p.defaultValue ?? (p.placeholder ? undefined : options[0]?.value),
+    p.onValueChange as ((value: V | undefined) => void) | undefined,
   );
   const [open, setOpen] = useState(false);
+  const [query, setQuery] = useState("");
   const anchor = useRef<HTMLButtonElement>(null);
   const box = useRef<HTMLDivElement>(null);
-  const selected = options.find((option) => option.value === value);
-  const choose = (next: string) => {
-    setValue(next);
+  const selectedKey = value === undefined ? undefined : keyOf(value);
+  const selected = options.find((option) => keyOf(option.value) === selectedKey);
+
+  const needle = query.trim().toLowerCase();
+  const shown = needle
+    ? options.filter((option) => `${textOf(option as SelectOption<unknown>)} ${option.group ?? ""}`.toLowerCase().includes(needle))
+    : options;
+  // Grouped options are listed group by group, in the order the groups first appear.
+  const order = [...new Set(shown.map((option) => option.group ?? ""))];
+  const sorted = [...shown].sort((a, b) => order.indexOf(a.group ?? "") - order.indexOf(b.group ?? ""));
+  const rows: Option[] = sorted.map((option) => ({
+    value: keyOf(option.value),
+    label: option.label,
+    disabled: option.disabled,
+    icon: option.icon,
+    avatar: option.avatar,
+    description: option.description,
+    group: option.group,
+    content: p.renderOption?.(option, { selected: keyOf(option.value) === selectedKey }),
+  }));
+
+  const choose = (key: string) => {
+    const option = options.find((item) => keyOf(item.value) === key);
+    if (!option) return;
+    setValue(option.value);
     setOpen(false);
+    setQuery("");
     anchor.current?.focus();
   };
+
+  const shownValue: ReactNode = selected
+    ? (p.renderValue?.(selected) ?? (
+        <span className="ad-select-value">
+          {selected.avatar && <Avatar size="xs" name={selected.avatar.name} src={selected.avatar.src} />}
+          {selected.icon && <Icon name={selected.icon} />}
+          <span className="ad-select-value-text">{selected.label}</span>
+        </span>
+      ))
+    : (p.placeholder ?? "Выберите значение");
+
   return (
     <FieldFrame
       ids={ids}
@@ -44,9 +98,7 @@ export function Select<V extends string = string>(p: SelectProps<V>) {
         filled={!!selected}
         disabled={p.disabled}
         error={!!p.error}
-        startAdornment={
-          p.startAdornment ?? (p.icon ? <Icon name={p.icon} /> : undefined)
-        }
+        startAdornment={p.startAdornment ?? (p.icon ? <Icon name={p.icon} /> : undefined)}
         endAdornment={
           <>
             {p.endAdornment}
@@ -72,15 +124,18 @@ export function Select<V extends string = string>(p: SelectProps<V>) {
           data-placeholder={!selected || undefined}
           onClick={() => setOpen((v) => !v)}
         >
-          {selected?.label ?? p.placeholder ?? "Выберите значение"}
+          {shownValue}
         </button>
       </InputBase>
-      {p.name && <input type="hidden" name={p.name} value={value} />}
+      {p.name && <input type="hidden" name={p.name} value={selected ? (selected.text ?? selectedKey ?? "") : ""} />}
       <Popover
         open={open}
         onOpenChange={(next) => {
           setOpen(next);
-          if (!next) anchor.current?.focus();
+          if (!next) {
+            setQuery("");
+            anchor.current?.focus();
+          }
         }}
         anchorRef={box}
         role="listbox"
@@ -88,8 +143,35 @@ export function Select<V extends string = string>(p: SelectProps<V>) {
         matchAnchorWidth
         className="ad-option-popover"
         label={typeof p.label === "string" ? p.label : "Варианты"}
+        autoFocus={!p.searchable}
       >
-        <OptionList options={options} selected={value} onChoose={choose} />
+        {p.searchable && (
+          <label className="ad-option-search">
+            <Icon name="search" />
+            <input
+              autoFocus
+              value={query}
+              placeholder={p.searchPlaceholder ?? "Поиск"}
+              aria-label={p.searchPlaceholder ?? "Поиск"}
+              onChange={(event) => setQuery(event.currentTarget.value)}
+              onKeyDown={(event) => {
+                if (event.key === "Enter" && rows[0] && !rows[0].disabled) {
+                  event.preventDefault();
+                  choose(rows[0].value);
+                }
+                if (event.key === "ArrowDown") {
+                  event.preventDefault();
+                  event.currentTarget.closest(".ad-option-popover")?.querySelector<HTMLButtonElement>(".ad-option:not(:disabled)")?.focus();
+                }
+              }}
+            />
+          </label>
+        )}
+        {rows.length ? (
+          <OptionList options={rows} selected={selectedKey} onChoose={choose} />
+        ) : (
+          <div className="ad-option-empty">Ничего не найдено</div>
+        )}
       </Popover>
     </FieldFrame>
   );

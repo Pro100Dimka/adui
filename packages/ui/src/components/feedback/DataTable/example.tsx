@@ -35,12 +35,17 @@ const statuses = {
 } as const;
 
 const columns: DataTableColumn<Track>[] = [
-  { key: "title", title: "Трек" },
+  { key: "title", title: "Трек", groupable: false, aggregate: (rows) => `${rows.length} трек.` },
   { key: "artist", title: "Исполнитель" },
   {
     key: "seconds",
     title: "Длина",
     align: "end",
+    groupable: false,
+    aggregate: (rows) => {
+      const total = rows.reduce((sum, t) => sum + t.seconds, 0);
+      return `Σ ${Math.floor(total / 60)}:${String(total % 60).padStart(2, "0")}`;
+    },
     render: (t) =>
       `${Math.floor(t.seconds / 60)}:${String(t.seconds % 60).padStart(2, "0")}`,
   },
@@ -48,6 +53,8 @@ const columns: DataTableColumn<Track>[] = [
     key: "plays",
     title: "Прослушивания",
     align: "end",
+    groupable: false,
+    aggregate: (rows) => `Σ ${rows.reduce((sum, t) => sum + t.plays, 0).toLocaleString("ru-RU")}`,
     render: (t) => t.plays.toLocaleString("ru-RU"),
   },
   {
@@ -69,6 +76,8 @@ export default function DataTableExample() {
       knobs={{
         selectable: { value: true },
         searchable: { value: true },
+        filterable: { value: true },
+        groupBy: { options: ["none", "artist", "status"], value: "artist" },
         dense: { value: false },
         striped: { value: false },
         loading: { value: false },
@@ -80,9 +89,12 @@ export default function DataTableExample() {
           rows: expr("tracks"),
           rowKey: expr("(t) => t.id"),
           defaultSort: expr('{ key: "plays", direction: "desc" }'),
-          pageSize: 4,
+          pageSize: 6,
           selectable: v.selectable,
           searchable: v.searchable,
+          filterable: v.filterable,
+          groupable: true,
+          defaultGroupBy: v.groupBy === "none" ? undefined : v.groupBy,
           dense: v.dense,
           striped: v.striped,
           loading: v.loading,
@@ -97,9 +109,13 @@ export default function DataTableExample() {
           rows={tracks}
           rowKey={(t) => t.id}
           defaultSort={{ key: "plays", direction: "desc" }}
-          pageSize={4}
+          pageSize={6}
           selectable={v.selectable}
           searchable={v.searchable}
+          filterable={v.filterable}
+          groupable
+          key={v.groupBy}
+          defaultGroupBy={v.groupBy === "none" ? null : v.groupBy}
           dense={v.dense}
           striped={v.striped}
           loading={v.loading}

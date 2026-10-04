@@ -1,0 +1,24 @@
+/* Styles owned by TagInput (and the chip row it shares with PeoplePicker). */
+.ad-chip-field-items {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem;
+  width: 100%;
+  min-height: calc(var(--ad-size-h, 2.5rem) - 0.75rem);
+}
+.ad-input-base .ad-chip-field-input {
+  flex: 1 0 6rem;
+  width: auto;
+  min-height: 1.75rem;
+}
+.ad-tag-input {
+  display: grid;
+  gap: 0.45rem;
+  min-width: 0;
+}
+.ad-tag-input-suggestions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}

@@ -2,6 +2,7 @@ import { useEffect, useState, type ComponentType } from "react";
 import { Badge, Button, MessageBar, Typography } from "@ad-voice/ui";
 import { CopyButton } from "./CopyButton";
 import { DocsExampleBoundary } from "./DocsExampleBoundary";
+import { CodeEditor } from "./CodeEditor";
 import { compile } from "./liveCode";
 
 const storageKey = (name: string) => `neo-ui-code:${name}`;
@@ -24,7 +25,10 @@ export function LiveEditor({
   name: string;
   original: string;
 }) {
-  const [draft, setDraft] = useState(() => readDraft(name));
+  const [stored, setStored] = useState(() => readDraft(name));
+  // Typing the example back to what it was is no edit at all: the draft disappears with it.
+  const draft = stored === original ? null : stored;
+  const setDraft = (next: string | null) => setStored(next === original ? null : next);
   const code = draft ?? original;
   const [result, setResult] = useState<{
     Component?: ComponentType;
@@ -83,23 +87,7 @@ export function LiveEditor({
             <CopyButton text={code} />
           </span>
         </div>
-        <textarea
-          className="docs-live-code"
-          value={code}
-          spellCheck={false}
-          aria-label="Код примера"
-          onChange={(event) => setDraft(event.currentTarget.value)}
-          onKeyDown={(event) => {
-            if (event.key !== "Tab" || event.shiftKey) return;
-            event.preventDefault();
-            const area = event.currentTarget;
-            const { selectionStart: from, selectionEnd: to } = area;
-            setDraft(code.slice(0, from) + "  " + code.slice(to));
-            requestAnimationFrame(() =>
-              area.setSelectionRange(from + 2, from + 2),
-            );
-          }}
-        />
+        <CodeEditor label="Код примера" value={code} onChange={setDraft} />
       </div>
       <div className="docs-live-preview">
         {error && <MessageBar tone="error">{error}</MessageBar>}

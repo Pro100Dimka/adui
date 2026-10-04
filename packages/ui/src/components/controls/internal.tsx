@@ -1,6 +1,7 @@
-import { useId, type ReactNode } from "react";
+import { Fragment, useId, type ReactNode } from "react";
 import type { Material, Variant } from "../../core/base";
 import { Icon } from "../layout/Icon/Icon";
+import { Avatar } from "../layout/Avatar/Avatar";
 
 export const variantMaterial: Record<Variant, Material> = {
   primary: "ruby",
@@ -9,7 +10,18 @@ export const variantMaterial: Record<Variant, Material> = {
   ghost: "ghost",
 };
 
-type Option = { value: string; label: string; disabled?: boolean };
+/** An option as the list draws it: a string key and everything it shows. */
+export type Option = {
+  value: string;
+  label: ReactNode;
+  disabled?: boolean;
+  icon?: string;
+  avatar?: { name: string; src?: string };
+  description?: ReactNode;
+  group?: string;
+  /** Replaces the whole row's content. */
+  content?: ReactNode;
+};
 export const toOption = (option: string | Option): Option =>
   typeof option === "string" ? { value: option, label: option } : option;
 
@@ -118,20 +130,33 @@ export function OptionList({
       }}
     >
       {options.map((option, index) => (
-        <button
-          key={option.value}
-          type="button"
-          role="option"
-          className="ad-option"
-          aria-selected={option.value === selected}
-          data-active={index === active || undefined}
-          disabled={option.disabled}
-          onPointerMove={() => onHover?.(index)}
-          onClick={() => onChoose(option.value)}
-        >
-          <span className="ad-option-label">{option.label}</span>
-          {option.value === selected && <Icon name="check" />}
-        </button>
+        <Fragment key={option.value}>
+          {option.group && option.group !== options[index - 1]?.group && (
+            <div className="ad-option-group" role="presentation">{option.group}</div>
+          )}
+          <button
+            type="button"
+            role="option"
+            className="ad-option"
+            aria-selected={option.value === selected}
+            data-active={index === active || undefined}
+            disabled={option.disabled}
+            onPointerMove={() => onHover?.(index)}
+            onClick={() => onChoose(option.value)}
+          >
+            {option.content ?? (
+              <>
+                {option.avatar && <Avatar size="sm" name={option.avatar.name} src={option.avatar.src} />}
+                {option.icon && <Icon name={option.icon} className="ad-option-icon" />}
+                <span className="ad-option-text">
+                  <span className="ad-option-label">{option.label}</span>
+                  {option.description && <span className="ad-option-description">{option.description}</span>}
+                </span>
+              </>
+            )}
+            {option.value === selected && <Icon name="check" className="ad-option-check" />}
+          </button>
+        </Fragment>
       ))}
     </div>
   );

@@ -57,6 +57,12 @@
 @import "./components/layout/BrandMark/styles.css";
 @import "./components/layout/ButtonGroup/styles.css";
 @import "./components/layout/Card/styles.css";
+@import "./components/foundation/ThemeEditor/styles.css";
+@import "./components/controls/Chip/styles.css";
+@import "./components/controls/TagInput/styles.css";
+@import "./components/controls/PeoplePicker/styles.css";
+@import "./components/controls/ColorPicker/styles.css";
+@import "./components/controls/DatePicker/styles.css";
 @import "./components/layout/StatTile/styles.css";
 @import "./components/media/MediaCard/styles.css";
 @import "./components/layout/DialogActions/styles.css";

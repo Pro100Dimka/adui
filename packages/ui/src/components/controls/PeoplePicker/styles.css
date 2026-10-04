@@ -1,0 +1,7 @@
+/* Styles owned by PeoplePicker: the chip row comes from TagInput's styles, the list from Select's. */
+.ad-people-picker {
+  min-width: 0;
+}
+.ad-people-picker .ad-option {
+  min-height: 2.75rem;
+}

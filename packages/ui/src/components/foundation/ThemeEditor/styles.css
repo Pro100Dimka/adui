@@ -1,0 +1,88 @@
+/* Styles owned by ThemeEditor: a toolbar, the simple or the advanced panel, a live sample. */
+.ad-theme-editor {
+  display: grid;
+  gap: var(--ad-space-4);
+  min-width: 0;
+}
+.ad-theme-editor-bar,
+.ad-theme-editor-actions,
+.ad-theme-editor-search,
+.ad-theme-editor-preview-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--ad-space-2);
+}
+.ad-theme-editor-bar {
+  justify-content: space-between;
+}
+/* The import picker shows only its button here. */
+.ad-theme-editor-actions > .ad-file-picker > small {
+  display: none;
+}
+.ad-theme-editor-paste {
+  display: grid;
+  gap: var(--ad-space-2);
+  width: min(24rem, calc(100vw - 2rem));
+}
+.ad-theme-editor-simple,
+.ad-theme-editor-advanced {
+  display: grid;
+  gap: var(--ad-space-3);
+}
+.ad-theme-editor-colors {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
+  gap: var(--ad-space-3);
+}
+.ad-theme-editor-strip {
+  display: flex;
+  overflow: hidden;
+  height: 1.75rem;
+  border-radius: var(--ad-radius-pill);
+  box-shadow: inset 0 0 0 0.0625rem #fff2;
+}
+.ad-theme-editor-strip > i {
+  flex: 1;
+}
+.ad-theme-editor-search > .ad-field {
+  flex: 1 1 14rem;
+}
+.ad-theme-editor-tokens {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 13rem), 1fr));
+  gap: var(--ad-space-3);
+}
+.ad-theme-editor-token {
+  position: relative;
+  display: grid;
+  gap: 0.15rem;
+  padding: var(--ad-space-2);
+  border-radius: var(--ad-radius);
+  transition: background var(--ad-duration-fast);
+}
+.ad-theme-editor-token[data-changed] {
+  background: rgb(from var(--ad-primary) r g b / 0.1);
+  box-shadow: inset 0 0 0 0.0625rem rgb(from var(--ad-primary) r g b / 0.35);
+}
+.ad-theme-editor-token > code {
+  overflow: hidden;
+  color: var(--ad-muted);
+  font-family: var(--ad-font-family-mono);
+  font-size: var(--ad-font-size-caption);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.ad-theme-editor-token > .ad-icon-button {
+  position: absolute;
+  top: var(--ad-space-1);
+  right: var(--ad-space-1);
+}
+.ad-theme-editor-preview {
+  display: grid;
+  gap: var(--ad-space-2);
+  padding: var(--ad-space-4);
+  border: 0.0625rem solid rgb(from var(--ad-primary) r g b / 0.3);
+  border-radius: var(--ad-radius-lg);
+  background: var(--ad-surface-card);
+}

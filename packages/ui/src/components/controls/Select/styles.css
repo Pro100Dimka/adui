@@ -47,16 +47,82 @@
   text-align: left;
   cursor: pointer;
 }
-.ad-option-label {
+.ad-option-text {
+  display: grid;
   flex: 1;
+  min-width: 0;
+}
+.ad-option-label {
   min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+.ad-option-description {
+  overflow: hidden;
+  color: var(--ad-muted);
+  font-size: var(--ad-font-size-caption);
+  font-weight: var(--ad-font-weight-regular);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 .ad-option > .ad-icon {
   --ad-icon-size: 1rem;
+  flex: none;
+}
+.ad-option-icon {
+  color: var(--ad-secondary-100);
+}
+.ad-option-check {
   color: var(--ad-pink);
+}
+/* Group names between the options of each group. */
+.ad-option-group {
+  padding: 0.5rem 0.65rem 0.2rem;
+  color: var(--ad-secondary-100);
+  font-size: var(--ad-font-size-caption);
+  font-weight: var(--ad-font-weight-bold);
+  letter-spacing: var(--ad-letter-spacing-eyebrow);
+  text-transform: uppercase;
+}
+/* Search box over a long list. */
+.ad-option-search {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin-bottom: 0.3rem;
+  padding: 0.35rem 0.65rem;
+  border-bottom: 0.0625rem solid rgb(from var(--ad-secondary) r g b / 0.2);
+  color: var(--ad-muted);
+  --ad-icon-size: 0.95rem;
+}
+.ad-option-search > input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  background: none;
+  color: var(--ad-text);
+  font: inherit;
+  font-size: var(--ad-font-size-body-sm);
+  outline: none;
+}
+.ad-option-empty {
+  padding: 0.75rem;
+  color: var(--ad-muted);
+  font-size: var(--ad-font-size-body-sm);
+  text-align: center;
+}
+/* The chosen value in the field: its avatar or icon beside the label. */
+.ad-select-value {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  max-width: 100%;
+  vertical-align: middle;
+}
+.ad-select-value-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .ad-option:hover:not(:disabled),
 .ad-option[data-active],

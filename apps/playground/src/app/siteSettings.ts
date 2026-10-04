@@ -1,16 +1,9 @@
 import { useEffect, useState } from "react";
-import type { ThemeName } from "@ad-voice/ui";
-
-/** How the reader colours the site: from two colours, or token by token. */
-export type ColorMode = "pair" | "all";
+import { defaultThemeConfig, themeProps, type ThemeConfig, type ThemeName } from "@ad-voice/ui";
 
 export interface SiteSettings {
-  theme: ThemeName;
-  mode: ColorMode;
-  primary?: string;
-  secondary?: string;
-  /** Per-token overrides, used in the "all" mode. */
-  tokens: Record<string, string>;
+  /** The site's theme, edited with the library's ThemeEditor. */
+  themeConfig: ThemeConfig;
   font: keyof typeof fonts;
   /** Text and spacing scale, 1 = 100 %. */
   scale: number;
@@ -27,72 +20,31 @@ export const fonts = {
   mono: { label: "Моноширинный", stack: "var(--ad-font-family-mono)" },
 };
 
-/** Every palette token the "all colours" mode lets the reader change, grouped. */
-export const tokenGroups: Array<[string, Array<[string, string]>]> = [
-  [
-    "Основные",
-    [
-      ["primary", "Primary"],
-      ["secondary", "Secondary"],
-    ],
-  ],
-  [
-    "Шкала primary",
-    [
-      ["primary-600", "600"],
-      ["primary-700", "700"],
-      ["primary-800", "800"],
-      ["primary-900", "900"],
-    ],
-  ],
-  [
-    "Шкала secondary",
-    [
-      ["secondary-200", "200"],
-      ["secondary-100", "100"],
-      ["secondary-50", "50"],
-    ],
-  ],
-  [
-    "Нейтральные",
-    [
-      ["neutral-200", "200"],
-      ["neutral-300", "300"],
-      ["neutral-400", "400"],
-      ["neutral-500", "500"],
-      ["neutral-600", "600"],
-      ["neutral-700", "700"],
-      ["neutral-800", "800"],
-      ["neutral-850", "850"],
-      ["neutral-900", "900"],
-      ["neutral-950", "950"],
-    ],
-  ],
-  [
-    "Текст и статусы",
-    [
-      ["text", "Текст"],
-      ["muted", "Приглушённый"],
-      ["success", "Успех"],
-      ["warning", "Внимание"],
-      ["info", "Инфо"],
-    ],
-  ],
-];
-
 const KEY = "neo-ui-site-settings";
 export const defaultSettings: SiteSettings = {
-  theme: "ruby",
-  mode: "pair",
-  tokens: {},
+  themeConfig: defaultThemeConfig,
   font: "default",
   scale: 1,
 };
 
+/** Settings saved before the theme editor (theme, mode, colours, tokens) become a theme config. */
+function migrate(saved: Record<string, unknown>): SiteSettings {
+  if (saved.themeConfig) return { ...defaultSettings, ...(saved as Partial<SiteSettings>) };
+  const themeConfig: ThemeConfig = {
+    version: 1,
+    mode: saved.mode === "all" ? "advanced" : "simple",
+    theme: (saved.theme as ThemeName) ?? "ruby",
+    primary: saved.primary as string | undefined,
+    secondary: saved.secondary as string | undefined,
+    tokens: (saved.tokens as Record<string, string>) ?? {},
+  };
+  return { ...defaultSettings, font: (saved.font as SiteSettings["font"]) ?? "default", scale: (saved.scale as number) ?? 1, themeConfig };
+}
+
 function load(): SiteSettings {
   try {
     const saved = JSON.parse(localStorage.getItem(KEY) ?? "null");
-    return saved ? { ...defaultSettings, ...saved } : defaultSettings;
+    return saved ? migrate(saved) : defaultSettings;
   } catch {
     return defaultSettings;
   }
@@ -115,28 +67,9 @@ export function useSiteSettings() {
   return [settings, update, () => setSettings(defaultSettings)] as const;
 }
 
-/** Tokens to hand to ThemeProvider for the current settings. */
-export function themeTokens(settings: SiteSettings) {
+/** Everything ThemeProvider needs for the current settings: the theme plus the chosen typeface. */
+export function siteThemeProps(settings: SiteSettings) {
+  const props = themeProps(settings.themeConfig);
   const stack = fonts[settings.font].stack;
-  return {
-    ...(settings.mode === "all" ? settings.tokens : {}),
-    ...(stack ? { "font-family-sans": stack } : {}),
-  };
-}
-
-/** The colour a token resolves to inside `scope`, as #rrggbb for a colour input. */
-export function resolveToken(scope: Element, token: string) {
-  const probe = document.createElement("span");
-  probe.style.color = `var(--ad-${token})`;
-  scope.append(probe);
-  const color = getComputedStyle(probe).color;
-  probe.remove();
-  const canvas = document.createElement("canvas");
-  canvas.width = canvas.height = 1;
-  const context = canvas.getContext("2d", { willReadFrequently: true });
-  if (!context) return "#000000";
-  context.fillStyle = color;
-  context.fillRect(0, 0, 1, 1);
-  const [r, g, b] = context.getImageData(0, 0, 1, 1).data;
-  return `#${[r, g, b].map((v) => v.toString(16).padStart(2, "0")).join("")}`;
+  return { ...props, tokens: { ...props.tokens, ...(stack ? { "font-family-sans": stack } : {}) } };
 }
