@@ -13,6 +13,8 @@ export interface DialogProps extends CommonProps {
   icon?: string;
   /** Label of the close button, for localisation. */
   closeLabel?: string;
+  /** Decoration painted across the whole window behind its content (artwork, glows, frames). */
+  art?: ReactNode;
   danger?: boolean;
   onConfirm?: () => boolean | void | Promise<boolean | void>;
 }
@@ -65,6 +67,8 @@ export interface ProgressBarProps extends CommonProps {
   max?: number;
   label?: string;
   indeterminate?: boolean;
+  /** A bar, or a sound wave that fills with colour from the left (e.g. audio being processed). */
+  variant?: "bar" | "wave";
 }
 export interface StepsProps extends CommonProps {
   steps?: string[];
@@ -128,6 +132,8 @@ export interface DataTableProps<
 }
 export interface CollapsibleSectionProps extends CommonProps {
   title?: string;
+  /** Muted line under the title, e.g. what the section holds. */
+  description?: ReactNode;
   icon?: string;
   open?: boolean;
   defaultOpen?: boolean;

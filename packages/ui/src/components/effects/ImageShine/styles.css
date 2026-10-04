@@ -1,0 +1,29 @@
+/* Styles owned by ImageShine: the light sweeps, the picture breathes, the glow pulses. */
+.ad-image-shine {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+.ad-image-shine[data-glow] {
+  animation: ad-image-shine-glow 2.6s ease-in-out infinite;
+}
+.ad-image-shine-picture {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: ad-image-shine-breathe 2.6s ease-in-out infinite;
+}
+.ad-image-shine-sweep {
+  mix-blend-mode: screen;
+  animation: ad-image-shine-sweep 2.2s ease-in-out infinite;
+}
+@keyframes ad-image-shine-glow {
+  0%, 100% { filter: drop-shadow(0 0 1rem rgb(from var(--ad-primary) r g b / 0.55)); }
+  50% { filter: drop-shadow(0 0 2.5rem var(--ad-primary)); }
+}
+@keyframes ad-image-shine-sweep {
+  to { transform: translateX(200%); }
+}
+@keyframes ad-image-shine-breathe {
+  50% { transform: scale(1.035); }
+}

@@ -1,0 +1,31 @@
+/* Styles owned by SignalBars: rising bars; lit ones glow, the top one breathes. */
+.ad-signal-bars {
+  --ad-signal-tone: var(--ad-primary);
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 0.18em;
+  width: 1.4em;
+  height: 1.4em;
+}
+.ad-signal-bars[data-weak] {
+  --ad-signal-tone: var(--ad-warning);
+}
+.ad-signal-bars > i {
+  flex: 1;
+  border-radius: 0.12em;
+  background: rgb(from var(--ad-neutral-200) r g b / 0.16);
+  transition: background 0.4s, box-shadow 0.4s;
+}
+.ad-signal-bars > i[data-lit] {
+  background: linear-gradient(var(--ad-secondary-100), var(--ad-signal-tone));
+  box-shadow: 0 0 0.45em rgb(from var(--ad-signal-tone) r g b / 0.55);
+}
+.ad-signal-bars > i[data-lit]:has(+ i:not([data-lit])),
+.ad-signal-bars > i[data-lit]:last-child {
+  animation: ad-signal-breathe 2.4s ease-in-out infinite;
+}
+@keyframes ad-signal-breathe {
+  50% {
+    filter: brightness(1.35);
+  }
+}

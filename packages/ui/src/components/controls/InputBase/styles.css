@@ -100,9 +100,10 @@
   cursor: not-allowed;
 }
 .ad-input-base[data-readonly] {
+  border-style: dashed;
+  border-color: rgb(from var(--ad-secondary) r g b / 0.4);
   background: var(--ad-neutral-900);
   box-shadow: none;
-  border-style: dashed;
 }
 
 /* Variants. */

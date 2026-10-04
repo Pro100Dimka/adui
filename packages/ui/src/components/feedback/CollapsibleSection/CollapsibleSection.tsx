@@ -18,7 +18,10 @@ export const CollapsibleSection = (p: CollapsibleSectionProps) => {
     >
       <summary>
         <Icon name={p.icon ?? "braces"} />
-        <span>{p.title ?? "Технический JSON"}</span>
+        <span className="ad-collapse-heading">
+          <span>{p.title ?? "Технический JSON"}</span>
+          {p.description && <small>{p.description}</small>}
+        </span>
         <Icon name="chevron" size={18} />
       </summary>
       <div className="ad-collapse-content">

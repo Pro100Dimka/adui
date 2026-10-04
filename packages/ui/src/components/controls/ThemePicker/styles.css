@@ -50,3 +50,78 @@
       0 0 1em currentColor;
   }
 }
+/* Gallery: one picture card per theme, edged and lit in that theme's colour. */
+.ad-theme-picker[data-gallery] {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 10rem), 1fr));
+  gap: var(--ad-space-3);
+}
+.ad-theme-card {
+  --ad-theme-card: var(--ad-primary);
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  aspect-ratio: 5 / 4;
+  padding: 0;
+  overflow: hidden;
+  border: 0.0625rem solid rgb(from var(--ad-theme-card) r g b / 0.38);
+  border-radius: 0.8rem;
+  background: linear-gradient(135deg, var(--ad-neutral-900), var(--ad-neutral-950));
+  color: var(--ad-text);
+  font: inherit;
+  cursor: pointer;
+  transition: filter 0.18s, box-shadow 0.18s, border-color 0.18s;
+}
+.ad-theme-card:hover {
+  filter: brightness(1.13);
+}
+.ad-theme-card:disabled {
+  cursor: not-allowed;
+  filter: grayscale(0.5);
+}
+.ad-theme-card[aria-pressed="true"] {
+  border-color: color-mix(in oklch, var(--ad-theme-card) 75%, #fff);
+  box-shadow:
+    0 0 0.35rem rgb(from var(--ad-theme-card) r g b / 0.58),
+    0 0 1rem rgb(from var(--ad-theme-card) r g b / 0.28);
+}
+.ad-theme-card-preview {
+  display: grid;
+  place-items: center;
+  min-height: 0;
+  padding: var(--ad-space-2);
+  background: radial-gradient(ellipse at 50% 76%, rgb(from var(--ad-theme-card) r g b / 0.18), transparent 72%);
+}
+.ad-theme-card-preview > :is(img, svg) {
+  width: auto;
+  max-width: 100%;
+  height: 100%;
+  aspect-ratio: 1;
+  object-fit: contain;
+}
+.ad-theme-card-caption {
+  display: grid;
+  justify-items: center;
+  gap: 0.15rem;
+  padding: var(--ad-space-2);
+  background: linear-gradient(180deg, transparent, var(--ad-neutral-950));
+}
+.ad-theme-card-caption > span {
+  color: var(--ad-muted);
+  font-size: var(--ad-font-size-caption);
+  text-align: center;
+}
+.ad-theme-card-check {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  display: grid;
+  place-items: center;
+  width: 1.6rem;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--ad-theme-card);
+  color: #fff;
+  box-shadow: 0 0 0.6rem var(--ad-theme-card);
+}

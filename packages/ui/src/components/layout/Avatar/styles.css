@@ -98,3 +98,52 @@
   height: 100%;
   overflow: visible;
 }
+/* A photo fills the face; inside the host seal it takes the crown's place. */
+.ad-avatar-photo {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.ad-avatar[data-photo] .host-emblem__crown {
+  display: none;
+}
+/* The tag sits on the ring's lower edge like a name plate. */
+.ad-avatar-badge {
+  position: absolute;
+  bottom: -0.35em;
+  left: 50%;
+  translate: -50% 0;
+  padding: 0.15em 0.6em;
+  border: 0.0625rem solid rgb(from var(--ad-secondary) r g b / 0.6);
+  border-radius: 999px;
+  background: var(--ad-neutral-950);
+  color: var(--ad-secondary-100);
+  font-size: max(0.5625rem, calc(var(--ad-avatar) * 0.12));
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  line-height: 1.3;
+  text-shadow: none;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+/* Presence: a lit dot on the lower right of the ring. */
+.ad-avatar-presence {
+  position: absolute;
+  right: 4%;
+  bottom: 4%;
+  width: max(0.55rem, calc(var(--ad-avatar) * 0.24));
+  aspect-ratio: 1;
+  border: 0.125rem solid var(--ad-neutral-950);
+  border-radius: 50%;
+  background: var(--ad-success);
+  box-shadow: 0 0 0.4rem var(--ad-success);
+}
+.ad-avatar-presence[data-presence="busy"] {
+  background: var(--ad-primary);
+  box-shadow: 0 0 0.4rem var(--ad-primary);
+}
+.ad-avatar-presence[data-presence="offline"] {
+  background: var(--ad-neutral-600, #555);
+  box-shadow: none;
+}

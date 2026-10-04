@@ -28,6 +28,8 @@ export interface TypographyProps extends Omit<CommonProps, "tone"> {
   align?: CSSProperties["textAlign"];
   truncate?: boolean;
   text?: ReactNode;
+  /** Hover text; a truncated plain string shows itself in full by default. */
+  title?: string;
 }
 
 const defaultElement: Record<TypographyVariant, ElementType> = {
@@ -53,10 +55,12 @@ export function Typography({
   align,
   truncate = false,
   text,
+  title,
   children,
   style,
   ...props
 }: TypographyProps) {
+  const content = children ?? text;
   return createElement(
     as ?? defaultElement[variant],
     {
@@ -65,8 +69,9 @@ export function Typography({
       "data-ad-tone": tone,
       "data-ad-weight": weight,
       "data-ad-truncate": truncate || undefined,
+      title: title ?? (truncate && typeof content === "string" ? content : undefined),
       style: { ...style, textAlign: align },
     },
-    children ?? text,
+    content,
   );
 }

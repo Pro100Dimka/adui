@@ -2,19 +2,20 @@ import { useRef, useState } from "react";
 import { assignRef, useControllable } from "../../../core/base";
 import { Popover } from "../../feedback/Popover/Popover";
 import { Icon } from "../../layout/Icon/Icon";
-import { FieldFrame, fieldLabel, OptionList, toOption } from "../internal";
+import { FieldFrame, fieldLabel, useFieldIds, OptionList, toOption } from "../internal";
 import { InputBase } from "../InputBase/InputBase";
 import type { SelectProps } from "../shared";
 
-export const Select = (p: SelectProps) => {
+export function Select<V extends string = string>(p: SelectProps<V>) {
+  const ids = useFieldIds(p.label, p.description || p.error);
   const floating = p.labelPlacement === "floating" && !!p.label;
   const options = (p.options ?? ["Первый вариант", "Второй вариант"]).map(
     toOption,
   );
-  const [value, setValue] = useControllable(
+  const [value, setValue] = useControllable<string>(
     p.value,
     p.defaultValue ?? (p.placeholder ? "" : (options[0]?.value ?? "")),
-    p.onValueChange,
+    p.onValueChange as ((value: string) => void) | undefined,
   );
   const [open, setOpen] = useState(false);
   const anchor = useRef<HTMLButtonElement>(null);
@@ -27,6 +28,7 @@ export const Select = (p: SelectProps) => {
   };
   return (
     <FieldFrame
+      ids={ids}
       className={`ad-select-shell ${p.className ?? ""}`}
       label={floating ? undefined : p.label}
       required={p.required}
@@ -37,6 +39,7 @@ export const Select = (p: SelectProps) => {
         ref={box}
         size={p.size}
         variant={p.variant}
+        labelId={ids.label}
         label={floating ? fieldLabel(p.label, p.required) : undefined}
         filled={!!selected}
         disabled={p.disabled}
@@ -57,6 +60,10 @@ export const Select = (p: SelectProps) => {
             assignRef(p.ref, n);
           }}
           type="button"
+          id={`${ids.label}control`}
+          // The name reads as "label, chosen value", like a native select.
+          aria-labelledby={p.label ? `${ids.label} ${ids.label}control` : undefined}
+          aria-describedby={ids.aria["aria-describedby"]}
           className="ad-input-control ad-select-control"
           disabled={p.disabled}
           aria-haspopup="listbox"
@@ -86,4 +93,4 @@ export const Select = (p: SelectProps) => {
       </Popover>
     </FieldFrame>
   );
-};
+}

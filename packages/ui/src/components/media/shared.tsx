@@ -45,7 +45,16 @@ export interface RotaryKnobProps extends CommonProps {
   step?: number;
   fineStep?: number;
   resetValue?: number;
+  /** Value range; 0–100 (percent) by default. */
+  min?: number;
+  max?: number;
+  /** The readout and typed input show value × this (e.g. 100 for a 0–2 gain shown as 0–200 %). */
+  displayScale?: number;
+  /** Unit after the shown number; "%" by default. */
+  suffix?: string;
   label?: string;
+  /** Print the label under the knob (otherwise it is only read out and shown on hover). */
+  showLabel?: boolean;
   showValue?: boolean;
   diameter?: number;
 }
@@ -56,6 +65,8 @@ export type RotaryKnobController = {
 };
 export interface SparklineProps extends CommonProps {
   values?: number[];
+  /** Scale to the values' own range instead of from zero, so small changes fill the height. */
+  fit?: boolean;
   color?: string;
   label?: string;
 }

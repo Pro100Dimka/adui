@@ -9,11 +9,13 @@ export const Sparkline = (p: SparklineProps) => {
     12, 23, 17, 31, 43, 24, 28, 20, 41, 29, 51, 34, 38, 22, 31, 16, 23,
   ];
   const id = useSvgId();
-  const max = Math.max(...values, 1);
-  const min = Math.min(...values, 0);
+  const max = p.fit ? Math.max(...values) : Math.max(...values, 1);
+  const min = p.fit ? Math.min(...values) : Math.min(...values, 0);
+  // A steady line runs through the middle when the values fill their own range.
+  const share = (v: number) => (max > min ? (v - min) / (max - min) : p.fit ? 0.5 : 0);
   const points = values.map((v, i) => [
     (i / Math.max(1, values.length - 1)) * 240,
-    66 - ((v - min) / (max - min || 1)) * 58,
+    66 - share(v) * 58,
   ]);
   const line = points.map(([x, y], i) => `${i ? "L" : "M"}${x},${y}`).join("");
   const [lastX, lastY] = points[points.length - 1];

@@ -294,3 +294,18 @@
   filter: hue-rotate(var(--ad-hue-shift, 0deg))
     drop-shadow(0 0.35rem 0.45rem #000b);
 }
+
+/* A printed label under the knob; the knob keeps room for it below. */
+.ad-rotary-knob.knob[data-labelled] {
+  margin-block-end: 1.6em;
+}
+.ad-rotary-knob .knob__label {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  translate: -50% 0.4em;
+  color: var(--ad-muted);
+  font-size: var(--ad-font-size-caption);
+  white-space: nowrap;
+  pointer-events: none;
+}

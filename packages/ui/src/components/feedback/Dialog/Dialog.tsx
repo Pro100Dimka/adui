@@ -46,6 +46,11 @@ export const Dialog = (p: DialogProps) => {
         if (!pending) setOpen(false);
       }}
     >
+      {p.art && (
+        <div className="ad-dialog-art" aria-hidden="true">
+          {p.art}
+        </div>
+      )}
       <Header
         title={<span id={titleId}>{p.title ?? "Подтверждение"}</span>}
         icon={p.icon}
@@ -77,11 +82,16 @@ export const Dialog = (p: DialogProps) => {
               variant={p.danger ? "danger" : "primary"}
               loading={pending}
               onClick={async () => {
-                setPending(true);
                 setError(undefined);
                 try {
-                  const result = await p.onConfirm?.();
-                  if (result !== false) setOpen(false);
+                  const outcome = p.onConfirm?.();
+                  // Only an asynchronous action holds the dialog busy; a plain one closes at once.
+                  if (!(outcome instanceof Promise)) {
+                    if (outcome !== false) setOpen(false);
+                    return;
+                  }
+                  setPending(true);
+                  if ((await outcome) !== false) setOpen(false);
                 } catch (e) {
                   setError(
                     e instanceof Error

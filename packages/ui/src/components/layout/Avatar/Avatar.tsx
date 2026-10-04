@@ -2,17 +2,20 @@ import { mark } from "../../../core/base";
 import { type AvatarProps } from "../shared";
 import { HostSeal } from "./HostSeal";
 
-export const Avatar = ({ variant = "initials", ...p }: AvatarProps) => (
+const initialOf = (name?: string) => (name ?? "Дмитрий").trim().slice(0, 1).toUpperCase();
+
+export const Avatar = ({ variant = "initials", src, badge, presence, ...p }: AvatarProps) => (
   <div
     {...mark("Avatar", p, "tile")}
     data-variant={variant}
+    data-photo={src ? "" : undefined}
     role="img"
     aria-label={p.name ?? "Пользователь"}
   >
-    {variant === "host" ? (
-      <HostSeal />
-    ) : (
-      (p.name ?? "Дмитрий").trim().slice(0, 1).toUpperCase()
-    )}
+    {variant === "host" && <HostSeal photo={src} />}
+    {variant !== "host" &&
+      (src ? <img className="ad-avatar-photo" src={src} alt="" draggable={false} /> : initialOf(p.name))}
+    {badge && variant !== "host" && <span className="ad-avatar-badge">{badge}</span>}
+    {presence && <span className="ad-avatar-presence" data-presence={presence} />}
   </div>
 );

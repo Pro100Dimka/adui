@@ -12,6 +12,7 @@ export const NumberField = ({
   step = 1,
   endAdornment,
   className,
+  controls = true,
   ...p
 }: NumberFieldProps) => {
   const [current, setCurrent] = useControllable<number | "">(
@@ -45,6 +46,7 @@ export const NumberField = ({
       endAdornment={
         <>
           {endAdornment}
+          {controls && <>
           <IconButton
             size="xs"
             variant="ghost"
@@ -61,6 +63,7 @@ export const NumberField = ({
             disabled={locked || (current !== "" && current >= high)}
             onClick={() => nudge(1)}
           />
+          </>}
         </>
       }
     />

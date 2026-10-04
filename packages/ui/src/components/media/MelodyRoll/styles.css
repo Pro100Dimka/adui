@@ -1,0 +1,136 @@
+/* Styles owned by MelodyRoll: a dark glass lane with a semitone and seconds grid; notes glide in,
+   flash green when sung right; the playhead and lane breathe with the music. */
+.ad-melody-roll {
+  --ad-roll-keys: clamp(2.75rem, 8%, 4.5rem);
+  position: relative;
+  display: grid;
+  grid-template-columns: var(--ad-roll-keys) minmax(0, 1fr);
+  width: 100%;
+  height: 100%;
+  min-height: 8rem;
+  overflow: hidden;
+  isolation: isolate;
+  border: 0.0625rem solid rgb(from var(--ad-primary) r g b / calc(0.18 + var(--ad-roll-beat) * 0.35));
+  border-radius: var(--ad-radius-lg, 1rem);
+  background:
+    radial-gradient(80% 120% at 25% 50%, rgb(from var(--ad-primary) r g b / calc(0.05 + var(--ad-roll-beat) * 0.12)), transparent 70%),
+    linear-gradient(180deg, rgb(from var(--ad-neutral-950) r g b / 0.72), rgb(from var(--ad-neutral-900) r g b / 0.6));
+  box-shadow:
+    inset 0 0.0625rem 0 #ffffff12,
+    0 0 calc(var(--ad-roll-beat) * 1.6rem) rgb(from var(--ad-primary) r g b / 0.25);
+  backdrop-filter: blur(0.5rem);
+  transition: border-color 0.12s, box-shadow 0.12s;
+}
+.ad-melody-roll-keys.ad-piano-keyboard {
+  min-height: 0;
+  z-index: 2;
+}
+.ad-melody-roll-lane {
+  position: relative;
+  container-type: size;
+  overflow: hidden;
+  border-left: 0.0625rem solid #ffffff22;
+  /* One line per semitone, one per second scrolling with the song. */
+  background:
+    linear-gradient(#ffffff0d 0.0625rem, transparent 0.0625rem) 0 0 / 100% calc(100% / var(--ad-roll-rows)),
+    linear-gradient(90deg, #ffffff0a 0.0625rem, transparent 0.0625rem) var(--ad-roll-shift) 0 / var(--ad-roll-second) 100%;
+}
+/* A note: a glossy capsule in the theme colours. */
+.ad-melody-note {
+  position: absolute;
+  /* Three quarters of a semitone row, centred in it. */
+  height: calc(100% / var(--ad-roll-rows) * 0.76);
+  translate: 0 15.8%;
+  border-radius: 999px;
+  background-image: linear-gradient(90deg, var(--ad-primary), var(--ad-secondary));
+  box-shadow: inset 0 0.0625rem 0 #ffffff55;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  transition:
+    filter 0.2s,
+    opacity 0.3s;
+}
+.ad-melody-note > span {
+  padding-inline: 0.4em;
+  color: #fff;
+  font: 600 clamp(0.5rem, 1.6cqh, 0.75rem) / 1 var(--ad-font-family-sans);
+  white-space: nowrap;
+  text-shadow: 0 0 0.3em #0008;
+}
+/* Under the playhead: brighter, lifted. */
+.ad-melody-note[data-now] {
+  filter: brightness(1.3) drop-shadow(0 0 0.4rem var(--ad-primary));
+}
+.ad-melody-note[data-past]:not([data-hit]) {
+  opacity: 0.45;
+}
+/* Sung right: green with a burst of light. */
+.ad-melody-note[data-hit] {
+  background-image: linear-gradient(90deg, #55ff9a, #16d875);
+  filter: drop-shadow(0 0 0.45rem #32ff8ff0) drop-shadow(0 0 1.1rem #32ff8f99);
+  animation: ad-melody-hit 0.62s ease-out;
+}
+@keyframes ad-melody-hit {
+  28% {
+    filter: brightness(1.9) drop-shadow(0 0 1.2rem #32ff8f);
+    scale: 1 1.6;
+  }
+}
+.ad-melody-trail {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+.ad-melody-trail > path {
+  fill: none;
+  stroke: color-mix(in oklch, var(--ad-secondary-100), #3dff91 calc(var(--ad-roll-accuracy) * 100%));
+  stroke-width: 0.15rem;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0.75;
+  filter: drop-shadow(0 0 0.25rem currentColor);
+}
+.ad-melody-playhead {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 0.125rem;
+  translate: -50% 0;
+  background: #fff;
+  box-shadow:
+    0 0 calc(0.6rem + var(--ad-roll-beat) * 1rem) #fff,
+    0 0 calc(1rem + var(--ad-roll-beat) * 1.6rem) var(--ad-primary);
+}
+/* The singer's voice: grows with loudness, greens with accuracy. */
+.ad-melody-voice {
+  --ad-voice: calc(0.95rem + var(--ad-roll-level) * 0.7rem);
+  position: absolute;
+  z-index: 3;
+  width: var(--ad-voice);
+  height: var(--ad-voice);
+  translate: -50% -50%;
+  border: 0.125rem solid #fff;
+  border-radius: 50%;
+  background: color-mix(in oklch, #fff, #2ee886 calc(var(--ad-roll-accuracy) * 100%));
+  box-shadow:
+    0 0 0 0.2rem #ffffff22,
+    0 0 calc(0.5rem + var(--ad-roll-accuracy) * 1rem) rgb(46 232 134 / calc(0.2 + var(--ad-roll-accuracy) * 0.7));
+  transition:
+    top 0.08s linear,
+    width 0.08s,
+    height 0.08s,
+    background 0.08s;
+}
+.ad-melody-voice[data-hit] {
+  background: #4dffa0;
+  animation: ad-melody-voice-hit 0.42s ease-out;
+}
+@keyframes ad-melody-voice-hit {
+  45% {
+    scale: 1.35;
+  }
+}

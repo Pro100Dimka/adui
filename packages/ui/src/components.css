@@ -29,6 +29,8 @@
 @import "./components/effects/Beacon/styles.css";
 @import "./components/effects/Sparkles/styles.css";
 @import "./components/effects/Shimmer/styles.css";
+@import "./components/feedback/SignalBars/styles.css";
+@import "./components/effects/ImageShine/styles.css";
 @import "./components/effects/Equalizer/styles.css";
 @import "./components/effects/GlowText/styles.css";
 @import "./components/effects/Reveal/styles.css";
@@ -70,6 +72,10 @@
 @import "./components/media/AudioPlayer/styles.css";
 @import "./components/media/LevelMeter/styles.css";
 @import "./components/media/RotaryKnob/styles.css";
+@import "./components/media/PianoKeyboard/styles.css";
+@import "./components/media/MelodyRoll/styles.css";
+@import "./components/media/KaraokeLyrics/styles.css";
+@import "./components/layout/FloatingPanel/styles.css";
 @import "./components/media/Sparkline/styles.css";
 @import "./components/media/WaveDecoration/styles.css";
 @import "./components/media/Waveform/styles.css";

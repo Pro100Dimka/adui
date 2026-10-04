@@ -12,6 +12,8 @@ export interface InputBaseProps extends CommonProps {
   variant?: InputVariant;
   /** Floating label drawn inside the box; it rises when focused or filled. */
   label?: ReactNode;
+  /** Id of the floating label, for the control's aria-labelledby. */
+  labelId?: string;
   /** The control has a value, so a floating label stays raised. */
   filled?: boolean;
   ref?: Ref<HTMLDivElement>;
@@ -27,6 +29,7 @@ export const InputBase = ({
   multiline,
   variant = "outlined",
   label,
+  labelId,
   filled,
   ref,
   onClick,
@@ -51,7 +54,7 @@ export const InputBase = ({
       </span>
     )}
     <span className="ad-input-base-content">
-      {label && <span className="ad-input-label">{label}</span>}
+      {label && <span className="ad-input-label" id={labelId}>{label}</span>}
       {children}
     </span>
     {endAdornment && (

@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import { useId, type ReactNode } from "react";
 import type { Material, Variant } from "../../core/base";
 import { Icon } from "../layout/Icon/Icon";
 
@@ -25,6 +25,24 @@ export const fieldLabel = (label: ReactNode, required?: boolean) => (
   </>
 );
 
+/**
+ * Ids that tie a control to its own label and message. The frame is a wrapping label (a click
+ * anywhere on the field focuses the control), but its text also holds the message and any
+ * adornment buttons, so the accessible name is pointed at the label text alone.
+ */
+export const useFieldIds = (label: ReactNode, message: ReactNode) => {
+  const id = useId();
+  const ids = { label: `${id}label`, message: `${id}message` };
+  return {
+    ...ids,
+    aria: {
+      "aria-labelledby": label ? ids.label : undefined,
+      "aria-describedby": message ? ids.message : undefined,
+    },
+  };
+};
+export type FieldIds = ReturnType<typeof useFieldIds>;
+
 /** Label, control and description/error line shared by every text-like field. */
 export function FieldFrame({
   className,
@@ -32,9 +50,11 @@ export function FieldFrame({
   required,
   description,
   error,
+  ids,
   children,
 }: {
   className: string;
+  ids: FieldIds;
   label?: ReactNode;
   required?: boolean;
   description?: ReactNode;
@@ -44,11 +64,11 @@ export function FieldFrame({
   return (
     <label className={`ad-field ${className}`}>
       {label && (
-        <span className="ad-field-label">{fieldLabel(label, required)}</span>
+        <span className="ad-field-label" id={ids.label}>{fieldLabel(label, required)}</span>
       )}
       {children}
       {(description || error) && (
-        <small className="ad-field-message" data-error={!!error || undefined}>
+        <small id={ids.message} className="ad-field-message" data-error={!!error || undefined}>
           {error && <Icon name="warning" />}
           {error || description}
         </small>

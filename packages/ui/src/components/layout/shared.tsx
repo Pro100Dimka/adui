@@ -46,6 +46,12 @@ export interface AvatarProps extends CommonProps {
   name?: string;
   /** Initials in a turning ring, or the animated host seal with a crown. */
   variant?: "initials" | "host";
+  /** Photo shown in place of the initials, or inside the host seal instead of its crown. */
+  src?: string;
+  /** Short tag on the lower edge of the ring, e.g. "ГОСТЬ". */
+  badge?: string;
+  /** A dot on the ring: online, busy (e.g. singing in a room) or offline. */
+  presence?: "online" | "busy" | "offline";
 }
 export interface TabPanelProps extends CommonProps {
   labelledBy?: string;

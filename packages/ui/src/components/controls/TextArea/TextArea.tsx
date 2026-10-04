@@ -1,5 +1,5 @@
 import { useControllable } from "../../../core/base";
-import { FieldFrame, fieldLabel } from "../internal";
+import { FieldFrame, fieldLabel, useFieldIds } from "../internal";
 import { InputBase } from "../InputBase/InputBase";
 import type { TextAreaProps } from "../shared";
 
@@ -27,9 +27,11 @@ export const TextArea = ({
     defaultValue,
     onValueChange,
   );
+  const ids = useFieldIds(label, description || error);
   const floating = labelPlacement === "floating" && !!label;
   return (
     <FieldFrame
+      ids={ids}
       className={`ad-text-area ad-text-area--resize-${resize} ${className ?? ""}`}
       label={floating ? undefined : label}
       required={textarea.required}
@@ -39,6 +41,7 @@ export const TextArea = ({
       <InputBase
         size={size}
         variant={variant}
+        labelId={ids.label}
         label={floating ? fieldLabel(label, textarea.required) : undefined}
         filled={!!current}
         multiline
@@ -49,6 +52,7 @@ export const TextArea = ({
         endAdornment={endAdornment}
       >
         <textarea
+          {...ids.aria}
           {...textarea}
           value={current}
           onChange={(e) => setCurrent(e.currentTarget.value)}

@@ -156,6 +156,8 @@ export interface NumberFieldProps extends Omit<
   value?: number | "";
   defaultValue?: number | "";
   onValueChange?: (value: number | "") => void;
+  /** The − and + buttons; off for values applied only when typing ends. */
+  controls?: boolean;
 }
 export interface TextAreaProps
   extends
@@ -190,17 +192,18 @@ export interface SelectOption {
   label: string;
   disabled?: boolean;
 }
-export interface SelectProps extends CommonProps {
+/** `V` narrows the values, e.g. `Select<"asc" | "desc">`, so the handler gets the exact type. */
+export interface SelectProps<V extends string = string> extends CommonProps {
   label?: ReactNode;
   description?: ReactNode;
   error?: ReactNode;
   placeholder?: string;
   startAdornment?: ReactNode;
   endAdornment?: ReactNode;
-  options?: Array<string | SelectOption>;
-  value?: string;
-  defaultValue?: string;
-  onValueChange?: (value: string) => void;
+  options?: Array<V | (SelectOption & { value: V })>;
+  value?: V;
+  defaultValue?: V;
+  onValueChange?: (value: V) => void;
   icon?: string;
   disabled?: boolean;
   required?: boolean;

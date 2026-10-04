@@ -4,8 +4,10 @@
   align-items: center;
   gap: 0.55rem;
   font-size: var(--ad-font-size-body-sm);
+  min-width: 0;
   color: var(--ad-neutral-300);
-  white-space: nowrap;
+  /* Short labels stay on one line; a long one wraps instead of pushing its container wider. */
+  overflow-wrap: anywhere;
 }
 .ad-status-dot {
   position: relative;

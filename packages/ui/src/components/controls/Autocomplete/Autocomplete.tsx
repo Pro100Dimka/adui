@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import { assignRef, useControllable } from "../../../core/base";
 import { Popover } from "../../feedback/Popover/Popover";
-import { FieldFrame, fieldLabel, OptionList, toOption } from "../internal";
+import { FieldFrame, fieldLabel, useFieldIds, OptionList, toOption } from "../internal";
 import { IconButton } from "../IconButton/IconButton";
 import { InputBase } from "../InputBase/InputBase";
 import type { AutocompleteProps } from "../shared";
@@ -56,9 +56,11 @@ export const Autocomplete = ({
     setOpen(false);
     inputNode.current?.focus();
   };
+  const ids = useFieldIds(label, description || error);
   const floating = labelPlacement === "floating" && !!label;
   return (
     <FieldFrame
+      ids={ids}
       className={`ad-autocomplete-shell ${className ?? ""}`}
       label={floating ? undefined : label}
       required={input.required}
@@ -69,6 +71,7 @@ export const Autocomplete = ({
         ref={box}
         size={size}
         variant={variant}
+        labelId={ids.label}
         label={floating ? fieldLabel(label, input.required) : undefined}
         filled={!!current}
         disabled={input.disabled}
@@ -105,6 +108,7 @@ export const Autocomplete = ({
         }
       >
         <input
+          {...ids.aria}
           {...input}
           className="ad-autocomplete-input"
           ref={(n) => {

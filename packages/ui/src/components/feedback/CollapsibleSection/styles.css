@@ -28,6 +28,17 @@
 .ad-collapsible-section summary:hover {
   background: #ffffff08;
 }
+.ad-collapse-heading {
+  display: grid;
+  flex: 1;
+  gap: 0.15rem;
+  min-width: 0;
+}
+.ad-collapse-heading > small {
+  color: var(--ad-muted);
+  font-size: var(--ad-font-size-caption);
+  font-weight: 400;
+}
 .ad-collapsible-section summary > .ad-icon:first-child {
   transition:
     transform 0.4s cubic-bezier(0.34, 1.56, 0.5, 1),

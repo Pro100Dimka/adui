@@ -3,6 +3,7 @@ import {
   useContext,
   useEffect,
   useMemo,
+  useRef,
   useState,
   type FormEvent,
   type ReactNode,
@@ -51,60 +52,73 @@ export function useForm<T extends Record<string, unknown>>(
     [errors, setErrors] = useState<FormErrors<T>>({}),
     [touched, setTouchedState] = useState<Record<string, boolean>>({}),
     [submitting, setSubmitting] = useState(false),
+    // The latest values and options: several changes in one event all land, submit sees them at
+    // once, and the methods below keep one identity for the life of the form (safe in effect deps).
+    latest = useRef(values),
+    settings = useRef(options),
     initialKey = JSON.stringify(options.initialValues);
+  settings.current = options;
   useEffect(() => {
-    if (options.reinitialize !== false) {
-      setValues(options.initialValues);
+    if (settings.current.reinitialize !== false) {
+      latest.current = settings.current.initialValues;
+      setValues(settings.current.initialValues);
       setErrors({});
       setTouchedState({});
     }
-  }, [initialKey, options.reinitialize]);
-  const validate = async (next = values) => {
-    const result = (await options.validate?.(next)) ?? {};
-    setErrors(result);
-    return result;
-  };
-  const api = useMemo(
-    () =>
-      ({
-        values,
-        errors,
-        touched,
-        submitting,
-        setValue: (path: string, value: unknown) => {
-          const next = setPath(values, path, value);
-          setValues(next);
-          if (options.validateOnChange) void validate(next);
-        },
-        setTouched: (path: string, state = true) => {
-          setTouchedState((current) => ({ ...current, [path]: state }));
-          if (state && options.validateOnBlur !== false) void validate();
-        },
-        reset: (next = options.initialValues) => {
-          setValues(next);
-          setErrors({});
-          setTouchedState({});
-        },
-        submit: async () => {
-          const result = await validate();
-          if (Object.values(result).some(Boolean)) return false;
-          setSubmitting(true);
-          try {
-            await options.onSubmit?.(values, api as FormApi<T>);
-            return true;
-          } finally {
-            setSubmitting(false);
-          }
-        },
-        field: (path: string) => ({
-          value: getPath(values, path),
-          error: getPath(errors, path),
-          touched: !!touched[path],
-          onValueChange: (value: unknown) => api.setValue(path, value),
-          onBlur: () => api.setTouched(path),
-        }),
-      }) as FormApi<T>,
-    [values, errors, touched, submitting, options],
+  }, [initialKey]);
+  const methods = useMemo(() => {
+    const validate = async (next: T) => {
+      const result = (await settings.current.validate?.(next)) ?? {};
+      setErrors(result);
+      return result;
+    };
+    const setValue = (path: string, value: unknown) => {
+      const next = setPath(latest.current, path, value);
+      latest.current = next;
+      setValues(next);
+      if (settings.current.validateOnChange) void validate(next);
+    };
+    const setTouched = (path: string, state = true) => {
+      setTouchedState((current) => ({ ...current, [path]: state }));
+      if (state && settings.current.validateOnBlur !== false) void validate(latest.current);
+    };
+    const reset = (next = settings.current.initialValues) => {
+      latest.current = next;
+      setValues(next);
+      setErrors({});
+      setTouchedState({});
+    };
+    return { validate, setValue, setTouched, reset };
+  }, []);
+  const api: FormApi<T> = useMemo(
+    () => ({
+      values,
+      errors,
+      touched,
+      submitting,
+      setValue: methods.setValue,
+      setTouched: methods.setTouched,
+      reset: methods.reset,
+      submit: async () => {
+        const result = await methods.validate(latest.current);
+        if (Object.values(result).some(Boolean)) return false;
+        setSubmitting(true);
+        try {
+          await settings.current.onSubmit?.(latest.current, api);
+          return true;
+        } finally {
+          setSubmitting(false);
+        }
+      },
+      field: (path: string) => ({
+        value: getPath(values, path),
+        error: getPath(errors, path),
+        touched: !!touched[path],
+        onValueChange: (value: unknown) => methods.setValue(path, value),
+        onBlur: () => methods.setTouched(path),
+      }),
+    }),
+    [values, errors, touched, submitting, methods],
   );
   return api;
 }

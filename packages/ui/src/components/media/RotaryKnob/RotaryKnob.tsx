@@ -25,24 +25,37 @@ export const RotaryKnob = (p: RotaryKnobProps) => {
   const onCommitRef = useRef(p.onValueCommit);
   const disabledRef = useRef(!!p.disabled);
   const readOnlyRef = useRef(!!p.readOnly);
-  const stepRef = useRef(Math.max(0.001, p.step ?? 1));
-  const fineStepRef = useRef(Math.max(0.001, p.fineStep ?? 0.1));
-  onChangeRef.current = p.onValueChange;
-  onCommitRef.current = p.onValueCommit;
-  disabledRef.current = !!p.disabled;
-  readOnlyRef.current = !!p.readOnly;
-  stepRef.current = Math.max(0.001, p.step ?? 1);
-  fineStepRef.current = Math.max(0.001, p.fineStep ?? 0.1);
-
-  const initial = clamp(p.defaultValue ?? p.value ?? 67);
-  const initialRef = useRef(initial);
-  const diameter =
-    p.diameter ??
-    { xs: 84, sm: 124, md: 220, lg: 320 }[normalizeSize(p.size) ?? "md"];
   const numberFormat = useMemo(
     () => new Intl.NumberFormat("ru-RU", { maximumFractionDigits: 1 }),
     [],
   );
+  // The knob turns through positions 0–100; values in [min, max] map onto them at the edges.
+  const min = p.min ?? 0;
+  const span = (p.max ?? 100) - min || 1;
+  const toPosition = (value: number) => clamp(((value - min) / span) * 100);
+  const toValue = (position: number) =>
+    Math.round((min + (position / 100) * span) * 1e6) / 1e6;
+  const displayScale = p.displayScale ?? 1;
+  const format = (value: number) =>
+    `${numberFormat.format(value * displayScale)}${p.suffix ?? "%"}`;
+  const scale = useRef({ toValue, format });
+  scale.current = { toValue, format };
+  const stepRef = useRef(1);
+  const fineStepRef = useRef(0.1);
+  onChangeRef.current = p.onValueChange;
+  onCommitRef.current = p.onValueCommit;
+  disabledRef.current = !!p.disabled;
+  readOnlyRef.current = !!p.readOnly;
+  stepRef.current = Math.max(0.001, ((p.step ?? span / 100) / span) * 100);
+  fineStepRef.current = Math.max(0.001, ((p.fineStep ?? span / 1000) / span) * 100);
+
+  const initial = toPosition(p.defaultValue ?? p.value ?? min + span * 0.67);
+  const initialRef = useRef(initial);
+  const resetRef = useRef<number | undefined>(undefined);
+  resetRef.current = p.resetValue === undefined ? undefined : toPosition(p.resetValue);
+  const diameter =
+    p.diameter ??
+    { xs: 84, sm: 124, md: 220, lg: 320 }[normalizeSize(p.size) ?? "md"];
 
   useLayoutEffect(() => {
     const root = rootRef.current!;
@@ -530,21 +543,20 @@ export const RotaryKnob = (p: RotaryKnobProps) => {
       const nextValue = Math.round(localClamp(numeric, 0, 100) * 1000) / 1000;
       const changed = nextValue !== value;
       value = nextValue;
-      root.dataset.value = String(value);
-      control.setAttribute("aria-valuenow", String(value));
-      control.setAttribute(
-        "aria-valuetext",
-        `${numberFormat.format(value)} процентов`,
-      );
-      control.title = `${p.label ?? "Громкость"}: ${numberFormat.format(value)}% · ведите по кругу или тяните за центр`;
-      readout.textContent = `${numberFormat.format(value)}%`;
+      const shown = scale.current.toValue(value);
+      const text = scale.current.format(shown);
+      root.dataset.value = String(shown);
+      control.setAttribute("aria-valuenow", String(shown));
+      control.setAttribute("aria-valuetext", text);
+      control.title = `${p.label ?? "Громкость"}: ${text} · ведите по кругу или тяните за центр`;
+      readout.textContent = text;
       schedulePaint();
-      if (changed && notify) onChangeRef.current?.(value);
+      if (changed && notify) onChangeRef.current?.(shown);
       return changed;
     }
 
     function commit() {
-      if (!disposed) onCommitRef.current?.(value);
+      if (!disposed) onCommitRef.current?.(scale.current.toValue(value));
     }
 
     function geometry() {
@@ -719,7 +731,7 @@ export const RotaryKnob = (p: RotaryKnobProps) => {
       if (disabledRef.current || readOnlyRef.current) return;
       event.preventDefault();
       finishDrag();
-      if (setValue(p.resetValue ?? defaultValue)) commit();
+      if (setValue(resetRef.current ?? defaultValue)) commit();
     }
 
     function scheduleRender() {
@@ -772,7 +784,7 @@ export const RotaryKnob = (p: RotaryKnobProps) => {
         setValue(next, notify);
       },
       reset() {
-        if (setValue(p.resetValue ?? defaultValue)) commit();
+        if (setValue(resetRef.current ?? defaultValue)) commit();
       },
     };
     setValue(value, false);
@@ -793,8 +805,9 @@ export const RotaryKnob = (p: RotaryKnobProps) => {
 
   useEffect(() => {
     if (p.value !== undefined)
-      controllerRef.current?.setValue(clamp(p.value), false);
-  }, [p.value]);
+      controllerRef.current?.setValue(toPosition(p.value), false);
+    // The scale is read on every render; a new value or range moves the knob.
+  }, [p.value, min, span]);
 
   // Typing a value, as in studio plug-ins: click the readout, Enter applies, Escape cancels.
   const [draft, setDraft] = useState<string | null>(null);
@@ -802,13 +815,13 @@ export const RotaryKnob = (p: RotaryKnobProps) => {
   const editable = !p.disabled && !p.readOnly;
   const applyDraft = () => {
     if (cancelled.current) return;
-    const next = Number(draft?.replace(",", ".").replace("%", ""));
+    const next = Number(draft?.replace(",", ".").replace(/[^\d.+-]/g, ""));
     setDraft(null);
     const controller = controllerRef.current;
-    if (!controller || !Number.isFinite(next)) return;
+    if (!draft?.trim() || !controller || !Number.isFinite(next)) return;
     const before = controller.value;
-    controller.setValue(clamp(next), true);
-    if (controller.value !== before) p.onValueCommit?.(controller.value);
+    controller.setValue(toPosition(next / displayScale), true);
+    if (controller.value !== before) p.onValueCommit?.(toValue(controller.value));
   };
 
   const rootProps = mark("RotaryKnob", p, undefined, "knob");
@@ -816,9 +829,10 @@ export const RotaryKnob = (p: RotaryKnobProps) => {
     <div
       {...rootProps}
       ref={rootRef}
-      data-value={initial}
+      data-value={toValue(initial)}
       data-disabled={p.disabled || undefined}
       data-readonly={p.readOnly || undefined}
+      data-labelled={p.showLabel || undefined}
       style={
         {
           ...p.style,
@@ -852,10 +866,10 @@ export const RotaryKnob = (p: RotaryKnobProps) => {
         aria-disabled={p.disabled || undefined}
         aria-readonly={p.readOnly || undefined}
         aria-label={p.label ?? "Громкость"}
-        aria-valuemin={0}
-        aria-valuemax={100}
-        aria-valuenow={initial}
-        aria-valuetext={`${numberFormat.format(initial)} процентов`}
+        aria-valuemin={min}
+        aria-valuemax={min + span}
+        aria-valuenow={toValue(initial)}
+        aria-valuetext={format(toValue(initial))}
         aria-orientation={p.readOnly ? undefined : "vertical"}
       >
         <div className="knob__indicator" aria-hidden="true">
@@ -873,11 +887,11 @@ export const RotaryKnob = (p: RotaryKnobProps) => {
             if (!editable) return;
             cancelled.current = false;
             setDraft(
-              numberFormat.format(controllerRef.current?.value ?? initial),
+              numberFormat.format(toValue(controllerRef.current?.value ?? initial) * displayScale),
             );
           }}
         >
-          {numberFormat.format(initial)}%
+          {format(toValue(initial))}
         </div>
       )}
       {draft !== null && (
@@ -898,6 +912,11 @@ export const RotaryKnob = (p: RotaryKnobProps) => {
             }
           }}
         />
+      )}
+      {p.showLabel && p.label && (
+        <span className="knob__label" aria-hidden="true">
+          {p.label}
+        </span>
       )}
       <span className="ad-sr-only">
         Зажмите ручку ближе к краю и ведите мышью по кругу. За центр можно
