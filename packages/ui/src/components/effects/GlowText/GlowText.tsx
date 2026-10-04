@@ -16,7 +16,12 @@ export function GlowText({
 }: GlowTextProps) {
   return createElement(
     as,
-    { ...mark("GlowText", p), "data-flicker": flicker || undefined },
+    {
+      ...mark("GlowText", p),
+      "data-flicker": flicker || undefined,
+      // Plain text gets its halo from a still copy behind it, so the flowing gradient never re-filters.
+      "data-text": typeof children === "string" ? children : undefined,
+    },
     children,
   );
 }

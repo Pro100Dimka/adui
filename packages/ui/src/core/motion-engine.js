@@ -178,38 +178,36 @@ U.attachBorder = (element, { shell = false, round = false, scope } = {}) => {
           "stop-opacity": opacity,
         }),
       );
-    const blur = U.svg("filter", {
-      id: `${id}-blur`,
-      filterUnits: "userSpaceOnUse",
-      x: 0,
-      y: 0,
-      width: radius * 2 + 28,
-      height: radius * 2 + 28,
-      "color-interpolation-filters": "sRGB",
+    defs.append(gradient, red);
+    // The aura is soft without a blur filter (which the browser would redraw on the CPU every
+    // frame): two wide, faint strokes of the fading gradient stack into a glow.
+    const haze = U.svg("path", {
+      fill: "none",
+      stroke: `url(#${id}-red)`,
+      "stroke-width": 13,
+      "stroke-linecap": "round",
+      opacity: 0.22,
     });
-    blur.append(U.svg("feGaussianBlur", { stdDeviation: 4.2 }));
-    defs.append(gradient, red, blur);
     const aura = U.svg("path", {
       fill: "none",
       stroke: `url(#${id}-red)`,
-      "stroke-width": 7.5,
-      filter: `url(#${id}-blur)`,
-      opacity: 0.94,
+      "stroke-width": 6.5,
+      "stroke-linecap": "round",
+      opacity: 0.55,
     });
     const core = U.svg("path", {
       fill: "none",
       stroke: `url(#${id})`,
       "stroke-width": shell ? 1.9 : 1.35,
     });
-    overlay.append(aura, core);
+    overlay.append(haze, aura, core);
     lights.push({
       gradient,
       red,
-      blur,
       radius,
       phase: (k * 0.48 + 0.535) % 1,
       speed: round ? (k ? 25 : 36) : k ? 86 : 125,
-      paths: [aura, core],
+      paths: [haze, aura, core],
     });
   }
   const computedPosition = getComputedStyle(element).position;
@@ -241,12 +239,16 @@ U.attachBorder = (element, { shell = false, round = false, scope } = {}) => {
       const p = path.getPointAtLength(
         (light.phase * item.length + time * light.speed) % item.length,
       );
+      const x = p.x.toFixed(1),
+        y = p.y.toFixed(1);
+      // Unchanged positions are not written, so a still light costs nothing.
+      if (light.x === x && light.y === y) continue;
+      light.x = x;
+      light.y = y;
       for (const g of [light.gradient, light.red]) {
-        g.setAttribute("cx", p.x.toFixed(2));
-        g.setAttribute("cy", p.y.toFixed(2));
+        g.setAttribute("cx", x);
+        g.setAttribute("cy", y);
       }
-      light.blur.setAttribute("x", (p.x - radius - 14).toFixed(1));
-      light.blur.setAttribute("y", (p.y - radius - 14).toFixed(1));
     }
   };
   item.sync = () => {

@@ -18,8 +18,8 @@ export interface MediaCardProps extends CommonProps {
   badge?: ReactNode;
   /** Round buttons in the glass pill at the bottom. */
   actions?: ReactNode;
-  /** Lean toward the pointer with a glare. */
-  tilt?: boolean;
+  /** Lean toward the pointer with a glossy glare; a number sets the largest lean in degrees. */
+  tilt?: boolean | number;
 }
 
 /**
@@ -46,5 +46,5 @@ export function MediaCard({ title, subtitle, image, levels, phase = 0, badge, ac
       </div>
     </Card>
   );
-  return <div {...mark("MediaCard", p)}>{tilt ? <Tilt max={5}>{card}</Tilt> : card}</div>;
+  return <div {...mark("MediaCard", p)}>{tilt ? <Tilt max={typeof tilt === "number" ? tilt : 10}>{card}</Tilt> : card}</div>;
 }

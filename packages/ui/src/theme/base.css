@@ -87,6 +87,8 @@ button.ad:focus-visible {
   user-select: none;
   fill: none;
   z-index: 20;
+  /* Its own layer: the moving lights repaint only this overlay, never the card under it. */
+  will-change: transform;
 }
 .ad-spinner {
   width: 0.9375rem;

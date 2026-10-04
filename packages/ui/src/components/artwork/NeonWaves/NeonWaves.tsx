@@ -29,20 +29,34 @@ const skyline = (x: number) => {
   const k = x1 === x0 ? 0 : (x - x0) / (x1 - x0);
   return y0 + (y1 - y0) * (1 - Math.cos(k * Math.PI)) / 2;
 };
-const SAMPLES = 72;
+const SAMPLES = 36;
+
+/** A smooth curve through the points (Catmull-Rom as cubic Béziers): few samples, no corners. */
+const smooth = (xs: number[], ys: number[]) => {
+  let d = `M${xs[0]!.toFixed(1)} ${ys[0]!.toFixed(1)}`;
+  for (let i = 0; i < xs.length - 1; i += 1) {
+    const x0 = xs[i - 1] ?? xs[i]!, y0 = ys[i - 1] ?? ys[i]!;
+    const x1 = xs[i]!, y1 = ys[i]!, x2 = xs[i + 1]!, y2 = ys[i + 1]!;
+    const x3 = xs[i + 2] ?? x2, y3 = ys[i + 2] ?? y2;
+    d += `C${(x1 + (x2 - x0) / 6).toFixed(1)} ${(y1 + (y2 - y0) / 6).toFixed(1)} ${(x2 - (x3 - x1) / 6).toFixed(1)} ${(y2 - (y3 - y1) / 6).toFixed(1)} ${x2.toFixed(1)} ${y2.toFixed(1)}`;
+  }
+  return d;
+};
 
 /** One strand of the ridge: the skyline, spread apart in the valleys and gathered at the peaks, rippling slowly. */
 const ridgeStrand = (t: number, drift: number) => {
-  let d = "";
+  const xs: number[] = [];
+  const ys: number[] = [];
   for (let i = 0; i <= SAMPLES; i += 1) {
     const x = i / SAMPLES;
     const base = skyline(x);
     const spread = H * (0.06 + 0.26 * base);
     // Neighbouring strands ripple out of step, so the bundle braids instead of moving as one band.
     const ripple = Math.sin(x * 8 + drift + t * 7) * H * (0.03 + 0.05 * base) + Math.sin(x * 21 - drift * 1.3 + t * 11) * H * 0.014;
-    d += `${i ? "L" : "M"}${(x * (W + 20) - 10).toFixed(1)} ${(base * H + (t - 0.5) * spread + ripple).toFixed(1)}`;
+    xs.push(x * (W + 20) - 10);
+    ys.push(base * H + (t - 0.5) * spread + ripple);
   }
-  return d;
+  return smooth(xs, ys);
 };
 
 /** Which strands carry a comet: spread across the bundle so they never run on top of each other. */

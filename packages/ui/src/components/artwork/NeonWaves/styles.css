@@ -5,6 +5,8 @@
   height: clamp(4.5rem, 3rem + 6vw, 7.5rem);
   overflow: visible;
   pointer-events: none;
+  /* Its own layer: the moving strands never repaint what lies around them. */
+  will-change: transform;
 }
 .ad-neon-waves-star {
   fill: var(--ad-pink);

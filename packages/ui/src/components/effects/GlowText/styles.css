@@ -20,6 +20,20 @@
   filter: drop-shadow(0 0 0.35em rgb(from var(--ad-primary) r g b / 0.53)) drop-shadow(0 0 1em rgb(from var(--ad-primary) r g b / 0.27));
   animation: ad-glow-flow 5s linear infinite;
 }
+.ad-glow-text[data-text] {
+  position: relative;
+  isolation: isolate;
+  filter: none;
+}
+.ad-glow-text[data-text]::before {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  color: transparent;
+  text-shadow: 0 0 0.35em rgb(from var(--ad-primary) r g b / 0.53), 0 0 1em rgb(from var(--ad-primary) r g b / 0.27);
+  pointer-events: none;
+}
 .ad-glow-text[data-flicker] {
   animation:
     ad-glow-flow 5s linear infinite,
