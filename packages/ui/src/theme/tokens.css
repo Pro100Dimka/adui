@@ -162,6 +162,22 @@
   --ad-space-12: calc(var(--ad-space-unit) * 12);
 
   --ad-radius: clamp(0.6875rem, 0.58rem + 0.28vw, 0.9375rem);
+  --ad-radius-sm: calc(var(--ad-radius) * 0.6);
+  --ad-radius-lg: calc(var(--ad-radius) * 1.4);
+  --ad-radius-pill: 999rem;
+
+  /* Motion: one set of timings and curves, so every screen moves alike. */
+  --ad-duration-fast: 140ms;
+  --ad-duration-normal: 220ms;
+  --ad-duration-slow: 360ms;
+  --ad-ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --ad-ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Stacking layers for things floating over a screen. */
+  --ad-z-floating: 40;
+  --ad-z-overlay: 900;
+  --ad-z-toast: 1600;
+  --ad-z-system: 2100;
   --ad-control-height: clamp(2.375rem, 2.15rem + 0.6vw, 2.875rem);
   --ad-focus: var(--ad-secondary-100);
   --ad-success: #11d6a4;

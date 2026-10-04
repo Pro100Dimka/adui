@@ -140,11 +140,17 @@ export const useFloatingPanel = (frameRef: RefObject<HTMLElement | null>, option
     );
   };
   const handleUp = () => {
-    if (!drag.current) return;
+    const current = drag.current;
+    if (!current) return;
     drag.current = null;
     setActive(true);
     // A plain click only selects; it never changes the placement.
-    if (moved.current && live) latest.current.onLayoutChange?.(live);
+    if (!moved.current || !live) return;
+    // Moving keeps the size the panel was given, not the size a small window squeezed it to,
+    // so it grows back when the window does.
+    const { layout: kept, defaultSize } = latest.current;
+    const size = kept ?? defaultSize;
+    latest.current.onLayoutChange?.(current.kind === "move" && size ? { ...live, width: size.width, height: size.height } : live);
   };
 
   const deactivate = useCallback(() => setActive(false), []);

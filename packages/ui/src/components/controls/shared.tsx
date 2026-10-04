@@ -79,6 +79,7 @@ export function buttonView(p: ButtonProps, name = "Button") {
       onPointerLeave={resetLight}
     >
       <span className="ad-button-fx" aria-hidden="true" />
+      <span className="ad-button-orbit" aria-hidden="true" />
       {loading && <span className="ad-spinner" aria-hidden="true" />}
       {icon && <Icon name={icon} />}{" "}
       {content != null && <span className="ad-button-label">{content}</span>}
@@ -273,4 +274,11 @@ export interface FilePickerProps extends CommonProps {
   accept?: string;
   multiple?: boolean;
   onFiles?: (files: File[]) => void;
+  /** "zone" is a large drop area: icon, title, the picked name or hint; files can be dropped on it. */
+  variant?: "button" | "zone";
+  /** Your own chooser instead of the browser's file input (e.g. a native dialog of a desktop app). */
+  onPick?: () => void;
+  /** Name of the chosen file, when the choice is kept outside (with `onPick`). */
+  value?: string;
+  disabled?: boolean;
 }

@@ -28,9 +28,9 @@
   box-shadow: var(--ad-shadow-tile);
   color: var(--ad-neutral-200);
 }
-/* Tile icons breathe with light; hovering lifts the tile and rocks the glyph. */
+/* Tile icons breathe with light (a glow layer fading in and out); hovering lifts the tile and rocks the glyph. */
 .ad-icon[data-ad-surface="tile"] {
-  animation: ad-tile-breathe 4s ease-in-out infinite;
+  position: relative;
   transition:
     transform 0.4s cubic-bezier(0.34, 1.56, 0.5, 1),
     border-color 0.3s;
@@ -45,14 +45,18 @@
 .ad-icon[data-ad-surface="tile"]:hover > [data-ad-component="IconAsset"] {
   transform: rotate(-10deg) scale(1.08);
 }
+.ad-icon[data-ad-surface="tile"]::after {
+  content: "";
+  position: absolute;
+  inset: -0.0625rem;
+  border-radius: inherit;
+  box-shadow: 0 0 1rem rgb(from var(--ad-primary) r g b / 0.33);
+  opacity: 0;
+  animation: ad-tile-breathe 4s ease-in-out infinite;
+  pointer-events: none;
+}
 @keyframes ad-tile-breathe {
-  0%,
-  100% {
-    box-shadow: var(--ad-shadow-tile);
-  }
   50% {
-    box-shadow:
-      var(--ad-shadow-tile),
-      0 0 1rem rgb(from var(--ad-primary) r g b / 0.33);
+    opacity: 1;
   }
 }

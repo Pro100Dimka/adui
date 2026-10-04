@@ -148,6 +148,8 @@ const knobLabels: Record<string, string> = {
   striped: "Зебра",
   strands: "Нити",
   stars: "Звёзды",
+  shape: "Форма",
+  comets: "Кометы",
   upload: "Облако загрузки",
 };
 

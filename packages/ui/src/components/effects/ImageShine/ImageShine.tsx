@@ -1,4 +1,4 @@
-import { useSvgId } from "../../../core/artwork";
+import type { CSSProperties } from "react";
 import { mark, type CommonProps } from "../../../core/base";
 
 export interface ImageShineProps extends CommonProps {
@@ -9,36 +9,25 @@ export interface ImageShineProps extends CommonProps {
   label?: string;
 }
 
-const SIZE = 500;
-
-/** A band of light sweeps across a picture's shape, as on a polished badge; the picture breathes. */
-export function ImageShine({ src, glow = true, label, ...p }: ImageShineProps) {
-  const id = useSvgId();
+/**
+ * A band of light sweeps across a picture's shape, as on a polished badge; the picture breathes.
+ * Built from stacked layers that only move and fade, so the browser composites it on the GPU.
+ */
+export function ImageShine({ src, glow = true, label, style, ...p }: ImageShineProps) {
   return (
-    <svg
+    <span
       {...mark("ImageShine", p)}
-      viewBox={`0 0 ${SIZE} ${SIZE}`}
+      style={{ ...style, "--ad-shine-src": `url("${src}")` } as CSSProperties}
       data-glow={glow || undefined}
       role={label ? "img" : undefined}
       aria-label={label}
       aria-hidden={label ? undefined : true}
     >
-      <defs>
-        <mask id={`${id}-mask`} maskUnits="userSpaceOnUse" x="0" y="0" width={SIZE} height={SIZE} style={{ maskType: "alpha" }}>
-          <image href={src} width={SIZE} height={SIZE} />
-        </mask>
-        <linearGradient id={`${id}-sweep`} x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0" stopColor="var(--ad-primary)" stopOpacity="0" />
-          <stop offset="0.42" stopColor="var(--ad-primary)" stopOpacity="0.58" />
-          <stop offset="0.5" stopColor="var(--ad-secondary-100)" stopOpacity="0.92" />
-          <stop offset="0.58" stopColor="var(--ad-primary)" stopOpacity="0.58" />
-          <stop offset="1" stopColor="var(--ad-primary)" stopOpacity="0" />
-        </linearGradient>
-      </defs>
-      <image className="ad-image-shine-picture" href={src} width={SIZE} height={SIZE} />
-      <g mask={`url(#${id}-mask)`}>
-        <rect className="ad-image-shine-sweep" x={-SIZE / 2} y="0" width={SIZE / 2} height={SIZE} fill={`url(#${id}-sweep)`} />
-      </g>
-    </svg>
+      {glow && <img className="ad-image-shine-glow" src={src} alt="" draggable={false} />}
+      <img className="ad-image-shine-picture" src={src} alt="" draggable={false} />
+      <span className="ad-image-shine-sweep">
+        <i />
+      </span>
+    </span>
   );
 }

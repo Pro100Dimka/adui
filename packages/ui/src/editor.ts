@@ -1,5 +1,2 @@
-export { PianoRollGrid } from "./components/editor/PianoRollGrid/PianoRollGrid";
-export type {
-  PianoRollGridProps,
-  NoteGeometry,
-} from "./components/editor/shared";
+export { PianoRoll } from "./components/editor/PianoRoll/PianoRoll";
+export type { PianoRollProps, PianoRollNote, PianoRollWord, PianoRollGesture } from "./components/editor/PianoRoll/PianoRoll";

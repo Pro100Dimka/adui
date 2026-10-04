@@ -23,7 +23,7 @@
 @import "./components/controls/TextArea/styles.css";
 @import "./components/controls/ThemePicker/styles.css";
 @import "./components/controls/ToggleButton/styles.css";
-@import "./components/editor/PianoRollGrid/styles.css";
+@import "./components/editor/PianoRoll/styles.css";
 @import "./components/effects/AnimatedBorder/styles.css";
 @import "./components/effects/Marquee/styles.css";
 @import "./components/effects/Beacon/styles.css";
@@ -57,6 +57,8 @@
 @import "./components/layout/BrandMark/styles.css";
 @import "./components/layout/ButtonGroup/styles.css";
 @import "./components/layout/Card/styles.css";
+@import "./components/layout/StatTile/styles.css";
+@import "./components/media/MediaCard/styles.css";
 @import "./components/layout/DialogActions/styles.css";
 @import "./components/layout/DialogBody/styles.css";
 @import "./components/layout/Divider/styles.css";

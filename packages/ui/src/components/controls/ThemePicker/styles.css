@@ -35,19 +35,20 @@
   transform: translateY(-0.15em) scale(1.25);
 }
 .ad-theme-picker > .ad-button[aria-pressed="true"] .ad-theme-swatch {
+  position: relative;
+}
+.ad-theme-picker > .ad-button[aria-pressed="true"] .ad-theme-swatch::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: 0 0 0 0.3em #ffffff22, 0 0 1em currentColor;
+  opacity: 0;
   animation: ad-swatch-pulse 2s ease-in-out infinite;
 }
 @keyframes ad-swatch-pulse {
-  0%,
-  100% {
-    box-shadow:
-      0 0 0 0.125rem #0007,
-      0 0 0.45em currentColor;
-  }
   50% {
-    box-shadow:
-      0 0 0 0.3em #ffffff22,
-      0 0 1em currentColor;
+    opacity: 1;
   }
 }
 /* Gallery: one picture card per theme, edged and lit in that theme's colour. */
@@ -93,7 +94,7 @@
   padding: var(--ad-space-2);
   background: radial-gradient(ellipse at 50% 76%, rgb(from var(--ad-theme-card) r g b / 0.18), transparent 72%);
 }
-.ad-theme-card-preview > :is(img, svg) {
+.ad-theme-card-preview > :is(img, svg, .ad-image-shine) {
   width: auto;
   max-width: 100%;
   height: 100%;

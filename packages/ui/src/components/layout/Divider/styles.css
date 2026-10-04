@@ -24,43 +24,35 @@
 .ad-divider::after {
   content: "";
   position: absolute;
-  inset: 0;
-  background: linear-gradient(
-      90deg,
-      transparent,
-      var(--ad-secondary-100),
-      var(--ad-primary),
-      transparent
-    ) -40%
-    0 / 40% 100% no-repeat;
+  inset: 0 auto 0 0;
+  width: 40%;
+  background: linear-gradient(90deg, transparent, var(--ad-secondary-100), var(--ad-primary), transparent);
+  transform: translateX(-100%);
   animation: ad-divider-pulse 6s ease-in-out infinite;
 }
 .ad-divider[aria-orientation="vertical"]::after {
-  background: linear-gradient(
-      180deg,
-      transparent,
-      var(--ad-secondary-100),
-      var(--ad-primary),
-      transparent
-    )
-    0 -40% / 100% 40% no-repeat;
+  inset: 0 0 auto;
+  width: auto;
+  height: 40%;
+  background: linear-gradient(180deg, transparent, var(--ad-secondary-100), var(--ad-primary), transparent);
+  transform: translateY(-100%);
   animation-name: ad-divider-pulse-y;
 }
 @keyframes ad-divider-pulse {
   0%,
   55% {
-    background-position: -40% 0;
+    transform: translateX(-100%);
   }
   100% {
-    background-position: 140% 0;
+    transform: translateX(250%);
   }
 }
 @keyframes ad-divider-pulse-y {
   0%,
   55% {
-    background-position: 0 -40%;
+    transform: translateY(-100%);
   }
   100% {
-    background-position: 0 140%;
+    transform: translateY(250%);
   }
 }

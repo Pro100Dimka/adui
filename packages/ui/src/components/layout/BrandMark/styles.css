@@ -10,28 +10,30 @@
 .ad-brand-mark > svg {
   width: min(15rem, 100%);
   height: auto;
+  filter: hue-rotate(var(--ad-hue-shift, 0deg)) drop-shadow(0 0 0.6rem rgb(from var(--ad-primary) r g b / 0.45));
   animation: ad-brand-breathe 4s ease-in-out infinite;
 }
 .ad-brand-mark > small {
+  display: block;
+  opacity: 0.8;
   font-size: 0.5rem;
   letter-spacing: 0.28rem;
   color: var(--ad-secondary-200);
   animation: ad-brand-spacing 4s ease-in-out infinite;
+  will-change: transform, opacity;
 }
 @keyframes ad-brand-breathe {
   0%,
   100% {
-    color: var(--ad-secondary);
-    filter: hue-rotate(var(--ad-hue-shift, 0deg)) drop-shadow(0 0 0.3rem rgb(from var(--ad-primary) r g b / 0.2));
+    opacity: 0.82;
   }
   50% {
-    color: var(--ad-secondary-200);
-    filter: hue-rotate(var(--ad-hue-shift, 0deg)) drop-shadow(0 0 0.9rem rgb(from var(--ad-primary) r g b / 0.67));
+    opacity: 1;
   }
 }
 @keyframes ad-brand-spacing {
   50% {
-    letter-spacing: 0.36rem;
-    color: #fff;
+    transform: scaleX(1.12);
+    opacity: 1;
   }
 }

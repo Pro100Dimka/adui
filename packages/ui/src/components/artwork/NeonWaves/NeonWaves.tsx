@@ -11,16 +11,50 @@ export interface NeonWavesProps extends CommonProps {
   stars?: boolean;
   /** Shifts the wave shape, so neighbouring instances do not move in step. */
   phase?: number;
+  /** "twist" braids the strands across; "ridge" lays them low on the left and lifts them into a mountain peak on the right. */
+  shape?: "twist" | "ridge";
+  /** Sparks of light that run along the strands. */
+  comets?: number;
 }
 
 const W = 600;
 const H = 120;
+
+/** The ridge's skyline as (x, y) fractions: calm on the left, a sharp peak, a dip and a rise at the edge. */
+const SKYLINE = [[0, 0.93], [0.16, 0.86], [0.3, 0.82], [0.42, 0.72], [0.55, 0.64], [0.64, 0.7], [0.74, 0.52], [0.84, 0.1], [0.9, 0.56], [0.95, 0.46], [1, 0.08]] as const;
+const skyline = (x: number) => {
+  const i = Math.max(0, SKYLINE.findIndex(([at]) => at >= x) - 1);
+  const [x0, y0] = SKYLINE[i]!;
+  const [x1, y1] = SKYLINE[Math.min(SKYLINE.length - 1, i + 1)]!;
+  const k = x1 === x0 ? 0 : (x - x0) / (x1 - x0);
+  return y0 + (y1 - y0) * (1 - Math.cos(k * Math.PI)) / 2;
+};
+const SAMPLES = 72;
+
+/** One strand of the ridge: the skyline, spread apart in the valleys and gathered at the peaks, rippling slowly. */
+const ridgeStrand = (t: number, drift: number) => {
+  let d = "";
+  for (let i = 0; i <= SAMPLES; i += 1) {
+    const x = i / SAMPLES;
+    const base = skyline(x);
+    const spread = H * (0.06 + 0.26 * base);
+    // Neighbouring strands ripple out of step, so the bundle braids instead of moving as one band.
+    const ripple = Math.sin(x * 8 + drift + t * 7) * H * (0.03 + 0.05 * base) + Math.sin(x * 21 - drift * 1.3 + t * 11) * H * 0.014;
+    d += `${i ? "L" : "M"}${(x * (W + 20) - 10).toFixed(1)} ${(base * H + (t - 0.5) * spread + ripple).toFixed(1)}`;
+  }
+  return d;
+};
+
+/** Which strands carry a comet: spread across the bundle so they never run on top of each other. */
+const cometStrand = (i: number, comets: number, strands: number) => Math.min(strands - 1, Math.round(((i + 0.5) / comets) * (strands - 1)));
 
 /** A bundle of neon strands that flow and twist slowly, with faint stars around them. */
 export function NeonWaves({
   strands = 22,
   stars = true,
   phase = 0.9,
+  shape = "twist",
+  comets = 0,
   ...p
 }: NeonWavesProps) {
   const ref = useRef<SVGSVGElement>(null);
@@ -37,10 +71,14 @@ export function NeonWaves({
   }, [stars, phase]);
 
   useDecoration(ref, (time) => {
-    const paths = ref.current?.querySelectorAll("path");
+    const paths = ref.current?.querySelectorAll<SVGPathElement>(".ad-neon-waves-strand");
     paths?.forEach((path, i) => {
       const t = i / Math.max(1, paths.length - 1);
       const drift = time * 0.42 + phase;
+      if (shape === "ridge") {
+        path.setAttribute("d", ridgeStrand(t, drift));
+        return;
+      }
       const a = Math.sin(drift + t * 1.4) * H * 0.095;
       const b = Math.cos(drift * 0.8 + t * 1.8) * H * 0.08;
       const y = H * (0.38 + t * 0.58);
@@ -51,6 +89,12 @@ export function NeonWaves({
           ? `M-12 ${y + a} C${W * 0.2} ${H * 1.28 - t * H * 0.27 + a} ${W * 0.32} ${H * 0.34 + t * H * 0.21 + b} ${W * 0.46} ${H * 0.62 + t * H * 0.12} S${W * 0.67} ${H * 1.14 - t * H * 0.09 + a} ${W * 0.8} ${H * 0.69 - t * H * 0.22 + b} S${W * 0.94} ${H * 0.43 - t * H * 0.44 + a} ${W + 8} ${H * 0.21 + t * H * 0.45}`
           : `M-12 ${H * (0.9 + t * 0.12) + b} C${W * 0.21} ${H * 0.98 + a} ${W * 0.33} ${H * 0.24 + t * H * 0.2 + a} ${W * 0.52} ${H * 0.75 + t * H * 0.25 + b} S${W * 0.82} ${H * 0.38 + t * H * 0.27 + a} ${W + 8} ${H * (0.48 + t * 0.5) + b}`,
       );
+    });
+    // Each comet rides its strand; its own dash animation moves it along.
+    ref.current?.querySelectorAll<SVGPathElement>(".ad-neon-waves-comet").forEach((comet) => {
+      const strand = paths?.[Number(comet.dataset.strand)];
+      const d = strand?.getAttribute("d");
+      if (d) comet.setAttribute("d", d);
     });
   });
 
@@ -70,10 +114,19 @@ export function NeonWaves({
           <stop offset=".78" stopColor="var(--ad-pink)" stopOpacity=".85" />
           <stop offset="1" stopColor="var(--ad-primary-600)" stopOpacity=".44" />
         </linearGradient>
+        {/* Comets fade in where the strands themselves come out of the dark. */}
+        <linearGradient id={`${id}-fade`}>
+          <stop stopColor="#fff" stopOpacity="0" />
+          <stop offset=".35" stopColor="#fff" stopOpacity="1" />
+        </linearGradient>
+        <mask id={`${id}-comets`} maskUnits="userSpaceOnUse" x={-20} y={-H} width={W + 40} height={H * 3}>
+          <rect x={-20} y={-H} width={W + 40} height={H * 3} fill={`url(#${id}-fade)`} />
+        </mask>
       </defs>
       {Array.from({ length: strands }, (_, i) => (
         <path
           key={i}
+          className="ad-neon-waves-strand"
           fill="none"
           stroke={`url(#${id}-strand)`}
           strokeWidth={i === 5 ? 1 : 0.55}
@@ -81,6 +134,19 @@ export function NeonWaves({
           vectorEffect="non-scaling-stroke"
         />
       ))}
+      <g mask={`url(#${id}-comets)`}>
+      {Array.from({ length: comets }, (_, i) => (
+        <path
+          key={`comet-${i}`}
+          className="ad-neon-waves-comet"
+          data-strand={cometStrand(i, comets, strands)}
+          fill="none"
+          pathLength={100}
+          vectorEffect="non-scaling-stroke"
+          style={{ animationDelay: `${-((i * 6) / comets + 1.8) % 6}s` }}
+        />
+      ))}
+      </g>
       {dots.map((d, i) => (
         <circle
           key={i}

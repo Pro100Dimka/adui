@@ -1,4 +1,4 @@
-/* Styles owned by NeonWaves: the strands move by script; the stars twinkle on their own. */
+/* Styles owned by NeonWaves: the strands move by script; the stars twinkle and the comets run on their own. */
 .ad-neon-waves {
   display: block;
   width: 100%;
@@ -13,5 +13,22 @@
 @keyframes ad-neon-twinkle {
   50% {
     opacity: 0.05;
+  }
+}
+/* A comet is a short bright dash with a glow, sliding along its strand's full length. */
+.ad-neon-waves-comet {
+  stroke: var(--ad-secondary-100, #ffb9cb);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-dasharray: 1.6 98.4;
+  filter: drop-shadow(0 0 0.2rem var(--ad-pink)) drop-shadow(0 0 0.5rem var(--ad-primary));
+  animation: ad-neon-comet 6s linear infinite;
+}
+@keyframes ad-neon-comet {
+  from {
+    stroke-dashoffset: 0;
+  }
+  to {
+    stroke-dashoffset: -100;
   }
 }

@@ -142,3 +142,29 @@ button.ad:focus-visible {
     display: none;
   }
 }
+
+/* Scrollbars inside a themed area: a slim glowing thumb in the primary colour, no arrows, a quiet track.
+   (Setting scrollbar-color would switch Chromium to plain bars, so only the WebKit parts are styled.) */
+.ad-theme ::-webkit-scrollbar {
+  width: clamp(0.6rem, 0.7vw, 1rem);
+  height: clamp(0.6rem, 0.7vw, 1rem);
+}
+.ad-theme ::-webkit-scrollbar-track {
+  border-radius: var(--ad-radius-pill);
+  background: rgb(from var(--ad-neutral-950) r g b / 0.35);
+}
+.ad-theme ::-webkit-scrollbar-thumb {
+  border: 0.18rem solid transparent;
+  border-radius: var(--ad-radius-pill);
+  background: linear-gradient(180deg, var(--ad-secondary), var(--ad-primary)) padding-box;
+  box-shadow: 0 0 0.5rem rgb(from var(--ad-primary) r g b / 0.6);
+}
+.ad-theme ::-webkit-scrollbar-thumb:hover {
+  background: var(--ad-secondary) padding-box;
+}
+.ad-theme ::-webkit-scrollbar-button {
+  display: none;
+}
+.ad-theme ::-webkit-scrollbar-corner {
+  background: transparent;
+}

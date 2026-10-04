@@ -78,7 +78,6 @@
 @keyframes ad-status-blink {
   50% {
     opacity: 0.3;
-    box-shadow: none;
   }
 }
 @keyframes ad-status-breathe {

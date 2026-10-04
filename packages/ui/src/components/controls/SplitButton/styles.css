@@ -1,7 +1,7 @@
 /* SplitButton shares the premium button shell so all variants stay visually consistent. */
 .ad-split-button {
   --ad-split-trigger: calc(var(--ad-size-h) * 0.92);
-  --ad-btn-radius: calc(var(--ad-size-radius) * 1.08);
+  --ad-btn-radius: 999rem;
   --ad-btn-bg-top: var(--ad-neutral-700);
   --ad-btn-bg-mid: var(--ad-neutral-850);
   --ad-btn-bg-bottom: var(--ad-neutral-900);

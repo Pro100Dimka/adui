@@ -1,0 +1,108 @@
+/* Styles owned by MediaCard: the cover fills the card under a dark gradient, the equalizer stands in
+   for a missing cover, the actions float in a glass pill. The card fills the height it is given. */
+.ad-media-card,
+.ad-media-card > .ad-tilt,
+.ad-media-card-card.ad-card {
+  height: 100%;
+  min-width: 0;
+}
+.ad-media-card-card.ad-card {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  transition: transform 0.18s var(--ad-ease-standard);
+}
+.ad-media-card-card.ad-card:hover {
+  transform: translateY(-0.2rem);
+}
+.ad-media-card-image {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+  object-position: center 28%;
+  transition: transform 0.42s var(--ad-ease-standard), filter 0.24s;
+}
+.ad-media-card-card:hover .ad-media-card-image {
+  filter: saturate(1.12) contrast(1.04);
+  transform: scale(1.045);
+}
+.ad-media-card-card[data-image]::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(180deg, rgb(from var(--ad-neutral-950) r g b / 0.68), transparent 42%),
+    linear-gradient(0deg, rgb(from var(--ad-neutral-950) r g b / 0.76), rgb(from var(--ad-neutral-950) r g b / 0.28) 48%, transparent 74%);
+}
+.ad-media-card-art {
+  position: absolute;
+  inset: 15% 0 0;
+  z-index: -1;
+  display: flex;
+  opacity: 0.25;
+  mask-image:
+    linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent),
+    linear-gradient(180deg, transparent, #000 14%, #000 88%, transparent);
+  mask-composite: intersect;
+  transition: opacity 0.18s;
+  pointer-events: none;
+}
+.ad-media-card-card[data-image] .ad-media-card-art {
+  opacity: 0.18;
+}
+.ad-media-card-card:hover .ad-media-card-art {
+  opacity: 0.32;
+}
+.ad-media-card-art > .ad-equalizer {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  gap: 0.35rem;
+  padding-inline: 0.75rem;
+}
+.ad-media-card-art > .ad-equalizer > i {
+  flex: 1;
+  width: auto;
+}
+.ad-media-card-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ad-space-3);
+  block-size: 100%;
+  box-sizing: border-box;
+  padding: clamp(0.85rem, 1.2vw, 1.25rem);
+}
+.ad-media-card-head {
+  display: flex;
+  gap: var(--ad-space-2);
+  align-items: flex-start;
+  justify-content: space-between;
+  min-inline-size: 0;
+}
+.ad-media-card-card[data-image] .ad-media-card-head {
+  text-shadow: 0 0.0625rem 0.125rem #000, 0 0 0.7rem #000c;
+}
+.ad-media-card-title {
+  display: grid;
+  flex: 1;
+  gap: 0.18rem;
+  min-inline-size: 0;
+}
+.ad-media-card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--ad-space-2);
+  inline-size: fit-content;
+  max-inline-size: 100%;
+  margin-block-start: auto;
+  padding: 0.22rem;
+  border: 0.0625rem solid rgb(from var(--ad-primary) r g b / 0.2);
+  border-radius: var(--ad-radius-pill);
+  background: rgb(from var(--ad-neutral-950) r g b / 0.6);
+  backdrop-filter: blur(0.9rem) saturate(1.25);
+}

@@ -15,6 +15,10 @@ export interface DialogProps extends CommonProps {
   closeLabel?: string;
   /** Decoration painted across the whole window behind its content (artwork, glows, frames). */
   art?: ReactNode;
+  /** Close on a click outside the window (default); `false` keeps it open until a button closes it. */
+  dismissible?: boolean;
+  /** Window width: "narrow" for a short question, "wide" and "large" for forms and lists, "full" for a workspace. */
+  width?: "narrow" | "normal" | "wide" | "large" | "full";
   danger?: boolean;
   onConfirm?: () => boolean | void | Promise<boolean | void>;
 }

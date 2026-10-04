@@ -11,7 +11,7 @@
     var(--ad-neutral-900);
 }
 .ad-planet > canvas {
-  /* Painted in ruby; turned to the theme hue. */
+  /* Painted in ruby; turned to the theme hue (a static filter, applied once). */
   filter: hue-rotate(var(--ad-hue-shift, 0deg));
   position: absolute;
   inset: 0;
@@ -21,7 +21,19 @@
   object-position: 100% 100%;
   opacity: 0;
   transition: opacity 1.2s ease-out;
+}
+/* The rim breathes: a screen-blended light over the planet's edge swells and settles (opacity only,
+   the painted canvas is never re-filtered). */
+.ad-planet::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: radial-gradient(ellipse 70% 120% at 100% 100%, transparent 38%, rgb(from var(--ad-primary) r g b / 0.22) 52%, transparent 66%);
+  mix-blend-mode: screen;
+  opacity: 0;
   animation: ad-planet-rim 6s ease-in-out infinite;
+  pointer-events: none;
 }
 .ad-planet > canvas[data-ready] {
   opacity: 1;
@@ -33,11 +45,7 @@
   padding: clamp(0.75rem, 2vw, 1.5rem);
 }
 @keyframes ad-planet-rim {
-  0%,
-  100% {
-    filter: hue-rotate(var(--ad-hue-shift, 0deg)) brightness(0.92) saturate(1);
-  }
   50% {
-    filter: hue-rotate(var(--ad-hue-shift, 0deg)) brightness(1.18) saturate(1.2);
+    opacity: 1;
   }
 }

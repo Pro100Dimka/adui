@@ -7,6 +7,13 @@ import { DialogBody } from "../../layout/DialogBody/DialogBody";
 import { DialogActions } from "../../layout/DialogActions/DialogActions";
 import { MessageBar } from "../MessageBar/MessageBar";
 import type { DialogProps } from "../shared";
+/** The backdrop belongs to the dialog element itself: a press on it lands on the dialog, outside its box. */
+const outside = (dialog: HTMLDialogElement, x: number, y: number, target: EventTarget) => {
+  if (target !== dialog) return false;
+  const box = dialog.getBoundingClientRect();
+  return x < box.left || x > box.right || y < box.top || y > box.bottom;
+};
+
 export const Dialog = (p: DialogProps) => {
   const [open, setOpen] = useControllable(
       p.open,
@@ -16,6 +23,8 @@ export const Dialog = (p: DialogProps) => {
     [pending, setPending] = useState(false),
     [error, setError] = useState<string>();
   const ref = useRef<HTMLDialogElement>(null),
+    // Where the press began: a click closes the window only when it both starts and ends outside it.
+    pressedOutside = useRef(false),
     titleId = useId(),
     descId = useId();
   useLayoutEffect(() => {
@@ -39,7 +48,26 @@ export const Dialog = (p: DialogProps) => {
     <dialog
       {...mark("Dialog", p, "dialog")}
       ref={ref}
+      data-ad-width={p.width}
       aria-labelledby={titleId}
+      onPointerDown={(e) => {
+        pressedOutside.current = outside(e.currentTarget, e.clientX, e.clientY, e.target);
+      }}
+      onClick={(e) => {
+        if (p.dismissible !== false && !pending && pressedOutside.current && outside(e.currentTarget, e.clientX, e.clientY, e.target))
+          setOpen(false);
+        pressedOutside.current = false;
+      }}
+      onPointerMove={(e) => {
+        // A soft light follows the pointer across the window.
+        const box = e.currentTarget.getBoundingClientRect();
+        e.currentTarget.style.setProperty("--ad-spot-x", `${e.clientX - box.left}px`);
+        e.currentTarget.style.setProperty("--ad-spot-y", `${e.clientY - box.top}px`);
+      }}
+      onPointerLeave={(e) => {
+        e.currentTarget.style.removeProperty("--ad-spot-x");
+        e.currentTarget.style.removeProperty("--ad-spot-y");
+      }}
       aria-describedby={p.description ? descId : undefined}
       onCancel={(e) => {
         e.preventDefault();

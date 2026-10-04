@@ -11,6 +11,12 @@
   isolation: isolate;
   color: var(--ad-text);
 }
+/* Pointer light: a soft glow under the cursor, painted over the window's own surface. */
+.ad-dialog[data-ad-material] {
+  --ad-material-bg:
+    radial-gradient(26rem circle at var(--ad-spot-x, -40rem) var(--ad-spot-y, -40rem), rgb(from var(--ad-primary) r g b / 0.11), transparent 60%),
+    var(--ad-surface-dialog);
+}
 /* The art layer spans the window under its content and never takes input. */
 .ad-dialog-art {
   position: absolute;
@@ -44,4 +50,17 @@
     background: rgb(from var(--ad-neutral-950) r g b / 0);
     backdrop-filter: blur(0);
   }
+}
+/* Window widths by `width`: a short question, the default, a form with columns, a whole workspace. */
+.ad-dialog[data-ad-width="narrow"] {
+  width: min(28rem, calc(100vw - 2rem));
+}
+.ad-dialog[data-ad-width="wide"] {
+  width: min(44rem, calc(100vw - 2rem));
+}
+.ad-dialog[data-ad-width="large"] {
+  width: min(60rem, calc(100vw - 2rem));
+}
+.ad-dialog[data-ad-width="full"] {
+  width: min(84rem, calc(100vw - 2rem));
 }

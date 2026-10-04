@@ -1,0 +1,90 @@
+/* Styles owned by StatTile: a glass card with a glowing icon ring; it grows to share a row with its siblings. */
+.ad-stat-tile {
+  position: relative;
+  flex: 1 1 11rem;
+  min-width: 0;
+}
+.ad-stat-tile-badge {
+  position: absolute;
+  top: calc(var(--ad-space-2) * -1);
+  right: calc(var(--ad-space-2) * -1);
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  min-inline-size: 1.5rem;
+  block-size: 1.5rem;
+  padding-inline: 0.4rem;
+  border-radius: var(--ad-radius-pill);
+  background: var(--ad-primary);
+  color: #fff;
+  font-size: var(--ad-font-size-caption);
+  font-weight: var(--ad-font-weight-bold);
+  box-shadow: 0 0 0.75rem var(--ad-primary);
+}
+.ad-stat-tile-badge::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: 0 0 1.4rem var(--ad-primary);
+  opacity: 0;
+  animation: ad-stat-tile-pulse 2s ease-in-out infinite;
+}
+@keyframes ad-stat-tile-pulse {
+  50% {
+    opacity: 1;
+  }
+}
+button.ad-stat-tile {
+  padding: 0;
+  border: 0;
+  border-radius: var(--ad-radius-lg);
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: start;
+  cursor: pointer;
+}
+button.ad-stat-tile:focus-visible {
+  outline: 0.125rem solid var(--ad-focus);
+  outline-offset: 0.2rem;
+}
+.ad-stat-tile-card.ad-card {
+  display: flex;
+  gap: var(--ad-space-4);
+  align-items: center;
+  height: 100%;
+}
+.ad-stat-tile-icon {
+  position: relative;
+  display: grid;
+  flex: none;
+  place-items: center;
+  inline-size: clamp(3rem, 5vw, 4.25rem);
+  aspect-ratio: 1;
+  border: 0.0625rem solid var(--ad-primary);
+  border-radius: 50%;
+  color: var(--ad-primary);
+  --ad-icon-size: 1.6rem;
+  background: radial-gradient(circle, rgb(from var(--ad-primary) r g b / 0.16), var(--ad-neutral-950) 68%);
+  box-shadow:
+    inset 0 0 1rem rgb(from var(--ad-primary) r g b / 0.16),
+    0 0 1rem rgb(from var(--ad-primary) r g b / 0.3);
+}
+.ad-stat-tile-spark {
+  position: absolute;
+  inset: 0.3rem 0.15rem auto auto;
+  --ad-icon-size: 0.75rem;
+  animation: ad-stat-tile-twinkle 3.2s ease-in-out infinite;
+}
+.ad-stat-tile-text {
+  display: grid;
+  gap: var(--ad-space-1);
+  min-width: 0;
+}
+@keyframes ad-stat-tile-twinkle {
+  50% {
+    opacity: 0.35;
+    scale: 0.8;
+  }
+}

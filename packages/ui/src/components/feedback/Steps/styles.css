@@ -35,16 +35,26 @@
   box-shadow: 0 0 0.5rem rgb(from var(--ad-primary) r g b / 0.53);
 }
 .ad-steps > li + li[data-state="current"]::before {
-  background: linear-gradient(
-      90deg,
-      var(--ad-primary) 0 30%,
-      var(--ad-neutral-200) 45%,
-      var(--ad-primary) 60%,
-      rgb(from var(--ad-primary) r g b / 0.25) 100%
-    )
-    0 0 / 250% 100%;
+  overflow: hidden;
+  background: linear-gradient(90deg, var(--ad-primary) 0 40%, rgb(from var(--ad-primary) r g b / 0.25) 100%);
   box-shadow: 0 0 0.5rem rgb(from var(--ad-primary) r g b / 0.53);
+}
+/* The line toward the current step carries a running glint. */
+.ad-steps > li[data-state="current"] {
+  --ad-steps-glint: 1;
+}
+.ad-steps > li + li[data-state="current"]::after {
+  content: "";
+  position: absolute;
+  top: calc(var(--ad-step-node) / 2 - 0.0625rem);
+  right: calc(50% + var(--ad-step-node) / 2 + 0.25rem);
+  left: calc(-50% + var(--ad-step-node) / 2 + 0.25rem);
+  height: 0.125rem;
+  border-radius: 999rem;
+  background: linear-gradient(90deg, transparent, var(--ad-neutral-200), transparent) 0 0 / 30% 100% no-repeat;
+  clip-path: inset(0 round 999rem);
   animation: ad-steps-flow 1.6s linear infinite;
+  pointer-events: none;
 }
 .ad-step-node {
   position: relative;
@@ -81,6 +91,14 @@
   box-shadow:
     inset 0 0 0 0.125rem var(--ad-secondary),
     0 0 0.9rem rgb(from var(--ad-primary) r g b / 0.53);
+}
+.ad-steps > li[data-state="current"] .ad-step-node::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 0.125rem var(--ad-secondary-200), 0 0 1.4rem rgb(from var(--ad-primary) r g b / 0.67);
+  opacity: 0;
   animation: ad-steps-pulse 1.8s ease-in-out infinite;
 }
 /* Orbiting dashed ring around the current node. */
@@ -103,15 +121,16 @@
   color: var(--ad-neutral-200);
 }
 @keyframes ad-steps-flow {
+  from {
+    background-position: -40% 0;
+  }
   to {
-    background-position: -250% 0;
+    background-position: 140% 0;
   }
 }
 @keyframes ad-steps-pulse {
   50% {
-    box-shadow:
-      inset 0 0 0 0.125rem var(--ad-secondary-200),
-      0 0 1.4rem rgb(from var(--ad-primary) r g b / 0.67);
+    opacity: 1;
   }
 }
 @keyframes ad-steps-orbit {

@@ -1,29 +1,67 @@
-/* Styles owned by ImageShine: the light sweeps, the picture breathes, the glow pulses. */
+/* Styles owned by ImageShine: the light sweeps, the picture breathes, the glow pulses.
+   Every layer animates transform or opacity only; the glow's blur is drawn once. */
 .ad-image-shine {
+  position: relative;
   display: block;
   width: 100%;
-  height: auto;
-  overflow: visible;
+  aspect-ratio: 1;
 }
-.ad-image-shine[data-glow] {
+.ad-image-shine > img,
+.ad-image-shine-sweep {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  user-select: none;
+  pointer-events: none;
+}
+.ad-image-shine-glow {
+  filter: blur(1.4rem) brightness(1.4) saturate(1.3);
+  opacity: 0.45;
+  will-change: opacity;
   animation: ad-image-shine-glow 2.6s ease-in-out infinite;
 }
 .ad-image-shine-picture {
-  transform-box: fill-box;
-  transform-origin: center;
+  will-change: transform;
+}
+.ad-image-shine[data-glow] > .ad-image-shine-picture {
   animation: ad-image-shine-breathe 2.6s ease-in-out infinite;
 }
+/* The band of light, seen only through the picture's own shape. */
 .ad-image-shine-sweep {
+  overflow: hidden;
+  mask: var(--ad-shine-src) center / contain no-repeat;
   mix-blend-mode: screen;
+}
+.ad-image-shine-sweep > i {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 50%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgb(from var(--ad-primary) r g b / 0.58) 42%,
+    rgb(from var(--ad-secondary-100) r g b / 0.92) 50%,
+    rgb(from var(--ad-primary) r g b / 0.58) 58%,
+    transparent
+  );
+  transform: translateX(-100%);
+  will-change: transform;
   animation: ad-image-shine-sweep 2.2s ease-in-out infinite;
 }
 @keyframes ad-image-shine-glow {
-  0%, 100% { filter: drop-shadow(0 0 1rem rgb(from var(--ad-primary) r g b / 0.55)); }
-  50% { filter: drop-shadow(0 0 2.5rem var(--ad-primary)); }
+  50% {
+    opacity: 0.95;
+  }
 }
 @keyframes ad-image-shine-sweep {
-  to { transform: translateX(200%); }
+  to {
+    transform: translateX(200%);
+  }
 }
 @keyframes ad-image-shine-breathe {
-  50% { transform: scale(1.035); }
+  50% {
+    transform: scale(1.035);
+  }
 }

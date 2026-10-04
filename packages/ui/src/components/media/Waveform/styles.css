@@ -177,7 +177,7 @@
 }
 @keyframes ad-waveform-flare {
   50% {
-    width: 9rem;
+    scale: 1.29 1;
     opacity: 0.45;
   }
 }

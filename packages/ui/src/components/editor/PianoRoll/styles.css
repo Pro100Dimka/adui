@@ -1,0 +1,186 @@
+/* Styles owned by PianoRoll: a scrolling piano grid; the keyboard and ruler stay in view, notes are
+   glossy capsules that glow when selected and flare under the playhead. */
+.ad-piano-roll {
+  --ad-roll-row: clamp(0.85rem, 2.2dvh, 1.35rem);
+  --ad-roll-keys: clamp(3rem, 7vw, 4.5rem);
+  position: relative;
+  min-width: 0;
+  min-height: 12rem;
+  border: 0.0625rem solid rgb(from var(--ad-primary) r g b / 0.25);
+  border-radius: var(--ad-radius-lg, 1rem);
+  background: var(--ad-neutral-950);
+  overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.ad-piano-roll-scroll {
+  display: grid;
+  grid-template-columns: var(--ad-roll-keys) max-content;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--ad-primary-700) transparent;
+}
+.ad-piano-roll-corner {
+  position: sticky;
+  left: 0;
+  z-index: 4;
+  background: var(--ad-neutral-900);
+}
+.ad-piano-roll-corner:first-child {
+  top: 0;
+  z-index: 5;
+}
+/* The corner beside the syllables stays with them at the bottom, covering the keyboard under it. */
+.ad-piano-roll-corner:has(+ .ad-piano-roll-words) {
+  bottom: 0;
+  z-index: 5;
+  border-top: 0.0625rem solid #ffffff14;
+}
+/* Ruler: seconds, the playhead mark; press to seek. */
+.ad-piano-roll-ruler {
+  position: sticky;
+  top: 0;
+  z-index: 3;
+  height: 1.5rem;
+  border-bottom: 0.0625rem solid #ffffff14;
+  background: linear-gradient(180deg, var(--ad-neutral-850), var(--ad-neutral-900));
+  cursor: pointer;
+}
+.ad-piano-roll-ruler > span {
+  position: absolute;
+  bottom: 0.1rem;
+  padding-left: 0.2rem;
+  border-left: 0.0625rem solid #ffffff22;
+  color: var(--ad-muted);
+  font-size: var(--ad-font-size-caption);
+  line-height: 1;
+}
+.ad-piano-roll-ruler > span[data-major] {
+  border-left-color: rgb(from var(--ad-primary) r g b / 0.6);
+  color: var(--ad-text);
+}
+.ad-piano-roll-head-mark {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 0.6rem;
+  translate: -50% 0;
+  background: var(--ad-primary);
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+}
+.ad-piano-roll-keys.ad-piano-keyboard {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  height: calc(var(--ad-roll-row) * var(--ad-roll-rows));
+  min-height: 0;
+  border-radius: 0;
+}
+/* The grid: a shaded band for every black key, a line every second. */
+.ad-piano-roll-world {
+  position: relative;
+  height: calc(var(--ad-roll-row) * var(--ad-roll-rows));
+  cursor: crosshair;
+}
+.ad-piano-roll[data-grid] .ad-piano-roll-world {
+  background:
+    linear-gradient(90deg, #ffffff12 0.0625rem, transparent 0.0625rem) 0 0 / var(--ad-pps) 100%,
+    linear-gradient(#ffffff08 0.0625rem, transparent 0.0625rem) 0 0 / 100% var(--ad-roll-row);
+}
+.ad-piano-roll-row {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: var(--ad-roll-row);
+  background: #ffffff05;
+  pointer-events: none;
+}
+.ad-piano-roll-note {
+  position: absolute;
+  height: var(--ad-roll-row);
+}
+.ad-piano-roll-note-body {
+  position: absolute;
+  inset: 12% 0;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--ad-primary), var(--ad-secondary));
+  box-shadow: inset 0 0.0625rem 0 #ffffff55, 0 0 0.4rem rgb(from var(--ad-primary) r g b / 0.45);
+  cursor: grab;
+  transition: filter 0.15s, box-shadow 0.15s;
+}
+.ad-piano-roll-note-body:active {
+  cursor: grabbing;
+}
+.ad-piano-roll-note-body:focus-visible {
+  outline: 0.125rem solid #fff;
+  outline-offset: 0.1rem;
+}
+.ad-piano-roll-note[data-selected] .ad-piano-roll-note-body {
+  box-shadow: inset 0 0 0 0.125rem #fff, 0 0 0.9rem var(--ad-primary);
+}
+.ad-piano-roll-note[data-now] .ad-piano-roll-note-body {
+  filter: brightness(1.35);
+}
+.ad-piano-roll-edge {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: max(0.35rem, 18%);
+  max-width: 0.6rem;
+  cursor: ew-resize;
+}
+.ad-piano-roll-edge[data-edge="start"] {
+  left: 0;
+}
+.ad-piano-roll-edge[data-edge="end"] {
+  right: 0;
+}
+.ad-piano-roll-area {
+  position: absolute;
+  display: none;
+  border: 0.0625rem dashed var(--ad-secondary-100);
+  background: rgb(from var(--ad-primary) r g b / 0.12);
+  pointer-events: none;
+}
+.ad-piano-roll-playhead {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 0.125rem;
+  translate: -50% 0;
+  background: #fff;
+  box-shadow: 0 0 0.6rem #fff, 0 0 1rem var(--ad-primary);
+  pointer-events: none;
+}
+/* Syllables under the notes: sung ones dim, the current one lights up. */
+.ad-piano-roll-words {
+  position: sticky;
+  bottom: 0;
+  z-index: 3;
+  height: 1.6rem;
+  border-top: 0.0625rem solid #ffffff14;
+  background: var(--ad-neutral-900);
+}
+.ad-piano-roll-words > span {
+  position: absolute;
+  top: 0.25rem;
+  overflow: hidden;
+  padding-left: 0.2rem;
+  border-left: 0.0625rem solid rgb(from var(--ad-primary) r g b / 0.4);
+  color: var(--ad-text);
+  font-size: var(--ad-font-size-caption);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.ad-piano-roll-words > span[data-sung] {
+  color: var(--ad-muted);
+}
+.ad-piano-roll-words > span[data-now] {
+  color: var(--ad-secondary-100);
+  text-shadow: 0 0 0.4rem var(--ad-primary);
+}

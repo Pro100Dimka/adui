@@ -122,12 +122,8 @@
 }
 
 @keyframes ad-btn-breathe {
-  0%,
-  100% {
-    filter: saturate(1) brightness(1);
-  }
   50% {
-    filter: saturate(1.08) brightness(1.03);
+    opacity: 1;
   }
 }
 @keyframes ad-btn-sheen {
@@ -153,7 +149,8 @@
 .ad-button,
 .ad-icon-button,
 .ad-toggle-button {
-  --ad-btn-radius: calc(var(--ad-size-radius) * 1.08);
+  /* Pill buttons, as in music players. */
+  --ad-btn-radius: 999rem;
   --ad-btn-bg-top: var(--ad-neutral-700);
   --ad-btn-bg-mid: var(--ad-neutral-850);
   --ad-btn-bg-bottom: var(--ad-neutral-900);
@@ -315,11 +312,6 @@
   --ad-btn-glow: rgb(from var(--ad-primary) r g b / 0.42);
   --ad-btn-inner: #fffafca3;
   --ad-btn-bottom: rgb(from var(--ad-primary-800) r g b / 0.42);
-}
-.ad-button[data-ad-variant="primary"],
-.ad-icon-button[data-ad-variant="primary"],
-.ad-toggle-button[aria-pressed="true"] {
-  animation: ad-btn-breathe 3.1s ease-in-out infinite;
 }
 .ad-button[data-ad-variant="primary"]::after,
 .ad-icon-button[data-ad-variant="primary"]::after,
@@ -553,13 +545,9 @@
   transform: scale(0.98);
 }
 
-/* Living plasma inside the button and a comet of light running round its edge.
-   Accent buttons always show them; quieter variants reveal them on hover. */
-@property --ad-btn-angle {
-  syntax: "<angle>";
-  inherits: false;
-  initial-value: 0deg;
-}
+/* Living plasma inside the button, a soft breath of light, and a comet running round its edge.
+   Accent buttons always show them; quieter variants reveal them on hover. Everything moves by
+   transform and opacity only, and only while it is visible, so a screen of buttons stays light. */
 .ad-button-fx {
   position: absolute;
   inset: 0;
@@ -584,56 +572,78 @@
     ),
     radial-gradient(ellipse at 80% 50%, rgb(from var(--ad-secondary) r g b / 0.44), transparent 65%);
   mask-image: linear-gradient(90deg, transparent, #000 40%);
+  filter: saturate(1.35);
   opacity: 0;
   transition: opacity 0.4s;
-  animation: ad-btn-plasma 7s ease-in-out infinite alternate;
+  will-change: transform;
 }
+/* The breath: a faint light over the face that swells and settles. */
 .ad-button-fx::after {
   content: "";
   position: absolute;
   inset: 0;
+  background: radial-gradient(ellipse at 50% 30%, rgb(from var(--ad-secondary-100) r g b / 0.14), transparent 70%);
+  opacity: 0;
+}
+/* The comet: a ring-shaped window onto a conic light that turns behind it. */
+.ad-button-orbit {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
   border-radius: inherit;
   padding: 0.0625rem;
-  background: conic-gradient(
-    from var(--ad-btn-angle),
-    transparent 0 76%,
-    var(--ad-secondary) 84%,
-    #fff 88%,
-    transparent 93%
-  );
+  overflow: hidden;
   mask:
     linear-gradient(#000 0 0) content-box exclude,
     linear-gradient(#000 0 0);
   opacity: 0;
   transition: opacity 0.4s;
-  animation: ad-btn-orbit 4.5s linear infinite;
+  pointer-events: none;
 }
-:is(.ad-button, .ad-icon-button):is(
-    [data-ad-variant="primary"],
-    [data-ad-variant="danger"]
-  )
-  > .ad-button-fx::before,
+.ad-button-orbit::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: max(130%, 6rem);
+  aspect-ratio: 1;
+  translate: -50% -50%;
+  background: conic-gradient(
+    transparent 0 76%,
+    var(--ad-secondary) 84%,
+    #fff 88%,
+    transparent 93%
+  );
+  will-change: transform;
+}
+:is(.ad-button, .ad-icon-button):is([data-ad-variant="primary"], [data-ad-variant="danger"]) > .ad-button-fx::before,
 .ad-toggle-button[aria-pressed="true"] > .ad-button-fx::before {
   opacity: 0.85;
+  animation: ad-btn-plasma 7s ease-in-out infinite alternate;
 }
-:is(.ad-button, .ad-icon-button):is(
-    [data-ad-variant="primary"],
-    [data-ad-variant="danger"]
-  )
-  > .ad-button-fx::after,
+:is(.ad-button, .ad-icon-button):is([data-ad-variant="primary"], [data-ad-variant="danger"]) > .ad-button-fx::after,
 .ad-toggle-button[aria-pressed="true"] > .ad-button-fx::after {
+  animation: ad-btn-breathe 3.1s ease-in-out infinite;
+}
+:is(.ad-button, .ad-icon-button):is([data-ad-variant="primary"], [data-ad-variant="danger"]) > .ad-button-orbit,
+.ad-toggle-button[aria-pressed="true"] > .ad-button-orbit {
   opacity: 1;
 }
-:is(.ad-button, .ad-icon-button, .ad-toggle-button):hover:not(:disabled)
-  > .ad-button-fx::before {
+:is(.ad-button, .ad-icon-button):is([data-ad-variant="primary"], [data-ad-variant="danger"]) > .ad-button-orbit::before,
+.ad-toggle-button[aria-pressed="true"] > .ad-button-orbit::before {
+  animation: ad-btn-orbit 4.5s linear infinite;
+}
+:is(.ad-button, .ad-icon-button, .ad-toggle-button):hover:not(:disabled) > .ad-button-fx::before {
   opacity: 0.9;
+  animation: ad-btn-plasma 7s ease-in-out infinite alternate;
 }
-:is(.ad-button, .ad-icon-button, .ad-toggle-button):hover:not(:disabled)
-  > .ad-button-fx::after {
+:is(.ad-button, .ad-icon-button, .ad-toggle-button):hover:not(:disabled) > .ad-button-orbit {
   opacity: 1;
-  animation-duration: 1.6s;
 }
-:is(.ad-button, .ad-icon-button):disabled > .ad-button-fx {
+:is(.ad-button, .ad-icon-button, .ad-toggle-button):hover:not(:disabled) > .ad-button-orbit::before {
+  animation: ad-btn-orbit 1.6s linear infinite;
+}
+:is(.ad-button, .ad-icon-button):disabled > :is(.ad-button-fx, .ad-button-orbit) {
   display: none;
 }
 /* Icon-only buttons are small: the plasma centres on them instead of the right side. */
@@ -642,27 +652,24 @@
   mask-image: radial-gradient(closest-side, #000 40%, transparent);
 }
 /* Ghost buttons stay subtle: only the comet, no plasma. */
-:is(.ad-button, .ad-icon-button)[data-ad-variant="ghost"]
-  > .ad-button-fx::before {
+:is(.ad-button, .ad-icon-button)[data-ad-variant="ghost"] > .ad-button-fx::before {
   display: none;
 }
 @keyframes ad-btn-plasma {
   from {
     transform: translate3d(-3%, -2%, 0) scale(1.02) rotate(0deg);
-    filter: saturate(1.1);
   }
   to {
     transform: translate3d(3%, 2%, 0) scale(1.14) rotate(8deg);
-    filter: saturate(1.6);
   }
 }
 @keyframes ad-btn-orbit {
   to {
-    --ad-btn-angle: 360deg;
+    rotate: 360deg;
   }
 }
 /* Buttons that live inside other controls stay plain. */
-:is(.ad-input-adornment, .ad-split-button) .ad-button-fx {
+:is(.ad-input-adornment, .ad-split-button) :is(.ad-button-fx, .ad-button-orbit) {
   display: none;
 }
 
