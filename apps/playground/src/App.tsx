@@ -1,3 +1,5 @@
+import { LocaleProvider, addMessages, setLocale, tr } from "@ad-voice/ui";
+import { docsMessages } from "./app/docsMessages";
 import { useEffect, useState } from "react";
 import {
   Badge,
@@ -28,11 +30,16 @@ const routes: RouteDefinition[] = [
   { path: "*", redirectTo: "/components/overview" },
 ];
 
+// The docs' own texts join the library's translations.
+for (const [locale, messages] of Object.entries(docsMessages)) addMessages(locale, messages);
+
 export default function App() {
   const reduced = useReducedMotion();
   const [explicit, setExplicit] = useState<boolean>();
   const motion = explicit ?? !reduced;
   const [settings, update, reset] = useSiteSettings();
+  // The texts of this component are worked out before LocaleProvider renders: set the language first.
+  setLocale(settings.locale);
   const [settingsOpen, setSettingsOpen] = useState(false);
   const themed = siteThemeProps(settings);
   // Theme examples in the docs drive the site theme through this.
@@ -67,6 +74,7 @@ export default function App() {
   }, [siteTheme.primary, siteTheme.secondary]);
 
   return (
+    <LocaleProvider locale={settings.locale}>
     <ThemeProvider {...themed}>
       <SiteThemeContext.Provider value={siteTheme}>
         <Stack id="app" gap={0}>
@@ -92,17 +100,17 @@ export default function App() {
               align="center"
               gap={3}
             >
-              <Badge>{catalog.length} компонентов</Badge>
+              <Badge>{catalog.length} {tr("компонентов")}</Badge>
               <Button
                 size="sm"
                 variant="secondary"
                 icon="palette"
                 onClick={() => setSettingsOpen(true)}
               >
-                Тема
+                {tr("Тема")}
               </Button>
               <Switch
-                label="Анимации"
+                label={tr("Анимации")}
                 checked={motion}
                 onValueChange={setExplicit}
               />
@@ -119,5 +127,6 @@ export default function App() {
         />
       </SiteThemeContext.Provider>
     </ThemeProvider>
+    </LocaleProvider>
   );
 }

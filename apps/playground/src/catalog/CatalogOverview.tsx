@@ -1,3 +1,4 @@
+import { tr } from "@ad-voice/ui";
 import { ExamplePreviewContext } from "../../../../packages/ui/src/dev/exampleHelpers";
 import { Badge, Card, Header, Icon, Stack, Typography, usePauseOffscreen } from "@ad-voice/ui";
 import { useLayoutEffect, useRef } from "react";
@@ -32,19 +33,19 @@ export function CatalogOverview() {
           <Header
             level={1}
             eyebrow="Neo UI · React component system"
-            title="Компоненты, от которых не оторвать глаз"
-            description="Здесь вся библиотека вживую. Наведите на понравившийся компонент и откройте его: там настройки, код и API."
+            title={tr("Компоненты, от которых не оторвать глаз")}
+            description={tr("Здесь вся библиотека вживую. Наведите на понравившийся компонент и откройте его: там настройки, код и API.")}
           />
           <Stack direction="row" gap={2} wrap>
             <Badge tone="success">v{packageVersion}</Badge>
-            <Badge>{catalog.length} компонентов</Badge>
-            <Badge>{catalogCategories.length} категорий</Badge>
+            <Badge>{catalog.length} {tr("компонентов")}</Badge>
+            <Badge>{catalogCategories.length} {tr("категорий")}</Badge>
             <Badge>TypeScript</Badge>
           </Stack>
           <Card className="docs-install" material="glass" padding="sm">
             <Stack gap={2}>
               <Typography variant="eyebrow" tone="muted">
-                Установка
+                {tr("Установка")}
               </Typography>
               {[installCommand, 'import "@ad-voice/ui/styles.css";'].map(
                 (line) => (
@@ -71,14 +72,14 @@ export function CatalogOverview() {
           className="docs-showcase"
           key={category.id}
           gap={3}
-          aria-label={category.label}
+          aria-label={tr(category.label)}
         >
           <Header
             level={2}
             compact
             icon={category.icon}
-            title={category.label}
-            description={category.description}
+            title={tr(category.label)}
+            description={tr(category.description)}
             actions={<Badge>{category.items.length}</Badge>}
           />
           <div className="docs-showcase-grid">
@@ -216,7 +217,7 @@ function ShowcaseTile({ item }: { item: CatalogMeta }) {
             </Typography>
           </a>
           <Typography variant="caption" tone="muted" truncate>
-            {item.description}
+            {tr(item.description)}
           </Typography>
         </Stack>
         <Icon name="chevron" />

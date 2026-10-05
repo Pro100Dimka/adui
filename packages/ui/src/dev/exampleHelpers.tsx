@@ -1,3 +1,4 @@
+import { tr } from "../core/i18n";
 import {
   createContext,
   useContext,
@@ -147,6 +148,8 @@ const knobLabels: Record<string, string> = {
   content: "Содержимое",
   palette: "Палитра",
   finish: "Отделка",
+  weight: "Жирность",
+  animation: "Анимация",
   glow: "Свечение",
   removable: "Удаление",
   async: "Поиск на сервере",
@@ -235,10 +238,10 @@ export function Playground<K extends Record<string, Knob>>({
             .map(([key, knob]) =>
               "options" in knob ? (
                 <div className="example-knob" key={key}>
-                  <span>{knobLabels[key] ?? key}</span>
+                  <span>{tr(knobLabels[key] ?? key)}</span>
                   <U.SegmentedControl
                     size="xs"
-                    label={knobLabels[key] ?? key}
+                    label={tr(knobLabels[key] ?? key)}
                     value={values[key] as string}
                     onValueChange={(v) => set(key, v)}
                     items={knob.options.map((o) => ({ value: o, label: o }))}
@@ -248,7 +251,7 @@ export function Playground<K extends Record<string, Knob>>({
                 <U.Switch
                   key={key}
                   size="xs"
-                  label={knobLabels[key] ?? key}
+                  label={tr(knobLabels[key] ?? key)}
                   checked={values[key] as boolean}
                   onValueChange={(v) => set(key, v)}
                 />

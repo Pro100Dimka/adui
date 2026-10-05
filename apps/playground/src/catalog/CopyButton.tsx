@@ -1,3 +1,4 @@
+import { tr } from "@ad-voice/ui";
 import { useState } from "react";
 import { Button, copyText } from "@ad-voice/ui";
 
@@ -15,7 +16,7 @@ export function CopyButton({ text }: { text: string }) {
         window.setTimeout(() => setCopied(false), 1600);
       }}
     >
-      {copied ? "Скопировано" : "Копировать"}
+      {copied ? tr("Скопировано") : tr("Копировать")}
     </Button>
   );
 }

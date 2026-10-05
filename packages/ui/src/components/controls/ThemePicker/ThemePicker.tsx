@@ -1,3 +1,4 @@
+import { tr } from "../../../core/i18n";
 import type { CSSProperties } from "react";
 import { mark, useControllable, type CommonProps } from "../../../core/base";
 import { Button } from "../Button/Button";
@@ -44,7 +45,7 @@ export function ThemePicker<V extends string = ThemeName>(p: ThemePickerProps<V>
 
   if (!p.options)
     return (
-      <div {...mark("ThemePicker", p)} role="radiogroup" aria-label={p.label ?? "Тема"}>
+      <div {...mark("ThemePicker", p)} role="radiogroup" aria-label={p.label ?? tr("Тема")}>
         {(Object.keys(builtIn) as ThemeName[]).map((key) => (
           <Button key={key} size={p.size ?? "sm"} aria-pressed={key === value} disabled={p.disabled}
             onClick={() => setValue(key as unknown as V)}>
@@ -56,7 +57,7 @@ export function ThemePicker<V extends string = ThemeName>(p: ThemePickerProps<V>
     );
 
   return (
-    <div {...mark("ThemePicker", p)} data-gallery="" role="radiogroup" aria-label={p.label ?? "Тема"}>
+    <div {...mark("ThemePicker", p)} data-gallery="" role="radiogroup" aria-label={p.label ?? tr("Тема")}>
       {p.options.map((option) => {
         const chosen = option.value === value;
         return (

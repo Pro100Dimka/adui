@@ -1,3 +1,4 @@
+import { tr } from "../../../core/i18n";
 import { useEffect, useRef, useState } from "react";
 import { useControllable, type CommonProps } from "../../../core/base";
 import { Popover } from "../../feedback/Popover/Popover";
@@ -53,7 +54,7 @@ export function PeoplePicker({
   onValueChange,
   single = false,
   max,
-  placeholder = "Начните вводить имя",
+  placeholder = tr("Начните вводить имя"),
   ...p
 }: PeoplePickerProps) {
   const [chosen, setChosen] = useControllable(controlled, defaultValue, onValueChange);
@@ -143,11 +144,11 @@ export function PeoplePicker({
         ))}
       />
       <Popover open={open && !full} onOpenChange={setOpen} anchorRef={box} role="listbox" align="start" matchAnchorWidth autoFocus={false}
-        className="ad-option-popover" label="Люди">
+        className="ad-option-popover" label={tr("Люди")}>
         <div className="ad-option-list">
-          {loading && <div className="ad-option-empty"><span className="ad-spinner" aria-hidden /> Ищем…</div>}
+          {loading && <div className="ad-option-empty"><span className="ad-spinner" aria-hidden /> {tr("Ищем…")}</div>}
           {!loading && options.length === 0 && (
-            <div className="ad-option-empty">{onSearch && !needle ? "Начните вводить имя" : "Никого не нашли"}</div>
+            <div className="ad-option-empty">{onSearch && !needle ? tr("Начните вводить имя") : tr("Никого не нашли")}</div>
           )}
           {!loading &&
             options.map((person, index) => (

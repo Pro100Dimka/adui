@@ -1,3 +1,4 @@
+import { tr } from "../../../core/i18n";
 import { useRef, useState } from "react";
 import { assignRef, useControllable } from "../../../core/base";
 import { Popover } from "../../feedback/Popover/Popover";
@@ -85,7 +86,7 @@ export const Autocomplete = ({
                 size="xs"
                 variant="ghost"
                 icon="close"
-                label="Очистить"
+                label={tr("Очистить")}
                 onClick={() => {
                   setCurrent("");
                   setOpen(true);
@@ -97,7 +98,7 @@ export const Autocomplete = ({
               size="xs"
               variant="ghost"
               icon="chevron"
-              label="Показать варианты"
+              label={tr("Показать варианты")}
               aria-expanded={open}
               onClick={() => {
                 setOpen((v) => !v);
@@ -150,7 +151,7 @@ export const Autocomplete = ({
         align="start"
         matchAnchorWidth
         className="ad-option-popover ad-autocomplete-popover"
-        label={typeof label === "string" ? label : "Подсказки"}
+        label={typeof label === "string" ? label : tr("Подсказки")}
       >
         <OptionList
           id={listId}

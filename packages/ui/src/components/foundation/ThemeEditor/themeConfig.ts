@@ -1,3 +1,4 @@
+import { tr } from "../../../core/i18n";
 import { themes, type ThemeName } from "../ThemeProvider/ThemeProvider";
 
 /**
@@ -135,12 +136,12 @@ export function parseTheme(text: string): ThemeConfig {
   try {
     data = JSON.parse(text);
   } catch {
-    throw new Error("Это не JSON: проверьте файл или вставленный текст.");
+    throw new Error(tr("Это не JSON: проверьте файл или вставленный текст."));
   }
-  if (!data || typeof data !== "object") throw new Error("В файле нет настроек темы.");
+  if (!data || typeof data !== "object") throw new Error(tr("В файле нет настроек темы."));
   const raw = data as Record<string, unknown>;
-  if (raw.$type !== undefined && raw.$type !== "neo-ui-theme") throw new Error("Это файл не темы Neo UI.");
-  if (raw.version !== undefined && raw.version !== 1) throw new Error(`Версия темы ${String(raw.version)} не поддерживается.`);
+  if (raw.$type !== undefined && raw.$type !== "neo-ui-theme") throw new Error(tr("Это файл не темы Neo UI."));
+  if (raw.version !== undefined && raw.version !== 1) throw new Error(tr("Версия темы {version} не поддерживается.", { version: String(raw.version) }));
   const theme = typeof raw.theme === "string" && raw.theme in themes ? (raw.theme as ThemeName) : "ruby";
   const pick = (value: unknown) => (typeof value === "string" && hex.test(value) ? value.toLowerCase() : undefined);
   const tokens: Record<string, string> = {};

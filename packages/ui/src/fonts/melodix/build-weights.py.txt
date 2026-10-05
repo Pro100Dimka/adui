@@ -1,0 +1,302 @@
+"""Melodix in nine weights (100–900), traced from the weight sheets (en, ru, ua).
+
+Each sheet holds a section per weight: a row of capitals, then a second row (digits and signs on
+the English sheet, lowercase on the Ukrainian one). Characters are cut out by keeping the widest
+column gaps, enlarged, traced with potrace and set on a shared baseline and cap height."""
+import json, sys
+import numpy as np
+import potrace
+from PIL import Image, ImageDraw
+from fontTools.ttLib import TTFont
+from fontTools.varLib import instancer
+from fontTools.pens.ttGlyphPen import TTGlyphPen
+from fontTools.pens.cu2quPen import Cu2QuPen
+from fontTools.pens.transformPen import TransformPen
+from fontTools.pens.recordingPen import RecordingPen
+from fontTools.pens.reverseContourPen import ReverseContourPen
+from fontTools.pens.areaPen import AreaPen
+from fontTools import subset
+
+UP = 6
+THRESHOLD = 165
+CAP = 700
+SIDE = 40
+DL = "C:/Users/YOJIK/Downloads/"
+
+SHEETS = {
+    "en": dict(x0=132, tops=[121 + 114 * i for i in range(8)], height=96, weights=[100, 200, 300, 400, 500, 600, 700, 800],
+               caps="ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+               second=["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "!", "?", "♪", "♫", ":", ";", ",", "…", "𝄞", "♥", "#"]),
+    "ru": dict(x0=106, tops=[120, 215, 312, 408, 505, 603, 702, 796, 890], height=84, weights=[100, 200, 300, 400, 500, 600, 700, 800, 900],
+               # the sheet draws Й and К as one letter: К is taken from here, Й from the Ukrainian sheet
+               caps="АБВГДЕЁЖЗИКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ", second=None),
+    "ua": dict(x0=104, tops=[114, 222, 321, 423, 523, 624, 723, 820, 909], height=93, weights=[100, 200, 300, 400, 500, 600, 700, 800, 900],
+               caps="АБВГҐДЕЄЖЗИІЇЙКЛМНОПРСТУФХЦЧШЩЬЮЯ",
+               second=None),
+}
+
+
+class Sheet:
+    def __init__(self, name):
+        self.name = name
+        self.gray = Image.open(DL + name + ".png").convert("L")
+        self.ink = np.asarray(self.gray) < THRESHOLD
+
+    def split_band(self, top, height):
+        """The section's two rows: split at the emptiest ink row in its middle part."""
+        band = self.ink[top:top + height, 100:1510]
+        counts = band.sum(axis=1)
+        lo, hi = int(height * 0.38), int(height * 0.7)
+        cut = lo + int(np.argmin(counts[lo:hi]))
+        return (top - 4, top + cut), (top + cut, top + height + 2)
+
+    def groups(self, y0, y1, x0, chars, x1=1515):
+        """The characters along the row: cuts chosen (dynamic programming) at empty or thin
+        columns so that each piece is about as wide as that character usually is."""
+        n = len(chars)
+        counts = self.ink[y0:y1, x0:x1].sum(axis=0)
+        filled = np.where(counts > 0)[0]
+        if not len(filled):
+            return None
+        a0, a1 = filled[0], filled[-1] + 1
+        # candidate cuts: middles of empty gaps (scored by gap width) and thin columns
+        cands = []
+        i = a0
+        while i < a1:
+            if counts[i] == 0:
+                j = i
+                while j < a1 and counts[j] == 0:
+                    j += 1
+                cands.append(((i + j) / 2, j - i))
+                i = j
+            else:
+                if counts[i] <= 1 and counts[max(a0, i - 1)] > 1:
+                    cands.append((i, 0.4))
+                elif (counts[i] <= (y1 - y0) * 0.3 and counts[i] < counts[max(a0, i - 2)]
+                      and counts[i] <= counts[min(a1 - 1, i + 2)] and i - a0 > 2):
+                    cands.append((i, 0.1))  # a thin waist where bold letters touch
+                i += 1
+        cands = [(a0, 0)] + cands + [(a1, 0)]
+        widths = [EXPECT.get(c, 600) for c in chars]
+        total_px = a1 - a0
+        unit = total_px / (sum(widths) * 1.12)
+        exp = [w * unit for w in widths]
+        m = len(cands)
+        INF = float("inf")
+        best = [[INF] * m for _ in range(n + 1)]
+        back = [[-1] * m for _ in range(n + 1)]
+        best[0][0] = 0
+        for k in range(1, n + 1):
+            e = exp[k - 1]
+            for j in range(1, m):
+                for i in range(j):
+                    if best[k - 1][i] == INF:
+                        continue
+                    w = cands[j][0] - cands[i][0]
+                    if w < e * 0.35 or w > e * 2.6:
+                        continue
+                    cost = best[k - 1][i] + ((w - e) / e) ** 2 * 4 - (cands[j][1] if k < n else 0) * 0.35
+                    if cost < best[k][j]:
+                        best[k][j] = cost
+                        back[k][j] = i
+        if best[n][m - 1] == INF:
+            return None
+        cuts, j = [], m - 1
+        for k in range(n, 0, -1):
+            i = back[k][j]
+            cuts.append((cands[i][0], cands[j][0]))
+            j = i
+        cuts.reverse()
+        out = []
+        for a, b in cuts:
+            seg = np.where(counts[int(a) - 0:int(b) + 1] > 0)[0]
+            lo = int(a) + (seg[0] if len(seg) else 0)
+            hi = int(a) + (seg[-1] + 1 if len(seg) else int(b - a))
+            out.append([lo + x0, hi + x0])
+        return out
+
+    def ink_rows(self, x0, x1, y0, y1):
+        rows = np.where(self.ink[y0:y1, x0:x1].sum(axis=1) > 0)[0]
+        return (rows.min() + y0, rows.max() + y0) if len(rows) else (y0, y1)
+
+    def trace(self, x0, x1, y0, y1):
+        pad = 2
+        box = (x0 - pad, y0, x1 + pad, y1)
+        crop = self.gray.crop(box).resize(((box[2] - box[0]) * UP, (box[3] - box[1]) * UP), Image.LANCZOS)
+        bits = np.asarray(crop) >= THRESHOLD  # potracer fills the False pixels
+        path = potrace.Bitmap(bits).trace(turdsize=6 * UP, turnpolicy=potrace.POTRACE_TURNPOLICY_MINORITY,
+                                          alphamax=1.0, opticurve=True, opttolerance=0.3)
+        rec = RecordingPen()
+        to = lambda p: (box[0] + p.x / UP, box[1] + p.y / UP)
+        for curve in path:
+            rec.moveTo(to(curve.start_point))
+            for seg in curve:
+                if seg.is_corner:
+                    rec.lineTo(to(seg.c))
+                    rec.lineTo(to(seg.end_point))
+                else:
+                    rec.curveTo(to(seg.c1), to(seg.c2), to(seg.end_point))
+            rec.closePath()
+        return rec
+
+
+_pf = TTFont("PD.ttf")
+_cm, _hm = _pf.getBestCmap(), _pf["hmtx"]
+EXPECT = {chr(c): _hm[g][0] for c, g in _cm.items()}
+EXPECT.update({"♪": 420, "♫": 600, "𝄞": 520, "♥": 600, "…": 700, ",": 260, ":": 260, ";": 260, "!": 300, "?": 450, "#": 520})
+
+# glyphs[weight][char] = (recording, left_px, baseline_px, scale, width_px)
+glyphs = {w: {} for w in range(100, 1000, 100)}
+debug = {}
+for name, cfg in SHEETS.items():
+    sheet = Sheet(name)
+    dbg = Image.open(DL + name + ".png").convert("RGB")
+    d = ImageDraw.Draw(dbg)
+    for weight, top in zip(cfg["weights"], cfg["tops"]):
+        rows = [(cfg["caps"], None)]
+        first, second = sheet.split_band(top, cfg["height"])
+        if cfg["second"] and not (name == "ua" and weight == 900) and not (name == "en" and weight == 900):
+            rows = [(cfg["caps"], first), (cfg["second"], second)]
+        else:
+            rows = [(cfg["caps"], (top - 4, top + 54) if weight == 900 else first)]
+        cap_measure = None
+        for chars, (y0, y1) in rows:
+            n = len(chars)
+            boxes = sheet.groups(y0, y1, cfg["x0"], chars, x1=945 if (name == "ua" and chars is cfg["second"]) else 1515)
+            if boxes is None:
+                print("!!", name, weight, "row", chars[:3], "could not split")
+                continue
+            tops_, bottoms = [], []
+            for b in boxes:
+                t, bt = sheet.ink_rows(b[0], b[1], y0, y1)
+                tops_.append(t)
+                bottoms.append(bt)
+            baseline = float(np.percentile(bottoms, 40))
+            if cap_measure is None:
+                cap_measure = baseline - float(np.median(tops_))
+                if name == "en" and chars is cfg["second"]:
+                    pass
+            scale = CAP / cap_measure
+            for ch, b in zip(chars, boxes):
+                d.rectangle([b[0], y0, b[1], y1], outline=(255, 0, 0))
+                # Russian capitals take precedence for shared letters, except where the Russian
+                # sheet draws the wrong letter (its Б in 100 and 200 is a В).
+                prefer_ua = (ch, weight) in {("Б", 100), ("Б", 200)}
+                if ch in glyphs[weight] and not (name == "ru" and not prefer_ua) and not (name == "ua" and prefer_ua):
+                    continue
+                glyphs[weight][ch] = (sheet.trace(b[0], b[1], y0, y1), b[0], baseline, scale, b[1] - b[0])
+            # The English digits row has its own (smaller) measure: digits are a little shorter.
+        print(name, weight, "ok", cap_measure)
+    dbg.save(f"seg-{name}.png")
+
+# Missing weights borrow the nearest weight that has the character.
+all_chars = set().union(*[set(g) for g in glyphs.values()])
+for w in range(100, 1000, 100):
+    for ch in all_chars:
+        if ch not in glyphs[w]:
+            for dw in (100, -100, 200, -200, 300, -300):
+                src = glyphs.get(w + dw, {})
+                if ch in src:
+                    glyphs[w][ch] = src[ch]
+                    break
+
+LOWER_LATIN = {u: u.lower() for u in "ABCDEFGHIJKLMNOPQRSTUVWXYZ"}
+SMALL = 0.8
+
+
+def make_glyph(rec, left, baseline, scale, glyf, shrink=1.0):
+    k = scale * shrink
+    def draw(pen, source):
+        source.replay(TransformPen(Cu2QuPen(pen, max_err=1.5, reverse_direction=False), (k, 0, 0, -k, SIDE - left * k, baseline * k)))
+    tt = TTGlyphPen(None)
+    draw(tt, rec)
+    g = tt.glyph()
+    g.recalcBounds(glyf)
+    area = AreaPen()
+    check = RecordingPen()
+    g.draw(check, glyf)
+    check.replay(area)
+    if area.value > 0:
+        rev = RecordingPen()
+        rec.replay(ReverseContourPen(rev))
+        tt = TTGlyphPen(None)
+        draw(tt, rev)
+        g = tt.glyph()
+        g.recalcBounds(glyf)
+    return g
+
+
+NAMES = {100: "Thin", 200: "ExtraLight", 300: "Light", 400: "Regular", 500: "Medium", 600: "SemiBold", 700: "Bold", 800: "ExtraBold", 900: "Black"}
+
+
+def build(weight):
+    base = instancer.instantiateVariableFont(TTFont("PD.ttf"), {"wght": max(400, min(900, weight))})
+    glyf, hmtx = base["glyf"], base["hmtx"]
+    order = list(base.getGlyphOrder())
+    tables = [t for t in base["cmap"].tables if t.isUnicode()]
+
+    def put(cp, glyph, advance):
+        name = f"mx{cp:04X}"
+        glyf[name] = glyph
+        if name not in order:
+            order.append(name)
+        hmtx[name] = (int(advance), getattr(glyph, "xMin", 0))
+        for t in tables:
+            if cp <= 0xFFFF or t.format == 12:
+                t.cmap[cp] = name
+
+    have = glyphs[weight]
+    for ch, (rec, left, baseline, scale, width) in have.items():
+        put(ord(ch), make_glyph(rec, left, baseline, scale, glyf), width * scale + 2 * SIDE)
+    # lowercase without drawings of their own: the capitals as small capitals
+    smalls = dict(LOWER_LATIN)
+    for u in "АБВГҐДЕЁЄЖЗИІЇЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ":
+        smalls[u] = u.lower()
+    for u, l in smalls.items():
+        if l in have or u not in have:
+            continue
+        rec, left, baseline, scale, width = have[u]
+        put(ord(l), make_glyph(rec, left, baseline, scale, glyf, SMALL), width * scale * SMALL + 2 * SIDE)
+    for alias, src in (("♩", "♪"), ("♬", "♫")):
+        if src in have:
+            rec, left, baseline, scale, width = have[src]
+            put(ord(alias), make_glyph(rec, left, baseline, scale, glyf), width * scale + 2 * SIDE)
+
+    base.setGlyphOrder(order)
+    glyf.glyphOrder = order
+    base["maxp"].numGlyphs = len(order)
+    style = NAMES[weight]
+    for rec in base["name"].names:
+        text = rec.toUnicode()
+        for old in ("Playfair Display", "PlayfairDisplay"):
+            text = text.replace(old, "Melodix")
+        rec.string = text
+    base["name"].setName("Melodix", 1, 3, 1, 0x409)
+    base["name"].setName(style, 2, 3, 1, 0x409)
+    base["name"].setName(f"Melodix {style}", 4, 3, 1, 0x409)
+    base["name"].setName(f"Melodix-{style}", 6, 3, 1, 0x409)
+    base["OS/2"].usWeightClass = weight
+    if "STAT" in base:
+        del base["STAT"]
+    base["hhea"].descent = min(base["hhea"].descent, -320)
+    base["OS/2"].usWinDescent = max(base["OS/2"].usWinDescent, 320)
+    path = f"out/Melodix-{weight}.ttf"
+    base.save(path)
+    opts = subset.Options()
+    opts.flavor = "woff2"
+    opts.layout_features = ["kern", "liga"]
+    opts.name_IDs = ["*"]
+    sub = subset.Subsetter(opts)
+    cps = list(range(0x20, 0x7F)) + list(range(0xA0, 0x100)) + list(range(0x370, 0x400)) + list(range(0x400, 0x460)) + [0x490, 0x491] + list(range(0x2010, 0x203B)) + [0x20AC, 0x2116, 0x2122, 0x2665] + list(range(0x2669, 0x2670)) + [0x1D11E]
+    f2 = TTFont(path)
+    sub.populate(unicodes=cps)
+    sub.subset(f2)
+    f2.flavor = "woff2"
+    f2.save(f"out/Melodix-{weight}.woff2")
+    print("built", weight, len(have), "drawn characters")
+
+
+import os
+os.makedirs("out", exist_ok=True)
+for w in range(100, 1000, 100):
+    build(w)

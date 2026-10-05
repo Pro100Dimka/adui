@@ -1,3 +1,4 @@
+import { tr } from "../../../core/i18n";
 import { mark, type CommonProps } from "../../../core/base";
 
 export interface ShimmerProps extends CommonProps {
@@ -12,7 +13,7 @@ export interface ShimmerProps extends CommonProps {
 export function Shimmer({
   lines = 3,
   circle = false,
-  label = "Загрузка",
+  label = tr("Загрузка"),
   ...p
 }: ShimmerProps) {
   return (

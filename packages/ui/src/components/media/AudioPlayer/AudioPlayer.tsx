@@ -1,3 +1,4 @@
+import { tr } from "../../../core/i18n";
 import { useEffect, useRef, useState } from "react";
 import { clamp, mark, timeText, useControllable } from "../../../core/base";
 import { useTick } from "../../../core/motion/hooks";
@@ -81,7 +82,7 @@ export const AudioPlayer = (p: AudioPlayerProps) => {
           variant="primary"
           round
           icon={playing ? "pause" : "play"}
-          label={playing ? "Пауза" : "Воспроизвести"}
+          label={playing ? tr("Пауза") : tr("Воспроизвести")}
           onClick={toggle}
         />
       </span>
@@ -102,7 +103,7 @@ export const AudioPlayer = (p: AudioPlayerProps) => {
         <IconButton
           variant="ghost"
           icon="volume"
-          label={muted ? "Включить звук" : "Выключить звук"}
+          label={muted ? tr("Включить звук") : tr("Выключить звук")}
           aria-pressed={muted}
           data-muted={muted || undefined}
           onClick={() => setMuted((v) => !v)}
@@ -118,7 +119,7 @@ export const AudioPlayer = (p: AudioPlayerProps) => {
               setMuted(false);
               setVolume(v);
             }}
-            label="Громкость"
+            label={tr("Громкость")}
           />
         )}
       </div>

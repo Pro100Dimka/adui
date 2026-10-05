@@ -1,3 +1,4 @@
+import { tr } from "../../../core/i18n";
 import { useSvgId } from "../../../core/artwork";
 import { useEffect, useMemo, useRef, useState, type PointerEvent } from "react";
 import { clamp, mark, timeText, useControllable } from "../../../core/base";
@@ -150,7 +151,7 @@ export function Waveform({
       ref={surface}
       role="slider"
       tabIndex={disabled ? -1 : 0}
-      aria-label={label ?? "Позиция воспроизведения"}
+      aria-label={label ?? tr("Позиция воспроизведения")}
       aria-valuemin={0}
       aria-valuemax={Math.round(duration)}
       aria-valuenow={Math.round(position)}

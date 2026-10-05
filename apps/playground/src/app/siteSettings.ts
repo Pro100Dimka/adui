@@ -5,6 +5,8 @@ export interface SiteSettings {
   /** The site's theme, edited with the library's ThemeEditor. */
   themeConfig: ThemeConfig;
   font: keyof typeof fonts;
+  /** Language of the site and of the library's texts. */
+  locale: "ru" | "en" | "uk";
   /** Face of the titles. */
   headingFont: keyof typeof headingFonts;
   /** Text and spacing scale, 1 = 100 %. */
@@ -30,10 +32,17 @@ export const fonts = {
 };
 
 const KEY = "neo-ui-site-settings";
+
+/** The visitor's language when it is one of ours, Russian otherwise. */
+function navigatorLocale(): SiteSettings["locale"] {
+  const code = (typeof navigator !== "undefined" ? navigator.language : "ru").slice(0, 2);
+  return code === "en" || code === "uk" ? code : "ru";
+}
 export const defaultSettings: SiteSettings = {
   themeConfig: defaultThemeConfig,
   font: "default",
   headingFont: "default",
+  locale: navigatorLocale(),
   scale: 1,
 };
 

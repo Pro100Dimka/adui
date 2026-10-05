@@ -1,3 +1,4 @@
+import { tr } from "../../../core/i18n";
 import { mark } from "../../../core/base";
 import { Icon } from "../Icon/Icon";
 import {
@@ -41,7 +42,7 @@ export const Header = ({
           variant={headingVariant[level]}
           weight="bold"
         >
-          {title ?? "Название раздела"}
+          {title ?? tr("Название раздела")}
         </Typography>
         {description && (
           <Typography variant="body-sm" tone="muted">

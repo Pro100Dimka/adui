@@ -1,0 +1,87 @@
+/* Styles owned by LoaderGenerator (the loader's own animations live in Loader.tsx). */
+.ad-loader-generator {
+  display: grid;
+  gap: var(--ad-space-4);
+  min-width: 0;
+}
+.ad-loader-generator-top {
+  display: grid;
+  grid-template-columns: minmax(12rem, 1fr) minmax(0, 1.4fr);
+  gap: var(--ad-space-4);
+}
+.ad-loader-generator-stage {
+  display: grid;
+  place-items: center;
+  min-height: 14rem;
+  border: 0.0625rem solid rgb(from var(--ad-primary) r g b / 0.3);
+  border-radius: var(--ad-radius-lg);
+  background:
+    radial-gradient(circle at 50% 45%, rgb(from var(--ad-primary) r g b / 0.12), transparent 60%),
+    var(--ad-neutral-950);
+}
+.ad-loader-generator-controls {
+  display: grid;
+  align-content: start;
+  gap: var(--ad-space-3);
+}
+.ad-loader-generator-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(6.5rem, 1fr));
+  gap: var(--ad-space-2);
+}
+.ad-loader-generator-option {
+  display: grid;
+  justify-items: center;
+  gap: var(--ad-space-2);
+  padding: var(--ad-space-3) var(--ad-space-2);
+  border: 0.0625rem solid rgb(from var(--ad-primary) r g b / 0.2);
+  border-radius: var(--ad-radius);
+  background: var(--ad-neutral-900);
+  color: var(--ad-muted);
+  font: inherit;
+  font-size: var(--ad-font-size-caption);
+  cursor: pointer;
+  transition: border-color var(--ad-duration-fast), background var(--ad-duration-fast);
+}
+.ad-loader-generator-option:hover {
+  border-color: rgb(from var(--ad-primary) r g b / 0.55);
+}
+.ad-loader-generator-option[aria-checked="true"] {
+  border-color: var(--ad-primary);
+  background: rgb(from var(--ad-primary) r g b / 0.14);
+  color: var(--ad-text);
+  box-shadow: 0 0 0.9rem rgb(from var(--ad-primary) r g b / 0.3);
+}
+.ad-loader-generator-code {
+  display: grid;
+  gap: var(--ad-space-2);
+}
+.ad-loader-generator-code > pre {
+  margin: 0;
+  padding: var(--ad-space-3);
+  overflow: auto;
+  border-radius: var(--ad-radius);
+  background: var(--ad-neutral-950);
+  color: var(--ad-secondary-100);
+  font: var(--ad-font-size-body-sm) / 1.5 var(--ad-font-family-mono);
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+.ad-loader-generator-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ad-space-2);
+}
+@media (max-width: 40rem) {
+  .ad-loader-generator-top {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+.ad-loader-generator-slider {
+  display: grid;
+  gap: var(--ad-space-1);
+}
+.ad-loader-generator-slider > span {
+  display: flex;
+  justify-content: space-between;
+}

@@ -1,3 +1,4 @@
+import { tr } from "../../../core/i18n";
 import type { ReactNode } from "react";
 import { mark, type CommonProps } from "../../../core/base";
 import { Avatar } from "../../layout/Avatar/Avatar";
@@ -19,7 +20,7 @@ export interface ChipProps extends CommonProps {
 }
 
 /** A compact pill for a tag, a person or a filter: optional picture or icon, removable or pressable. */
-export function Chip({ label, icon, avatar, onRemove, removeLabel = "Убрать", onClick, selected, disabled, ...p }: ChipProps) {
+export function Chip({ label, icon, avatar, onRemove, removeLabel = tr("Убрать"), onClick, selected, disabled, ...p }: ChipProps) {
   const content = (
     <>
       {avatar && <Avatar size="xs" name={avatar.name} src={avatar.src} />}

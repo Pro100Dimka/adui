@@ -1,3 +1,4 @@
+import { tr } from "../../../core/i18n";
 import React from "react";
 import { clamp, mark, useControllable } from "../../../core/base";
 import type { SliderProps } from "../shared";
@@ -22,7 +23,7 @@ export const Slider = (p: SliderProps) => {
       max={max}
       step={p.step ?? 1}
       disabled={p.disabled}
-      aria-label={p.label ?? "Значение"}
+      aria-label={p.label ?? tr("Значение")}
       style={{ "--ad-level": `${percent}%`, ...p.style } as React.CSSProperties}
       onChange={(e) => setValue(Number(e.currentTarget.value))}
     />

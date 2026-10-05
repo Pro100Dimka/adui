@@ -1,3 +1,4 @@
+import { tr } from "@ad-voice/ui";
 import { useEffect, useState } from "react";
 import { CopyButton } from "./CopyButton";
 import { DocsExampleBoundary } from "./DocsExampleBoundary";
@@ -105,7 +106,7 @@ export function ComponentDocsPage({ item }: { item: CatalogMeta }) {
   const sourcePath = sources?.getComponentSourcePath(item.name);
   const codeViews = {
     example: {
-      title: "песочница",
+      title: tr("песочница"),
       file: "Example.tsx",
       code: liveCode
         ? withImports(liveCode, item.name, getImportPath(item))
@@ -118,7 +119,7 @@ export function ComponentDocsPage({ item }: { item: CatalogMeta }) {
       language: "ts",
     },
     source: {
-      title: "исходник",
+      title: tr("исходник"),
       file: sourcePath || `${item.name}.tsx`,
       code: sources
         ? sources.getComponentSource(item.name) || "// Исходник не найден"
@@ -167,12 +168,12 @@ export function ComponentDocsPage({ item }: { item: CatalogMeta }) {
             >
               <Link href="#/components/overview" underline="none">
                 <Typography variant="caption" tone="muted">
-                  Компоненты
+                  {tr("Компоненты")}
                 </Typography>
               </Link>
               <Icon name="chevron" />
               <Typography variant="caption" tone="muted">
-                {category?.label ?? "Компонент"}
+                {category ? tr(category.label) : tr("Компонент")}
               </Typography>
               <Icon name="chevron" />
               <Typography variant="caption" weight="bold">
@@ -195,7 +196,7 @@ export function ComponentDocsPage({ item }: { item: CatalogMeta }) {
             as="div"
             level={1}
             title={item.name}
-            description={item.description}
+            description={tr(item.description)}
           />
         </Stack>
       </Card>
@@ -210,11 +211,11 @@ export function ComponentDocsPage({ item }: { item: CatalogMeta }) {
           <Header
             level={2}
             compact
-            title="Пример"
+            title={tr("Пример")}
             description={
               liveCode
-                ? "Меняйте настройки, а в «Коде» правьте пример и сразу смотрите результат."
-                : "Живой компонент из текущих исходников."
+                ? tr("Меняйте настройки, а в «Коде» правьте пример и сразу смотрите результат.")
+                : tr("Живой компонент из текущих исходников.")
             }
             actions={
               <Stack direction="row" gap={2} wrap>
@@ -224,7 +225,7 @@ export function ComponentDocsPage({ item }: { item: CatalogMeta }) {
                   icon="braces"
                   onClick={() => setModal("example")}
                 >
-                  Код
+                  {tr("Код")}
                 </Button>
                 <Button
                   size="sm"
@@ -249,7 +250,7 @@ export function ComponentDocsPage({ item }: { item: CatalogMeta }) {
                 </ExampleCodeContext.Provider>
               ) : (
                 <Typography variant="body-sm" tone="muted">
-                  Для компонента пока нет example.tsx.
+                  {tr("Для компонента пока нет example.tsx.")}
                 </Typography>
               )}
             </DocsExampleBoundary>
@@ -267,7 +268,7 @@ export function ComponentDocsPage({ item }: { item: CatalogMeta }) {
           <Header
             level={2}
             compact
-            title={related.length ? "Связанные" : "Исходник"}
+            title={related.length ? tr("Связанные") : tr("Исходник")}
             actions={
               <Stack
                 as="nav"
@@ -276,7 +277,7 @@ export function ComponentDocsPage({ item }: { item: CatalogMeta }) {
                 gap={2}
                 align="center"
                 wrap
-                aria-label="Соседние компоненты и исходник"
+                aria-label={tr("Соседние компоненты и исходник")}
               >
                 {previous && (
                   <Link
@@ -284,7 +285,7 @@ export function ComponentDocsPage({ item }: { item: CatalogMeta }) {
                     href={componentHref(previous.name)}
                     underline="none"
                     icon="chevron"
-                    title="Предыдущий компонент"
+                    title={tr("Предыдущий компонент")}
                   >
                     {previous.name}
                   </Link>
@@ -295,7 +296,7 @@ export function ComponentDocsPage({ item }: { item: CatalogMeta }) {
                     href={componentHref(next.name)}
                     underline="none"
                     endIcon="chevron"
-                    title="Следующий компонент"
+                    title={tr("Следующий компонент")}
                   >
                     {next.name}
                   </Link>
@@ -306,7 +307,7 @@ export function ComponentDocsPage({ item }: { item: CatalogMeta }) {
                   icon="document"
                   onClick={() => setModal("source")}
                 >
-                  Исходник
+                  {tr("Исходник")}
                 </Button>
               </Stack>
             }
@@ -329,7 +330,7 @@ export function ComponentDocsPage({ item }: { item: CatalogMeta }) {
                       {candidate.name}
                     </Typography>
                     <Typography variant="caption" tone="muted">
-                      {candidate.description}
+                      {tr(candidate.description)}
                     </Typography>
                   </Stack>
                 </Link>
@@ -345,7 +346,7 @@ export function ComponentDocsPage({ item }: { item: CatalogMeta }) {
         onOpenChange={(open) => !open && setModal(undefined)}
         title={`${item.name} — ${modal ? codeViews[modal].title : ""}`}
         cancelLabel={false}
-        confirmLabel="Готово"
+        confirmLabel={tr("Готово")}
       >
         {modal === "example" ? (
           <LiveEditor name={item.name} original={codeViews.example.code} />

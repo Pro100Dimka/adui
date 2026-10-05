@@ -1,3 +1,4 @@
+import { tr } from "../../../core/i18n";
 import { mark, type CommonProps } from "../../../core/base";
 
 export interface SignalBarsProps extends CommonProps {
@@ -15,7 +16,7 @@ export function SignalBars({ level = 3, bars = 4, weak = false, label, ...p }: S
     <span
       {...mark("SignalBars", p)}
       role="img"
-      aria-label={label ?? `Сигнал: ${level} из ${bars}`}
+      aria-label={label ?? tr("Сигнал: {level} из {bars}", { level, bars })}
       data-weak={weak || undefined}
     >
       {Array.from({ length: bars }, (_, i) => (

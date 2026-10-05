@@ -1,3 +1,4 @@
+import { tr } from "../../../core/i18n";
 import { useRef, useState } from "react";
 import { mark } from "../../../core/base";
 import { Menu } from "../../feedback/Menu/Menu";
@@ -22,7 +23,7 @@ export const SplitButton = (p: SplitButtonProps) => {
         icon={p.icon ?? "save"}
         onClick={p.onClick}
       >
-        {p.children ?? p.label ?? "Сохранить"}
+        {p.children ?? p.label ?? tr("Сохранить")}
       </Button>
       <IconButton
         className="ad-split-button-trigger"
@@ -30,7 +31,7 @@ export const SplitButton = (p: SplitButtonProps) => {
         ref={anchor}
         variant="ghost"
         icon="chevron"
-        label="Другие действия"
+        label={tr("Другие действия")}
         aria-haspopup="menu"
         aria-expanded={open}
         onClick={() => setOpen((v) => !v)}
@@ -40,7 +41,7 @@ export const SplitButton = (p: SplitButtonProps) => {
         onOpenChange={setOpen}
         anchorRef={anchor}
         align="end"
-        items={p.items ?? [{ label: "Экспортировать JSON", icon: "download" }]}
+        items={p.items ?? [{ label: tr("Экспортировать JSON"), icon: "download" }]}
       />
     </div>
   );

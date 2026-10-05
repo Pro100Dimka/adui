@@ -1,3 +1,4 @@
+import { tr } from "../../../core/i18n";
 import { useState } from "react";
 import { useControllable, type CommonProps } from "../../../core/base";
 import { Chip } from "../Chip/Chip";
@@ -35,7 +36,7 @@ export function TagInput({
   max,
   validate,
   icon,
-  placeholder = "Добавьте тег и нажмите Enter",
+  placeholder = tr("Добавьте тег и нажмите Enter"),
   ...p
 }: TagInputProps) {
   const [tags, setTags] = useControllable(controlled, defaultValue, onValueChange);
@@ -99,7 +100,7 @@ export function TagInput({
         ))}
       />
       {offered.length > 0 && (
-        <div className="ad-tag-input-suggestions" role="listbox" aria-label="Подсказки">
+        <div className="ad-tag-input-suggestions" role="listbox" aria-label={tr("Подсказки")}>
           {offered.map((tag) => (
             <Chip key={tag} label={tag} icon="plus" onClick={() => add(tag)} />
           ))}

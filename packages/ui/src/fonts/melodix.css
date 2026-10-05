@@ -1,12 +1,61 @@
-/* Melodix: the musical display typeface. Records, piano keys, note heads, strings, a treble clef
-   and waveforms are part of the letters themselves. Capitals of Cyrillic and Latin, digits,
-   ! ? : ; , … and ♩ ♪ ♫ ♬ 𝄞 ♥ #; lowercase letters are the same shapes as small capitals.
-   The letters were traced from the Melodix design sheet; Greek and the remaining punctuation
-   come from Playfair Display (SIL Open Font License 1.1, see melodix/OFL-PlayfairDisplay.txt).
-   The file downloads only when some text uses the family. */
+/* Melodix: the musical display typeface, in nine weights (100 Thin … 900 Black). Records, piano
+   keys, note heads, strings, a treble clef and waveforms are part of the letters themselves.
+   Capitals of Cyrillic (Russian and Ukrainian) and Latin, digits, ! ? : ; , … and ♩ ♪ ♫ ♬ 𝄞 ♥ #;
+   lowercase letters are the same shapes as small capitals. Traced from the Melodix weight sheets;
+   Greek and the remaining punctuation come from Playfair Display (SIL Open Font License 1.1, see
+   melodix/OFL-PlayfairDisplay.txt). Each weight downloads only when some text uses it. */
 @font-face {
   font-family: "Melodix";
-  src: url("./melodix/Melodix-Regular.woff2") format("woff2");
+  src: url("./melodix/Melodix-100.woff2") format("woff2");
+  font-weight: 100;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Melodix";
+  src: url("./melodix/Melodix-200.woff2") format("woff2");
+  font-weight: 200;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Melodix";
+  src: url("./melodix/Melodix-300.woff2") format("woff2");
+  font-weight: 300;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Melodix";
+  src: url("./melodix/Melodix-400.woff2") format("woff2");
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Melodix";
+  src: url("./melodix/Melodix-500.woff2") format("woff2");
+  font-weight: 500;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Melodix";
+  src: url("./melodix/Melodix-600.woff2") format("woff2");
+  font-weight: 600;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Melodix";
+  src: url("./melodix/Melodix-700.woff2") format("woff2");
+  font-weight: 700;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Melodix";
+  src: url("./melodix/Melodix-800.woff2") format("woff2");
+  font-weight: 800;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Melodix";
+  src: url("./melodix/Melodix-900.woff2") format("woff2");
+  font-weight: 900;
   font-display: swap;
 }
 :root,

@@ -1,3 +1,4 @@
+import { plural, tr } from "../../../core/i18n";
 import { useLayoutEffect, useRef, useState } from "react";
 import { copyText, mark, useControllable, type CommonProps } from "../../../core/base";
 import { Button } from "../../controls/Button/Button";
@@ -40,7 +41,7 @@ const neutralStrip = ["neutral-950", "neutral-900", "neutral-850", "neutral-800"
 
 /** "1 токен", "3 токена", "7 токенов". */
 const tokensWord = (n: number) =>
-  `${n} ${n % 10 === 1 && n % 100 !== 11 ? "токен" : n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14) ? "токена" : "токенов"}`;
+  `${n} ${plural(n, tr("токен"), tr("токена"), tr("токенов"))}`;
 
 /** Downloads text as a file. */
 const download = (name: string, text: string) => {
@@ -95,10 +96,10 @@ export function ThemeEditor({ value: controlled, defaultValue = defaultThemeConf
   const load = (text: string) => {
     try {
       setConfig(parseTheme(text));
-      setNotice({ tone: "success", text: "Тема загружена." });
+      setNotice({ tone: "success", text: tr("Тема загружена.") });
       return true;
     } catch (error) {
-      setNotice({ tone: "error", text: error instanceof Error ? error.message : "Не удалось прочитать тему." });
+      setNotice({ tone: "error", text: error instanceof Error ? error.message : tr("Не удалось прочитать тему.") });
       return false;
     }
   };
@@ -112,77 +113,77 @@ export function ThemeEditor({ value: controlled, defaultValue = defaultThemeConf
           value={config.mode}
           onValueChange={(mode) => update({ mode: mode as ThemeConfig["mode"] })}
           items={[
-            { value: "simple", label: "Простой", icon: "palette" },
-            { value: "advanced", label: "Продвинутый", icon: "sliders" },
+            { value: "simple", label: tr("Простой"), icon: "palette" },
+            { value: "advanced", label: tr("Продвинутый"), icon: "sliders" },
           ]}
         />
         <span className="ad-theme-editor-actions">
-          <Button size="sm" icon="download" onClick={() => download(fileName, exportTheme(config))}>Экспорт</Button>
-          <IconButton size="sm" icon="copy" label="Скопировать JSON темы" onClick={async () => {
+          <Button size="sm" icon="download" onClick={() => download(fileName, exportTheme(config))}>{tr("Экспорт")}</Button>
+          <IconButton size="sm" icon="copy" label={tr("Скопировать JSON темы")} onClick={async () => {
             const done = await copyText(exportTheme(config));
-            setNotice(done ? { tone: "success", text: "JSON темы скопирован." } : { tone: "error", text: "Не удалось скопировать." });
+            setNotice(done ? { tone: "success", text: tr("JSON темы скопирован.") } : { tone: "error", text: tr("Не удалось скопировать.") });
           }} />
-          <FilePicker size="sm" icon="upload" label="Импорт" description=" " accept=".json,application/json"
+          <FilePicker size="sm" icon="upload" label={tr("Импорт")} description=" " accept=".json,application/json"
             onFiles={async ([file]) => file && load(await file.text())} />
-          <IconButton ref={pasteAnchor} size="sm" icon="document" label="Вставить JSON темы" aria-expanded={pasteOpen} onClick={() => setPasteOpen((v) => !v)} />
-          <IconButton size="sm" variant="ghost" icon="reset" label="Сбросить тему" onClick={() => { setConfig(defaultThemeConfig); setNotice(undefined); }} />
+          <IconButton ref={pasteAnchor} size="sm" icon="document" label={tr("Вставить JSON темы")} aria-expanded={pasteOpen} onClick={() => setPasteOpen((v) => !v)} />
+          <IconButton size="sm" variant="ghost" icon="reset" label={tr("Сбросить тему")} onClick={() => { setConfig(defaultThemeConfig); setNotice(undefined); }} />
         </span>
       </div>
-      <Popover open={pasteOpen} onOpenChange={setPasteOpen} anchorRef={pasteAnchor} align="end" label="Вставить тему" className="ad-theme-editor-paste">
-        <TextArea label="JSON темы" value={pasted} onValueChange={setPasted} rows={6} placeholder='{ "$type": "neo-ui-theme", … }' />
+      <Popover open={pasteOpen} onOpenChange={setPasteOpen} anchorRef={pasteAnchor} align="end" label={tr("Вставить тему")} className="ad-theme-editor-paste">
+        <TextArea label={tr("JSON темы")} value={pasted} onValueChange={setPasted} rows={6} placeholder='{ "$type": "neo-ui-theme", … }' />
         <Button size="sm" variant="primary" icon="check" disabled={!pasted.trim()} onClick={() => { if (load(pasted)) { setPasted(""); setPasteOpen(false); } }}>
-          Применить
+          {tr("Применить")}
         </Button>
       </Popover>
       {notice && <MessageBar tone={notice.tone}>{notice.text}</MessageBar>}
 
       {config.mode === "simple" ? (
         <div className="ad-theme-editor-simple">
-          <ThemePicker value={config.theme} label="Готовая тема"
+          <ThemePicker value={config.theme} label={tr("Готовая тема")}
             onValueChange={(theme) => setConfig({ ...config, theme, primary: undefined, secondary: undefined })} />
           <div className="ad-theme-editor-colors">
-            <ColorPicker label="Основной цвет" value={primary} onValueChange={(hex) => update({ primary: hex })} />
+            <ColorPicker label={tr("Основной цвет")} value={primary} onValueChange={(hex) => update({ primary: hex })} />
             {/* Swapping turns the calculation off: the pair stays exactly as it is, the other way round. */}
-            <IconButton round icon="refresh" className="ad-theme-editor-swap" label="Поменять цвета местами"
+            <IconButton round icon="refresh" className="ad-theme-editor-swap" label={tr("Поменять цвета местами")}
               onClick={() => update({ primary: secondary, secondary: primary, autoSecondary: false })} />
-            <ColorPicker label="Второй цвет" value={secondary} disabled={config.autoSecondary}
-              description={config.autoSecondary ? "Рассчитывается из основного" : undefined}
+            <ColorPicker label={tr("Второй цвет")} value={secondary} disabled={config.autoSecondary}
+              description={config.autoSecondary ? tr("Рассчитывается из основного") : undefined}
               onValueChange={(hex) => update({ secondary: hex })} />
           </div>
-          <Switch label="Второй цвет рассчитывать автоматически" checked={!!config.autoSecondary}
+          <Switch label={tr("Второй цвет рассчитывать автоматически")} checked={!!config.autoSecondary}
             onValueChange={(autoSecondary) => update({ autoSecondary, primary: config.primary ?? primary, secondary })} />
-          <Typography variant="caption" tone="muted">Палитра, построенная из этих цветов:</Typography>
+          <Typography variant="caption" tone="muted">{tr("Палитра, построенная из этих цветов:")}</Typography>
           <div className="ad-theme-editor-strip">{paletteStrip.map((name) => <i key={name} title={name} style={{ background: `var(--ad-${name})` }} />)}</div>
           <div className="ad-theme-editor-strip">{neutralStrip.map((name) => <i key={name} title={name} style={{ background: `var(--ad-${name})` }} />)}</div>
         </div>
       ) : (
         <div className="ad-theme-editor-advanced">
           <div className="ad-theme-editor-search">
-            <TextField size="sm" placeholder="Найти токен…" startAdornment={<Icon name="search" />} clearable value={search} onValueChange={setSearch} aria-label="Найти токен" />
-            <Badge tone={changed ? "warning" : undefined}>{changed ? `Изменено: ${changed}` : "Всё из темы"}</Badge>
+            <TextField size="sm" placeholder={tr("Найти токен…")} startAdornment={<Icon name="search" />} clearable value={search} onValueChange={setSearch} aria-label={tr("Найти токен")} />
+            <Badge tone={changed ? "warning" : undefined}>{changed ? tr("Изменено: {count}", { count: changed }) : tr("Всё из темы")}</Badge>
           </div>
           {themeTokenGroups.map((group, index) => {
             const rows = group.tokens.filter((token) => !needle || `${token.name} ${token.label} ${group.title}`.toLowerCase().includes(needle));
             if (!rows.length) return null;
             const own = rows.filter((token) => tokens[token.name] !== undefined).length;
             return (
-              <CollapsibleSection key={group.title} title={group.title} defaultOpen={index < 2 || !!needle}
-                description={own ? `изменено: ${own} из ${rows.length}` : tokensWord(rows.length)}>
+              <CollapsibleSection key={group.title} title={tr(group.title)} defaultOpen={index < 2 || !!needle}
+                description={own ? tr("изменено: {own} из {total}", { own, total: rows.length }) : tokensWord(rows.length)}>
                 <div className="ad-theme-editor-tokens">
                   {rows.map((token) => {
                     const current = tokens[token.name] ?? resolved[token.name] ?? "";
                     return (
                       <div key={token.name} className="ad-theme-editor-token" data-changed={tokens[token.name] !== undefined || undefined}>
                         {token.kind === "color" ? (
-                          <ColorPicker size="sm" label={token.label} value={/^#[0-9a-f]{6}$/i.test(current) ? current : "#000000"}
+                          <ColorPicker size="sm" label={tr(token.label)} value={/^#[0-9a-f]{6}$/i.test(current) ? current : "#000000"}
                             onValueChange={(hex) => setToken(token.name, hex)} />
                         ) : (
-                          <TextField size="sm" label={token.label} value={current} spellCheck={false}
+                          <TextField size="sm" label={tr(token.label)} value={current} spellCheck={false}
                             onValueChange={(value) => setToken(token.name, value)} />
                         )}
                         <code>--ad-{token.name}</code>
                         {tokens[token.name] !== undefined && (
-                          <IconButton size="xs" variant="ghost" icon="reset" label={`Вернуть ${token.label}`} onClick={() => setToken(token.name, undefined)} />
+                          <IconButton size="xs" variant="ghost" icon="reset" label={tr("Вернуть {name}", { name: tr(token.label) })} onClick={() => setToken(token.name, undefined)} />
                         )}
                       </div>
                     );
@@ -194,16 +195,16 @@ export function ThemeEditor({ value: controlled, defaultValue = defaultThemeConf
         </div>
       )}
 
-      <div className="ad-theme-editor-preview" aria-label="Пример темы">
-        <Typography variant="eyebrow" tone="accent">Пример</Typography>
-        <Typography variant="title">Так выглядит тема</Typography>
+      <div className="ad-theme-editor-preview" aria-label={tr("Пример темы")}>
+        <Typography variant="eyebrow" tone="accent">{tr("Пример")}</Typography>
+        <Typography variant="title">{tr("Так выглядит тема")}</Typography>
         <div className="ad-theme-editor-preview-row">
-          <Button size="sm" variant="primary" icon="play">Играть</Button>
-          <Button size="sm" icon="settings">Настройки</Button>
-          <Badge tone="success">Готово</Badge>
-          <Badge tone="warning">Внимание</Badge>
+          <Button size="sm" variant="primary" icon="play">{tr("Играть")}</Button>
+          <Button size="sm" icon="settings">{tr("Настройки")}</Button>
+          <Badge tone="success">{tr("Готово")}</Badge>
+          <Badge tone="warning">{tr("Внимание")}</Badge>
         </div>
-        <ProgressBar value={62} label="Обработка" />
+        <ProgressBar value={62} label={tr("Обработка")} />
       </div>
     </div>
   );

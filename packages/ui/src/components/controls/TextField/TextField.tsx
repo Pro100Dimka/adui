@@ -1,3 +1,4 @@
+import { tr } from "../../../core/i18n";
 import { useControllable } from "../../../core/base";
 import { FieldFrame, fieldLabel, useFieldIds } from "../internal";
 import { IconButton } from "../IconButton/IconButton";
@@ -58,7 +59,7 @@ export const TextField = ({
                 size="xs"
                 variant="ghost"
                 icon="close"
-                label="Очистить"
+                label={tr("Очистить")}
                 disabled={input.disabled || input.readOnly}
                 onClick={() => setCurrent("")}
               />

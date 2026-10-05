@@ -1,3 +1,4 @@
+import { tr } from "../../../core/i18n";
 import { mark } from "../../../core/base";
 import type { MessageBarProps } from "../shared";
 import { Icon } from "../../layout/Icon/Icon";
@@ -13,7 +14,7 @@ export const MessageBar = ({ action, ...p }: MessageBarProps) => (
       <Icon name={icons[p.tone as keyof typeof icons] ?? "info"} />
     </span>
     <span className="ad-message-bar-text">
-      {p.children ?? "Для операции нужно больше свободного места."}
+      {p.children ?? tr("Для операции нужно больше свободного места.")}
     </span>
     {action && <span className="ad-message-bar-action">{action}</span>}
   </div>

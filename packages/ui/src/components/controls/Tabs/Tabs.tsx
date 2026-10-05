@@ -1,3 +1,4 @@
+import { tr } from "../../../core/i18n";
 import { createResizeObserver } from "../../../core/environment";
 import { useLayoutEffect, useRef, useState } from "react";
 import {
@@ -13,9 +14,9 @@ export function Tabs<V extends string = string>(p: TabsProps<V>) {
   const items =
     p.items ??
     ([
-      { value: "appearance", label: "Внешний вид", icon: "palette" },
-      { value: "audio", label: "Аудио", icon: "audio" },
-      { value: "advanced", label: "Дополнительно", icon: "wrench" },
+      { value: "appearance", label: tr("Внешний вид"), icon: "palette" },
+      { value: "audio", label: tr("Аудио"), icon: "audio" },
+      { value: "advanced", label: tr("Дополнительно"), icon: "wrench" },
     ] as TabItem<V>[]);
   const [value, setValue] = useControllable<V>(
     p.value,
@@ -57,7 +58,7 @@ export function Tabs<V extends string = string>(p: TabsProps<V>) {
     <nav
       {...mark("Tabs", p)}
       role="tablist"
-      aria-label={p.label ?? "Разделы"}
+      aria-label={p.label ?? tr("Разделы")}
       data-moving={moving || undefined}
       onPointerDown={(e) => {
         const tab = (e.target as HTMLElement).closest<HTMLElement>(".ad-tab");

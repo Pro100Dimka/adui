@@ -1,3 +1,4 @@
+import { tr } from "../../../core/i18n";
 import { useId } from "react";
 import { clamp, mark } from "../../../core/base";
 import { type ProgressBarProps } from "../shared";
@@ -20,7 +21,7 @@ export const ProgressBar = (p: ProgressBarProps) => {
     <div
       {...mark("ProgressBar", p)}
       role="progressbar"
-      aria-label={p.label ?? "Прогресс"}
+      aria-label={p.label ?? tr("Прогресс")}
       aria-valuemin={0}
       aria-valuemax={max}
       aria-valuenow={p.indeterminate ? undefined : value}

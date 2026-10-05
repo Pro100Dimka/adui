@@ -1,3 +1,4 @@
+import { tr } from "../../../core/i18n";
 import { mark } from "../../../core/base";
 import { type AvatarProps } from "../shared";
 import { HostSeal } from "./HostSeal";
@@ -10,7 +11,7 @@ export const Avatar = ({ variant = "initials", src, badge, presence, ...p }: Ava
     data-variant={variant}
     data-photo={src ? "" : undefined}
     role="img"
-    aria-label={p.name ?? "Пользователь"}
+    aria-label={p.name ?? tr("Пользователь")}
   >
     {variant === "host" && <HostSeal photo={src} />}
     {variant !== "host" &&

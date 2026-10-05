@@ -58,6 +58,7 @@
 @import "./components/layout/BrandMark/styles.css";
 @import "./components/layout/ButtonGroup/styles.css";
 @import "./components/layout/Card/styles.css";
+@import "./components/foundation/LoaderGenerator/styles.css";
 @import "./components/effects/MelodixText/styles.css";
 @import "./components/foundation/ThemeEditor/styles.css";
 @import "./components/controls/Chip/styles.css";

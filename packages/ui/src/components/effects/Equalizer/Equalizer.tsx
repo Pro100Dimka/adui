@@ -1,3 +1,4 @@
+import { tr } from "../../../core/i18n";
 import { useRef } from "react";
 import { usePauseOffscreen } from "../../../core/motion/hooks";
 import { mark, type CommonProps } from "../../../core/base";
@@ -30,7 +31,7 @@ export function Equalizer({
       {...mark("Equalizer", p)}
       ref={pauseRef}
       role="img"
-      aria-label={label ?? (playing ? "Играет" : "Пауза")}
+      aria-label={label ?? (playing ? tr("Играет") : tr("Пауза"))}
       data-playing={(playing && !levels) || undefined}
       data-live={levels ? "" : undefined}
     >

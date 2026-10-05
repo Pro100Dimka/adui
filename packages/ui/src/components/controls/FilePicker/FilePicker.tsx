@@ -1,3 +1,4 @@
+import { tr } from "../../../core/i18n";
 import { useRef, useState } from "react";
 import { mark } from "../../../core/base";
 import { Button } from "../Button/Button";
@@ -35,9 +36,9 @@ export const FilePicker = (p: FilePickerProps) => {
       >
         <Icon name={p.icon ?? "upload"} />
         <span className="ad-file-picker-text">
-          <strong>{p.label ?? "Выбрать файл"}</strong>
+          <strong>{p.label ?? tr("Выбрать файл")}</strong>
           <small key={picked} data-picked={!!picked || undefined}>
-            {picked || p.description || "или перетащите его сюда"}
+            {picked || p.description || tr("или перетащите его сюда")}
           </small>
         </span>
         <input
@@ -61,10 +62,10 @@ export const FilePicker = (p: FilePickerProps) => {
         disabled={p.disabled}
         onClick={choose}
       >
-        {p.label ?? "Выбрать файл"}
+        {p.label ?? tr("Выбрать файл")}
       </Button>
       <small key={picked} data-picked={!!picked || undefined}>
-        {picked || p.description || "Файл не выбран"}
+        {picked || p.description || tr("Файл не выбран")}
       </small>
       <input
         type="file"

@@ -1,3 +1,4 @@
+import { tr } from "@ad-voice/ui";
 import { Component, type ReactNode } from "react";
 import { Card, Stack, Typography } from "@ad-voice/ui";
 
@@ -19,7 +20,7 @@ export class DocsExampleBoundary extends Component<
       <Card className="docs-example-error" material="danger" padding="sm">
         <Stack gap={2}>
           <Typography variant="label" weight="bold">
-            Пример {this.props.name} не отрисовался
+            {tr("Пример {name} не отрисовался", { name: this.props.name })}
           </Typography>
           <Typography variant="mono">{this.state.error.message}</Typography>
         </Stack>

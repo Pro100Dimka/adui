@@ -1,3 +1,4 @@
+import { tr } from "../../../core/i18n";
 import { useSvgId } from "../../../core/artwork";
 import { useEffect, useRef } from "react";
 import { clamp, mark } from "../../../core/base";
@@ -106,7 +107,7 @@ export function LevelMeter({
     <div
       {...mark("LevelMeter", p)}
       role="meter"
-      aria-label={label ?? "Уровень сигнала"}
+      aria-label={label ?? tr("Уровень сигнала")}
       aria-valuemin={0}
       aria-valuemax={100}
       aria-valuenow={stream ? undefined : Math.round(active ? level * 100 : 0)}

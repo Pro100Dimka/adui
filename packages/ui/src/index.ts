@@ -32,6 +32,10 @@ export { Avatar } from "./components/layout/Avatar/Avatar";
 export { BrandMark } from "./components/layout/BrandMark/BrandMark";
 export { ButtonGroup } from "./components/layout/ButtonGroup/ButtonGroup";
 export { Card } from "./components/layout/Card/Card";
+export { Loader, loaderAnimations, loaderAnimationLabel, loaderCss, loaderDefaultImage } from "./components/foundation/Loader/Loader";
+export type { LoaderAnimation, LoaderProps } from "./components/foundation/Loader/Loader";
+export { LoaderGenerator, loaderHtml } from "./components/foundation/LoaderGenerator/LoaderGenerator";
+export type { LoaderGeneratorProps, LoaderSettings } from "./components/foundation/LoaderGenerator/LoaderGenerator";
 export { MelodixText } from "./components/effects/MelodixText/MelodixText";
 export type { MelodixTextProps } from "./components/effects/MelodixText/MelodixText";
 export { ThemeEditor } from "./components/foundation/ThemeEditor/ThemeEditor";
@@ -188,3 +192,7 @@ export type {
   FieldKind,
   FieldRegistry,
 } from "./components/forms/FormFields/FormFields";
+
+export { LocaleProvider, addMessages, getLocale, plural, setLocale, tr, useLocale } from "./core/i18n";
+export type { Locale, Messages } from "./core/i18n";
+export { messages as builtInMessages } from "./core/messages";

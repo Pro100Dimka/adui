@@ -1,3 +1,4 @@
+import { tr } from "../../../core/i18n";
 import { mark } from "../../../core/base";
 import { type KeyValueListProps } from "../shared";
 
@@ -7,7 +8,7 @@ export const KeyValueList = (p: KeyValueListProps) => (
       p.items ?? [
         ["Python Backend", "Ready"],
         ["AudioService", "Running"],
-        ["База данных", "Исправно"],
+        [tr("База данных"), tr("Исправно")],
       ]
     ).map(([key, value], i) => (
       <div key={i}>

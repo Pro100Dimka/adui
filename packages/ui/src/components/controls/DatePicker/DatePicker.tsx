@@ -1,3 +1,4 @@
+import { getLocale, tr } from "../../../core/i18n";
 import { useMemo, useRef, useState } from "react";
 import { mark, useControllable, type CommonProps } from "../../../core/base";
 import { Popover } from "../../feedback/Popover/Popover";
@@ -18,7 +19,7 @@ export interface DatePickerProps extends CommonProps {
   /** Earliest and latest dates that can be chosen, YYYY-MM-DD. */
   min?: string;
   max?: string;
-  /** Language of month and day names. */
+  /** Language of month and day names (by default the library's current language). */
   locale?: string;
   disabled?: boolean;
   required?: boolean;
@@ -39,7 +40,9 @@ const parseTyped = (text: string) => {
 };
 
 /** A date field with a month calendar: arrows through months, today marked, out-of-range days off. */
-export function DatePicker({ value: controlled, defaultValue = "", onValueChange, min, max, locale = "ru-RU", placeholder = "дд.мм.гггг", ...p }: DatePickerProps) {
+const intlLocale = () => ({ ru: "ru-RU", en: "en-GB", uk: "uk-UA" } as Record<string, string>)[getLocale()] ?? getLocale();
+
+export function DatePicker({ value: controlled, defaultValue = "", onValueChange, min, max, locale = intlLocale(), placeholder = tr("дд.мм.гггг"), ...p }: DatePickerProps) {
   const [value, setValue] = useControllable(controlled, defaultValue, onValueChange);
   const selected = parse(value);
   const [open, setOpen] = useState(false);
@@ -71,7 +74,7 @@ export function DatePicker({ value: controlled, defaultValue = "", onValueChange
     <div {...mark("DatePicker", p)}>
       <FieldFrame ids={ids} className="" label={p.label} required={p.required} description={p.description} error={p.error}>
         <InputBase ref={box} size={p.size} disabled={p.disabled} error={!!p.error} filled={!!selected}
-          endAdornment={<IconButton size="xs" variant="ghost" icon="clock" label="Открыть календарь" disabled={p.disabled}
+          endAdornment={<IconButton size="xs" variant="ghost" icon="clock" label={tr("Открыть календарь")} disabled={p.disabled}
             onClick={() => { setMonth(selected ?? new Date()); setOpen((v) => !v); }} />}>
           <input
             value={text ?? (selected ? format.format(selected) : "")}
@@ -95,12 +98,12 @@ export function DatePicker({ value: controlled, defaultValue = "", onValueChange
           />
         </InputBase>
       </FieldFrame>
-      <Popover open={open} onOpenChange={setOpen} anchorRef={box} align="start" label="Календарь" className="ad-date-popover">
+      <Popover open={open} onOpenChange={setOpen} anchorRef={box} align="start" label={tr("Календарь")} className="ad-date-popover">
         <div className="ad-calendar">
           <div className="ad-calendar-head">
-            <IconButton size="xs" variant="ghost" icon="prev" label="Предыдущий месяц" onClick={() => shift(-1)} />
+            <IconButton size="xs" variant="ghost" icon="prev" label={tr("Предыдущий месяц")} onClick={() => shift(-1)} />
             <strong>{new Intl.DateTimeFormat(locale, { month: "long", year: "numeric" }).format(month)}</strong>
-            <IconButton size="xs" variant="ghost" icon="prev" className="ad-calendar-next" label="Следующий месяц" onClick={() => shift(1)} />
+            <IconButton size="xs" variant="ghost" icon="prev" className="ad-calendar-next" label={tr("Следующий месяц")} onClick={() => shift(1)} />
           </div>
           <div className="ad-calendar-grid" role="grid">
             {weekdays.map((day) => <span key={day} className="ad-calendar-weekday">{day}</span>)}
@@ -116,8 +119,8 @@ export function DatePicker({ value: controlled, defaultValue = "", onValueChange
             })}
           </div>
           <div className="ad-calendar-foot">
-            <Button size="xs" variant="ghost" icon="clock" disabled={!allowed(today)} onClick={() => choose(new Date())}>Сегодня</Button>
-            {selected && <Button size="xs" variant="ghost" icon="close" onClick={() => { setValue(""); setOpen(false); }}>Очистить</Button>}
+            <Button size="xs" variant="ghost" icon="clock" disabled={!allowed(today)} onClick={() => choose(new Date())}>{tr("Сегодня")}</Button>
+            {selected && <Button size="xs" variant="ghost" icon="close" onClick={() => { setValue(""); setOpen(false); }}>{tr("Очистить")}</Button>}
           </div>
         </div>
       </Popover>

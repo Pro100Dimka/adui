@@ -1,14 +1,15 @@
+import { tr } from "../../../core/i18n";
 import { mark } from "../../../core/base";
 import { Icon } from "../../layout/Icon/Icon";
 import { type StepsProps } from "../shared";
 
 export const Steps = (p: StepsProps) => {
   const steps = p.steps ?? [
-    "Подготовка",
-    "Анализ",
-    "Модель",
-    "Обработка",
-    "Проверка",
+    tr("Подготовка"),
+    tr("Анализ"),
+    tr("Модель"),
+    tr("Обработка"),
+    tr("Проверка"),
   ];
   const current = p.current ?? 3;
   return (

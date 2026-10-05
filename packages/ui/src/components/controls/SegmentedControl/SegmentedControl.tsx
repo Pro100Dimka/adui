@@ -1,3 +1,4 @@
+import { tr } from "../../../core/i18n";
 import { mark } from "../../../core/base";
 import { type TabItem, type TabsProps } from "../shared";
 import { Tabs } from "../Tabs/Tabs";
@@ -11,8 +12,8 @@ export const SegmentedControl = <V extends string = string>(
       items={
         p.items ??
         ([
-          { value: "list", label: "Список", icon: "list" },
-          { value: "grid", label: "Плитка", icon: "grid" },
+          { value: "list", label: tr("Список"), icon: "list" },
+          { value: "grid", label: tr("Плитка"), icon: "grid" },
         ] as TabItem<V>[])
       }
     />

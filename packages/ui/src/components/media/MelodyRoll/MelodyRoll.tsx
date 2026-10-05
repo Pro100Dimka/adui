@@ -1,3 +1,4 @@
+import { tr } from "../../../core/i18n";
 import { useRef, type CSSProperties, type WheelEvent } from "react";
 import { clamp, mark, useControllable, type CommonProps } from "../../../core/base";
 import { PianoKeyboard } from "../PianoKeyboard/PianoKeyboard";
@@ -117,7 +118,7 @@ export const MelodyRoll = ({
     <div
       {...mark("MelodyRoll", p)}
       role="img"
-      aria-label={label ?? "Мелодия"}
+      aria-label={label ?? tr("Мелодия")}
       onWheel={zoom}
       style={
         {

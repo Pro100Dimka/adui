@@ -1,3 +1,4 @@
+import { tr } from "@ad-voice/ui";
 import { useEffect, useState, type ComponentType } from "react";
 import { Badge, Button, MessageBar, Typography } from "@ad-voice/ui";
 import { CopyButton } from "./CopyButton";
@@ -70,7 +71,7 @@ export function LiveEditor({
           <Typography variant="label">Example.tsx</Typography>
           {draft !== null && (
             <Badge tone="warning" size="sm">
-              Изменено
+              {tr("Изменено")}
             </Badge>
           )}
           <span className="docs-live-actions">
@@ -81,13 +82,13 @@ export function LiveEditor({
                 icon="reset"
                 onClick={() => setDraft(null)}
               >
-                Вернуть исходный
+                {tr("Вернуть исходный")}
               </Button>
             )}
             <CopyButton text={code} />
           </span>
         </div>
-        <CodeEditor label="Код примера" value={code} onChange={setDraft} />
+        <CodeEditor label={tr("Код примера")} value={code} onChange={setDraft} />
       </div>
       <div className="docs-live-preview">
         {error && <MessageBar tone="error">{error}</MessageBar>}

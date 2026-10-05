@@ -1,3 +1,4 @@
+import { tr } from "../../../core/i18n";
 import { mark, type Tone } from "../../../core/base";
 import type { StatusIndicatorProps } from "../shared";
 export const StatusIndicator = ({
@@ -5,13 +6,13 @@ export const StatusIndicator = ({
   ...p
 }: StatusIndicatorProps) => {
   const labels: Record<Tone, string> = {
-    success: "Готово",
-    error: "Ошибка",
-    warning: "Внимание",
-    processing: "Обработка",
-    pending: "В очереди",
-    offline: "Не подключено",
-    info: "Информация",
+    success: tr("Готово"),
+    error: tr("Ошибка"),
+    warning: tr("Внимание"),
+    processing: tr("Обработка"),
+    pending: tr("В очереди"),
+    offline: tr("Не подключено"),
+    info: tr("Информация"),
   };
   return (
     <span {...mark("StatusIndicator", { ...p, tone: status })}>

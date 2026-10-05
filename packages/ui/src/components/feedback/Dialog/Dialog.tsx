@@ -1,3 +1,4 @@
+import { tr } from "../../../core/i18n";
 import { useId, useLayoutEffect, useRef, useState } from "react";
 import { mark, useControllable } from "../../../core/base";
 import { Button } from "../../controls/Button/Button";
@@ -80,14 +81,14 @@ export const Dialog = (p: DialogProps) => {
         </div>
       )}
       <Header
-        title={<span id={titleId}>{p.title ?? "Подтверждение"}</span>}
+        title={<span id={titleId}>{p.title ?? tr("Подтверждение")}</span>}
         icon={p.icon}
         level={2}
         actions={
           <IconButton
             variant="ghost"
             icon="close"
-            label={p.closeLabel ?? "Закрыть"}
+            label={p.closeLabel ?? tr("Закрыть")}
             disabled={pending}
             onClick={() => setOpen(false)}
           />
@@ -102,7 +103,7 @@ export const Dialog = (p: DialogProps) => {
         <DialogActions>
           {p.cancelLabel !== false && (
             <Button disabled={pending} onClick={() => setOpen(false)}>
-              {p.cancelLabel ?? "Отмена"}
+              {p.cancelLabel ?? tr("Отмена")}
             </Button>
           )}
           {p.confirmLabel !== false && (
@@ -124,14 +125,14 @@ export const Dialog = (p: DialogProps) => {
                   setError(
                     e instanceof Error
                       ? e.message
-                      : "Не удалось выполнить действие",
+                      : tr("Не удалось выполнить действие"),
                   );
                 } finally {
                   setPending(false);
                 }
               }}
             >
-              {p.confirmLabel ?? "Готово"}
+              {p.confirmLabel ?? tr("Готово")}
             </Button>
           )}
         </DialogActions>

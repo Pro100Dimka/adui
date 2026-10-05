@@ -1,3 +1,4 @@
+import { tr } from "../../../core/i18n";
 import { memo, useState, type CSSProperties } from "react";
 import { mark, type CommonProps } from "../../../core/base";
 
@@ -83,7 +84,7 @@ export const PianoKeyboard = memo(function PianoKeyboard({
     <div
       {...mark("PianoKeyboard", p)}
       role={onKeyPress ? "group" : "img"}
-      aria-label={label ?? `Клавиатура ${noteName(minMidi)}–${noteName(maxMidi)}`}
+      aria-label={label ?? tr("Клавиатура {from}–{to}", { from: noteName(minMidi), to: noteName(maxMidi) })}
       style={{ ...p.style, "--ad-keys": rows } as CSSProperties}
     >
       {whiteKeys(minMidi, maxMidi).map(({ midi, top, size }) => key(midi, top, size, false))}

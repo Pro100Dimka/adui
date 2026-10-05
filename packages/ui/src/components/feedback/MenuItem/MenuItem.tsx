@@ -1,9 +1,10 @@
+import { tr } from "../../../core/i18n";
 import { mark } from "../../../core/base";
 import { Icon } from "../../layout/Icon/Icon";
 import type { MenuItemProps } from "../shared";
 
 export const MenuItem = (p: MenuItemProps) => {
-  const label = p.label ?? p.children ?? "Действие";
+  const label = p.label ?? p.children ?? tr("Действие");
   return (
     <button
       {...mark("MenuItem", { ...p, tone: p.danger ? "error" : p.tone })}

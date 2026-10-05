@@ -1,3 +1,4 @@
+import { tr } from "../../../core/i18n";
 import { classes, clamp, useControllable } from "../../../core/base";
 import { IconButton } from "../IconButton/IconButton";
 import { TextField } from "../TextField/TextField";
@@ -51,7 +52,7 @@ export const NumberField = ({
             size="xs"
             variant="ghost"
             icon="minus"
-            label="Уменьшить"
+            label={tr("Уменьшить")}
             disabled={locked || (current !== "" && current <= low)}
             onClick={() => nudge(-1)}
           />
@@ -59,7 +60,7 @@ export const NumberField = ({
             size="xs"
             variant="ghost"
             icon="plus"
-            label="Увеличить"
+            label={tr("Увеличить")}
             disabled={locked || (current !== "" && current >= high)}
             onClick={() => nudge(1)}
           />

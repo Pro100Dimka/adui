@@ -1,3 +1,4 @@
+import { tr } from "@ad-voice/ui";
 import { useEffect, useState } from "react";
 import {
   Badge,
@@ -43,7 +44,7 @@ function OverviewLink({ className }: { className: string }) {
       underline="none"
       icon="grid"
     >
-      <Typography variant="label">Обзор</Typography>
+      <Typography variant="label">{tr("Обзор")}</Typography>
       <Badge>{catalog.length}</Badge>
     </Link>
   );
@@ -80,7 +81,7 @@ export function CatalogSidebar({ activeItem }: { activeItem?: CatalogMeta }) {
     .map((category) => ({
       category,
       items: category.items.filter((item) =>
-        `${item.name} ${item.description}`.toLowerCase().includes(needle),
+        `${item.name} ${item.description} ${tr(item.description)}`.toLowerCase().includes(needle),
       ),
     }))
     .filter((group) => group.items.length);
@@ -89,7 +90,7 @@ export function CatalogSidebar({ activeItem }: { activeItem?: CatalogMeta }) {
     <Stack as="aside" className="docs-sidebar" gap={3}>
       <CollapsibleSection
         className="docs-mobile-nav"
-        title={activeItem?.name ?? "Компоненты"}
+        title={activeItem?.name ?? tr("Компоненты")}
         icon="list"
       >
         <Stack className="docs-mobile-nav-panel" gap={3}>
@@ -99,7 +100,7 @@ export function CatalogSidebar({ activeItem }: { activeItem?: CatalogMeta }) {
               <Stack direction="row" gap={2} align="center">
                 <Icon name={category.icon} />
                 <Typography variant="label" weight="bold">
-                  {category.label}
+                  {tr(category.label)}
                 </Typography>
                 <Badge>{category.items.length}</Badge>
               </Stack>
@@ -120,14 +121,14 @@ export function CatalogSidebar({ activeItem }: { activeItem?: CatalogMeta }) {
       <Card className="docs-sidebar-head" material="glass" padding="sm">
         <Stack gap={3}>
           <Typography variant="eyebrow" tone="muted">
-            Документация компонентов
+            {tr("Документация компонентов")}
           </Typography>
           <Stack className="docs-nav-search">
             <TextField
               size="sm"
               value={query}
               onValueChange={setQuery}
-              placeholder="Найти компонент…"
+              placeholder={tr("Найти компонент…")}
               startAdornment={<Icon name="search" />}
               endAdornment={
                 <Typography variant="mono" tone="muted">
@@ -146,9 +147,9 @@ export function CatalogSidebar({ activeItem }: { activeItem?: CatalogMeta }) {
       <ScrollArea
         className="docs-nav-scroll"
         height="none"
-        label="Навигация по компонентам"
+        label={tr("Навигация по компонентам")}
       >
-        <Stack as="nav" className="docs-nav" gap={2} aria-label="Компоненты">
+        <Stack as="nav" className="docs-nav" gap={2} aria-label={tr("Компоненты")}>
           {groups.map(({ category, items }) => {
             const expanded = !!needle || openId === category.id;
             return (
@@ -168,7 +169,7 @@ export function CatalogSidebar({ activeItem }: { activeItem?: CatalogMeta }) {
                   onClick={() => setOpenId(expanded ? "" : category.id)}
                 >
                   <Typography as="span" variant="label" truncate>
-                    {category.label}
+                    {tr(category.label)}
                   </Typography>
                   <Badge>{items.length}</Badge>
                 </Button>
@@ -196,7 +197,7 @@ export function CatalogSidebar({ activeItem }: { activeItem?: CatalogMeta }) {
           React + TypeScript
         </Typography>
         <Typography variant="caption" tone="muted">
-          Один компонент · одна страница
+          {tr("Один компонент · одна страница")}
         </Typography>
       </Stack>
     </Stack>

@@ -1,3 +1,4 @@
+import { tr } from "../../../core/i18n";
 import { useEffect, useRef } from "react";
 import { mark } from "../../../core/base";
 import { Icon } from "../../layout/Icon/Icon";
@@ -39,7 +40,7 @@ export const Toast = ({
           }
         />
       </span>
-      <span>{p.message ?? p.children ?? "Настройки сохранены"}</span>
+      <span>{p.message ?? p.children ?? tr("Настройки сохранены")}</span>
       {onClose && duration > 0 && (
         <span
           className="ad-toast-timer"

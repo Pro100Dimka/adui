@@ -1,3 +1,4 @@
+import { tr } from "../../../core/i18n";
 import { useEffect, useRef, type CSSProperties, type KeyboardEvent, type PointerEvent, type WheelEvent } from "react";
 import { clamp, mark, useControllable, type CommonProps } from "../../../core/base";
 import { PianoKeyboard, isBlackKey } from "../../media/PianoKeyboard/PianoKeyboard";
@@ -198,7 +199,7 @@ export const PianoRoll = ({
     <div
       {...mark("PianoRoll", p)}
       role="application"
-      aria-label={label ?? "Редактор мелодии"}
+      aria-label={label ?? tr("Редактор мелодии")}
       data-grid={grid || undefined}
       style={{ ...p.style, "--ad-pps": `${4 * zoom}rem`, "--ad-roll-rows": rows } as CSSProperties}
     >
@@ -224,7 +225,7 @@ export const PianoRoll = ({
             <div key={note.id} className="ad-piano-roll-note" data-selected={selected?.has(note.id) || undefined}
               data-now={(position >= note.start && position <= note.end) || undefined}
               style={{ left: at(note.start), width: `max(0.25rem, ${at(note.end - note.start)})`, top: row(note.pitch) }}>
-              <button type="button" className="ad-piano-roll-note-body" aria-label={`Нота ${note.pitch}`} aria-pressed={selected?.has(note.id) ?? false}
+              <button type="button" className="ad-piano-roll-note-body" aria-label={tr("Нота {pitch}", { pitch: note.pitch })} aria-pressed={selected?.has(note.id) ?? false}
                 onPointerDown={(event) => startMove(event, note)} onKeyDown={(event) => nudge(event, note)} />
               <span className="ad-piano-roll-edge" data-edge="start" aria-hidden="true" onPointerDown={(event) => startResize(event, note, "start")} />
               <span className="ad-piano-roll-edge" data-edge="end" aria-hidden="true" onPointerDown={(event) => startResize(event, note, "end")} />

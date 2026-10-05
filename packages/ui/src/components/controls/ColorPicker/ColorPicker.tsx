@@ -1,3 +1,4 @@
+import { tr } from "../../../core/i18n";
 import { useEffect, useRef, useState, type PointerEvent } from "react";
 import { mark, useControllable, type CommonProps } from "../../../core/base";
 import { Popover } from "../../feedback/Popover/Popover";
@@ -53,7 +54,7 @@ function ColorPanel({ value, onChange, swatches }: { value: string; onChange: (h
         className="ad-color-area"
         style={{ "--ad-color-hue": `hsl(${hsv.h} 100% 50%)` } as React.CSSProperties}
         role="slider"
-        aria-label="Насыщенность и яркость"
+        aria-label={tr("Насыщенность и яркость")}
         aria-valuetext={value}
         tabIndex={0}
         {...drag((x, y) => update({ ...hsv, s: clamp(x), v: 1 - clamp(y) }))}
@@ -76,7 +77,7 @@ function ColorPanel({ value, onChange, swatches }: { value: string; onChange: (h
       <div
         className="ad-color-hue"
         role="slider"
-        aria-label="Оттенок"
+        aria-label={tr("Оттенок")}
         aria-valuemin={0}
         aria-valuemax={360}
         aria-valuenow={Math.round(hsv.h)}
@@ -97,7 +98,7 @@ function ColorPanel({ value, onChange, swatches }: { value: string; onChange: (h
         <input
           value={text}
           spellCheck={false}
-          aria-label="Код цвета"
+          aria-label={tr("Код цвета")}
           onChange={(event) => {
             setText(event.currentTarget.value);
             const hex = normalizeHex(event.currentTarget.value);
@@ -144,7 +145,7 @@ export function ColorPicker({ value: controlled, defaultValue = "#ff244c", onVal
           </button>
         </InputBase>
       </FieldFrame>
-      <Popover open={open} onOpenChange={setOpen} anchorRef={box} align="start" label="Выбор цвета" className="ad-color-popover">
+      <Popover open={open} onOpenChange={setOpen} anchorRef={box} align="start" label={tr("Выбор цвета")} className="ad-color-popover">
         <ColorPanel value={hex} onChange={setValue} swatches={swatches} />
       </Popover>
     </div>

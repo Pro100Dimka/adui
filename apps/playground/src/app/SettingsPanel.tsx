@@ -1,5 +1,7 @@
+import { tr } from "@ad-voice/ui";
 import {
   Button,
+  SegmentedControl,
   Dialog,
   Select,
   Slider,
@@ -32,44 +34,54 @@ export function SettingsPanel({
       width="large"
       open={open}
       onOpenChange={onOpenChange}
-      title="Тема и настройки"
-      description="Меняется только у вас, в этом браузере."
+      title={tr("Тема и настройки")}
+      description={tr("Меняется только у вас, в этом браузере.")}
       cancelLabel={false}
-      confirmLabel="Готово"
+      confirmLabel={tr("Готово")}
     >
       <Stack gap={5}>
+        <SegmentedControl
+          aria-label={tr("Язык")}
+          value={settings.locale}
+          onValueChange={(locale) => update({ locale: locale as SiteSettings["locale"] })}
+          items={[
+            { value: "ru", label: "Русский" },
+            { value: "en", label: "English" },
+            { value: "uk", label: "Українська" },
+          ]}
+        />
         <ThemeEditor value={settings.themeConfig} onValueChange={(themeConfig) => update({ themeConfig })} />
 
         <Stack gap={3}>
           <Typography variant="eyebrow" tone="muted">
-            Типографика
+            {tr("Типографика")}
           </Typography>
           <Select
-            label="Шрифт заголовков"
+            label={tr("Шрифт заголовков")}
             value={settings.headingFont}
             onValueChange={(headingFont) => update({ headingFont: headingFont as SiteSettings["headingFont"] })}
-            options={Object.entries(headingFonts).map(([value, font]) => ({ value, label: font.label }))}
+            options={Object.entries(headingFonts).map(([value, font]) => ({ value, label: tr(font.label) }))}
           />
           <Select
-            label="Шрифт текста"
+            label={tr("Шрифт текста")}
             value={settings.font}
             onValueChange={(font) =>
               update({ font: font as SiteSettings["font"] })
             }
             options={Object.entries(fonts).map(([value, font]) => ({
               value,
-              label: font.label,
+              label: tr(font.label),
             }))}
           />
           <Stack gap={2}>
             <Stack direction="row" justify="between" align="center">
-              <Typography variant="label">Масштаб текста</Typography>
+              <Typography variant="label">{tr("Масштаб текста")}</Typography>
               <Typography variant="mono" tone="muted">
                 {Math.round(settings.scale * 100)}%
               </Typography>
             </Stack>
             <Slider
-              label="Масштаб текста"
+              label={tr("Масштаб текста")}
               min={85}
               max={125}
               step={5}
@@ -80,7 +92,7 @@ export function SettingsPanel({
         </Stack>
 
         <Button variant="ghost" icon="reset" onClick={reset}>
-          Вернуть всё как было
+          {tr("Вернуть всё как было")}
         </Button>
       </Stack>
     </Dialog>

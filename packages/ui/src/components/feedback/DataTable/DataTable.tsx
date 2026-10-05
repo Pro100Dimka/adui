@@ -1,3 +1,4 @@
+import { tr } from "../../../core/i18n";
 import { Fragment, useMemo, useRef, useState, type ReactNode } from "react";
 import { mark, useControllable } from "../../../core/base";
 import { Button } from "../../controls/Button/Button";
@@ -51,7 +52,7 @@ const describe = (filter: DataTableFilter) =>
     : filter.kind === "values"
       ? filter.values.length <= 2
         ? filter.values.join(", ")
-        : `${filter.values.length} знач.`
+        : tr("{count} знач.", { count: filter.values.length })
       : `${filter.min ?? "…"} – ${filter.max ?? "…"}`;
 
 /** The filter editor in a column header's popover. */
@@ -72,7 +73,7 @@ function FilterEditor({
       <TextField
         size="sm"
         autoFocus
-        placeholder="Содержит…"
+        placeholder={tr("Содержит…")}
         startAdornment={<Icon name="search" />}
         clearable
         value={filter?.kind === "text" ? filter.text : ""}
@@ -87,8 +88,8 @@ function FilterEditor({
     };
     return (
       <div className="ad-data-table-range">
-        <NumberField size="sm" label="От" controls={false} value={range.min ?? ""} onValueChange={(v) => set("min", v)} />
-        <NumberField size="sm" label="До" controls={false} value={range.max ?? ""} onValueChange={(v) => set("max", v)} />
+        <NumberField size="sm" label={tr("От")} controls={false} value={range.min ?? ""} onValueChange={(v) => set("min", v)} />
+        <NumberField size="sm" label={tr("До")} controls={false} value={range.max ?? ""} onValueChange={(v) => set("max", v)} />
       </div>
     );
   }
@@ -101,11 +102,11 @@ function FilterEditor({
   return (
     <div className="ad-data-table-values">
       {options.length > 8 && (
-        <TextField size="sm" autoFocus placeholder="Найти значение…" startAdornment={<Icon name="search" />} value={search} onValueChange={setSearch} />
+        <TextField size="sm" autoFocus placeholder={tr("Найти значение…")} startAdornment={<Icon name="search" />} value={search} onValueChange={setSearch} />
       )}
       <Checkbox
         size="sm"
-        label="Все"
+        label={tr("Все")}
         checked={chosen.length === options.length}
         indeterminate={chosen.length > 0 && chosen.length < options.length}
         onValueChange={(all) => onChange(all ? undefined : { kind: "values", values: [] })}
@@ -145,11 +146,11 @@ function ColumnFilter({
         icon="sliders"
         className="ad-data-table-filter"
         data-active={isActive(filter) || undefined}
-        label={`Фильтр: ${title}`}
+        label={tr("Фильтр: {title}", { title })}
         aria-expanded={open}
         onClick={() => setOpen((v) => !v)}
       />
-      <Popover open={open} onOpenChange={setOpen} anchorRef={anchor} label={`Фильтр: ${title}`} className="ad-data-table-filter-popover">
+      <Popover open={open} onOpenChange={setOpen} anchorRef={anchor} label={tr("Фильтр: {title}", { title })} className="ad-data-table-filter-popover">
         <FilterEditor kind={kind} options={options} filter={filter} onChange={onChange} />
       </Popover>
     </>
@@ -171,7 +172,7 @@ function cellValue(column: DataTableColumn, row: DataTableRow) {
  * rows still works.
  */
 export function DataTable<T extends DataTableRow = DataTableRow>({
-  columns = ["Дата", "Событие", "Статус"],
+  columns = [tr("Дата"), tr("Событие"), tr("Статус")],
   rows = [] as unknown as T[],
   caption,
   rowKey = (_, index) => String(index),
@@ -196,7 +197,7 @@ export function DataTable<T extends DataTableRow = DataTableRow>({
   dense = false,
   striped = false,
   loading = false,
-  empty = "Нет данных",
+  empty = tr("Нет данных"),
   onRowClick,
   ...p
 }: DataTableProps<T>) {
@@ -374,7 +375,7 @@ export function DataTable<T extends DataTableRow = DataTableRow>({
               size="sm"
               checked={chosen.has(key)}
               onValueChange={() => toggle(key)}
-              label={<span className="ad-sr-only">Выбрать строку</span>}
+              label={<span className="ad-sr-only">{tr("Выбрать строку")}</span>}
             />
           </td>
         )}
@@ -405,7 +406,7 @@ export function DataTable<T extends DataTableRow = DataTableRow>({
               size="sm"
               className="ad-data-table-group-by"
               icon="list"
-              aria-label="Группировать по"
+              aria-label={tr("Группировать по")}
               value={groupBy ?? ""}
               onValueChange={(key) => {
                 setGroupBy(key || null);
@@ -413,7 +414,7 @@ export function DataTable<T extends DataTableRow = DataTableRow>({
                 setPage(0);
               }}
               options={[
-                { value: "", label: "Без группировки" },
+                { value: "", label: tr("Без группировки") },
                 ...cols
                   .filter((column) => column.groupable !== false)
                   .map((column) => ({ value: column.key, label: column.title, text: typeof column.title === "string" ? column.title : column.key })),
@@ -423,7 +424,7 @@ export function DataTable<T extends DataTableRow = DataTableRow>({
           {searchable && (
             <TextField
               size="sm"
-              placeholder="Поиск…"
+              placeholder={tr("Поиск…")}
               value={query}
               onValueChange={(value) => {
                 setQuery(value);
@@ -431,7 +432,7 @@ export function DataTable<T extends DataTableRow = DataTableRow>({
               }}
               startAdornment={<Icon name="search" />}
               clearable
-              aria-label="Поиск по таблице"
+              aria-label={tr("Поиск по таблице")}
             />
           )}
         </div>
@@ -441,13 +442,13 @@ export function DataTable<T extends DataTableRow = DataTableRow>({
           {activeFilters.map((column) => (
             <span key={column.key} className="ad-data-table-chip">
               <strong>{column.title}</strong> {describe(filters[column.key]!)}
-              <button type="button" aria-label="Убрать фильтр" onClick={() => setFilter(column.key, undefined)}>
+              <button type="button" aria-label={tr("Убрать фильтр")} onClick={() => setFilter(column.key, undefined)}>
                 <Icon name="close" />
               </button>
             </span>
           ))}
           <Button size="xs" variant="ghost" icon="reset" onClick={() => { setFilters({}); setPage(0); }}>
-            Сбросить фильтры
+            {tr("Сбросить фильтры")}
           </Button>
         </div>
       )}
@@ -462,7 +463,7 @@ export function DataTable<T extends DataTableRow = DataTableRow>({
                     checked={allChosen}
                     indeterminate={someChosen}
                     onValueChange={toggleAll}
-                    label={<span className="ad-sr-only">Выбрать все</span>}
+                    label={<span className="ad-sr-only">{tr("Выбрать все")}</span>}
                   />
                 </th>
               )}
@@ -520,8 +521,8 @@ export function DataTable<T extends DataTableRow = DataTableRow>({
         <div className="ad-data-table-foot">
           <span>
             {selectable && selection.length > 0
-              ? `Выбрано: ${selection.length}`
-              : `${sorted.length} ${query || activeFilters.length ? "найдено" : "всего"}`}
+              ? tr("Выбрано: {count}", { count: selection.length })
+              : tr(query || activeFilters.length ? "{count} найдено" : "{count} всего", { count: sorted.length })}
           </span>
           {pageSize && pages > 1 && (
             <span className="ad-data-table-pages">
@@ -529,7 +530,7 @@ export function DataTable<T extends DataTableRow = DataTableRow>({
                 size="xs"
                 variant="ghost"
                 icon="prev"
-                label="Предыдущая страница"
+                label={tr("Предыдущая страница")}
                 disabled={current === 0}
                 onClick={() => setPage(current - 1)}
               />
@@ -540,7 +541,7 @@ export function DataTable<T extends DataTableRow = DataTableRow>({
                 size="xs"
                 variant="ghost"
                 icon="prev"
-                label="Следующая страница"
+                label={tr("Следующая страница")}
                 className="ad-data-table-next"
                 disabled={current >= pages - 1}
                 onClick={() => setPage(current + 1)}

@@ -1,3 +1,4 @@
+import { tr } from "../../../core/i18n";
 import {
   canPaint,
   createResizeObserver,
@@ -548,7 +549,7 @@ export const RotaryKnob = (p: RotaryKnobProps) => {
       root.dataset.value = String(shown);
       control.setAttribute("aria-valuenow", String(shown));
       control.setAttribute("aria-valuetext", text);
-      control.title = `${p.label ?? "Громкость"}: ${text} · ведите по кругу или тяните за центр`;
+      control.title = tr("{label}: {value} · ведите по кругу или тяните за центр", { label: p.label ?? tr("Громкость"), value: text });
       readout.textContent = text;
       schedulePaint();
       if (changed && notify) onChangeRef.current?.(shown);
@@ -865,7 +866,7 @@ export const RotaryKnob = (p: RotaryKnobProps) => {
         tabIndex={p.disabled || p.readOnly ? -1 : 0}
         aria-disabled={p.disabled || undefined}
         aria-readonly={p.readOnly || undefined}
-        aria-label={p.label ?? "Громкость"}
+        aria-label={p.label ?? tr("Громкость")}
         aria-valuemin={min}
         aria-valuemax={min + span}
         aria-valuenow={toValue(initial)}
@@ -882,7 +883,7 @@ export const RotaryKnob = (p: RotaryKnobProps) => {
           className="knob__value"
           data-editable={editable || undefined}
           data-editing={draft !== null || undefined}
-          title={editable ? "Нажмите, чтобы ввести значение" : undefined}
+          title={editable ? tr("Нажмите, чтобы ввести значение") : undefined}
           onClick={() => {
             if (!editable) return;
             cancelled.current = false;
@@ -897,7 +898,7 @@ export const RotaryKnob = (p: RotaryKnobProps) => {
       {draft !== null && (
         <input
           className="knob__input"
-          aria-label={`${p.label ?? "Громкость"}, значение`}
+          aria-label={tr("{label}, значение", { label: p.label ?? tr("Громкость") })}
           inputMode="decimal"
           autoFocus
           value={draft}

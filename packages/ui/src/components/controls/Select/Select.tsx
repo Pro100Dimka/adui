@@ -1,3 +1,4 @@
+import { tr } from "../../../core/i18n";
 import { useMemo, useRef, useState, type ReactNode } from "react";
 import { assignRef, useControllable } from "../../../core/base";
 import { Popover } from "../../feedback/Popover/Popover";
@@ -24,7 +25,7 @@ export function Select<V = string>(p: SelectProps<V>) {
   const keyOf = (p.getKey ?? defaultKey) as (value: V) => string;
   const options = useMemo<SelectOption<V>[]>(
     () =>
-      (p.options ?? (["Первый вариант", "Второй вариант"] as unknown as V[])).map((option) =>
+      (p.options ?? ([tr("Первый вариант"), tr("Второй вариант")] as unknown as V[])).map((option) =>
         typeof option === "object" && option !== null && "value" in (option as object)
           ? (option as SelectOption<V>)
           : { value: option as V, label: String(option) },
@@ -78,7 +79,7 @@ export function Select<V = string>(p: SelectProps<V>) {
           <span className="ad-select-value-text">{selected.label}</span>
         </span>
       ))
-    : (p.placeholder ?? "Выберите значение");
+    : (p.placeholder ?? tr("Выберите значение"));
 
   return (
     <FieldFrame
@@ -142,7 +143,7 @@ export function Select<V = string>(p: SelectProps<V>) {
         align="start"
         matchAnchorWidth
         className="ad-option-popover"
-        label={typeof p.label === "string" ? p.label : "Варианты"}
+        label={typeof p.label === "string" ? p.label : tr("Варианты")}
         autoFocus={!p.searchable}
       >
         {p.searchable && (
@@ -151,8 +152,8 @@ export function Select<V = string>(p: SelectProps<V>) {
             <input
               autoFocus
               value={query}
-              placeholder={p.searchPlaceholder ?? "Поиск"}
-              aria-label={p.searchPlaceholder ?? "Поиск"}
+              placeholder={p.searchPlaceholder ?? tr("Поиск")}
+              aria-label={p.searchPlaceholder ?? tr("Поиск")}
               onChange={(event) => setQuery(event.currentTarget.value)}
               onKeyDown={(event) => {
                 if (event.key === "Enter" && rows[0] && !rows[0].disabled) {
@@ -170,7 +171,7 @@ export function Select<V = string>(p: SelectProps<V>) {
         {rows.length ? (
           <OptionList options={rows} selected={selectedKey} onChoose={choose} />
         ) : (
-          <div className="ad-option-empty">Ничего не найдено</div>
+          <div className="ad-option-empty">{tr("Ничего не найдено")}</div>
         )}
       </Popover>
     </FieldFrame>
