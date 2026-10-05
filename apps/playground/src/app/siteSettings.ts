@@ -5,9 +5,18 @@ export interface SiteSettings {
   /** The site's theme, edited with the library's ThemeEditor. */
   themeConfig: ThemeConfig;
   font: keyof typeof fonts;
+  /** Face of the titles. */
+  headingFont: keyof typeof headingFonts;
   /** Text and spacing scale, 1 = 100 %. */
   scale: number;
 }
+
+/** Faces for titles; Melodix is a display face, too ornate for running text. */
+export const headingFonts = {
+  default: { label: "Как основной текст", stack: "" },
+  melodix: { label: "Melodix — музыкальный", stack: "var(--ad-font-family-melodix)" },
+  serif: { label: "С засечками", stack: 'Georgia, "Times New Roman", serif' },
+};
 
 export const fonts = {
   default: { label: "Segoe UI (по умолчанию)", stack: "" },
@@ -18,19 +27,26 @@ export const fonts = {
   },
   serif: { label: "С засечками", stack: 'Georgia, "Times New Roman", serif' },
   mono: { label: "Моноширинный", stack: "var(--ad-font-family-mono)" },
-  melodix: { label: "Melodix — музыкальный", stack: "var(--ad-font-family-melodix)" },
 };
 
 const KEY = "neo-ui-site-settings";
 export const defaultSettings: SiteSettings = {
   themeConfig: defaultThemeConfig,
   font: "default",
+  headingFont: "default",
   scale: 1,
 };
 
 /** Settings saved before the theme editor (theme, mode, colours, tokens) become a theme config. */
 function migrate(saved: Record<string, unknown>): SiteSettings {
-  if (saved.themeConfig) return { ...defaultSettings, ...(saved as Partial<SiteSettings>) };
+  if (saved.themeConfig) {
+    const next = { ...defaultSettings, ...(saved as Partial<SiteSettings>) };
+    // Melodix chosen as the text font before titles had their own: it belongs to the titles.
+    if ((next.font as string) === "melodix" || !(next.font in fonts)) next.font = "default";
+    if ((saved.font as string) === "melodix") next.headingFont = "melodix";
+    if (!(next.headingFont in headingFonts)) next.headingFont = "default";
+    return next;
+  }
   const themeConfig: ThemeConfig = {
     version: 1,
     mode: saved.mode === "all" ? "advanced" : "simple",
@@ -72,5 +88,13 @@ export function useSiteSettings() {
 export function siteThemeProps(settings: SiteSettings) {
   const props = themeProps(settings.themeConfig);
   const stack = fonts[settings.font].stack;
-  return { ...props, tokens: { ...props.tokens, ...(stack ? { "font-family-sans": stack } : {}) } };
+  const heading = headingFonts[settings.headingFont].stack;
+  return {
+    ...props,
+    tokens: {
+      ...props.tokens,
+      ...(stack ? { "font-family-sans": stack } : {}),
+      ...(heading ? { "font-family-heading": heading } : {}),
+    },
+  };
 }

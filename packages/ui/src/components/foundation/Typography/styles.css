@@ -109,3 +109,7 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+/* Titles take the heading font (the text font unless a theme sets a display face). */
+.ad-typography:is([data-ad-variant="display"], [data-ad-variant="h1"], [data-ad-variant="h2"], [data-ad-variant="h3"]) {
+  font-family: var(--ad-font-family-heading);
+}

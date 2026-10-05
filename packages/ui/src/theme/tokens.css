@@ -9,6 +9,8 @@
     BlinkMacSystemFont, sans-serif;
   --ad-font-family-mono:
     "Cascadia Code", "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  /* Titles (display, h1–h3, card and dialog headings); the text font unless a theme sets one. */
+  --ad-font-family-heading: var(--ad-font-family-sans);
 
   --ad-font-size-display: clamp(2.125rem, 1.55rem + 1.6vw, 3.125rem);
   --ad-font-size-h1: clamp(1.75rem, 1.42rem + 0.9vw, 2.375rem);

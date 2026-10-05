@@ -7,7 +7,7 @@ import {
   ThemeEditor,
   Typography,
 } from "@ad-voice/ui";
-import { fonts, type SiteSettings } from "./siteSettings";
+import { fonts, headingFonts, type SiteSettings } from "./siteSettings";
 
 /**
  * The site's own look, set by each reader for themselves with the library's ThemeEditor
@@ -45,7 +45,13 @@ export function SettingsPanel({
             Типографика
           </Typography>
           <Select
-            label="Шрифт"
+            label="Шрифт заголовков"
+            value={settings.headingFont}
+            onValueChange={(headingFont) => update({ headingFont: headingFont as SiteSettings["headingFont"] })}
+            options={Object.entries(headingFonts).map(([value, font]) => ({ value, label: font.label }))}
+          />
+          <Select
+            label="Шрифт текста"
             value={settings.font}
             onValueChange={(font) =>
               update({ font: font as SiteSettings["font"] })

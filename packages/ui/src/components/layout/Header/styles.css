@@ -16,6 +16,7 @@
 .ad-header-copy h3,
 .ad-header-copy h4 {
   margin: 0;
+  font-family: var(--ad-font-family-heading);
   color: var(--ad-text);
   line-height: var(--ad-line-height-heading);
   letter-spacing: var(--ad-letter-spacing-heading);
