@@ -1,6 +1,13 @@
 /* Styles owned by DialogBody. */
 .ad-dialog-body {
+  min-height: 0;
+  max-height: calc(100dvh - 10rem);
+  overflow: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: var(--ad-primary) transparent;
   padding: 1.125rem 0;
+  padding-inline-end: var(--ad-space-2);
 }
 .ad-dialog-body p {
   font-size: 0.875rem;

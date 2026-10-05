@@ -1,8 +1,8 @@
 import { tr } from "@ad-voice/ui";
 import {
   Button,
-  SegmentedControl,
   Dialog,
+  Grid,
   Select,
   Slider,
   Stack,
@@ -40,55 +40,47 @@ export function SettingsPanel({
       confirmLabel={tr("Готово")}
     >
       <Stack gap={5}>
-        <SegmentedControl
-          aria-label={tr("Язык")}
-          value={settings.locale}
-          onValueChange={(locale) => update({ locale: locale as SiteSettings["locale"] })}
-          items={[
-            { value: "ru", label: "Русский" },
-            { value: "en", label: "English" },
-            { value: "uk", label: "Українська" },
-          ]}
-        />
         <ThemeEditor value={settings.themeConfig} onValueChange={(themeConfig) => update({ themeConfig })} />
 
         <Stack gap={3}>
           <Typography variant="eyebrow" tone="muted">
             {tr("Типографика")}
           </Typography>
-          <Select
-            label={tr("Шрифт заголовков")}
-            value={settings.headingFont}
-            onValueChange={(headingFont) => update({ headingFont: headingFont as SiteSettings["headingFont"] })}
-            options={Object.entries(headingFonts).map(([value, font]) => ({ value, label: tr(font.label) }))}
-          />
-          <Select
-            label={tr("Шрифт текста")}
-            value={settings.font}
-            onValueChange={(font) =>
-              update({ font: font as SiteSettings["font"] })
-            }
-            options={Object.entries(fonts).map(([value, font]) => ({
-              value,
-              label: tr(font.label),
-            }))}
-          />
-          <Stack gap={2}>
-            <Stack direction="row" justify="between" align="center">
-              <Typography variant="label">{tr("Масштаб текста")}</Typography>
-              <Typography variant="mono" tone="muted">
-                {Math.round(settings.scale * 100)}%
-              </Typography>
-            </Stack>
-            <Slider
-              label={tr("Масштаб текста")}
-              min={85}
-              max={125}
-              step={5}
-              value={settings.scale * 100}
-              onValueChange={(value) => update({ scale: value / 100 })}
+          <Grid className="site-typography-grid" columns={3} gap={3} align="end">
+            <Select
+              label={tr("Шрифт заголовков")}
+              value={settings.headingFont}
+              onValueChange={(headingFont) => update({ headingFont: headingFont as SiteSettings["headingFont"] })}
+              options={Object.entries(headingFonts).map(([value, font]) => ({ value, label: tr(font.label) }))}
             />
-          </Stack>
+            <Select
+              label={tr("Шрифт текста")}
+              value={settings.font}
+              onValueChange={(font) =>
+                update({ font: font as SiteSettings["font"] })
+              }
+              options={Object.entries(fonts).map(([value, font]) => ({
+                value,
+                label: tr(font.label),
+              }))}
+            />
+            <Stack gap={2}>
+              <Stack direction="row" justify="between" align="center">
+                <Typography variant="label">{tr("Масштаб текста")}</Typography>
+                <Typography variant="mono" tone="muted">
+                  {Math.round(settings.scale * 100)}%
+                </Typography>
+              </Stack>
+              <Slider
+                label={tr("Масштаб текста")}
+                min={85}
+                max={125}
+                step={5}
+                value={settings.scale * 100}
+                onValueChange={(value) => update({ scale: value / 100 })}
+              />
+            </Stack>
+          </Grid>
         </Stack>
 
         <Button variant="ghost" icon="reset" onClick={reset}>

@@ -2,6 +2,12 @@
 html {
   font-size: clamp(87.5%, calc(82% + 0.25vw), 100%);
   color-scheme: dark;
+  scrollbar-width: thin;
+  scrollbar-color: var(--ad-primary) transparent;
+}
+html[data-ad-color-mode="light"],
+html[data-ad-color-mode="light"] .ad-theme {
+  color-scheme: light;
 }
 * {
   box-sizing: border-box;
@@ -44,6 +50,20 @@ a {
   align-items: center;
   gap: var(--ad-space-3);
   min-width: 0;
+}
+.site-tools {
+  min-width: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.site-tools::-webkit-scrollbar {
+  display: none;
+}
+.site-tools > * {
+  flex: none;
+}
+.site-tools .ad-tabs-list {
+  min-height: auto;
 }
 
 /* Two columns from md: sidebar and content scroll independently inside the viewport.
@@ -220,6 +240,8 @@ a {
 .docs-component-hero.ad-card {
   position: relative;
   isolation: isolate;
+  overflow: clip;
+  overflow-clip-margin: 0.5rem;
 }
 .docs-hero-backdrop {
   position: absolute;
@@ -229,6 +251,10 @@ a {
   border-radius: inherit;
   pointer-events: none;
   mask: linear-gradient(90deg, transparent, #000 30%, #000 88%, transparent);
+}
+/* Decorative dark scenes must never cover dark copy in the light documentation theme. */
+html[data-ad-color-mode="light"] .docs-hero-backdrop {
+  opacity: 0.2;
 }
 /* Every scene stretches over the hero instead of keeping its own proportions. */
 .docs-hero-backdrop > * {

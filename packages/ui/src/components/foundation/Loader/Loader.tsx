@@ -3,7 +3,7 @@ import { mark, type CommonProps } from "../../../core/base";
 import { usePauseOffscreen } from "../../../core/motion/hooks";
 import { tr } from "../../../core/i18n";
 
-export const loaderAnimations = ["spin", "pulse", "breathe", "bounce", "flip", "orbit", "wave", "glow", "fill", "shine", "wobble", "radar"] as const;
+export const loaderAnimations = ["spin", "pulse", "breathe", "bounce", "flip", "orbit", "wave", "glow", "fill", "shine", "wobble", "radar", "palette"] as const;
 export type LoaderAnimation = (typeof loaderAnimations)[number];
 
 /** Names of the animations for pickers, in the library's language. */
@@ -22,6 +22,7 @@ export const loaderAnimationLabel = (animation: LoaderAnimation) =>
       shine: "Блик",
       wobble: "Покачивание",
       radar: "Радар",
+      palette: "Перелив",
     } as const)[animation],
   );
 
@@ -35,6 +36,8 @@ export interface LoaderProps extends Omit<CommonProps, "size"> {
   speed?: number;
   /** Colour of rings, glows and the sweep; the theme colour by default. */
   color?: string;
+  /** Extra colours used by multicolour animations. */
+  palette?: string[];
   /** What screen readers hear. */
   label?: string;
 }
@@ -46,7 +49,7 @@ export interface LoaderProps extends Omit<CommonProps, "size"> {
 export const loaderCss = `
 .ad-loader{--ad-loader-size:4rem;--ad-loader-speed:1;--ad-loader-color:var(--ad-primary,#ff244c);position:relative;display:inline-grid;place-items:center;width:var(--ad-loader-size);height:var(--ad-loader-size);flex:none}
 .ad-loader>*{grid-area:1/1}
-.ad-loader-img{width:72%;height:72%;object-fit:contain;user-select:none;pointer-events:none;will-change:transform,opacity}
+.ad-loader-img{width:72%;height:72%;object-fit:contain;filter:drop-shadow(0 0 calc(var(--ad-loader-size)*.07) color-mix(in srgb,var(--ad-loader-color) 60%,transparent));user-select:none;pointer-events:none;will-change:transform,opacity}
 .ad-loader-ring{width:100%;height:100%;border-radius:50%;pointer-events:none}
 .ad-loader[data-animation=spin] .ad-loader-img{animation:ad-loader-spin calc(1.2s/var(--ad-loader-speed)) linear infinite}
 .ad-loader[data-animation=pulse] .ad-loader-img{animation:ad-loader-pulse calc(1s/var(--ad-loader-speed)) ease-in-out infinite}
@@ -60,14 +63,17 @@ export const loaderCss = `
 .ad-loader[data-animation=wave] .ad-loader-ring{box-shadow:0 0 0 2px var(--ad-loader-color);opacity:0;animation:ad-loader-wave calc(1.8s/var(--ad-loader-speed)) ease-out infinite}
 .ad-loader[data-animation=wave] .ad-loader-ring+.ad-loader-ring{animation-delay:calc(-.9s/var(--ad-loader-speed))}
 .ad-loader[data-animation=glow] .ad-loader-ring{width:80%;height:80%;background:radial-gradient(closest-side,var(--ad-loader-color),transparent);opacity:.25;animation:ad-loader-glow calc(1.6s/var(--ad-loader-speed)) ease-in-out infinite}
-.ad-loader[data-animation=fill] .ad-loader-img{opacity:.22;filter:grayscale(1)}
+.ad-loader[data-animation=fill] .ad-loader-img{opacity:.22;filter:grayscale(1) drop-shadow(0 0 calc(var(--ad-loader-size)*.07) color-mix(in srgb,var(--ad-loader-color) 60%,transparent))}
 .ad-loader-fill{width:72%;height:72%;overflow:hidden;transform:translateY(100%);animation:ad-loader-fill calc(2s/var(--ad-loader-speed)) ease-in-out infinite}
 .ad-loader-fill>img{width:100%;height:100%;object-fit:contain;transform:translateY(-100%);animation:ad-loader-fill-back calc(2s/var(--ad-loader-speed)) ease-in-out infinite}
 .ad-loader[data-animation=shine] .ad-loader-sweep{width:72%;height:72%;overflow:hidden;-webkit-mask:var(--ad-loader-src) center/contain no-repeat;mask:var(--ad-loader-src) center/contain no-repeat}
-.ad-loader-sweep>i{display:block;width:45%;height:100%;background:linear-gradient(90deg,transparent,rgb(255 255 255/.9),transparent);transform:translateX(-120%) skewX(-15deg);animation:ad-loader-shine calc(1.6s/var(--ad-loader-speed)) ease-in-out infinite}
+.ad-loader-sweep>i{display:block;width:45%;height:100%;background:linear-gradient(90deg,transparent,color-mix(in srgb,var(--ad-loader-color) 65%,white),transparent);transform:translateX(-120%) skewX(-15deg);animation:ad-loader-shine calc(1.6s/var(--ad-loader-speed)) ease-in-out infinite}
 .ad-loader[data-animation=wobble] .ad-loader-img{transform-origin:50% 90%;animation:ad-loader-wobble calc(1.2s/var(--ad-loader-speed)) ease-in-out infinite}
 .ad-loader[data-animation=radar] .ad-loader-img{width:46%;height:46%}
 .ad-loader[data-animation=radar] .ad-loader-ring{background:conic-gradient(from 0deg,transparent 0 70%,color-mix(in srgb,var(--ad-loader-color) 70%,transparent));-webkit-mask:radial-gradient(closest-side,transparent 30%,#000 32%);mask:radial-gradient(closest-side,transparent 30%,#000 32%);animation:ad-loader-spin calc(1.4s/var(--ad-loader-speed)) linear infinite}
+.ad-loader[data-animation=palette] .ad-loader-img{animation:ad-loader-palette-image calc(2.8s/var(--ad-loader-speed)) ease-in-out infinite}
+.ad-loader[data-animation=palette] .ad-loader-ring{width:92%;height:92%;border-radius:44% 56% 52% 48%;background:conic-gradient(from 30deg,transparent,var(--ad-loader-color),var(--ad-loader-color-2),var(--ad-loader-color-3),transparent);filter:blur(calc(var(--ad-loader-size)*.055));opacity:.48;mix-blend-mode:screen;animation:ad-loader-spin calc(3.2s/var(--ad-loader-speed)) linear infinite}
+.ad-loader[data-animation=palette] .ad-loader-ring+.ad-loader-ring{width:72%;height:72%;animation-direction:reverse;animation-duration:calc(2.3s/var(--ad-loader-speed));opacity:.32}
 @keyframes ad-loader-spin{to{transform:rotate(1turn)}}
 @keyframes ad-loader-pulse{50%{transform:scale(.78);opacity:.55}}
 @keyframes ad-loader-breathe{50%{transform:scale(1.12)}}
@@ -81,6 +87,7 @@ export const loaderCss = `
 @keyframes ad-loader-fill-back{0%{transform:translateY(-100%)}70%,100%{transform:translateY(0)}}
 @keyframes ad-loader-shine{0%,30%{transform:translateX(-120%) skewX(-15deg)}100%{transform:translateX(260%) skewX(-15deg)}}
 @keyframes ad-loader-wobble{0%,100%{transform:rotate(-12deg)}50%{transform:rotate(12deg)}}
+@keyframes ad-loader-palette-image{0%,100%{transform:scale(.94);filter:drop-shadow(0 0 calc(var(--ad-loader-size)*.1) var(--ad-loader-color))}33%{filter:drop-shadow(0 0 calc(var(--ad-loader-size)*.13) var(--ad-loader-color-2))}66%{transform:scale(1.05);filter:drop-shadow(0 0 calc(var(--ad-loader-size)*.13) var(--ad-loader-color-3))}}
 `;
 
 let injected = false;
@@ -103,7 +110,7 @@ export const loaderDefaultImage =
   );
 
 /** A loading spinner made of your own picture, with one of twelve animations. */
-export function Loader({ src = loaderDefaultImage, animation = "spin", size, speed = 1, color, label, style, ...p }: LoaderProps) {
+export function Loader({ src = loaderDefaultImage, animation = "spin", size, speed = 1, color, palette, label, style, ...p }: LoaderProps) {
   useLoaderStyles();
   const ref = useRef<HTMLSpanElement>(null);
   usePauseOffscreen(ref);
@@ -112,9 +119,11 @@ export function Loader({ src = loaderDefaultImage, animation = "spin", size, spe
     ...(size ? { "--ad-loader-size": size } : {}),
     "--ad-loader-speed": speed,
     ...(color ? { "--ad-loader-color": color } : {}),
+    ...(palette?.[1] ? { "--ad-loader-color-2": palette[1] } : {}),
+    ...(palette?.[2] ? { "--ad-loader-color-3": palette[2] } : {}),
     ...(animation === "shine" ? { "--ad-loader-src": `url("${src}")` } : {}),
   } as CSSProperties;
-  const rings = animation === "wave" ? 2 : ["bounce", "orbit", "glow", "radar"].includes(animation) ? 1 : 0;
+  const rings = ["wave", "palette"].includes(animation) ? 2 : ["bounce", "orbit", "glow", "radar"].includes(animation) ? 1 : 0;
   return (
     <span {...mark("Loader", p)} ref={ref} role="status" aria-label={label ?? tr("Загрузка")} data-animation={animation} style={vars}>
       {Array.from({ length: rings }, (_, i) => (

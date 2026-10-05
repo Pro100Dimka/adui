@@ -7,6 +7,7 @@ import {
   Icon,
   Link,
   Router,
+  SegmentedControl,
   Stack,
   Switch,
   ThemeProvider,
@@ -20,7 +21,12 @@ import { CatalogPage } from "./catalog/CatalogPage";
 import { catalog } from "./catalog/componentRegistry";
 import { SettingsPanel } from "./app/SettingsPanel";
 import { SiteThemeContext } from "../../../packages/ui/src/dev/exampleHelpers";
-import { siteThemeProps, useSiteSettings } from "./app/siteSettings";
+import {
+  siteAppearanceTokens,
+  siteThemeProps,
+  useSiteSettings,
+  type SiteSettings,
+} from "./app/siteSettings";
 
 const routes: RouteDefinition[] = [
   {
@@ -71,7 +77,15 @@ export default function App() {
     const root = document.documentElement.style;
     root.setProperty("--ad-primary", siteTheme.primary);
     root.setProperty("--ad-secondary", siteTheme.secondary);
-  }, [siteTheme.primary, siteTheme.secondary]);
+    document.documentElement.dataset.adColorMode = settings.appearance;
+    const lightTokens = siteAppearanceTokens("light");
+    const activeTokens = siteAppearanceTokens(settings.appearance);
+    for (const token of Object.keys(lightTokens)) {
+      const value = activeTokens[token as keyof typeof activeTokens];
+      if (value) root.setProperty(`--ad-${token}`, value);
+      else root.removeProperty(`--ad-${token}`);
+    }
+  }, [settings.appearance, siteTheme.primary, siteTheme.secondary]);
 
   return (
     <LocaleProvider locale={settings.locale}>
@@ -101,6 +115,27 @@ export default function App() {
               gap={3}
             >
               <Badge>{catalog.length} {tr("компонентов")}</Badge>
+              <SegmentedControl<SiteSettings["appearance"]>
+                className="site-appearance"
+                label={tr("Оформление")}
+                value={settings.appearance}
+                onValueChange={(appearance) => update({ appearance })}
+                items={[
+                  { value: "light", label: tr("Светлая") },
+                  { value: "dark", label: tr("Тёмная") },
+                ]}
+              />
+              <SegmentedControl<SiteSettings["locale"]>
+                className="site-locale"
+                label={tr("Язык")}
+                value={settings.locale}
+                onValueChange={(locale) => update({ locale })}
+                items={[
+                  { value: "ru", label: "RU" },
+                  { value: "en", label: "EN" },
+                  { value: "uk", label: "UA" },
+                ]}
+              />
               <Button
                 size="sm"
                 variant="secondary"

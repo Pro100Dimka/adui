@@ -1,5 +1,10 @@
 /* Styles owned by Dialog: the page blurs away and the window rises into place. */
+html:has(.ad-dialog[open]) {
+  overflow: hidden;
+}
 .ad-dialog {
+  display: grid;
+  grid-template-rows: auto auto auto;
   position: fixed;
   margin: auto;
   width: min(32.5rem, calc(100vw - 2rem));
@@ -7,7 +12,7 @@
   padding: clamp(1.25rem, 3vw, 1.75rem);
   border: 0.0625rem solid rgb(from var(--ad-secondary) r g b / 0.51) !important;
   border-radius: 1.4375rem;
-  overflow: auto;
+  overflow: hidden;
   isolation: isolate;
   color: var(--ad-text);
 }

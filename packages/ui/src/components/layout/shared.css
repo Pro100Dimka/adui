@@ -3,6 +3,11 @@
   font-family: inherit;
   color: var(--ad-text);
 }
+/* Ruby and tile remain intentionally dark in a light theme, so their inherited copy stays light. */
+:is([data-ad-material="ruby"], [data-ad-material="tile"]) {
+  --ad-text: var(--ad-on-accent);
+  --ad-muted: var(--ad-on-accent-muted);
+}
 [data-ad-material="shell"] {
   --ad-material-bg: var(--ad-surface-shell);
   --ad-material-shadow: var(--ad-shadow-shell);

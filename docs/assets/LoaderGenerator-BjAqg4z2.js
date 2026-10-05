@@ -1,4 +1,4 @@
-import { useState } from "react";
+const e=`import { useState } from "react";
 import { mark, type CommonProps } from "../../../core/base";
 import { tr } from "../../../core/i18n";
 import { ColorPicker } from "../../controls/ColorPicker/ColorPicker";
@@ -251,7 +251,7 @@ export function removeBackgroundPixels(pixels: Uint8ClampedArray, width: number,
   // outer matte or keyline colour.
   const mainColours = new Set<string>();
   const colourBucket = (pixel: number, redOffset = 0, greenOffset = 0, blueOffset = 0) =>
-    `${Math.floor(pixels[pixel * 4] / 32) + redOffset}:${Math.floor(pixels[pixel * 4 + 1] / 32) + greenOffset}:${Math.floor(pixels[pixel * 4 + 2] / 32) + blueOffset}`;
+    \`\${Math.floor(pixels[pixel * 4] / 32) + redOffset}:\${Math.floor(pixels[pixel * 4 + 1] / 32) + greenOffset}:\${Math.floor(pixels[pixel * 4 + 2] / 32) + blueOffset}\`;
   for (let pixel = 0; pixel < total; pixel += 1) if (mainBackground[pixel]) mainColours.add(colourBucket(pixel));
   for (let pixel = 0; pixel < total; pixel += 1) {
     if (background[pixel]) continue;
@@ -347,9 +347,9 @@ export function pickLoaderAccent(pixels: Uint8ClampedArray) {
     count += 1;
   }
   if (!count) return "#ff244c";
-  return `#${[red, green, blue]
+  return \`#\${[red, green, blue]
     .map((channel) => Math.round(channel / count).toString(16).padStart(2, "0"))
-    .join("")}`;
+    .join("")}\`;
 }
 
 export function pickLoaderPalette(pixels: Uint8ClampedArray) {
@@ -375,7 +375,7 @@ export function pickLoaderPalette(pixels: Uint8ClampedArray) {
     })
     .map(({ colour }) => colour)
     .filter((colour, index, all) => all.slice(0, index).every((picked) => Math.hypot(...colour.map((channel, i) => channel - picked[i])) > 48))
-    .map((colour) => `#${colour.map((channel) => channel.toString(16).padStart(2, "0")).join("")}`)
+    .map((colour) => \`#\${colour.map((channel) => channel.toString(16).padStart(2, "0")).join("")}\`)
     .slice(0, 3);
   for (const fallback of ["#ff7c97", "#7c3aed", "#24d6ff"]) {
     if (colours.length >= 3) break;
@@ -408,7 +408,7 @@ const escapeHtmlAttribute = (value: string) =>
   value.replaceAll("&", "&amp;").replaceAll('"', "&quot;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
 
 export const loaderCode = (settings: LoaderSettings) =>
-  `<Loader src={${JSON.stringify(settings.src)}} animation="${settings.animation}" size="${settings.size}rem"${settings.speed !== 1 ? ` speed={${settings.speed}}` : ""} color="${settings.color}"${settings.palette?.length ? ` palette={${JSON.stringify(settings.palette)}}` : ""} />`;
+  \`<Loader src={\${JSON.stringify(settings.src)}} animation="\${settings.animation}" size="\${settings.size}rem"\${settings.speed !== 1 ? \` speed={\${settings.speed}}\` : ""} color="\${settings.color}"\${settings.palette?.length ? \` palette={\${JSON.stringify(settings.palette)}}\` : ""} />\`;
 
 /** A standalone page with just the loader: its markup and the animation it uses. */
 export function loaderHtml({ src, animation, size, speed, color, palette }: LoaderSettings) {
@@ -416,17 +416,17 @@ export function loaderHtml({ src, animation, size, speed, color, palette }: Load
   const rings = ["wave", "palette"].includes(animation) ? 2 : ["bounce", "orbit", "glow", "radar"].includes(animation) ? 1 : 0;
   const extra =
     animation === "fill"
-      ? `<span class="ad-loader-fill"><img src="${safeSrc}" alt=""></span>`
+      ? \`<span class="ad-loader-fill"><img src="\${safeSrc}" alt=""></span>\`
       : animation === "shine"
-        ? `<span class="ad-loader-sweep"><i></i></span>`
+        ? \`<span class="ad-loader-sweep"><i></i></span>\`
         : "";
-  return `<!doctype html>
+  return \`<!doctype html>
 <html><head><meta charset="utf-8"><title>Loader</title><style>
 html,body{height:100%;margin:0;display:grid;place-items:center;background:#0b0508}
-${loaderCss.trim()}
+\${loaderCss.trim()}
 </style></head><body>
-<span class="ad-loader" role="status" aria-label="Loading" data-animation="${animation}" style="--ad-loader-size:${size}rem;--ad-loader-speed:${speed};--ad-loader-color:${color};--ad-loader-color-2:${palette?.[1] ?? color};--ad-loader-color-3:${palette?.[2] ?? color};${animation === "shine" ? `--ad-loader-src:url('${safeSrc}')` : ""}">${'<span class="ad-loader-ring"></span>'.repeat(rings)}<img class="ad-loader-img" src="${safeSrc}" alt="">${extra}</span>
-</body></html>`;
+<span class="ad-loader" role="status" aria-label="Loading" data-animation="\${animation}" style="--ad-loader-size:\${size}rem;--ad-loader-speed:\${speed};--ad-loader-color:\${color};--ad-loader-color-2:\${palette?.[1] ?? color};--ad-loader-color-3:\${palette?.[2] ?? color};\${animation === "shine" ? \`--ad-loader-src:url('\${safeSrc}')\` : ""}">\${'<span class="ad-loader-ring"></span>'.repeat(rings)}<img class="ad-loader-img" src="\${safeSrc}" alt="">\${extra}</span>
+</body></html>\`;
 }
 
 /**
@@ -473,7 +473,7 @@ export function LoaderGenerator({ value, defaultValue, onValueChange, ...p }: Lo
     <Stack {...mark("LoaderGenerator", p)} gap={4}>
       <Grid className="ad-loader-generator-top" columns={{ base: 1, sm: "minmax(12rem, 1fr) minmax(0, 1.4fr)" }} gap={4}>
         <Grid className="ad-loader-generator-stage" columns={1} align="center" justify="center">
-          <Loader key={loaderRenderKey(settings)} src={settings.src} animation={settings.animation} size={`${settings.size}rem`} speed={settings.speed} color={settings.color} palette={settings.palette} />
+          <Loader key={loaderRenderKey(settings)} src={settings.src} animation={settings.animation} size={\`\${settings.size}rem\`} speed={settings.speed} color={settings.color} palette={settings.palette} />
         </Grid>
         <Stack className="ad-loader-generator-controls" gap={3}>
           <FilePicker variant="zone" icon="photo" accept="image/*" label={tr("Загрузите картинку")}
@@ -514,3 +514,4 @@ export function LoaderGenerator({ value, defaultValue, onValueChange, ...p }: Lo
     </Stack>
   );
 }
+`;export{e as default};

@@ -67,6 +67,9 @@
   --ad-pink: var(--ad-secondary);
   --ad-text: #f7f5f8;
   --ad-muted: #bfc0d9;
+  /* Foreground for intentionally dark accent materials in either colour scheme. */
+  --ad-on-accent: #fff;
+  --ad-on-accent-muted: #f0dfe4;
   --ad-surface-shell:
     radial-gradient(ellipse 27.5rem 6.875rem at 37% 0, rgb(from var(--ad-primary-800) r g b / 0.16), transparent)
       padding-box,

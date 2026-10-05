@@ -134,7 +134,7 @@ export async function copyText(text: string): Promise<boolean> {
   } catch {
     const field = document.createElement("textarea");
     field.value = text;
-    field.style.cssText = "position:fixed;left:-100vw;top:0";
+    field.style.cssText = "position:fixed;left:0;top:0;width:1px;height:1px;padding:0;border:0;opacity:0;pointer-events:none";
     const focus = document.activeElement as HTMLElement | null;
     document.body.append(field);
     field.select();

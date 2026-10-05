@@ -9,12 +9,10 @@ import { SegmentedControl } from "../../controls/SegmentedControl/SegmentedContr
 import { Switch } from "../../controls/Switch/Switch";
 import { TextArea } from "../../controls/TextArea/TextArea";
 import { TextField } from "../../controls/TextField/TextField";
-import { ThemePicker } from "../../controls/ThemePicker/ThemePicker";
 import { Badge } from "../../feedback/Badge/Badge";
 import { CollapsibleSection } from "../../feedback/CollapsibleSection/CollapsibleSection";
 import { MessageBar } from "../../feedback/MessageBar/MessageBar";
 import { Popover } from "../../feedback/Popover/Popover";
-import { ProgressBar } from "../../feedback/ProgressBar/ProgressBar";
 import { Icon } from "../../layout/Icon/Icon";
 import { Typography } from "../Typography/Typography";
 import { themes } from "../ThemeProvider/ThemeProvider";
@@ -139,8 +137,6 @@ export function ThemeEditor({ value: controlled, defaultValue = defaultThemeConf
 
       {config.mode === "simple" ? (
         <div className="ad-theme-editor-simple">
-          <ThemePicker value={config.theme} label={tr("Готовая тема")}
-            onValueChange={(theme) => setConfig({ ...config, theme, primary: undefined, secondary: undefined })} />
           <div className="ad-theme-editor-colors">
             <ColorPicker label={tr("Основной цвет")} value={primary} onValueChange={(hex) => update({ primary: hex })} />
             {/* Swapping turns the calculation off: the pair stays exactly as it is, the other way round. */}
@@ -195,17 +191,6 @@ export function ThemeEditor({ value: controlled, defaultValue = defaultThemeConf
         </div>
       )}
 
-      <div className="ad-theme-editor-preview" aria-label={tr("Пример темы")}>
-        <Typography variant="eyebrow" tone="accent">{tr("Пример")}</Typography>
-        <Typography variant="title">{tr("Так выглядит тема")}</Typography>
-        <div className="ad-theme-editor-preview-row">
-          <Button size="sm" variant="primary" icon="play">{tr("Играть")}</Button>
-          <Button size="sm" icon="settings">{tr("Настройки")}</Button>
-          <Badge tone="success">{tr("Готово")}</Badge>
-          <Badge tone="warning">{tr("Внимание")}</Badge>
-        </div>
-        <ProgressBar value={62} label={tr("Обработка")} />
-      </div>
     </div>
   );
 }

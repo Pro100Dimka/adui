@@ -26,7 +26,7 @@
   border-radius: calc(var(--ad-radius) * 0.85);
   background: var(--ad-surface-tile);
   box-shadow: var(--ad-shadow-tile);
-  color: var(--ad-neutral-200);
+  color: var(--ad-on-accent);
 }
 /* Tile icons breathe with light (a glow layer fading in and out); hovering lifts the tile and rocks the glyph. */
 .ad-icon[data-ad-surface="tile"] {

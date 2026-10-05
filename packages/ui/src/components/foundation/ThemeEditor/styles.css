@@ -6,8 +6,7 @@
 }
 .ad-theme-editor-bar,
 .ad-theme-editor-actions,
-.ad-theme-editor-search,
-.ad-theme-editor-preview-row {
+.ad-theme-editor-search {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -95,12 +94,4 @@
   position: absolute;
   top: var(--ad-space-1);
   right: var(--ad-space-1);
-}
-.ad-theme-editor-preview {
-  display: grid;
-  gap: var(--ad-space-2);
-  padding: var(--ad-space-4);
-  border: 0.0625rem solid rgb(from var(--ad-primary) r g b / 0.3);
-  border-radius: var(--ad-radius-lg);
-  background: var(--ad-surface-card);
 }

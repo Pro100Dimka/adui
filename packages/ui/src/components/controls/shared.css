@@ -312,6 +312,7 @@
   --ad-btn-glow: rgb(from var(--ad-primary) r g b / 0.42);
   --ad-btn-inner: #fffafca3;
   --ad-btn-bottom: rgb(from var(--ad-primary-800) r g b / 0.42);
+  color: var(--ad-on-accent);
 }
 .ad-button[data-ad-variant="primary"]::after,
 .ad-icon-button[data-ad-variant="primary"]::after,
@@ -361,7 +362,7 @@
   --ad-btn-glow: rgb(from var(--ad-primary-600) r g b / 0.22);
   --ad-btn-inner: rgb(from var(--ad-secondary-100) r g b / 0.37);
   --ad-btn-bottom: rgb(from var(--ad-primary-900) r g b / 0.47);
-  color: var(--ad-neutral-200);
+  color: var(--ad-on-accent);
 }
 .ad-button:disabled,
 .ad-icon-button:disabled,

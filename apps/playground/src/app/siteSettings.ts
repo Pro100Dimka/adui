@@ -7,13 +7,15 @@ export interface SiteSettings {
   font: keyof typeof fonts;
   /** Language of the site and of the library's texts. */
   locale: "ru" | "en" | "uk";
+  /** Colour scheme of the entire documentation site. */
+  appearance: "light" | "dark";
   /** Face of the titles. */
   headingFont: keyof typeof headingFonts;
   /** Text and spacing scale, 1 = 100 %. */
   scale: number;
 }
 
-/** Faces for titles; Melodix is a display face, too ornate for running text. */
+/** Faces available for titles. */
 export const headingFonts = {
   default: { label: "Как основной текст", stack: "" },
   melodix: { label: "Melodix — музыкальный", stack: "var(--ad-font-family-melodix)" },
@@ -22,6 +24,7 @@ export const headingFonts = {
 
 export const fonts = {
   default: { label: "Segoe UI (по умолчанию)", stack: "" },
+  melodix: { label: "Melodix — музыкальный", stack: "var(--ad-font-family-melodix)" },
   system: { label: "Системный", stack: "system-ui, sans-serif" },
   humanist: {
     label: "Гуманистический",
@@ -33,26 +36,39 @@ export const fonts = {
 
 const KEY = "neo-ui-site-settings";
 
-/** The visitor's language when it is one of ours, Russian otherwise. */
-function navigatorLocale(): SiteSettings["locale"] {
-  const code = (typeof navigator !== "undefined" ? navigator.language : "ru").slice(0, 2);
-  return code === "en" || code === "uk" ? code : "ru";
-}
 export const defaultSettings: SiteSettings = {
   themeConfig: defaultThemeConfig,
   font: "default",
   headingFont: "default",
-  locale: navigatorLocale(),
+  locale: "uk",
+  appearance: "dark",
   scale: 1,
 };
+
+const lightAppearanceTokens = {
+  "neutral-950": "oklch(from var(--ad-primary) 0.98 0.006 h)",
+  "neutral-900": "oklch(from var(--ad-primary) 0.965 0.008 h)",
+  "neutral-850": "oklch(from var(--ad-primary) 0.94 0.01 h)",
+  "neutral-800": "oklch(from var(--ad-primary) 0.9 0.012 h)",
+  "neutral-700": "oklch(from var(--ad-primary) 0.82 0.014 h)",
+  "neutral-600": "oklch(from var(--ad-primary) 0.7 0.016 h)",
+  "neutral-500": "oklch(from var(--ad-primary) 0.58 0.018 h)",
+  "neutral-400": "oklch(from var(--ad-primary) 0.46 0.02 h)",
+  "neutral-300": "oklch(from var(--ad-primary) 0.34 0.018 h)",
+  "neutral-200": "oklch(from var(--ad-primary) 0.22 0.014 h)",
+  text: "#211b1f",
+  muted: "#6f6269",
+};
+
+export function siteAppearanceTokens(appearance: SiteSettings["appearance"]) {
+  return appearance === "light" ? lightAppearanceTokens : {};
+}
 
 /** Settings saved before the theme editor (theme, mode, colours, tokens) become a theme config. */
 function migrate(saved: Record<string, unknown>): SiteSettings {
   if (saved.themeConfig) {
     const next = { ...defaultSettings, ...(saved as Partial<SiteSettings>) };
-    // Melodix chosen as the text font before titles had their own: it belongs to the titles.
-    if ((next.font as string) === "melodix" || !(next.font in fonts)) next.font = "default";
-    if ((saved.font as string) === "melodix") next.headingFont = "melodix";
+    if (!(next.font in fonts)) next.font = "default";
     if (!(next.headingFont in headingFonts)) next.headingFont = "default";
     return next;
   }
@@ -102,6 +118,7 @@ export function siteThemeProps(settings: SiteSettings) {
     ...props,
     tokens: {
       ...props.tokens,
+      ...siteAppearanceTokens(settings.appearance),
       ...(stack ? { "font-family-sans": stack } : {}),
       ...(heading ? { "font-family-heading": heading } : {}),
     },
