@@ -1,7 +1,10 @@
 /* Melodix: the musical display typeface, in nine weights (100 Thin … 900 Black). Records, piano
-   keys, note heads, strings, a treble clef and waveforms are part of the letters themselves.
-   Capitals of Cyrillic (Russian and Ukrainian) and Latin, digits, ! ? : ; , … and ♩ ♪ ♫ ♬ 𝄞 ♥ #;
-   lowercase letters are the same shapes as small capitals. Traced from the large Melodix sheet, weights grown or slimmed from it (ornaments kept);
+   keys, note heads, strings and waveforms are part of the letters themselves; the Latin S carries a
+   treble clef (a loop above, a hook with a note head below). Capitals of Cyrillic (Russian and
+   Ukrainian) and Latin, digits, ! ? : ; , … and ♩ ♪ ♫ ♬ 𝄞 ♥ #; lowercase letters are the same shapes
+   as small capitals. Traced from the large Melodix sheet, weights grown or slimmed from it.
+   "Melodix Text" is the cut for small sizes (body text, menus, labels under ~24 px): the engraving
+   finer than a screen pixel is filled in so the letters stay clear, records and notes stay.
    Greek and the remaining punctuation come from Playfair Display (SIL Open Font License 1.1, see
    melodix/OFL-PlayfairDisplay.txt). Each weight downloads only when some text uses it. */
 @font-face {
@@ -58,7 +61,63 @@
   font-weight: 900;
   font-display: swap;
 }
+@font-face {
+  font-family: "Melodix Text";
+  src: url("./melodix/MelodixText-100.woff2") format("woff2");
+  font-weight: 100;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Melodix Text";
+  src: url("./melodix/MelodixText-200.woff2") format("woff2");
+  font-weight: 200;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Melodix Text";
+  src: url("./melodix/MelodixText-300.woff2") format("woff2");
+  font-weight: 300;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Melodix Text";
+  src: url("./melodix/MelodixText-400.woff2") format("woff2");
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Melodix Text";
+  src: url("./melodix/MelodixText-500.woff2") format("woff2");
+  font-weight: 500;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Melodix Text";
+  src: url("./melodix/MelodixText-600.woff2") format("woff2");
+  font-weight: 600;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Melodix Text";
+  src: url("./melodix/MelodixText-700.woff2") format("woff2");
+  font-weight: 700;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Melodix Text";
+  src: url("./melodix/MelodixText-800.woff2") format("woff2");
+  font-weight: 800;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Melodix Text";
+  src: url("./melodix/MelodixText-900.woff2") format("woff2");
+  font-weight: 900;
+  font-display: swap;
+}
 :root,
 .ad-theme {
   --ad-font-family-melodix: "Melodix", Georgia, serif;
+  /* the same letters cut for small sizes: use it for running text, menus and labels */
+  --ad-font-family-melodix-text: "Melodix Text", "Melodix", Georgia, serif;
 }

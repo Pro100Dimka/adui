@@ -55,7 +55,7 @@ class PolyPen(BasePen):
     _endPath = _closePath
 
 
-def raster(gs, name, pad):
+def raster(gs, name, pad, extra=None):
     g = gs[name]
     rec = DecomposingRecordingPen(gs)
     g.draw(rec)
@@ -65,6 +65,8 @@ def raster(gs, name, pad):
     if not bp.bounds:
         return None
     x0, y0, x1, y1 = bp.bounds
+    if extra:
+        x0, y0, x1, y1 = min(x0, extra[0]), min(y0, extra[1]), max(x1, extra[2]), max(y1, extra[3])
     W = int((x1 - x0) * PX) + 2 * pad
     H = int((y1 - y0) * PX) + 2 * pad
     tx = lambda p: ((p[0] - x0) * PX + pad, (y1 - p[1]) * PX + pad)
@@ -76,6 +78,8 @@ def raster(gs, name, pad):
         im = Image.new("1", (W, H), 0)
         ImageDraw.Draw(im).polygon(poly, fill=1)
         mask ^= np.asarray(im, bool)
+    if extra:
+        mask |= clef_strokes((W, H), tx)
     return mask, (x0, y1)
 
 
@@ -122,6 +126,39 @@ def morph(mask, r):
     return closed & mask
 
 
+# "Melodix Text": the cut for small sizes. At 12–16 px the engraving (grooves, key gaps, the slits
+# between bands) is narrower than a screen pixel and greys the letters into a blot, so every white
+# passage narrower than 2·TEXT_GAP is filled; counters, notes, records and big cut-outs stay.
+TEXT = os.environ.get("MELODIX_TEXT") == "1"
+TEXT_GAP = 20 * PX
+
+
+RECORDS = {f"mx{c:04X}" for c in (0x4F, 0x6F, 0x41E, 0x43E, 0x42E, 0x44E)}
+
+
+def solid(mask, record=False):
+    white = ~mask
+    wide = ndimage.distance_transform_edt(white) > TEXT_GAP
+    wide = ndimage.distance_transform_edt(~wide) <= TEXT_GAP
+    out = mask | (white & ~wide)
+    # a white ring round a black centre (the record's label) stays, however narrow: without it the
+    # record O would read as a dot
+    labels, n = ndimage.label(white)
+    border = set(np.unique(np.concatenate([labels[0], labels[-1], labels[:, 0], labels[:, -1]])))
+    for i, sl in enumerate(ndimage.find_objects(labels), 1):
+        if i in border or sl is None:
+            continue
+        part = labels[sl] == i
+        if part.sum() > 2000 * PX * PX and (ndimage.binary_fill_holes(part) & ~part).sum() > 300 * PX * PX:
+            out[sl] &= ~part
+            if record:
+                # on records the ring is widened outwards, so at 12–16 px it still reads as O
+                ring = ndimage.distance_transform_edt(~(labels == i)) <= 55 * PX
+                label_dot = ndimage.binary_fill_holes(labels == i) & ~(labels == i)
+                out &= ~(ring & ~label_dot)
+    return out
+
+
 def trace(mask, origin):
     x0, y1 = origin
     path = potrace.Bitmap(~mask).trace(turdsize=8, turnpolicy=potrace.POTRACE_TURNPOLICY_MINORITY, alphamax=1.0, opticurve=True, opttolerance=0.3)
@@ -158,27 +195,31 @@ def add_ukrainian(font):
     font["maxp"].numGlyphs = len(order)
 
 
-def add_clef(font):
-    """The Latin S is a treble clef (shape from Noto Music, OFL): its spiral sits on the letters'
-    body, the loop rises above the capitals and the tail drops below the line."""
-    noto = TTFont("NotoMusic.ttf")
-    ngs = noto.getGlyphSet()
-    src = ngs[noto.getBestCmap()[0x1D11E]]
-    k, side = 0.74, 40
-    x0, y0 = 50, -398                     # the clef's own bounds: (50, -398) – (661, 1334)
-    tt = TTGlyphPen(None)
-    src.draw(TransformPen(Cu2QuPen(tt, max_err=1.0, reverse_direction=False), (k, 0, 0, k, side - x0 * k, -280 - y0 * k)))
-    name = font.getBestCmap()[0x53]
-    g = tt.glyph()
-    g.recalcBounds(font["glyf"])
-    font["glyf"][name] = g
-    font["hmtx"][name] = (int((661 - 50) * k + 2 * side), side)
+CLEF_BOUNDS = (30, -240, 640, 1020)
+
+
+def clef_strokes(size, tx):
+    """The treble clef laid over the S: a hairline stem through the letter, a loop above the capitals
+    and a hook with a note head below the line. The S itself stays whole, so it still reads as S."""
+    im = Image.new("1", size, 0)
+    d = ImageDraw.Draw(im)
+    w = max(1, round(24 * PX))
+    def box(cx, cy, rx, ry):
+        (ax, ay), (bx, by) = tx((cx - rx, cy + ry)), tx((cx + rx, cy - ry))
+        return [ax, ay, bx, by]
+    # nothing crosses the letter's body (a stem through it reads as $): the loop grows out of the top
+    # arc, leaning right, and the tail falls from the bottom arc to the left
+    d.line([tx((440, 680)), tx((468, 880))], fill=1, width=w)
+    d.ellipse(box(420, 900, 50, 96), outline=1, width=w)                 # the loop above
+    d.line([tx((210, 30)), tx((196, -150))], fill=1, width=w)
+    d.arc(box(142, -150, 54, 52), 0, 180, fill=1, width=w)               # the hook below
+    d.ellipse(box(92, -168, 50, 42), fill=1)                              # the note head ending it
+    return np.asarray(im, bool)
 
 
 def build(weight):
     font = TTFont(SRC)
     add_ukrainian(font)
-    add_clef(font)
     glyf, hmtx = font["glyf"], font["hmtx"]
     gs = font.getGlyphSet()
     r = OFFSETS[weight] * PX
@@ -187,11 +228,13 @@ def build(weight):
     pad = int(abs(r) * 3) + 12
     names = sorted({n for n in font.getBestCmap().values() if n.startswith("mx")})
     for name in names:
-        res = raster(gs, name, pad)
+        res = raster(gs, name, pad, CLEF_BOUNDS if name == "mx0053" else None)
         if res is None:
             continue
         mask, (x0, y1) = res
         out = morph(mask, r)
+        if TEXT:
+            out = solid(out, name in RECORDS)
         path = potrace.Bitmap(~out).trace(turdsize=8, turnpolicy=potrace.POTRACE_TURNPOLICY_MINORITY, alphamax=1.0, opticurve=True, opttolerance=0.3)
         back = lambda p: ((p.x - pad) / PX + x0, y1 - (p.y - pad) / PX)
         rec = RecordingPen()
@@ -229,9 +272,12 @@ def build(weight):
     font["name"].setName(f"Melodix {style}", 4, 3, 1, 0x409)
     font["name"].setName(f"Melodix-{style}", 6, 3, 1, 0x409)
     font["OS/2"].usWeightClass = weight
-    os.makedirs("out2", exist_ok=True)
-    font.save(f"out2/Melodix-{weight}.ttf")
-    f2 = TTFont(f"out2/Melodix-{weight}.ttf")
+    family, out = ("Melodix Text", "out-text/MelodixText") if TEXT else ("Melodix", "out2/Melodix")
+    for i, v in ((1, family), (4, f"{family} {style}"), (6, f"{family.replace(' ', '')}-{style}")):
+        font["name"].setName(v, i, 3, 1, 0x409)
+    os.makedirs(os.path.dirname(out), exist_ok=True)
+    font.save(f"{out}-{weight}.ttf")
+    f2 = TTFont(f"{out}-{weight}.ttf")
     opts = subset.Options()
     opts.flavor = "woff2"
     opts.layout_features = ["kern", "liga"]
@@ -241,7 +287,7 @@ def build(weight):
     sub.populate(unicodes=cps)
     sub.subset(f2)
     f2.flavor = "woff2"
-    f2.save(f"out2/Melodix-{weight}.woff2")
+    f2.save(f"{out}-{weight}.woff2")
     print("built", weight, len(names))
 
 

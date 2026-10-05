@@ -24,7 +24,7 @@ export const headingFonts = {
 
 export const fonts = {
   default: { label: "Segoe UI (по умолчанию)", stack: "" },
-  melodix: { label: "Melodix — музыкальный", stack: "var(--ad-font-family-melodix)" },
+  melodix: { label: "Melodix — музыкальный", stack: "var(--ad-font-family-melodix-text)" },
   system: { label: "Системный", stack: "system-ui, sans-serif" },
   humanist: {
     label: "Гуманистический",
