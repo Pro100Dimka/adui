@@ -18,15 +18,15 @@ export interface SiteSettings {
 /** Faces available for titles. */
 export const headingFonts = {
   default: { label: "Как основной текст", stack: "" },
-  melodix: { label: "Melodix — музыкальный", stack: "var(--ad-font-family-melodix)" },
-  melodixText: { label: "Melodix Text — для мелкого текста", stack: "var(--ad-font-family-melodix-text)" },
+  melodix: { label: "Melodix — для заголовков", stack: "var(--ad-font-family-melodix)" },
+  melodixText: { label: "Melodix — обычный текст", stack: "var(--ad-font-family-melodix-text)" },
   serif: { label: "С засечками", stack: 'Georgia, "Times New Roman", serif' },
 };
 
 export const fonts = {
   default: { label: "Segoe UI (по умолчанию)", stack: "" },
-  melodix: { label: "Melodix — музыкальный", stack: "var(--ad-font-family-melodix)" },
-  melodixText: { label: "Melodix Text — для мелкого текста", stack: "var(--ad-font-family-melodix-text)" },
+  melodix: { label: "Melodix — для заголовков", stack: "var(--ad-font-family-melodix)" },
+  melodixText: { label: "Melodix — обычный текст", stack: "var(--ad-font-family-melodix-text)" },
   system: { label: "Системный", stack: "system-ui, sans-serif" },
   humanist: {
     label: "Гуманистический",
