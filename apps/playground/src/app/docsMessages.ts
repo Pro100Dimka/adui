@@ -18,6 +18,7 @@ const rows: Row[] = [
   ["Вернуть всё как было", "Reset everything", "Повернути все як було"],
   ["Как основной текст", "Same as text", "Як основний текст"],
   ["Melodix — музыкальный", "Melodix — musical", "Melodix — музичний"],
+  ["Melodix Text — для мелкого текста", "Melodix Text — for small text", "Melodix Text — для дрібного тексту"],
   ["С засечками", "Serif", "Із зарубками"],
   ["Segoe UI (по умолчанию)", "Segoe UI (default)", "Segoe UI (за замовчуванням)"],
   ["Системный", "System", "Системний"],
