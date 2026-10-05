@@ -158,9 +158,27 @@ def add_ukrainian(font):
     font["maxp"].numGlyphs = len(order)
 
 
+def add_clef(font):
+    """The Latin S is a treble clef (shape from Noto Music, OFL): its spiral sits on the letters'
+    body, the loop rises above the capitals and the tail drops below the line."""
+    noto = TTFont("NotoMusic.ttf")
+    ngs = noto.getGlyphSet()
+    src = ngs[noto.getBestCmap()[0x1D11E]]
+    k, side = 0.74, 40
+    x0, y0 = 50, -398                     # the clef's own bounds: (50, -398) – (661, 1334)
+    tt = TTGlyphPen(None)
+    src.draw(TransformPen(Cu2QuPen(tt, max_err=1.0, reverse_direction=False), (k, 0, 0, k, side - x0 * k, -280 - y0 * k)))
+    name = font.getBestCmap()[0x53]
+    g = tt.glyph()
+    g.recalcBounds(font["glyf"])
+    font["glyf"][name] = g
+    font["hmtx"][name] = (int((661 - 50) * k + 2 * side), side)
+
+
 def build(weight):
     font = TTFont(SRC)
     add_ukrainian(font)
+    add_clef(font)
     glyf, hmtx = font["glyf"], font["hmtx"]
     gs = font.getGlyphSet()
     r = OFFSETS[weight] * PX
