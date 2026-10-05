@@ -22,15 +22,14 @@
   opacity: 0;
   transition: opacity 1.2s ease-out;
 }
-/* The rim breathes: a screen-blended light over the planet's edge swells and settles (opacity only,
-   the painted canvas is never re-filtered). */
+/* The rim breathes: a light over the planet's edge swells and settles (opacity only; the painted
+   canvas is never re-filtered and nothing is blended). */
 .ad-planet::after {
   content: "";
   position: absolute;
   inset: 0;
   z-index: 0;
-  background: radial-gradient(ellipse 70% 120% at 100% 100%, transparent 38%, rgb(from var(--ad-primary) r g b / 0.22) 52%, transparent 66%);
-  mix-blend-mode: screen;
+  background: radial-gradient(ellipse 70% 120% at 100% 100%, transparent 38%, rgb(from var(--ad-secondary) r g b / 0.16) 52%, transparent 66%);
   opacity: 0;
   animation: ad-planet-rim 6s ease-in-out infinite;
   pointer-events: none;

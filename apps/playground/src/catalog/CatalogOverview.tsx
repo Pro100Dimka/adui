@@ -1,5 +1,5 @@
 import { ExamplePreviewContext } from "../../../../packages/ui/src/dev/exampleHelpers";
-import { Badge, Card, Header, Icon, Stack, Typography } from "@ad-voice/ui";
+import { Badge, Card, Header, Icon, Stack, Typography, usePauseOffscreen } from "@ad-voice/ui";
 import { useLayoutEffect, useRef } from "react";
 import { CopyButton } from "./CopyButton";
 import {
@@ -121,6 +121,8 @@ function wraps(root: HTMLElement) {
 function ShowcaseTile({ item }: { item: CatalogMeta }) {
   const ref = useRef<HTMLDivElement>(null);
   const Example = getExample(item.name);
+  // Specimens out of view hold their animations still.
+  usePauseOffscreen(ref);
 
   useLayoutEffect(() => {
     const tile = ref.current;

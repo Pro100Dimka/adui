@@ -77,18 +77,85 @@ button.ad:focus-visible {
 .ad-border {
   position: absolute;
   inset: 0;
+  z-index: 20;
   display: block;
-  width: 100%;
-  height: 100%;
-  max-width: none;
-  max-height: none;
-  overflow: visible;
+  border-radius: var(--ad-border-r, 1.125rem);
   pointer-events: none;
   user-select: none;
-  fill: none;
-  z-index: 20;
-  /* Its own layer: the moving lights repaint only this overlay, never the card under it. */
+}
+/* The faint line along the edge itself. */
+.ad-border-outline {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: inset 0 0 0 0.6px rgb(from var(--ad-primary) r g b / 0.16);
+}
+.ad-border[data-shell] > .ad-border-outline {
+  box-shadow: inset 0 0 0 1.1px rgb(from var(--ad-secondary) r g b / 0.65);
+}
+/* A ring-shaped window of the given width, centred on the edge: only what passes it shows. */
+.ad-border-ring {
+  position: absolute;
+  inset: calc(var(--ad-ring) / -2);
+  padding: var(--ad-ring);
+  border-radius: calc(var(--ad-border-r, 1.125rem) + var(--ad-ring) / 2);
+  mask:
+    linear-gradient(#000 0 0) content-box exclude,
+    linear-gradient(#000 0 0);
+}
+.ad-border-ring[data-ring="haze"] {
+  opacity: 0.22;
+}
+.ad-border-ring[data-ring="aura"] {
+  opacity: 0.55;
+}
+/* A light: a point travelling the edge (the ring's own path, half a ring in from its outside),
+   carrying a soft glow centred on it. */
+.ad-border-light {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  offset-path: inset(calc(var(--ad-ring) / 2) round var(--ad-border-r, 1.125rem));
+  offset-rotate: 0deg;
+  offset-anchor: center;
+  animation: ad-border-orbit 8s linear infinite;
+  /* Its own layer: moving it is a shift on the GPU, never a repaint of the ring. */
   will-change: transform;
+}
+.ad-border-light::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: var(--ad-light-size, 14.5rem);
+  aspect-ratio: 1;
+  translate: -50% -50%;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, var(--ad-primary), rgb(from var(--ad-primary) r g b / 0.7) 40%, transparent);
+}
+.ad-border[data-shell] {
+  --ad-light-size: 12.75rem;
+}
+.ad-border[data-round] {
+  --ad-light-size: 3.5rem;
+}
+.ad-border-ring[data-ring="core"] > .ad-border-light::before {
+  background: radial-gradient(
+    closest-side,
+    var(--ad-neutral-200),
+    var(--ad-neutral-200) 4%,
+    var(--ad-secondary) 16%,
+    rgb(from var(--ad-primary) r g b / 0.85) 40%,
+    rgb(from var(--ad-primary) r g b / 0.32) 72%,
+    transparent
+  );
+}
+@keyframes ad-border-orbit {
+  to {
+    offset-distance: 100%;
+  }
 }
 .ad-spinner {
   width: 0.9375rem;
@@ -169,4 +236,14 @@ button.ad:focus-visible {
 }
 .ad-theme ::-webkit-scrollbar-corner {
   background: transparent;
+}
+
+/* Out of view (see usePauseOffscreen): every animation inside holds still until it scrolls back. */
+[data-ad-offscreen],
+[data-ad-offscreen]::before,
+[data-ad-offscreen]::after,
+[data-ad-offscreen] *,
+[data-ad-offscreen] *::before,
+[data-ad-offscreen] *::after {
+  animation-play-state: paused !important;
 }

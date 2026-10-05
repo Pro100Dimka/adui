@@ -1,3 +1,5 @@
+import { useRef } from "react";
+import { usePauseOffscreen } from "../../../core/motion/hooks";
 import type { CSSProperties } from "react";
 import { mark, type CommonProps } from "../../../core/base";
 
@@ -16,9 +18,12 @@ export function Marquee({
   children,
   ...p
 }: MarqueeProps) {
+  const pauseRef = useRef<HTMLDivElement & HTMLSpanElement>(null);
+  usePauseOffscreen(pauseRef);
   return (
     <div
       {...mark("Marquee", p)}
+      ref={pauseRef}
       style={{ ...style, "--ad-marquee-time": `${duration}s` } as CSSProperties}
       data-reverse={reverse || undefined}
     >

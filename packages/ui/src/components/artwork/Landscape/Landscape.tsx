@@ -1,4 +1,5 @@
 import { useRef } from "react";
+import { usePauseOffscreen } from "../../../core/motion/hooks";
 import { mark, type CommonProps } from "../../../core/base";
 import { clamp01, fbm, seeded, type Painting } from "../../../core/noise";
 import { useArtwork } from "../useArtwork";
@@ -266,10 +267,12 @@ const NEAR_RIDGE: Point[] = [
 
 /** Procedural night landscape with a planet; children are laid over it. */
 export function Landscape({ shade = true, children, ...p }: LandscapeProps) {
+  const pauseRef = useRef<HTMLDivElement & HTMLSpanElement>(null);
+  usePauseOffscreen(pauseRef);
   const ref = useRef<HTMLCanvasElement>(null);
   useArtwork(ref, "landscape", W, H, landscape);
   return (
-    <div {...mark("Landscape", p)} data-shade={shade || undefined}>
+    <div {...mark("Landscape", p)} ref={pauseRef} data-shade={shade || undefined}>
       <canvas ref={ref} aria-hidden />
       <span className="ad-landscape-glow" aria-hidden />
       {children && <div className="ad-landscape-content">{children}</div>}

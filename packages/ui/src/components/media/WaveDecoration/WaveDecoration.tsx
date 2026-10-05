@@ -1,7 +1,7 @@
 import { useSvgId } from "../../../core/artwork";
 import { useRef } from "react";
 import { mark, type CommonProps } from "../../../core/base";
-import { useDecoration } from "../../../core/motion/hooks";
+import { useDecoration, usePauseOffscreen } from "../../../core/motion/hooks";
 
 export const WaveDecoration = (p: CommonProps) => {
   const ref = useRef<SVGSVGElement>(null);
@@ -20,6 +20,7 @@ export const WaveDecoration = (p: CommonProps) => {
       }
       path.setAttribute("d", d);
     });
+  usePauseOffscreen(ref);
   useDecoration(ref, paint);
   return (
     <svg

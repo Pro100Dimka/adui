@@ -32,8 +32,26 @@
 }
 .ad-theme-editor-colors {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: start;
   gap: var(--ad-space-3);
+}
+/* The swap sits between the two fields, level with their boxes. */
+.ad-theme-editor-swap.ad-icon-button {
+  margin-top: 1.55rem;
+  transition: rotate var(--ad-duration-slow) var(--ad-ease-spring);
+}
+.ad-theme-editor-swap.ad-icon-button:active {
+  rotate: 180deg;
+}
+@media (max-width: 30rem) {
+  .ad-theme-editor-colors {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .ad-theme-editor-swap.ad-icon-button {
+    justify-self: center;
+    margin-top: 0;
+  }
 }
 .ad-theme-editor-strip {
   display: flex;

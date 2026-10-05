@@ -9,8 +9,10 @@ export type {
 export { useReducedMotion, useMotion } from "./core/providers/context";
 export {
   useBorder,
+  usePauseOffscreen,
+  useTick,
   useDecoration,
   useSmoothWheel,
   useTabShape,
 } from "./core/motion/hooks";
-export { getMotionStats } from "./core/motion-engine.js";
+export { getMotionStats, setMotionFrameRate, subscribeTick } from "./core/motion-engine.js";

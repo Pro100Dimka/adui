@@ -1,3 +1,5 @@
+import { useRef } from "react";
+import { usePauseOffscreen } from "../../../core/motion/hooks";
 import { mark, type CommonProps } from "../../../core/base";
 
 export interface EqualizerProps extends CommonProps {
@@ -21,9 +23,12 @@ export function Equalizer({
   label,
   ...p
 }: EqualizerProps) {
+  const pauseRef = useRef<HTMLDivElement & HTMLSpanElement>(null);
+  usePauseOffscreen(pauseRef);
   return (
     <span
       {...mark("Equalizer", p)}
+      ref={pauseRef}
       role="img"
       aria-label={label ?? (playing ? "Играет" : "Пауза")}
       data-playing={(playing && !levels) || undefined}

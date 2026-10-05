@@ -32,7 +32,6 @@
 .ad-image-shine-sweep {
   overflow: hidden;
   mask: var(--ad-shine-src) center / contain no-repeat;
-  mix-blend-mode: screen;
 }
 .ad-image-shine-sweep > i {
   position: absolute;
@@ -41,9 +40,9 @@
   background: linear-gradient(
     90deg,
     transparent,
-    rgb(from var(--ad-primary) r g b / 0.58) 42%,
-    rgb(from var(--ad-secondary-100) r g b / 0.92) 50%,
-    rgb(from var(--ad-primary) r g b / 0.58) 58%,
+    rgb(from var(--ad-secondary) r g b / 0.4) 42%,
+    rgb(from var(--ad-secondary-100) r g b / 0.75) 50%,
+    rgb(from var(--ad-secondary) r g b / 0.4) 58%,
     transparent
   );
   transform: translateX(-100%);

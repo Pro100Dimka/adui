@@ -31,10 +31,11 @@ await build({
   chunkNames: "chunks/[name]-[hash]",
   legalComments: "none",
 });
-// Stylesheets are copied with the same layout (the docs-only dev helpers stay out).
+// Stylesheets and fonts (with their licence) are copied with the same layout (the docs-only dev
+// helpers stay out).
 cpSync(at("src"), at("dist"), {
   recursive: true,
   filter: (path) =>
     !/[\\/]src[\\/]dev$/.test(path) &&
-    (statSync(path).isDirectory() || path.endsWith(".css")),
+    (statSync(path).isDirectory() || /\.(css|woff2)$/.test(path) || /[\\/]fonts[\\/].*\.txt$/.test(path)),
 });

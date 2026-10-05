@@ -1,6 +1,7 @@
 import { useSvgId } from "../../../core/artwork";
 import { useEffect, useRef } from "react";
 import { clamp, mark } from "../../../core/base";
+import { subscribeTick } from "../../../core/motion-engine.js";
 import { type LevelMeterProps } from "../shared";
 
 const SAMPLES = 64;
@@ -75,7 +76,8 @@ export function LevelMeter({
     let envelope = 0;
     let carry = 0;
     let last = performance.now();
-    let frame = requestAnimationFrame(function draw(now) {
+    // Drawn on the shared motion clock, in step with every other animation.
+    const stop = subscribeTick(function draw(now) {
       carry += Math.min(250, now - last);
       last = now;
       const input = analyser ? loudness(analyser, buffer) : target.current;
@@ -92,10 +94,9 @@ export function LevelMeter({
         "transform",
         `translate(${(-(carry / SAMPLE_MS) * STEP).toFixed(3)} 0)`,
       );
-      frame = requestAnimationFrame(draw);
     });
     return () => {
-      cancelAnimationFrame(frame);
+      stop();
       source?.disconnect();
       void context?.close();
     };

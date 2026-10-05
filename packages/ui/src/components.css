@@ -1,3 +1,4 @@
+@import "./fonts/melodix.css";
 /* Entry for all component styles. Add a new component styles.css here. */
 @import "./theme/base.css";
 @import "./components/layout/shared.css";
@@ -57,6 +58,7 @@
 @import "./components/layout/BrandMark/styles.css";
 @import "./components/layout/ButtonGroup/styles.css";
 @import "./components/layout/Card/styles.css";
+@import "./components/effects/MelodixText/styles.css";
 @import "./components/foundation/ThemeEditor/styles.css";
 @import "./components/controls/Chip/styles.css";
 @import "./components/controls/TagInput/styles.css";

@@ -4,6 +4,7 @@ import {
   attachBorder,
   attachTabShape,
   createMotion,
+  subscribeTick,
 } from "../motion-engine.js";
 import { useMotion } from "../providers/context";
 
@@ -45,27 +46,54 @@ export function useBorder(
   shell = false,
   round = false,
 ) {
-  const motion = useMotion();
-  const scope = useRef<ReturnType<typeof createMotion> | null>(null);
-
   useLayoutEffect(() => {
     const node = ref.current;
     if (!node || !enabled) return;
-
-    const controller = createMotion(node);
-    scope.current = controller;
-    const border = attachBorder(node, { shell, round, scope: controller });
-
-    return () => {
-      border.destroy();
-      controller.dispose();
-      scope.current = null;
-    };
+    const border = attachBorder(node, { shell, round });
+    return () => border.destroy();
   }, [ref, enabled, shell, round]);
+}
 
+/**
+ * Runs a callback on the shared motion clock while `active`: positions, meters and other live
+ * read-outs update in step with every animation instead of asking for frames of their own.
+ */
+export function useTick(callback: (now: number) => void, active = true) {
+  const latest = useRef(callback);
+  latest.current = callback;
+  useEffect(() => {
+    if (!active) return;
+    return subscribeTick((now) => latest.current(now));
+  }, [active]);
+}
+
+/**
+ * One observer for the whole page marks blocks that are out of view with `data-ad-offscreen`;
+ * the stylesheet pauses every animation inside them, so effects nobody can see cost nothing.
+ */
+let offscreenObserver: IntersectionObserver | null = null;
+const watchOffscreen = (node: Element) => {
+  if (typeof IntersectionObserver === "undefined") return () => undefined;
+  offscreenObserver ??= new IntersectionObserver(
+    (entries) => {
+      for (const entry of entries) entry.target.toggleAttribute("data-ad-offscreen", !entry.isIntersecting);
+    },
+    { rootMargin: "12% 0px" },
+  );
+  offscreenObserver.observe(node);
+  return () => {
+    offscreenObserver?.unobserve(node);
+    node.removeAttribute("data-ad-offscreen");
+  };
+};
+
+/** Pauses the animations of a block (and everything in it) while it is outside the viewport. */
+export function usePauseOffscreen(ref: React.RefObject<Element | null>) {
   useLayoutEffect(() => {
-    scope.current?.set(motion);
-  }, [motion, enabled, shell, round]);
+    const node = ref.current;
+    if (!node) return;
+    return watchOffscreen(node);
+  }, [ref]);
 }
 
 export function useTabShape(ref: React.RefObject<HTMLButtonElement | null>) {

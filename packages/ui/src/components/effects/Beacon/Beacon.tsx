@@ -1,3 +1,5 @@
+import { useRef } from "react";
+import { usePauseOffscreen } from "../../../core/motion/hooks";
 import type { CSSProperties } from "react";
 import { mark, type CommonProps } from "../../../core/base";
 
@@ -16,9 +18,12 @@ export function Beacon({
   children,
   ...p
 }: BeaconProps) {
+  const pauseRef = useRef<HTMLDivElement & HTMLSpanElement>(null);
+  usePauseOffscreen(pauseRef);
   return (
     <span
       {...mark("Beacon", p)}
+      ref={pauseRef}
       style={{ ...style, "--ad-beacon": color } as CSSProperties}
       data-active={active || undefined}
     >

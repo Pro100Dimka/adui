@@ -142,6 +142,9 @@ export function ThemeEditor({ value: controlled, defaultValue = defaultThemeConf
             onValueChange={(theme) => setConfig({ ...config, theme, primary: undefined, secondary: undefined })} />
           <div className="ad-theme-editor-colors">
             <ColorPicker label="Основной цвет" value={primary} onValueChange={(hex) => update({ primary: hex })} />
+            {/* Swapping turns the calculation off: the pair stays exactly as it is, the other way round. */}
+            <IconButton round icon="refresh" className="ad-theme-editor-swap" label="Поменять цвета местами"
+              onClick={() => update({ primary: secondary, secondary: primary, autoSecondary: false })} />
             <ColorPicker label="Второй цвет" value={secondary} disabled={config.autoSecondary}
               description={config.autoSecondary ? "Рассчитывается из основного" : undefined}
               onValueChange={(hex) => update({ secondary: hex })} />

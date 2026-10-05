@@ -1,7 +1,7 @@
 import { useSvgId } from "../../../core/artwork";
 import { useRef } from "react";
 import { mark, type CommonProps } from "../../../core/base";
-import { useDecoration } from "../../../core/motion/hooks";
+import { useDecoration, usePauseOffscreen } from "../../../core/motion/hooks";
 
 export interface SpectrumProps extends CommonProps {
   /** Segmented level columns, or smooth glowing bars in a bell shape. */
@@ -17,6 +17,7 @@ export function Spectrum({ variant = "segmented", ...p }: SpectrumProps) {
   const ref = useRef<SVGSVGElement>(null);
   const id = useSvgId();
 
+  usePauseOffscreen(ref);
   useDecoration(ref, (time) => {
     const svg = ref.current;
     if (!svg) return;

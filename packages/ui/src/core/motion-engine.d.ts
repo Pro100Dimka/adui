@@ -11,12 +11,9 @@ export interface MotionScope {
 }
 export interface BorderEffect {
   element: HTMLElement;
-  overlay: SVGSVGElement;
-  path: SVGPathElement;
-  length: number;
+  overlay: HTMLSpanElement;
   observer: ResizeObserver;
   sync(): void;
-  paint(seconds: number): void;
   destroy(): void;
 }
 export function createMotion(
@@ -27,7 +24,7 @@ export function attachBorder(
   options: {
     shell?: boolean;
     round?: boolean;
-    scope: MotionScope;
+    scope?: MotionScope;
   },
 ): BorderEffect;
 export function attachTabShape(element: HTMLButtonElement): {
@@ -42,3 +39,8 @@ export function getMotionStats(): {
   scheduled: boolean;
   callbacks: number;
 };
+
+/** Frames per second of the motion clock that steps every looping decoration (default 30). */
+export function setMotionFrameRate(fps: number): void;
+/** Calls the listener on every tick of the motion clock (30 a second); returns the unsubscribe. */
+export function subscribeTick(listener: (now: number) => void): () => void;

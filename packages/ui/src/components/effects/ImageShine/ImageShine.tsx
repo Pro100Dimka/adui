@@ -1,3 +1,5 @@
+import { useRef } from "react";
+import { usePauseOffscreen } from "../../../core/motion/hooks";
 import type { CSSProperties } from "react";
 import { mark, type CommonProps } from "../../../core/base";
 
@@ -14,9 +16,12 @@ export interface ImageShineProps extends CommonProps {
  * Built from stacked layers that only move and fade, so the browser composites it on the GPU.
  */
 export function ImageShine({ src, glow = true, label, style, ...p }: ImageShineProps) {
+  const pauseRef = useRef<HTMLDivElement & HTMLSpanElement>(null);
+  usePauseOffscreen(pauseRef);
   return (
     <span
       {...mark("ImageShine", p)}
+      ref={pauseRef}
       style={{ ...style, "--ad-shine-src": `url("${src}")` } as CSSProperties}
       data-glow={glow || undefined}
       role={label ? "img" : undefined}

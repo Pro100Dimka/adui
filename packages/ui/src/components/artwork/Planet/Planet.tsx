@@ -1,4 +1,5 @@
 import { useRef } from "react";
+import { usePauseOffscreen } from "../../../core/motion/hooks";
 import { mark, type CommonProps } from "../../../core/base";
 import { clamp01, fbm, noise, type Painting } from "../../../core/noise";
 import { useArtwork } from "../useArtwork";
@@ -60,10 +61,12 @@ const planet: Painting = {
 
 /** Planet horizon banner; children are laid over the dark side. */
 export function Planet({ children, ...p }: PlanetProps) {
+  const pauseRef = useRef<HTMLDivElement & HTMLSpanElement>(null);
+  usePauseOffscreen(pauseRef);
   const ref = useRef<HTMLCanvasElement>(null);
   useArtwork(ref, "planet", W, H, planet);
   return (
-    <div {...mark("Planet", p)}>
+    <div {...mark("Planet", p)} ref={pauseRef}>
       <canvas ref={ref} aria-hidden />
       {children && <div className="ad-planet-content">{children}</div>}
     </div>

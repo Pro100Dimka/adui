@@ -1,4 +1,5 @@
-import { createElement, type ElementType } from "react";
+import { createElement, type ElementType, useRef } from "react";
+import { usePauseOffscreen } from "../../../core/motion/hooks";
 import { mark, type CommonProps } from "../../../core/base";
 
 export interface GlowTextProps extends CommonProps {
@@ -14,10 +15,13 @@ export function GlowText({
   children,
   ...p
 }: GlowTextProps) {
+  const pauseRef = useRef<HTMLDivElement & HTMLSpanElement>(null);
+  usePauseOffscreen(pauseRef);
   return createElement(
     as,
     {
       ...mark("GlowText", p),
+      ref: pauseRef,
       "data-flicker": flicker || undefined,
       // Plain text gets its halo from a still copy behind it, so the flowing gradient never re-filters.
       "data-text": typeof children === "string" ? children : undefined,

@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { clamp, mark, timeText, useControllable } from "../../../core/base";
+import { useTick } from "../../../core/motion/hooks";
 import { IconButton } from "../../controls/IconButton/IconButton";
 import { Slider } from "../../controls/Slider/Slider";
 import { Waveform } from "../Waveform/Waveform";
@@ -32,29 +33,27 @@ export const AudioPlayer = (p: AudioPlayerProps) => {
       setFileDuration(undefined);
     };
   }, [p.src]);
-  // While playing, the position is read every display refresh (timeupdate fires only ~4
-  // times a second), so the cursor glides. Without a source the timeline runs on its own,
+  // While playing, the position is read on every tick of the shared motion clock (timeupdate
+  // fires only ~4 times a second), so the cursor glides. Without a source the timeline runs on its own,
   // so the player can be shown alive in demos.
+  const lastTick = useRef(0);
+  useTick((now) => {
+    const media = audio.current;
+    if (media) {
+      setPosition(media.currentTime);
+      p.onTimeChange?.(media.currentTime);
+    } else
+      setPosition((v) => {
+        const next = v + (now - (lastTick.current || now)) / 1000;
+        if (next < duration) return next;
+        setPlaying(false);
+        return 0;
+      });
+    lastTick.current = now;
+  }, playing);
   useEffect(() => {
-    if (!playing) return;
-    let last = performance.now();
-    let frame = requestAnimationFrame(function tick(now) {
-      const media = audio.current;
-      if (media) {
-        setPosition(media.currentTime);
-        p.onTimeChange?.(media.currentTime);
-      } else
-        setPosition((v) => {
-          const next = v + (now - last) / 1000;
-          if (next < duration) return next;
-          setPlaying(false);
-          return 0;
-        });
-      last = now;
-      frame = requestAnimationFrame(tick);
-    });
-    return () => cancelAnimationFrame(frame);
-  }, [playing, duration]);
+    if (!playing) lastTick.current = 0;
+  }, [playing]);
   useEffect(() => {
     if (audio.current) {
       audio.current.muted = muted;

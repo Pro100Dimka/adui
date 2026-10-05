@@ -1,15 +1,28 @@
 /* Styles owned by NeonWaves: the strands move by script; the stars twinkle and the comets run on their own. */
 .ad-neon-waves {
+  position: relative;
   display: block;
   width: 100%;
   height: clamp(4.5rem, 3rem + 6vw, 7.5rem);
   overflow: visible;
   pointer-events: none;
-  /* Its own layer: the moving strands never repaint what lies around them. */
+}
+/* The drawings on their own layers: the moving strands never repaint what lies around them. */
+.ad-neon-waves-strands,
+.ad-neon-waves-comets {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
   will-change: transform;
 }
 .ad-neon-waves-star {
-  fill: var(--ad-pink);
+  position: absolute;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--ad-pink);
+  translate: -50% -50%;
   animation: ad-neon-twinkle 4s ease-in-out infinite;
 }
 @keyframes ad-neon-twinkle {

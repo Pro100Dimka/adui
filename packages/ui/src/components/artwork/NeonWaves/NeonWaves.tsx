@@ -1,7 +1,7 @@
 import { useSvgId } from "../../../core/artwork";
 import { useMemo, useRef } from "react";
 import { mark, type CommonProps } from "../../../core/base";
-import { useDecoration } from "../../../core/motion/hooks";
+import { useDecoration, usePauseOffscreen } from "../../../core/motion/hooks";
 import { seeded } from "../../../core/noise";
 
 export interface NeonWavesProps extends CommonProps {
@@ -72,6 +72,8 @@ export function NeonWaves({
   ...p
 }: NeonWavesProps) {
   const ref = useRef<SVGSVGElement>(null);
+  const cometsRef = useRef<SVGSVGElement>(null);
+  const lastDraw = useRef(-1);
   const id = useSvgId();
   const dots = useMemo(() => {
     if (!stars) return [];
@@ -84,7 +86,12 @@ export function NeonWaves({
     }));
   }, [stars, phase]);
 
+  usePauseOffscreen(ref);
   useDecoration(ref, (time) => {
+    // The strands drift slowly: redrawing them on every other tick (15 a second) looks the same
+    // and halves their cost; the comets ride their own layer at the full clock rate.
+    if (lastDraw.current >= 0 && time - lastDraw.current < 1 / 16) return;
+    lastDraw.current = time;
     const paths = ref.current?.querySelectorAll<SVGPathElement>(".ad-neon-waves-strand");
     paths?.forEach((path, i) => {
       const t = i / Math.max(1, paths.length - 1);
@@ -105,7 +112,7 @@ export function NeonWaves({
       );
     });
     // Each comet rides its strand; its own dash animation moves it along.
-    ref.current?.querySelectorAll<SVGPathElement>(".ad-neon-waves-comet").forEach((comet) => {
+    cometsRef.current?.querySelectorAll<SVGPathElement>(".ad-neon-waves-comet").forEach((comet) => {
       const strand = paths?.[Number(comet.dataset.strand)];
       const d = strand?.getAttribute("d");
       if (d) comet.setAttribute("d", d);
@@ -113,12 +120,12 @@ export function NeonWaves({
   });
 
   return (
+    <span {...mark("NeonWaves", p)} aria-hidden="true">
     <svg
-      {...mark("NeonWaves", p)}
       ref={ref}
+      className="ad-neon-waves-strands"
       viewBox={`0 0 ${W} ${H}`}
       preserveAspectRatio="none"
-      aria-hidden="true"
     >
       <defs>
         <linearGradient id={`${id}-strand`}>
@@ -128,14 +135,6 @@ export function NeonWaves({
           <stop offset=".78" stopColor="var(--ad-pink)" stopOpacity=".85" />
           <stop offset="1" stopColor="var(--ad-primary-600)" stopOpacity=".44" />
         </linearGradient>
-        {/* Comets fade in where the strands themselves come out of the dark. */}
-        <linearGradient id={`${id}-fade`}>
-          <stop stopColor="#fff" stopOpacity="0" />
-          <stop offset=".35" stopColor="#fff" stopOpacity="1" />
-        </linearGradient>
-        <mask id={`${id}-comets`} maskUnits="userSpaceOnUse" x={-20} y={-H} width={W + 40} height={H * 3}>
-          <rect x={-20} y={-H} width={W + 40} height={H * 3} fill={`url(#${id}-fade)`} />
-        </mask>
       </defs>
       {Array.from({ length: strands }, (_, i) => (
         <path
@@ -148,6 +147,19 @@ export function NeonWaves({
           vectorEffect="non-scaling-stroke"
         />
       ))}
+    </svg>
+    {comets > 0 && (
+    <svg ref={cometsRef} className="ad-neon-waves-comets" viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="none">
+      <defs>
+        {/* Comets fade in where the strands themselves come out of the dark. */}
+        <linearGradient id={`${id}-fade`}>
+          <stop stopColor="#fff" stopOpacity="0" />
+          <stop offset=".35" stopColor="#fff" stopOpacity="1" />
+        </linearGradient>
+        <mask id={`${id}-comets`} maskUnits="userSpaceOnUse" x={-20} y={-H} width={W + 40} height={H * 3}>
+          <rect x={-20} y={-H} width={W + 40} height={H * 3} fill={`url(#${id}-fade)`} />
+        </mask>
+      </defs>
       <g mask={`url(#${id}-comets)`}>
       {Array.from({ length: comets }, (_, i) => (
         <path
@@ -161,17 +173,23 @@ export function NeonWaves({
         />
       ))}
       </g>
+    </svg>
+    )}
+      {/* Stars are page elements over the drawing, not part of it: their twinkle fades on the
+          GPU and never redraws the strands. */}
       {dots.map((d, i) => (
-        <circle
+        <i
           key={i}
           className="ad-neon-waves-star"
-          cx={d.x}
-          cy={d.y}
-          r={d.r}
-          opacity={d.o}
-          style={{ animationDelay: `${-(i % 9) * 0.45}s` }}
+          style={{
+            left: `${(d.x / W) * 100}%`,
+            top: `${(d.y / H) * 100}%`,
+            width: `${Math.max(1, d.r * 3)}px`,
+            opacity: d.o,
+            animationDelay: `${-(i % 9) * 0.45}s`,
+          }}
         />
       ))}
-    </svg>
+    </span>
   );
 }

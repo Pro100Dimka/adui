@@ -4,6 +4,8 @@ export * from "./core/artwork";
 export { useReducedMotion, useMotion } from "./core/providers/context";
 export {
   useBorder,
+  usePauseOffscreen,
+  useTick,
   useDecoration,
   useSmoothWheel,
   useTabShape,
@@ -30,6 +32,8 @@ export { Avatar } from "./components/layout/Avatar/Avatar";
 export { BrandMark } from "./components/layout/BrandMark/BrandMark";
 export { ButtonGroup } from "./components/layout/ButtonGroup/ButtonGroup";
 export { Card } from "./components/layout/Card/Card";
+export { MelodixText } from "./components/effects/MelodixText/MelodixText";
+export type { MelodixTextProps } from "./components/effects/MelodixText/MelodixText";
 export { ThemeEditor } from "./components/foundation/ThemeEditor/ThemeEditor";
 export type { ThemeEditorProps } from "./components/foundation/ThemeEditor/ThemeEditor";
 export { defaultThemeConfig, deriveSecondary, exportTheme, parseTheme, resolveToken, themeProps, themeTokenGroups } from "./components/foundation/ThemeEditor/themeConfig";
@@ -156,7 +160,7 @@ export { WaveDecoration } from "./components/media/WaveDecoration/WaveDecoration
 export { Waveform } from "./components/media/Waveform/Waveform";
 export { useWaveformPeaks } from "./components/media/Waveform/useWaveformPeaks";
 export * from "./components/media/shared";
-export { getMotionStats } from "./core/motion-engine.js";
+export { getMotionStats, setMotionFrameRate, subscribeTick } from "./core/motion-engine.js";
 export {
   Router,
   useRouter,

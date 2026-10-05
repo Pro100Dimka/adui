@@ -1,0 +1,15 @@
+/* Melodix: the musical display typeface. Records, piano keys, note heads, strings, a treble clef
+   and waveforms are part of the letters themselves. Capitals of Cyrillic and Latin, digits,
+   ! ? : ; , … and ♩ ♪ ♫ ♬ 𝄞 ♥ #; lowercase letters are the same shapes as small capitals.
+   The letters were traced from the Melodix design sheet; Greek and the remaining punctuation
+   come from Playfair Display (SIL Open Font License 1.1, see melodix/OFL-PlayfairDisplay.txt).
+   The file downloads only when some text uses the family. */
+@font-face {
+  font-family: "Melodix";
+  src: url("./melodix/Melodix-Regular.woff2") format("woff2");
+  font-display: swap;
+}
+:root,
+.ad-theme {
+  --ad-font-family-melodix: "Melodix", Georgia, serif;
+}

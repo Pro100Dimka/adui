@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useRef, useState } from "react";
 import { Playground, U, expr, jsx } from "../../../dev/exampleHelpers";
 
 const DURATION = 231;
@@ -14,19 +14,16 @@ function PlayingWaveform({
   file: File | null;
 }) {
   const [position, setPosition] = useState(64);
-  useEffect(() => {
-    if (!playing) return;
-    let last = performance.now();
-    let frame = requestAnimationFrame(function tick(now) {
-      setPosition((v) => (v + (now - last) / 1000) % DURATION);
-      last = now;
-      frame = requestAnimationFrame(tick);
-    });
-    return () => cancelAnimationFrame(frame);
-  }, [playing]);
+  // Plays on the library's motion clock: in step with every animation, still when out of view.
+  const box = useRef<HTMLDivElement>(null);
+  const last = useRef<number | null>(null);
+  U.useDecoration(box, (time) => {
+    if (playing && last.current !== null) setPosition((v) => (v + time - last.current!) % DURATION);
+    last.current = time;
+  });
   return (
+    <div ref={box} style={{ width: "min(100%, 52rem)" }}>
     <U.Waveform
-      style={{ width: "min(100%, 52rem)" }}
       label="Позиция в записи"
       src={file}
       duration={DURATION}
@@ -34,6 +31,7 @@ function PlayingWaveform({
       onSeek={setPosition}
       disabled={disabled}
     />
+    </div>
   );
 }
 

@@ -1,6 +1,6 @@
 {
   "name": "@ad-voice/ui",
-  "version": "2.5.0",
+  "version": "2.6.0",
   "description": "Neo UI — React component library",
   "type": "module",
   "license": "UNLICENSED",
@@ -34,6 +34,7 @@
     "./tokens.css": "./dist/tokens.css",
     "./package.json": "./package.json",
     "./components.css": "./dist/components.css",
+    "./fonts/melodix.css": "./dist/fonts/melodix.css",
     "./router": {
       "types": "./dist/router.d.ts",
       "import": "./dist/router.js",

@@ -1,0 +1,26 @@
+/* Styles owned by MelodixText: the Melodix typeface in brushed silver (or the theme's colours)
+   under a still neon halo; nothing here animates. */
+.ad-melodix-text {
+  --ad-melodix-glow: #3d8bff;
+  --ad-melodix-top: #ffffff;
+  --ad-melodix-mid: #c9d3e3;
+  --ad-melodix-low: #7f8ca6;
+  display: inline-block;
+  font-family: var(--ad-font-family-melodix);
+  line-height: 1.25;
+  letter-spacing: 0.06em;
+}
+.ad-melodix-text:not([data-finish="ink"]) {
+  color: transparent;
+  background: linear-gradient(180deg, var(--ad-melodix-top) 10%, var(--ad-melodix-mid) 46%, var(--ad-melodix-low) 58%, var(--ad-melodix-top) 92%);
+  background-clip: text;
+  -webkit-background-clip: text;
+}
+.ad-melodix-text[data-finish="theme"] {
+  --ad-melodix-glow: var(--ad-primary);
+  --ad-melodix-mid: var(--ad-secondary-100);
+  --ad-melodix-low: var(--ad-primary);
+}
+.ad-melodix-text[data-glow] {
+  filter: drop-shadow(0 0 0.05em rgb(from var(--ad-melodix-glow) r g b / 0.85)) drop-shadow(0 0 0.25em rgb(from var(--ad-melodix-glow) r g b / 0.4));
+}

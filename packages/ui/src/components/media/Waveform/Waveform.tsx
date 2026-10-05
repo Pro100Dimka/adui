@@ -107,6 +107,16 @@ export function Waveform({
         : columns(demoSong);
     return { peaksPath: mirrored(top), corePath: mirrored(core) };
   }, [points, decoded]);
+  // The track's shape as mask pictures, made once per shape; the bloom's is blurred in the picture.
+  const masks = useMemo(() => {
+    const picture = (body: string) =>
+      `url("data:image/svg+xml,${encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 ${W} ${H}' preserveAspectRatio='none'>${body}</svg>`)}")`;
+    return {
+      peaks: picture(`<path d='${peaksPath}'/>`),
+      core: picture(`<path d='${corePath}'/>`),
+      bloom: picture(`<filter id='b' x='-5%' y='-50%' width='110%' height='200%'><feGaussianBlur stdDeviation='4'/></filter><path d='${corePath}' filter='url(#b)'/>`),
+    };
+  }, [peaksPath, corePath]);
   const duration = Math.max(0.001, total ?? 231);
   const [position, seek] = useControllable(controlled, defaultPosition, onSeek);
   const progress = clamp(position / duration, 0, 1);
@@ -152,6 +162,7 @@ export function Waveform({
         {
           ...p.style,
           "--ad-wave-played": `${progress * 100}%`,
+          "--ad-wave-progress": progress,
           "--ad-wave-hover": hover === null ? undefined : `${hover * 100}%`,
           ...(color ? { "--ad-wave-color": color } : {}),
         } as React.CSSProperties
@@ -182,8 +193,11 @@ export function Waveform({
       }}
     >
       <span className="ad-waveform-floor" aria-hidden />
+      {/* The track itself never repaints during playback: everything that follows the position
+          is a layer moved or stretched by transform over these still pictures. */}
       <svg
         key={shape}
+        className="ad-waveform-base"
         viewBox={`0 0 ${W} ${H}`}
         preserveAspectRatio="none"
         aria-hidden="true"
@@ -191,12 +205,6 @@ export function Waveform({
         <defs>
           <clipPath id={`${id}-track`}>
             <path d={peaksPath} />
-          </clipPath>
-          <clipPath id={`${id}-played`}>
-            <rect width={played} height={H} />
-          </clipPath>
-          <clipPath id={`${id}-ahead`}>
-            <rect x={played} width={ahead} height={H} />
           </clipPath>
           {/* Brushed silver: brightest along the midline, fading to the edges. */}
           <linearGradient id={`${id}-silver`} x1="0" x2="0" y1="0" y2="1">
@@ -209,20 +217,6 @@ export function Waveform({
             <stop offset="0.5" stopColor="#fff" />
             <stop offset="1" stopColor="var(--ad-neutral-200)" stopOpacity="0.8" />
           </linearGradient>
-          {/* Light builds up along the played part and peaks at the cursor. */}
-          <linearGradient
-            id={`${id}-lit`}
-            gradientUnits="userSpaceOnUse"
-            x1="0"
-            x2={Math.max(1, played)}
-          >
-            <stop offset="0" stopColor="var(--ad-primary-700)" />
-            <stop
-              offset="0.6"
-              stopColor="var(--ad-wave-color, var(--ad-red))"
-            />
-            <stop offset="1" stopColor="var(--ad-secondary-100)" />
-          </linearGradient>
           <linearGradient id={`${id}-depth`} x1="0" x2="0" y1="0" y2="1">
             {/* Lit from above: the upper half catches light, the lower sinks into shadow. */}
             <stop offset="0" stopColor="#fff" stopOpacity="0.16" />
@@ -230,83 +224,54 @@ export function Waveform({
             <stop offset="0.56" stopColor="#000" stopOpacity="0" />
             <stop offset="1" stopColor="#000" stopOpacity="0.6" />
           </linearGradient>
-          <radialGradient id={`${id}-spot`}>
-            <stop offset="0" stopColor="#fff" stopOpacity="0.9" />
-            <stop offset="1" stopColor="var(--ad-primary)" stopOpacity="0" />
-          </radialGradient>
-          <filter
-            id={`${id}-bloom`}
-            x="-5%"
-            y="-50%"
-            width="110%"
-            height="200%"
-          >
-            <feGaussianBlur stdDeviation="4" />
-          </filter>
         </defs>
-
         <line className="ad-waveform-axis" x2={W} y1={MID} y2={MID} />
-        <path
-          className="ad-waveform-peaks"
-          d={peaksPath}
-          fill={`url(#${id}-silver)`}
-        />
-        <path
-          className="ad-waveform-core"
-          d={corePath}
-          fill={`url(#${id}-solid)`}
-        />
+        <path className="ad-waveform-peaks" d={peaksPath} fill={`url(#${id}-silver)`} />
+        <path className="ad-waveform-core" d={corePath} fill={`url(#${id}-solid)`} />
         <path className="ad-waveform-edge" d={peaksPath} />
-
-        <g clipPath={`url(#${id}-ahead)`} className="ad-waveform-ahead">
-          <path d={peaksPath} />
-          <path d={corePath} />
-        </g>
-
-        <g clipPath={`url(#${id}-played)`}>
-          <path
-            className="ad-waveform-bloom"
-            d={corePath}
-            fill={`url(#${id}-lit)`}
-            filter={`url(#${id}-bloom)`}
-          />
-          <path
-            className="ad-waveform-lit-peaks"
-            d={peaksPath}
-            fill={`url(#${id}-lit)`}
-          />
-          <path
-            className="ad-waveform-lit-core"
-            d={corePath}
-            fill={`url(#${id}-lit)`}
-          />
-          <g clipPath={`url(#${id}-track)`}>
-            <rect className="ad-waveform-sheen" width="160" height={H} />
-          </g>
-        </g>
-
-        <rect
-          className="ad-waveform-depth"
-          width={W}
-          height={H}
-          fill={`url(#${id}-depth)`}
-          clipPath={`url(#${id}-track)`}
-        />
-        <ellipse
-          className="ad-waveform-spot"
-          cx={played}
-          cy={MID}
-          rx="60"
-          ry={H}
-          fill={`url(#${id}-spot)`}
-          clipPath={`url(#${id}-track)`}
-        />
       </svg>
-      <span className="ad-waveform-cursor" aria-hidden>
-        <span className="ad-waveform-sparks">
-          {Array.from({ length: 8 }, (_, i) => (
-            <i key={i} />
-          ))}
+      {ahead > 0 && (
+        <svg className="ad-waveform-overlay" viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="none" aria-hidden="true">
+          <clipPath id={`${id}-ahead`}>
+            <rect x={played} width={ahead} height={H} />
+          </clipPath>
+          <g clipPath={`url(#${id}-ahead)`} className="ad-waveform-ahead">
+            <path d={peaksPath} />
+            <path d={corePath} />
+          </g>
+        </svg>
+      )}
+      {/* Played: the ruby light seen through the track's shape, stretched up to the position
+          (so it still builds up along the played part and peaks at the cursor). */}
+      <span className="ad-waveform-layer ad-waveform-bloom" style={{ maskImage: masks.bloom, WebkitMaskImage: masks.bloom }} aria-hidden>
+        <i />
+      </span>
+      <span className="ad-waveform-layer ad-waveform-lit" style={{ maskImage: masks.peaks, WebkitMaskImage: masks.peaks }} aria-hidden>
+        <i />
+      </span>
+      <span className="ad-waveform-layer ad-waveform-lit ad-waveform-lit-core" style={{ maskImage: masks.core, WebkitMaskImage: masks.core }} aria-hidden>
+        <i />
+      </span>
+      <span className="ad-waveform-layer ad-waveform-sheen-clip" style={{ maskImage: masks.peaks, WebkitMaskImage: masks.peaks }} aria-hidden>
+        <span className="ad-waveform-window">
+          <span className="ad-waveform-window-inner">
+            <i className="ad-waveform-sheen" />
+          </span>
+        </span>
+      </span>
+      <span className="ad-waveform-layer ad-waveform-depth" style={{ maskImage: masks.peaks, WebkitMaskImage: masks.peaks }} aria-hidden />
+      <span className="ad-waveform-layer ad-waveform-shade" style={{ maskImage: masks.peaks, WebkitMaskImage: masks.peaks }} aria-hidden>
+        <span className="ad-waveform-follow">
+          <i className="ad-waveform-spot" />
+        </span>
+      </span>
+      <span className="ad-waveform-follow" aria-hidden>
+        <span className="ad-waveform-cursor">
+          <span className="ad-waveform-sparks">
+            {Array.from({ length: 8 }, (_, i) => (
+              <i key={i} />
+            ))}
+          </span>
         </span>
       </span>
       {hover !== null && !disabled && (

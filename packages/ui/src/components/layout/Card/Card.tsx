@@ -1,6 +1,6 @@
 import React, { createElement, useRef } from "react";
 import { mark } from "../../../core/base";
-import { useBorder } from "../../../core/motion/hooks";
+import { useBorder, usePauseOffscreen } from "../../../core/motion/hooks";
 import { Header } from "../Header/Header";
 import type { CardProps } from "../shared";
 export const Card = ({
@@ -19,6 +19,7 @@ export const Card = ({
 }: CardProps) => {
   const ref = useRef<HTMLElement>(null);
   useBorder(ref, border, shell);
+  usePauseOffscreen(ref);
   return createElement(
     as,
     {

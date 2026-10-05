@@ -18,6 +18,7 @@ export const fonts = {
   },
   serif: { label: "С засечками", stack: 'Georgia, "Times New Roman", serif' },
   mono: { label: "Моноширинный", stack: "var(--ad-font-family-mono)" },
+  melodix: { label: "Melodix — музыкальный", stack: "var(--ad-font-family-melodix)" },
 };
 
 const KEY = "neo-ui-site-settings";
