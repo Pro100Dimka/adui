@@ -16,7 +16,7 @@
   animation: ad-lyric-in 0.22s ease both;
 }
 .ad-lyrics-current {
-  font: 750 clamp(1.75rem, 1rem + 3.2vw, 3.25rem) / 1.15 var(--ad-font-family-sans);
+  font: 750 clamp(1.75rem, 1rem + 3.2vw, 3.25rem) / 1.15 var(--ad-font-family-heading);
   letter-spacing: -0.02em;
   min-block-size: 1.15em;
   filter:
@@ -32,7 +32,7 @@
 .ad-lyrics-next {
   min-block-size: 1.2em;
   color: rgb(255 255 255 / 0.45);
-  font: 500 clamp(1rem, 0.7rem + 1.4vw, 1.6rem) / 1.2 var(--ad-font-family-sans);
+  font: 500 clamp(1rem, 0.7rem + 1.4vw, 1.6rem) / 1.2 var(--ad-font-family-heading);
 }
 /* A word fills with the theme's glowing gradient as it is sung; the rest stays white. */
 .ad-lyrics-current .ad-lyric-word {
