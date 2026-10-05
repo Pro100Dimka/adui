@@ -1,7 +1,7 @@
 /* Melodix: the musical display typeface, in nine weights (100 Thin … 900 Black). Records, piano
    keys, note heads, strings, a treble clef and waveforms are part of the letters themselves.
    Capitals of Cyrillic (Russian and Ukrainian) and Latin, digits, ! ? : ; , … and ♩ ♪ ♫ ♬ 𝄞 ♥ #;
-   lowercase letters are the same shapes as small capitals. Traced from the Melodix weight sheets;
+   lowercase letters are the same shapes as small capitals. Traced from the large Melodix sheet, weights grown or slimmed from it (ornaments kept);
    Greek and the remaining punctuation come from Playfair Display (SIL Open Font License 1.1, see
    melodix/OFL-PlayfairDisplay.txt). Each weight downloads only when some text uses it. */
 @font-face {
