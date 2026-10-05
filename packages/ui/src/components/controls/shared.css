@@ -532,16 +532,16 @@
   filter: none;
 }
 :is(.ad-button, .ad-icon-button)[data-ad-variant="ghost"]:hover:not(:disabled) {
-  background: #ffffff10;
+  background: rgb(from var(--ad-primary) r g b / 0.08);
   box-shadow: none;
-  color: #fff;
+  color: var(--ad-text);
   filter: none;
   transform: none;
 }
 :is(.ad-button, .ad-icon-button)[data-ad-variant="ghost"]:active:not(
     :disabled
   ) {
-  background: #ffffff1a;
+  background: rgb(from var(--ad-primary) r g b / 0.14);
   box-shadow: none;
   transform: scale(0.98);
 }

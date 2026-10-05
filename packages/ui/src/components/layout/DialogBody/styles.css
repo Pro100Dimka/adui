@@ -2,7 +2,8 @@
 .ad-dialog-body {
   min-height: 0;
   max-height: calc(100dvh - 10rem);
-  overflow: auto;
+  overflow-y: auto;
+  overflow-x: clip;
   overscroll-behavior: contain;
   scrollbar-width: thin;
   scrollbar-color: var(--ad-primary) transparent;

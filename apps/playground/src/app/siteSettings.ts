@@ -56,6 +56,10 @@ const lightAppearanceTokens = {
   "neutral-400": "oklch(from var(--ad-primary) 0.46 0.02 h)",
   "neutral-300": "oklch(from var(--ad-primary) 0.34 0.018 h)",
   "neutral-200": "oklch(from var(--ad-primary) 0.22 0.014 h)",
+  "surface-input":
+    "linear-gradient(135deg, var(--ad-neutral-950), var(--ad-neutral-900)) padding-box, linear-gradient(125deg, var(--ad-primary), var(--ad-secondary) 50%, var(--ad-primary)) border-box",
+  "shadow-input":
+    "inset 0 0.0625rem 0.125rem rgb(from var(--ad-text) r g b / 0.08), 0 0.1875rem 0.4375rem rgb(from var(--ad-primary) r g b / 0.12)",
   text: "#211b1f",
   muted: "#6f6269",
 };
@@ -117,8 +121,8 @@ export function siteThemeProps(settings: SiteSettings) {
   return {
     ...props,
     tokens: {
-      ...props.tokens,
       ...siteAppearanceTokens(settings.appearance),
+      ...props.tokens,
       ...(stack ? { "font-family-sans": stack } : {}),
       ...(heading ? { "font-family-heading": heading } : {}),
     },

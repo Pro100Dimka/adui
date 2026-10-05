@@ -14,6 +14,7 @@ html[data-ad-color-mode="light"] .ad-theme {
 }
 body {
   margin: 0;
+  overflow-x: clip;
   font-family: "Segoe UI", Arial, sans-serif;
   color: var(--ad-text);
   background:
@@ -78,12 +79,14 @@ a {
 }
 .docs-main {
   min-width: 0;
+  overflow-x: clip;
   padding: var(--ad-space-4) clamp(var(--ad-space-3), 2.4vw, var(--ad-space-8))
     var(--ad-space-5);
 }
 .docs-mobile-nav-panel {
   max-height: min(66dvh, 32rem);
-  overflow: auto;
+  overflow-y: auto;
+  overflow-x: clip;
 }
 .docs-sidebar > .docs-sidebar-head,
 .docs-sidebar > .docs-nav-scroll,
@@ -106,7 +109,8 @@ a {
       linear-gradient(180deg, rgb(from var(--ad-neutral-900) r g b / 0.94), rgb(from var(--ad-neutral-900) r g b / 0.97));
   }
   .docs-main {
-    overflow: auto;
+    overflow-y: auto;
+    overflow-x: clip;
     scrollbar-width: thin;
     scrollbar-color: var(--ad-primary-700) transparent;
   }
@@ -140,8 +144,8 @@ a {
   margin-left: auto;
 }
 .docs-overview-link:hover {
-  background: #ffffff08;
-  color: #fff;
+  background: rgb(from var(--ad-primary) r g b / 0.08);
+  color: var(--ad-text);
 }
 .docs-overview-link.active,
 .docs-mobile-overview {
@@ -206,7 +210,7 @@ a {
 .docs-nav-item:hover,
 .docs-mobile-nav-panel .ad-link:hover {
   background: rgb(from var(--ad-primary-800) r g b / 0.29);
-  color: #fff;
+  color: var(--ad-text);
 }
 .docs-nav-item.active,
 .docs-mobile-nav-panel .ad-link.active {

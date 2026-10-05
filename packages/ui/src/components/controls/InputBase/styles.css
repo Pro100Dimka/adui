@@ -241,13 +241,13 @@
   filter: none;
 }
 .ad-input-adornment .ad-icon-button:hover:not(:disabled) {
-  background: #ffffff12;
-  color: #fff;
+  background: rgb(from var(--ad-primary) r g b / 0.08);
+  color: var(--ad-text);
   transform: none;
   box-shadow: none;
 }
 .ad-input-adornment .ad-icon-button:active:not(:disabled) {
-  background: #ffffff1c;
+  background: rgb(from var(--ad-primary) r g b / 0.14);
   transform: scale(0.94);
 }
 .ad-input-adornment .ad-icon-button:disabled {

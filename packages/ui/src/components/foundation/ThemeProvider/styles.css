@@ -32,3 +32,26 @@
     --ad-text 0.7s ease,
     --ad-muted 0.7s ease;
 }
+
+/* A nested provider keeps the active scheme while still recomputing its palette from its own accent. */
+.ad-theme[data-ad-color-scheme="light"] {
+  color-scheme: light;
+  --ad-neutral-950: oklch(from var(--ad-primary) 0.98 0.006 h);
+  --ad-neutral-900: oklch(from var(--ad-primary) 0.965 0.008 h);
+  --ad-neutral-850: oklch(from var(--ad-primary) 0.94 0.01 h);
+  --ad-neutral-800: oklch(from var(--ad-primary) 0.9 0.012 h);
+  --ad-neutral-700: oklch(from var(--ad-primary) 0.82 0.014 h);
+  --ad-neutral-600: oklch(from var(--ad-primary) 0.7 0.016 h);
+  --ad-neutral-500: oklch(from var(--ad-primary) 0.58 0.018 h);
+  --ad-neutral-400: oklch(from var(--ad-primary) 0.46 0.02 h);
+  --ad-neutral-300: oklch(from var(--ad-primary) 0.34 0.018 h);
+  --ad-neutral-200: oklch(from var(--ad-primary) 0.22 0.014 h);
+  --ad-text: #211b1f;
+  --ad-muted: #6f6269;
+  --ad-surface-input:
+    linear-gradient(135deg, var(--ad-neutral-950), var(--ad-neutral-900)) padding-box,
+    linear-gradient(125deg, var(--ad-primary), var(--ad-secondary) 50%, var(--ad-primary)) border-box;
+  --ad-shadow-input:
+    inset 0 0.0625rem 0.125rem rgb(from var(--ad-text) r g b / 0.08),
+    0 0.1875rem 0.4375rem rgb(from var(--ad-primary) r g b / 0.12);
+}

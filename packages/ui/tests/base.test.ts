@@ -46,16 +46,20 @@ describe("documentation motion", () => {
     const generator = readFileSync("src/components/foundation/LoaderGenerator/styles.css", "utf8");
     const editor = readFileSync("src/components/foundation/ThemeEditor/ThemeEditor.tsx", "utf8");
     const settings = readFileSync("../../apps/playground/src/app/SettingsPanel.tsx", "utf8");
+    const docsCss = readFileSync("../../apps/playground/src/app/app.css", "utf8");
 
     expect(dialog).toMatch(/\.ad-dialog\s*{[^}]*overflow:\s*hidden/s);
     expect(dialog).toMatch(/html:has\(\.ad-dialog\[open\]\)\s*{[^}]*overflow:\s*hidden/s);
     expect(dialog).toMatch(/grid-template-rows:\s*auto\s+auto\s+auto/);
-    expect(body).toMatch(/\.ad-dialog-body\s*{[^}]*overflow:\s*auto/s);
+    expect(body).toMatch(/\.ad-dialog-body\s*{[^}]*overflow-y:\s*auto[^}]*overflow-x:\s*clip/s);
     expect(body).toMatch(/max-height:\s*calc\(100dvh\s*-\s*10rem\)/);
     expect(generator).toMatch(/scrollbar-color:\s*var\(--ad-primary\)\s+transparent/);
     expect(editor).not.toContain("ad-theme-editor-preview");
     expect(editor).not.toContain("<ThemePicker");
     expect(settings).toContain('<Grid className="site-typography-grid" columns={3}');
+    expect(docsCss).toMatch(/body\s*{[^}]*overflow-x:\s*clip/s);
+    expect(docsCss).toMatch(/\.docs-mobile-nav-panel\s*{[^}]*overflow-x:\s*clip/s);
+    expect(docsCss).toMatch(/\.docs-main\s*{[^}]*overflow-x:\s*clip/s);
   });
 
   it("defaults to Ukrainian and provides a readable light site theme", () => {
@@ -75,11 +79,39 @@ describe("documentation motion", () => {
     const light = siteThemeProps({ ...defaultSettings, appearance: "light" });
     expect(light.tokens?.text).toBe("#211b1f");
     expect(light.tokens?.["neutral-950"]).toContain("0.98");
+    expect(light.tokens?.["surface-input"]).toContain("neutral-950");
+    expect(light.tokens?.["shadow-input"]).not.toContain("#0005");
     expect(fonts.melodix.stack).toBe("var(--ad-font-family-melodix)");
     expect(tokens).toContain("--ad-on-accent: #fff");
     expect(controls).toMatch(/data-ad-variant="primary"[^}]*color:\s*var\(--ad-on-accent\)/s);
+    expect(controls).toMatch(/data-ad-variant="ghost"\]:hover[^}]*background:\s*rgb\(from var\(--ad-primary\)[^}]*color:\s*var\(--ad-text\)/s);
+    expect(docsCss).toMatch(/\.docs-overview-link:hover\s*{[^}]*color:\s*var\(--ad-text\)/s);
+    expect(docsCss).toMatch(/\.docs-mobile-nav-panel \.ad-link:hover\s*{[^}]*color:\s*var\(--ad-text\)/s);
     expect(icon).toMatch(/data-ad-surface="tile"[^}]*color:\s*var\(--ad-on-accent\)/s);
     expect(surfaces).toMatch(/data-ad-material="ruby"[^}]*--ad-text:\s*var\(--ad-on-accent\)/s);
     expect(docsCss).toMatch(/data-ad-color-mode="light"[^}]*\.docs-hero-backdrop[^}]*opacity:\s*0\.2/s);
+
+    const customised = siteThemeProps({
+      ...defaultSettings,
+      appearance: "light",
+      themeConfig: {
+        ...defaultSettings.themeConfig,
+        mode: "advanced",
+        tokens: { "neutral-950": "#abcdef" },
+      },
+    });
+    expect(customised.tokens?.["neutral-950"]).toBe("#abcdef");
+  });
+
+  it("keeps nested ThemeProviders in the active colour scheme", () => {
+    const provider = readFileSync("src/components/foundation/ThemeProvider/ThemeProvider.tsx", "utf8");
+    const providerCss = readFileSync("src/components/foundation/ThemeProvider/styles.css", "utf8");
+    const app = readFileSync("../../apps/playground/src/App.tsx", "utf8");
+
+    expect(provider).toContain('colorScheme?: "light" | "dark"');
+    expect(provider).toContain("useContext(ThemeColorSchemeContext)");
+    expect(provider).toContain("data-ad-color-scheme={scheme}");
+    expect(providerCss).toMatch(/\.ad-theme\[data-ad-color-scheme="light"\]\s*{[^}]*--ad-surface-input:/s);
+    expect(app).toContain("colorScheme={settings.appearance}");
   });
 });

@@ -89,7 +89,7 @@ export default function App() {
 
   return (
     <LocaleProvider locale={settings.locale}>
-    <ThemeProvider {...themed}>
+    <ThemeProvider {...themed} colorScheme={settings.appearance}>
       <SiteThemeContext.Provider value={siteTheme}>
         <Stack id="app" gap={0}>
           <Toolbar className="site-top">
