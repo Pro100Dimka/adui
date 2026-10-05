@@ -10,7 +10,7 @@
   height: calc(var(--ad-size-h) - 0.375rem);
   padding-inline: calc(var(--ad-size-pad-x) * 1.35);
   border: 0;
-  border-radius: 999rem;
+  border-radius: var(--ad-size-radius);
   background: transparent;
   color: var(--ad-neutral-400);
   font: inherit;

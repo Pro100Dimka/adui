@@ -1,4 +1,5 @@
 const e=`import { type CommonProps, type TokenStyle } from "../../../core/base";
+import { createContext, useContext } from "react";
 
 /** Ready colour pairs: [primary, secondary]. Everything else is derived from the pair. */
 export const themes = {
@@ -11,6 +12,8 @@ export type ThemeName = keyof typeof themes;
 
 export interface ThemeProviderProps extends CommonProps {
   theme?: ThemeName;
+  /** Colour scheme; nested providers inherit it unless they explicitly override it. */
+  colorScheme?: "light" | "dark";
   /** Main colour; overrides the theme's. The whole palette is built from it and \`secondary\`. */
   primary?: string;
   /** Light accent colour for highlights and glints; overrides the theme's. */
@@ -20,6 +23,8 @@ export interface ThemeProviderProps extends CommonProps {
   /** Any token by name (\`primary-700\`, \`neutral-900\`, \`--ad-text\`…), for full control. */
   tokens?: Record<string, string>;
 }
+
+const ThemeColorSchemeContext = createContext<"light" | "dark">("dark");
 
 /** HSL hue of a #rrggbb colour, in degrees. */
 function hue(hex: string) {
@@ -44,6 +49,7 @@ function hue(hex: string) {
  */
 export const ThemeProvider = ({
   theme = "ruby",
+  colorScheme,
   primary,
   secondary,
   accent,
@@ -53,6 +59,8 @@ export const ThemeProvider = ({
   id,
   className,
 }: ThemeProviderProps) => {
+  const inheritedScheme = useContext(ThemeColorSchemeContext);
+  const scheme = colorScheme ?? inheritedScheme;
   const main = primary ?? accent ?? themes[theme][0];
   const vars: TokenStyle = {
     ...style,
@@ -65,15 +73,18 @@ export const ThemeProvider = ({
   for (const [key, value] of Object.entries(tokens))
     vars[(key.startsWith("--") ? key : \`--ad-\${key}\`) as \`--\${string}\`] = value;
   return (
-    <div
-      id={id}
-      className={\`ad-theme \${className ?? ""}\`}
-      style={vars}
-      data-ad-component="ThemeProvider"
-      data-ad-theme={theme}
-    >
-      {children}
-    </div>
+    <ThemeColorSchemeContext.Provider value={scheme}>
+      <div
+        id={id}
+        className={\`ad-theme \${className ?? ""}\`}
+        style={vars}
+        data-ad-component="ThemeProvider"
+        data-ad-theme={theme}
+        data-ad-color-scheme={scheme}
+      >
+        {children}
+      </div>
+    </ThemeColorSchemeContext.Provider>
   );
 };
 `;export{e as default};

@@ -6,9 +6,10 @@
   display: flex;
   gap: 0.125rem;
   min-width: 0;
-  padding: var(--ad-tabs-pad);
+  padding: var(--ad-tabs-pad) var(--ad-tabs-pad)
+    calc(var(--ad-tabs-pad) + 0.3rem);
   border: 0.0625rem solid rgb(from var(--ad-primary-600) r g b / 0.24);
-  border-radius: 999rem;
+  border-radius: calc(var(--ad-size-radius) + 0.25rem);
   background:
     linear-gradient(180deg, #ffffff06, transparent 40%),
     linear-gradient(180deg, var(--ad-neutral-900), var(--ad-neutral-950));
@@ -45,9 +46,23 @@
   flex: 1 0 auto;
 }
 
-/* Tab shape: a pill, like the buttons. */
+/* Blade geometry: chamfered corners and a notch cut into the bottom edge. */
 :is(.ad-tabs, .ad-tab) {
-  --ad-blade: inset(0 round 999rem);
+  --ad-blade-cut: calc(var(--ad-size-radius) * 0.75);
+  --ad-blade-notch: 0.4rem;
+  --ad-blade: polygon(
+    var(--ad-blade-cut) 0,
+    calc(100% - var(--ad-blade-cut)) 0,
+    100% var(--ad-blade-cut),
+    100% calc(100% - var(--ad-blade-cut)),
+    calc(100% - var(--ad-blade-cut)) 100%,
+    calc(50% + var(--ad-blade-notch)) 100%,
+    50% calc(100% - var(--ad-blade-notch) * 0.75),
+    calc(50% - var(--ad-blade-notch)) 100%,
+    var(--ad-blade-cut) 100%,
+    0 calc(100% - var(--ad-blade-cut)),
+    0 var(--ad-blade-cut)
+  );
 }
 
 .ad-tabs-indicator,
@@ -69,14 +84,15 @@
     width 0.45s var(--ad-tabs-spring),
     scale 0.3s ease-out;
 }
-/* The blade breathes: a glow behind it swells and settles (opacity only). */
+/* The blade breathes: a soft glow under it swells and settles (opacity only; the blur is still). */
 .ad-tabs-indicator::after {
   content: "";
   position: absolute;
-  inset: 0;
+  inset: -0.35rem -0.25rem -0.15rem;
   z-index: -1;
-  border-radius: 999rem;
-  box-shadow: 0 0 0.7rem rgb(from var(--ad-primary) r g b / 0.53), 0 0.2rem 0.9rem rgb(from var(--ad-primary) r g b / 0.27);
+  border-radius: var(--ad-size-radius);
+  background: radial-gradient(closest-side, rgb(from var(--ad-primary) r g b / 0.55), transparent);
+  filter: blur(0.45rem);
   opacity: 0;
   animation: ad-tabs-breathe 3.2s ease-in-out infinite;
 }
@@ -120,7 +136,7 @@
 /* Comet trail: a blurred copy that lags behind while the blade travels. */
 .ad-tabs-trail {
   z-index: -2;
-  border-radius: 999rem;
+  border-radius: var(--ad-size-radius);
   background: radial-gradient(closest-side, rgb(from var(--ad-primary) r g b / 0.5), transparent);
   filter: blur(0.6rem);
   opacity: 0;
