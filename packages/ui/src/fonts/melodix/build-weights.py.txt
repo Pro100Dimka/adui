@@ -18,7 +18,7 @@ from fontTools import subset
 
 SRC = "Melodix-Regular.ttf"          # the trace of the large sheet
 PX = 0.9                             # pixels per font unit while morphing (cap 700 → 630 px)
-OFFSETS = {100: -24, 200: -16, 300: -8, 400: 0, 500: 7, 600: 14, 700: 21, 800: 28, 900: 36}
+OFFSETS = {100: -24, 200: -16, 300: -8, 400: 0, 500: 6, 600: 11, 700: 16, 800: 21, 900: 26}
 NAMES = {100: "Thin", 200: "ExtraLight", 300: "Light", 400: "Regular", 500: "Medium", 600: "SemiBold", 700: "Bold", 800: "ExtraBold", 900: "Black"}
 
 
@@ -85,13 +85,21 @@ def morph(mask, r):
         core = ndimage.distance_transform_edt(mask) > 3
         core = ndimage.distance_transform_edt(~core) <= 3  # opening: thin parts removed
         grown = mask | (ndimage.distance_transform_edt(~core) <= r)
+        # Every narrow white passage — counters, slits, grooves and the gaps between neighbouring
+        # strokes — keeps its original width, so nothing merges; only open space takes the growth.
         white = ~mask
-        white_core = ndimage.distance_transform_edt(white) > r * 0.9
-        white_core = ndimage.distance_transform_edt(~white_core) <= r * 0.9
+        rw = r * 1.6 + 2
+        white_core = ndimage.distance_transform_edt(white) > rw
+        white_core = ndimage.distance_transform_edt(~white_core) <= rw
         thin_white = white & ~white_core
-        # thin white inside the letter only (not the outside margin)
-        outside = ndimage.binary_fill_holes(mask) == False
-        return grown & ~(thin_white & ~outside)
+        out = grown & ~thin_white
+        # smooth the outline: tiny bumps and nicks from the two rules above are rounded off
+        dilated = ndimage.distance_transform_edt(~out) <= 1.8
+        closed = ndimage.distance_transform_edt(dilated) > 1.8
+        eroded = ndimage.distance_transform_edt(closed) > 1.5
+        opened = ndimage.distance_transform_edt(~eroded) <= 1.5
+        # the original's own thin white details stay open after smoothing too
+        return (opened | (out & mask)) & ~thin_white
     r = -r
     inside = ndimage.distance_transform_edt(mask)
     eroded = inside > r
