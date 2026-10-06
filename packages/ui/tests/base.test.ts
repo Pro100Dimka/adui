@@ -24,6 +24,11 @@ it("locks the Linux Rollup binary needed by the release runner", () => {
   expect(lock.packages["node_modules/@rollup/rollup-linux-x64-gnu"]?.version).toBe(lock.packages["node_modules/rollup"].version);
 });
 
+it("builds the package before CI tests import its dist entry", () => {
+  const workflow = readFileSync(new URL("../../../.github/workflows/release.yml", import.meta.url), "utf8");
+  expect(workflow.indexOf("- run: npm run build --workspace @ad-voice/ui")).toBeLessThan(workflow.indexOf("- run: npm test --workspace @ad-voice/ui"));
+});
+
 describe("closed dialog work", () => {
   it("does not mount a dialog or its expensive children while closed", () => {
     expect(renderToStaticMarkup(createElement(Dialog, { open: false }, createElement("span", null, "Heavy editor")))).toBe("");
@@ -87,7 +92,7 @@ describe("release checks", () => {
   it("runs the package tests before creating a release archive", () => {
     const workflow = readFileSync("../../.github/workflows/release.yml", "utf8");
     expect(workflow).toMatch(/npm test --workspace @ad-voice\/ui/);
-    expect(workflow.indexOf("npm test --workspace @ad-voice/ui")).toBeLessThan(workflow.indexOf("npm run package"));
+    expect(workflow.indexOf("npm test --workspace @ad-voice/ui")).toBeLessThan(workflow.indexOf("npm pack ./packages/ui"));
   });
   it("installs the packed release in a clean consumer before publishing", () => {
     const workflow = readFileSync("../../.github/workflows/release.yml", "utf8");
