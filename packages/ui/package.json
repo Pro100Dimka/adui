@@ -1,6 +1,6 @@
 {
   "name": "@ad-voice/ui",
-  "version": "2.7.14",
+  "version": "2.7.15",
   "description": "Neo UI — React component library",
   "type": "module",
   "license": "UNLICENSED",
@@ -59,7 +59,9 @@
   "devDependencies": {
     "@types/react": "^19.1.0",
     "@types/react-dom": "^19.1.0",
+    "@types/react-test-renderer": "^19.3.0",
     "esbuild": "^0.25.12",
+    "react-test-renderer": "^19.3.0",
     "typescript": "^5.8.3",
     "vitest": "^3.2.4"
   },

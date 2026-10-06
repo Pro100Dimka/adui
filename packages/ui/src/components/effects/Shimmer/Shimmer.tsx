@@ -1,4 +1,4 @@
-import { tr } from "../../../core/i18n";
+import { useTr } from "../../../core/i18n";
 import { mark, type CommonProps } from "../../../core/base";
 
 export interface ShimmerProps extends CommonProps {
@@ -13,14 +13,15 @@ export interface ShimmerProps extends CommonProps {
 export function Shimmer({
   lines = 3,
   circle = false,
-  label = tr("Загрузка"),
+  label,
   ...p
 }: ShimmerProps) {
+  const tr = useTr();
   return (
     <div
       {...mark("Shimmer", p)}
       role="status"
-      aria-label={label}
+      aria-label={label ?? tr("Загрузка")}
       aria-busy="true"
     >
       {circle && <i className="ad-shimmer-circle" />}

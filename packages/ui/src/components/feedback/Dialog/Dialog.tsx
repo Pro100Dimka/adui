@@ -1,4 +1,4 @@
-import { tr } from "../../../core/i18n";
+import { tr, useTr } from "../../../core/i18n";
 import { useId, useLayoutEffect, useRef, useState } from "react";
 import { mark, useControllable } from "../../../core/base";
 import { Button } from "../../controls/Button/Button";
@@ -16,6 +16,7 @@ const outside = (dialog: HTMLDialogElement, x: number, y: number, target: EventT
 };
 
 export const Dialog = (p: DialogProps) => {
+  const tr = useTr();
   const [open, setOpen] = useControllable(
       p.open,
       p.defaultOpen ?? false,
@@ -45,6 +46,7 @@ export const Dialog = (p: DialogProps) => {
       else d.removeAttribute("open");
     };
   }, [open]);
+  if (!open) return null;
   return (
     <dialog
       {...mark("Dialog", p, "dialog")}

@@ -1,9 +1,10 @@
-import { tr } from "../../../core/i18n";
+import { tr, useTr } from "../../../core/i18n";
 import React from "react";
 import { clamp, mark, useControllable } from "../../../core/base";
 import { FieldFrame, useFieldIds } from "../internal";
 import type { SliderProps } from "../shared";
 export const Slider = (p: SliderProps) => {
+  const tr = useTr();
   const min = p.min ?? 0,
     max = Math.max(min, p.max ?? 100);
   const [value, setValue] = useControllable(

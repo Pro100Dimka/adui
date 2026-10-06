@@ -1,4 +1,4 @@
-import { tr } from "../../../core/i18n";
+import { tr, useTr } from "../../../core/i18n";
 import { useEffect, useRef, type CSSProperties, type KeyboardEvent, type PointerEvent, type WheelEvent } from "react";
 import { clamp, mark, useControllable, type CommonProps } from "../../../core/base";
 import { PianoKeyboard, isBlackKey } from "../../media/PianoKeyboard/PianoKeyboard";
@@ -102,6 +102,7 @@ export const PianoRoll = ({
   label,
   ...p
 }: PianoRollProps) => {
+  const tr = useTr();
   const [zoom, setZoom] = useControllable(zoomProp, defaultZoom, onZoomChange);
   const scroller = useRef<HTMLDivElement>(null);
   const world = useRef<HTMLDivElement>(null);

@@ -1,4 +1,4 @@
-import { tr } from "@ad-voice/ui";
+import { tr, useTr } from "@ad-voice/ui";
 import {
   Button,
   Dialog,
@@ -28,6 +28,7 @@ export function SettingsPanel({
   update: (patch: Partial<SiteSettings>) => void;
   reset: () => void;
 }) {
+  const tr = useTr();
   return (
     <Dialog
       className="site-settings"

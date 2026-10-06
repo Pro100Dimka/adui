@@ -1,4 +1,4 @@
-import { tr } from "../../../core/i18n";
+import { tr, useTr } from "../../../core/i18n";
 import { mark } from "../../../core/base";
 import { Icon } from "../Icon/Icon";
 import {
@@ -31,6 +31,7 @@ export const Header = ({
   compact,
   ...p
 }: HeaderProps) => {
+  const tr = useTr();
   const Component = as;
   return (
     <Component {...mark("Header", p)} data-ad-compact={compact || undefined}>

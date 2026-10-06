@@ -25,7 +25,16 @@ jobs:
           echo "VERSION=$VERSION" >> "$GITHUB_ENV"
       - run: npm ci
       - run: npm run typecheck
+      - run: npm test --workspace @ad-voice/ui
       - run: npm run package
+      - name: Smoke-test packed consumer
+        run: |
+          mkdir consumer-smoke
+          cd consumer-smoke
+          npm init -y
+          npm install ../release/ad-voice-ui-${VERSION}.tgz react@19 react-dom@19 --no-audit --no-fund
+          node --input-type=module -e 'import { createElement } from "react"; import { renderToStaticMarkup } from "react-dom/server"; import { Button } from "@ad-voice/ui"; if (!renderToStaticMarkup(createElement(Button, null, "Smoke")).includes("Smoke")) process.exit(1)'
+          test -f node_modules/@ad-voice/ui/dist/styles.css
       - uses: softprops/action-gh-release@v2
         with:
           name: "@ad-voice/ui ${{ github.ref_name }}"

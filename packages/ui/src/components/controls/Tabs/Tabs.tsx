@@ -1,4 +1,4 @@
-import { tr } from "../../../core/i18n";
+import { tr, useTr } from "../../../core/i18n";
 import { createResizeObserver } from "../../../core/environment";
 import { useLayoutEffect, useRef, useState } from "react";
 import {
@@ -11,6 +11,7 @@ import { type TabItem, type TabsProps } from "../shared";
 import { Tab } from "../Tab/Tab";
 
 export function Tabs<V extends string = string>(p: TabsProps<V>) {
+  const tr = useTr();
   const items =
     p.items ??
     ([

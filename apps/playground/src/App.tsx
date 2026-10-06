@@ -1,6 +1,6 @@
-import { LocaleProvider, addMessages, setLocale, tr } from "@ad-voice/ui";
+import { LocaleProvider, addMessages, translate } from "@ad-voice/ui";
 import { docsMessages } from "./app/docsMessages";
-import { useEffect, useState } from "react";
+import { memo, useCallback, useEffect, useMemo, useState } from "react";
 import {
   Badge,
   Button,
@@ -35,6 +35,8 @@ const routes: RouteDefinition[] = [
   },
   { path: "*", redirectTo: "/components/overview" },
 ];
+const CatalogRouter = memo(Router);
+const StableSettingsPanel = memo(SettingsPanel);
 
 // The docs' own texts join the library's translations.
 for (const [locale, messages] of Object.entries(docsMessages)) addMessages(locale, messages);
@@ -44,16 +46,14 @@ export default function App() {
   const [explicit, setExplicit] = useState<boolean>();
   const motion = explicit ?? !reduced;
   const [settings, update, reset] = useSiteSettings();
-  // The texts of this component are worked out before LocaleProvider renders: set the language first.
-  setLocale(settings.locale);
+  const tr = (text: string) => translate(settings.locale, text);
   const [settingsOpen, setSettingsOpen] = useState(false);
-  const themed = siteThemeProps(settings);
+  const themed = useMemo(
+    () => siteThemeProps(settings),
+    [settings.themeConfig, settings.appearance, settings.font, settings.headingFont],
+  );
   // Theme examples in the docs drive the site theme through this.
-  const siteTheme = {
-    theme: themed.theme,
-    primary: themed.primary,
-    secondary: themed.secondary,
-    set: ({
+  const setSiteTheme = useCallback(({
       theme,
       ...colors
     }: {
@@ -61,12 +61,17 @@ export default function App() {
       primary?: string;
       secondary?: string;
     }) =>
-      update({
+      update((current) => ({
         themeConfig: theme
           ? { version: 1, mode: "simple", theme, ...colors }
-          : { ...settings.themeConfig, autoSecondary: false, ...colors },
-      }),
-  };
+          : { ...current.themeConfig, autoSecondary: false, ...colors },
+      })), [update]);
+  const siteTheme = useMemo(() => ({
+    theme: themed.theme,
+    primary: themed.primary,
+    secondary: themed.secondary,
+    set: setSiteTheme,
+  }), [themed.theme, themed.primary, themed.secondary, setSiteTheme]);
 
   useEffect(() => {
     document.documentElement.dataset.adMotion = motion ? "on" : "off";
@@ -151,15 +156,15 @@ export default function App() {
               />
             </Stack>
           </Toolbar>
-          <Router routes={routes} />
+          <CatalogRouter key={settings.locale} routes={routes} />
         </Stack>
-        <SettingsPanel
+        {settingsOpen && <StableSettingsPanel
           open={settingsOpen}
           onOpenChange={setSettingsOpen}
           settings={settings}
           update={update}
           reset={reset}
-        />
+        />}
       </SiteThemeContext.Provider>
     </ThemeProvider>
     </LocaleProvider>

@@ -1,0 +1,1 @@
+import{af as o,j as a,g as e}from"./index-CkfvrOzv.js";const s=[{path:"/rooms/:id",element:t=>`Комната ${t.params.id}`},{path:"/settings",element:"Настройки"},{path:"*",redirectTo:"/settings"}];function m(){const t=o(s,"/rooms/42");return a.jsxs(e,{variant:"mono",children:["/rooms/42 → ",t?.route.path," · id = ",t?.params.id]})}export{m as default};

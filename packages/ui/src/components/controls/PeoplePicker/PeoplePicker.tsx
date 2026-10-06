@@ -1,4 +1,4 @@
-import { tr } from "../../../core/i18n";
+import { tr, useTr } from "../../../core/i18n";
 import { useEffect, useRef, useState } from "react";
 import { useControllable, type CommonProps } from "../../../core/base";
 import { Popover } from "../../feedback/Popover/Popover";
@@ -54,15 +54,17 @@ export function PeoplePicker({
   onValueChange,
   single = false,
   max,
-  placeholder = tr("Начните вводить имя"),
+  placeholder,
   ...p
 }: PeoplePickerProps) {
+  const tr = useTr();
   const [chosen, setChosen] = useControllable(controlled, defaultValue, onValueChange);
   const [query, setQuery] = useState("");
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState(0);
   const [found, setFound] = useState<PickerPerson[] | null>(null);
   const [loading, setLoading] = useState(false);
+  const [searchError, setSearchError] = useState<string>();
   const box = useRef<HTMLDivElement>(null);
   const limit = single ? 1 : max;
   const full = limit !== undefined && chosen.length >= limit;
@@ -70,13 +72,23 @@ export function PeoplePicker({
   // Asynchronous search: debounced, and a late answer to an older query is ignored.
   useEffect(() => {
     if (!onSearch) return;
-    if (!query.trim()) return setFound(null);
+    if (!query.trim()) {
+      setFound(null);
+      setSearchError(undefined);
+      return;
+    }
     let current = true;
     setLoading(true);
+    setSearchError(undefined);
     const timer = setTimeout(async () => {
       try {
         const result = await onSearch(query.trim());
         if (current) setFound(result);
+      } catch (error) {
+        if (current) {
+          setFound([]);
+          setSearchError(error instanceof Error ? error.message : tr("Не удалось выполнить поиск"));
+        }
       } finally {
         if (current) setLoading(false);
       }
@@ -115,7 +127,7 @@ export function PeoplePicker({
         variant={p.variant}
         labelPlacement={p.labelPlacement}
         startAdornment={<Icon name="users" />}
-        placeholder={full ? undefined : placeholder}
+        placeholder={full ? undefined : placeholder ?? tr("Начните вводить имя")}
         query={query}
         onQueryChange={(next) => {
           setQuery(next);
@@ -147,10 +159,10 @@ export function PeoplePicker({
         className="ad-option-popover" label={tr("Люди")}>
         <div className="ad-option-list">
           {loading && <div className="ad-option-empty"><span className="ad-spinner" aria-hidden /> {tr("Ищем…")}</div>}
-          {!loading && options.length === 0 && (
-            <div className="ad-option-empty">{onSearch && !needle ? tr("Начните вводить имя") : tr("Никого не нашли")}</div>
+          {!loading && (searchError || options.length === 0) && (
+            <div className="ad-option-empty">{searchError ?? (onSearch && !needle ? tr("Начните вводить имя") : tr("Никого не нашли"))}</div>
           )}
-          {!loading &&
+          {!loading && !searchError &&
             options.map((person, index) => (
               <button key={person.id} type="button" role="option" className="ad-option" aria-selected={false}
                 data-active={index === active || undefined} onPointerMove={() => setActive(index)}

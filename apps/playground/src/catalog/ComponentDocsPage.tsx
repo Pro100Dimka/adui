@@ -1,8 +1,7 @@
-import { tr } from "@ad-voice/ui";
-import { useEffect, useState } from "react";
+import { tr, useTr } from "@ad-voice/ui";
+import { Suspense, lazy, useEffect, useState } from "react";
 import { CopyButton } from "./CopyButton";
 import { DocsExampleBoundary } from "./DocsExampleBoundary";
-import { LiveEditor } from "./LiveEditor";
 import { toModule } from "./liveCode";
 import { HeroBackdrop } from "./HeroBackdrop";
 import { ExampleCodeContext } from "../../../../packages/ui/src/dev/exampleHelpers";
@@ -29,6 +28,7 @@ import {
   type CatalogMeta,
 } from "./componentRegistry";
 import { getCategoryForItem } from "./catalogNavigation";
+const LiveEditor = lazy(() => import("./LiveEditor"));
 
 /** A code listing with its file name and a copy button that confirms itself. */
 function CodeBlock({
@@ -91,6 +91,7 @@ function withImports(code: string, name: string, path: string) {
 }
 
 export function ComponentDocsPage({ item }: { item: CatalogMeta }) {
+  const tr = useTr();
   const category = getCategoryForItem(item);
   const LiveExample = getExample(item.name);
   const [liveCode, setLiveCode] = useState<string>();
@@ -98,12 +99,13 @@ export function ComponentDocsPage({ item }: { item: CatalogMeta }) {
   const [sources, setSources] =
     useState<Awaited<ReturnType<typeof loadSources>>>();
   useEffect(() => {
+    if (!modal || sources) return;
     let alive = true;
     void loadSources().then((module) => alive && setSources(module));
     return () => {
       alive = false;
     };
-  }, []);
+  }, [modal, sources]);
   const loading = "// Загрузка…";
   const sourcePath = sources?.getComponentSourcePath(item.name);
   const parts = getDocumentationParts(item.name);
@@ -257,7 +259,7 @@ export function ComponentDocsPage({ item }: { item: CatalogMeta }) {
             <DocsExampleBoundary name={item.name}>
               {LiveExample ? (
                 <ExampleCodeContext.Provider value={setLiveCode}>
-                  <LiveExample />
+                  <Suspense fallback={null}><LiveExample /></Suspense>
                 </ExampleCodeContext.Provider>
               ) : (
                 <Typography variant="body-sm" tone="muted">
@@ -351,20 +353,21 @@ export function ComponentDocsPage({ item }: { item: CatalogMeta }) {
         </Stack>
       </Card>
 
-      <Dialog
+      {modal && <Dialog
         className={`docs-code-dialog ${modal === "example" ? "docs-code-dialog--live" : ""}`}
-        open={!!modal}
+        open
         onOpenChange={(open) => !open && setModal(undefined)}
         title={`${item.name} — ${modal ? codeViews[modal].title : ""}`}
         cancelLabel={false}
         confirmLabel={tr("Готово")}
       >
         {modal === "example" ? (
-          <LiveEditor name={item.name} original={codeViews.example.code} />
+          sources ? <Suspense fallback={null}><LiveEditor name={item.name} original={codeViews.example.code} /></Suspense>
+            : <Typography variant="body-sm" tone="muted">{tr("Загрузка…")}</Typography>
         ) : (
           modal && <CodeBlock {...codeViews[modal]} />
         )}
-      </Dialog>
+      </Dialog>}
     </Stack>
   );
 }

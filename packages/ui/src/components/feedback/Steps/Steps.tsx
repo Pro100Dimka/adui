@@ -1,9 +1,10 @@
-import { tr } from "../../../core/i18n";
+import { tr, useTr } from "../../../core/i18n";
 import { mark } from "../../../core/base";
 import { Icon } from "../../layout/Icon/Icon";
 import { type StepsProps } from "../shared";
 
 export const Steps = (p: StepsProps) => {
+  const tr = useTr();
   const steps = p.steps ?? [
     tr("Подготовка"),
     tr("Анализ"),

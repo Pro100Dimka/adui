@@ -1,4 +1,4 @@
-import { tr } from "../../../core/i18n";
+import { tr, useTr } from "../../../core/i18n";
 import type { CSSProperties } from "react";
 import { mark, useControllable, type CommonProps } from "../../../core/base";
 import { Button } from "../Button/Button";
@@ -40,6 +40,7 @@ const builtIn: Record<ThemeName, string> = {
 
 /** Choosing a theme: compact swatches for the built-in themes, or a gallery of picture cards. */
 export function ThemePicker<V extends string = ThemeName>(p: ThemePickerProps<V>) {
+  const tr = useTr();
   const first = (p.options?.[0]?.value ?? "ruby") as V;
   const [value, setValue] = useControllable<V>(p.value, p.defaultValue ?? first, p.onValueChange);
 

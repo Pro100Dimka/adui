@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { mark, type CommonProps } from "../../../core/base";
-import { tr } from "../../../core/i18n";
+import { tr, useTr } from "../../../core/i18n";
 import { ColorPicker } from "../../controls/ColorPicker/ColorPicker";
 import { Button } from "../../controls/Button/Button";
 import { FilePicker } from "../../controls/FilePicker/FilePicker";
@@ -384,18 +384,18 @@ export function pickLoaderPalette(pixels: Uint8ClampedArray) {
   return colours;
 }
 
-async function removeImageBackground(src: string) {
+async function removeImageBackground(src: string, translate = tr) {
   const image = await new Promise<HTMLImageElement>((resolve, reject) => {
     const element = new Image();
     element.onload = () => resolve(element);
-    element.onerror = () => reject(new Error(tr("Не удалось прочитать изображение.")));
+    element.onerror = () => reject(new Error(translate("Не удалось прочитать изображение.")));
     element.src = src;
   });
   const canvas = document.createElement("canvas");
   canvas.width = image.naturalWidth;
   canvas.height = image.naturalHeight;
   const context = canvas.getContext("2d", { willReadFrequently: true });
-  if (!context) throw new Error(tr("Обработка изображений недоступна в этом браузере."));
+  if (!context) throw new Error(translate("Обработка изображений недоступна в этом браузере."));
   context.drawImage(image, 0, 0);
   const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
   removeBackgroundPixels(imageData.data, canvas.width, canvas.height);
@@ -434,6 +434,7 @@ ${loaderCss.trim()}
  * previews, set size, speed and colour, then copy the code or download a ready page.
  */
 export function LoaderGenerator({ value, defaultValue, onValueChange, ...p }: LoaderGeneratorProps) {
+  const tr = useTr();
   const [own, setOwn] = useState<LoaderSettings>({
     src: loaderDefaultImage,
     animation: "pulse",
@@ -459,7 +460,7 @@ export function LoaderGenerator({ value, defaultValue, onValueChange, ...p }: Lo
     setError("");
     try {
       const original = await fileToDataUrl(file);
-      const processed = await removeImageBackground(original);
+      const processed = await removeImageBackground(original, tr);
       setUploaded({ original, transparent: processed.src });
       update({ src: removeBackground ? processed.src : original, color: processed.color, palette: processed.palette });
     } catch (cause) {
@@ -507,7 +508,7 @@ export function LoaderGenerator({ value, defaultValue, onValueChange, ...p }: Lo
           <Button key={animation} variant="ghost" type="button" role="radio" aria-checked={animation === settings.animation}
             className="ad-loader-generator-option" onClick={() => update({ animation })}>
             <Loader src={settings.src} animation={animation} size="3.5rem" speed={settings.speed} color={settings.color} palette={settings.palette} />
-            <Typography variant="caption">{loaderAnimationLabel(animation)}</Typography>
+            <Typography variant="caption">{loaderAnimationLabel(animation, tr)}</Typography>
           </Button>
         ))}
       </Stack>

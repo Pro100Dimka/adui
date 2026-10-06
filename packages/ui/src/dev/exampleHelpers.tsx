@@ -1,4 +1,4 @@
-import { tr } from "../core/i18n";
+import { tr, useTr } from "../core/i18n";
 import {
   createContext,
   useContext,
@@ -186,6 +186,7 @@ export function Playground<K extends Record<string, Knob>>({
   /** Short comparison shown under the controls, e.g. all variants side by side. */
   extra?: ReactNode;
 }) {
+  const tr = useTr();
   const [values, setValues] = useState(
     () =>
       Object.fromEntries(

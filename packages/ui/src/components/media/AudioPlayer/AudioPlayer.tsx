@@ -1,4 +1,4 @@
-import { tr } from "../../../core/i18n";
+import { tr, useTr } from "../../../core/i18n";
 import { useEffect, useRef, useState } from "react";
 import { clamp, mark, timeText, useControllable } from "../../../core/base";
 import { useTick } from "../../../core/motion/hooks";
@@ -7,6 +7,7 @@ import { Slider } from "../../controls/Slider/Slider";
 import { Waveform } from "../Waveform/Waveform";
 import type { AudioPlayerProps } from "../shared";
 export const AudioPlayer = (p: AudioPlayerProps) => {
+  const tr = useTr();
   const audio = useRef<HTMLAudioElement | null>(null);
   const [playing, setPlaying] = useState(false),
     [position, setPosition] = useState(0),
@@ -14,10 +15,21 @@ export const AudioPlayer = (p: AudioPlayerProps) => {
   const [volume, setVolume] = useControllable(p.volume, p.defaultVolume ?? 0.7);
   const [fileDuration, setFileDuration] = useState<number>();
   const duration = p.duration ?? fileDuration ?? 51;
+  const start = (media: HTMLAudioElement) => {
+    void media.play().catch(() => {
+      if (audio.current === media) {
+        setPlaying(false);
+        p.onPlayingChange?.(false);
+      }
+    });
+  };
   useEffect(() => {
     if (!p.src) return;
     const media = new Audio(p.src);
     audio.current = media;
+    media.muted = muted;
+    media.volume = clamp(volume, 0, 1);
+    if (playing) start(media);
     const meta = () =>
       Number.isFinite(media.duration) && setFileDuration(media.duration);
     const ended = () => {
@@ -66,7 +78,7 @@ export const AudioPlayer = (p: AudioPlayerProps) => {
     setPlaying(next);
     p.onPlayingChange?.(next);
     if (audio.current) {
-      if (next) void audio.current.play();
+      if (next) start(audio.current);
       else audio.current.pause();
     }
   };

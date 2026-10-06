@@ -1,14 +1,14 @@
 import { useInsertionEffect, useRef, type CSSProperties } from "react";
 import { mark, type CommonProps } from "../../../core/base";
 import { usePauseOffscreen } from "../../../core/motion/hooks";
-import { tr } from "../../../core/i18n";
+import { tr, useTr } from "../../../core/i18n";
 
 export const loaderAnimations = ["spin", "pulse", "breathe", "bounce", "flip", "orbit", "wave", "glow", "fill", "shine", "wobble", "radar", "palette"] as const;
 export type LoaderAnimation = (typeof loaderAnimations)[number];
 
 /** Names of the animations for pickers, in the library's language. */
-export const loaderAnimationLabel = (animation: LoaderAnimation) =>
-  tr(
+export const loaderAnimationLabel = (animation: LoaderAnimation, translate = tr) =>
+  translate(
     ({
       spin: "Вращение",
       pulse: "Пульс",
@@ -111,6 +111,7 @@ export const loaderDefaultImage =
 
 /** A loading spinner made of your own picture, with one of twelve animations. */
 export function Loader({ src = loaderDefaultImage, animation = "spin", size, speed = 1, color, palette, label, style, ...p }: LoaderProps) {
+  const tr = useTr();
   useLoaderStyles();
   const ref = useRef<HTMLSpanElement>(null);
   usePauseOffscreen(ref);

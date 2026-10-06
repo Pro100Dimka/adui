@@ -1,4 +1,4 @@
-import { tr } from "../../../core/i18n";
+import { tr as defaultTr, translate, type Locale } from "../../../core/i18n";
 import { themes, type ThemeName } from "../ThemeProvider/ThemeProvider";
 
 /**
@@ -131,7 +131,8 @@ export function exportTheme(config: ThemeConfig): string {
 const hex = /^#[0-9a-f]{6}$/i;
 
 /** Reads a theme back from JSON; throws an Error with a readable message when it is not one. */
-export function parseTheme(text: string): ThemeConfig {
+export function parseTheme(text: string, locale?: Locale): ThemeConfig {
+  const tr = (value: string, vars?: Record<string, string | number>) => locale ? translate(locale, value, vars) : defaultTr(value, vars);
   let data: unknown;
   try {
     data = JSON.parse(text);

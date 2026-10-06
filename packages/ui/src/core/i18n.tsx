@@ -1,4 +1,4 @@
-import { createContext, useContext, type ReactNode } from "react";
+import { createContext, useCallback, useContext, useMemo, type ReactNode } from "react";
 import { messages as builtIn } from "./messages";
 
 /** Languages the library speaks out of the box; any other code works with your own messages. */
@@ -18,8 +18,12 @@ const fill = (text: string, vars?: Record<string, string | number>) =>
  * `{name}` placeholders are filled from `vars`. Unknown texts come back as they are.
  */
 export function tr(text: string, vars?: Record<string, string | number>): string {
-  const own = extra[current]?.[text];
-  const known = own ?? builtIn[current]?.[text];
+  return translate(current, text, vars);
+}
+
+export function translate(locale: Locale, text: string, vars?: Record<string, string | number>, messages?: Messages): string {
+  const own = messages?.[text] ?? extra[locale]?.[text];
+  const known = own ?? builtIn[locale]?.[text];
   return fill(known ?? text, vars);
 }
 
@@ -37,29 +41,35 @@ export function addMessages(locale: Locale, messages: Messages) {
 }
 
 /** Plural form by Slavic rules (one / few / many); English uses one / many. */
-export function plural(n: number, one: string, few: string, many: string) {
+export function plural(n: number, one: string, few: string, many: string, locale: Locale = current) {
   const mod10 = n % 10,
     mod100 = n % 100;
-  if (current === "en") return n === 1 ? one : many;
+  if (locale === "en") return n === 1 ? one : many;
   if (mod10 === 1 && mod100 !== 11) return one;
   if (mod10 >= 2 && mod10 <= 4 && (mod100 < 12 || mod100 > 14)) return few;
   return many;
 }
 
-const LocaleContext = createContext<Locale>("ru");
+const LocaleContext = createContext<{ locale: Locale; messages?: Messages } | null>(null);
 
 /**
  * Sets the language of every library text inside it. Changing `locale` re-renders the tree
- * under it in the new language; `messages` adds or overrides translations.
+ * under it in the new language; `messages` overrides translations only in this tree.
  */
 export function LocaleProvider({ locale, messages, children }: { locale: Locale; messages?: Messages; children?: ReactNode }) {
-  if (messages) addMessages(locale, messages);
-  // Set while rendering, so everything below reads the new language in this same pass.
-  current = locale;
-  return <LocaleContext.Provider value={locale}>{children}</LocaleContext.Provider>;
+  const value = useMemo(() => ({ locale, messages }), [locale, messages]);
+  return <LocaleContext.Provider value={value}>{children}</LocaleContext.Provider>;
 }
 
 /** The language set by the nearest LocaleProvider. */
 export function useLocale(): Locale {
-  return useContext(LocaleContext);
+  return useContext(LocaleContext)?.locale ?? current;
+}
+
+/** A translator bound to the nearest provider, safe across independent React roots. */
+export function useTr() {
+  const context = useContext(LocaleContext);
+  const locale = context?.locale ?? current;
+  const messages = context?.messages;
+  return useCallback((text: string, vars?: Record<string, string | number>) => translate(locale, text, vars, messages), [locale, messages]);
 }

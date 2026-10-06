@@ -1,4 +1,4 @@
-import { type ComponentType, type ReactNode } from "react";
+import { memo, type ComponentType, type ReactNode } from "react";
 import { Grid, type GridResponsive } from "../../layout/Grid/Grid";
 import { TextField } from "../../controls/TextField/TextField";
 import { NumberField } from "../../controls/NumberField/NumberField";
@@ -75,7 +75,7 @@ export function FormFields<T extends Record<string, unknown>>({
       {fields
         .filter((field) => field.showWhen?.(form.values) ?? true)
         .map((field) => (
-          <Slot
+          <StableSlot
             key={field.name}
             field={field}
             form={form}
@@ -121,3 +121,9 @@ function Slot<T extends Record<string, unknown>>({
     </Grid>
   );
 }
+const StableSlot = memo(Slot, (previous, next) => {
+  if (previous.field !== next.field || previous.registry !== next.registry) return false;
+  const before = previous.form.field(previous.field.name);
+  const after = next.form.field(next.field.name);
+  return Object.is(before.value, after.value) && before.error === after.error && before.touched === after.touched;
+}) as typeof Slot;

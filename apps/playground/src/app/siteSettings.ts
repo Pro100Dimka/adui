@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { defaultThemeConfig, themeProps, type ThemeConfig, type ThemeName } from "@ad-voice/ui";
+import { useCallback, useEffect, useState } from "react";
+import { defaultThemeConfig, parseTheme, themeProps, type ThemeConfig, type ThemeName } from "@ad-voice/ui";
 
 export interface SiteSettings {
   /** The site's theme, edited with the library's ThemeEditor. */
@@ -74,6 +74,7 @@ export function siteAppearanceTokens(appearance: SiteSettings["appearance"]) {
 function migrate(saved: Record<string, unknown>): SiteSettings {
   if (saved.themeConfig) {
     const next = { ...defaultSettings, ...(saved as Partial<SiteSettings>) };
+    next.themeConfig = parseTheme(JSON.stringify(saved.themeConfig));
     if (!(next.font in fonts)) next.font = "default";
     if (!(next.headingFont in headingFonts)) next.headingFont = "default";
     return next;
@@ -110,9 +111,15 @@ export function useSiteSettings() {
     document.documentElement.style.fontSize =
       settings.scale === 1 ? "" : `${settings.scale * 100}%`;
   }, [settings]);
-  const update = (patch: Partial<SiteSettings>) =>
-    setSettings((current) => ({ ...current, ...patch }));
-  return [settings, update, () => setSettings(defaultSettings)] as const;
+  const update = useCallback((patch: Partial<SiteSettings> | ((current: SiteSettings) => Partial<SiteSettings>)) =>
+    setSettings((current) => {
+      const changes = typeof patch === "function" ? patch(current) : patch;
+      return Object.entries(changes).every(([key, value]) => current[key as keyof SiteSettings] === value)
+        ? current
+        : { ...current, ...changes };
+    }), []);
+  const reset = useCallback(() => setSettings(defaultSettings), []);
+  return [settings, update, reset] as const;
 }
 
 /** Everything ThemeProvider needs for the current settings: the theme plus the chosen typeface. */

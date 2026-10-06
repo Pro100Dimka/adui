@@ -1,4 +1,4 @@
-import { tr } from "../../../core/i18n";
+import { tr, useTr } from "../../../core/i18n";
 import { useState } from "react";
 import { useControllable, type CommonProps } from "../../../core/base";
 import { Chip } from "../Chip/Chip";
@@ -36,19 +36,25 @@ export function TagInput({
   max,
   validate,
   icon,
-  placeholder = tr("Добавьте тег и нажмите Enter"),
+  placeholder,
   ...p
 }: TagInputProps) {
+  const tr = useTr();
   const [tags, setTags] = useControllable(controlled, defaultValue, onValueChange);
   const [query, setQuery] = useState("");
   const [refusal, setRefusal] = useState<string>();
   const full = max !== undefined && tags.length >= max;
 
   const add = (raw: string) => {
+    const seen = new Set(tags.map((tag) => tag.toLowerCase()));
     const fresh = raw
       .split(/[,\n;]/)
       .map((tag) => tag.trim())
-      .filter((tag) => tag && !tags.some((t) => t.toLowerCase() === tag.toLowerCase()));
+      .filter((tag) => {
+        if (!tag || seen.has(tag.toLowerCase())) return false;
+        seen.add(tag.toLowerCase());
+        return true;
+      });
     if (!fresh.length) return setQuery("");
     const problem = fresh.map((tag) => validate?.(tag)).find(Boolean);
     if (problem) return setRefusal(problem);
@@ -73,7 +79,7 @@ export function TagInput({
         variant={p.variant}
         labelPlacement={p.labelPlacement}
         startAdornment={icon ? <Icon name={icon} /> : undefined}
-        placeholder={full ? undefined : placeholder}
+        placeholder={full ? undefined : placeholder ?? tr("Добавьте тег и нажмите Enter")}
         query={query}
         onQueryChange={(next) => {
           setRefusal(undefined);

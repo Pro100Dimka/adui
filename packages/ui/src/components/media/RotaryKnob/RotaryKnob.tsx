@@ -1,4 +1,4 @@
-import { tr } from "../../../core/i18n";
+import { tr, useTr } from "../../../core/i18n";
 import {
   canPaint,
   createResizeObserver,
@@ -15,6 +15,7 @@ import { clamp, mark, normalizeSize } from "../../../core/base";
 import { type RotaryKnobProps, type RotaryKnobController } from "../shared";
 
 export const RotaryKnob = (p: RotaryKnobProps) => {
+  const tr = useTr();
   const rootRef = useRef<HTMLDivElement>(null);
   const baseRef = useRef<HTMLCanvasElement>(null);
   const feedbackRef = useRef<HTMLCanvasElement>(null);

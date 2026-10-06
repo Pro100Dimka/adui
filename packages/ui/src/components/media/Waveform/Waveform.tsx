@@ -1,4 +1,4 @@
-import { tr } from "../../../core/i18n";
+import { tr, useTr } from "../../../core/i18n";
 import { useSvgId } from "../../../core/artwork";
 import { useEffect, useMemo, useRef, useState, type PointerEvent } from "react";
 import { clamp, mark, timeText, useControllable } from "../../../core/base";
@@ -95,6 +95,7 @@ export function Waveform({
   disabled = false,
   ...p
 }: WaveformProps) {
+  const tr = useTr();
   const id = useSvgId();
   const surface = useRef<HTMLDivElement>(null);
   const [hover, setHover] = useState<number | null>(null);

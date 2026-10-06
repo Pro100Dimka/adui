@@ -1,7 +1,8 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { readFileSync } from "node:fs";
-import { createElement } from "react";
+import { createElement, useState } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
+import { act, create } from "react-test-renderer";
 import { copyText } from "../src/core/base";
 import { attachBorder } from "../src/core/motion-engine.js";
 import { Slider } from "../src/components/controls/Slider/Slider";
@@ -11,11 +12,109 @@ import { RotaryKnob } from "../src/components/media/RotaryKnob/RotaryKnob";
 import { DataTable, FilterEditor, dataTableCsv } from "../src/components/feedback/DataTable/DataTable";
 import { Form } from "../src/components/forms/Form/Form";
 import { FormFields, defaultFieldRegistry } from "../src/components/forms/FormFields/FormFields";
-import { defaultSettings, fonts, siteThemeProps } from "../../../apps/playground/src/app/siteSettings";
-import { catalog, componentCount, getCatalogItemBySlug, getDocumentationParts } from "../../../apps/playground/src/catalog/componentRegistry";
-import { toModule } from "../../../apps/playground/src/catalog/liveCode";
+import { defaultSettings, fonts, siteThemeProps, useSiteSettings } from "../../../apps/playground/src/app/siteSettings";
+import { catalog, componentCount, getCatalogItemBySlug, getDocumentationParts, getExample } from "../../../apps/playground/src/catalog/componentRegistry";
+import { compile, toModule } from "../../../apps/playground/src/catalog/liveCode";
+import { LocaleProvider, getLocale, setLocale } from "../src/core/i18n";
+import { Toast } from "../src/components/feedback/Toast/Toast";
+import { Dialog } from "../src/components/feedback/Dialog/Dialog";
+
+describe("closed dialog work", () => {
+  it("does not mount a dialog or its expensive children while closed", () => {
+    expect(renderToStaticMarkup(createElement(Dialog, { open: false }, createElement("span", null, "Heavy editor")))).toBe("");
+  });
+});
+
+describe("locale isolation", () => {
+  it("preserves the imperative locale for components without a provider", () => {
+    setLocale("en");
+    expect(renderToStaticMarkup(createElement(Toast, { duration: 0 }))).toContain("Settings saved");
+    setLocale("ru");
+  });
+
+  it("does not change the imperative default locale during provider rendering", () => {
+    vi.stubGlobal("IS_REACT_ACT_ENVIRONMENT", true);
+    setLocale("ru");
+    let tree!: ReturnType<typeof create>;
+    act(() => { tree = create(createElement(LocaleProvider, { locale: "en" }, createElement(Toast, { duration: 0 }))); });
+    expect(getLocale()).toBe("ru");
+    act(() => tree.unmount());
+  });
+
+  it("keeps per-provider custom messages out of other roots", () => {
+    vi.stubGlobal("IS_REACT_ACT_ENVIRONMENT", true);
+    let first!: ReturnType<typeof create>;
+    let second!: ReturnType<typeof create>;
+    let refresh!: () => void;
+    function Probe() {
+      const [version, setVersion] = useState(0);
+      refresh = () => setVersion((value) => value + 1);
+      return createElement(Toast, { duration: 0, className: String(version) });
+    }
+    act(() => { first = create(createElement(LocaleProvider, { locale: "en", messages: { "Настройки сохранены": "Saved A" } }, createElement(Probe))); });
+    act(() => { second = create(createElement(LocaleProvider, { locale: "en", messages: { "Настройки сохранены": "Saved B" } }, createElement(Toast, { duration: 0 }))); });
+    act(() => refresh());
+    expect(first.root.findAllByType("span").at(-1)?.children).toEqual(["Saved A"]);
+    act(() => { first.unmount(); second.unmount(); });
+  });
+
+  it("keeps translated components bound to their own provider after another root renders", () => {
+    vi.stubGlobal("IS_REACT_ACT_ENVIRONMENT", true);
+    setLocale("ru");
+    let english!: ReturnType<typeof create>;
+    let ukrainian!: ReturnType<typeof create>;
+    let refresh!: () => void;
+    function Probe() {
+      const [version, setVersion] = useState(0);
+      refresh = () => setVersion((value) => value + 1);
+      return createElement(Toast, { duration: 0, className: String(version) });
+    }
+    act(() => { english = create(createElement(LocaleProvider, { locale: "en" }, createElement(Probe))); });
+    act(() => { ukrainian = create(createElement(LocaleProvider, { locale: "uk" }, createElement(Toast, { duration: 0 }))); });
+    act(() => refresh());
+    expect(english.root.findAllByType("span").at(-1)?.children).toEqual(["Settings saved"]);
+    act(() => { english.unmount(); ukrainian.unmount(); });
+    setLocale("ru");
+  });
+});
+
+describe("release checks", () => {
+  it("runs the package tests before creating a release archive", () => {
+    const workflow = readFileSync("../../.github/workflows/release.yml", "utf8");
+    expect(workflow).toMatch(/npm test --workspace @ad-voice\/ui/);
+    expect(workflow.indexOf("npm test --workspace @ad-voice/ui")).toBeLessThan(workflow.indexOf("npm run package"));
+  });
+  it("installs the packed release in a clean consumer before publishing", () => {
+    const workflow = readFileSync("../../.github/workflows/release.yml", "utf8");
+    expect(workflow).toContain("Smoke-test packed consumer");
+    expect(workflow).toContain("npm install ../release/ad-voice-ui-${VERSION}.tgz");
+    expect(workflow.indexOf("Smoke-test packed consumer")).toBeGreaterThan(workflow.indexOf("npm run package"));
+  });
+});
 
 describe("documentation groups", () => {
+  it("transforms edited code without executing it in the documentation page", async () => {
+    const result = await compile('export default function Example() { return null; }');
+    expect(result).toEqual(expect.any(String));
+    expect(result).toContain("exports.default");
+  });
+
+  it("loads example components on demand instead of placing every example in the entry chunk", () => {
+    expect(getExample("Button")).toHaveProperty("$$typeof", Symbol.for("react.lazy"));
+  });
+  it("does not load the executable code editor before its dialog opens", () => {
+    const page = readFileSync("../../apps/playground/src/catalog/ComponentDocsPage.tsx", "utf8");
+    expect(page).toContain('lazy(() => import("./LiveEditor"))');
+  });
+  it("does not fetch modal source code before a documentation dialog opens", () => {
+    const page = readFileSync("../../apps/playground/src/catalog/ComponentDocsPage.tsx", "utf8");
+    expect(page).toMatch(/useEffect\(\(\) => \{\s*if \(!modal \|\| sources\) return;/);
+  });
+  it("waits for a real example before mounting the live editor", () => {
+    const page = readFileSync("../../apps/playground/src/catalog/ComponentDocsPage.tsx", "utf8");
+    expect(page).toMatch(/modal === "example" \? \(\s*sources \?/);
+  });
+
   it("puts compositional parts on one discoverable page while keeping old links working", () => {
     const groups = [
       ["tab", "Tab", "Tabs"], ["tab-panel", "TabPanel", "Tabs"],
@@ -77,6 +176,33 @@ describe("documentation layout stability", () => {
       expect(keyframes).not.toContain("transform:");
     expect(css).toMatch(/\.docs-main\s*\{[^}]*scrollbar-gutter:\s*stable/s);
     expect(page).not.toContain('behavior: "smooth"');
+  });
+});
+
+describe("site settings updates", () => {
+  it("ignores a patch that does not change any setting", () => {
+    vi.stubGlobal("IS_REACT_ACT_ENVIRONMENT", true);
+    vi.stubGlobal("localStorage", { getItem: () => null, setItem: () => {} });
+    vi.stubGlobal("document", { documentElement: { style: { fontSize: "" } } });
+    let renders = 0;
+    let update!: ReturnType<typeof useSiteSettings>[1];
+    const Probe = () => {
+      const [, change] = useSiteSettings();
+      update = change;
+      renders++;
+      return null;
+    };
+    let tree!: ReturnType<typeof create>;
+    act(() => { tree = create(createElement(Probe)); });
+    const initial = renders;
+
+    act(() => update({ font: defaultSettings.font }));
+    expect(renders).toBe(initial);
+    act(() => update({ font: "melodix" }));
+    expect(renders).toBe(initial + 1);
+
+    act(() => tree.unmount());
+    vi.unstubAllGlobals();
   });
 });
 

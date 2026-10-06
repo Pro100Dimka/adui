@@ -1,4 +1,4 @@
-import { tr } from "../../../core/i18n";
+import { tr, useTr } from "../../../core/i18n";
 import { useId } from "react";
 import { clamp, mark } from "../../../core/base";
 import { type ProgressBarProps } from "../shared";
@@ -13,6 +13,7 @@ const wavePath = WAVE.map((level, i) => {
 }).join("");
 
 export const ProgressBar = (p: ProgressBarProps) => {
+  const tr = useTr();
   const max = Math.max(0.0001, p.max ?? 100);
   const value = clamp(p.value ?? 56, 0, max);
   const share = p.indeterminate ? 35 : (value / max) * 100;

@@ -1,4 +1,4 @@
-import { tr } from "../../../core/i18n";
+import { useTr } from "../../../core/i18n";
 import { useEffect, useRef } from "react";
 import { mark } from "../../../core/base";
 import { Icon } from "../../layout/Icon/Icon";
@@ -10,6 +10,7 @@ export const Toast = ({
   onClose,
   ...p
 }: ToastProps) => {
+  const tr = useTr();
   const close = useRef(onClose);
   close.current = onClose;
   useEffect(() => {

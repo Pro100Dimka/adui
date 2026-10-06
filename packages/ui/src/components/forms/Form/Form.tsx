@@ -38,10 +38,15 @@ export interface UseFormOptions<T extends Record<string, unknown>> {
 const getPath = (value: any, path: string) =>
     path.split(".").reduce((current, key) => current?.[key], value),
   setPath = (value: any, path: string, next: unknown) => {
-    const root = structuredClone(value),
-      keys = path.split(".");
+    const keys = path.split(".");
+    const copy = (item: any) => Array.isArray(item) ? [...item] : { ...item };
+    const root = copy(value);
     let cursor = root;
-    keys.slice(0, -1).forEach((key) => (cursor = cursor[key] ??= {}));
+    let source = value;
+    for (const key of keys.slice(0, -1)) {
+      source = source?.[key] ?? {};
+      cursor = cursor[key] = copy(source);
+    }
     cursor[keys.at(-1)!] = next;
     return root;
   };
@@ -55,10 +60,15 @@ export function useForm<T extends Record<string, unknown>>(
     // The latest values and options: several changes in one event all land, submit sees them at
     // once, and the methods below keep one identity for the life of the form (safe in effect deps).
     latest = useRef(values),
+    validationId = useRef(0),
+    submittingRef = useRef(false),
     settings = useRef(options),
     initialKey = JSON.stringify(options.initialValues);
+  const previousInitialKey = useRef(initialKey);
   settings.current = options;
   useEffect(() => {
+    if (previousInitialKey.current === initialKey) return;
+    previousInitialKey.current = initialKey;
     if (settings.current.reinitialize !== false) {
       latest.current = settings.current.initialValues;
       setValues(settings.current.initialValues);
@@ -68,11 +78,13 @@ export function useForm<T extends Record<string, unknown>>(
   }, [initialKey]);
   const methods = useMemo(() => {
     const validate = async (next: T) => {
+      const id = ++validationId.current;
       const result = (await settings.current.validate?.(next)) ?? {};
-      setErrors(result);
+      if (id === validationId.current && next === latest.current) setErrors(result);
       return result;
     };
     const setValue = (path: string, value: unknown) => {
+      if (Object.is(getPath(latest.current, path), value)) return;
       const next = setPath(latest.current, path, value);
       latest.current = next;
       setValues(next);
@@ -83,6 +95,7 @@ export function useForm<T extends Record<string, unknown>>(
       if (state && settings.current.validateOnBlur !== false) void validate(latest.current);
     };
     const reset = (next = settings.current.initialValues) => {
+      validationId.current += 1;
       latest.current = next;
       setValues(next);
       setErrors({});
@@ -100,13 +113,17 @@ export function useForm<T extends Record<string, unknown>>(
       setTouched: methods.setTouched,
       reset: methods.reset,
       submit: async () => {
-        const result = await methods.validate(latest.current);
-        if (Object.values(result).some(Boolean)) return false;
+        if (submittingRef.current) return false;
+        submittingRef.current = true;
         setSubmitting(true);
         try {
+          const next = latest.current;
+          const result = await methods.validate(next);
+          if (next !== latest.current || Object.values(result).some(Boolean)) return false;
           await settings.current.onSubmit?.(latest.current, api);
           return true;
         } finally {
+          submittingRef.current = false;
           setSubmitting(false);
         }
       },

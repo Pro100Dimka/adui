@@ -1,0 +1,1 @@
+import{j as r,P as i,U as s,a as l}from"./index-CkfvrOzv.js";function n(){return r.jsx(i,{stretch:!0,knobs:{lines:{options:["1","2","3","4"],value:"3"},circle:{value:!0}},code:e=>l("Shimmer",{lines:e.lines==="3"?void 0:Number(e.lines),circle:e.circle}),children:e=>r.jsx(s.Shimmer,{lines:Number(e.lines),circle:e.circle})})}export{n as default};

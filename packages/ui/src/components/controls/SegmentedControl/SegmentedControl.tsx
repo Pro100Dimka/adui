@@ -1,11 +1,11 @@
-import { tr } from "../../../core/i18n";
+import { tr, useTr } from "../../../core/i18n";
 import { mark } from "../../../core/base";
 import { type TabItem, type TabsProps } from "../shared";
 import { Tabs } from "../Tabs/Tabs";
 
 export const SegmentedControl = <V extends string = string>(
   p: TabsProps<V>,
-) => (
+) => { const tr = useTr(); return ((
   <div {...mark("SegmentedControl", p)}>
     <Tabs<V>
       {...p}
@@ -18,4 +18,4 @@ export const SegmentedControl = <V extends string = string>(
       }
     />
   </div>
-);
+)); };

@@ -1,4 +1,4 @@
-import { tr } from "../../../core/i18n";
+import { tr, useTr } from "../../../core/i18n";
 import { useEffect, useRef, useState, type PointerEvent } from "react";
 import { mark, useControllable, type CommonProps } from "../../../core/base";
 import { Popover } from "../../feedback/Popover/Popover";
@@ -24,6 +24,7 @@ const defaultSwatches = ["#ff244c", "#ff7c97", "#e0a43a", "#10c99a", "#38bdf8", 
 
 /** Picks a colour on a saturation/brightness square and a hue strip, by hex code or from swatches. */
 function ColorPanel({ value, onChange, swatches }: { value: string; onChange: (hex: string) => void; swatches: string[] }) {
+  const tr = useTr();
   // HSV is kept while dragging, so a grey or black point does not lose the chosen hue.
   const [hsv, setHsv] = useState<Hsv>(() => hexToHsv(value));
   const [text, setText] = useState(value);
@@ -124,6 +125,7 @@ function ColorPanel({ value, onChange, swatches }: { value: string; onChange: (h
 
 /** A colour field: its swatch and code; a click opens the picker panel. With `inline` the panel stands alone. */
 export function ColorPicker({ value: controlled, defaultValue = "#ff244c", onValueChange, swatches = defaultSwatches, inline, ...p }: ColorPickerProps) {
+  const tr = useTr();
   const [value, setValue] = useControllable(controlled, defaultValue, onValueChange);
   const [open, setOpen] = useState(false);
   const box = useRef<HTMLDivElement>(null);

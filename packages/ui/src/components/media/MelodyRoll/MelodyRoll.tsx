@@ -1,4 +1,4 @@
-import { tr } from "../../../core/i18n";
+import { tr, useTr } from "../../../core/i18n";
 import { useRef, type CSSProperties, type WheelEvent } from "react";
 import { clamp, mark, useControllable, type CommonProps } from "../../../core/base";
 import { PianoKeyboard } from "../PianoKeyboard/PianoKeyboard";
@@ -84,6 +84,7 @@ export const MelodyRoll = ({
   label,
   ...p
 }: MelodyRollProps) => {
+  const tr = useTr();
   const [span, setSpan] = useControllable(windowProp, defaultWindow, onWindowChange);
   const pitches = notes.map((note) => note.pitch);
   const low = minPitch ?? Math.min(...pitches, 60) - 2;

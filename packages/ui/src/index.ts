@@ -193,6 +193,6 @@ export type {
   FieldRegistry,
 } from "./components/forms/FormFields/FormFields";
 
-export { LocaleProvider, addMessages, getLocale, plural, setLocale, tr, useLocale } from "./core/i18n";
+export { LocaleProvider, addMessages, getLocale, plural, setLocale, tr, translate, useLocale, useTr } from "./core/i18n";
 export type { Locale, Messages } from "./core/i18n";
 export { messages as builtInMessages } from "./core/messages";

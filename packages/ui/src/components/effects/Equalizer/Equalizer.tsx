@@ -1,4 +1,4 @@
-import { tr } from "../../../core/i18n";
+import { tr, useTr } from "../../../core/i18n";
 import { useRef } from "react";
 import { usePauseOffscreen } from "../../../core/motion/hooks";
 import { mark, type CommonProps } from "../../../core/base";
@@ -24,6 +24,7 @@ export function Equalizer({
   label,
   ...p
 }: EqualizerProps) {
+  const tr = useTr();
   const pauseRef = useRef<HTMLDivElement & HTMLSpanElement>(null);
   usePauseOffscreen(pauseRef);
   return (

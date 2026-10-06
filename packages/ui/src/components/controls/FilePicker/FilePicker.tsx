@@ -1,4 +1,4 @@
-import { tr } from "../../../core/i18n";
+import { tr, useTr } from "../../../core/i18n";
 import { useEffect, useRef, useState } from "react";
 import { mark } from "../../../core/base";
 import { Button } from "../Button/Button";
@@ -6,6 +6,7 @@ import { Icon } from "../../layout/Icon/Icon";
 import { Avatar } from "../../layout/Avatar/Avatar";
 import type { FilePickerProps } from "../shared";
 export const FilePicker = (p: FilePickerProps) => {
+  const tr = useTr();
   const input = useRef<HTMLInputElement>(null),
     [names, setNames] = useState(""),
     [preview, setPreview] = useState<string>(),
@@ -14,10 +15,18 @@ export const FilePicker = (p: FilePickerProps) => {
   useEffect(() => setPreview(undefined), [p.src]);
   const choose = () => (p.onPick ? p.onPick() : input.current?.click());
   const take = (files: File[]) => {
-    const pickedFiles = p.variant === "avatar"
-      ? files.filter((file) => file.type.startsWith("image/")).slice(0, 1)
-      : files;
-    if (!pickedFiles.length && p.variant === "avatar") return;
+    if (p.disabled) return;
+    const accepted = (p.accept ?? (p.variant === "avatar" ? "image/*" : ""))
+      .split(",").map((type) => type.trim().toLowerCase()).filter(Boolean);
+    const pickedFiles = files.filter((file) =>
+      (p.variant !== "avatar" || file.type.startsWith("image/")) &&
+      (accepted.length === 0 || accepted.some((type) =>
+        type.startsWith(".") ? file.name.toLowerCase().endsWith(type) :
+          type.endsWith("/*") ? file.type.toLowerCase().startsWith(type.slice(0, -1)) :
+            file.type.toLowerCase() === type,
+      )),
+    ).slice(0, p.variant === "avatar" ? 1 : undefined);
+    if (!pickedFiles.length) return;
     setNames(pickedFiles.map((file) => file.name).join(", "));
     if (p.variant === "avatar") setPreview(URL.createObjectURL(pickedFiles[0]));
     p.onFiles?.(pickedFiles);
@@ -61,7 +70,7 @@ export const FilePicker = (p: FilePickerProps) => {
         onClick={choose}
         onDragOver={(e) => {
           e.preventDefault();
-          setOver(true);
+          if (!p.disabled) setOver(true);
         }}
         onDragLeave={() => setOver(false)}
         onDrop={(e) => {

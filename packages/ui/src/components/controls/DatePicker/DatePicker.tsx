@@ -1,4 +1,4 @@
-import { getLocale, tr } from "../../../core/i18n";
+import { useLocale, useTr } from "../../../core/i18n";
 import { useMemo, useRef, useState } from "react";
 import { mark, useControllable, type CommonProps } from "../../../core/base";
 import { Popover } from "../../feedback/Popover/Popover";
@@ -26,23 +26,29 @@ export interface DatePickerProps extends CommonProps {
 }
 
 const iso = (date: Date) =>
-  `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
+  `${String(date.getFullYear()).padStart(4, "0")}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
+const calendarDate = (year: number, month: number, day: number) => {
+  const date = new Date(0);
+  date.setFullYear(year, month - 1, day);
+  return date.getFullYear() === year && date.getMonth() + 1 === month && date.getDate() === day ? date : null;
+};
 const parse = (value?: string) => {
   const match = value && /^(\d{4})-(\d{2})-(\d{2})$/.exec(value);
-  return match ? new Date(Number(match[1]), Number(match[2]) - 1, Number(match[3])) : null;
+  return match ? calendarDate(Number(match[1]), Number(match[2]), Number(match[3])) : null;
 };
 /** Typed "dd.mm.yyyy" (or with / and -) back to a date. */
 const parseTyped = (text: string) => {
   const match = /^(\d{1,2})[./-](\d{1,2})[./-](\d{4})$/.exec(text.trim());
   if (!match) return null;
-  const date = new Date(Number(match[3]), Number(match[2]) - 1, Number(match[1]));
-  return date.getDate() === Number(match[1]) ? date : null;
+  return calendarDate(Number(match[3]), Number(match[2]), Number(match[1]));
 };
 
 /** A date field with a month calendar: arrows through months, today marked, out-of-range days off. */
-const intlLocale = () => ({ ru: "ru-RU", en: "en-GB", uk: "uk-UA" } as Record<string, string>)[getLocale()] ?? getLocale();
+const intlLocale = (code: string) => ({ ru: "ru-RU", en: "en-GB", uk: "uk-UA" } as Record<string, string>)[code] ?? code;
 
-export function DatePicker({ value: controlled, defaultValue = "", onValueChange, min, max, locale = intlLocale(), placeholder = tr("дд.мм.гггг"), ...p }: DatePickerProps) {
+export function DatePicker({ value: controlled, defaultValue = "", onValueChange, min, max, locale: requestedLocale, placeholder, ...p }: DatePickerProps) {
+  const tr = useTr();
+  const locale = requestedLocale ?? intlLocale(useLocale());
   const [value, setValue] = useControllable(controlled, defaultValue, onValueChange);
   const selected = parse(value);
   const [open, setOpen] = useState(false);
@@ -78,7 +84,7 @@ export function DatePicker({ value: controlled, defaultValue = "", onValueChange
             onClick={() => { setMonth(selected ?? new Date()); setOpen((v) => !v); }} />}>
           <input
             value={text ?? (selected ? format.format(selected) : "")}
-            placeholder={placeholder}
+            placeholder={placeholder ?? tr("дд.мм.гггг")}
             disabled={p.disabled}
             aria-labelledby={ids.aria["aria-labelledby"]}
             aria-describedby={ids.aria["aria-describedby"]}

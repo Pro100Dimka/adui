@@ -1,4 +1,4 @@
-import { tr } from "@ad-voice/ui";
+import { tr, useTr } from "@ad-voice/ui";
 import { useEffect, useState } from "react";
 import {
   Badge,
@@ -37,6 +37,7 @@ function ItemLink({
 }
 
 function OverviewLink({ className }: { className: string }) {
+  const tr = useTr();
   return (
     <Link
       className={className}
@@ -51,6 +52,7 @@ function OverviewLink({ className }: { className: string }) {
 }
 
 export function CatalogSidebar({ activeItem }: { activeItem?: CatalogMeta }) {
+  const tr = useTr();
   const activeCategory = activeItem && getCategoryForItem(activeItem);
   const [query, setQuery] = useState("");
   const [openId, setOpenId] = useState(activeCategory?.id ?? "fields");

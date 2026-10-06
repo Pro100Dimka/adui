@@ -1,4 +1,4 @@
-import { tr } from "../../../core/i18n";
+import { tr, useTr } from "../../../core/i18n";
 import { Fragment, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { mark, useControllable } from "../../../core/base";
 import { Button } from "../../controls/Button/Button";
@@ -47,13 +47,13 @@ const isActive = (filter?: DataTableFilter) =>
   (filter.kind === "text" ? !!filter.text : filter.kind === "values" ? true : filter.min !== undefined || filter.max !== undefined);
 
 /** Short description of an active filter for its chip. */
-const describe = (filter: DataTableFilter) =>
+const describe = (filter: DataTableFilter, translate = tr) =>
   filter.kind === "text"
     ? `«${filter.text}»`
     : filter.kind === "values"
       ? filter.values.length <= 2
         ? filter.values.join(", ")
-        : tr("{count} знач.", { count: filter.values.length })
+        : translate("{count} знач.", { count: filter.values.length })
       : `${filter.min ?? "…"} – ${filter.max ?? "…"}`;
 
 /** The filter editor in a column header's popover. */
@@ -68,6 +68,7 @@ export function FilterEditor({
   filter?: DataTableFilter;
   onChange: (filter: DataTableFilter | undefined) => void;
 }) {
+  const tr = useTr();
   const [search, setSearch] = useState("");
   if (kind === "text")
     return (
@@ -143,6 +144,7 @@ function ColumnFilter({
   filter?: DataTableFilter;
   onChange: (filter: DataTableFilter | undefined) => void;
 }) {
+  const tr = useTr();
   const [open, setOpen] = useState(false);
   const anchor = useRef<HTMLButtonElement>(null);
   const title = typeof column.title === "string" ? column.title : column.key;
@@ -193,10 +195,10 @@ export const dataTableCsv = <T extends DataTableRow>(columns: DataTableColumn<T>
  * rows still works.
  */
 export function DataTable<T extends DataTableRow = DataTableRow>({
-  columns = [tr("Дата"), tr("Событие"), tr("Статус")],
+  columns: providedColumns,
   rows = [] as unknown as T[],
   caption,
-  rowKey = (_, index) => String(index),
+  rowKey,
   sort: controlledSort,
   defaultSort = null,
   onSortChange,
@@ -220,10 +222,13 @@ export function DataTable<T extends DataTableRow = DataTableRow>({
   dense = false,
   striped = false,
   loading = false,
-  empty = tr("Нет данных"),
+  empty: providedEmpty,
   onRowClick,
   ...p
 }: DataTableProps<T>) {
+  const tr = useTr();
+  const columns = providedColumns ?? [tr("Дата"), tr("Событие"), tr("Статус")];
+  const empty = providedEmpty ?? tr("Нет данных");
   const cols = useMemo(
     () =>
       columns.map((column, index) =>
@@ -243,6 +248,22 @@ export function DataTable<T extends DataTableRow = DataTableRow>({
     defaultSelected,
     onSelectionChange,
   );
+  const generatedKeys = useRef(new WeakMap<object, string>());
+  const nextGeneratedKey = useRef(0);
+  const identify = (row: T, index: number) => {
+    if (rowKey) return rowKey(row, index);
+    const id = !Array.isArray(row) && row && typeof row === "object" && "id" in row ? row.id : undefined;
+    if (typeof id === "string" || typeof id === "number") return String(id);
+    if (row && typeof row === "object") {
+      let key = generatedKeys.current.get(row);
+      if (!key) {
+        key = `\u0000row:${++nextGeneratedKey.current}`;
+        generatedKeys.current.set(row, key);
+      }
+      return key;
+    }
+    return `\u0000index:${index}`;
+  };
   const [query, setQuery] = useState("");
   const [hiddenColumns, setHiddenColumns] = useState<string[]>([]);
   const [columnWidths, setColumnWidths] = useState<Record<string, number>>({});
@@ -271,7 +292,7 @@ export function DataTable<T extends DataTableRow = DataTableRow>({
   const keyed = rows.map((row, index) => ({
     row,
     index,
-    key: rowKey(row, index),
+    key: identify(row, index),
   }));
   const activeFilters = cols.filter((column) => isActive(filters[column.key]));
   const found = keyed.filter(
@@ -299,11 +320,15 @@ export function DataTable<T extends DataTableRow = DataTableRow>({
   // Grouping keeps the sort inside each group; groups follow in the order of their values.
   const groupColumn = groupBy ? cols.find((column) => column.key === groupBy) : undefined;
   const groupOf = (row: T) => (groupColumn ? String(cellValue(groupColumn as AnyColumn, row)) : "");
+  const grouped = new Map<string, typeof sorted>();
+  if (groupColumn) for (const item of sorted) {
+    const name = groupOf(item.row);
+    if (!grouped.has(name)) grouped.set(name, []);
+    grouped.get(name)!.push(item);
+  }
   const groups = groupColumn
-    ? distinct(groupColumn as AnyColumn, sorted.map(({ row }) => row)).map((name) => ({
-        name,
-        items: sorted.filter(({ row }) => groupOf(row) === name),
-      }))
+    ? [...grouped].sort(([a], [b]) => a.localeCompare(b, undefined, { numeric: true }))
+      .map(([name, items]) => ({ name, items }))
     : [];
   const ordered = groupColumn ? groups.flatMap((group) => (collapsed.has(group.name) ? [] : group.items)) : sorted;
   const pages = perPage ? Math.max(1, Math.ceil(ordered.length / perPage)) : 1;
@@ -311,6 +336,12 @@ export function DataTable<T extends DataTableRow = DataTableRow>({
   const visible = perPage
     ? ordered.slice(current * perPage, (current + 1) * perPage)
     : ordered;
+  const visibleGroups = new Map<string, typeof visible>();
+  if (groupColumn) for (const item of visible) {
+    const name = groupOf(item.row);
+    if (!visibleGroups.has(name)) visibleGroups.set(name, []);
+    visibleGroups.get(name)!.push(item);
+  }
   const sizes = [...new Set([pageSize, ...(pageSizeOptions ?? [10, 25, 50])]
     .filter((size): size is number => typeof size === "number" && Number.isInteger(size) && size > 0))].sort((a, b) => a - b);
   const viewChanged = !!(query || sort || groupBy || activeFilters.length || hiddenColumns.length || Object.keys(columnWidths).length || collapsed.size || perPage !== pageSize);
@@ -400,7 +431,7 @@ export function DataTable<T extends DataTableRow = DataTableRow>({
   ) : (
     (groupColumn
       ? groups.flatMap((group) => {
-          const inPage = visible.filter((item) => groupOf(item.row) === group.name);
+          const inPage = visibleGroups.get(group.name) ?? [];
           if (collapsed.has(group.name)) return current === 0 ? [{ header: group, items: [] }] : [];
           return inPage.length ? [{ header: group, items: inPage }] : [];
         })
@@ -520,7 +551,7 @@ export function DataTable<T extends DataTableRow = DataTableRow>({
         <div className="ad-data-table-chips">
           {activeFilters.map((column) => (
             <span key={column.key} className="ad-data-table-chip">
-              <strong>{column.title}</strong> {describe(filters[column.key]!)}
+              <strong>{column.title}</strong> {describe(filters[column.key]!, tr)}
               <button type="button" aria-label={tr("Убрать фильтр")} onClick={() => setFilter(column.key, undefined)}>
                 <Icon name="close" />
               </button>

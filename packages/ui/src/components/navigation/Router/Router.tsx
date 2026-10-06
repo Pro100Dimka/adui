@@ -7,7 +7,7 @@ import {
   type ReactNode,
 } from "react";
 import { flushSync } from "react-dom";
-import { useMotion } from "../../../core/providers/context";
+import { motionEnabled } from "../../../core/providers/context";
 export interface RouteAccessContext {
   pathname: string;
   params: Record<string, string>;
@@ -42,8 +42,8 @@ const Context = createContext<RouterValue | null>(null),
   current = (m: "hash" | "history") =>
     clean(m === "hash" ? location.hash.slice(1) || "/" : location.pathname);
 /** With motion on, the page change morphs through a view transition where the browser has one. */
-const morph = (motion: boolean, update: () => void) =>
-  motion && "startViewTransition" in document
+const morph = (update: () => void) =>
+  motionEnabled() && "startViewTransition" in document
     ? void document.startViewTransition(() => flushSync(update))
     : update();
 function matchPath(pattern: string, pathname: string) {
@@ -53,12 +53,15 @@ function matchPath(pattern: string, pathname: string) {
   for (let i = 0, j = 0; i < p.length; i++, j++) {
     const token = p[i];
     if (token === "*") {
-      params["*"] = decodeURIComponent(v.slice(j).join("/"));
+      try { params["*"] = decodeURIComponent(v.slice(j).join("/")); }
+      catch { return null; }
       return params;
     }
     if (j >= v.length) return null;
-    if (token.startsWith(":"))
-      params[token.slice(1)] = decodeURIComponent(v[j]);
+    if (token.startsWith(":")) {
+      try { params[token.slice(1)] = decodeURIComponent(v[j]); }
+      catch { return null; }
+    }
     else if (token !== v[j]) return null;
   }
   return p.at(-1) === "*" || p.length === v.length ? params : null;
@@ -80,13 +83,12 @@ export function Router({
   mode = "hash",
 }: RouterProps) {
   const [pathname, setPathname] = useState(() => current(mode));
-  const motion = useMotion();
   useEffect(() => {
     const event = mode === "hash" ? "hashchange" : "popstate",
-      sync = () => morph(motion, () => setPathname(current(mode)));
+      sync = () => morph(() => setPathname(current(mode)));
     window.addEventListener(event, sync);
     return () => window.removeEventListener(event, sync);
-  }, [mode, motion]);
+  }, [mode]);
   const match = useMemo(() => matchRoute(routes, pathname), [routes, pathname]);
   const navigate = (to: string, replace = false) => {
     const path = clean(to);
@@ -98,7 +100,7 @@ export function Router({
       } else location.hash = path;
     } else {
       history[replace ? "replaceState" : "pushState"](null, "", path);
-      morph(motion, () => setPathname(path));
+      morph(() => setPathname(path));
     }
   };
   useEffect(() => {

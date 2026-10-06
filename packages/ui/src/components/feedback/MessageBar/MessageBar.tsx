@@ -1,11 +1,11 @@
-import { tr } from "../../../core/i18n";
+import { tr, useTr } from "../../../core/i18n";
 import { mark } from "../../../core/base";
 import type { MessageBarProps } from "../shared";
 import { Icon } from "../../layout/Icon/Icon";
 
 const icons = { success: "check", error: "warning", warning: "warning" };
 
-export const MessageBar = ({ action, ...p }: MessageBarProps) => (
+export const MessageBar = ({ action, ...p }: MessageBarProps) => { const tr = useTr(); return ((
   <div
     {...mark("MessageBar", { ...p, tone: p.tone ?? "warning" })}
     role={p.tone === "error" ? "alert" : "status"}
@@ -18,4 +18,4 @@ export const MessageBar = ({ action, ...p }: MessageBarProps) => (
     </span>
     {action && <span className="ad-message-bar-action">{action}</span>}
   </div>
-);
+)); };

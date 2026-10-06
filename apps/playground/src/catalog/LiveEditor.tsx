@@ -1,10 +1,11 @@
-import { tr } from "@ad-voice/ui";
-import { useEffect, useState, type ComponentType } from "react";
+import { tr, useLocale, useTr } from "@ad-voice/ui";
+import { useEffect, useRef, useState } from "react";
 import { Badge, Button, MessageBar, Typography } from "@ad-voice/ui";
 import { CopyButton } from "./CopyButton";
-import { DocsExampleBoundary } from "./DocsExampleBoundary";
 import { CodeEditor } from "./CodeEditor";
 import { compile } from "./liveCode";
+import sandboxRuntimeUrl from "./sandboxRuntime.tsx?worker&url";
+const previewRuntimeUrl = import.meta.env.DEV ? "/sandbox-runtime.js" : sandboxRuntimeUrl;
 
 const storageKey = (name: string) => `neo-ui-code:${name}`;
 const readDraft = (name: string) => {
@@ -26,13 +27,17 @@ export function LiveEditor({
   name: string;
   original: string;
 }) {
+  const tr = useTr();
+  const locale = useLocale();
   const [stored, setStored] = useState(() => readDraft(name));
   // Typing the example back to what it was is no edit at all: the draft disappears with it.
   const draft = stored === original ? null : stored;
   const setDraft = (next: string | null) => setStored(next === original ? null : next);
   const code = draft ?? original;
+  const preview = useRef<HTMLDivElement>(null);
+  const frame = useRef<HTMLIFrameElement>(null);
   const [result, setResult] = useState<{
-    Component?: ComponentType;
+    js?: string;
     error?: string;
     version: number;
   }>({ version: 0 });
@@ -50,10 +55,10 @@ export function LiveEditor({
     let alive = true;
     const timer = setTimeout(() => {
       compile(code).then(
-        (Component) =>
-          alive && setResult((r) => ({ Component, version: r.version + 1 })),
+        (js) =>
+          alive && setResult((r) => ({ js, version: r.version + 1 })),
         (error: Error) =>
-          alive && setResult((r) => ({ ...r, error: error.message })),
+          alive && setResult((r) => ({ error: error.message, version: r.version + 1 })),
       );
     }, 250);
     return () => {
@@ -62,7 +67,37 @@ export function LiveEditor({
     };
   }, [code]);
 
-  const { Component, error, version } = result;
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const receive = (event: MessageEvent) => {
+      if (event.source !== frame.current?.contentWindow || event.data?.kind !== "ad-preview-error") return;
+      setResult((current) => ({ error: String(event.data.message), version: current.version + 1 }));
+    };
+    window.addEventListener("message", receive);
+    return () => window.removeEventListener("message", receive);
+  }, []);
+
+  const sendPreview = () => {
+    const host = preview.current;
+    if (!host || !result.js) return;
+    const theme = host.closest<HTMLElement>("[data-ad-theme]");
+    const computed = getComputedStyle(theme ?? host);
+    const tokens = Object.fromEntries(Array.from(computed)
+      .filter((name) => name.startsWith("--ad-"))
+      .map((name) => [name, computed.getPropertyValue(name)]));
+    frame.current?.contentWindow?.postMessage({
+      kind: "ad-preview-render",
+      code: result.js,
+      locale,
+      theme: theme?.dataset.adTheme ?? "ruby",
+      colorScheme: theme?.dataset.adColorScheme ?? "dark",
+      tokens,
+      links: Array.from(document.querySelectorAll<HTMLLinkElement>('link[rel="stylesheet"]')).map((link) => link.href),
+      styles: Array.from(document.querySelectorAll<HTMLStyleElement>("style")).map((style) => style.textContent ?? ""),
+    }, "*");
+  };
+
+  const { js, error, version } = result;
   return (
     <div className="docs-live">
       <div className="docs-live-editor">
@@ -90,14 +125,21 @@ export function LiveEditor({
         </div>
         <CodeEditor label={tr("Код примера")} value={code} onChange={setDraft} />
       </div>
-      <div className="docs-live-preview">
+      <div className="docs-live-preview" ref={preview}>
         {error && <MessageBar tone="error">{error}</MessageBar>}
-        {Component && (
-          <DocsExampleBoundary key={version} name={name}>
-            <Component />
-          </DocsExampleBoundary>
+        {js && (
+          <iframe
+            key={version}
+            ref={frame}
+            className="docs-live-frame"
+            title={`${name} preview`}
+            sandbox="allow-scripts"
+            srcDoc={`<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>html,body{margin:0;min-height:100%;background:transparent}#root{min-height:100vh;display:grid;place-items:center}</style></head><body><div id="root"></div><script>addEventListener("error",function(e){parent.postMessage({kind:"ad-preview-error",message:e.message||"Не удалось загрузить предпросмотр."},"*")},true)<\/script><script src="${previewRuntimeUrl}"><\/script></body></html>`}
+            onLoad={sendPreview}
+          />
         )}
       </div>
     </div>
   );
 }
+export default LiveEditor;

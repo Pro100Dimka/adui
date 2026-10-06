@@ -764,3 +764,8 @@ html[data-ad-color-mode="light"] .docs-hero-backdrop {
 .docs-live-preview > * {
   max-width: 100%;
 }
+.docs-live-frame {
+  width: 100%;
+  height: min(60dvh, 34rem);
+  border: 0;
+}

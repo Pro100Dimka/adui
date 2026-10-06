@@ -127,7 +127,7 @@ export interface DataTableProps<
   columns?: Array<string | DataTableColumn<T>>;
   rows?: T[];
   caption?: ReactNode;
-  /** Stable id of a row, for selection; its index by default. */
+  /** Stable id of a row, for selection; defaults to `row.id` or object identity. Provide this for freshly recreated rows without ids. */
   rowKey?: (row: T, index: number) => string;
   sort?: DataTableSort | null;
   defaultSort?: DataTableSort | null;

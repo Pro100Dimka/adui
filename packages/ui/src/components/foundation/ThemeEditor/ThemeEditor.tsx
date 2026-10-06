@@ -1,4 +1,4 @@
-import { plural, tr } from "../../../core/i18n";
+import { plural, useLocale, useTr } from "../../../core/i18n";
 import { useLayoutEffect, useRef, useState } from "react";
 import { copyText, mark, useControllable, type CommonProps } from "../../../core/base";
 import { Button } from "../../controls/Button/Button";
@@ -38,8 +38,8 @@ const paletteStrip = ["primary-900", "primary-800", "primary-700", "primary-600"
 const neutralStrip = ["neutral-950", "neutral-900", "neutral-850", "neutral-800", "neutral-700", "neutral-600", "neutral-500", "neutral-400", "neutral-300", "neutral-200"];
 
 /** "1 токен", "3 токена", "7 токенов". */
-const tokensWord = (n: number) =>
-  `${n} ${plural(n, tr("токен"), tr("токена"), tr("токенов"))}`;
+const tokensWord = (n: number, locale: string, translate: ReturnType<typeof useTr>) =>
+  `${n} ${plural(n, translate("токен"), translate("токена"), translate("токенов"), locale)}`;
 
 /** Downloads text as a file. */
 const download = (name: string, text: string) => {
@@ -57,6 +57,8 @@ const download = (name: string, text: string) => {
  * per-token reset. Either way the theme exports to JSON and imports back.
  */
 export function ThemeEditor({ value: controlled, defaultValue = defaultThemeConfig, onValueChange, fileName = "neo-ui-theme.json", ...p }: ThemeEditorProps) {
+  const tr = useTr();
+  const locale = useLocale();
   const [config, setConfig] = useControllable(controlled, defaultValue, onValueChange);
   const update = (patch: Partial<ThemeConfig>) => setConfig({ ...config, ...patch });
   const root = useRef<HTMLDivElement>(null);
@@ -93,7 +95,7 @@ export function ThemeEditor({ value: controlled, defaultValue = defaultThemeConf
   };
   const load = (text: string) => {
     try {
-      setConfig(parseTheme(text));
+      setConfig(parseTheme(text, locale));
       setNotice({ tone: "success", text: tr("Тема загружена.") });
       return true;
     } catch (error) {
@@ -164,7 +166,7 @@ export function ThemeEditor({ value: controlled, defaultValue = defaultThemeConf
             const own = rows.filter((token) => tokens[token.name] !== undefined).length;
             return (
               <CollapsibleSection key={group.title} title={tr(group.title)} defaultOpen={index < 2 || !!needle}
-                description={own ? tr("изменено: {own} из {total}", { own, total: rows.length }) : tokensWord(rows.length)}>
+                description={own ? tr("изменено: {own} из {total}", { own, total: rows.length }) : tokensWord(rows.length, locale, tr)}>
                 <div className="ad-theme-editor-tokens">
                   {rows.map((token) => {
                     const current = tokens[token.name] ?? resolved[token.name] ?? "";

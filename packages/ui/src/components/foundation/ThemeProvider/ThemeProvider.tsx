@@ -1,5 +1,5 @@
 import { type CommonProps, type TokenStyle } from "../../../core/base";
-import { createContext, useContext } from "react";
+import { createContext, useContext, useMemo } from "react";
 
 /** Ready colour pairs: [primary, secondary]. Everything else is derived from the pair. */
 export const themes = {
@@ -25,6 +25,7 @@ export interface ThemeProviderProps extends CommonProps {
 }
 
 const ThemeColorSchemeContext = createContext<"light" | "dark">("dark");
+const emptyTokens: Record<string, string> = {};
 
 /** HSL hue of a #rrggbb colour, in degrees. */
 function hue(hex: string) {
@@ -53,7 +54,7 @@ export const ThemeProvider = ({
   primary,
   secondary,
   accent,
-  tokens = {},
+  tokens = emptyTokens,
   style,
   children,
   id,
@@ -62,16 +63,19 @@ export const ThemeProvider = ({
   const inheritedScheme = useContext(ThemeColorSchemeContext);
   const scheme = colorScheme ?? inheritedScheme;
   const main = primary ?? accent ?? themes[theme][0];
-  const vars: TokenStyle = {
-    ...style,
-    "--ad-primary": main,
-    "--ad-secondary": secondary ?? themes[theme][1],
-  };
-  if (/^#[0-9a-f]{6}$/i.test(main))
-    vars["--ad-hue-shift"] =
-      `${Math.round(hue(main) - hue(themes.ruby[0]))}deg`;
-  for (const [key, value] of Object.entries(tokens))
-    vars[(key.startsWith("--") ? key : `--ad-${key}`) as `--${string}`] = value;
+  const vars = useMemo(() => {
+    const next: TokenStyle = {
+      ...style,
+      "--ad-primary": main,
+      "--ad-secondary": secondary ?? themes[theme][1],
+    };
+    if (/^#[0-9a-f]{6}$/i.test(main))
+      next["--ad-hue-shift"] =
+        `${Math.round(hue(main) - hue(themes.ruby[0]))}deg`;
+    for (const [key, value] of Object.entries(tokens))
+      next[(key.startsWith("--") ? key : `--ad-${key}`) as `--${string}`] = value;
+    return next;
+  }, [style, main, secondary, theme, tokens]);
   return (
     <ThemeColorSchemeContext.Provider value={scheme}>
       <div

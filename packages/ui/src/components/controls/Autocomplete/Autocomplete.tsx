@@ -1,4 +1,4 @@
-import { tr } from "../../../core/i18n";
+import { tr, useTr } from "../../../core/i18n";
 import { useRef, useState } from "react";
 import { assignRef, useControllable } from "../../../core/base";
 import { Popover } from "../../feedback/Popover/Popover";
@@ -30,6 +30,7 @@ export const Autocomplete = ({
   children: _children,
   ...input
 }: AutocompleteProps) => {
+  const tr = useTr();
   const [current, setCurrent] = useControllable(
     value,
     defaultValue,
@@ -87,6 +88,7 @@ export const Autocomplete = ({
                 variant="ghost"
                 icon="close"
                 label={tr("Очистить")}
+                disabled={input.disabled || input.readOnly}
                 onClick={() => {
                   setCurrent("");
                   setOpen(true);
@@ -99,6 +101,7 @@ export const Autocomplete = ({
               variant="ghost"
               icon="chevron"
               label={tr("Показать варианты")}
+              disabled={input.disabled || input.readOnly}
               aria-expanded={open}
               onClick={() => {
                 setOpen((v) => !v);

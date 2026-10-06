@@ -1,4 +1,4 @@
-import { tr } from "../../../core/i18n";
+import { tr, useTr } from "../../../core/i18n";
 import { mark, type CommonProps } from "../../../core/base";
 
 export interface SignalBarsProps extends CommonProps {
@@ -12,6 +12,7 @@ export interface SignalBarsProps extends CommonProps {
 
 /** Signal strength as rising bars, like a phone's reception; the lit ones glow. */
 export function SignalBars({ level = 3, bars = 4, weak = false, label, ...p }: SignalBarsProps) {
+  const tr = useTr();
   return (
     <span
       {...mark("SignalBars", p)}

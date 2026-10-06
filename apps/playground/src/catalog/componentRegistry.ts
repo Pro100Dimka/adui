@@ -1,4 +1,4 @@
-import type React from "react";
+import { lazy, type ComponentType } from "react";
 import { version } from "../../../../packages/ui/package.json";
 
 export type CatalogMeta = {
@@ -21,10 +21,9 @@ const metas = import.meta.glob<CatalogMeta>(
   { eager: true, import: "default" },
 );
 const examples = byComponent(
-  import.meta.glob<React.ComponentType>(
+  Object.fromEntries(Object.entries(import.meta.glob<{ default: ComponentType }>(
     "../../../../packages/ui/src/components/*/*/example.tsx",
-    { eager: true, import: "default" },
-  ),
+  )).map(([path, load]) => [path, lazy(load)])),
 );
 const documentationParent: Record<string, string> = {
   Tab: "Tabs",

@@ -1,4 +1,4 @@
-import { tr } from "../../../core/i18n";
+import { tr, useTr } from "../../../core/i18n";
 import { classes, clamp, useControllable } from "../../../core/base";
 import { IconButton } from "../IconButton/IconButton";
 import { TextField } from "../TextField/TextField";
@@ -16,6 +16,7 @@ export const NumberField = ({
   controls = true,
   ...p
 }: NumberFieldProps) => {
+  const tr = useTr();
   const [current, setCurrent] = useControllable<number | "">(
     value,
     defaultValue,

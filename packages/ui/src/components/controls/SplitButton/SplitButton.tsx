@@ -1,4 +1,4 @@
-import { tr } from "../../../core/i18n";
+import { tr, useTr } from "../../../core/i18n";
 import { useRef, useState } from "react";
 import { mark } from "../../../core/base";
 import { Menu } from "../../feedback/Menu/Menu";
@@ -8,6 +8,7 @@ import { variantMaterial } from "../internal";
 import type { SplitButtonProps } from "../shared";
 
 export const SplitButton = (p: SplitButtonProps) => {
+  const tr = useTr();
   const [open, setOpen] = useState(false);
   const anchor = useRef<HTMLButtonElement>(null);
   const variant = p.variant ?? "primary";

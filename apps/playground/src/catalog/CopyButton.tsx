@@ -1,9 +1,10 @@
-import { tr } from "@ad-voice/ui";
+import { tr, useTr } from "@ad-voice/ui";
 import { useState } from "react";
 import { Button, copyText } from "@ad-voice/ui";
 
 /** Copies `text` and says so for a moment. */
 export function CopyButton({ text }: { text: string }) {
+  const tr = useTr();
   const [copied, setCopied] = useState(false);
   return (
     <Button

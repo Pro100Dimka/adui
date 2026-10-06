@@ -1,8 +1,8 @@
-import { tr } from "../../../core/i18n";
+import { tr, useTr } from "../../../core/i18n";
 import { mark } from "../../../core/base";
 import { type KeyValueListProps } from "../shared";
 
-export const KeyValueList = (p: KeyValueListProps) => (
+export const KeyValueList = (p: KeyValueListProps) => { const tr = useTr(); return ((
   <dl {...mark("KeyValueList", p)}>
     {(
       p.items ?? [
@@ -17,4 +17,4 @@ export const KeyValueList = (p: KeyValueListProps) => (
       </div>
     ))}
   </dl>
-);
+)); };

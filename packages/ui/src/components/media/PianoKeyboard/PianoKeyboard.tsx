@@ -1,4 +1,4 @@
-import { tr } from "../../../core/i18n";
+import { useTr } from "../../../core/i18n";
 import { memo, useState, type CSSProperties } from "react";
 import { mark, type CommonProps } from "../../../core/base";
 
@@ -53,6 +53,7 @@ export const PianoKeyboard = memo(function PianoKeyboard({
   label,
   ...p
 }: PianoKeyboardProps) {
+  const tr = useTr();
   const [pressed, setPressed] = useState<number>();
   const rows = Math.max(1, maxMidi - minMidi + 1);
   const pct = (value: number) => `${(value / rows) * 100}%`;

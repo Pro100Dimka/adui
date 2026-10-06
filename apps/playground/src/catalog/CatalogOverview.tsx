@@ -1,7 +1,7 @@
-import { tr } from "@ad-voice/ui";
+import { tr, useTr } from "@ad-voice/ui";
 import { ExamplePreviewContext } from "../../../../packages/ui/src/dev/exampleHelpers";
 import { Badge, Card, Header, Icon, Stack, Typography, usePauseOffscreen } from "@ad-voice/ui";
-import { useRef } from "react";
+import { Suspense, useRef } from "react";
 import { CopyButton } from "./CopyButton";
 import {
   catalog,
@@ -21,6 +21,7 @@ import { HeroBackdrop } from "./HeroBackdrop";
  * the whole kit on one page and opens whatever catches the eye.
  */
 export function CatalogOverview() {
+  const tr = useTr();
   return (
     <Stack as="section" className="docs-overview" gap={5}>
       <Card
@@ -96,6 +97,7 @@ export function CatalogOverview() {
 
 /** A fixed-size preview: artwork may animate, but the catalog grid never reflows around it. */
 function ShowcaseTile({ item }: { item: CatalogMeta }) {
+  const tr = useTr();
   const ref = useRef<HTMLDivElement>(null);
   const Example = getExample(item.name);
   usePauseOffscreen(ref);
@@ -105,7 +107,7 @@ function ShowcaseTile({ item }: { item: CatalogMeta }) {
       <div className="docs-showcase-preview" inert>
         <DocsExampleBoundary name={item.name}>
           <ExamplePreviewContext.Provider value>
-            {Example && <Example />}
+            {Example && <Suspense fallback={null}><Example /></Suspense>}
           </ExamplePreviewContext.Provider>
         </DocsExampleBoundary>
       </div>

@@ -1,45 +1,39 @@
 import { reducedMotionQuery } from "../environment";
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
+
+const subscribers = new Set<() => void>();
+let media: MediaQueryList | undefined;
+let observer: MutationObserver | undefined;
+const notify = () => subscribers.forEach((subscriber) => subscriber());
+const subscribe = (subscriber: () => void) => {
+  subscribers.add(subscriber);
+  if (subscribers.size === 1) {
+    media = reducedMotionQuery();
+    media.addEventListener("change", notify);
+    if (typeof document !== "undefined" && typeof MutationObserver !== "undefined") {
+      observer = new MutationObserver(notify);
+      observer.observe(document.documentElement, { attributes: true, attributeFilter: ["data-ad-motion"] });
+    }
+  }
+  return () => {
+    subscribers.delete(subscriber);
+    if (subscribers.size === 0) {
+      media?.removeEventListener("change", notify);
+      observer?.disconnect();
+      media = undefined;
+      observer = undefined;
+    }
+  };
+};
+const reducedMotion = () => media?.matches ?? reducedMotionQuery().matches;
 export function useReducedMotion() {
-  const [reduced, setReduced] = useState(() => reducedMotionQuery().matches);
-  useEffect(() => {
-    const media = reducedMotionQuery(),
-      update = () => setReduced(media.matches);
-    media.addEventListener("change", update);
-    update();
-    return () => media.removeEventListener("change", update);
-  }, []);
-  return reduced;
+  return useSyncExternalStore(subscribe, reducedMotion, () => false);
+}
+/** Read the current motion setting only when an interaction needs it. */
+export function motionEnabled() {
+  const setting = typeof document === "undefined" ? undefined : document.documentElement.dataset.adMotion;
+  return setting === "on" || (setting !== "off" && !reducedMotion());
 }
 export function useMotion() {
-  const reduced = useReducedMotion();
-  const [explicit, setExplicit] = useState<boolean | undefined>(() =>
-    typeof document === "undefined"
-      ? undefined
-      : document.documentElement.dataset.adMotion === "off"
-        ? false
-        : document.documentElement.dataset.adMotion === "on"
-          ? true
-          : undefined,
-  );
-  useEffect(() => {
-    if (typeof document === "undefined") return;
-    const root = document.documentElement,
-      update = () =>
-        setExplicit(
-          root.dataset.adMotion === "off"
-            ? false
-            : root.dataset.adMotion === "on"
-              ? true
-              : undefined,
-        );
-    const observer = new MutationObserver(update);
-    observer.observe(root, {
-      attributes: true,
-      attributeFilter: ["data-ad-motion"],
-    });
-    update();
-    return () => observer.disconnect();
-  }, []);
-  return explicit ?? !reduced;
+  return useSyncExternalStore(subscribe, motionEnabled, () => true);
 }

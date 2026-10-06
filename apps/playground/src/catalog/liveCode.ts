@@ -111,28 +111,12 @@ function withMissingImports(code: string) {
   return [...lines, code].join("\n");
 }
 
-/** Compiles TSX in the browser (sucrase is fetched on first use) into a component. */
-export async function compile(code: string): Promise<React.ComponentType> {
+/** Transform TSX without executing it; the sandboxed preview frame evaluates the result. */
+export async function compile(code: string): Promise<string> {
   const { transform } = await import("sucrase");
-  const js = transform(toModule(code), {
+  return transform(toModule(code), {
     transforms: ["typescript", "jsx", "imports"],
     jsxRuntime: "classic",
     production: true,
   }).code;
-  const module = { exports: {} as { default?: React.ComponentType } };
-  const require = (name: string) => {
-    if (name in modules) return modules[name];
-    throw new Error(`Модуль «${name}» недоступен в песочнице`);
-  };
-  new Function("require", "module", "exports", "React", js)(
-    require,
-    module,
-    module.exports,
-    React,
-  );
-  if (typeof module.exports.default !== "function")
-    throw new Error(
-      "Пример должен экспортировать компонент: export default function …",
-    );
-  return module.exports.default;
 }

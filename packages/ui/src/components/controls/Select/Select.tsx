@@ -1,4 +1,4 @@
-import { tr } from "../../../core/i18n";
+import { tr, useTr } from "../../../core/i18n";
 import { useMemo, useRef, useState, type ReactNode } from "react";
 import { assignRef, useControllable } from "../../../core/base";
 import { Popover } from "../../feedback/Popover/Popover";
@@ -20,6 +20,7 @@ const textOf = (option: SelectOption<unknown>) =>
  * search box with `searchable`.
  */
 export function Select<V = string>(p: SelectProps<V>) {
+  const tr = useTr();
   const ids = useFieldIds(p.label, p.description || p.error);
   const floating = p.labelPlacement === "floating" && !!p.label;
   const keyOf = (p.getKey ?? defaultKey) as (value: V) => string;
