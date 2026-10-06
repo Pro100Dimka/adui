@@ -1,4 +1,4 @@
-import { tr } from "../../../core/i18n";
+const e=`import { tr } from "../../../core/i18n";
 import React from "react";
 import { clamp, mark, useControllable } from "../../../core/base";
 import { FieldFrame, useFieldIds } from "../internal";
@@ -27,9 +27,10 @@ export const Slider = (p: SliderProps) => {
         disabled={p.disabled}
         aria-labelledby={p["aria-labelledby"] ?? ids.aria["aria-labelledby"]}
         aria-label={p["aria-label"] ?? (p.label ? undefined : tr("Значение"))}
-        style={{ "--ad-level": `${percent}%`, ...p.style } as React.CSSProperties}
+        style={{ "--ad-level": \`\${percent}%\`, ...p.style } as React.CSSProperties}
         onChange={(e) => setValue(Number(e.currentTarget.value))}
       />
     </FieldFrame>
   );
 };
+`;export{e as default};

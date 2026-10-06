@@ -7,6 +7,12 @@ import { Select } from "../../controls/Select/Select";
 import { Autocomplete } from "../../controls/Autocomplete/Autocomplete";
 import { Checkbox } from "../../controls/Checkbox/Checkbox";
 import { Switch } from "../../controls/Switch/Switch";
+import { ColorPicker } from "../../controls/ColorPicker/ColorPicker";
+import { DatePicker } from "../../controls/DatePicker/DatePicker";
+import { FilePicker } from "../../controls/FilePicker/FilePicker";
+import { PeoplePicker } from "../../controls/PeoplePicker/PeoplePicker";
+import { Slider } from "../../controls/Slider/Slider";
+import { TagInput } from "../../controls/TagInput/TagInput";
 import { useFormContext, type FormApi } from "../Form/Form";
 export type FieldKind =
   | "text"
@@ -15,7 +21,13 @@ export type FieldKind =
   | "select"
   | "autocomplete"
   | "checkbox"
-  | "switch";
+  | "switch"
+  | "color"
+  | "date"
+  | "file"
+  | "people"
+  | "slider"
+  | "tags";
 export interface FormFieldDefinition<
   T extends Record<string, unknown> = Record<string, unknown>,
 > {
@@ -35,6 +47,12 @@ export const defaultFieldRegistry: FieldRegistry = {
   autocomplete: Autocomplete,
   checkbox: Checkbox,
   switch: Switch,
+  color: ColorPicker,
+  date: DatePicker,
+  file: FilePicker,
+  people: PeoplePicker,
+  slider: Slider,
+  tags: TagInput,
 };
 export interface FormFieldsProps<T extends Record<string, unknown>> {
   fields: readonly FormFieldDefinition<T>[];
@@ -50,7 +68,7 @@ export function FormFields<T extends Record<string, unknown>>({
 }: FormFieldsProps<T>) {
   const form = useFormContext<T>();
   return (
-    <Grid columns={columns} gap={gap}>
+    <Grid columns={columns} gap={gap} align="center">
       {fields
         .filter((field) => field.showWhen?.(form.values) ?? true)
         .map((field) => (
@@ -73,13 +91,21 @@ function Slot<T extends Record<string, unknown>>({
   form: FormApi<T>;
   registry: FieldRegistry;
 }) {
-  const Component = registry[field.kind ?? "text"] ?? registry.text,
+  const kind = field.kind ?? "text",
+    Component = registry[kind] ?? registry.text,
     b = form.field(field.name),
-    boolean = field.kind === "checkbox" || field.kind === "switch",
-    props = boolean
+    emptyValue: Partial<Record<FieldKind, unknown>> = { people: [], tags: [], slider: 0 },
+    props = kind === "checkbox" || kind === "switch"
       ? { checked: !!b.value, onValueChange: b.onValueChange }
+      : kind === "file"
+        ? {
+            value: Array.isArray(b.value)
+              ? b.value.map((file: File) => file.name).join(", ")
+              : typeof b.value === "string" ? b.value : "",
+            onFiles: b.onValueChange,
+          }
       : {
-          value: b.value ?? "",
+          value: b.value ?? emptyValue[kind] ?? "",
           onValueChange: b.onValueChange,
           error: b.touched ? b.error : undefined,
           onBlur: b.onBlur,

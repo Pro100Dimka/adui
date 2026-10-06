@@ -9,7 +9,7 @@ Live docs: https://pro100dimka.github.io/adui/
 The package is installed from its GitHub release; React and ReactDOM are peer dependencies.
 
 ```bash
-npm install https://github.com/Pro100Dimka/adui/releases/download/v2.7.12/ad-voice-ui-2.7.12.tgz react react-dom
+npm install https://github.com/Pro100Dimka/adui/releases/download/v2.7.13/ad-voice-ui-2.7.13.tgz react react-dom
 ```
 
 Import the stylesheet once in the app entry point:

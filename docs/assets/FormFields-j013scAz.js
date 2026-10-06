@@ -1,4 +1,4 @@
-const r=`import { type ComponentType, type ReactNode } from "react";\r
+const e=`import { type ComponentType, type ReactNode } from "react";\r
 import { Grid, type GridResponsive } from "../../layout/Grid/Grid";\r
 import { TextField } from "../../controls/TextField/TextField";\r
 import { NumberField } from "../../controls/NumberField/NumberField";\r
@@ -6,16 +6,28 @@ import { TextArea } from "../../controls/TextArea/TextArea";\r
 import { Select } from "../../controls/Select/Select";\r
 import { Autocomplete } from "../../controls/Autocomplete/Autocomplete";\r
 import { Checkbox } from "../../controls/Checkbox/Checkbox";\r
-import { Switch } from "../../controls/Switch/Switch";\r
+import { Switch } from "../../controls/Switch/Switch";
+import { ColorPicker } from "../../controls/ColorPicker/ColorPicker";
+import { DatePicker } from "../../controls/DatePicker/DatePicker";
+import { FilePicker } from "../../controls/FilePicker/FilePicker";
+import { PeoplePicker } from "../../controls/PeoplePicker/PeoplePicker";
+import { Slider } from "../../controls/Slider/Slider";
+import { TagInput } from "../../controls/TagInput/TagInput";
 import { useFormContext, type FormApi } from "../Form/Form";\r
 export type FieldKind =\r
   | "text"\r
   | "number"\r
   | "textarea"\r
   | "select"\r
-  | "autocomplete"\r
-  | "checkbox"\r
-  | "switch";\r
+  | "autocomplete"
+  | "checkbox"
+  | "switch"
+  | "color"
+  | "date"
+  | "file"
+  | "people"
+  | "slider"
+  | "tags";
 export interface FormFieldDefinition<\r
   T extends Record<string, unknown> = Record<string, unknown>,\r
 > {\r
@@ -33,8 +45,14 @@ export const defaultFieldRegistry: FieldRegistry = {\r
   textarea: TextArea,\r
   select: Select,\r
   autocomplete: Autocomplete,\r
-  checkbox: Checkbox,\r
-  switch: Switch,\r
+  checkbox: Checkbox,
+  switch: Switch,
+  color: ColorPicker,
+  date: DatePicker,
+  file: FilePicker,
+  people: PeoplePicker,
+  slider: Slider,
+  tags: TagInput,
 };\r
 export interface FormFieldsProps<T extends Record<string, unknown>> {\r
   fields: readonly FormFieldDefinition<T>[];\r
@@ -50,7 +68,7 @@ export function FormFields<T extends Record<string, unknown>>({\r
 }: FormFieldsProps<T>) {\r
   const form = useFormContext<T>();\r
   return (\r
-    <Grid columns={columns} gap={gap}>\r
+    <Grid columns={columns} gap={gap} align="center">
       {fields\r
         .filter((field) => field.showWhen?.(form.values) ?? true)\r
         .map((field) => (\r
@@ -73,13 +91,21 @@ function Slot<T extends Record<string, unknown>>({\r
   form: FormApi<T>;\r
   registry: FieldRegistry;\r
 }) {\r
-  const Component = registry[field.kind ?? "text"] ?? registry.text,\r
-    b = form.field(field.name),\r
-    boolean = field.kind === "checkbox" || field.kind === "switch",\r
-    props = boolean\r
-      ? { checked: !!b.value, onValueChange: b.onValueChange }\r
-      : {\r
-          value: b.value ?? "",\r
+  const kind = field.kind ?? "text",
+    Component = registry[kind] ?? registry.text,
+    b = form.field(field.name),
+    emptyValue: Partial<Record<FieldKind, unknown>> = { people: [], tags: [], slider: 0 },
+    props = kind === "checkbox" || kind === "switch"
+      ? { checked: !!b.value, onValueChange: b.onValueChange }
+      : kind === "file"
+        ? {
+            value: Array.isArray(b.value)
+              ? b.value.map((file: File) => file.name).join(", ")
+              : typeof b.value === "string" ? b.value : "",
+            onFiles: b.onValueChange,
+          }
+      : {
+          value: b.value ?? emptyValue[kind] ?? "",
           onValueChange: b.onValueChange,\r
           error: b.touched ? b.error : undefined,\r
           onBlur: b.onBlur,\r
@@ -90,4 +116,4 @@ function Slot<T extends Record<string, unknown>>({\r
     </Grid>\r
   );\r
 }\r
-`;export{r as default};
+`;export{e as default};

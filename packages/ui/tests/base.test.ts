@@ -1,8 +1,59 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { readFileSync } from "node:fs";
+import { createElement } from "react";
+import { renderToStaticMarkup } from "react-dom/server";
 import { copyText } from "../src/core/base";
 import { attachBorder } from "../src/core/motion-engine.js";
+import { Slider } from "../src/components/controls/Slider/Slider";
+import { Form } from "../src/components/forms/Form/Form";
+import { FormFields, defaultFieldRegistry } from "../src/components/forms/FormFields/FormFields";
 import { defaultSettings, fonts, siteThemeProps } from "../../../apps/playground/src/app/siteSettings";
+
+describe("Slider", () => {
+  it("shows its label next to the range control instead of using it only as an accessible name", () => {
+    const html = renderToStaticMarkup(createElement(Slider, { label: "Громкость", value: 35 }));
+
+    expect(html).toMatch(/<label[^>]*>.*Громкость.*<input[^>]*type="range"/);
+  });
+
+  it("visually mutes the disabled track and thumb", () => {
+    const css = readFileSync("src/components/controls/Slider/styles.css", "utf8");
+
+    expect(css).toMatch(/\.ad-slider:disabled\s*\{[^}]*opacity:\s*0\.42[^}]*filter:\s*saturate\(0\.2\)/s);
+  });
+});
+
+describe("FormFields", () => {
+  it("registers every standalone field control", () => {
+    expect(Object.keys(defaultFieldRegistry).sort()).toEqual([
+      "autocomplete", "checkbox", "color", "date", "file", "number", "people",
+      "select", "slider", "switch", "tags", "text", "textarea",
+    ]);
+  });
+
+  it("centers controls of different heights within each grid row", () => {
+    const form = {
+      values: { enabled: true },
+      field: () => ({ value: true, onValueChange: vi.fn() }),
+    } as any;
+    const html = renderToStaticMarkup(createElement(Form, { form },
+      createElement(FormFields, { fields: [{ name: "enabled", kind: "switch", label: "Включено" }] })));
+
+    expect(html).toContain("--ad-grid-align:center");
+  });
+
+  it("binds a file field to its file list and shows selected names", () => {
+    const form = {
+      values: { upload: [{ name: "demo.wav" }] },
+      field: () => ({ value: [{ name: "demo.wav" }], onValueChange: vi.fn() }),
+    } as any;
+    const html = renderToStaticMarkup(createElement(Form, { form },
+      createElement(FormFields, { fields: [{ name: "upload", kind: "file", label: "Запись" }] })));
+
+    expect(html).toContain('type="file"');
+    expect(html).toContain("demo.wav");
+  });
+});
 
 describe("copyText", () => {
   afterEach(() => vi.unstubAllGlobals());

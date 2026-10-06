@@ -128,3 +128,11 @@
 .ad-slider:hover:not(:disabled)::-moz-range-thumb {
   transform: scale(1.18);
 }
+.ad-slider:disabled {
+  opacity: 0.42;
+  filter: saturate(0.2) brightness(0.88);
+  cursor: not-allowed;
+}
+.ad-slider-field:has(.ad-slider:disabled) .ad-field-label {
+  opacity: 0.5;
+}

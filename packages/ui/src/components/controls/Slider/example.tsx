@@ -22,12 +22,6 @@ export default function SliderExample() {
     >
       {(v) => (
         <U.Stack gap={2}>
-          <U.Stack direction="row" justify="between" align="center">
-            <U.Typography variant="label">Громкость</U.Typography>
-            <U.Typography variant="mono" tone="muted">
-              {volume}%
-            </U.Typography>
-          </U.Stack>
           <U.Slider
             label="Громкость"
             value={volume}
@@ -35,6 +29,9 @@ export default function SliderExample() {
             size={v.size}
             disabled={v.disabled}
           />
+          <U.Typography variant="mono" tone="muted">
+            {volume}%
+          </U.Typography>
         </U.Stack>
       )}
     </Playground>
