@@ -66,8 +66,10 @@ describe("AnimatedBorder", () => {
     const overlay = host.children[0];
     expect(overlay.tagName).toBe("svg");
     expect(overlay.style.overflow).toBe("visible");
-    expect(overlay.children[0].children.filter((child: any) => child.tagName === "radialGradient")).toHaveLength(4);
-    expect(overlay.children.filter((child: any) => child.tagName === "path")).toHaveLength(7);
+    expect(overlay.children[0].children.filter((child: any) => child.tagName === "radialGradient")).toHaveLength(2);
+    expect(overlay.children[0].children.filter((child: any) => child.tagName === "filter")).toHaveLength(1);
+    expect(overlay.children.filter((child: any) => child.tagName === "path")).toHaveLength(3);
+    expect(overlay.children[0].children.find((child: any) => child.tagName === "filter")?.children[0].tagName).toBe("feGaussianBlur");
     expect(add).toHaveBeenCalledOnce();
     const gradient = overlay.children[0].children[0];
     expect(gradient.children[0].attributes["stop-color"]).toBe("var(--ad-on-accent)");

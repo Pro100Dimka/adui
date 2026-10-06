@@ -207,7 +207,8 @@ const borders = new WeakMap();
    beyond the edge. The shared motion scope still pauses painting while offscreen. */
 U.attachBorder = (element, { shell = false, round = false, scope } = {}) => {
   if (borders.has(element)) return borders.get(element);
-  const radius = round ? 28 : shell ? 102 : 116;
+  const radius = round ? 26 : shell ? 76 : 84;
+  const extent = radius + 16;
   const overlay = U.svg("svg", {
     class: "ad-border",
     "aria-hidden": "true",
@@ -218,72 +219,62 @@ U.attachBorder = (element, { shell = false, round = false, scope } = {}) => {
   const defs = U.svg("defs"),
     path = U.svg("path", {
       fill: "none",
-      stroke: shell ? "rgb(from var(--ad-secondary) r g b / 0.65)" : "rgb(from var(--ad-primary) r g b / 0.16)",
-      "stroke-width": shell ? 1.1 : 0.6,
+      stroke: shell ? "rgb(from var(--ad-secondary) r g b / 0.32)" : "rgb(from var(--ad-primary) r g b / 0.18)",
+      "stroke-width": shell ? 0.9 : 0.7,
     });
   overlay.append(defs, path);
-  const lights = [];
-  for (let k = 0; k < 2; k++) {
-    const id = U.uid("ad-orbit");
-    const gradient = U.svg("radialGradient", {
-      id,
-      gradientUnits: "userSpaceOnUse",
-      cx: 0,
-      cy: 0,
-      r: radius,
-    });
-    for (const [offset, color, opacity] of [
-      [0, "var(--ad-on-accent)", 1],
-      [0.04, "var(--ad-on-accent)", 1],
-      [0.16, "var(--ad-secondary)", 1],
-      [0.4, "var(--ad-primary)", 0.85],
-      [0.72, "var(--ad-primary)", 0.32],
-      [1, "var(--ad-primary)", 0],
-    ])
-      gradient.append(U.svg("stop", { offset, "stop-color": color, "stop-opacity": opacity }));
-    const red = U.svg("radialGradient", {
-      id: `${id}-red`,
-      gradientUnits: "userSpaceOnUse",
-      cx: 0,
-      cy: 0,
-      r: radius,
-    });
-    for (const [offset, opacity] of [[0, 1], [0.4, 0.7], [1, 0]])
-      red.append(U.svg("stop", {
-        offset,
-        "stop-color": "var(--ad-primary)",
-        "stop-opacity": opacity,
-      }));
-    defs.append(gradient, red);
-    const haze = U.svg("path", {
-      fill: "none",
-      stroke: `url(#${id}-red)`,
-      "stroke-width": 22,
-      "stroke-linecap": "round",
-      opacity: 0.17,
-    });
-    const aura = U.svg("path", {
-      fill: "none",
-      stroke: `url(#${id}-red)`,
-      "stroke-width": 8.5,
-      "stroke-linecap": "round",
-      opacity: 0.48,
-    });
-    const core = U.svg("path", {
-      fill: "none",
-      stroke: `url(#${id})`,
-      "stroke-width": shell ? 1.9 : 1.35,
-    });
-    overlay.append(haze, aura, core);
-    lights.push({
-      gradient,
-      red,
-      radius,
-      phase: (k * 0.48 + 0.535) % 1,
-      speed: round ? (k ? 25 : 36) : k ? 86 : 125,
-      paths: [haze, aura, core],
-    });
-  }
+  const id = U.uid("ad-orbit");
+  const gradient = U.svg("radialGradient", {
+    id,
+    gradientUnits: "userSpaceOnUse",
+    cx: 0,
+    cy: 0,
+    r: radius,
+  });
+  for (const [offset, color, opacity] of [
+    [0, "var(--ad-on-accent)", 0.92],
+    [0.055, "var(--ad-on-accent)", 0.86],
+    [0.14, "var(--ad-secondary)", 0.76],
+    [0.42, "var(--ad-primary)", 0.4],
+    [0.7, "var(--ad-primary)", 0.12],
+    [1, "var(--ad-primary)", 0],
+  ])
+    gradient.append(U.svg("stop", { offset, "stop-color": color, "stop-opacity": opacity }));
+  const glow = U.svg("radialGradient", {
+    id: `${id}-glow`,
+    gradientUnits: "userSpaceOnUse",
+    cx: 0,
+    cy: 0,
+    r: radius,
+  });
+  for (const [offset, opacity] of [[0, 0.75], [0.4, 0.32], [1, 0]])
+    glow.append(U.svg("stop", {
+      offset,
+      "stop-color": "var(--ad-primary)",
+      "stop-opacity": opacity,
+    }));
+  const blur = U.svg("filter", {
+    id: `${id}-blur`,
+    filterUnits: "userSpaceOnUse",
+    width: extent * 2,
+    height: extent * 2,
+    "color-interpolation-filters": "sRGB",
+  });
+  blur.append(U.svg("feGaussianBlur", { stdDeviation: 4.5 }));
+  defs.append(gradient, glow, blur);
+  const aura = U.svg("path", {
+    fill: "none",
+    stroke: `url(#${id}-glow)`,
+    "stroke-width": 8,
+    filter: `url(#${id}-blur)`,
+    opacity: 0.7,
+  });
+  const core = U.svg("path", {
+    fill: "none",
+    stroke: `url(#${id})`,
+    "stroke-width": shell ? 1.5 : 1.1,
+  });
+  overlay.append(aura, core);
   const computedPosition = getComputedStyle(element).position;
   const patchedPosition = computedPosition === "static";
   const previousInlinePosition = element.style.position;
@@ -298,19 +289,19 @@ U.attachBorder = (element, { shell = false, round = false, scope } = {}) => {
   overlay.setAttribute("height", "100%");
   overlay.setAttribute("preserveAspectRatio", "none");
   element.append(overlay);
-  const item = { element, overlay, path, lights, length: 0, patchedPosition, previousInlinePosition };
+  const item = { element, overlay, path, length: 0, patchedPosition, previousInlinePosition };
   item.paint = (time) => {
     if (!item.length) return;
-    for (const light of lights) {
-      const p = path.getPointAtLength((light.phase * item.length + time * light.speed) % item.length);
-      const x = p.x.toFixed(1), y = p.y.toFixed(1);
-      if (light.x === x && light.y === y) continue;
-      light.x = x;
-      light.y = y;
-      const transform = `translate(${x} ${y})`;
-      for (const gradient of [light.gradient, light.red])
-        gradient.setAttribute("gradientTransform", transform);
-    }
+    const p = path.getPointAtLength((((time / (round ? 11 : 18)) + 0.535) % 1) * item.length);
+    const x = p.x.toFixed(1), y = p.y.toFixed(1);
+    if (item.x === x && item.y === y) return;
+    item.x = x;
+    item.y = y;
+    const transform = `translate(${x} ${y})`;
+    for (const light of [gradient, glow])
+      light.setAttribute("gradientTransform", transform);
+    blur.setAttribute("x", (p.x - extent).toFixed(1));
+    blur.setAttribute("y", (p.y - extent).toFixed(1));
   };
   item.sync = () => {
     const w = element.offsetWidth,
@@ -323,7 +314,7 @@ U.attachBorder = (element, { shell = false, round = false, scope } = {}) => {
     const d = U.roundedPath(w, h, r);
     overlay.setAttribute("viewBox", `0 0 ${w} ${h}`);
     path.setAttribute("d", d);
-    for (const light of lights) for (const stroke of light.paths) stroke.setAttribute("d", d);
+    for (const stroke of [aura, core]) stroke.setAttribute("d", d);
     item.length = path.getTotalLength();
     item.paint(scope?.time || 0);
   };
