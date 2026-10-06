@@ -18,7 +18,7 @@ import {
   type RouteDefinition,
 } from "@ad-voice/ui";
 import { CatalogPage } from "./catalog/CatalogPage";
-import { catalog } from "./catalog/componentRegistry";
+import { componentCount } from "./catalog/componentRegistry";
 import { SettingsPanel } from "./app/SettingsPanel";
 import { SiteThemeContext } from "../../../packages/ui/src/dev/exampleHelpers";
 import {
@@ -114,7 +114,7 @@ export default function App() {
               align="center"
               gap={3}
             >
-              <Badge>{catalog.length} {tr("компонентов")}</Badge>
+              <Badge>{componentCount} {tr("компонентов")}</Badge>
               <SegmentedControl<SiteSettings["appearance"]>
                 className="site-appearance"
                 label={tr("Оформление")}

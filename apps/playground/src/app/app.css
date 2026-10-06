@@ -80,6 +80,7 @@ a {
 .docs-main {
   min-width: 0;
   overflow-x: clip;
+  scrollbar-gutter: stable;
   padding: var(--ad-space-4) clamp(var(--ad-space-3), 2.4vw, var(--ad-space-8))
     var(--ad-space-5);
 }
@@ -297,6 +298,7 @@ html[data-ad-color-mode="light"] .docs-hero-backdrop {
   grid-template-columns: minmax(0, 1fr);
   grid-template-rows: 1fr auto;
   min-width: 0;
+  block-size: 15rem;
   overflow: hidden;
   border: 0.0625rem solid rgb(from var(--ad-primary-700) r g b / 0.23);
   border-radius: 1rem;
@@ -581,8 +583,7 @@ html[data-ad-color-mode="light"] .docs-hero-backdrop {
   flex: none;
 }
 
-/* Page transitions: the old page lifts away and the new one glides in (a view transition,
-   drawn by the compositor); its sections then follow in a cascade. */
+/* Fade pages and sections without translating their boxes into the scrollable overflow. */
 .docs-main {
   view-transition-name: docs-main;
 }
@@ -598,7 +599,6 @@ html[data-ad-color-mode="light"] .docs-hero-backdrop {
 @keyframes docs-page-out {
   to {
     opacity: 0;
-    transform: translate3d(0, -0.75rem, 0) scale(0.99);
   }
 }
 .docs-component-content > *,
@@ -624,40 +624,11 @@ html[data-ad-color-mode="light"] .docs-hero-backdrop {
 @keyframes docs-page-in {
   from {
     opacity: 0;
-    transform: translate3d(0, 1.25rem, 0) scale(0.985);
   }
 }
 @keyframes docs-section-in {
   from {
     opacity: 0;
-    transform: translate3d(0, 1rem, 0);
-  }
-}
-/* Scroll-linked motion: tiles float up out of a soft blur as they enter, hero scenes drift
-   slower than the page (parallax). Tied to scroll position, so it is smooth at any speed. */
-@supports (animation-timeline: view()) {
-  .docs-showcase-tile,
-  .docs-showcase > .ad-header {
-    animation: docs-float-in linear both;
-    animation-timeline: view();
-    animation-range: entry 0% entry 70%;
-  }
-  .docs-hero-backdrop > * {
-    animation: docs-parallax linear both;
-    animation-timeline: scroll(nearest);
-    animation-range: 0 20rem;
-  }
-}
-@keyframes docs-float-in {
-  from {
-    opacity: 0;
-    transform: translate3d(0, 2.5rem, 0) scale(0.96);
-  }
-}
-@keyframes docs-parallax {
-  to {
-    transform: translateY(2.5rem) scale(1.06);
-    opacity: 0.35;
   }
 }
 [data-ad-motion="off"]

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { CopyButton } from "./CopyButton";
 import { DocsExampleBoundary } from "./DocsExampleBoundary";
 import { LiveEditor } from "./LiveEditor";
+import { toModule } from "./liveCode";
 import { HeroBackdrop } from "./HeroBackdrop";
 import { ExampleCodeContext } from "../../../../packages/ui/src/dev/exampleHelpers";
 import {
@@ -21,6 +22,7 @@ import {
 import {
   catalog,
   componentHref,
+  getDocumentationParts,
   getExample,
   getImportPath,
   loadSources,
@@ -104,18 +106,21 @@ export function ComponentDocsPage({ item }: { item: CatalogMeta }) {
   }, []);
   const loading = "// Загрузка…";
   const sourcePath = sources?.getComponentSourcePath(item.name);
+  const parts = getDocumentationParts(item.name);
   const codeViews = {
     example: {
       title: tr("песочница"),
       file: "Example.tsx",
       code: liveCode
-        ? withImports(liveCode, item.name, getImportPath(item))
+        ? toModule(withImports(liveCode, item.name, getImportPath(item)), sources?.getExampleSource(item.name))
         : (sources?.getExampleSource(item.name) ?? loading),
     },
     api: {
       title: "API",
       file: `${item.name}Props`,
-      code: sources?.getComponentApiSource(item.name) ?? loading,
+      code: sources
+        ? [item, ...parts].map((component) => `// ${component.name}\n${sources.getComponentApiSource(component.name)}`).join("\n\n")
+        : loading,
       language: "ts",
     },
     source: {
@@ -198,6 +203,12 @@ export function ComponentDocsPage({ item }: { item: CatalogMeta }) {
             title={item.name}
             description={tr(item.description)}
           />
+          {!!parts.length && (
+            <Stack direction="row" gap={2} align="center" wrap>
+              <Typography variant="caption" tone="muted">{tr("Вместе с")}</Typography>
+              {parts.map((part) => <Badge key={part.name}>{part.name}</Badge>)}
+            </Stack>
+          )}
         </Stack>
       </Card>
 

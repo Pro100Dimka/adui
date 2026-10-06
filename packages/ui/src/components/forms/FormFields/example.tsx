@@ -14,9 +14,10 @@ type Values = {
   notes: string;
   color: string;
   date: string;
-  recording: File[];
+  photo: File[];
   people: PickerPerson[];
   volume: number;
+  gain: number;
   tags: string[];
   confirmed: boolean;
   monitor: boolean;
@@ -28,12 +29,14 @@ const team: PickerPerson[] = [
   { id: "dmitry", name: "Дмитрий Андреев" },
 ];
 const fields: FormFieldDefinition<Values>[] = [
-  { name: "name", label: "Имя", span: column },
+  { name: "photo", kind: "file", label: "Изменить фото", span: { base: "full", sm: 2, lg: 2 },
+    props: { variant: "avatar", name: "Дмитрий", accept: "image/*" } },
+  { name: "name", label: "Имя", span: { base: "full", sm: 4, lg: 4 } },
   {
     name: "delay",
     kind: "number",
     label: "Задержка, мс",
-    span: column,
+    span: { base: "full", sm: 6, lg: 6 },
     props: { min: 0, max: 500, step: 10 },
   },
   {
@@ -49,12 +52,12 @@ const fields: FormFieldDefinition<Values>[] = [
   { name: "color", kind: "color", label: "Цвет комнаты", span: column },
   { name: "volume", kind: "slider", label: "Громкость", span: column,
     props: { min: 0, max: 100 } },
+  { name: "gain", kind: "rotary", label: "Усиление", span: column,
+    props: { size: "xs", showLabel: true, suffix: "%" } },
   { name: "tags", kind: "tags", label: "Теги", span: column,
     props: { suggestions: ["Музыка", "Эфир", "Запись"] } },
   { name: "people", kind: "people", label: "Участники", span: column,
     props: { people: team } },
-  { name: "recording", kind: "file", label: "Аудиофайл", span: column,
-    props: { accept: "audio/*" } },
   { name: "confirmed", kind: "checkbox", label: "Настройки проверены", span: column },
   {
     name: "monitor",
@@ -75,9 +78,10 @@ export default function FormFieldsExample() {
       notes: "",
       color: "#FF244C",
       date: "",
-      recording: [],
+      photo: [],
       people: [],
       volume: 65,
+      gain: 42,
       tags: [],
       confirmed: false,
       monitor: true,

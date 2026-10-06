@@ -94,3 +94,56 @@
 .ad-file-picker-text > small[data-picked] {
   color: var(--ad-neutral-200);
 }
+
+/* The avatar is the chooser itself; its host seal keeps animating under the edit affordance. */
+.ad-file-picker[data-variant="avatar"] {
+  display: inline-flex;
+  width: fit-content;
+}
+.ad-file-picker-avatar-button {
+  position: relative;
+  display: block;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+.ad-file-picker-avatar-button:focus-visible {
+  outline: 0.125rem solid var(--ad-secondary);
+  outline-offset: 0.25rem;
+}
+.ad-file-picker-avatar-edit {
+  position: absolute;
+  z-index: 1;
+  right: -0.1rem;
+  bottom: 0.1rem;
+  display: grid;
+  place-items: center;
+  width: 1.8rem;
+  aspect-ratio: 1;
+  border: 0.0625rem solid var(--ad-secondary);
+  border-radius: 50%;
+  background: var(--ad-primary-800);
+  color: var(--ad-on-accent);
+  box-shadow: 0 0 0.6rem rgb(from var(--ad-primary) r g b / 0.5);
+  opacity: 0;
+  transform: translateY(0.3rem) scale(0.8);
+  transition: opacity 0.2s, transform 0.2s;
+  pointer-events: none;
+  --ad-icon-size: 1rem;
+}
+.ad-file-picker-avatar-button:is(:hover, :focus-visible) .ad-file-picker-avatar-edit,
+.ad-file-picker[data-variant="avatar"][data-over] .ad-file-picker-avatar-edit {
+  opacity: 1;
+  transform: none;
+}
+.ad-file-picker-avatar-button:disabled {
+  cursor: not-allowed;
+  filter: grayscale(1);
+  opacity: 0.45;
+}
+@media (hover: none) {
+  .ad-file-picker-avatar-edit { opacity: 1; transform: none; }
+}

@@ -9,7 +9,7 @@ Live docs: https://pro100dimka.github.io/adui/
 The package is installed from its GitHub release; React and ReactDOM are peer dependencies.
 
 ```bash
-npm install https://github.com/Pro100Dimka/adui/releases/download/v2.7.13/ad-voice-ui-2.7.13.tgz react react-dom
+npm install https://github.com/Pro100Dimka/adui/releases/download/v2.7.14/ad-voice-ui-2.7.14.tgz react react-dom
 ```
 
 Import the stylesheet once in the app entry point:
@@ -49,6 +49,12 @@ export function SettingsCard() {
 ```
 
 Every stateful component works both controlled (`value` + `onValueChange`) and uncontrolled (`defaultValue`).
+
+## DataTable
+
+`DataTable` includes sorting, per-column filters with distinct-value autocomplete, grouping and aggregates, search, selection, column visibility, CSV export, and responsive cards. Readers can resize columns by dragging the header edge or focusing it and pressing ←/→; double-clicking the edge restores its original width. `resizableColumns={false}` disables all handles, and `resizable: false` disables one column.
+
+Set `pageSize` to enable pagination. `pageSizeOptions` provides footer choices (the initial size is always included), and the footer shows the visible result range. The reset button clears sorting, filters, grouping, search, hidden columns, resized widths, and the chosen page size. See the live `DataTable` example in the documentation for complete column and row definitions.
 
 ## Entry points
 

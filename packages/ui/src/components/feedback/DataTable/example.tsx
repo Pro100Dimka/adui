@@ -1,4 +1,4 @@
-import { Playground, U, expr, jsx } from "../../../dev/exampleHelpers";
+import { Badge, DataTable } from "@ad-voice/ui";
 import type { DataTableColumn } from "@ad-voice/ui";
 
 type Track = {
@@ -62,65 +62,28 @@ const columns: DataTableColumn<Track>[] = [
     title: "Статус",
     value: (t) => statuses[t.status][0],
     render: (t) => (
-      <U.Badge size="sm" tone={statuses[t.status][1]}>
+      <Badge size="sm" tone={statuses[t.status][1]}>
         {statuses[t.status][0]}
-      </U.Badge>
+      </Badge>
     ),
   },
 ];
 
 export default function DataTableExample() {
   return (
-    <Playground
-      stretch
-      knobs={{
-        selectable: { value: true },
-        searchable: { value: true },
-        filterable: { value: true },
-        groupBy: { options: ["none", "artist", "status"], value: "artist" },
-        dense: { value: false },
-        striped: { value: false },
-        loading: { value: false },
-      }}
-      code={(v) =>
-        jsx("DataTable", {
-          caption: "Треки",
-          columns: expr("columns"),
-          rows: expr("tracks"),
-          rowKey: expr("(t) => t.id"),
-          defaultSort: expr('{ key: "plays", direction: "desc" }'),
-          pageSize: 6,
-          selectable: v.selectable,
-          searchable: v.searchable,
-          filterable: v.filterable,
-          groupable: true,
-          defaultGroupBy: v.groupBy === "none" ? undefined : v.groupBy,
-          dense: v.dense,
-          striped: v.striped,
-          loading: v.loading,
-        })
-      }
-    >
-      {(v) => (
-        <U.DataTable
-          style={{ width: "min(100%, 48rem)" }}
-          caption="Треки"
-          columns={columns}
-          rows={tracks}
-          rowKey={(t) => t.id}
-          defaultSort={{ key: "plays", direction: "desc" }}
-          pageSize={6}
-          selectable={v.selectable}
-          searchable={v.searchable}
-          filterable={v.filterable}
-          groupable
-          key={v.groupBy}
-          defaultGroupBy={v.groupBy === "none" ? null : v.groupBy}
-          dense={v.dense}
-          striped={v.striped}
-          loading={v.loading}
-        />
-      )}
-    </Playground>
+    <DataTable
+      caption="Треки"
+      columns={columns}
+      rows={tracks}
+      rowKey={(track) => track.id}
+      defaultSort={{ key: "plays", direction: "desc" }}
+      pageSize={6}
+      pageSizeOptions={[6, 12, 24]}
+      selectable
+      searchable
+      filterable
+      groupable
+      defaultGroupBy="artist"
+    />
   );
 }

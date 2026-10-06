@@ -1,7 +1,8 @@
 import { tr } from "../../../core/i18n";
-import { Fragment, useMemo, useRef, useState, type ReactNode } from "react";
+import { Fragment, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { mark, useControllable } from "../../../core/base";
 import { Button } from "../../controls/Button/Button";
+import { Autocomplete } from "../../controls/Autocomplete/Autocomplete";
 import { Checkbox } from "../../controls/Checkbox/Checkbox";
 import { IconButton } from "../../controls/IconButton/IconButton";
 import { NumberField } from "../../controls/NumberField/NumberField";
@@ -56,7 +57,7 @@ const describe = (filter: DataTableFilter) =>
       : `${filter.min ?? "…"} – ${filter.max ?? "…"}`;
 
 /** The filter editor in a column header's popover. */
-function FilterEditor({
+export function FilterEditor({
   kind,
   options,
   filter,
@@ -70,12 +71,13 @@ function FilterEditor({
   const [search, setSearch] = useState("");
   if (kind === "text")
     return (
-      <TextField
+      <Autocomplete
         size="sm"
         autoFocus
         placeholder={tr("Содержит…")}
         startAdornment={<Icon name="search" />}
         clearable
+        options={options}
         value={filter?.kind === "text" ? filter.text : ""}
         onValueChange={(text) => onChange(text ? { kind: "text", text } : undefined)}
       />
@@ -93,29 +95,36 @@ function FilterEditor({
       </div>
     );
   }
-  const chosen = filter?.kind === "values" ? filter.values : options;
-  const shown = search ? options.filter((o) => o.toLowerCase().includes(search.toLowerCase())) : options;
-  const toggle = (value: string) => {
-    const next = chosen.includes(value) ? chosen.filter((v) => v !== value) : [...chosen, value];
-    onChange(next.length === options.length ? undefined : { kind: "values", values: next });
-  };
+  const chosen = filter?.kind === "values" ? filter.values : [];
   return (
     <div className="ad-data-table-values">
-      {options.length > 8 && (
-        <TextField size="sm" autoFocus placeholder={tr("Найти значение…")} startAdornment={<Icon name="search" />} value={search} onValueChange={setSearch} />
-      )}
-      <Checkbox
+      <Autocomplete
         size="sm"
-        label={tr("Все")}
-        checked={chosen.length === options.length}
-        indeterminate={chosen.length > 0 && chosen.length < options.length}
-        onValueChange={(all) => onChange(all ? undefined : { kind: "values", values: [] })}
+        autoFocus
+        placeholder={tr("Найти значение…")}
+        startAdornment={<Icon name="search" />}
+        options={options.filter((value) => !chosen.includes(value))}
+        value={search}
+        onValueChange={setSearch}
+        onOptionSelect={(value) => {
+          onChange({ kind: "values", values: [...chosen, value] });
+          setSearch("");
+        }}
       />
-      <div className="ad-data-table-values-list">
-        {shown.map((value) => (
-          <Checkbox key={value} size="sm" label={value || "—"} checked={chosen.includes(value)} onValueChange={() => toggle(value)} />
+      {chosen.length > 0 && <div className="ad-data-table-values-list">
+        {chosen.map((value) => (
+          <span key={value} className="ad-data-table-chip">
+            {value || "—"}
+            <button type="button" aria-label={tr("Убрать {value}", { value: value || "—" })}
+              onClick={() => {
+                const next = chosen.filter((item) => item !== value);
+                onChange(next.length ? { kind: "values", values: next } : undefined);
+              }}>
+              <Icon name="close" />
+            </button>
+          </span>
         ))}
-      </div>
+      </div>}
     </div>
   );
 }
@@ -161,10 +170,22 @@ const field = (row: DataTableRow, key: string) =>
   (row as Record<string, unknown>)[key];
 
 /** Text of a cell for sorting and search: numbers stay numbers. */
-function cellValue(column: DataTableColumn, row: DataTableRow) {
+function cellValue<T extends DataTableRow>(column: DataTableColumn<T>, row: T) {
   const raw = column.value ? column.value(row) : field(row, column.key);
   return typeof raw === "number" ? raw : raw == null ? "" : String(raw);
 }
+
+/** Export the filtered, sorted rows with the same columns the reader can see. */
+export const dataTableCsv = <T extends DataTableRow>(columns: DataTableColumn<T>[], rows: T[]) => {
+  const quote = (value: string | number) => {
+    const safe = typeof value === "string" && /^[=+\-@\t\r]/.test(value) ? `'${value}` : String(value);
+    return `"${safe.replace(/"/g, '""')}"`;
+  };
+  return [
+    columns.map((column) => typeof column.title === "string" ? column.title : column.key),
+    ...rows.map((row) => columns.map((column) => cellValue(column, row))),
+  ].map((cells) => cells.map(quote).join(",")).join("\r\n");
+};
 
 /**
  * A data table: sortable columns, row selection with "select all", search, pages, a sticky
@@ -193,6 +214,8 @@ export function DataTable<T extends DataTableRow = DataTableRow>({
   defaultGroupBy = null,
   onGroupByChange,
   pageSize,
+  pageSizeOptions,
+  resizableColumns = true,
   maxHeight,
   dense = false,
   striped = false,
@@ -221,7 +244,15 @@ export function DataTable<T extends DataTableRow = DataTableRow>({
     onSelectionChange,
   );
   const [query, setQuery] = useState("");
+  const [hiddenColumns, setHiddenColumns] = useState<string[]>([]);
+  const [columnWidths, setColumnWidths] = useState<Record<string, number>>({});
+  const resizing = useRef<{ key: string; x: number; width: number } | null>(null);
+  const [columnsOpen, setColumnsOpen] = useState(false);
+  const columnsAnchor = useRef<HTMLButtonElement>(null);
+  const visibleCols = cols.filter((column) => !hiddenColumns.includes(column.key));
   const [page, setPage] = useState(0);
+  const [perPage, setPerPage] = useState(pageSize);
+  useEffect(() => setPerPage(pageSize), [pageSize]);
   const [filters, setFilters] = useControllable<Filters>(controlledFilters, defaultFilters, onFiltersChange);
   const [groupBy, setGroupBy] = useControllable<string | null>(controlledGroupBy, defaultGroupBy, onGroupByChange);
   const [collapsed, setCollapsed] = useState<ReadonlySet<string>>(new Set());
@@ -275,11 +306,26 @@ export function DataTable<T extends DataTableRow = DataTableRow>({
       }))
     : [];
   const ordered = groupColumn ? groups.flatMap((group) => (collapsed.has(group.name) ? [] : group.items)) : sorted;
-  const pages = pageSize ? Math.max(1, Math.ceil(ordered.length / pageSize)) : 1;
+  const pages = perPage ? Math.max(1, Math.ceil(ordered.length / perPage)) : 1;
   const current = Math.min(page, pages - 1);
-  const visible = pageSize
-    ? ordered.slice(current * pageSize, (current + 1) * pageSize)
+  const visible = perPage
+    ? ordered.slice(current * perPage, (current + 1) * perPage)
     : ordered;
+  const sizes = [...new Set([pageSize, ...(pageSizeOptions ?? [10, 25, 50])]
+    .filter((size): size is number => typeof size === "number" && Number.isInteger(size) && size > 0))].sort((a, b) => a - b);
+  const viewChanged = !!(query || sort || groupBy || activeFilters.length || hiddenColumns.length || Object.keys(columnWidths).length || collapsed.size || perPage !== pageSize);
+  const resetView = () => {
+    setQuery("");
+    setSort(null);
+    setFilters({});
+    setGroupBy(null);
+    setHiddenColumns([]);
+    setColumnWidths({});
+    setCollapsed(new Set());
+    setPerPage(pageSize);
+    setPage(0);
+    setColumnsOpen(false);
+  };
   const toggleGroup = (name: string) =>
     setCollapsed((all) => {
       const next = new Set(all);
@@ -287,21 +333,25 @@ export function DataTable<T extends DataTableRow = DataTableRow>({
       else next.add(name);
       return next;
     });
+  const span = visibleCols.length + (selectable ? 1 : 0);
   /** The group header row: chevron, the group's value, its count and the columns' summaries. */
   const groupRow = (group: { name: string; items: typeof sorted }) => (
     <tr key={`group:${group.name}`} className="ad-data-table-group" data-collapsed={collapsed.has(group.name) || undefined}>
-      <td colSpan={selectable ? 2 : 1}>
-        <button type="button" className="ad-data-table-group-toggle" aria-expanded={!collapsed.has(group.name)} onClick={() => toggleGroup(group.name)}>
-          <Icon name="chevron" />
-          <span>{group.name || "—"}</span>
-          <span className="ad-data-table-group-count">{group.items.length}</span>
-        </button>
+      <td colSpan={span}>
+        <div className="ad-data-table-group-content">
+          <button type="button" className="ad-data-table-group-toggle" aria-expanded={!collapsed.has(group.name)} onClick={() => toggleGroup(group.name)}>
+            <Icon name="chevron" />
+            <span>{group.name || "—"}</span>
+            <span className="ad-data-table-group-count">{group.items.length}</span>
+          </button>
+          <div className="ad-data-table-group-summaries">{visibleCols.filter((column) => column.aggregate && column.key !== visibleCols[0]?.key).map((column) => (
+            <span key={column.key} className="ad-data-table-group-summary">
+              <span>{column.title}</span>
+              <strong>{column.aggregate?.(group.items.map(({ row }) => row))}</strong>
+            </span>
+          ))}</div>
+        </div>
       </td>
-      {cols.slice(1).map((column) => (
-        <td key={column.key} data-align={column.align}>
-          {column.aggregate?.(group.items.map(({ row }) => row))}
-        </td>
-      ))}
     </tr>
   );
 
@@ -331,9 +381,8 @@ export function DataTable<T extends DataTableRow = DataTableRow>({
           : null,
     );
 
-  const span = cols.length + (selectable ? 1 : 0);
   const body: ReactNode = loading ? (
-    Array.from({ length: Math.min(pageSize ?? 4, 6) }, (_, i) => (
+    Array.from({ length: Math.min(perPage ?? 4, 6) }, (_, i) => (
       <tr key={i} className="ad-data-table-loading">
         {Array.from({ length: span }, (__, j) => (
           <td key={j}>
@@ -379,8 +428,10 @@ export function DataTable<T extends DataTableRow = DataTableRow>({
             />
           </td>
         )}
-        {cols.map((column) => (
-          <td key={column.key} data-align={column.align}>
+        {visibleCols.map((column) => (
+          <td key={column.key} data-align={column.align}
+            data-label={typeof column.title === "string" ? column.title : column.key}
+            data-primary={column.key === visibleCols[0]?.key || undefined}>
             {column.render
               ? column.render(row, index)
               : (field(row, column.key) as ReactNode)}
@@ -397,8 +448,9 @@ export function DataTable<T extends DataTableRow = DataTableRow>({
       {...mark("DataTable", p)}
       data-dense={dense || undefined}
       data-striped={striped || undefined}
+      data-selectable={selectable || undefined}
     >
-      {(caption || searchable || groupable) && (
+      {(caption || searchable || groupable || cols.length > 1 || viewChanged) && (
         <div className="ad-data-table-bar">
           {caption && <strong>{caption}</strong>}
           {groupable && (
@@ -435,6 +487,33 @@ export function DataTable<T extends DataTableRow = DataTableRow>({
               aria-label={tr("Поиск по таблице")}
             />
           )}
+          <span className="ad-data-table-tools">
+            {viewChanged && <IconButton size="sm" variant="ghost" icon="reset"
+              label={tr("Сбросить вид")} onClick={resetView} />}
+            {cols.length > 1 && <>
+              <IconButton ref={columnsAnchor} size="sm" variant="ghost" icon="grid"
+                label={tr("Столбцы")} aria-expanded={columnsOpen} onClick={() => setColumnsOpen((open) => !open)} />
+              <Popover open={columnsOpen} onOpenChange={setColumnsOpen} anchorRef={columnsAnchor} label={tr("Столбцы")}>
+                <div className="ad-data-table-columns">
+                  {cols.map((column) => <Checkbox key={column.key} size="sm"
+                    label={typeof column.title === "string" ? column.title : column.key}
+                    checked={!hiddenColumns.includes(column.key)}
+                    onValueChange={(shown) => setHiddenColumns((current) => shown
+                      ? current.filter((key) => key !== column.key)
+                      : visibleCols.length > 1 ? [...current, column.key] : current)} />)}
+                </div>
+              </Popover>
+            </>}
+            <IconButton size="sm" variant="ghost" icon="download" label={tr("Экспорт CSV")}
+              onClick={() => {
+                const url = URL.createObjectURL(new Blob(["\uFEFF", dataTableCsv(visibleCols, sorted.map(({ row }) => row))], { type: "text/csv;charset=utf-8" }));
+                const link = document.createElement("a");
+                link.href = url;
+                link.download = "data-table.csv";
+                link.click();
+                window.setTimeout(() => URL.revokeObjectURL(url), 0);
+              }} />
+          </span>
         </div>
       )}
       {activeFilters.length > 0 && (
@@ -467,16 +546,19 @@ export function DataTable<T extends DataTableRow = DataTableRow>({
                   />
                 </th>
               )}
-              {cols.map((column) => {
+              {visibleCols.map((column) => {
                 const sortable = column.sortable ?? true;
                 const direction =
                   sort?.key === column.key ? sort.direction : undefined;
+                const width = columnWidths[column.key];
+                const resize = (delta: number, base: number) =>
+                  setColumnWidths((current) => ({ ...current, [column.key]: Math.max(96, Math.min(800, Math.round(base + delta))) }));
                 return (
                   <th
                     key={column.key}
                     scope="col"
                     data-align={column.align}
-                    style={{ width: column.width }}
+                    style={{ width: width ?? column.width }}
                     aria-sort={
                       direction === "asc"
                         ? "ascending"
@@ -503,12 +585,47 @@ export function DataTable<T extends DataTableRow = DataTableRow>({
                         <ColumnFilter
                           column={column as AnyColumn}
                           kind={kinds.get(column.key) as "text" | "values" | "range"}
-                          options={kinds.get(column.key) === "values" ? distinct(column as AnyColumn, rows) : []}
+                          options={distinct(column as AnyColumn, rows)}
                           filter={filters[column.key]}
                           onChange={(filter) => setFilter(column.key, filter)}
                         />
                       )}
                     </span>
+                    {resizableColumns && column.resizable !== false && (
+                      <span className="ad-data-table-resize" role="separator" tabIndex={0}
+                        aria-orientation="vertical"
+                        aria-label={tr("Изменить ширину: {title}", { title: typeof column.title === "string" ? column.title : column.key })}
+                        aria-valuemin={96} aria-valuemax={800}
+                        aria-valuenow={width}
+                        aria-valuetext={width ? `${width}px` : column.width ?? tr("Авто")}
+                        onPointerDown={(event) => {
+                          if (event.button !== 0) return;
+                          event.preventDefault();
+                          const measured = event.currentTarget.closest("th")?.getBoundingClientRect().width ?? 160;
+                          resizing.current = { key: column.key, x: event.clientX, width: measured };
+                          event.currentTarget.setPointerCapture(event.pointerId);
+                        }}
+                        onPointerMove={(event) => {
+                          const active = resizing.current;
+                          if (active?.key === column.key) resize(event.clientX - active.x, active.width);
+                        }}
+                        onPointerUp={(event) => {
+                          if (resizing.current?.key === column.key) resizing.current = null;
+                          if (event.currentTarget.hasPointerCapture(event.pointerId)) event.currentTarget.releasePointerCapture(event.pointerId);
+                        }}
+                        onLostPointerCapture={() => { if (resizing.current?.key === column.key) resizing.current = null; }}
+                        onDoubleClick={() => setColumnWidths((current) => {
+                          const next = { ...current };
+                          delete next[column.key];
+                          return next;
+                        })}
+                        onKeyDown={(event) => {
+                          if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
+                          event.preventDefault();
+                          const measured = event.currentTarget.closest("th")?.getBoundingClientRect().width ?? 160;
+                          resize(event.key === "ArrowRight" ? 16 : -16, width ?? measured);
+                        }} />
+                    )}
                   </th>
                 );
               })}
@@ -517,14 +634,26 @@ export function DataTable<T extends DataTableRow = DataTableRow>({
           <tbody>{body}</tbody>
         </table>
       </div>
-      {(pageSize || activeFilters.length > 0 || (selectable && selection.length > 0)) && (
+      {(perPage || activeFilters.length > 0 || (selectable && selection.length > 0)) && (
         <div className="ad-data-table-foot">
           <span>
             {selectable && selection.length > 0
               ? tr("Выбрано: {count}", { count: selection.length })
-              : tr(query || activeFilters.length ? "{count} найдено" : "{count} всего", { count: sorted.length })}
+              : perPage
+                ? tr("{from}–{to} из {count}", { from: visible.length ? current * perPage + 1 : 0, to: current * perPage + visible.length, count: sorted.length })
+                : tr(query || activeFilters.length ? "{count} найдено" : "{count} всего", { count: sorted.length })}
           </span>
-          {pageSize && pages > 1 && (
+          {selectable && selection.length > 0 && (
+            <Button size="xs" variant="ghost" icon="close" onClick={() => setSelection([])}>
+              {tr("Снять выделение")}
+            </Button>
+          )}
+          {perPage && <span className="ad-data-table-page-controls">
+            <Select<number> size="sm" label={tr("Строк на странице")}
+              value={perPage}
+              options={sizes.map((size) => ({ value: size, label: String(size) }))}
+              onValueChange={(size) => { if (size) { setPerPage(size); setPage(0); } }} />
+          {pages > 1 && (
             <span className="ad-data-table-pages">
               <IconButton
                 size="xs"
@@ -548,6 +677,7 @@ export function DataTable<T extends DataTableRow = DataTableRow>({
               />
             </span>
           )}
+          </span>}
         </div>
       )}
     </div>

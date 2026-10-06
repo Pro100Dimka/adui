@@ -13,7 +13,7 @@ export const Avatar = ({ variant = "initials", src, badge, presence, ...p }: Ava
     role="img"
     aria-label={p.name ?? tr("Пользователь")}
   >
-    {variant === "host" && <HostSeal photo={src} />}
+    {variant === "host" && <HostSeal photo={src} name={p.name} />}
     {variant !== "host" &&
       (src ? <img className="ad-avatar-photo" src={src} alt="" draggable={false} /> : initialOf(p.name))}
     {badge && variant !== "host" && <span className="ad-avatar-badge">{badge}</span>}

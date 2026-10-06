@@ -1,4 +1,4 @@
-const e=`import React, { useEffect, useRef } from "react";
+const n=`import React, { useEffect, useRef } from "react";
 import type {
   ButtonHTMLAttributes,
   InputHTMLAttributes,
@@ -297,15 +297,19 @@ export interface FilePickerProps extends CommonProps {
   label?: string;
   description?: string;
   icon?: string;
+  /** Name and existing photo used by the avatar chooser. */
+  name?: string;
+  src?: string;
+  avatarVariant?: "initials" | "host";
   accept?: string;
   multiple?: boolean;
   onFiles?: (files: File[]) => void;
-  /** "zone" is a large drop area: icon, title, the picked name or hint; files can be dropped on it. */
-  variant?: "button" | "zone";
+  /** "zone" is a large drop area; "avatar" is an animated image chooser with an edit affordance. */
+  variant?: "button" | "zone" | "avatar";
   /** Your own chooser instead of the browser's file input (e.g. a native dialog of a desktop app). */
   onPick?: () => void;
   /** Name of the chosen file, when the choice is kept outside (with \`onPick\`). */
   value?: string;
   disabled?: boolean;
 }
-`;export{e as default};
+`;export{n as default};

@@ -1,23 +1,23 @@
-import { useMemo, useRef } from "react";
-import { SvgAsset } from "../../../core/artwork";
-import type { VectorNode } from "../../../core/base";
-import { useDecoration } from "../../../core/motion/hooks";
-import { illustrations } from "../shared";
-
+const n=`import { useMemo, useRef } from "react";\r
+import { SvgAsset } from "../../../core/artwork";\r
+import type { VectorNode } from "../../../core/base";\r
+import { useDecoration } from "../../../core/motion/hooks";\r
+import { illustrations } from "../shared";\r
+\r
 /** The seal's face circle; a photo is clipped to it and drawn under the rings and label. */
-const facePhoto = (src: string): VectorNode => ({
-  tag: "image",
-  props: {
-    className: "host-emblem__photo",
-    x: "20.65",
-    y: "19.15",
-    width: "88.7",
-    height: "88.7",
-    preserveAspectRatio: "xMidYMid slice",
-    clipPath: "url(#hostv2-face-clip)",
-    href: src,
-  },
-});
+const facePhoto = (src: string): VectorNode => ({\r
+  tag: "image",\r
+  props: {\r
+    className: "host-emblem__photo",\r
+    x: "20.65",\r
+    y: "19.15",\r
+    width: "88.7",\r
+    height: "88.7",\r
+    preserveAspectRatio: "xMidYMid slice",\r
+    clipPath: "url(#hostv2-face-clip)",\r
+    href: src,\r
+  },\r
+});\r
 const withPerson = (seal: VectorNode, photo?: string, name?: string): VectorNode => {
   const person = name?.trim();
   if ((!photo && !person) || !seal.children) return seal;
@@ -52,27 +52,28 @@ const withPerson = (seal: VectorNode, photo?: string, name?: string): VectorNode
     }),
   };
 };
-
-/** The host's neon seal: a crown (or the host's photo) inside two counter-rotating rings of light. */
+\r
+/** The host's neon seal: a crown (or the host's photo) inside two counter-rotating rings of light. */\r
 export function HostSeal({ photo, name }: { photo?: string; name?: string }) {
-  const ref = useRef<HTMLSpanElement>(null);
-  useDecoration(ref, (t) =>
-    ref.current
-      ?.querySelectorAll<SVGGElement>("[data-host-orbit]")
-      .forEach((g) => {
-        const inner =
-          g.classList.contains("host-motion__inner-rear") ||
-          g.classList.contains("host-motion__inner-front");
-        g.setAttribute(
-          "transform",
-          `rotate(${t * (inner ? 360 / 5.6 : -360 / 8.4)} 65 65)`,
-        );
-      }),
-  );
+  const ref = useRef<HTMLSpanElement>(null);\r
+  useDecoration(ref, (t) =>\r
+    ref.current\r
+      ?.querySelectorAll<SVGGElement>("[data-host-orbit]")\r
+      .forEach((g) => {\r
+        const inner =\r
+          g.classList.contains("host-motion__inner-rear") ||\r
+          g.classList.contains("host-motion__inner-front");\r
+        g.setAttribute(\r
+          "transform",\r
+          \`rotate(\${t * (inner ? 360 / 5.6 : -360 / 8.4)} 65 65)\`,\r
+        );\r
+      }),\r
+  );\r
   const node = useMemo(() => withPerson(illustrations.host, photo, name), [photo, name]);
-  return (
-    <span ref={ref} className="ad-host-seal" aria-hidden="true">
-      <SvgAsset node={node} />
-    </span>
-  );
-}
+  return (\r
+    <span ref={ref} className="ad-host-seal" aria-hidden="true">\r
+      <SvgAsset node={node} />\r
+    </span>\r
+  );\r
+}\r
+`;export{n as default};

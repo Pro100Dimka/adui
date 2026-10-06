@@ -1,4 +1,4 @@
-import c from"./DatabaseArt-qdeT9kYx.js";import p from"./Landscape-47JMUN06.js";import u from"./NeonWaves-5bJ7SJZX.js";import m from"./Planet-STJmJp8W.js";import d from"./ServerArt-BP0zp3Lc.js";import g from"./Spectrum-CS9UadPh.js";import _ from"./useArtwork-3FWzfxNY.js";import v from"./Autocomplete-B4Cp_lcN.js";import f from"./Button-sh7IQtPP.js";import b from"./Checkbox-BSH0DmWy.js";import x from"./Chip-CzKts9RL.js";import y from"./ChipField-SP5hF6Io.js";import k from"./ColorPicker-ChMM1LXn.js";import h from"./color-DfIqQghc.js";import S from"./DatePicker-D1FFM3Bp.js";import P from"./FilePicker-BlRPp_6z.js";import T from"./IconButton-C2KPQ4gG.js";import w from"./InputBase-p92QfRgS.js";import U from"./Link-BRz5XpCU.js";import B from"./NumberField-Coc3lS1r.js";import z from"./PeoplePicker-PAhuhFLt.js";import C from"./SegmentedControl-hqeLOgtX.js";import E from"./Select-DKdJrYuR.js";import M from"./Slider-l__AnmZH.js";import I from"./SplitButton-DtO9-GGs.js";import j from"./Switch-C5u6YsX7.js";import A from"./Tab-DKZgIMpU.js";import D from"./Tabs-CAT7VM8X.js";import V from"./TagInput-DvG7l1Fp.js";import R from"./TextArea-BuqIFK9l.js";import L from"./TextField-gyVoTpxK.js";import F from"./ThemePicker-C1HZ1A_e.js";import H from"./ToggleButton-eyE81cGn.js";import K from"./internal-BW-vLfgx.js";import N from"./shared-CMp3ziKA.js";import G from"./PianoRoll-YXiqRpbQ.js";import O from"./AnimatedBorder-B7j6aBoQ.js";import W from"./Beacon-C1KRD-rR.js";import $ from"./Equalizer-CKM0KLQ0.js";import q from"./GlowText-Ceuvscy9.js";import J from"./ImageShine-C_8YRrMp.js";import X from"./Marquee-BEUqrEz3.js";import Q from"./MelodixText-612OVQKU.js";import Y from"./Reveal-CkDN7IpK.js";import Z from"./Shimmer-C_E_zVrq.js";import ee from"./Sparkles-ChWOyK3q.js";import ne from"./Spotlight-CBtiukR_.js";import te from"./Tilt-Ny5pPIWG.js";import re from"./Badge-B3Uvkbl-.js";import oe from"./CollapsibleSection-Ccu5Fu_2.js";import ae from"./DataTable-va6Ru1Wx.js";import se from"./Dialog-DVN9NfS-.js";import ie from"./EmptyState-CIbbF8Mg.js";import le from"./KeyValueList-BDauVJxp.js";import ce from"./Menu-TmTKm1GE.js";import pe from"./MenuItem-BuHhd4Nc.js";import ue from"./MessageBar-3UqBxsB0.js";import me from"./Popover-CZidQAa1.js";import de from"./ProgressBar-BL7qZqLB.js";import ge from"./SignalBars-CPLlsHt4.js";import _e from"./StatusIndicator-DWSHM7DP.js";import ve from"./Steps-C1ULYvbW.js";import fe from"./Toast-DLXqZV1v.js";import be from"./Tooltip-EMZ39PEG.js";import xe from"./shared-CCpLa_mJ.js";import ye from"./Form-Dn7dgu6X.js";import ke from"./FormFields-j013scAz.js";import he from"./Loader-BJA72oQY.js";import Se from"./LoaderGenerator-BjAqg4z2.js";import Pe from"./ThemeEditor-D-hQ6LeR.js";import Te from"./themeConfig-B-bcVFJ2.js";import we from"./ThemeProvider-CIZWK25f.js";import Ue from"./Typography-CV9a5zW6.js";import Be from"./Avatar-YDBX5EMd.js";import ze from"./HostSeal-CJCgwHm-.js";import Ce from"./BrandMark-DotDq9Lz.js";import Ee from"./ButtonGroup-CRyjVgYo.js";import Me from"./Card-D6zWqazr.js";import Ie from"./DialogActions-FwjolcoO.js";import je from"./DialogBody-1lb1ZdjN.js";import Ae from"./Divider-De6fTrJs.js";import De from"./FloatingPanel-BEspSYsO.js";import Ve from"./useFloatingPanel-CxfEngE7.js";import Re from"./Grid-Bj4TW3CI.js";import Le from"./Header-Dsq6a2XY.js";import Fe from"./Icon-JpwGvxHS.js";import He from"./Illustration-CJFClYMT.js";import Ke from"./ScrollArea-CrsXj-VC.js";import Ne from"./Stack-C9Yq2HyD.js";import Ge from"./StatTile-hH9icy0M.js";import Oe from"./TabPanel-lngTbXEq.js";import We from"./Text-BFUQ2_Lh.js";import $e from"./Toolbar-C9O3dgdH.js";import qe from"./shared-Dxm-B2rO.js";import Je from"./AudioPlayer-C8_IQPkb.js";import Xe from"./KaraokeLyrics-PE2fC0RD.js";import Qe from"./LevelMeter-D90WiDA8.js";import Ye from"./MediaCard-DE9GFB_m.js";import Ze from"./MelodyRoll-BvvmLMbK.js";import en from"./PianoKeyboard-CSbjownQ.js";import nn from"./RotaryKnob-QaGp-8ta.js";import tn from"./Sparkline-BYMcY9_1.js";import rn from"./WaveDecoration-DrUrugMJ.js";import on from"./Waveform-BllivXfC.js";import an from"./useWaveformPeaks-Cj4W_gBs.js";import sn from"./shared-OXFEVzS3.js";import ln from"./Router-VZTbXUDe.js";import cn from"./core-BbaIeRdp.js";import pn from"./artwork-CI-8a25S.js";import un from"./base-DClxvfeX.js";import mn from"./environment-5dd4eKYm.js";import dn from"./i18n-DwFUGYFu.js";import gn from"./messages-iDqOl0EG.js";import _n from"./motion-engine.d-D3SCGgY2.js";import vn from"./hooks-G-nrPBAH.js";import fn from"./noise-Cq-IqxEs.js";import bn from"./context-Btps8GxD.js";import xn from"./responsive-Bbu5-Dlu.js";import yn from"./editor-DQx1QbPv.js";import kn from"./forms-S3Ef8qae.js";import hn from"./index-BDxLCeBG.js";import Sn from"./router-wuGPPYZY.js";import Pn from"./typography-Cara87qI.js";const Tn=`import { DatabaseArt } from "@ad-voice/ui";
+import c from"./DatabaseArt-qdeT9kYx.js";import p from"./Landscape-47JMUN06.js";import u from"./NeonWaves-5bJ7SJZX.js";import m from"./Planet-STJmJp8W.js";import d from"./ServerArt-BP0zp3Lc.js";import g from"./Spectrum-CS9UadPh.js";import _ from"./useArtwork-3FWzfxNY.js";import v from"./Autocomplete-B4Cp_lcN.js";import f from"./Button-sh7IQtPP.js";import b from"./Checkbox-BSH0DmWy.js";import x from"./Chip-CzKts9RL.js";import y from"./ChipField-SP5hF6Io.js";import k from"./ColorPicker-ChMM1LXn.js";import h from"./color-DfIqQghc.js";import S from"./DatePicker-D1FFM3Bp.js";import P from"./FilePicker-XYz-8EAF.js";import T from"./IconButton-C2KPQ4gG.js";import w from"./InputBase-p92QfRgS.js";import U from"./Link-BRz5XpCU.js";import B from"./NumberField-Coc3lS1r.js";import z from"./PeoplePicker-PAhuhFLt.js";import C from"./SegmentedControl-hqeLOgtX.js";import E from"./Select-DKdJrYuR.js";import M from"./Slider-l__AnmZH.js";import I from"./SplitButton-DtO9-GGs.js";import A from"./Switch-C5u6YsX7.js";import j from"./Tab-DKZgIMpU.js";import D from"./Tabs-CAT7VM8X.js";import V from"./TagInput-DvG7l1Fp.js";import R from"./TextArea-BuqIFK9l.js";import L from"./TextField-gyVoTpxK.js";import F from"./ThemePicker-C1HZ1A_e.js";import H from"./ToggleButton-eyE81cGn.js";import K from"./internal-BW-vLfgx.js";import N from"./shared-CX9mh2o3.js";import G from"./PianoRoll-YXiqRpbQ.js";import O from"./AnimatedBorder-B7j6aBoQ.js";import W from"./Beacon-C1KRD-rR.js";import $ from"./Equalizer-CKM0KLQ0.js";import q from"./GlowText-Ceuvscy9.js";import J from"./ImageShine-C_8YRrMp.js";import X from"./Marquee-BEUqrEz3.js";import Y from"./MelodixText-612OVQKU.js";import Q from"./Reveal-CkDN7IpK.js";import Z from"./Shimmer-C_E_zVrq.js";import ee from"./Sparkles-ChWOyK3q.js";import ne from"./Spotlight-CBtiukR_.js";import te from"./Tilt-Ny5pPIWG.js";import re from"./Badge-B3Uvkbl-.js";import oe from"./CollapsibleSection-Ccu5Fu_2.js";import ae from"./DataTable-KEPKjp5M.js";import se from"./Dialog-DVN9NfS-.js";import ie from"./EmptyState-CIbbF8Mg.js";import le from"./KeyValueList-BDauVJxp.js";import ce from"./Menu-TmTKm1GE.js";import pe from"./MenuItem-BuHhd4Nc.js";import ue from"./MessageBar-3UqBxsB0.js";import me from"./Popover-CZidQAa1.js";import de from"./ProgressBar-BL7qZqLB.js";import ge from"./SignalBars-CPLlsHt4.js";import _e from"./StatusIndicator-DWSHM7DP.js";import ve from"./Steps-C1ULYvbW.js";import fe from"./Toast-DLXqZV1v.js";import be from"./Tooltip-EMZ39PEG.js";import xe from"./shared-DSt0OGlR.js";import ye from"./Form-Dn7dgu6X.js";import ke from"./FormFields-B7hseFN5.js";import he from"./Loader-BJA72oQY.js";import Se from"./LoaderGenerator-BjAqg4z2.js";import Pe from"./ThemeEditor-D-hQ6LeR.js";import Te from"./themeConfig-B-bcVFJ2.js";import we from"./ThemeProvider-CIZWK25f.js";import Ue from"./Typography-CV9a5zW6.js";import Be from"./Avatar-2jW-G2n_.js";import ze from"./HostSeal-MIG2AUAU.js";import Ce from"./BrandMark-DotDq9Lz.js";import Ee from"./ButtonGroup-CRyjVgYo.js";import Me from"./Card-D6zWqazr.js";import Ie from"./DialogActions-FwjolcoO.js";import Ae from"./DialogBody-1lb1ZdjN.js";import je from"./Divider-De6fTrJs.js";import De from"./FloatingPanel-BEspSYsO.js";import Ve from"./useFloatingPanel-CxfEngE7.js";import Re from"./Grid-Bj4TW3CI.js";import Le from"./Header-Dsq6a2XY.js";import Fe from"./Icon-JpwGvxHS.js";import He from"./Illustration-CJFClYMT.js";import Ke from"./ScrollArea-CrsXj-VC.js";import Ne from"./Stack-C9Yq2HyD.js";import Ge from"./StatTile-hH9icy0M.js";import Oe from"./TabPanel-lngTbXEq.js";import We from"./Text-BFUQ2_Lh.js";import $e from"./Toolbar-C9O3dgdH.js";import qe from"./shared-Dxm-B2rO.js";import Je from"./AudioPlayer-C8_IQPkb.js";import Xe from"./KaraokeLyrics-PE2fC0RD.js";import Ye from"./LevelMeter-D90WiDA8.js";import Qe from"./MediaCard-DE9GFB_m.js";import Ze from"./MelodyRoll-BvvmLMbK.js";import en from"./PianoKeyboard-CSbjownQ.js";import nn from"./RotaryKnob-QaGp-8ta.js";import tn from"./Sparkline-BYMcY9_1.js";import rn from"./WaveDecoration-DrUrugMJ.js";import on from"./Waveform-BllivXfC.js";import an from"./useWaveformPeaks-Cj4W_gBs.js";import sn from"./shared-OXFEVzS3.js";import ln from"./Router-VZTbXUDe.js";import cn from"./core-BbaIeRdp.js";import pn from"./artwork-CI-8a25S.js";import un from"./base-DClxvfeX.js";import mn from"./environment-5dd4eKYm.js";import dn from"./i18n-DwFUGYFu.js";import gn from"./messages-DRxdxkKB.js";import _n from"./motion-engine.d-D3SCGgY2.js";import vn from"./hooks-G-nrPBAH.js";import fn from"./noise-Cq-IqxEs.js";import bn from"./context-Btps8GxD.js";import xn from"./responsive-Bbu5-Dlu.js";import yn from"./editor-DQx1QbPv.js";import kn from"./forms-S3Ef8qae.js";import hn from"./index-BDxLCeBG.js";import Sn from"./router-wuGPPYZY.js";import Pn from"./typography-Cara87qI.js";const Tn=`import { DatabaseArt } from "@ad-voice/ui";
 
 export default function DatabaseArtExample() {
   return <DatabaseArt label="Хранилище записей" />;
@@ -79,13 +79,13 @@ export default function ServerArtExample() {
     </Playground>
   );
 }
-`,jn=`export default {\r
+`,An=`export default {\r
   name: "ServerArt",\r
   description:\r
     "Неоновая серверная стойка с мигающими светодиодами — для сервисов и развёртывания.",\r
   category: "motion",\r
 } as const;\r
-`,An=`import { Playground, U, jsx } from "../../../dev/exampleHelpers";
+`,jn=`import { Playground, U, jsx } from "../../../dev/exampleHelpers";
 
 export default function SpectrumExample() {
   return (
@@ -361,40 +361,46 @@ export default function FilePickerExample() {
   return (
     <Playground
       knobs={{
-        variant: { options: ["button", "zone"], value: "button" },
+        variant: { options: ["avatar", "button", "zone"], value: "avatar" },
         size: { options: sizes, value: "md" },
         multiple: { value: false },
       }}
-      code={(v, c) =>
-        jsx("FilePicker", {
-          label: "Выбрать запись",
-          description: "WAV, MP3 или FLAC",
-          accept: "audio/*",
-          multiple: v.multiple,
+      code={(v, c) => {
+        const avatar = v.variant === "avatar";
+        return jsx("FilePicker", {
+          label: avatar ? "Изменить фото" : "Выбрать запись",
+          description: avatar ? undefined : "WAV, MP3 или FLAC",
+          name: avatar ? "Pro100Yojik" : undefined,
+          accept: avatar ? "image/*" : "audio/*",
+          multiple: avatar ? undefined : v.multiple,
           size: c.size,
           variant: v.variant === "button" ? undefined : v.variant,
-        })
-      }
+        });
+      }}
     >
-      {(v) => (
+      {(v) => {
+        const avatar = v.variant === "avatar";
+        return (
         <U.FilePicker
-          label="Выбрать запись"
-          description="WAV, MP3 или FLAC"
-          accept="audio/*"
-          multiple={v.multiple}
+          label={avatar ? "Изменить фото" : "Выбрать запись"}
+          description={avatar ? undefined : "WAV, MP3 или FLAC"}
+          name={avatar ? "Pro100Yojik" : undefined}
+          accept={avatar ? "image/*" : "audio/*"}
+          multiple={avatar ? false : v.multiple}
           size={v.size}
-          variant={v.variant as "button" | "zone"}
+          variant={v.variant as "avatar" | "button" | "zone"}
         />
-      )}
+        );
+      }}
     </Playground>
   );
 }
 `,Xn=`export default {\r
   name: "FilePicker",\r
-  description: "Локальный выбор файлов без отправки",\r
+  description: "Выбор файла кнопкой, зоной или аватаром с предпросмотром фото",
   category: "fields",\r
 } as const;\r
-`,Qn=`import {\r
+`,Yn=`import {\r
   Playground,\r
   U,\r
   buttonVariants,\r
@@ -442,7 +448,7 @@ export default function IconButtonExample() {\r
     </Playground>\r
   );\r
 }\r
-`,Yn=`export default {\r
+`,Qn=`export default {\r
   name: "IconButton",\r
   description: "Компактная кнопка с одной иконкой",\r
   category: "buttons",\r
@@ -932,8 +938,8 @@ export default function TabExample() {\r
   description: "Отдельная вкладка с состоянием выбора",\r
   category: "navigation",\r
 } as const;\r
-`,xt=`import { useState } from "react";\r
-import { Playground, U, expr, jsx, sizes } from "../../../dev/exampleHelpers";\r
+`,xt=`import { useState } from "react";
+import { Stack, TabPanel, Tabs, Typography } from "@ad-voice/ui";
 \r
 const items = [\r
   { value: "view", label: "Внешний вид", icon: "palette", id: "tab-view" },\r
@@ -946,42 +952,17 @@ const panels: Record<string, string> = {\r
   keys: "API-ключи сервисов обработки.",\r
 };\r
 \r
-export default function TabsExample() {\r
-  const [tab, setTab] = useState("audio");\r
-  return (\r
-    <Playground\r
-      stretch\r
-      knobs={{ size: { options: sizes, value: "md" } }}\r
-      code={(_, c) =>\r
-        \`const items = \${JSON.stringify(items.map(({ value, label, icon }) => ({ value, label, icon })))};\\n\\n\` +\r
-        jsx("Tabs", {\r
-          label: "Настройки",\r
-          items: expr("items"),\r
-          value: expr("tab"),\r
-          onValueChange: expr("setTab"),\r
-          size: c.size,\r
-        })\r
-      }\r
-    >\r
-      {(v) => (\r
-        <U.Stack gap={3}>\r
-          <U.Tabs\r
-            label="Настройки"\r
-            items={items}\r
-            value={tab}\r
-            onValueChange={setTab}\r
-            size={v.size}\r
-          />\r
-          <U.TabPanel labelledBy={\`tab-\${tab}\`}>\r
-            <U.Typography variant="body-sm" tone="muted">\r
-              {panels[tab]}\r
-            </U.Typography>\r
-          </U.TabPanel>\r
-        </U.Stack>\r
-      )}\r
-    </Playground>\r
-  );\r
-}\r
+export default function TabsExample() {
+  const [tab, setTab] = useState("audio");
+  return (
+    <Stack gap={3}>
+      <Tabs label="Настройки" items={items} value={tab} onValueChange={setTab} />
+      <TabPanel labelledBy={\`tab-\${tab}\`}>
+        <Typography variant="body-sm" tone="muted">{panels[tab]}</Typography>
+      </TabPanel>
+    </Stack>
+  );
+}
 `,yt=`export default {\r
   name: "Tabs",\r
   description: "Переключение вкладок с фигурной подсветкой",\r
@@ -1294,13 +1275,13 @@ export default function AnimatedBorderExample() {
     </AnimatedBorder>
   );
 }
-`,jt=`export default {\r
+`,At=`export default {\r
   name: "AnimatedBorder",\r
   description:\r
     "Анимированная неоновая обводка для любого контейнера, не только Card.",\r
   category: "motion",\r
 };\r
-`,At=`import { Playground, U, expr, jsx } from "../../../dev/exampleHelpers";
+`,jt=`import { Playground, U, expr, jsx } from "../../../dev/exampleHelpers";
 
 export default function BeaconExample() {
   return (
@@ -1547,7 +1528,7 @@ export default function ShimmerExample() {
   description: "Заглушка загрузки: форма будущего контента и бегущий блик.",\r
   category: "motion",\r
 } as const;\r
-`,Qt=`import { Badge, Sparkles, Stack, Typography } from "@ad-voice/ui";
+`,Yt=`import { Badge, Sparkles, Stack, Typography } from "@ad-voice/ui";
 
 export default function SparklesExample() {
   return (
@@ -1561,7 +1542,7 @@ export default function SparklesExample() {
     </Stack>
   );
 }
-`,Yt=`export default {\r
+`,Qt=`export default {\r
   name: "Sparkles",\r
   description: "Мерцающие искры вокруг значка, награды или заголовка.",\r
   category: "motion",\r
@@ -1678,7 +1659,7 @@ export default function CollapsibleSectionExample() {
   description: "Раскрывающийся раздел",\r
   category: "feedback",\r
 } as const;\r
-`,ir=`import { Playground, U, expr, jsx } from "../../../dev/exampleHelpers";
+`,ir=`import { Badge, DataTable } from "@ad-voice/ui";
 import type { DataTableColumn } from "@ad-voice/ui";
 
 type Track = {
@@ -1742,66 +1723,29 @@ const columns: DataTableColumn<Track>[] = [
     title: "Статус",
     value: (t) => statuses[t.status][0],
     render: (t) => (
-      <U.Badge size="sm" tone={statuses[t.status][1]}>
+      <Badge size="sm" tone={statuses[t.status][1]}>
         {statuses[t.status][0]}
-      </U.Badge>
+      </Badge>
     ),
   },
 ];
 
 export default function DataTableExample() {
   return (
-    <Playground
-      stretch
-      knobs={{
-        selectable: { value: true },
-        searchable: { value: true },
-        filterable: { value: true },
-        groupBy: { options: ["none", "artist", "status"], value: "artist" },
-        dense: { value: false },
-        striped: { value: false },
-        loading: { value: false },
-      }}
-      code={(v) =>
-        jsx("DataTable", {
-          caption: "Треки",
-          columns: expr("columns"),
-          rows: expr("tracks"),
-          rowKey: expr("(t) => t.id"),
-          defaultSort: expr('{ key: "plays", direction: "desc" }'),
-          pageSize: 6,
-          selectable: v.selectable,
-          searchable: v.searchable,
-          filterable: v.filterable,
-          groupable: true,
-          defaultGroupBy: v.groupBy === "none" ? undefined : v.groupBy,
-          dense: v.dense,
-          striped: v.striped,
-          loading: v.loading,
-        })
-      }
-    >
-      {(v) => (
-        <U.DataTable
-          style={{ width: "min(100%, 48rem)" }}
-          caption="Треки"
-          columns={columns}
-          rows={tracks}
-          rowKey={(t) => t.id}
-          defaultSort={{ key: "plays", direction: "desc" }}
-          pageSize={6}
-          selectable={v.selectable}
-          searchable={v.searchable}
-          filterable={v.filterable}
-          groupable
-          key={v.groupBy}
-          defaultGroupBy={v.groupBy === "none" ? null : v.groupBy}
-          dense={v.dense}
-          striped={v.striped}
-          loading={v.loading}
-        />
-      )}
-    </Playground>
+    <DataTable
+      caption="Треки"
+      columns={columns}
+      rows={tracks}
+      rowKey={(track) => track.id}
+      defaultSort={{ key: "plays", direction: "desc" }}
+      pageSize={6}
+      pageSizeOptions={[6, 12, 24]}
+      selectable
+      searchable
+      filterable
+      groupable
+      defaultGroupBy="artist"
+    />
   );
 }
 `,lr=`export default {\r
@@ -2144,12 +2088,12 @@ export default function TooltipExample() {
     </Stack>
   );
 }
-`,jr=`export default {
+`,Ar=`export default {
   name: "Tooltip",
   description: "Подсказка при наведении и фокусе; не обрезается контейнерами",
   category: "feedback",
 } as const;
-`,Ar=`import { Button, Stack, TextField } from "@ad-voice/ui";\r
+`,jr=`import { Button, Stack, TextField } from "@ad-voice/ui";\r
 import { Form, useForm } from "@ad-voice/ui/forms";\r
 \r
 export default function FormExample() {\r
@@ -2199,9 +2143,10 @@ type Values = {
   notes: string;
   color: string;
   date: string;
-  recording: File[];
+  photo: File[];
   people: PickerPerson[];
   volume: number;
+  gain: number;
   tags: string[];
   confirmed: boolean;
   monitor: boolean;
@@ -2213,12 +2158,14 @@ const team: PickerPerson[] = [
   { id: "dmitry", name: "Дмитрий Андреев" },
 ];
 const fields: FormFieldDefinition<Values>[] = [
-  { name: "name", label: "Имя", span: column },
+  { name: "photo", kind: "file", label: "Изменить фото", span: { base: "full", sm: 2, lg: 2 },
+    props: { variant: "avatar", name: "Дмитрий", accept: "image/*" } },
+  { name: "name", label: "Имя", span: { base: "full", sm: 4, lg: 4 } },
   {
     name: "delay",
     kind: "number",
     label: "Задержка, мс",
-    span: column,
+    span: { base: "full", sm: 6, lg: 6 },
     props: { min: 0, max: 500, step: 10 },
   },
   {
@@ -2234,12 +2181,12 @@ const fields: FormFieldDefinition<Values>[] = [
   { name: "color", kind: "color", label: "Цвет комнаты", span: column },
   { name: "volume", kind: "slider", label: "Громкость", span: column,
     props: { min: 0, max: 100 } },
+  { name: "gain", kind: "rotary", label: "Усиление", span: column,
+    props: { size: "xs", showLabel: true, suffix: "%" } },
   { name: "tags", kind: "tags", label: "Теги", span: column,
     props: { suggestions: ["Музыка", "Эфир", "Запись"] } },
   { name: "people", kind: "people", label: "Участники", span: column,
     props: { people: team } },
-  { name: "recording", kind: "file", label: "Аудиофайл", span: column,
-    props: { accept: "audio/*" } },
   { name: "confirmed", kind: "checkbox", label: "Настройки проверены", span: column },
   {
     name: "monitor",
@@ -2260,9 +2207,10 @@ export default function FormFieldsExample() {\r
       notes: "",
       color: "#FF244C",
       date: "",
-      recording: [],
+      photo: [],
       people: [],
       volume: 65,
+      gain: 42,
       tags: [],
       confirmed: false,
       monitor: true,
@@ -2404,7 +2352,7 @@ export default function ThemeProviderExample() {
   category: "typography",
   wide: true,
 };
-`,$r=`import { Grid, Stack, Typography } from "@ad-voice/ui";\r
+`,$r=`import { Grid, Stack, Text, Typography } from "@ad-voice/ui";
 \r
 const headings = [\r
   ["display", "Neo UI"],\r
@@ -2444,7 +2392,7 @@ export default function TypographyExample() {\r
           </Grid>\r
         ))}\r
       </Grid>\r
-      <Stack direction="row" gap={3} wrap>\r
+      <Stack direction="row" gap={3} wrap>
         {(["muted", "accent", "success", "warning", "danger"] as const).map(\r
           (tone) => (\r
             <Typography key={tone} variant="body-sm" tone={tone}>\r
@@ -2452,7 +2400,12 @@ export default function TypographyExample() {\r
             </Typography>\r
           ),\r
         )}\r
-      </Stack>\r
+      </Stack>
+      <Stack gap={2}>
+        <Typography variant="label" tone="muted">Короткая запись через Text</Typography>
+        <Text as="h3" variant="title">Настройки комнаты</Text>
+        <Text variant="muted">Вспомогательная подпись</Text>
+      </Stack>
     </Stack>\r
   );\r
 }\r
@@ -2486,15 +2439,15 @@ export default function AvatarExample() {\r
 }\r
 `,Xr=`export default {\r
   name: "Avatar",\r
-  description: "Инициалы в неоновом кольце или анимированная печать ведущего с короной",\r
+  description: "Инициалы в неоновом кольце или анимированная печать с именем и фото",
   category: "typography",\r
 } as const;\r
-`,Qr=`import { BrandMark } from "@ad-voice/ui";\r
+`,Yr=`import { BrandMark } from "@ad-voice/ui";\r
 \r
 export default function BrandMarkExample() {\r
   return <BrandMark />;\r
 }\r
-`,Yr=`export default {\r
+`,Qr=`export default {\r
   name: "BrandMark",\r
   description: "Фирменная надпись и подпись студии",\r
   category: "typography",\r
@@ -2948,7 +2901,7 @@ export default function AudioPlayerExample() {
   category: "audio",\r
   wide: true,\r
 } as const;\r
-`,jo=`import { useRef, useState } from "react";
+`,Ao=`import { useRef, useState } from "react";
 import { KaraokeLyrics, useDecoration, type LyricWord } from "@ad-voice/ui";
 
 const lines = [["Ночь", "горит", "огнями"], ["и", "нас", "зовёт"], ["домой", "сквозь", "тьму"]];
@@ -2973,7 +2926,7 @@ export default function KaraokeLyricsExample() {
     </div>
   );
 }
-`,Ao=`export default {
+`,jo=`export default {
   name: "KaraokeLyrics",
   description: "Строки караоке: заливка по мере пения, следующая строка, отсчёт, реакция на барабаны.",
   category: "audio",
@@ -3299,12 +3252,12 @@ export default function WaveformExample() {
     </Playground>
   );
 }
-`,Qo=`export default {\r
+`,Yo=`export default {\r
   name: "Waveform",\r
   description: "Геометрия сигнала и позиция воспроизведения",\r
   category: "audio",\r
 } as const;\r
-`,Yo=`import { Typography } from "@ad-voice/ui";\r
+`,Qo=`import { Typography } from "@ad-voice/ui";\r
 import { matchRoute, type RouteDefinition } from "@ad-voice/ui/router";\r
 \r
 const routes: RouteDefinition[] = [\r
@@ -3623,5 +3576,5 @@ export const buttonVariants = [
   "danger",
 ] as const;
 export const inputVariants = ["outlined", "filled", "underlined"] as const;
-`,l=Object.entries(Object.assign({"../../../../packages/ui/src/components/artwork/DatabaseArt/DatabaseArt.tsx":c,"../../../../packages/ui/src/components/artwork/DatabaseArt/example.tsx":Tn,"../../../../packages/ui/src/components/artwork/DatabaseArt/meta.ts":wn,"../../../../packages/ui/src/components/artwork/Landscape/Landscape.tsx":p,"../../../../packages/ui/src/components/artwork/Landscape/example.tsx":Un,"../../../../packages/ui/src/components/artwork/Landscape/meta.ts":Bn,"../../../../packages/ui/src/components/artwork/NeonWaves/NeonWaves.tsx":u,"../../../../packages/ui/src/components/artwork/NeonWaves/example.tsx":zn,"../../../../packages/ui/src/components/artwork/NeonWaves/meta.ts":Cn,"../../../../packages/ui/src/components/artwork/Planet/Planet.tsx":m,"../../../../packages/ui/src/components/artwork/Planet/example.tsx":En,"../../../../packages/ui/src/components/artwork/Planet/meta.ts":Mn,"../../../../packages/ui/src/components/artwork/ServerArt/ServerArt.tsx":d,"../../../../packages/ui/src/components/artwork/ServerArt/example.tsx":In,"../../../../packages/ui/src/components/artwork/ServerArt/meta.ts":jn,"../../../../packages/ui/src/components/artwork/Spectrum/Spectrum.tsx":g,"../../../../packages/ui/src/components/artwork/Spectrum/example.tsx":An,"../../../../packages/ui/src/components/artwork/Spectrum/meta.ts":Dn,"../../../../packages/ui/src/components/artwork/useArtwork.ts":_,"../../../../packages/ui/src/components/controls/Autocomplete/Autocomplete.tsx":v,"../../../../packages/ui/src/components/controls/Autocomplete/example.tsx":Vn,"../../../../packages/ui/src/components/controls/Autocomplete/meta.ts":Rn,"../../../../packages/ui/src/components/controls/Button/Button.tsx":f,"../../../../packages/ui/src/components/controls/Button/example.tsx":Ln,"../../../../packages/ui/src/components/controls/Button/meta.ts":Fn,"../../../../packages/ui/src/components/controls/Checkbox/Checkbox.tsx":b,"../../../../packages/ui/src/components/controls/Checkbox/example.tsx":Hn,"../../../../packages/ui/src/components/controls/Checkbox/meta.ts":Kn,"../../../../packages/ui/src/components/controls/Chip/Chip.tsx":x,"../../../../packages/ui/src/components/controls/Chip/example.tsx":Nn,"../../../../packages/ui/src/components/controls/Chip/meta.ts":Gn,"../../../../packages/ui/src/components/controls/ChipField.tsx":y,"../../../../packages/ui/src/components/controls/ColorPicker/ColorPicker.tsx":k,"../../../../packages/ui/src/components/controls/ColorPicker/color.ts":h,"../../../../packages/ui/src/components/controls/ColorPicker/example.tsx":On,"../../../../packages/ui/src/components/controls/ColorPicker/meta.ts":Wn,"../../../../packages/ui/src/components/controls/DatePicker/DatePicker.tsx":S,"../../../../packages/ui/src/components/controls/DatePicker/example.tsx":$n,"../../../../packages/ui/src/components/controls/DatePicker/meta.ts":qn,"../../../../packages/ui/src/components/controls/FilePicker/FilePicker.tsx":P,"../../../../packages/ui/src/components/controls/FilePicker/example.tsx":Jn,"../../../../packages/ui/src/components/controls/FilePicker/meta.ts":Xn,"../../../../packages/ui/src/components/controls/IconButton/IconButton.tsx":T,"../../../../packages/ui/src/components/controls/IconButton/example.tsx":Qn,"../../../../packages/ui/src/components/controls/IconButton/meta.ts":Yn,"../../../../packages/ui/src/components/controls/InputBase/InputBase.tsx":w,"../../../../packages/ui/src/components/controls/InputBase/example.tsx":Zn,"../../../../packages/ui/src/components/controls/InputBase/meta.ts":et,"../../../../packages/ui/src/components/controls/Link/Link.tsx":U,"../../../../packages/ui/src/components/controls/Link/example.tsx":nt,"../../../../packages/ui/src/components/controls/Link/meta.ts":tt,"../../../../packages/ui/src/components/controls/NumberField/NumberField.tsx":B,"../../../../packages/ui/src/components/controls/NumberField/example.tsx":rt,"../../../../packages/ui/src/components/controls/NumberField/meta.ts":ot,"../../../../packages/ui/src/components/controls/PeoplePicker/PeoplePicker.tsx":z,"../../../../packages/ui/src/components/controls/PeoplePicker/example.tsx":at,"../../../../packages/ui/src/components/controls/PeoplePicker/meta.ts":st,"../../../../packages/ui/src/components/controls/SegmentedControl/SegmentedControl.tsx":C,"../../../../packages/ui/src/components/controls/SegmentedControl/example.tsx":it,"../../../../packages/ui/src/components/controls/SegmentedControl/meta.ts":lt,"../../../../packages/ui/src/components/controls/Select/Select.tsx":E,"../../../../packages/ui/src/components/controls/Select/example.tsx":ct,"../../../../packages/ui/src/components/controls/Select/meta.ts":pt,"../../../../packages/ui/src/components/controls/Slider/Slider.tsx":M,"../../../../packages/ui/src/components/controls/Slider/example.tsx":ut,"../../../../packages/ui/src/components/controls/Slider/meta.ts":mt,"../../../../packages/ui/src/components/controls/SplitButton/SplitButton.tsx":I,"../../../../packages/ui/src/components/controls/SplitButton/example.tsx":dt,"../../../../packages/ui/src/components/controls/SplitButton/meta.ts":gt,"../../../../packages/ui/src/components/controls/Switch/Switch.tsx":j,"../../../../packages/ui/src/components/controls/Switch/example.tsx":_t,"../../../../packages/ui/src/components/controls/Switch/meta.ts":vt,"../../../../packages/ui/src/components/controls/Tab/Tab.tsx":A,"../../../../packages/ui/src/components/controls/Tab/example.tsx":ft,"../../../../packages/ui/src/components/controls/Tab/meta.ts":bt,"../../../../packages/ui/src/components/controls/Tabs/Tabs.tsx":D,"../../../../packages/ui/src/components/controls/Tabs/example.tsx":xt,"../../../../packages/ui/src/components/controls/Tabs/meta.ts":yt,"../../../../packages/ui/src/components/controls/TagInput/TagInput.tsx":V,"../../../../packages/ui/src/components/controls/TagInput/example.tsx":kt,"../../../../packages/ui/src/components/controls/TagInput/meta.ts":ht,"../../../../packages/ui/src/components/controls/TextArea/TextArea.tsx":R,"../../../../packages/ui/src/components/controls/TextArea/example.tsx":St,"../../../../packages/ui/src/components/controls/TextArea/meta.ts":Pt,"../../../../packages/ui/src/components/controls/TextField/TextField.tsx":L,"../../../../packages/ui/src/components/controls/TextField/example.tsx":Tt,"../../../../packages/ui/src/components/controls/TextField/meta.ts":wt,"../../../../packages/ui/src/components/controls/ThemePicker/ThemePicker.tsx":F,"../../../../packages/ui/src/components/controls/ThemePicker/example.tsx":Ut,"../../../../packages/ui/src/components/controls/ThemePicker/meta.ts":Bt,"../../../../packages/ui/src/components/controls/ToggleButton/ToggleButton.tsx":H,"../../../../packages/ui/src/components/controls/ToggleButton/example.tsx":zt,"../../../../packages/ui/src/components/controls/ToggleButton/meta.ts":Ct,"../../../../packages/ui/src/components/controls/internal.tsx":K,"../../../../packages/ui/src/components/controls/shared.tsx":N,"../../../../packages/ui/src/components/editor/PianoRoll/PianoRoll.tsx":G,"../../../../packages/ui/src/components/editor/PianoRoll/example.tsx":Et,"../../../../packages/ui/src/components/editor/PianoRoll/meta.ts":Mt,"../../../../packages/ui/src/components/effects/AnimatedBorder/AnimatedBorder.tsx":O,"../../../../packages/ui/src/components/effects/AnimatedBorder/example.tsx":It,"../../../../packages/ui/src/components/effects/AnimatedBorder/meta.ts":jt,"../../../../packages/ui/src/components/effects/Beacon/Beacon.tsx":W,"../../../../packages/ui/src/components/effects/Beacon/example.tsx":At,"../../../../packages/ui/src/components/effects/Beacon/meta.ts":Dt,"../../../../packages/ui/src/components/effects/Equalizer/Equalizer.tsx":$,"../../../../packages/ui/src/components/effects/Equalizer/example.tsx":Vt,"../../../../packages/ui/src/components/effects/Equalizer/meta.ts":Rt,"../../../../packages/ui/src/components/effects/GlowText/GlowText.tsx":q,"../../../../packages/ui/src/components/effects/GlowText/example.tsx":Lt,"../../../../packages/ui/src/components/effects/GlowText/meta.ts":Ft,"../../../../packages/ui/src/components/effects/ImageShine/ImageShine.tsx":J,"../../../../packages/ui/src/components/effects/ImageShine/example.tsx":Ht,"../../../../packages/ui/src/components/effects/ImageShine/meta.ts":Kt,"../../../../packages/ui/src/components/effects/Marquee/Marquee.tsx":X,"../../../../packages/ui/src/components/effects/Marquee/example.tsx":Nt,"../../../../packages/ui/src/components/effects/Marquee/meta.ts":Gt,"../../../../packages/ui/src/components/effects/MelodixText/MelodixText.tsx":Q,"../../../../packages/ui/src/components/effects/MelodixText/example.tsx":Ot,"../../../../packages/ui/src/components/effects/MelodixText/meta.ts":Wt,"../../../../packages/ui/src/components/effects/Reveal/Reveal.tsx":Y,"../../../../packages/ui/src/components/effects/Reveal/example.tsx":$t,"../../../../packages/ui/src/components/effects/Reveal/meta.ts":qt,"../../../../packages/ui/src/components/effects/Shimmer/Shimmer.tsx":Z,"../../../../packages/ui/src/components/effects/Shimmer/example.tsx":Jt,"../../../../packages/ui/src/components/effects/Shimmer/meta.ts":Xt,"../../../../packages/ui/src/components/effects/Sparkles/Sparkles.tsx":ee,"../../../../packages/ui/src/components/effects/Sparkles/example.tsx":Qt,"../../../../packages/ui/src/components/effects/Sparkles/meta.ts":Yt,"../../../../packages/ui/src/components/effects/Spotlight/Spotlight.tsx":ne,"../../../../packages/ui/src/components/effects/Spotlight/example.tsx":Zt,"../../../../packages/ui/src/components/effects/Spotlight/meta.ts":er,"../../../../packages/ui/src/components/effects/Tilt/Tilt.tsx":te,"../../../../packages/ui/src/components/effects/Tilt/example.tsx":nr,"../../../../packages/ui/src/components/effects/Tilt/meta.ts":tr,"../../../../packages/ui/src/components/feedback/Badge/Badge.tsx":re,"../../../../packages/ui/src/components/feedback/Badge/example.tsx":rr,"../../../../packages/ui/src/components/feedback/Badge/meta.ts":or,"../../../../packages/ui/src/components/feedback/CollapsibleSection/CollapsibleSection.tsx":oe,"../../../../packages/ui/src/components/feedback/CollapsibleSection/example.tsx":ar,"../../../../packages/ui/src/components/feedback/CollapsibleSection/meta.ts":sr,"../../../../packages/ui/src/components/feedback/DataTable/DataTable.tsx":ae,"../../../../packages/ui/src/components/feedback/DataTable/example.tsx":ir,"../../../../packages/ui/src/components/feedback/DataTable/meta.ts":lr,"../../../../packages/ui/src/components/feedback/Dialog/Dialog.tsx":se,"../../../../packages/ui/src/components/feedback/Dialog/example.tsx":cr,"../../../../packages/ui/src/components/feedback/Dialog/meta.ts":pr,"../../../../packages/ui/src/components/feedback/EmptyState/EmptyState.tsx":ie,"../../../../packages/ui/src/components/feedback/EmptyState/example.tsx":ur,"../../../../packages/ui/src/components/feedback/EmptyState/meta.ts":mr,"../../../../packages/ui/src/components/feedback/KeyValueList/KeyValueList.tsx":le,"../../../../packages/ui/src/components/feedback/KeyValueList/example.tsx":dr,"../../../../packages/ui/src/components/feedback/KeyValueList/meta.ts":gr,"../../../../packages/ui/src/components/feedback/Menu/Menu.tsx":ce,"../../../../packages/ui/src/components/feedback/Menu/example.tsx":_r,"../../../../packages/ui/src/components/feedback/Menu/meta.ts":vr,"../../../../packages/ui/src/components/feedback/MenuItem/MenuItem.tsx":pe,"../../../../packages/ui/src/components/feedback/MenuItem/example.tsx":fr,"../../../../packages/ui/src/components/feedback/MenuItem/meta.ts":br,"../../../../packages/ui/src/components/feedback/MessageBar/MessageBar.tsx":ue,"../../../../packages/ui/src/components/feedback/MessageBar/example.tsx":xr,"../../../../packages/ui/src/components/feedback/MessageBar/meta.ts":yr,"../../../../packages/ui/src/components/feedback/Popover/Popover.tsx":me,"../../../../packages/ui/src/components/feedback/Popover/example.tsx":kr,"../../../../packages/ui/src/components/feedback/Popover/meta.ts":hr,"../../../../packages/ui/src/components/feedback/ProgressBar/ProgressBar.tsx":de,"../../../../packages/ui/src/components/feedback/ProgressBar/example.tsx":Sr,"../../../../packages/ui/src/components/feedback/ProgressBar/meta.ts":Pr,"../../../../packages/ui/src/components/feedback/SignalBars/SignalBars.tsx":ge,"../../../../packages/ui/src/components/feedback/SignalBars/example.tsx":Tr,"../../../../packages/ui/src/components/feedback/SignalBars/meta.ts":wr,"../../../../packages/ui/src/components/feedback/StatusIndicator/StatusIndicator.tsx":_e,"../../../../packages/ui/src/components/feedback/StatusIndicator/example.tsx":Ur,"../../../../packages/ui/src/components/feedback/StatusIndicator/meta.ts":Br,"../../../../packages/ui/src/components/feedback/Steps/Steps.tsx":ve,"../../../../packages/ui/src/components/feedback/Steps/example.tsx":zr,"../../../../packages/ui/src/components/feedback/Steps/meta.ts":Cr,"../../../../packages/ui/src/components/feedback/Toast/Toast.tsx":fe,"../../../../packages/ui/src/components/feedback/Toast/example.tsx":Er,"../../../../packages/ui/src/components/feedback/Toast/meta.ts":Mr,"../../../../packages/ui/src/components/feedback/Tooltip/Tooltip.tsx":be,"../../../../packages/ui/src/components/feedback/Tooltip/example.tsx":Ir,"../../../../packages/ui/src/components/feedback/Tooltip/meta.ts":jr,"../../../../packages/ui/src/components/feedback/shared.tsx":xe,"../../../../packages/ui/src/components/forms/Form/Form.tsx":ye,"../../../../packages/ui/src/components/forms/Form/example.tsx":Ar,"../../../../packages/ui/src/components/forms/Form/meta.ts":Dr,"../../../../packages/ui/src/components/forms/FormFields/FormFields.tsx":ke,"../../../../packages/ui/src/components/forms/FormFields/example.tsx":Vr,"../../../../packages/ui/src/components/forms/FormFields/meta.ts":Rr,"../../../../packages/ui/src/components/foundation/Loader/Loader.tsx":he,"../../../../packages/ui/src/components/foundation/Loader/example.tsx":Lr,"../../../../packages/ui/src/components/foundation/Loader/meta.ts":Fr,"../../../../packages/ui/src/components/foundation/LoaderGenerator/LoaderGenerator.tsx":Se,"../../../../packages/ui/src/components/foundation/LoaderGenerator/example.tsx":Hr,"../../../../packages/ui/src/components/foundation/LoaderGenerator/meta.ts":Kr,"../../../../packages/ui/src/components/foundation/ThemeEditor/ThemeEditor.tsx":Pe,"../../../../packages/ui/src/components/foundation/ThemeEditor/example.tsx":Nr,"../../../../packages/ui/src/components/foundation/ThemeEditor/meta.ts":Gr,"../../../../packages/ui/src/components/foundation/ThemeEditor/themeConfig.ts":Te,"../../../../packages/ui/src/components/foundation/ThemeProvider/ThemeProvider.tsx":we,"../../../../packages/ui/src/components/foundation/ThemeProvider/example.tsx":Or,"../../../../packages/ui/src/components/foundation/ThemeProvider/meta.ts":Wr,"../../../../packages/ui/src/components/foundation/Typography/Typography.tsx":Ue,"../../../../packages/ui/src/components/foundation/Typography/example.tsx":$r,"../../../../packages/ui/src/components/foundation/Typography/meta.ts":qr,"../../../../packages/ui/src/components/layout/Avatar/Avatar.tsx":Be,"../../../../packages/ui/src/components/layout/Avatar/HostSeal.tsx":ze,"../../../../packages/ui/src/components/layout/Avatar/example.tsx":Jr,"../../../../packages/ui/src/components/layout/Avatar/meta.ts":Xr,"../../../../packages/ui/src/components/layout/BrandMark/BrandMark.tsx":Ce,"../../../../packages/ui/src/components/layout/BrandMark/example.tsx":Qr,"../../../../packages/ui/src/components/layout/BrandMark/meta.ts":Yr,"../../../../packages/ui/src/components/layout/ButtonGroup/ButtonGroup.tsx":Ee,"../../../../packages/ui/src/components/layout/ButtonGroup/example.tsx":Zr,"../../../../packages/ui/src/components/layout/ButtonGroup/meta.ts":eo,"../../../../packages/ui/src/components/layout/Card/Card.tsx":Me,"../../../../packages/ui/src/components/layout/Card/example.tsx":no,"../../../../packages/ui/src/components/layout/Card/meta.ts":to,"../../../../packages/ui/src/components/layout/DialogActions/DialogActions.tsx":Ie,"../../../../packages/ui/src/components/layout/DialogActions/example.tsx":ro,"../../../../packages/ui/src/components/layout/DialogActions/meta.ts":oo,"../../../../packages/ui/src/components/layout/DialogBody/DialogBody.tsx":je,"../../../../packages/ui/src/components/layout/DialogBody/example.tsx":ao,"../../../../packages/ui/src/components/layout/DialogBody/meta.ts":so,"../../../../packages/ui/src/components/layout/Divider/Divider.tsx":Ae,"../../../../packages/ui/src/components/layout/Divider/example.tsx":io,"../../../../packages/ui/src/components/layout/Divider/meta.ts":lo,"../../../../packages/ui/src/components/layout/FloatingPanel/FloatingPanel.tsx":De,"../../../../packages/ui/src/components/layout/FloatingPanel/example.tsx":co,"../../../../packages/ui/src/components/layout/FloatingPanel/meta.ts":po,"../../../../packages/ui/src/components/layout/FloatingPanel/useFloatingPanel.ts":Ve,"../../../../packages/ui/src/components/layout/Grid/Grid.tsx":Re,"../../../../packages/ui/src/components/layout/Grid/example.tsx":uo,"../../../../packages/ui/src/components/layout/Grid/meta.ts":mo,"../../../../packages/ui/src/components/layout/Header/Header.tsx":Le,"../../../../packages/ui/src/components/layout/Header/example.tsx":go,"../../../../packages/ui/src/components/layout/Header/meta.ts":_o,"../../../../packages/ui/src/components/layout/Icon/Icon.tsx":Fe,"../../../../packages/ui/src/components/layout/Icon/example.tsx":vo,"../../../../packages/ui/src/components/layout/Icon/meta.ts":fo,"../../../../packages/ui/src/components/layout/Illustration/Illustration.tsx":He,"../../../../packages/ui/src/components/layout/Illustration/example.tsx":bo,"../../../../packages/ui/src/components/layout/Illustration/meta.ts":xo,"../../../../packages/ui/src/components/layout/ScrollArea/ScrollArea.tsx":Ke,"../../../../packages/ui/src/components/layout/ScrollArea/example.tsx":yo,"../../../../packages/ui/src/components/layout/ScrollArea/meta.ts":ko,"../../../../packages/ui/src/components/layout/Stack/Stack.tsx":Ne,"../../../../packages/ui/src/components/layout/Stack/example.tsx":ho,"../../../../packages/ui/src/components/layout/Stack/meta.ts":So,"../../../../packages/ui/src/components/layout/StatTile/StatTile.tsx":Ge,"../../../../packages/ui/src/components/layout/StatTile/example.tsx":Po,"../../../../packages/ui/src/components/layout/StatTile/meta.ts":To,"../../../../packages/ui/src/components/layout/TabPanel/TabPanel.tsx":Oe,"../../../../packages/ui/src/components/layout/TabPanel/example.tsx":wo,"../../../../packages/ui/src/components/layout/TabPanel/meta.ts":Uo,"../../../../packages/ui/src/components/layout/Text/Text.tsx":We,"../../../../packages/ui/src/components/layout/Text/example.tsx":Bo,"../../../../packages/ui/src/components/layout/Text/meta.ts":zo,"../../../../packages/ui/src/components/layout/Toolbar/Toolbar.tsx":$e,"../../../../packages/ui/src/components/layout/Toolbar/example.tsx":Co,"../../../../packages/ui/src/components/layout/Toolbar/meta.ts":Eo,"../../../../packages/ui/src/components/layout/shared.tsx":qe,"../../../../packages/ui/src/components/media/AudioPlayer/AudioPlayer.tsx":Je,"../../../../packages/ui/src/components/media/AudioPlayer/example.tsx":Mo,"../../../../packages/ui/src/components/media/AudioPlayer/meta.ts":Io,"../../../../packages/ui/src/components/media/KaraokeLyrics/KaraokeLyrics.tsx":Xe,"../../../../packages/ui/src/components/media/KaraokeLyrics/example.tsx":jo,"../../../../packages/ui/src/components/media/KaraokeLyrics/meta.ts":Ao,"../../../../packages/ui/src/components/media/LevelMeter/LevelMeter.tsx":Qe,"../../../../packages/ui/src/components/media/LevelMeter/example.tsx":Do,"../../../../packages/ui/src/components/media/LevelMeter/meta.ts":Vo,"../../../../packages/ui/src/components/media/MediaCard/MediaCard.tsx":Ye,"../../../../packages/ui/src/components/media/MediaCard/example.tsx":Ro,"../../../../packages/ui/src/components/media/MediaCard/meta.ts":Lo,"../../../../packages/ui/src/components/media/MelodyRoll/MelodyRoll.tsx":Ze,"../../../../packages/ui/src/components/media/MelodyRoll/example.tsx":Fo,"../../../../packages/ui/src/components/media/MelodyRoll/meta.ts":Ho,"../../../../packages/ui/src/components/media/PianoKeyboard/PianoKeyboard.tsx":en,"../../../../packages/ui/src/components/media/PianoKeyboard/example.tsx":Ko,"../../../../packages/ui/src/components/media/PianoKeyboard/meta.ts":No,"../../../../packages/ui/src/components/media/RotaryKnob/RotaryKnob.tsx":nn,"../../../../packages/ui/src/components/media/RotaryKnob/example.tsx":Go,"../../../../packages/ui/src/components/media/RotaryKnob/meta.ts":Oo,"../../../../packages/ui/src/components/media/Sparkline/Sparkline.tsx":tn,"../../../../packages/ui/src/components/media/Sparkline/example.tsx":Wo,"../../../../packages/ui/src/components/media/Sparkline/meta.ts":$o,"../../../../packages/ui/src/components/media/WaveDecoration/WaveDecoration.tsx":rn,"../../../../packages/ui/src/components/media/WaveDecoration/example.tsx":qo,"../../../../packages/ui/src/components/media/WaveDecoration/meta.ts":Jo,"../../../../packages/ui/src/components/media/Waveform/Waveform.tsx":on,"../../../../packages/ui/src/components/media/Waveform/example.tsx":Xo,"../../../../packages/ui/src/components/media/Waveform/meta.ts":Qo,"../../../../packages/ui/src/components/media/Waveform/useWaveformPeaks.ts":an,"../../../../packages/ui/src/components/media/shared.tsx":sn,"../../../../packages/ui/src/components/navigation/Router/Router.tsx":ln,"../../../../packages/ui/src/components/navigation/Router/example.tsx":Yo,"../../../../packages/ui/src/components/navigation/Router/meta.ts":Zo,"../../../../packages/ui/src/core.ts":cn,"../../../../packages/ui/src/core/artwork.tsx":pn,"../../../../packages/ui/src/core/base.tsx":un,"../../../../packages/ui/src/core/environment.ts":mn,"../../../../packages/ui/src/core/i18n.tsx":dn,"../../../../packages/ui/src/core/messages.ts":gn,"../../../../packages/ui/src/core/motion-engine.d.ts":_n,"../../../../packages/ui/src/core/motion/hooks.ts":vn,"../../../../packages/ui/src/core/noise.ts":fn,"../../../../packages/ui/src/core/providers/context.ts":bn,"../../../../packages/ui/src/core/responsive.ts":xn,"../../../../packages/ui/src/dev/exampleHelpers.tsx":ea,"../../../../packages/ui/src/editor.ts":yn,"../../../../packages/ui/src/forms.ts":kn,"../../../../packages/ui/src/index.ts":hn,"../../../../packages/ui/src/router.ts":Sn,"../../../../packages/ui/src/theme/typography.ts":Pn})),o=(e,r=`${e}.tsx`)=>l.find(([n])=>n.endsWith(`/${e}/${r}`)),vi=e=>o(e,"example.tsx")?.[1]??`// Нет example.tsx для ${e}`,fi=e=>o(e)?.[1]??"",bi=e=>o(e)?.[0].replace(/^.*packages\/ui\/src\//,"src/")??"";function i(e,r){const n=e.indexOf(r);if(n<0)return"";const a=e.indexOf("{",n);if(a<0){const t=e.indexOf(";",n);return e.slice(n,t<0?e.length:t+1).trim()}let s=0;for(let t=a;t<e.length;t+=1)if(e[t]==="{"&&(s+=1),e[t]==="}"&&--s===0)return e.slice(n,t+1).trim();return e.slice(n).trim()}const xi=e=>{for(const[,r]of l){const n=i(r,`export interface ${e}Props`)||i(r,`export type ${e}Props`);if(n)return n}return`// ${e} не объявляет отдельный Props-интерфейс.
+`,l=Object.entries(Object.assign({"../../../../packages/ui/src/components/artwork/DatabaseArt/DatabaseArt.tsx":c,"../../../../packages/ui/src/components/artwork/DatabaseArt/example.tsx":Tn,"../../../../packages/ui/src/components/artwork/DatabaseArt/meta.ts":wn,"../../../../packages/ui/src/components/artwork/Landscape/Landscape.tsx":p,"../../../../packages/ui/src/components/artwork/Landscape/example.tsx":Un,"../../../../packages/ui/src/components/artwork/Landscape/meta.ts":Bn,"../../../../packages/ui/src/components/artwork/NeonWaves/NeonWaves.tsx":u,"../../../../packages/ui/src/components/artwork/NeonWaves/example.tsx":zn,"../../../../packages/ui/src/components/artwork/NeonWaves/meta.ts":Cn,"../../../../packages/ui/src/components/artwork/Planet/Planet.tsx":m,"../../../../packages/ui/src/components/artwork/Planet/example.tsx":En,"../../../../packages/ui/src/components/artwork/Planet/meta.ts":Mn,"../../../../packages/ui/src/components/artwork/ServerArt/ServerArt.tsx":d,"../../../../packages/ui/src/components/artwork/ServerArt/example.tsx":In,"../../../../packages/ui/src/components/artwork/ServerArt/meta.ts":An,"../../../../packages/ui/src/components/artwork/Spectrum/Spectrum.tsx":g,"../../../../packages/ui/src/components/artwork/Spectrum/example.tsx":jn,"../../../../packages/ui/src/components/artwork/Spectrum/meta.ts":Dn,"../../../../packages/ui/src/components/artwork/useArtwork.ts":_,"../../../../packages/ui/src/components/controls/Autocomplete/Autocomplete.tsx":v,"../../../../packages/ui/src/components/controls/Autocomplete/example.tsx":Vn,"../../../../packages/ui/src/components/controls/Autocomplete/meta.ts":Rn,"../../../../packages/ui/src/components/controls/Button/Button.tsx":f,"../../../../packages/ui/src/components/controls/Button/example.tsx":Ln,"../../../../packages/ui/src/components/controls/Button/meta.ts":Fn,"../../../../packages/ui/src/components/controls/Checkbox/Checkbox.tsx":b,"../../../../packages/ui/src/components/controls/Checkbox/example.tsx":Hn,"../../../../packages/ui/src/components/controls/Checkbox/meta.ts":Kn,"../../../../packages/ui/src/components/controls/Chip/Chip.tsx":x,"../../../../packages/ui/src/components/controls/Chip/example.tsx":Nn,"../../../../packages/ui/src/components/controls/Chip/meta.ts":Gn,"../../../../packages/ui/src/components/controls/ChipField.tsx":y,"../../../../packages/ui/src/components/controls/ColorPicker/ColorPicker.tsx":k,"../../../../packages/ui/src/components/controls/ColorPicker/color.ts":h,"../../../../packages/ui/src/components/controls/ColorPicker/example.tsx":On,"../../../../packages/ui/src/components/controls/ColorPicker/meta.ts":Wn,"../../../../packages/ui/src/components/controls/DatePicker/DatePicker.tsx":S,"../../../../packages/ui/src/components/controls/DatePicker/example.tsx":$n,"../../../../packages/ui/src/components/controls/DatePicker/meta.ts":qn,"../../../../packages/ui/src/components/controls/FilePicker/FilePicker.tsx":P,"../../../../packages/ui/src/components/controls/FilePicker/example.tsx":Jn,"../../../../packages/ui/src/components/controls/FilePicker/meta.ts":Xn,"../../../../packages/ui/src/components/controls/IconButton/IconButton.tsx":T,"../../../../packages/ui/src/components/controls/IconButton/example.tsx":Yn,"../../../../packages/ui/src/components/controls/IconButton/meta.ts":Qn,"../../../../packages/ui/src/components/controls/InputBase/InputBase.tsx":w,"../../../../packages/ui/src/components/controls/InputBase/example.tsx":Zn,"../../../../packages/ui/src/components/controls/InputBase/meta.ts":et,"../../../../packages/ui/src/components/controls/Link/Link.tsx":U,"../../../../packages/ui/src/components/controls/Link/example.tsx":nt,"../../../../packages/ui/src/components/controls/Link/meta.ts":tt,"../../../../packages/ui/src/components/controls/NumberField/NumberField.tsx":B,"../../../../packages/ui/src/components/controls/NumberField/example.tsx":rt,"../../../../packages/ui/src/components/controls/NumberField/meta.ts":ot,"../../../../packages/ui/src/components/controls/PeoplePicker/PeoplePicker.tsx":z,"../../../../packages/ui/src/components/controls/PeoplePicker/example.tsx":at,"../../../../packages/ui/src/components/controls/PeoplePicker/meta.ts":st,"../../../../packages/ui/src/components/controls/SegmentedControl/SegmentedControl.tsx":C,"../../../../packages/ui/src/components/controls/SegmentedControl/example.tsx":it,"../../../../packages/ui/src/components/controls/SegmentedControl/meta.ts":lt,"../../../../packages/ui/src/components/controls/Select/Select.tsx":E,"../../../../packages/ui/src/components/controls/Select/example.tsx":ct,"../../../../packages/ui/src/components/controls/Select/meta.ts":pt,"../../../../packages/ui/src/components/controls/Slider/Slider.tsx":M,"../../../../packages/ui/src/components/controls/Slider/example.tsx":ut,"../../../../packages/ui/src/components/controls/Slider/meta.ts":mt,"../../../../packages/ui/src/components/controls/SplitButton/SplitButton.tsx":I,"../../../../packages/ui/src/components/controls/SplitButton/example.tsx":dt,"../../../../packages/ui/src/components/controls/SplitButton/meta.ts":gt,"../../../../packages/ui/src/components/controls/Switch/Switch.tsx":A,"../../../../packages/ui/src/components/controls/Switch/example.tsx":_t,"../../../../packages/ui/src/components/controls/Switch/meta.ts":vt,"../../../../packages/ui/src/components/controls/Tab/Tab.tsx":j,"../../../../packages/ui/src/components/controls/Tab/example.tsx":ft,"../../../../packages/ui/src/components/controls/Tab/meta.ts":bt,"../../../../packages/ui/src/components/controls/Tabs/Tabs.tsx":D,"../../../../packages/ui/src/components/controls/Tabs/example.tsx":xt,"../../../../packages/ui/src/components/controls/Tabs/meta.ts":yt,"../../../../packages/ui/src/components/controls/TagInput/TagInput.tsx":V,"../../../../packages/ui/src/components/controls/TagInput/example.tsx":kt,"../../../../packages/ui/src/components/controls/TagInput/meta.ts":ht,"../../../../packages/ui/src/components/controls/TextArea/TextArea.tsx":R,"../../../../packages/ui/src/components/controls/TextArea/example.tsx":St,"../../../../packages/ui/src/components/controls/TextArea/meta.ts":Pt,"../../../../packages/ui/src/components/controls/TextField/TextField.tsx":L,"../../../../packages/ui/src/components/controls/TextField/example.tsx":Tt,"../../../../packages/ui/src/components/controls/TextField/meta.ts":wt,"../../../../packages/ui/src/components/controls/ThemePicker/ThemePicker.tsx":F,"../../../../packages/ui/src/components/controls/ThemePicker/example.tsx":Ut,"../../../../packages/ui/src/components/controls/ThemePicker/meta.ts":Bt,"../../../../packages/ui/src/components/controls/ToggleButton/ToggleButton.tsx":H,"../../../../packages/ui/src/components/controls/ToggleButton/example.tsx":zt,"../../../../packages/ui/src/components/controls/ToggleButton/meta.ts":Ct,"../../../../packages/ui/src/components/controls/internal.tsx":K,"../../../../packages/ui/src/components/controls/shared.tsx":N,"../../../../packages/ui/src/components/editor/PianoRoll/PianoRoll.tsx":G,"../../../../packages/ui/src/components/editor/PianoRoll/example.tsx":Et,"../../../../packages/ui/src/components/editor/PianoRoll/meta.ts":Mt,"../../../../packages/ui/src/components/effects/AnimatedBorder/AnimatedBorder.tsx":O,"../../../../packages/ui/src/components/effects/AnimatedBorder/example.tsx":It,"../../../../packages/ui/src/components/effects/AnimatedBorder/meta.ts":At,"../../../../packages/ui/src/components/effects/Beacon/Beacon.tsx":W,"../../../../packages/ui/src/components/effects/Beacon/example.tsx":jt,"../../../../packages/ui/src/components/effects/Beacon/meta.ts":Dt,"../../../../packages/ui/src/components/effects/Equalizer/Equalizer.tsx":$,"../../../../packages/ui/src/components/effects/Equalizer/example.tsx":Vt,"../../../../packages/ui/src/components/effects/Equalizer/meta.ts":Rt,"../../../../packages/ui/src/components/effects/GlowText/GlowText.tsx":q,"../../../../packages/ui/src/components/effects/GlowText/example.tsx":Lt,"../../../../packages/ui/src/components/effects/GlowText/meta.ts":Ft,"../../../../packages/ui/src/components/effects/ImageShine/ImageShine.tsx":J,"../../../../packages/ui/src/components/effects/ImageShine/example.tsx":Ht,"../../../../packages/ui/src/components/effects/ImageShine/meta.ts":Kt,"../../../../packages/ui/src/components/effects/Marquee/Marquee.tsx":X,"../../../../packages/ui/src/components/effects/Marquee/example.tsx":Nt,"../../../../packages/ui/src/components/effects/Marquee/meta.ts":Gt,"../../../../packages/ui/src/components/effects/MelodixText/MelodixText.tsx":Y,"../../../../packages/ui/src/components/effects/MelodixText/example.tsx":Ot,"../../../../packages/ui/src/components/effects/MelodixText/meta.ts":Wt,"../../../../packages/ui/src/components/effects/Reveal/Reveal.tsx":Q,"../../../../packages/ui/src/components/effects/Reveal/example.tsx":$t,"../../../../packages/ui/src/components/effects/Reveal/meta.ts":qt,"../../../../packages/ui/src/components/effects/Shimmer/Shimmer.tsx":Z,"../../../../packages/ui/src/components/effects/Shimmer/example.tsx":Jt,"../../../../packages/ui/src/components/effects/Shimmer/meta.ts":Xt,"../../../../packages/ui/src/components/effects/Sparkles/Sparkles.tsx":ee,"../../../../packages/ui/src/components/effects/Sparkles/example.tsx":Yt,"../../../../packages/ui/src/components/effects/Sparkles/meta.ts":Qt,"../../../../packages/ui/src/components/effects/Spotlight/Spotlight.tsx":ne,"../../../../packages/ui/src/components/effects/Spotlight/example.tsx":Zt,"../../../../packages/ui/src/components/effects/Spotlight/meta.ts":er,"../../../../packages/ui/src/components/effects/Tilt/Tilt.tsx":te,"../../../../packages/ui/src/components/effects/Tilt/example.tsx":nr,"../../../../packages/ui/src/components/effects/Tilt/meta.ts":tr,"../../../../packages/ui/src/components/feedback/Badge/Badge.tsx":re,"../../../../packages/ui/src/components/feedback/Badge/example.tsx":rr,"../../../../packages/ui/src/components/feedback/Badge/meta.ts":or,"../../../../packages/ui/src/components/feedback/CollapsibleSection/CollapsibleSection.tsx":oe,"../../../../packages/ui/src/components/feedback/CollapsibleSection/example.tsx":ar,"../../../../packages/ui/src/components/feedback/CollapsibleSection/meta.ts":sr,"../../../../packages/ui/src/components/feedback/DataTable/DataTable.tsx":ae,"../../../../packages/ui/src/components/feedback/DataTable/example.tsx":ir,"../../../../packages/ui/src/components/feedback/DataTable/meta.ts":lr,"../../../../packages/ui/src/components/feedback/Dialog/Dialog.tsx":se,"../../../../packages/ui/src/components/feedback/Dialog/example.tsx":cr,"../../../../packages/ui/src/components/feedback/Dialog/meta.ts":pr,"../../../../packages/ui/src/components/feedback/EmptyState/EmptyState.tsx":ie,"../../../../packages/ui/src/components/feedback/EmptyState/example.tsx":ur,"../../../../packages/ui/src/components/feedback/EmptyState/meta.ts":mr,"../../../../packages/ui/src/components/feedback/KeyValueList/KeyValueList.tsx":le,"../../../../packages/ui/src/components/feedback/KeyValueList/example.tsx":dr,"../../../../packages/ui/src/components/feedback/KeyValueList/meta.ts":gr,"../../../../packages/ui/src/components/feedback/Menu/Menu.tsx":ce,"../../../../packages/ui/src/components/feedback/Menu/example.tsx":_r,"../../../../packages/ui/src/components/feedback/Menu/meta.ts":vr,"../../../../packages/ui/src/components/feedback/MenuItem/MenuItem.tsx":pe,"../../../../packages/ui/src/components/feedback/MenuItem/example.tsx":fr,"../../../../packages/ui/src/components/feedback/MenuItem/meta.ts":br,"../../../../packages/ui/src/components/feedback/MessageBar/MessageBar.tsx":ue,"../../../../packages/ui/src/components/feedback/MessageBar/example.tsx":xr,"../../../../packages/ui/src/components/feedback/MessageBar/meta.ts":yr,"../../../../packages/ui/src/components/feedback/Popover/Popover.tsx":me,"../../../../packages/ui/src/components/feedback/Popover/example.tsx":kr,"../../../../packages/ui/src/components/feedback/Popover/meta.ts":hr,"../../../../packages/ui/src/components/feedback/ProgressBar/ProgressBar.tsx":de,"../../../../packages/ui/src/components/feedback/ProgressBar/example.tsx":Sr,"../../../../packages/ui/src/components/feedback/ProgressBar/meta.ts":Pr,"../../../../packages/ui/src/components/feedback/SignalBars/SignalBars.tsx":ge,"../../../../packages/ui/src/components/feedback/SignalBars/example.tsx":Tr,"../../../../packages/ui/src/components/feedback/SignalBars/meta.ts":wr,"../../../../packages/ui/src/components/feedback/StatusIndicator/StatusIndicator.tsx":_e,"../../../../packages/ui/src/components/feedback/StatusIndicator/example.tsx":Ur,"../../../../packages/ui/src/components/feedback/StatusIndicator/meta.ts":Br,"../../../../packages/ui/src/components/feedback/Steps/Steps.tsx":ve,"../../../../packages/ui/src/components/feedback/Steps/example.tsx":zr,"../../../../packages/ui/src/components/feedback/Steps/meta.ts":Cr,"../../../../packages/ui/src/components/feedback/Toast/Toast.tsx":fe,"../../../../packages/ui/src/components/feedback/Toast/example.tsx":Er,"../../../../packages/ui/src/components/feedback/Toast/meta.ts":Mr,"../../../../packages/ui/src/components/feedback/Tooltip/Tooltip.tsx":be,"../../../../packages/ui/src/components/feedback/Tooltip/example.tsx":Ir,"../../../../packages/ui/src/components/feedback/Tooltip/meta.ts":Ar,"../../../../packages/ui/src/components/feedback/shared.tsx":xe,"../../../../packages/ui/src/components/forms/Form/Form.tsx":ye,"../../../../packages/ui/src/components/forms/Form/example.tsx":jr,"../../../../packages/ui/src/components/forms/Form/meta.ts":Dr,"../../../../packages/ui/src/components/forms/FormFields/FormFields.tsx":ke,"../../../../packages/ui/src/components/forms/FormFields/example.tsx":Vr,"../../../../packages/ui/src/components/forms/FormFields/meta.ts":Rr,"../../../../packages/ui/src/components/foundation/Loader/Loader.tsx":he,"../../../../packages/ui/src/components/foundation/Loader/example.tsx":Lr,"../../../../packages/ui/src/components/foundation/Loader/meta.ts":Fr,"../../../../packages/ui/src/components/foundation/LoaderGenerator/LoaderGenerator.tsx":Se,"../../../../packages/ui/src/components/foundation/LoaderGenerator/example.tsx":Hr,"../../../../packages/ui/src/components/foundation/LoaderGenerator/meta.ts":Kr,"../../../../packages/ui/src/components/foundation/ThemeEditor/ThemeEditor.tsx":Pe,"../../../../packages/ui/src/components/foundation/ThemeEditor/example.tsx":Nr,"../../../../packages/ui/src/components/foundation/ThemeEditor/meta.ts":Gr,"../../../../packages/ui/src/components/foundation/ThemeEditor/themeConfig.ts":Te,"../../../../packages/ui/src/components/foundation/ThemeProvider/ThemeProvider.tsx":we,"../../../../packages/ui/src/components/foundation/ThemeProvider/example.tsx":Or,"../../../../packages/ui/src/components/foundation/ThemeProvider/meta.ts":Wr,"../../../../packages/ui/src/components/foundation/Typography/Typography.tsx":Ue,"../../../../packages/ui/src/components/foundation/Typography/example.tsx":$r,"../../../../packages/ui/src/components/foundation/Typography/meta.ts":qr,"../../../../packages/ui/src/components/layout/Avatar/Avatar.tsx":Be,"../../../../packages/ui/src/components/layout/Avatar/HostSeal.tsx":ze,"../../../../packages/ui/src/components/layout/Avatar/example.tsx":Jr,"../../../../packages/ui/src/components/layout/Avatar/meta.ts":Xr,"../../../../packages/ui/src/components/layout/BrandMark/BrandMark.tsx":Ce,"../../../../packages/ui/src/components/layout/BrandMark/example.tsx":Yr,"../../../../packages/ui/src/components/layout/BrandMark/meta.ts":Qr,"../../../../packages/ui/src/components/layout/ButtonGroup/ButtonGroup.tsx":Ee,"../../../../packages/ui/src/components/layout/ButtonGroup/example.tsx":Zr,"../../../../packages/ui/src/components/layout/ButtonGroup/meta.ts":eo,"../../../../packages/ui/src/components/layout/Card/Card.tsx":Me,"../../../../packages/ui/src/components/layout/Card/example.tsx":no,"../../../../packages/ui/src/components/layout/Card/meta.ts":to,"../../../../packages/ui/src/components/layout/DialogActions/DialogActions.tsx":Ie,"../../../../packages/ui/src/components/layout/DialogActions/example.tsx":ro,"../../../../packages/ui/src/components/layout/DialogActions/meta.ts":oo,"../../../../packages/ui/src/components/layout/DialogBody/DialogBody.tsx":Ae,"../../../../packages/ui/src/components/layout/DialogBody/example.tsx":ao,"../../../../packages/ui/src/components/layout/DialogBody/meta.ts":so,"../../../../packages/ui/src/components/layout/Divider/Divider.tsx":je,"../../../../packages/ui/src/components/layout/Divider/example.tsx":io,"../../../../packages/ui/src/components/layout/Divider/meta.ts":lo,"../../../../packages/ui/src/components/layout/FloatingPanel/FloatingPanel.tsx":De,"../../../../packages/ui/src/components/layout/FloatingPanel/example.tsx":co,"../../../../packages/ui/src/components/layout/FloatingPanel/meta.ts":po,"../../../../packages/ui/src/components/layout/FloatingPanel/useFloatingPanel.ts":Ve,"../../../../packages/ui/src/components/layout/Grid/Grid.tsx":Re,"../../../../packages/ui/src/components/layout/Grid/example.tsx":uo,"../../../../packages/ui/src/components/layout/Grid/meta.ts":mo,"../../../../packages/ui/src/components/layout/Header/Header.tsx":Le,"../../../../packages/ui/src/components/layout/Header/example.tsx":go,"../../../../packages/ui/src/components/layout/Header/meta.ts":_o,"../../../../packages/ui/src/components/layout/Icon/Icon.tsx":Fe,"../../../../packages/ui/src/components/layout/Icon/example.tsx":vo,"../../../../packages/ui/src/components/layout/Icon/meta.ts":fo,"../../../../packages/ui/src/components/layout/Illustration/Illustration.tsx":He,"../../../../packages/ui/src/components/layout/Illustration/example.tsx":bo,"../../../../packages/ui/src/components/layout/Illustration/meta.ts":xo,"../../../../packages/ui/src/components/layout/ScrollArea/ScrollArea.tsx":Ke,"../../../../packages/ui/src/components/layout/ScrollArea/example.tsx":yo,"../../../../packages/ui/src/components/layout/ScrollArea/meta.ts":ko,"../../../../packages/ui/src/components/layout/Stack/Stack.tsx":Ne,"../../../../packages/ui/src/components/layout/Stack/example.tsx":ho,"../../../../packages/ui/src/components/layout/Stack/meta.ts":So,"../../../../packages/ui/src/components/layout/StatTile/StatTile.tsx":Ge,"../../../../packages/ui/src/components/layout/StatTile/example.tsx":Po,"../../../../packages/ui/src/components/layout/StatTile/meta.ts":To,"../../../../packages/ui/src/components/layout/TabPanel/TabPanel.tsx":Oe,"../../../../packages/ui/src/components/layout/TabPanel/example.tsx":wo,"../../../../packages/ui/src/components/layout/TabPanel/meta.ts":Uo,"../../../../packages/ui/src/components/layout/Text/Text.tsx":We,"../../../../packages/ui/src/components/layout/Text/example.tsx":Bo,"../../../../packages/ui/src/components/layout/Text/meta.ts":zo,"../../../../packages/ui/src/components/layout/Toolbar/Toolbar.tsx":$e,"../../../../packages/ui/src/components/layout/Toolbar/example.tsx":Co,"../../../../packages/ui/src/components/layout/Toolbar/meta.ts":Eo,"../../../../packages/ui/src/components/layout/shared.tsx":qe,"../../../../packages/ui/src/components/media/AudioPlayer/AudioPlayer.tsx":Je,"../../../../packages/ui/src/components/media/AudioPlayer/example.tsx":Mo,"../../../../packages/ui/src/components/media/AudioPlayer/meta.ts":Io,"../../../../packages/ui/src/components/media/KaraokeLyrics/KaraokeLyrics.tsx":Xe,"../../../../packages/ui/src/components/media/KaraokeLyrics/example.tsx":Ao,"../../../../packages/ui/src/components/media/KaraokeLyrics/meta.ts":jo,"../../../../packages/ui/src/components/media/LevelMeter/LevelMeter.tsx":Ye,"../../../../packages/ui/src/components/media/LevelMeter/example.tsx":Do,"../../../../packages/ui/src/components/media/LevelMeter/meta.ts":Vo,"../../../../packages/ui/src/components/media/MediaCard/MediaCard.tsx":Qe,"../../../../packages/ui/src/components/media/MediaCard/example.tsx":Ro,"../../../../packages/ui/src/components/media/MediaCard/meta.ts":Lo,"../../../../packages/ui/src/components/media/MelodyRoll/MelodyRoll.tsx":Ze,"../../../../packages/ui/src/components/media/MelodyRoll/example.tsx":Fo,"../../../../packages/ui/src/components/media/MelodyRoll/meta.ts":Ho,"../../../../packages/ui/src/components/media/PianoKeyboard/PianoKeyboard.tsx":en,"../../../../packages/ui/src/components/media/PianoKeyboard/example.tsx":Ko,"../../../../packages/ui/src/components/media/PianoKeyboard/meta.ts":No,"../../../../packages/ui/src/components/media/RotaryKnob/RotaryKnob.tsx":nn,"../../../../packages/ui/src/components/media/RotaryKnob/example.tsx":Go,"../../../../packages/ui/src/components/media/RotaryKnob/meta.ts":Oo,"../../../../packages/ui/src/components/media/Sparkline/Sparkline.tsx":tn,"../../../../packages/ui/src/components/media/Sparkline/example.tsx":Wo,"../../../../packages/ui/src/components/media/Sparkline/meta.ts":$o,"../../../../packages/ui/src/components/media/WaveDecoration/WaveDecoration.tsx":rn,"../../../../packages/ui/src/components/media/WaveDecoration/example.tsx":qo,"../../../../packages/ui/src/components/media/WaveDecoration/meta.ts":Jo,"../../../../packages/ui/src/components/media/Waveform/Waveform.tsx":on,"../../../../packages/ui/src/components/media/Waveform/example.tsx":Xo,"../../../../packages/ui/src/components/media/Waveform/meta.ts":Yo,"../../../../packages/ui/src/components/media/Waveform/useWaveformPeaks.ts":an,"../../../../packages/ui/src/components/media/shared.tsx":sn,"../../../../packages/ui/src/components/navigation/Router/Router.tsx":ln,"../../../../packages/ui/src/components/navigation/Router/example.tsx":Qo,"../../../../packages/ui/src/components/navigation/Router/meta.ts":Zo,"../../../../packages/ui/src/core.ts":cn,"../../../../packages/ui/src/core/artwork.tsx":pn,"../../../../packages/ui/src/core/base.tsx":un,"../../../../packages/ui/src/core/environment.ts":mn,"../../../../packages/ui/src/core/i18n.tsx":dn,"../../../../packages/ui/src/core/messages.ts":gn,"../../../../packages/ui/src/core/motion-engine.d.ts":_n,"../../../../packages/ui/src/core/motion/hooks.ts":vn,"../../../../packages/ui/src/core/noise.ts":fn,"../../../../packages/ui/src/core/providers/context.ts":bn,"../../../../packages/ui/src/core/responsive.ts":xn,"../../../../packages/ui/src/dev/exampleHelpers.tsx":ea,"../../../../packages/ui/src/editor.ts":yn,"../../../../packages/ui/src/forms.ts":kn,"../../../../packages/ui/src/index.ts":hn,"../../../../packages/ui/src/router.ts":Sn,"../../../../packages/ui/src/theme/typography.ts":Pn})),o=(e,r=`${e}.tsx`)=>l.find(([n])=>n.endsWith(`/${e}/${r}`)),vi=e=>o(e,"example.tsx")?.[1]??`// Нет example.tsx для ${e}`,fi=e=>o(e)?.[1]??"",bi=e=>o(e)?.[0].replace(/^.*packages\/ui\/src\//,"src/")??"";function i(e,r){const n=e.indexOf(r);if(n<0)return"";const a=e.indexOf("{",n);if(a<0){const t=e.indexOf(";",n);return e.slice(n,t<0?e.length:t+1).trim()}let s=0;for(let t=a;t<e.length;t+=1)if(e[t]==="{"&&(s+=1),e[t]==="}"&&--s===0)return e.slice(n,t+1).trim();return e.slice(n).trim()}const xi=e=>{for(const[,r]of l){const n=i(r,`export interface ${e}Props`)||i(r,`export type ${e}Props`);if(n)return n}return`// ${e} не объявляет отдельный Props-интерфейс.
 // Компонент использует общие props или композицию дочерних компонентов.`};export{xi as getComponentApiSource,fi as getComponentSource,bi as getComponentSourcePath,vi as getExampleSource};

@@ -5,9 +5,204 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { copyText } from "../src/core/base";
 import { attachBorder } from "../src/core/motion-engine.js";
 import { Slider } from "../src/components/controls/Slider/Slider";
+import { FilePicker } from "../src/components/controls/FilePicker/FilePicker";
+import { Avatar } from "../src/components/layout/Avatar/Avatar";
+import { RotaryKnob } from "../src/components/media/RotaryKnob/RotaryKnob";
+import { DataTable, FilterEditor, dataTableCsv } from "../src/components/feedback/DataTable/DataTable";
 import { Form } from "../src/components/forms/Form/Form";
 import { FormFields, defaultFieldRegistry } from "../src/components/forms/FormFields/FormFields";
 import { defaultSettings, fonts, siteThemeProps } from "../../../apps/playground/src/app/siteSettings";
+import { catalog, componentCount, getCatalogItemBySlug, getDocumentationParts } from "../../../apps/playground/src/catalog/componentRegistry";
+import { toModule } from "../../../apps/playground/src/catalog/liveCode";
+
+describe("documentation groups", () => {
+  it("puts compositional parts on one discoverable page while keeping old links working", () => {
+    const groups = [
+      ["tab", "Tab", "Tabs"], ["tab-panel", "TabPanel", "Tabs"],
+      ["menu-item", "MenuItem", "Menu"], ["form", "Form", "FormFields"],
+      ["text", "Text", "Typography"], ["dialog-body", "DialogBody", "Dialog"],
+      ["dialog-actions", "DialogActions", "Dialog"],
+    ];
+    for (const [slug, part, parent] of groups) {
+      expect(getCatalogItemBySlug(slug)?.name).toBe(parent);
+      expect(catalog.some((item) => item.name === part)).toBe(false);
+    }
+    expect(catalog.some((item) => item.name === "Tabs")).toBe(true);
+    expect(getDocumentationParts("Tabs").map((item) => item.name)).toEqual(["Tab", "TabPanel"]);
+    expect(componentCount).toBeGreaterThan(catalog.length);
+  });
+
+  it("uses complete, copyable examples for the composed navigation and table pages", () => {
+    for (const path of ["controls/Tabs", "feedback/DataTable"]) {
+      const source = readFileSync(`src/components/${path}/example.tsx`, "utf8");
+      expect(source).toContain("export default function");
+      expect(source).toContain('from "@ad-voice/ui"');
+      expect(source).not.toContain("dev/exampleHelpers");
+    }
+  });
+  it("shows the compact Text component beside the full Typography scale", () => {
+    const source = readFileSync("src/components/foundation/Typography/example.tsx", "utf8");
+    expect(source).toContain("<Text ");
+  });
+
+  it("wraps live specimens in a self-contained component with its state import", () => {
+    const code = toModule('import { Slider } from "@ad-voice/ui";\n<Slider value={volume} onValueChange={setVolume} />');
+
+    expect(code).toContain('import * as React from "react"');
+    expect(code).toContain("export default function Example()");
+    expect(code).toContain("const [volume, setVolume] = React.useState()");
+  });
+  it("copies the real initial state into a generated interactive example", () => {
+    const code = toModule(
+      'import { Slider } from "@ad-voice/ui";\n<Slider value={volume} onValueChange={setVolume} />',
+      'const [volume, setVolume] = useState(65);',
+    );
+    expect(code).toContain("const [volume, setVolume] = React.useState(65)");
+  });
+});
+
+describe("documentation layout stability", () => {
+  it("does not change scroll geometry as animated previews enter the viewport", () => {
+    const css = readFileSync("../../apps/playground/src/app/app.css", "utf8");
+    const page = readFileSync("../../apps/playground/src/catalog/CatalogPage.tsx", "utf8");
+    const overview = readFileSync("../../apps/playground/src/catalog/CatalogOverview.tsx", "utf8");
+
+    expect(css).toMatch(/\.docs-showcase-tile\s*\{[^}]*block-size:\s*15rem;[^}]*content-visibility:\s*auto;[^}]*contain-intrinsic-size:\s*auto 15rem/s);
+    expect(overview).not.toContain("ResizeObserver");
+    expect(overview).not.toContain("style.gridColumn");
+    expect(overview).not.toContain("specimen.style.zoom");
+    expect(css).not.toContain("animation-timeline: view()");
+    expect(css).not.toContain("animation-timeline: scroll(nearest)");
+    for (const keyframes of css.match(/@keyframes docs-(?:page-in|page-out|section-in)\s*\{[\s\S]*?\n\}/g) ?? [])
+      expect(keyframes).not.toContain("transform:");
+    expect(css).toMatch(/\.docs-main\s*\{[^}]*scrollbar-gutter:\s*stable/s);
+    expect(page).not.toContain('behavior: "smooth"');
+  });
+});
+
+describe("DataTable tools", () => {
+  it("offers column visibility and exports the visible data as a safe CSV", () => {
+    const columns = [{ key: "title", title: "Трек" }, { key: "artist", title: "Исполнитель" }];
+    const rows = [{ title: 'Ночь, "неон"', artist: "Аура" }];
+    const html = renderToStaticMarkup(createElement(DataTable, { columns, rows }));
+
+    expect(html).toContain('aria-label="Столбцы"');
+    expect(html).toContain('aria-label="Экспорт CSV"');
+    expect(dataTableCsv(columns.slice(0, 1), rows)).toBe('"Трек"\r\n"Ночь, ""неон"""');
+    expect(dataTableCsv(columns.slice(0, 1), [{ title: "=1+1", artist: "Аура" }]))
+      .toBe('"Трек"\r\n"\'=1+1"');
+  });
+
+  it("keeps table geometry stable and gives the scroll surface a themed finish", () => {
+    const css = readFileSync("src/components/feedback/DataTable/styles.css", "utf8");
+
+    expect(css).not.toContain("animation: ad-table-row");
+    expect(css).toMatch(/\.ad-data-table table\s*\{[^}]*table-layout:\s*fixed/s);
+    expect(css).toMatch(/\.ad-data-table-scroll\s*\{[^}]*border:[^;]*var\(--ad-primary/s);
+    expect(css).toMatch(/\.ad-data-table-tools\s*\{/);
+  });
+
+  it("renders each group as one coherent full-width summary instead of empty cells", () => {
+    const columns = [
+      { key: "artist", title: "Исполнитель" },
+      { key: "plays", title: "Прослушивания", aggregate: (rows: Array<{ plays: number }>) => rows.reduce((sum, row) => sum + row.plays, 0) },
+    ];
+    const html = renderToStaticMarkup(createElement(DataTable, {
+      columns, rows: [{ artist: "Аура", plays: 12 }], defaultGroupBy: "artist", groupable: true,
+    }));
+
+    expect(html).toMatch(/class="ad-data-table-group"[^>]*><td colSpan="2">/);
+    expect(html).toContain('class="ad-data-table-group-summary"');
+    expect(html).toContain("Прослушивания");
+  });
+  it("separates grouped totals from the group name and anchors them on the far side", () => {
+    const css = readFileSync("src/components/feedback/DataTable/styles.css", "utf8");
+    const html = renderToStaticMarkup(createElement(DataTable, {
+      columns: [
+        { key: "artist", title: "Исполнитель" },
+        { key: "plays", title: "Прослушивания", aggregate: (rows: Array<{ plays: number }>) => rows.reduce((sum, row) => sum + row.plays, 0) },
+      ],
+      rows: [{ artist: "Аура", plays: 12 }], defaultGroupBy: "artist",
+    }));
+
+    expect(html).toMatch(/ad-data-table-group-toggle[\s\S]*?<\/button><div class="ad-data-table-group-summaries"/);
+    expect(css).toMatch(/\.ad-data-table-group-summaries\s*\{[^}]*margin-inline-start:\s*auto/s);
+  });
+  it("uses an autocomplete with the column's distinct values and keeps multiple selections visible", () => {
+    const html = renderToStaticMarkup(createElement(FilterEditor, {
+      kind: "values", options: ["Аура", "Кай", "Мия"],
+      filter: { kind: "values", values: ["Аура", "Мия"] }, onChange: vi.fn(),
+    }));
+    const source = readFileSync("src/components/feedback/DataTable/DataTable.tsx", "utf8");
+
+    expect(html).toContain('role="combobox"');
+    expect(html).toContain("Аура");
+    expect(html).toContain("Мия");
+    expect(html).toContain("Убрать");
+    expect(source).toMatch(/options=\{distinct\(column as AnyColumn, rows\)\}/);
+  });
+  it("offers a way to clear selected rows without changing the current filters", () => {
+    const html = renderToStaticMarkup(createElement(DataTable, {
+      columns: [{ key: "artist", title: "Исполнитель" }],
+      rows: [{ artist: "Аура" }], selectable: true, defaultSelected: ["0"],
+    }));
+
+    expect(html).toContain("Снять выделение");
+  });
+  it("provides an accessible column resize handle with a visible interaction target", () => {
+    const html = renderToStaticMarkup(createElement(DataTable, {
+      columns: [{ key: "artist", title: "Исполнитель" }, { key: "plays", title: "Прослушивания", resizable: false }],
+      rows: [{ artist: "Аура", plays: 12 }],
+    }));
+    const css = readFileSync("src/components/feedback/DataTable/styles.css", "utf8");
+
+    expect(html).toContain('role="separator"');
+    expect(html).toContain('aria-label="Изменить ширину: Исполнитель"');
+    expect(html).not.toContain('aria-label="Изменить ширину: Прослушивания"');
+    expect(css).toMatch(/\.ad-data-table-resize\s*\{[^}]*touch-action:\s*none/s);
+  });
+  it("lets readers change page size and shows the actual visible result range", () => {
+    const html = renderToStaticMarkup(createElement(DataTable, {
+      columns: [{ key: "title", title: "Трек" }],
+      rows: Array.from({ length: 8 }, (_, index) => ({ title: `Трек ${index}` })),
+      pageSize: 6, pageSizeOptions: [6, 12],
+    }));
+
+    expect(html).toContain("Строк на странице");
+    expect(html).toContain("aria-labelledby=");
+    expect(html).toContain("1–6 из 8");
+  });
+  it("keeps the initial page size selectable even when custom choices omit it", () => {
+    const html = renderToStaticMarkup(createElement(DataTable, {
+      columns: [{ key: "title", title: "Трек" }], rows: [{ title: "Неон" }],
+      pageSize: 6, pageSizeOptions: [12, 24],
+    }));
+
+    expect(html).toContain('ad-select-value-text">6</span>');
+  });
+  it("offers a single reset for sorting, filters, grouping, search and hidden columns", () => {
+    const html = renderToStaticMarkup(createElement(DataTable, {
+      columns: [{ key: "artist", title: "Исполнитель" }],
+      rows: [{ artist: "Аура" }], defaultSort: { key: "artist", direction: "asc" },
+    }));
+    const source = readFileSync("src/components/feedback/DataTable/DataTable.tsx", "utf8");
+
+    expect(html).toContain('aria-label="Сбросить вид"');
+    expect(source).toMatch(/setHiddenColumns\(\[\]\)/);
+    expect(source).toMatch(/setCollapsed\(new Set\(\)\)/);
+  });
+  it("labels cells for a readable mobile card layout", () => {
+    const html = renderToStaticMarkup(createElement(DataTable, {
+      columns: [{ key: "title", title: "Трек" }, { key: "artist", title: "Исполнитель" }],
+      rows: [{ title: "Неон", artist: "Кай" }],
+    }));
+    const css = readFileSync("src/components/feedback/DataTable/styles.css", "utf8");
+
+    expect(html).toContain('data-label="Исполнитель"');
+    expect(css).toMatch(/@media \(max-width: 48rem\)[\s\S]*\.ad-data-table tbody tr:not\(\.ad-data-table-group\)/);
+    expect(css).toContain("content: attr(data-label)");
+  });
+});
 
 describe("Slider", () => {
   it("shows its label next to the range control instead of using it only as an accessible name", () => {
@@ -23,11 +218,74 @@ describe("Slider", () => {
   });
 });
 
+describe("FilePicker avatar", () => {
+  it("describes the avatar chooser in the localized documentation", () => {
+    const meta = readFileSync("src/components/controls/FilePicker/meta.ts", "utf8");
+    const messages = readFileSync("../../apps/playground/src/app/docsMessages.ts", "utf8");
+    expect(meta).toContain("аватар");
+    expect(messages).toContain("анімована печатка з ім’ям і фото");
+  });
+  it("uses the animated avatar as the image chooser and shows a supplied photo", () => {
+    const html = renderToStaticMarkup(createElement(FilePicker, {
+      variant: "avatar", name: "Дмитрий", src: "/portrait.png", label: "Изменить фото",
+    }));
+
+    expect(html).toContain('data-variant="avatar"');
+    expect(html).toContain('aria-label="Изменить фото"');
+    expect(html).toContain('class="ad-host-seal"');
+    expect(html).toContain('href="/portrait.png"');
+    expect(html).toContain('>Дмитрий</text>');
+    expect(html).not.toContain('class="host-emblem__crown"');
+    expect(html).toContain('type="file"');
+  });
+
+  it("reveals an edit icon on hover and keyboard focus", () => {
+    const css = readFileSync("src/components/controls/FilePicker/styles.css", "utf8");
+
+    expect(css).toMatch(/\.ad-file-picker-avatar-button:is\(:hover, :focus-visible\)\s+\.ad-file-picker-avatar-edit,/);
+    expect(css).toMatch(/\.ad-file-picker\[data-variant="avatar"\]\[data-over\]\s+\.ad-file-picker-avatar-edit\s*\{[^}]*opacity:\s*1/s);
+    expect(css).toMatch(/\.ad-file-picker-avatar-edit\s*\{[^}]*z-index:\s*1/s);
+    expect(css).toMatch(/\.ad-file-picker-avatar-edit\s*\{[^}]*background:\s*var\(--ad-primary-800\);[^}]*color:\s*var\(--ad-on-accent\)/s);
+  });
+});
+
+describe("Avatar host", () => {
+  it("shows the person's initial and name instead of the HOST crown when named", () => {
+    const html = renderToStaticMarkup(createElement(Avatar, { variant: "host", name: "Дмитрий" }));
+
+    expect(html).toContain('class="host-emblem__initial"');
+    expect(html).toContain('>Д</text>');
+    expect(html).toContain('>Дмитрий</text>');
+    expect(html).not.toContain('class="host-emblem__crown"');
+    expect(html).not.toContain('>HOST</text>');
+  });
+
+  it("keeps the branded crown only when no person is named", () => {
+    const html = renderToStaticMarkup(createElement(Avatar, { variant: "host" }));
+
+    expect(html).toContain('class="host-emblem__crown"');
+    expect(html).toContain('>HOST</text>');
+  });
+});
+
 describe("FormFields", () => {
+  it("registers RotaryKnob as a declarative form field", () => {
+    expect(defaultFieldRegistry.rotary).toBe(RotaryKnob);
+    const form = {
+      values: { gain: 42 },
+      field: () => ({ value: 42, onValueChange: vi.fn() }),
+    } as any;
+    const html = renderToStaticMarkup(createElement(Form, { form },
+      createElement(FormFields, { fields: [{ name: "gain", kind: "rotary", label: "Усиление" }] })));
+
+    expect(html).toContain('data-ad-component="RotaryKnob"');
+    expect(html).toContain("Усиление");
+  });
+
   it("registers every standalone field control", () => {
     expect(Object.keys(defaultFieldRegistry).sort()).toEqual([
       "autocomplete", "checkbox", "color", "date", "file", "number", "people",
-      "select", "slider", "switch", "tags", "text", "textarea",
+      "rotary", "select", "slider", "switch", "tags", "text", "textarea",
     ]);
   });
 

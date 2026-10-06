@@ -13,7 +13,7 @@ export function CatalogPage({ routeId }: { routeId?: string }) {
 
   useEffect(() => {
     document.title = item ? `${item.name} · Neo UI` : "Neo UI · React";
-    main.current?.scrollTo({ top: 0, behavior: "smooth" });
+    main.current?.scrollTo({ top: 0 });
   }, [item]);
 
   return (

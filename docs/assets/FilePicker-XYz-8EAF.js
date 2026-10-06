@@ -1,4 +1,4 @@
-import { tr } from "../../../core/i18n";
+const e=`import { tr } from "../../../core/i18n";
 import { useEffect, useRef, useState } from "react";
 import { mark } from "../../../core/base";
 import { Button } from "../Button/Button";
@@ -97,3 +97,4 @@ export const FilePicker = (p: FilePickerProps) => {
     </div>
   );
 };
+`;export{e as default};

@@ -13,7 +13,7 @@ import {
   TextField,
   Typography,
 } from "@ad-voice/ui";
-import { catalog, componentHref, type CatalogMeta } from "./componentRegistry";
+import { componentCount, componentHref, type CatalogMeta } from "./componentRegistry";
 import { catalogCategories, getCategoryForItem } from "./catalogNavigation";
 
 function ItemLink({
@@ -45,7 +45,7 @@ function OverviewLink({ className }: { className: string }) {
       icon="grid"
     >
       <Typography variant="label">{tr("Обзор")}</Typography>
-      <Badge>{catalog.length}</Badge>
+      <Badge>{componentCount}</Badge>
     </Link>
   );
 }
@@ -195,9 +195,6 @@ export function CatalogSidebar({ activeItem }: { activeItem?: CatalogMeta }) {
       <Stack className="docs-sidebar-foot" gap={1}>
         <Typography variant="caption" tone="muted">
           React + TypeScript
-        </Typography>
-        <Typography variant="caption" tone="muted">
-          {tr("Один компонент · одна страница")}
         </Typography>
       </Stack>
     </Stack>

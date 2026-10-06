@@ -1,4 +1,4 @@
-import { Grid, Stack, Typography } from "@ad-voice/ui";
+import { Grid, Stack, Text, Typography } from "@ad-voice/ui";
 
 const headings = [
   ["display", "Neo UI"],
@@ -46,6 +46,11 @@ export default function TypographyExample() {
             </Typography>
           ),
         )}
+      </Stack>
+      <Stack gap={2}>
+        <Typography variant="label" tone="muted">Короткая запись через Text</Typography>
+        <Text as="h3" variant="title">Настройки комнаты</Text>
+        <Text variant="muted">Вспомогательная подпись</Text>
       </Stack>
     </Stack>
   );

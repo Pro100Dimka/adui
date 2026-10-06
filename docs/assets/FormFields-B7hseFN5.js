@@ -13,6 +13,7 @@ import { FilePicker } from "../../controls/FilePicker/FilePicker";
 import { PeoplePicker } from "../../controls/PeoplePicker/PeoplePicker";
 import { Slider } from "../../controls/Slider/Slider";
 import { TagInput } from "../../controls/TagInput/TagInput";
+import { RotaryKnob } from "../../media/RotaryKnob/RotaryKnob";
 import { useFormContext, type FormApi } from "../Form/Form";\r
 export type FieldKind =\r
   | "text"\r
@@ -27,6 +28,7 @@ export type FieldKind =\r
   | "file"
   | "people"
   | "slider"
+  | "rotary"
   | "tags";
 export interface FormFieldDefinition<\r
   T extends Record<string, unknown> = Record<string, unknown>,\r
@@ -52,6 +54,7 @@ export const defaultFieldRegistry: FieldRegistry = {\r
   file: FilePicker,
   people: PeoplePicker,
   slider: Slider,
+  rotary: RotaryKnob,
   tags: TagInput,
 };\r
 export interface FormFieldsProps<T extends Record<string, unknown>> {\r
@@ -104,6 +107,8 @@ function Slot<T extends Record<string, unknown>>({\r
               : typeof b.value === "string" ? b.value : "",
             onFiles: b.onValueChange,
           }
+      : kind === "rotary"
+        ? { value: Number(b.value ?? 0), onValueChange: b.onValueChange }
       : {
           value: b.value ?? emptyValue[kind] ?? "",
           onValueChange: b.onValueChange,\r

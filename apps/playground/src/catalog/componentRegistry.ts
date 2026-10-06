@@ -26,15 +26,30 @@ const examples = byComponent(
     { eager: true, import: "default" },
   ),
 );
-export const catalog = Object.values(metas).sort((a, b) =>
+const documentationParent: Record<string, string> = {
+  Tab: "Tabs",
+  TabPanel: "Tabs",
+  MenuItem: "Menu",
+  Form: "FormFields",
+  Text: "Typography",
+  DialogBody: "Dialog",
+  DialogActions: "Dialog",
+};
+const allComponents = Object.values(metas).sort((a, b) =>
   a.name.localeCompare(b.name),
 );
+export const componentCount = allComponents.length;
+export const catalog = allComponents.filter((item) => !documentationParent[item.name]);
 const componentSlug = (name: string) =>
   name.replace(/([a-z0-9])([A-Z])/g, "$1-$2").toLowerCase();
 export const componentHref = (name: string) =>
   `#/components/${componentSlug(name)}`;
-export const getCatalogItemBySlug = (slug?: string) =>
-  catalog.find((item) => componentSlug(item.name) === slug);
+export const getCatalogItemBySlug = (slug?: string) => {
+  const matched = allComponents.find((item) => componentSlug(item.name) === slug);
+  return matched && catalog.find((item) => item.name === (documentationParent[matched.name] ?? matched.name));
+};
+export const getDocumentationParts = (name: string) =>
+  allComponents.filter((item) => documentationParent[item.name] === name);
 export const getExample = (name: string) => examples.get(name);
 /** Raw sources for the code dialogs live in their own chunk, fetched after the page shows. */
 export const loadSources = () => import("./sources");

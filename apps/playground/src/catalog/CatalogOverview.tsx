@@ -1,10 +1,11 @@
 import { tr } from "@ad-voice/ui";
 import { ExamplePreviewContext } from "../../../../packages/ui/src/dev/exampleHelpers";
 import { Badge, Card, Header, Icon, Stack, Typography, usePauseOffscreen } from "@ad-voice/ui";
-import { useLayoutEffect, useRef } from "react";
+import { useRef } from "react";
 import { CopyButton } from "./CopyButton";
 import {
   catalog,
+  componentCount,
   componentHref,
   getExample,
   installCommand,
@@ -38,7 +39,7 @@ export function CatalogOverview() {
           />
           <Stack direction="row" gap={2} wrap>
             <Badge tone="success">v{packageVersion}</Badge>
-            <Badge>{catalog.length} {tr("компонентов")}</Badge>
+            <Badge>{componentCount} {tr("компонентов")}</Badge>
             <Badge>{catalogCategories.length} {tr("категорий")}</Badge>
             <Badge>TypeScript</Badge>
           </Stack>
@@ -93,112 +94,11 @@ export function CatalogOverview() {
   );
 }
 
-/** How many extra lines the wrapping rows inside the specimen have spilled onto. */
-function wraps(root: HTMLElement) {
-  let extra = 0;
-  for (const node of root.querySelectorAll<HTMLElement>("*")) {
-    const style = getComputedStyle(node);
-    if (!style.display.includes("flex") || style.flexWrap === "nowrap")
-      continue;
-    const tops = new Set(
-      [...node.children]
-        .filter((child) => {
-          const position = getComputedStyle(child).position;
-          return position !== "absolute" && position !== "fixed";
-        })
-        .map((child) => (child as HTMLElement).offsetTop),
-    );
-    extra += tops.size - 1;
-  }
-  return extra;
-}
-
-/**
- * A live tile that takes as many grid columns as its specimen needs: it widens while the
- * preview overflows, while a row of variants wraps (or while widening still makes it
- * shorter) and stays narrow otherwise;
- * a specimen still too tall is scaled down to be seen whole.
- */
+/** A fixed-size preview: artwork may animate, but the catalog grid never reflows around it. */
 function ShowcaseTile({ item }: { item: CatalogMeta }) {
   const ref = useRef<HTMLDivElement>(null);
   const Example = getExample(item.name);
-  // Specimens out of view hold their animations still.
   usePauseOffscreen(ref);
-
-  useLayoutEffect(() => {
-    const tile = ref.current;
-    const grid = tile?.parentElement;
-    const preview = tile?.firstElementChild as HTMLElement | null;
-    if (!tile || !grid || !preview) return;
-    const fit = () => {
-      const specimen = preview.firstElementChild as HTMLElement | null;
-      if (specimen) specimen.style.zoom = "";
-      const columns =
-        getComputedStyle(grid).gridTemplateColumns.split(" ").length;
-      let span = Math.min(columns, item.wide ? 2 : 1);
-      tile.style.gridColumn = `span ${span}`;
-      while (span < columns) {
-        const wide = preview.scrollWidth > preview.clientWidth + 1;
-        const tall = preview.scrollHeight > preview.clientHeight + 1;
-        const lines = wraps(preview);
-        if (!wide && !tall && !lines) break;
-        const height = preview.scrollHeight;
-        tile.style.gridColumn = `span ${span + 1}`;
-        // Widening must help: fewer wrapped lines or a shorter specimen, else stay narrow.
-        if (
-          !wide &&
-          wraps(preview) >= lines &&
-          preview.scrollHeight >= height - 1
-        ) {
-          tile.style.gridColumn = `span ${span}`;
-          break;
-        }
-        span += 1;
-      }
-      // Still taller than the tile: scale the specimen down, step by step since it
-      // reflows as it shrinks, until it is seen whole.
-      let zoom = 1;
-      for (
-        let step = 0;
-        specimen &&
-        step < 6 &&
-        zoom > 0.4 &&
-        preview.scrollHeight > preview.clientHeight + 1;
-        step += 1
-      ) {
-        zoom *= Math.max(0.8, preview.clientHeight / preview.scrollHeight);
-        specimen.style.zoom = String(zoom);
-      }
-    };
-    // Refit when the grid resizes, when the specimen changes size (it may finish drawing
-    // later) and when an off-screen tile is rendered for the first time. Size changes caused
-    // by the fit itself land in the same frames and are ignored.
-    let frame = 0;
-    let settling = false;
-    const schedule = () => {
-      if (settling) return;
-      cancelAnimationFrame(frame);
-      frame = requestAnimationFrame(() => {
-        settling = true;
-        fit();
-        frame = requestAnimationFrame(() =>
-          requestAnimationFrame(() => (settling = false)),
-        );
-      });
-    };
-    fit();
-    const observer = new ResizeObserver(schedule);
-    observer.observe(grid);
-    const stage =
-      preview.querySelector(".example-stage") ?? preview.firstElementChild;
-    if (stage) observer.observe(stage);
-    tile.addEventListener("contentvisibilityautostatechange", schedule);
-    return () => {
-      observer.disconnect();
-      tile.removeEventListener("contentvisibilityautostatechange", schedule);
-      cancelAnimationFrame(frame);
-    };
-  }, [item.wide]);
 
   return (
     <div ref={ref} className="docs-showcase-tile">

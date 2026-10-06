@@ -95,6 +95,8 @@ export interface DataTableColumn<T extends DataTableRow = DataTableRow> {
   title: ReactNode;
   align?: "start" | "center" | "end";
   width?: string;
+  /** Allow readers to resize this column; on by default. */
+  resizable?: boolean;
   /** Click the header to sort; on by default. */
   sortable?: boolean;
   /** Cell content; the raw field by default. */
@@ -149,6 +151,10 @@ export interface DataTableProps<
   onGroupByChange?: (key: string | null) => void;
   /** Rows per page; everything on one page by default. */
   pageSize?: number;
+  /** Page-size choices in the footer when pagination is enabled. */
+  pageSizeOptions?: number[];
+  /** Allow readers to resize columns; on by default. */
+  resizableColumns?: boolean;
   /** Scroll inside the table with a sticky header beyond this height. */
   maxHeight?: string;
   dense?: boolean;

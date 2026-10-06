@@ -105,9 +105,6 @@
   border-radius: 50%;
   object-fit: cover;
 }
-.ad-avatar[data-photo] .host-emblem__crown {
-  display: none;
-}
 /* The tag sits on the ring's lower edge like a name plate. */
 .ad-avatar-badge {
   position: absolute;

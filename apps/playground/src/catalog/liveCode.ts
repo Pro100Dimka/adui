@@ -21,7 +21,7 @@ const modules: Record<string, unknown> = {
  * snippet only refers to get stand-ins: `value={x}` + `setX` becomes state, anything else
  * is left undefined, so the component falls back to its defaults.
  */
-export function toModule(code: string) {
+export function toModule(code: string, exampleSource = "") {
   code = withMissingImports(code);
   if (/export\s+default/.test(code)) return code;
   const lines = code.split("\n");
@@ -48,6 +48,10 @@ export function toModule(code: string) {
       (m) => m[1],
     ),
   );
+  const initialState = new Map(
+    [...exampleSource.matchAll(/\bconst\s*\[\s*([A-Za-z_$][\w$]*)\s*,\s*[A-Za-z_$][\w$]*\s*\]\s*=\s*(?:React\.)?useState(?:<[^>]+>)?\(\s*([^\n)]*)\s*\)/g)]
+      .map((match) => [match[1], match[2]]),
+  );
   const stand = [...used]
     .filter(
       (name) =>
@@ -59,12 +63,14 @@ export function toModule(code: string) {
     .map((name) => {
       const setter = `set${name[0].toUpperCase()}${name.slice(1)}`;
       return used.has(setter)
-        ? `const [${name}, ${setter}] = React.useState();`
+        ? `const [${name}, ${setter}] = React.useState(${initialState.get(name) ?? ""});`
         : /^set[A-Z]/.test(name)
           ? `const ${name} = () => {};`
           : `const ${name} = undefined;`;
     });
   return [
+    ...(stand.length && !imports.some((line) => /import\s+(?:\*\s+as\s+)?React\b/.test(line))
+      ? ['import * as React from "react";'] : []),
     ...imports,
     ...statements,
     "export default function Example() {",
