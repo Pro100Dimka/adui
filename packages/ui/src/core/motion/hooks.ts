@@ -46,12 +46,26 @@ export function useBorder(
   shell = false,
   round = false,
 ) {
+  const motion = useMotion();
+  const scope = useRef<ReturnType<typeof createMotion> | null>(null);
+
   useLayoutEffect(() => {
     const node = ref.current;
     if (!node || !enabled) return;
-    const border = attachBorder(node, { shell, round });
-    return () => border.destroy();
+
+    const controller = createMotion(node);
+    scope.current = controller;
+    const border = attachBorder(node, { shell, round, scope: controller });
+    return () => {
+      border.destroy();
+      controller.dispose();
+      scope.current = null;
+    };
   }, [ref, enabled, shell, round]);
+
+  useLayoutEffect(() => {
+    scope.current?.set(motion);
+  }, [motion, enabled, shell, round]);
 }
 
 /**

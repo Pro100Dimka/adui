@@ -49,14 +49,14 @@ npm run check
 Установка в любой проект — из GitHub Release:
 
 ```bash
-npm install https://github.com/Pro100Dimka/adui/releases/download/v2.7.2/ad-voice-ui-2.7.2.tgz
+npm install https://github.com/Pro100Dimka/adui/releases/download/v2.7.11/ad-voice-ui-2.7.11.tgz
 ```
 
 Новая версия:
 
 ```bash
 npm run release:patch          # или release:minor / release:major — поднимает версию
-git commit -am "v<версия>" && git tag v<версия> && git push --follow-tags
+git commit -am "v<версия>" && git tag v<версия> && git push origin main && git push origin v<версия>
 ```
 
 По тегу GitHub Actions сам собирает `.tgz` и публикует релиз.

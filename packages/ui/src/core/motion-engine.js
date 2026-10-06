@@ -203,71 +203,136 @@ U.roundedPath = (w, h, r) => {
     : `M${i} ${i}H${R}V${B}H${i}Z`;
 };
 const borders = new WeakMap();
-/* The animated border: two lights travel round the element's edge, each a soft glow seen through
-   three ring-shaped windows (a wide haze, an aura, a thin bright core) centred on the edge.
-   The lights move along a CSS motion path, so the browser composites them: nothing is
-   repainted per frame and no script runs while they move. */
-const BORDER_RINGS = [
-  ["haze", 13],
-  ["aura", 6.5],
-  ["core", 1.35],
-];
-U.attachBorder = (element, { shell = false, round = false } = {}) => {
+/* SVG strokes keep the moving glow smooth around rounded corners and let its halo extend
+   beyond the edge. The shared motion scope still pauses painting while offscreen. */
+U.attachBorder = (element, { shell = false, round = false, scope } = {}) => {
   if (borders.has(element)) return borders.get(element);
-  const overlay = document.createElement("span");
-  overlay.className = "ad-border";
-  overlay.setAttribute("aria-hidden", "true");
-  overlay.dataset.adComponent = "AnimatedBorder";
-  if (shell) overlay.dataset.shell = "";
-  if (round) overlay.dataset.round = "";
-  const outline = document.createElement("span");
-  outline.className = "ad-border-outline";
-  overlay.append(outline);
-  const speeds = round ? [36, 25] : [125, 86];
+  const radius = round ? 28 : shell ? 102 : 116;
+  const overlay = U.svg("svg", {
+    class: "ad-border",
+    "aria-hidden": "true",
+    focusable: "false",
+    fill: "none",
+    "data-ad-component": "AnimatedBorder",
+  });
+  const defs = U.svg("defs"),
+    path = U.svg("path", {
+      fill: "none",
+      stroke: shell ? "rgb(from var(--ad-secondary) r g b / 0.65)" : "rgb(from var(--ad-primary) r g b / 0.16)",
+      "stroke-width": shell ? 1.1 : 0.6,
+    });
+  overlay.append(defs, path);
   const lights = [];
-  for (const [kind, width] of BORDER_RINGS) {
-    const ring = document.createElement("span");
-    ring.className = "ad-border-ring";
-    ring.dataset.ring = kind;
-    ring.style.setProperty("--ad-ring", `${width}px`);
-    for (let k = 0; k < 2; k++) {
-      const light = document.createElement("i");
-      light.className = "ad-border-light";
-      ring.append(light);
-      lights.push({ light, k });
-    }
-    overlay.append(ring);
+  for (let k = 0; k < 2; k++) {
+    const id = U.uid("ad-orbit");
+    const gradient = U.svg("radialGradient", {
+      id,
+      gradientUnits: "userSpaceOnUse",
+      cx: 0,
+      cy: 0,
+      r: radius,
+    });
+    for (const [offset, color, opacity] of [
+      [0, "var(--ad-on-accent)", 1],
+      [0.04, "var(--ad-on-accent)", 1],
+      [0.16, "var(--ad-secondary)", 1],
+      [0.4, "var(--ad-primary)", 0.85],
+      [0.72, "var(--ad-primary)", 0.32],
+      [1, "var(--ad-primary)", 0],
+    ])
+      gradient.append(U.svg("stop", { offset, "stop-color": color, "stop-opacity": opacity }));
+    const red = U.svg("radialGradient", {
+      id: `${id}-red`,
+      gradientUnits: "userSpaceOnUse",
+      cx: 0,
+      cy: 0,
+      r: radius,
+    });
+    for (const [offset, opacity] of [[0, 1], [0.4, 0.7], [1, 0]])
+      red.append(U.svg("stop", {
+        offset,
+        "stop-color": "var(--ad-primary)",
+        "stop-opacity": opacity,
+      }));
+    defs.append(gradient, red);
+    const haze = U.svg("path", {
+      fill: "none",
+      stroke: `url(#${id}-red)`,
+      "stroke-width": 22,
+      "stroke-linecap": "round",
+      opacity: 0.17,
+    });
+    const aura = U.svg("path", {
+      fill: "none",
+      stroke: `url(#${id}-red)`,
+      "stroke-width": 8.5,
+      "stroke-linecap": "round",
+      opacity: 0.48,
+    });
+    const core = U.svg("path", {
+      fill: "none",
+      stroke: `url(#${id})`,
+      "stroke-width": shell ? 1.9 : 1.35,
+    });
+    overlay.append(haze, aura, core);
+    lights.push({
+      gradient,
+      red,
+      radius,
+      phase: (k * 0.48 + 0.535) % 1,
+      speed: round ? (k ? 25 : 36) : k ? 86 : 125,
+      paths: [haze, aura, core],
+    });
   }
   const computedPosition = getComputedStyle(element).position;
   const patchedPosition = computedPosition === "static";
   const previousInlinePosition = element.style.position;
   if (patchedPosition) element.style.position = "relative";
+  Object.assign(overlay.style, {
+    inset: "0",
+    width: "100%",
+    height: "100%",
+    overflow: "visible",
+  });
+  overlay.setAttribute("width", "100%");
+  overlay.setAttribute("height", "100%");
+  overlay.setAttribute("preserveAspectRatio", "none");
   element.append(overlay);
-  const item = { element, overlay, patchedPosition, previousInlinePosition };
-  // Each light keeps its own speed in px/s, so its lap time follows the edge's length.
+  const item = { element, overlay, path, lights, length: 0, patchedPosition, previousInlinePosition };
+  item.paint = (time) => {
+    if (!item.length) return;
+    for (const light of lights) {
+      const p = path.getPointAtLength((light.phase * item.length + time * light.speed) % item.length);
+      const x = p.x.toFixed(1), y = p.y.toFixed(1);
+      if (light.x === x && light.y === y) continue;
+      light.x = x;
+      light.y = y;
+      const transform = `translate(${x} ${y})`;
+      for (const gradient of [light.gradient, light.red])
+        gradient.setAttribute("gradientTransform", transform);
+    }
+  };
   item.sync = () => {
     const w = element.offsetWidth,
       h = element.offsetHeight;
     if (!w || !h) return;
     const corner = getComputedStyle(element).borderTopLeftRadius;
-    const r = Math.min(
-      corner.includes("%") ? (Math.min(w, h) * parseFloat(corner)) / 100 : parseFloat(corner) || 0,
-      w / 2,
-      h / 2,
-    );
-    const perimeter = 2 * (w + h) - 8 * r + 2 * Math.PI * r;
-    overlay.style.setProperty("--ad-border-r", `${r}px`);
-    for (const { light, k } of lights) {
-      const lap = perimeter / speeds[k];
-      const phase = (k * 0.48 + 0.535) % 1;
-      light.style.animationDuration = `${lap.toFixed(2)}s`;
-      light.style.animationDelay = `${(-phase * lap).toFixed(2)}s`;
-    }
+    const r = corner.includes("%")
+      ? (Math.min(w, h) * parseFloat(corner)) / 100
+      : parseFloat(corner) || 0;
+    const d = U.roundedPath(w, h, r);
+    overlay.setAttribute("viewBox", `0 0 ${w} ${h}`);
+    path.setAttribute("d", d);
+    for (const light of lights) for (const stroke of light.paths) stroke.setAttribute("d", d);
+    item.length = path.getTotalLength();
+    item.paint(scope?.time || 0);
   };
   item.observer = createResizeObserver(item.sync);
   item.observer.observe(element);
   item.sync();
+  const unsubscribe = scope?.add(element, item.paint);
   item.destroy = () => {
+    unsubscribe?.();
     item.observer.disconnect();
     overlay.remove();
     if (item.patchedPosition) element.style.position = item.previousInlinePosition;

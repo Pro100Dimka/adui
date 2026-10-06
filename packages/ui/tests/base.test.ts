@@ -1,6 +1,7 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { readFileSync } from "node:fs";
 import { copyText } from "../src/core/base";
+import { attachBorder } from "../src/core/motion-engine.js";
 import { defaultSettings, fonts, siteThemeProps } from "../../../apps/playground/src/app/siteSettings";
 
 describe("copyText", () => {
@@ -30,6 +31,52 @@ describe("copyText", () => {
 
     expect(await copyText("loader code")).toBe(true);
     expect(overflowed).toBe(false);
+  });
+});
+
+describe("AnimatedBorder", () => {
+  afterEach(() => vi.unstubAllGlobals());
+
+  it("renders smooth gradient strokes that can glow beyond the card edge", () => {
+    const node = (tag: string) => ({
+      tagName: tag,
+      children: [] as any[],
+      attributes: {} as Record<string, string>,
+      style: { setProperty: vi.fn() } as Record<string, any>,
+      dataset: {} as Record<string, string>,
+      append(...children: any[]) { this.children.push(...children); },
+      setAttribute(name: string, value: string) { this.attributes[name] = value; },
+      getTotalLength: () => 400,
+      getPointAtLength: (distance: number) => ({ x: distance, y: 0 }),
+      remove: vi.fn(),
+    });
+    const host = Object.assign(node("section"), {
+      offsetWidth: 200,
+      offsetHeight: 100,
+    });
+    vi.stubGlobal("document", {
+      createElement: node,
+      createElementNS: (_namespace: string, tag: string) => node(tag),
+    });
+    vi.stubGlobal("getComputedStyle", () => ({ position: "relative", borderTopLeftRadius: "18px" }));
+    const unsubscribe = vi.fn();
+    const add = vi.fn(() => unsubscribe);
+
+    const border = attachBorder(host as any, { scope: { add } as any });
+    const overlay = host.children[0];
+    expect(overlay.tagName).toBe("svg");
+    expect(overlay.style.overflow).toBe("visible");
+    expect(overlay.children[0].children.filter((child: any) => child.tagName === "radialGradient")).toHaveLength(4);
+    expect(overlay.children.filter((child: any) => child.tagName === "path")).toHaveLength(7);
+    expect(add).toHaveBeenCalledOnce();
+    const gradient = overlay.children[0].children[0];
+    expect(gradient.children[0].attributes["stop-color"]).toBe("var(--ad-on-accent)");
+    const initialTransform = gradient.attributes.gradientTransform;
+    add.mock.calls[0][1](1);
+    expect(gradient.attributes.gradientTransform).toMatch(/^translate\([\d.]+ [\d.]+\)$/);
+    expect(gradient.attributes.gradientTransform).not.toBe(initialTransform);
+    border.destroy();
+    expect(unsubscribe).toHaveBeenCalledOnce();
   });
 });
 
