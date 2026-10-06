@@ -19,6 +19,11 @@ import { LocaleProvider, getLocale, setLocale } from "../src/core/i18n";
 import { Toast } from "../src/components/feedback/Toast/Toast";
 import { Dialog } from "../src/components/feedback/Dialog/Dialog";
 
+it("locks the Linux Rollup binary needed by the release runner", () => {
+  const lock = JSON.parse(readFileSync(new URL("../../../package-lock.json", import.meta.url), "utf8"));
+  expect(lock.packages["node_modules/@rollup/rollup-linux-x64-gnu"]?.version).toBe(lock.packages["node_modules/rollup"].version);
+});
+
 describe("closed dialog work", () => {
   it("does not mount a dialog or its expensive children while closed", () => {
     expect(renderToStaticMarkup(createElement(Dialog, { open: false }, createElement("span", null, "Heavy editor")))).toBe("");
