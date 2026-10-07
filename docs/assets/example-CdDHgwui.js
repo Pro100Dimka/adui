@@ -1,0 +1,1 @@
+import{r as a,j as s,o,H as n}from"./index-0UK2-KzX.js";function l(){const[t,e]=a.useState(!1);return s.jsxs(s.Fragment,{children:[s.jsx(o,{icon:"save",onClick:()=>e(!0),children:"Сохранить"}),s.jsx(n,{floating:!0,open:t,message:"Настройки сохранены",onClose:()=>e(!1)})]})}export{l as default};

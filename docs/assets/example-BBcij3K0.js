@@ -1,1 +1,0 @@
-import{j as r,P as a,U as l,a as t}from"./index-CkfvrOzv.js";function i(){return r.jsx(a,{knobs:{flicker:{value:!0}},code:e=>t("GlowText",{as:"h2",flicker:e.flicker},"Karaoke Night"),children:e=>r.jsx(l.GlowText,{as:"h2",flicker:e.flicker,style:{fontSize:"clamp(2rem, 6vw, 3.5rem)"},children:"Karaoke Night"})})}export{i as default};

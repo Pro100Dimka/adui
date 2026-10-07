@@ -1,9 +1,44 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { act, create, type ReactTestRenderer } from "react-test-renderer";
 import { Router } from "../src/components/navigation/Router/Router";
+import RouterExample from "../src/components/navigation/Router/example";
+import { LocaleProvider } from "@ad-voice/ui";
 import { useMotion, useReducedMotion } from "../src/core/providers/context";
 
 afterEach(() => vi.unstubAllGlobals());
+
+it("translates the Router example with the selected documentation locale", () => {
+  vi.stubGlobal("IS_REACT_ACT_ENVIRONMENT", true);
+  vi.stubGlobal("location", { hash: "#/", pathname: "/" });
+  vi.stubGlobal("window", { addEventListener: () => {}, removeEventListener: () => {} });
+  let tree!: ReactTestRenderer;
+  act(() => { tree = create(<LocaleProvider locale="en"><RouterExample /></LocaleProvider>); });
+  expect(JSON.stringify(tree.toJSON())).toContain("Home");
+  expect(JSON.stringify(tree.toJSON())).toContain("You are on the home page.");
+  act(() => tree.unmount());
+});
+
+it("documents a usable Router with interactive home and dynamic room routes", () => {
+  let hashChange = () => {};
+  const location = { hash: "#/", pathname: "/" };
+  vi.stubGlobal("IS_REACT_ACT_ENVIRONMENT", true);
+  vi.stubGlobal("location", location);
+  vi.stubGlobal("window", {
+    addEventListener: (_event: string, listener: () => void) => { hashChange = listener; },
+    removeEventListener: () => {},
+  });
+  vi.stubGlobal("document", { documentElement: { dataset: { adMotion: "off" } } });
+
+  let tree!: ReactTestRenderer;
+  act(() => { tree = create(<RouterExample />); });
+  expect(tree.root.findAllByType("p").some((node) => node.children.join("") === "Вы на главной странице.")).toBe(true);
+  const roomButton = tree.root.findAllByType("button").find((button) =>
+    button.findAllByType("span").some((label) => label.children.includes("Комнаты")));
+  expect(roomButton).toBeDefined();
+  act(() => { roomButton!.props.onClick(); location.hash = "#/rooms/42"; hashChange(); });
+  expect(tree.root.findAllByType("p").some((node) => node.children.join("") === "Комната 42")).toBe(true);
+  act(() => tree.unmount());
+});
 
 describe("Router render stability", () => {
   it("does not rerender the current page when only the motion preference changes", () => {

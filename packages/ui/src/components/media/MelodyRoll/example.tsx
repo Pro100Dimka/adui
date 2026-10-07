@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { MelodyRoll, Switch, useDecoration, type MelodyNote } from "@ad-voice/ui";
+import { MelodyRoll, Stack, Switch, useDecoration, type MelodyNote } from "@ad-voice/ui";
 
 const melody = [64, 67, 69, 67, 64, 62, 60, 64, 65, 67, 72, 71, 69, 67];
 const syllables = ["Ночь", "го", "рит", "ог", "ня", "ми", "и", "нас", "зо", "вёт", "до", "мой", "сквозь", "тьму"];
@@ -27,10 +27,10 @@ export default function MelodyRollExample() {
 
   return (
     <div ref={box} style={{ display: "grid", gap: "0.75rem", width: "100%" }}>
-      <div style={{ height: "14rem" }}>
+      <Stack style={{ height: "14rem" }}>
         <MelodyRoll notes={notes} position={position} livePitch={livePitch} accuracy={accuracy} hit={hit}
           hitIds={hits.current} level={note ? 0.5 + Math.sin(position * 5) * 0.3 : 0} beat={beat} showLyrics={lyrics} />
-      </div>
+      </Stack>
       <Switch label="Слоги на нотах" checked={lyrics} onValueChange={setLyrics} />
     </div>
   );

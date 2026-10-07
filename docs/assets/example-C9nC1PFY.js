@@ -1,0 +1,1 @@
+import{j as t,P as a,U as n,a as o}from"./index-0UK2-KzX.js";const r=["success","processing","pending","warning","error","offline","info"];function e(){return t.jsx(a,{knobs:{status:{options:r,value:"processing"}},code:s=>o("StatusIndicator",{status:s.status}),children:s=>t.jsx(n.StatusIndicator,{status:s.status})})}export{e as default};

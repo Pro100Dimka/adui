@@ -1,0 +1,1 @@
+import{j as a,S as r,o as e}from"./index-0UK2-KzX.js";function n(){return a.jsxs(r,{direction:{base:"column",md:"row"},gap:{base:2,md:3},align:{base:"stretch",md:"center"},children:[a.jsx(e,{variant:"primary",icon:"save",children:"Сохранить"}),a.jsx(e,{icon:"eye",children:"Предпросмотр"}),a.jsx(e,{variant:"ghost",children:"Отмена"})]})}export{n as default};

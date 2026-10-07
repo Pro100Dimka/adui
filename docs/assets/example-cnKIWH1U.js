@@ -1,1 +1,0 @@
-import{j as s,K as a,t}from"./index-CkfvrOzv.js";function u(){return s.jsx(a,{items:[["Python backend",s.jsx(t,{status:"success",label:"Работает"})],["Аудиосервис",s.jsx(t,{status:"processing",label:"Запуск"})],["База данных",s.jsx(t,{status:"success",label:"Исправна"})]]})}export{u as default};

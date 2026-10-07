@@ -17,11 +17,11 @@ export default function TabExample() {
       }
     >
       {(v) => (
-        <div role="tablist" aria-label="Пример вкладки">
+        <U.Stack role="tablist" aria-label="Пример вкладки">
           <U.Tab icon="audio" selected={v.selected} size={v.size}>
             Аудио
           </U.Tab>
-        </div>
+        </U.Stack>
       )}
     </Playground>
   );

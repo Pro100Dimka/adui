@@ -1,6 +1,6 @@
 import { tr, useLocale, useTr } from "@ad-voice/ui";
 import { useEffect, useRef, useState } from "react";
-import { Badge, Button, MessageBar, Typography } from "@ad-voice/ui";
+import { Badge, Button, Grid, MessageBar, Stack, Typography } from "@ad-voice/ui";
 import { CopyButton } from "./CopyButton";
 import { CodeEditor } from "./CodeEditor";
 import { compile } from "./liveCode";
@@ -99,9 +99,9 @@ export function LiveEditor({
 
   const { js, error, version } = result;
   return (
-    <div className="docs-live">
-      <div className="docs-live-editor">
-        <div className="docs-live-head">
+    <Grid className="docs-live" columns="repeat(auto-fit, minmax(min(100%, 22rem), 1fr))" gap={4}>
+      <Grid className="docs-live-editor" columns={1}>
+        <Stack className="docs-live-head" direction="row" align="center" wrap gap={2}>
           <Badge>TSX</Badge>
           <Typography variant="label">Example.tsx</Typography>
           {draft !== null && (
@@ -109,7 +109,7 @@ export function LiveEditor({
               {tr("Изменено")}
             </Badge>
           )}
-          <span className="docs-live-actions">
+          <Stack as="span" className="docs-live-actions" direction="row" gap={2} inline>
             {draft !== null && (
               <Button
                 size="xs"
@@ -121,10 +121,10 @@ export function LiveEditor({
               </Button>
             )}
             <CopyButton text={code} />
-          </span>
-        </div>
+          </Stack>
+        </Stack>
         <CodeEditor label={tr("Код примера")} value={code} onChange={setDraft} />
-      </div>
+      </Grid>
       <div className="docs-live-preview" ref={preview}>
         {error && <MessageBar tone="error">{error}</MessageBar>}
         {js && (
@@ -139,7 +139,7 @@ export function LiveEditor({
           />
         )}
       </div>
-    </div>
+    </Grid>
   );
 }
 export default LiveEditor;

@@ -17,13 +17,13 @@ export default function MelodixTextExample() {
         const props = { finish: v.finish as "silver", glow: v.glow };
         const weight = Number(v.weight);
         return (
-          <div style={{ display: "grid", gap: "0.75rem", justifyItems: "center", width: "100%", padding: "1rem 0" }}>
+          <U.Stack align="center" gap={3} style={{ width: "100%", padding: "1rem 0" }}>
             <U.MelodixText as="div" {...props} style={{ fontSize: "clamp(3rem, 7vw, 5.5rem)", fontWeight: weight }}>MELODIX</U.MelodixText>
             <U.MelodixText as="div" {...props} style={{ fontSize: "clamp(1.75rem, 4vw, 3rem)", fontWeight: weight }}>АБВГҐДЕЄЁЖЗИІЇЙКЛМН</U.MelodixText>
             <U.MelodixText as="div" {...props} style={{ fontSize: "clamp(1.75rem, 4vw, 3rem)", fontWeight: weight }}>ОПРСТУФХЦЧШЩЪЫЬЭЮЯ</U.MelodixText>
             <U.MelodixText as="div" {...props} style={{ fontSize: "clamp(1.75rem, 4vw, 3rem)", fontWeight: weight }}>0123456789 ♪♫𝄞♥#</U.MelodixText>
             <U.MelodixText as="div" {...props} style={{ fontSize: "clamp(1.5rem, 3vw, 2.25rem)", fontWeight: weight }}>Караоке «Небо» — Звери</U.MelodixText>
-          </div>
+          </U.Stack>
         );
       }}
     </Playground>

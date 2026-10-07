@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { resolveToken } from "@ad-voice/ui";
+import { Grid, resolveToken } from "@ad-voice/ui";
 import type * as Monaco from "monaco-editor";
 
 /**
@@ -180,7 +180,7 @@ export function CodeEditor({
   }, [value]);
 
   return (
-    <div className="docs-code-editor">
+    <Grid className="docs-code-editor" columns={1}>
       <div ref={host} className="docs-code-editor-host" data-loaded={loaded || undefined} />
       {!loaded && (
         <textarea
@@ -191,6 +191,6 @@ export function CodeEditor({
           onChange={(event) => onChange(event.currentTarget.value)}
         />
       )}
-    </div>
+    </Grid>
   );
 }

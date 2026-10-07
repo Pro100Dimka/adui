@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { PianoRoll, type PianoRollGesture, type PianoRollNote } from "@ad-voice/ui";
+import { PianoRoll, Stack, type PianoRollGesture, type PianoRollNote } from "@ad-voice/ui";
 
 const start: PianoRollNote[] = [
   { id: "1", start: 0.4, end: 1.1, pitch: 64 },
@@ -30,13 +30,13 @@ export default function PianoRollExample() {
     }));
   };
   return (
-    <div style={{ width: "100%", height: "22rem" }}>
+    <Stack style={{ width: "100%", height: "22rem" }}>
       <PianoRoll notes={notes} selected={selected} position={position} duration={8}
         onSelect={(id, additive) => setSelected((current) => additive ? new Set([...current, id]) : new Set([id]))}
         onSelectArea={(ids) => setSelected(new Set(ids))}
         onSeek={setPosition} onNoteDrag={drag} onNoteDragEnd={() => (before.current = null)}
         onNudge={(id, pitch, seconds) => setNotes((all) => all.map((note) => note.id === id
           ? { ...note, pitch: note.pitch + pitch, start: note.start + seconds, end: note.end + seconds } : note))} />
-    </div>
+    </Stack>
   );
 }

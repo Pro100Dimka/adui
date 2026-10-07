@@ -1,6 +1,6 @@
 import { tr, useTr } from "@ad-voice/ui";
 import { ExamplePreviewContext } from "../../../../packages/ui/src/dev/exampleHelpers";
-import { Badge, Card, Header, Icon, Stack, Typography, usePauseOffscreen } from "@ad-voice/ui";
+import { Badge, Card, Grid, Header, Icon, Link, Stack, Typography, usePauseOffscreen } from "@ad-voice/ui";
 import { Suspense, useRef } from "react";
 import { CopyButton } from "./CopyButton";
 import {
@@ -84,11 +84,11 @@ export function CatalogOverview() {
             description={tr(category.description)}
             actions={<Badge>{category.items.length}</Badge>}
           />
-          <div className="docs-showcase-grid">
+          <Grid className="docs-showcase-grid" columns="repeat(auto-fill, minmax(min(100%, 15rem), 1fr))" gap={3} dense>
             {category.items.map((item) => (
               <ShowcaseTile key={item.name} item={item} />
             ))}
-          </div>
+          </Grid>
         </Stack>
       ))}
     </Stack>
@@ -104,26 +104,26 @@ function ShowcaseTile({ item }: { item: CatalogMeta }) {
 
   return (
     <div ref={ref} className="docs-showcase-tile">
-      <div className="docs-showcase-preview" inert>
+      <Stack className="docs-showcase-preview" align="center" justify="center" inert>
         <DocsExampleBoundary name={item.name}>
           <ExamplePreviewContext.Provider value>
             {Example && <Suspense fallback={null}><Example /></Suspense>}
           </ExamplePreviewContext.Provider>
         </DocsExampleBoundary>
-      </div>
-      <div className="docs-showcase-foot">
+      </Stack>
+      <Stack className="docs-showcase-foot" direction="row" align="center" gap={3}>
         <Stack gap={0}>
-          <a className="docs-showcase-link" href={componentHref(item.name)}>
+          <Link className="docs-showcase-link" href={componentHref(item.name)} underline="none">
             <Typography variant="label" weight="bold">
               {item.name}
             </Typography>
-          </a>
+          </Link>
           <Typography variant="caption" tone="muted" truncate>
             {tr(item.description)}
           </Typography>
         </Stack>
         <Icon name="chevron" />
-      </div>
+      </Stack>
     </div>
   );
 }

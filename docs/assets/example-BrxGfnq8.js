@@ -1,1 +1,0 @@
-import{j as e,S as t,d as n}from"./index-CkfvrOzv.js";function o(){return e.jsxs(t,{direction:"row",gap:4,wrap:!0,children:[e.jsx(n,{href:"#/components/button",children:"Документация"}),e.jsx(n,{href:"#/components/button",icon:"document",children:"С иконкой"}),e.jsx(n,{href:"https://react.dev",external:!0,underline:"always",children:"Внешняя ссылка"})]})}export{o as default};

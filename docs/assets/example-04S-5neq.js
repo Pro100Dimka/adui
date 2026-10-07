@@ -1,1 +1,0 @@
-import{j as o,P as i,U as n,a as e}from"./index-CkfvrOzv.js";function s(){return o.jsx(i,{knobs:{animation:{options:[...n.loaderAnimations],value:"orbit"}},code:a=>e("Loader",{src:"/logo.png",animation:a.animation,size:"4rem"}),children:a=>o.jsx(n.Loader,{animation:a.animation,size:"5rem"})})}export{s as default};

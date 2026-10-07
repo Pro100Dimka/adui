@@ -19,6 +19,34 @@ import { LocaleProvider, getLocale, setLocale } from "../src/core/i18n";
 import { Toast } from "../src/components/feedback/Toast/Toast";
 import { Dialog } from "../src/components/feedback/Dialog/Dialog";
 
+it("composes the documentation UI and visual examples from kit primitives", () => {
+  const surfaces = [
+    "../../apps/playground/src/catalog/CatalogOverview.tsx",
+    "../../apps/playground/src/catalog/ComponentDocsPage.tsx",
+    "../../apps/playground/src/catalog/CodeEditor.tsx",
+    "../../apps/playground/src/catalog/LiveEditor.tsx",
+    "src/components/navigation/Router/example.tsx",
+    "src/components/media/PianoKeyboard/example.tsx",
+    "src/components/media/MediaCard/example.tsx",
+    "src/components/media/MelodyRoll/example.tsx",
+    "src/components/controls/DatePicker/example.tsx",
+    "src/components/controls/ColorPicker/example.tsx",
+    "src/components/controls/Chip/example.tsx",
+    "src/components/effects/ImageShine/example.tsx",
+    "src/components/effects/MelodixText/example.tsx",
+    "src/components/layout/FloatingPanel/example.tsx",
+    "src/components/layout/StatTile/example.tsx",
+    "src/components/controls/Tab/example.tsx",
+  ];
+  for (const path of surfaces) {
+    // A DOM host with a ref is still needed for visibility or preview APIs.
+    const source = readFileSync(path, "utf8")
+      .replace(/<div\b[^>]*\bref=\{[^}]+\}[^>]*>/g, "")
+      .replace('<div id="root"></div>', "");
+    expect(source, path).not.toMatch(/<(?:div|span|a|nav)\b/);
+  }
+});
+
 it("locks the Linux Rollup binary needed by the release runner", () => {
   const lock = JSON.parse(readFileSync(new URL("../../../package-lock.json", import.meta.url), "utf8"));
   expect(lock.packages["node_modules/@rollup/rollup-linux-x64-gnu"]?.version).toBe(lock.packages["node_modules/rollup"].version);

@@ -16,6 +16,8 @@ vi.mock("@ad-voice/ui", () => ({
   tr: (text: string) => text,
   useTr: () => (text: string) => text,
   useLocale: () => "en",
+  Grid: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
+  Stack: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
   Badge: ({ children }: { children: React.ReactNode }) => <span>{children}</span>,
   Typography: ({ children }: { children: React.ReactNode }) => <span>{children}</span>,
   MessageBar: ({ children }: { children: React.ReactNode }) => <span>{children}</span>,

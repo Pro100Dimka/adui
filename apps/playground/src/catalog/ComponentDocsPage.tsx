@@ -63,11 +63,11 @@ function CodeBlock({
         <CopyButton text={code} />
       </Stack>
       <Divider />
-      <div className="docs-code-body">
+      <Stack className="docs-code-body">
         <Typography as="pre" className="docs-code-pre" variant="mono">
           {code}
         </Typography>
-      </div>
+      </Stack>
     </Card>
   );
 }

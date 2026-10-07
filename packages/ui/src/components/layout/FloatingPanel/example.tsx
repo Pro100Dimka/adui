@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { FloatingPanel, MelodyRoll, Typography, type PanelLayout } from "@ad-voice/ui";
+import { FloatingPanel, MelodyRoll, Stack, Typography, type PanelLayout } from "@ad-voice/ui";
 
 export default function FloatingPanelExample() {
   const [layout, setLayout] = useState<PanelLayout | null>(null);
   return (
-    <div style={{ display: "grid", gap: "0.5rem" }}>
+    <Stack gap={2}>
       <Typography variant="caption" tone="muted">
         Тяните панель за поверхность; щёлкните, чтобы выделить и менять размер за края и углы.
       </Typography>
@@ -12,6 +12,6 @@ export default function FloatingPanelExample() {
         label="Мелодия" style={{ right: "2rem", bottom: "2rem", width: "26rem", height: "11rem" }}>
         <MelodyRoll position={1.6} livePitch={68.8} accuracy={0.8} hit />
       </FloatingPanel>
-    </div>
+    </Stack>
   );
 }

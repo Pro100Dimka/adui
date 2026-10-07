@@ -10,10 +10,10 @@ export default function ColorPickerExample() {
       code={(v) => jsx("ColorPicker", { label: "Основной цвет", value: { expr: "color" }, onValueChange: { expr: "setColor" }, inline: v.inline })}
     >
       {(v) => (
-        <div style={{ display: "grid", gap: "1rem", width: "min(100%, 22rem)" }}>
+        <U.Stack gap={4} style={{ width: "min(100%, 22rem)" }}>
           <U.ColorPicker label="Основной цвет" value={color} onValueChange={setColor} inline={v.inline} />
           <U.Button variant="primary" icon="palette" style={{ background: color }}>Цвет {color}</U.Button>
-        </div>
+        </U.Stack>
       )}
     </Playground>
   );

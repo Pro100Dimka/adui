@@ -8,11 +8,11 @@ export default function StatTileExample() {
       code={(v) => jsx("StatTile", { icon: "music", value: { expr: "128" }, label: "Всего песен", tilt: v.tilt ? undefined : { expr: "false" } })}
     >
       {(v) => (
-        <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem" }}>
+        <U.Stack direction="row" wrap gap={4}>
           <U.StatTile icon="music" value={128} label="Всего песен" tilt={v.tilt} />
           <U.StatTile icon="mic" value={96} label="Готово к караоке" tilt={v.tilt} />
           <U.StatTile icon="users" value={4} label="Друзья · 2 в сети" tilt={v.tilt} onClick={() => undefined} />
-        </div>
+        </U.Stack>
       )}
     </Playground>
   );

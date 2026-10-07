@@ -12,11 +12,11 @@ export default function DatePickerExample() {
       }
     >
       {(v) => (
-        <div style={{ width: "min(100%, 20rem)" }}>
+        <U.Stack style={{ width: "min(100%, 20rem)" }}>
           <U.DatePicker label="Дата выступления" value={date} onValueChange={setDate}
             min={v.limited ? "2026-10-01" : undefined} max={v.limited ? "2026-10-31" : undefined}
             description={v.limited ? "Только в октябре" : undefined} />
-        </div>
+        </U.Stack>
       )}
     </Playground>
   );

@@ -1,1 +1,0 @@
-import{u as t,j as i,P as n,s as o,U as r,a as m}from"./index-CkfvrOzv.js";function h(){const s=t();return i.jsx(n,{knobs:{size:{options:o,value:"sm"}},code:(a,e)=>m("ThemePicker",{value:{expr:"theme"},onValueChange:{expr:"setTheme"},size:e.size}),children:a=>i.jsx(r.ThemePicker,{size:a.size,value:s.theme,onValueChange:e=>s.set({theme:e})})})}export{h as default};

@@ -1,4 +1,4 @@
-import { ImageShine } from "@ad-voice/ui";
+import { ImageShine, Stack } from "@ad-voice/ui";
 
 // Any picture with transparency works; this one is a neon note drawn inline.
 const note = `data:image/svg+xml,${encodeURIComponent(
@@ -7,8 +7,8 @@ const note = `data:image/svg+xml,${encodeURIComponent(
 
 export default function ImageShineExample() {
   return (
-    <div style={{ width: "12rem" }}>
+    <Stack style={{ width: "12rem" }}>
       <ImageShine src={note} label="Нота" />
-    </div>
+    </Stack>
   );
 }
