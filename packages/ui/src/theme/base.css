@@ -88,6 +88,9 @@ button.ad:focus-visible {
   fill: none;
   z-index: 20;
 }
+[data-ad-color-mode="light"] .ad-border path[filter] {
+  opacity: 0.4;
+}
 .ad-spinner {
   width: 0.9375rem;
   height: 0.9375rem;

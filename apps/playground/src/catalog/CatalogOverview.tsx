@@ -1,7 +1,7 @@
 import { tr, useTr } from "@ad-voice/ui";
 import { ExamplePreviewContext } from "../../../../packages/ui/src/dev/exampleHelpers";
-import { Badge, Card, Grid, Header, Icon, Link, Stack, Typography, usePauseOffscreen } from "@ad-voice/ui";
-import { Suspense, useRef } from "react";
+import { Badge, Card, Grid, Header, Icon, Link, Stack, Typography, useBorder, usePauseOffscreen } from "@ad-voice/ui";
+import { Suspense, useEffect, useRef, useState } from "react";
 import { CopyButton } from "./CopyButton";
 import {
   catalog,
@@ -44,7 +44,7 @@ export function CatalogOverview() {
             <Badge>{catalogCategories.length} {tr("категорий")}</Badge>
             <Badge>TypeScript</Badge>
           </Stack>
-          <Card className="docs-install" material="glass" padding="sm">
+          <Card className="docs-install" material="glass" border padding="sm">
             <Stack gap={2}>
               <Typography variant="eyebrow" tone="muted">
                 {tr("Установка")}
@@ -59,7 +59,7 @@ export function CatalogOverview() {
                     >
                       {line}
                     </Typography>
-                    <CopyButton text={line} />
+                    <CopyButton text={line} variant="ghost" />
                   </Stack>
                 ),
               )}
@@ -99,15 +99,30 @@ export function CatalogOverview() {
 function ShowcaseTile({ item }: { item: CatalogMeta }) {
   const tr = useTr();
   const ref = useRef<HTMLDivElement>(null);
+  const [showPreview, setShowPreview] = useState(false);
   const Example = getExample(item.name);
+  useBorder(ref);
   usePauseOffscreen(ref);
+  useEffect(() => {
+    const node = ref.current;
+    if (!node) return;
+    if (typeof IntersectionObserver === "undefined") {
+      setShowPreview(true);
+      return;
+    }
+    const observer = new IntersectionObserver(([entry]) => {
+      setShowPreview(entry.isIntersecting);
+    }, { rootMargin: "50% 0px" });
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <div ref={ref} className="docs-showcase-tile">
       <Stack className="docs-showcase-preview" align="center" justify="center" inert>
         <DocsExampleBoundary name={item.name}>
           <ExamplePreviewContext.Provider value>
-            {Example && <Suspense fallback={null}><Example /></Suspense>}
+            {showPreview && Example && <Suspense fallback={null}><Example /></Suspense>}
           </ExamplePreviewContext.Provider>
         </DocsExampleBoundary>
       </Stack>

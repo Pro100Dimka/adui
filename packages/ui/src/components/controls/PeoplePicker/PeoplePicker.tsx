@@ -1,4 +1,4 @@
-import { tr, useTr } from "../../../core/i18n";
+import { useTr } from "../../../core/i18n";
 import { useEffect, useRef, useState } from "react";
 import { useControllable, type CommonProps } from "../../../core/base";
 import { Popover } from "../../feedback/Popover/Popover";
@@ -21,8 +21,8 @@ export interface PickerPerson {
 export interface PeoplePickerProps extends CommonProps {
   /** Everyone who can be picked; filtered by name and description while typing. */
   people?: PickerPerson[];
-  /** Search elsewhere (a server) instead: called as the user types, results replace `people`. */
-  onSearch?: (query: string) => Promise<PickerPerson[]> | PickerPerson[];
+  /** Search elsewhere; the optional signal cancels superseded or unmounted requests. */
+  onSearch?: (query: string, signal?: AbortSignal) => Promise<PickerPerson[]> | PickerPerson[];
   value?: PickerPerson[];
   defaultValue?: PickerPerson[];
   onValueChange?: (people: PickerPerson[]) => void;
@@ -66,23 +66,30 @@ export function PeoplePicker({
   const [loading, setLoading] = useState(false);
   const [searchError, setSearchError] = useState<string>();
   const box = useRef<HTMLDivElement>(null);
+  const search = useRef(onSearch);
+  search.current = onSearch;
+  const remote = !!onSearch;
+  const needle = query.trim().toLowerCase();
   const limit = single ? 1 : max;
   const full = limit !== undefined && chosen.length >= limit;
 
   // Asynchronous search: debounced, and a late answer to an older query is ignored.
   useEffect(() => {
-    if (!onSearch) return;
-    if (!query.trim()) {
+    if (!remote || !query.trim()) {
       setFound(null);
       setSearchError(undefined);
+      setLoading(false);
       return;
     }
     let current = true;
+    const controller = new AbortController();
     setLoading(true);
     setSearchError(undefined);
     const timer = setTimeout(async () => {
       try {
-        const result = await onSearch(query.trim());
+        const load = search.current;
+        if (!load) return;
+        const result = await load(query.trim(), controller.signal);
         if (current) setFound(result);
       } catch (error) {
         if (current) {
@@ -96,10 +103,10 @@ export function PeoplePicker({
     return () => {
       current = false;
       clearTimeout(timer);
+      controller.abort();
     };
-  }, [query, onSearch]);
+  }, [query, remote]);
 
-  const needle = query.trim().toLowerCase();
   const pool = onSearch ? (found ?? []) : people;
   const options = pool
     .filter((person) => !chosen.some((c) => c.id === person.id))

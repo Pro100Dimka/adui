@@ -16,7 +16,9 @@ const U = {
 };
 const seen = new WeakMap();
 const running = new Set();
+const measurements = new Set();
 let raf = null,
+  timer = null,
   last = 0;
 
 /* The motion clock. Every looping decoration of the library (glows, glints, comets, border
@@ -36,30 +38,41 @@ U.setMotionFrameRate = (fps) => {
   FRAME = 1000 / Math.max(1, Math.min(120, fps));
 };
 const looping = new Set();
+const pendingAnimations = new Set();
+const pendingTargets = new Set();
 let active = [];
 let lastScan = -Infinity;
+let needsScan = false;
 /* Plain listeners on the same clock (playback positions, meters): they run whether or not
    motion is on, but share its frames instead of asking for their own. */
 const tickers = new Set();
 U.subscribeTick = (listener) => {
   tickers.add(listener);
   schedule();
-  return () => tickers.delete(listener);
+  return () => {
+    tickers.delete(listener);
+    schedule();
+  };
 };
 const isLoop = (animation) => {
   if (!animation.animationName || !animation.animationName.startsWith("ad-")) return false;
   const timing = animation.effect && animation.effect.getTiming();
   return !!timing && timing.iterations === Infinity;
 };
-function scan(now) {
+function scan(now, animations = pendingAnimations) {
   lastScan = now;
-  if (typeof document.getAnimations !== "function") return;
-  for (const animation of document.getAnimations())
+  needsScan = false;
+  // Native discovery can flush layout; read each event target once per shared frame.
+  for (const target of pendingTargets)
+    for (const animation of target.getAnimations?.() || []) pendingAnimations.add(animation);
+  pendingTargets.clear();
+  for (const animation of animations)
     if (!looping.has(animation) && animation.playState === "running" && isLoop(animation)) {
       animation.__adStart = now - (animation.currentTime || 0);
       animation.pause();
       looping.add(animation);
     }
+  pendingAnimations.clear();
   active = [];
   for (const animation of looping) {
     const target = animation.effect && animation.effect.target;
@@ -69,7 +82,7 @@ function scan(now) {
       if (target && target.isConnected && animation.playState === "paused") animation.play();
       continue;
     }
-    const hidden = target.closest("[data-ad-offscreen]");
+    const hidden = document.hidden || target.closest("[data-ad-offscreen]");
     if (hidden) {
       // Resume where it stopped once back in view.
       animation.__adHeld = true;
@@ -84,8 +97,21 @@ function scan(now) {
 }
 function tick(now) {
   raf = null;
+  if (needsScan || now - lastScan > 400) scan(now);
+  // Border geometry can flush layout. Spread visible mount/resize work across frames.
+  // Unseen borders keep their pending measurement without forcing it.
+  const deadline = performance.now() + 8;
+  for (const item of measurements) {
+    if (!item.element.isConnected) {
+      measurements.delete(item);
+      continue;
+    }
+    if (item.element._adInView === false) continue;
+    if (performance.now() >= deadline) break;
+    measurements.delete(item);
+    item.sync();
+  }
   if (now - last >= FRAME - 6) {
-    if (now - lastScan > 400) scan(now);
     for (const animation of active) animation.currentTime = now - animation.__adStart;
     for (const scope of running) scope.tick(now);
     for (const listener of tickers) listener(now);
@@ -93,27 +119,57 @@ function tick(now) {
   }
   // Sleep until the next tick is due instead of asking for every screen refresh: a request
   // for an animation frame makes the browser prepare a frame even when nothing changes.
-  if ((running.size || looping.size || tickers.size || now - lastScan < 1500) && !document.hidden) {
-    raf = 0;
-    setTimeout(() => {
-      raf = document.hidden ? null : requestAnimationFrame(tick);
+  if (hasVisibleWork() && !document.hidden) {
+    timer = setTimeout(() => {
+      timer = null;
+      schedule();
     }, Math.max(0, FRAME - (performance.now() - now) - 4));
   }
 }
+function hasVisibleWork() {
+  if (needsScan || tickers.size || active.length) return true;
+  for (const item of measurements)
+    if (item.element.isConnected && item.element._adInView !== false) return true;
+  for (const scope of running)
+    if (scope.enabled)
+      for (const node of scope.callbacks.keys())
+        if (node.isConnected && node._adInView !== false) return true;
+  return false;
+}
 function schedule() {
-  if (raf === null && !document.hidden) raf = requestAnimationFrame(tick);
+  if (document.hidden || !hasVisibleWork()) {
+    if (raf !== null) cancelAnimationFrame(raf);
+    if (timer !== null) clearTimeout(timer);
+    raf = timer = null;
+    return;
+  }
+  if (raf === null && timer === null) raf = requestAnimationFrame(tick);
+}
+export function refreshMotion() {
+  // A route can detach dozens of offscreen boundaries in one React commit.
+  // Scan once on the shared frame, not once per boundary while the old DOM exists.
+  needsScan = true;
+  schedule();
 }
 const wake = () => {
   for (const s of running) s.previous = null;
-  lastScan = -Infinity;
-  schedule();
+  // Hold CSS clocks once before sleeping, not for every hidden boundary cleanup.
+  if (document.hidden) scan(performance.now());
+  refreshMotion();
 };
-// New loops appear as components mount; a light check twice a second picks them up.
+// Discover CSS loops when they start, including pseudo-elements. No polling of the
+// consumer's document is needed while the kit is idle or while effects are running.
 if (typeof window !== "undefined" && typeof document !== "undefined") {
   document.addEventListener("visibilitychange", wake);
-  setInterval(() => {
-    if (!document.hidden && raf === null) schedule();
-  }, 500);
+  const onAnimation = (event) => {
+    if (!event.animationName.startsWith("ad-")) return;
+    pendingTargets.add(event.target);
+    needsScan = true;
+    schedule();
+  };
+  document.addEventListener("animationstart", onAnimation);
+  document.addEventListener("animationcancel", onAnimation);
+  scan(performance.now(), document.getAnimations?.() || []);
   schedule();
 }
 let scopeCount = 0;
@@ -127,31 +183,39 @@ U.createMotion = (root = document) => {
     previous: null,
     explicit: false,
     callbacks: new Map(),
-    observers: [],
     tick(now) {
       if (!this.enabled) {
         this.previous = null;
         return;
       }
-      if (this.previous !== null)
-        this.time += Math.min((now - this.previous) / 1000, 0.1);
-      this.previous = now;
+      let painted = false;
       for (const [node, fn] of this.callbacks) {
         if (!node.isConnected) {
           this.callbacks.delete(node);
+          this.intersection?.unobserve(node);
           continue;
         }
-        if (node.getClientRects().length && node._adInView !== false)
+        if (node._adInView === true || (node._adInView !== false && node.getClientRects().length)) {
+          if (!painted) {
+            if (this.previous !== null)
+              this.time += Math.min((now - this.previous) / 1000, 0.1);
+            this.previous = now;
+            painted = true;
+          }
           fn(this.time);
+        }
       }
+      if (!painted) this.previous = null;
     },
-    add(node, callback) {
+    add(node, callback, immediate = true) {
       this.callbacks.set(node, callback);
-      callback(this.time);
+      if (immediate) callback(this.time);
       this.intersection?.observe(node);
+      schedule();
       return () => {
         this.callbacks.delete(node);
         this.intersection?.unobserve(node);
+        schedule();
       };
     },
     set(enabled, explicit = true) {
@@ -176,12 +240,16 @@ U.createMotion = (root = document) => {
       this.callbacks.clear();
       this.intersection?.disconnect();
       media.removeEventListener("change", this.onPreference);
+      schedule();
     },
   };
   scope.intersection = canObserveIntersection()
     ? new IntersectionObserver(
-        (entries) =>
-          entries.forEach((e) => (e.target._adInView = e.isIntersecting)),
+        (entries) => {
+          entries.forEach((e) => (e.target._adInView = e.isIntersecting));
+          scope.previous = null;
+          schedule();
+        },
         { rootMargin: "10%" },
       )
     : null;
@@ -198,17 +266,52 @@ U.roundedPath = (w, h, r) => {
     R = w - i,
     B = h - i;
   r = Math.max(0, Math.min(r - i, (w - 2 * i) / 2, (h - 2 * i) / 2));
-  return r
+  const d = r
     ? `M${i + r} ${i}H${R - r}A${r} ${r} 0 0 1 ${R} ${i + r}V${B - r}A${r} ${r} 0 0 1 ${R - r} ${B}H${i + r}A${r} ${r} 0 0 1 ${i} ${B - r}V${i + r}A${r} ${r} 0 0 1 ${i + r} ${i}Z`
     : `M${i} ${i}H${R}V${B}H${i}Z`;
+  const horizontal = Math.abs(R - i - 2 * r),
+    vertical = Math.abs(B - i - 2 * r),
+    arc = Math.PI * r / 2,
+    dx = Math.sign(R - i),
+    dy = Math.sign(B - i);
+  const segments = [
+    { length: horizontal, x: i + r, y: i, dx, dy: 0 },
+    { length: arc, x: R - r, y: i + r, angle: -Math.PI / 2 },
+    { length: vertical, x: R, y: i + r, dx: 0, dy },
+    { length: arc, x: R - r, y: B - r, angle: 0 },
+    { length: horizontal, x: R - r, y: B, dx: -dx, dy: 0 },
+    { length: arc, x: i + r, y: B - r, angle: Math.PI / 2 },
+    { length: vertical, x: i, y: B - r, dx: 0, dy: -dy },
+    { length: arc, x: i + r, y: i + r, angle: Math.PI },
+  ];
+  const length = 2 * (horizontal + vertical) + 4 * arc;
+  return {
+    d,
+    point(fraction) {
+      let distance = fraction * length;
+      for (const segment of segments) {
+        if (segment.length && distance <= segment.length) {
+          if (segment.angle !== undefined) {
+            const angle = segment.angle + distance / r;
+            return { x: segment.x + r * Math.cos(angle), y: segment.y + r * Math.sin(angle) };
+          }
+          return { x: segment.x + segment.dx * distance, y: segment.y + segment.dy * distance };
+        }
+        distance -= segment.length;
+      }
+      return { x: i + r, y: i };
+    },
+  };
 };
 const borders = new WeakMap();
-/* SVG strokes keep the moving glow smooth around rounded corners and let its halo extend
-   beyond the edge. The shared motion scope still pauses painting while offscreen. */
-U.attachBorder = (element, { shell = false, round = false, scope } = {}) => {
+let borderSerial = 0;
+/* The early-release border: two broad lights travel the same SVG edge at
+   different speeds, each with a soft aura and a fine bright core. */
+U.attachBorder = (element, { shell = false, round = false, scope, defer = false } = {}) => {
   if (borders.has(element)) return borders.get(element);
-  const radius = round ? 26 : shell ? 76 : 84;
-  const extent = radius + 16;
+  defer &&= !!scope;
+  if (defer && canObserveIntersection()) element._adInView = false;
+  let radius = round ? 28 : shell ? 102 : 116;
   const overlay = U.svg("svg", {
     class: "ad-border",
     "aria-hidden": "true",
@@ -216,69 +319,51 @@ U.attachBorder = (element, { shell = false, round = false, scope } = {}) => {
     fill: "none",
     "data-ad-component": "AnimatedBorder",
   });
-  const defs = U.svg("defs"),
-    path = U.svg("path", {
-      fill: "none",
-      stroke: shell ? "rgb(from var(--ad-secondary) r g b / 0.32)" : "rgb(from var(--ad-primary) r g b / 0.18)",
-      "stroke-width": shell ? 0.9 : 0.7,
-    });
+  const defs = U.svg("defs"), path = U.svg("path", {
+    stroke: shell ? "rgb(from var(--ad-secondary) r g b / 0.65)" : "rgb(from var(--ad-primary) r g b / 0.16)",
+    "stroke-width": shell ? 1.1 : 0.6,
+  });
   overlay.append(defs, path);
-  const id = U.uid("ad-orbit");
-  const gradient = U.svg("radialGradient", {
-    id,
-    gradientUnits: "userSpaceOnUse",
-    cx: 0,
-    cy: 0,
-    r: radius,
+  const instancePhase = (++borderSerial * 0.38196601125) % 1;
+  const lights = Array.from({ length: 2 }, (_, k) => {
+    const id = U.uid("ad-orbit");
+    const gradient = U.svg("radialGradient", {
+      id, gradientUnits: "userSpaceOnUse", r: radius,
+    });
+    for (const [offset, color, opacity] of [
+      [0, "var(--ad-neutral-200)", 1], [0.04, "var(--ad-neutral-200)", 1],
+      [0.16, "var(--ad-secondary)", 1], [0.4, "var(--ad-primary)", 0.85],
+      [0.72, "var(--ad-primary)", 0.32], [1, "var(--ad-primary)", 0],
+    ])
+      gradient.append(U.svg("stop", { offset, "stop-color": color, "stop-opacity": opacity }));
+    const red = U.svg("radialGradient", {
+      id: `${id}-red`, gradientUnits: "userSpaceOnUse", r: radius,
+    });
+    for (const [offset, opacity] of [[0, 1], [0.4, 0.7], [1, 0]])
+      red.append(U.svg("stop", { offset, "stop-color": "var(--ad-primary)", "stop-opacity": opacity }));
+    const blur = U.svg("filter", {
+      id: `${id}-blur`, filterUnits: "userSpaceOnUse", x: 0, y: 0,
+      width: radius * 2 + 28, height: radius * 2 + 28,
+      "color-interpolation-filters": "sRGB",
+    });
+    blur.append(U.svg("feGaussianBlur", { stdDeviation: 4.2 }));
+    defs.append(gradient, red, blur);
+    const aura = U.svg("path", {
+      stroke: `url(#${id}-red)`, "stroke-width": 7.5,
+      filter: `url(#${id}-blur)`, opacity: 0.94,
+    });
+    const core = U.svg("path", {
+      stroke: `url(#${id})`, "stroke-width": shell ? 1.9 : 1.35,
+    });
+    overlay.append(aura, core);
+    return {
+      gradient, red, blur, radius,
+      phase: (k * 0.48 + 0.535 + instancePhase) % 1,
+      speed: round ? (k ? 25 : 36) : k ? 86 : 125,
+      paths: [aura, core],
+    };
   });
-  for (const [offset, color, opacity] of [
-    [0, "var(--ad-on-accent)", 0.92],
-    [0.055, "var(--ad-on-accent)", 0.86],
-    [0.14, "var(--ad-secondary)", 0.76],
-    [0.42, "var(--ad-primary)", 0.4],
-    [0.7, "var(--ad-primary)", 0.12],
-    [1, "var(--ad-primary)", 0],
-  ])
-    gradient.append(U.svg("stop", { offset, "stop-color": color, "stop-opacity": opacity }));
-  const glow = U.svg("radialGradient", {
-    id: `${id}-glow`,
-    gradientUnits: "userSpaceOnUse",
-    cx: 0,
-    cy: 0,
-    r: radius,
-  });
-  for (const [offset, opacity] of [[0, 0.75], [0.4, 0.32], [1, 0]])
-    glow.append(U.svg("stop", {
-      offset,
-      "stop-color": "var(--ad-primary)",
-      "stop-opacity": opacity,
-    }));
-  const blur = U.svg("filter", {
-    id: `${id}-blur`,
-    filterUnits: "userSpaceOnUse",
-    width: extent * 2,
-    height: extent * 2,
-    "color-interpolation-filters": "sRGB",
-  });
-  blur.append(U.svg("feGaussianBlur", { stdDeviation: 4.5 }));
-  defs.append(gradient, glow, blur);
-  const aura = U.svg("path", {
-    fill: "none",
-    stroke: `url(#${id}-glow)`,
-    "stroke-width": 8,
-    filter: `url(#${id}-blur)`,
-    opacity: 0.7,
-  });
-  const core = U.svg("path", {
-    fill: "none",
-    stroke: `url(#${id})`,
-    "stroke-width": shell ? 1.5 : 1.1,
-  });
-  overlay.append(aura, core);
-  const computedPosition = getComputedStyle(element).position;
-  const patchedPosition = computedPosition === "static";
   const previousInlinePosition = element.style.position;
-  if (patchedPosition) element.style.position = "relative";
   Object.assign(overlay.style, {
     inset: "0",
     width: "100%",
@@ -289,40 +374,67 @@ U.attachBorder = (element, { shell = false, round = false, scope } = {}) => {
   overlay.setAttribute("height", "100%");
   overlay.setAttribute("preserveAspectRatio", "none");
   element.append(overlay);
-  const item = { element, overlay, path, length: 0, patchedPosition, previousInlinePosition };
+  const item = {
+    element, overlay, path, lights, length: 0, elapsed: 0, previousTime: null,
+    patchedPosition: false, previousInlinePosition,
+  };
   item.paint = (time) => {
     if (!item.length) return;
-    const p = path.getPointAtLength((((time / (round ? 11 : 18)) + 0.535) % 1) * item.length);
-    const x = p.x.toFixed(1), y = p.y.toFixed(1);
-    if (item.x === x && item.y === y) return;
-    item.x = x;
-    item.y = y;
-    const transform = `translate(${x} ${y})`;
-    for (const light of [gradient, glow])
-      light.setAttribute("gradientTransform", transform);
-    blur.setAttribute("x", (p.x - extent).toFixed(1));
-    blur.setAttribute("y", (p.y - extent).toFixed(1));
+    if (item.previousTime !== null)
+      item.elapsed += Math.min(0.1, Math.max(0, time - item.previousTime));
+    item.previousTime = time;
+    for (const light of lights) {
+      const p = item.contour.point(((light.phase * item.length + item.elapsed * light.speed) % item.length) / item.length);
+      for (const gradient of [light.gradient, light.red]) {
+        gradient.setAttribute("cx", p.x.toFixed(2));
+        gradient.setAttribute("cy", p.y.toFixed(2));
+      }
+      light.blur.setAttribute("x", (p.x - radius - 14).toFixed(1));
+      light.blur.setAttribute("y", (p.y - radius - 14).toFixed(1));
+    }
   };
   item.sync = () => {
     const w = element.offsetWidth,
       h = element.offsetHeight;
     if (!w || !h) return;
-    const corner = getComputedStyle(element).borderTopLeftRadius;
+    const computed = getComputedStyle(element);
+    const corner = computed.borderTopLeftRadius;
+    if (computed.position === "static") {
+      item.patchedPosition = true;
+      element.style.position = "relative";
+    }
     const r = corner.includes("%")
       ? (Math.min(w, h) * parseFloat(corner)) / 100
       : parseFloat(corner) || 0;
-    const d = U.roundedPath(w, h, r);
+    item.contour = U.roundedPath(w, h, r);
+    const { d } = item.contour;
     overlay.setAttribute("viewBox", `0 0 ${w} ${h}`);
     path.setAttribute("d", d);
-    for (const stroke of [aura, core]) stroke.setAttribute("d", d);
+    for (const light of lights) for (const stroke of light.paths) stroke.setAttribute("d", d);
     item.length = path.getTotalLength();
+    radius = round ? 28 : Math.min(260, Math.max(42, item.length * 0.153));
+    for (const light of lights) {
+      light.radius = radius;
+      light.gradient.setAttribute("r", radius);
+      light.red.setAttribute("r", radius);
+      light.blur.setAttribute("width", radius * 2 + 28);
+      light.blur.setAttribute("height", radius * 2 + 28);
+    }
     item.paint(scope?.time || 0);
   };
-  item.observer = createResizeObserver(item.sync);
+  const queueMeasurement = () => {
+    if (item.destroyed) return;
+    measurements.add(item);
+    schedule();
+  };
+  item.observer = createResizeObserver(defer ? queueMeasurement : item.sync);
   item.observer.observe(element);
-  item.sync();
-  const unsubscribe = scope?.add(element, item.paint);
+  if (defer) queueMeasurement();
+  else item.sync();
+  const unsubscribe = scope?.add(element, item.paint, !defer);
   item.destroy = () => {
+    item.destroyed = true;
+    measurements.delete(item);
     unsubscribe?.();
     item.observer.disconnect();
     overlay.remove();
@@ -456,7 +568,7 @@ export function getMotionStats() {
   return {
     scopes: scopeCount,
     running: running.size,
-    scheduled: raf !== null,
+    scheduled: raf !== null || timer !== null,
     callbacks: [...running].reduce((n, s) => n + s.callbacks.size, 0),
   };
 }

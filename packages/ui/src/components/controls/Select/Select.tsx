@@ -1,4 +1,4 @@
-import { tr, useTr } from "../../../core/i18n";
+import { useTr } from "../../../core/i18n";
 import { useMemo, useRef, useState, type ReactNode } from "react";
 import { assignRef, useControllable } from "../../../core/base";
 import { Popover } from "../../feedback/Popover/Popover";
@@ -45,23 +45,27 @@ export function Select<V = string>(p: SelectProps<V>) {
   const selectedKey = value === undefined ? undefined : keyOf(value);
   const selected = options.find((option) => keyOf(option.value) === selectedKey);
 
-  const needle = query.trim().toLowerCase();
-  const shown = needle
-    ? options.filter((option) => `${textOf(option as SelectOption<unknown>)} ${option.group ?? ""}`.toLowerCase().includes(needle))
-    : options;
-  // Grouped options are listed group by group, in the order the groups first appear.
-  const order = [...new Set(shown.map((option) => option.group ?? ""))];
-  const sorted = [...shown].sort((a, b) => order.indexOf(a.group ?? "") - order.indexOf(b.group ?? ""));
-  const rows: Option[] = sorted.map((option) => ({
-    value: keyOf(option.value),
-    label: option.label,
-    disabled: option.disabled,
-    icon: option.icon,
-    avatar: option.avatar,
-    description: option.description,
-    group: option.group,
-    content: p.renderOption?.(option, { selected: keyOf(option.value) === selectedKey }),
-  }));
+  const rows = useMemo<Option[]>(() => {
+    if (!open) return [];
+    const needle = query.trim().toLowerCase();
+    // Insertion order groups rows in a single pass without repeatedly searching group indices.
+    const groups = new Map<string, SelectOption<V>[]>();
+    for (const option of options) {
+      if (needle && !`${textOf(option as SelectOption<unknown>)} ${option.group ?? ""}`.toLowerCase().includes(needle)) continue;
+      const group = option.group ?? "";
+      const items = groups.get(group) ?? [];
+      items.push(option);
+      groups.set(group, items);
+    }
+    return [...groups.values()].flatMap((group) => group.map((option) => {
+      const key = keyOf(option.value);
+      return {
+        value: key, label: option.label, disabled: option.disabled, icon: option.icon,
+        avatar: option.avatar, description: option.description, group: option.group,
+        content: p.renderOption?.(option, { selected: key === selectedKey }),
+      };
+    }));
+  }, [open, query, options, keyOf, selectedKey, p.renderOption]);
 
   const choose = (key: string) => {
     const option = options.find((item) => keyOf(item.value) === key);

@@ -1,1 +1,0 @@
-import{j as i,G as a,l as s,C as t,g as n}from"./index-0UK2-KzX.js";function e(){return i.jsx(a,{minChildWidth:"12rem",gap:3,children:["Комната","Очередь","Записи"].map(r=>i.jsx(s,{children:i.jsx(t,{title:r,icon:"music",children:i.jsx(n,{variant:"body-sm",tone:"muted",children:"Проведите курсором над карточкой."})})},r))})}export{e as default};

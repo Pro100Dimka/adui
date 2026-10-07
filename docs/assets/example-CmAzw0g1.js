@@ -1,0 +1,1 @@
+import{j as r,A as a,C as e,g as s}from"./index-Pyz-R8Vs.js";function d(){return r.jsx(a,{style:{borderRadius:"var(--ad-radius)"},children:r.jsx(e,{material:"glass",title:"Выступление в эфире",children:r.jsx(s,{variant:"body-sm",tone:"muted",children:"Обводка привлекает внимание к активному блоку."})})})}export{d as default};

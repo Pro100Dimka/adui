@@ -1,1 +1,0 @@
-import{j as t,q as i,o as a}from"./index-0UK2-KzX.js";function o(){return t.jsx(i,{icon:"music",title:"Пока нет записей",description:"Спойте первую песню — запись появится здесь.",action:t.jsx(a,{variant:"primary",icon:"plus",children:"Новое выступление"})})}export{o as default};

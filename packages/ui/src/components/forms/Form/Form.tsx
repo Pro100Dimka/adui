@@ -60,10 +60,11 @@ export function useForm<T extends Record<string, unknown>>(
     // The latest values and options: several changes in one event all land, submit sees them at
     // once, and the methods below keep one identity for the life of the form (safe in effect deps).
     latest = useRef(values),
+    touchedRef = useRef(touched),
     validationId = useRef(0),
     submittingRef = useRef(false),
     settings = useRef(options),
-    initialKey = JSON.stringify(options.initialValues);
+    initialKey = useMemo(() => JSON.stringify(options.initialValues), [options.initialValues]);
   const previousInitialKey = useRef(initialKey);
   settings.current = options;
   useEffect(() => {
@@ -73,7 +74,8 @@ export function useForm<T extends Record<string, unknown>>(
       latest.current = settings.current.initialValues;
       setValues(settings.current.initialValues);
       setErrors({});
-      setTouchedState({});
+      touchedRef.current = {};
+      setTouchedState(touchedRef.current);
     }
   }, [initialKey]);
   const methods = useMemo(() => {
@@ -91,7 +93,10 @@ export function useForm<T extends Record<string, unknown>>(
       if (settings.current.validateOnChange) void validate(next);
     };
     const setTouched = (path: string, state = true) => {
-      setTouchedState((current) => ({ ...current, [path]: state }));
+      if (Boolean(touchedRef.current[path]) !== state) {
+        touchedRef.current = { ...touchedRef.current, [path]: state };
+        setTouchedState(touchedRef.current);
+      }
       if (state && settings.current.validateOnBlur !== false) void validate(latest.current);
     };
     const reset = (next = settings.current.initialValues) => {
@@ -99,7 +104,8 @@ export function useForm<T extends Record<string, unknown>>(
       latest.current = next;
       setValues(next);
       setErrors({});
-      setTouchedState({});
+      touchedRef.current = {};
+      setTouchedState(touchedRef.current);
     };
     return { validate, setValue, setTouched, reset };
   }, []);

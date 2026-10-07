@@ -1,8 +1,10 @@
-import { describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
+import { act, create } from "react-test-renderer";
 import { readFileSync } from "node:fs";
 import { loaderCss } from "../src/components/foundation/Loader/Loader";
+import { FilePicker } from "../src/components/controls/FilePicker/FilePicker";
 import {
   LoaderGenerator,
   loaderGeneratorAnimations,
@@ -15,8 +17,170 @@ import {
   removeBackgroundPixels,
 } from "../src/components/foundation/LoaderGenerator/LoaderGenerator";
 
+afterEach(() => { vi.unstubAllGlobals(); vi.restoreAllMocks(); });
+
+function mockUploadImage(width: number, height: number) {
+  vi.stubGlobal("IS_REACT_ACT_ENVIRONMENT", true);
+  vi.stubGlobal("FileReader", class {
+    result = "";
+    onload = () => {};
+    onabort = () => {};
+    abort() { this.onabort(); }
+    readAsDataURL(blob: Blob) {
+      this.result = blob instanceof Blob ? "data:image/png;base64,encoded" : "data:image/png;base64,original";
+      queueMicrotask(() => this.onload());
+    }
+  });
+  vi.stubGlobal("Image", class {
+    naturalWidth = width;
+    naturalHeight = height;
+    onload = () => {};
+    set src(_: string) { queueMicrotask(() => this.onload()); }
+  });
+  const canvas = {
+    width: 0, height: 0,
+    getContext: () => ({ drawImage() {}, getImageData: () => ({ data: new Uint8ClampedArray(16) }), putImageData() {} }),
+    toBlob: vi.fn((callback: (blob: Blob) => void) => queueMicrotask(() => callback(new Blob(["png"], { type: "image/png" })))),
+    toDataURL: vi.fn(() => "data:image/png;base64,encoded"),
+  };
+  vi.stubGlobal("document", {
+    createElement: (tag: string) => tag === "canvas" ? canvas : { dataset: {}, textContent: "" },
+    head: { append() {} },
+  });
+  return canvas;
+}
+
 describe("LoaderGenerator", () => {
-  it("removes a flat image background and feathers contrasting edge pixels", () => {
+  it("encodes processed images asynchronously and bounds the loader image working size", async () => {
+    const canvas = mockUploadImage(6000, 3000);
+    const onValueChange = vi.fn();
+    let tree: ReturnType<typeof create>;
+    act(() => { tree = create(createElement(LoaderGenerator, { onValueChange })); });
+    await act(async () => {
+      tree.root.findByType(FilePicker).props.onFiles([{}]);
+      await new Promise((resolve) => setTimeout(resolve, 10));
+    });
+    expect(canvas.toDataURL).not.toHaveBeenCalled();
+    expect(canvas.toBlob).toHaveBeenCalled();
+    expect(canvas.width).toBe(2048);
+    expect(canvas.height).toBe(1024);
+    expect(onValueChange).toHaveBeenCalledWith(expect.objectContaining({ src: "data:image/png;base64,encoded" }));
+    act(() => tree.unmount());
+  });
+
+  it("ignores encoded images when the generator closed during encoding", async () => {
+    const canvas = mockUploadImage(2, 2);
+    let finishEncoding: ((blob: Blob) => void) | undefined;
+    canvas.toBlob.mockImplementation((callback) => { finishEncoding = callback; });
+    const onValueChange = vi.fn();
+    let tree: ReturnType<typeof create>;
+    act(() => { tree = create(createElement(LoaderGenerator, { onValueChange })); });
+    await act(async () => {
+      tree.root.findByType(FilePicker).props.onFiles([{}]);
+      await new Promise((resolve) => setTimeout(resolve, 10));
+    });
+    expect(finishEncoding).toBeTypeOf("function");
+    act(() => tree.unmount());
+    await act(async () => { finishEncoding?.(new Blob(["png"], { type: "image/png" })); });
+    expect(onValueChange).not.toHaveBeenCalled();
+  });
+
+  it("compares palette colours only with colours that were actually selected", async () => {
+    const pixels = new Uint8ClampedArray([
+      100, 0, 0, 255, 100, 0, 0, 255, 100, 0, 0, 255,
+      145, 0, 0, 255, 145, 0, 0, 255,
+      190, 0, 0, 255,
+    ]);
+    expect((await pickLoaderPalette(pixels)).slice(0, 2)).toEqual(["#640000", "#be0000"]);
+  });
+
+  it("yields during colour extraction without discarding image pixels", async () => {
+    let elapsed = 0;
+    vi.spyOn(performance, "now").mockImplementation(() => ++elapsed);
+    const pixels = new Uint8ClampedArray(256 * 256 * 4).fill(255);
+    const heartbeat = vi.fn();
+    const timer = setTimeout(heartbeat, 0);
+    try {
+      expect(await pickLoaderPalette(pixels)).toContain("#ffffff");
+      expect(heartbeat).toHaveBeenCalled();
+    } finally {
+      clearTimeout(timer);
+    }
+  });
+
+  it("does not process a pending upload after the generator unmounts", async () => {
+    vi.stubGlobal("IS_REACT_ACT_ENVIRONMENT", true);
+    let finishReading = () => {};
+    vi.stubGlobal("FileReader", class {
+      result = "data:image/png;base64,original";
+      onload = () => {};
+      onabort = () => {};
+      abort() { this.onabort(); }
+      readAsDataURL() { finishReading = () => this.onload(); }
+    });
+    vi.stubGlobal("Image", class {
+      naturalWidth = 2;
+      naturalHeight = 2;
+      onload = () => {};
+      set src(_: string) { queueMicrotask(() => this.onload()); }
+    });
+    const createCanvas = vi.fn(() => ({
+      width: 0, height: 0,
+      getContext: () => ({ drawImage() {}, getImageData: () => ({ data: new Uint8ClampedArray(16) }), putImageData() {} }),
+      toDataURL: () => "data:image/png;base64,transparent",
+    }));
+    vi.stubGlobal("document", {
+      createElement: (tag: string) => tag === "canvas" ? createCanvas() : { dataset: {}, textContent: "" },
+      head: { append() {} },
+    });
+    const onValueChange = vi.fn();
+    let tree: ReturnType<typeof create>;
+    act(() => { tree = create(createElement(LoaderGenerator, { onValueChange })); });
+    act(() => tree.root.findByType(FilePicker).props.onFiles([{}]));
+    act(() => tree.unmount());
+    await act(async () => {
+      finishReading();
+      await new Promise((resolve) => setTimeout(resolve, 0));
+    });
+    expect(createCanvas).not.toHaveBeenCalled();
+    expect(onValueChange).not.toHaveBeenCalled();
+  });
+
+  it("lets user input run while removing a large image background", async () => {
+    let elapsed = 0;
+    vi.spyOn(performance, "now").mockImplementation(() => ++elapsed);
+    const size = 128;
+    const pixels = new Uint8ClampedArray(size * size * 4).fill(255);
+    const heartbeat = vi.fn();
+    const timer = setTimeout(heartbeat, 0);
+    try {
+      await removeBackgroundPixels(pixels, size, size);
+      expect(heartbeat).toHaveBeenCalled();
+      expect(pixels[3]).toBe(0);
+    } finally {
+      clearTimeout(timer);
+    }
+  });
+
+  it("cancels image processing at the next work slice", async () => {
+    let elapsed = 0;
+    vi.spyOn(performance, "now").mockImplementation(() => ++elapsed);
+    const size = 256;
+    const pixels = new Uint8ClampedArray(size * size * 4).fill(255);
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 0);
+    try {
+      await expect(Promise.resolve().then(async () => {
+        await removeBackgroundPixels(pixels, size, size, controller.signal);
+        return "completed";
+      }))
+        .rejects.toMatchObject({ name: "AbortError" });
+    } finally {
+      clearTimeout(timer);
+    }
+  });
+
+  it("removes a flat image background and feathers contrasting edge pixels", async () => {
     const pixels = new Uint8ClampedArray([
       255, 255, 255, 255,
       255, 255, 255, 255,
@@ -29,7 +193,7 @@ describe("LoaderGenerator", () => {
       0, 110, 255, 255,
     ]);
 
-    removeBackgroundPixels(pixels, 3, 3);
+    await removeBackgroundPixels(pixels, 3, 3);
 
     expect(pixels[3]).toBe(0);
     expect(pixels[19]).toBeLessThan(80);
@@ -45,7 +209,7 @@ describe("LoaderGenerator", () => {
       }
     }
 
-    removeBackgroundPixels(withCodecEdge, 20, 20);
+    await removeBackgroundPixels(withCodecEdge, 20, 20);
 
     expect(withCodecEdge[(10 * 20 + 1) * 4 + 3]).toBe(0);
     expect(withCodecEdge[(10 * 20 + 10) * 4 + 3]).toBe(255);
@@ -58,7 +222,7 @@ describe("LoaderGenerator", () => {
       }
     }
 
-    removeBackgroundPixels(withInsetFrame, 20, 20);
+    await removeBackgroundPixels(withInsetFrame, 20, 20);
 
     expect(withInsetFrame[(10 * 20 + 1) * 4 + 3]).toBe(0);
     expect(withInsetFrame[(10 * 20 + 10) * 4 + 3]).toBe(255);
@@ -72,13 +236,13 @@ describe("LoaderGenerator", () => {
       }
     }
 
-    removeBackgroundPixels(withEdgeSpeckles, 20, 20);
+    await removeBackgroundPixels(withEdgeSpeckles, 20, 20);
 
     expect(withEdgeSpeckles[(3 * 20 + 1) * 4 + 3]).toBe(0);
     expect(withEdgeSpeckles[(9 * 20 + 9) * 4 + 3]).toBe(255);
   });
 
-  it("removes a border plus a second background colour without erasing matching logo details", () => {
+  it("removes a border plus a second background colour without erasing matching logo details", async () => {
     const white = [255, 255, 255, 255];
     const green = [0, 115, 86, 255];
     const pixels = new Uint8ClampedArray([
@@ -89,14 +253,14 @@ describe("LoaderGenerator", () => {
       ...white, ...white, ...white, ...white, ...white,
     ]);
 
-    removeBackgroundPixels(pixels, 5, 5);
+    await removeBackgroundPixels(pixels, 5, 5);
 
     expect(pixels[3]).toBe(0);
     expect(pixels[(1 * 5 + 1) * 4 + 3]).toBe(0);
     expect(pixels[(2 * 5 + 2) * 4 + 3]).toBe(255);
   });
 
-  it("peels thin nested frames before removing a large inner background", () => {
+  it("peels thin nested frames before removing a large inner background", async () => {
     const frames = [
       [255, 255, 255, 255],
       [195, 205, 200, 255],
@@ -116,14 +280,14 @@ describe("LoaderGenerator", () => {
       }
     }
 
-    removeBackgroundPixels(pixels, 15, 15);
+    await removeBackgroundPixels(pixels, 15, 15);
 
     expect(pixels[(4 * 15 + 4) * 4 + 3]).toBe(0);
     expect(pixels[(5 * 15 + 5) * 4 + 3]).toBe(0);
     expect(pixels[(7 * 15 + 7) * 4 + 3]).toBe(255);
   });
 
-  it("follows a smooth edge-connected gradient but stops at a sharp logo edge", () => {
+  it("follows a smooth edge-connected gradient but stops at a sharp logo edge", async () => {
     const pixels = new Uint8ClampedArray(5 * 5 * 4);
     for (let y = 0; y < 5; y += 1) {
       for (let x = 0; x < 5; x += 1) {
@@ -132,13 +296,13 @@ describe("LoaderGenerator", () => {
       }
     }
 
-    removeBackgroundPixels(pixels, 5, 5);
+    await removeBackgroundPixels(pixels, 5, 5);
 
     expect(pixels[(1 * 5 + 1) * 4 + 3]).toBe(0);
     expect(pixels[(2 * 5 + 2) * 4 + 3]).toBe(255);
   });
 
-  it("removes a bright radial gradient behind a contrasting logo", () => {
+  it("removes a bright radial gradient behind a contrasting logo", async () => {
     const pixels = new Uint8ClampedArray(7 * 7 * 4);
     for (let y = 0; y < 7; y += 1) {
       for (let x = 0; x < 7; x += 1) {
@@ -148,13 +312,13 @@ describe("LoaderGenerator", () => {
       }
     }
 
-    removeBackgroundPixels(pixels, 7, 7);
+    await removeBackgroundPixels(pixels, 7, 7);
 
     expect(pixels[(2 * 7 + 3) * 4 + 3]).toBe(0);
     expect(pixels[(3 * 7 + 3) * 4 + 3]).toBe(255);
   });
 
-  it("removes background enclosed inside a logo", () => {
+  it("removes background enclosed inside a logo", async () => {
     const background = [200, 230, 250, 255];
     const logo = [10, 55, 175, 255];
     const pixels = new Uint8ClampedArray(7 * 7 * 4);
@@ -165,7 +329,7 @@ describe("LoaderGenerator", () => {
       }
     }
 
-    removeBackgroundPixels(pixels, 7, 7);
+    await removeBackgroundPixels(pixels, 7, 7);
 
     expect(pixels[(3 * 7 + 3) * 4 + 3]).toBe(0);
     expect(pixels[(2 * 7 + 3) * 4 + 3]).toBe(255);
@@ -184,13 +348,13 @@ describe("LoaderGenerator", () => {
       }
     }
 
-    removeBackgroundPixels(gradient, size, size);
+    await removeBackgroundPixels(gradient, size, size);
 
     expect(gradient[(20 * size + 20) * 4 + 3]).toBe(0);
     expect(gradient[(20 * size + 28) * 4 + 3]).toBe(255);
   });
 
-  it("keeps an image that already has a transparent background unchanged", () => {
+  it("keeps an image that already has a transparent background unchanged", async () => {
     const pixels = new Uint8ClampedArray([
       0, 0, 0, 0,
       255, 30, 60, 180,
@@ -199,7 +363,7 @@ describe("LoaderGenerator", () => {
     ]);
     const original = pixels.slice();
 
-    removeBackgroundPixels(pixels, 2, 2);
+    await removeBackgroundPixels(pixels, 2, 2);
 
     expect(pixels).toEqual(original);
   });
@@ -270,7 +434,7 @@ describe("LoaderGenerator", () => {
     expect(loaderCss).toMatch(/\.ad-loader-img\{[^}]*filter:drop-shadow\([^}]*--ad-loader-color/);
   });
 
-  it("extracts distinct loader colours for the palette animation", () => {
+  it("extracts distinct loader colours for the palette animation", async () => {
     const pixels = new Uint8ClampedArray([
       245, 25, 45, 255,
       240, 30, 50, 255,
@@ -279,11 +443,11 @@ describe("LoaderGenerator", () => {
       255, 255, 255, 0,
     ]);
 
-    expect(pickLoaderPalette(pixels)).toEqual(["#f31c30", "#1973ee", "#ff7c97"]);
+    expect(await pickLoaderPalette(pixels)).toEqual(["#f31c30", "#1973ee", "#ff7c97"]);
     expect(loaderCss).toContain("data-animation=palette");
   });
 
-  it("prefers a saturated brand colour over a larger near-white highlight", () => {
+  it("prefers a saturated brand colour over a larger near-white highlight", async () => {
     const pixels = new Uint8ClampedArray([
       245, 250, 255, 255,
       245, 250, 255, 255,
@@ -292,7 +456,7 @@ describe("LoaderGenerator", () => {
       20, 105, 230, 255,
     ]);
 
-    expect(pickLoaderPalette(pixels)[0]).toBe("#176ee9");
+    expect((await pickLoaderPalette(pixels))[0]).toBe("#176ee9");
   });
 
   it("forces a fresh loader instance when the selected animation changes", () => {

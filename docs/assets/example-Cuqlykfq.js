@@ -1,0 +1,1 @@
+import{j as t,G as r,a2 as a}from"./index-Pyz-R8Vs.js";const e={height:"clamp(9rem, 26dvh, 15rem)"};function s(){return t.jsxs(r,{minChildWidth:"12rem",gap:4,children:[t.jsx(a,{variant:"planet",label:"Планета",style:e}),t.jsx(a,{variant:"mountains",framed:!0,label:"Горы",style:e})]})}export{s as default};

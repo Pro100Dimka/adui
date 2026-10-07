@@ -50,6 +50,7 @@ export const loaderCss = `
 .ad-loader{--ad-loader-size:4rem;--ad-loader-speed:1;--ad-loader-color:var(--ad-primary,#ff244c);position:relative;display:inline-grid;place-items:center;width:var(--ad-loader-size);height:var(--ad-loader-size);flex:none}
 .ad-loader>*{grid-area:1/1}
 .ad-loader-img{width:72%;height:72%;object-fit:contain;filter:drop-shadow(0 0 calc(var(--ad-loader-size)*.07) color-mix(in srgb,var(--ad-loader-color) 60%,transparent));user-select:none;pointer-events:none;will-change:transform,opacity}
+.ad-loader-default-image{display:block;background:linear-gradient(135deg,var(--ad-loader-color-2,var(--ad-secondary)),var(--ad-loader-color));-webkit-mask:var(--ad-loader-src) center/contain no-repeat;mask:var(--ad-loader-src) center/contain no-repeat}
 .ad-loader-ring{width:100%;height:100%;border-radius:50%;pointer-events:none}
 .ad-loader[data-animation=spin] .ad-loader-img{animation:ad-loader-spin calc(1.2s/var(--ad-loader-speed)) linear infinite}
 .ad-loader[data-animation=pulse] .ad-loader-img{animation:ad-loader-pulse calc(1s/var(--ad-loader-speed)) ease-in-out infinite}
@@ -65,7 +66,7 @@ export const loaderCss = `
 .ad-loader[data-animation=glow] .ad-loader-ring{width:80%;height:80%;background:radial-gradient(closest-side,var(--ad-loader-color),transparent);opacity:.25;animation:ad-loader-glow calc(1.6s/var(--ad-loader-speed)) ease-in-out infinite}
 .ad-loader[data-animation=fill] .ad-loader-img{opacity:.22;filter:grayscale(1) drop-shadow(0 0 calc(var(--ad-loader-size)*.07) color-mix(in srgb,var(--ad-loader-color) 60%,transparent))}
 .ad-loader-fill{width:72%;height:72%;overflow:hidden;transform:translateY(100%);animation:ad-loader-fill calc(2s/var(--ad-loader-speed)) ease-in-out infinite}
-.ad-loader-fill>img{width:100%;height:100%;object-fit:contain;transform:translateY(-100%);animation:ad-loader-fill-back calc(2s/var(--ad-loader-speed)) ease-in-out infinite}
+.ad-loader-fill>.ad-loader-img{width:100%;height:100%;object-fit:contain;transform:translateY(-100%);animation:ad-loader-fill-back calc(2s/var(--ad-loader-speed)) ease-in-out infinite}
 .ad-loader[data-animation=shine] .ad-loader-sweep{width:72%;height:72%;overflow:hidden;-webkit-mask:var(--ad-loader-src) center/contain no-repeat;mask:var(--ad-loader-src) center/contain no-repeat}
 .ad-loader-sweep>i{display:block;width:45%;height:100%;background:linear-gradient(90deg,transparent,color-mix(in srgb,var(--ad-loader-color) 65%,white),transparent);transform:translateX(-120%) skewX(-15deg);animation:ad-loader-shine calc(1.6s/var(--ad-loader-speed)) ease-in-out infinite}
 .ad-loader[data-animation=wobble] .ad-loader-img{transform-origin:50% 90%;animation:ad-loader-wobble calc(1.2s/var(--ad-loader-speed)) ease-in-out infinite}
@@ -115,6 +116,7 @@ export function Loader({ src = loaderDefaultImage, animation = "spin", size, spe
   useLoaderStyles();
   const ref = useRef<HTMLSpanElement>(null);
   usePauseOffscreen(ref);
+  const builtIn = src === loaderDefaultImage;
   const vars = {
     ...style,
     ...(size ? { "--ad-loader-size": size } : {}),
@@ -122,18 +124,21 @@ export function Loader({ src = loaderDefaultImage, animation = "spin", size, spe
     ...(color ? { "--ad-loader-color": color } : {}),
     ...(palette?.[1] ? { "--ad-loader-color-2": palette[1] } : {}),
     ...(palette?.[2] ? { "--ad-loader-color-3": palette[2] } : {}),
-    ...(animation === "shine" ? { "--ad-loader-src": `url("${src}")` } : {}),
+    ...(builtIn || animation === "shine" ? { "--ad-loader-src": `url("${src}")` } : {}),
   } as CSSProperties;
   const rings = ["wave", "palette"].includes(animation) ? 2 : ["bounce", "orbit", "glow", "radar"].includes(animation) ? 1 : 0;
+  const picture = builtIn
+    ? <span className="ad-loader-img ad-loader-default-image" aria-hidden="true" />
+    : <img className="ad-loader-img" src={src} alt="" draggable={false} />;
   return (
     <span {...mark("Loader", p)} ref={ref} role="status" aria-label={label ?? tr("Загрузка")} data-animation={animation} style={vars}>
       {Array.from({ length: rings }, (_, i) => (
         <span key={i} className="ad-loader-ring" aria-hidden="true" />
       ))}
-      <img className="ad-loader-img" src={src} alt="" draggable={false} />
+      {picture}
       {animation === "fill" && (
         <span className="ad-loader-fill" aria-hidden="true">
-          <img src={src} alt="" draggable={false} />
+          {picture}
         </span>
       )}
       {animation === "shine" && (

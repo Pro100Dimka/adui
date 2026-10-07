@@ -57,6 +57,28 @@ export const defaultFieldRegistry: FieldRegistry = {
   rotary: RotaryKnob,
   tags: TagInput,
 };
+const bindings: Record<"checked" | "file" | "rotary" | "value", (field: ReturnType<FormApi<Record<string, unknown>>["field"]>, kind: FieldKind) => object> = {
+  checked: (field) => ({ checked: Boolean(field.value), onValueChange: field.onValueChange }),
+  file: (field) => {
+    let value = "";
+    if (Array.isArray(field.value)) value = field.value.map((file: File) => file.name).join(", ");
+    else if (typeof field.value === "string") value = field.value;
+    return { value, onFiles: field.onValueChange };
+  },
+  rotary: (field) => ({ value: Number(field.value ?? 0), onValueChange: field.onValueChange }),
+  value: (field, kind) => {
+    const emptyValue: Partial<Record<FieldKind, unknown>> = { people: [], tags: [], slider: 0 };
+    return {
+      value: field.value ?? emptyValue[kind] ?? "",
+      onValueChange: field.onValueChange,
+      error: field.touched ? field.error : undefined,
+      onBlur: field.onBlur,
+    };
+  },
+};
+const bindingKind: Partial<Record<FieldKind, keyof typeof bindings>> = {
+  checkbox: "checked", switch: "checked", file: "file", rotary: "rotary",
+};
 export interface FormFieldsProps<T extends Record<string, unknown>> {
   fields: readonly FormFieldDefinition<T>[];
   registry?: FieldRegistry;
@@ -71,7 +93,7 @@ export function FormFields<T extends Record<string, unknown>>({
 }: FormFieldsProps<T>) {
   const form = useFormContext<T>();
   return (
-    <Grid columns={columns} gap={gap} align="center">
+    <Grid columns={columns} gap={gap} align="center" className="ad-form-fields">
       {fields
         .filter((field) => field.showWhen?.(form.values) ?? true)
         .map((field) => (
@@ -96,27 +118,9 @@ function Slot<T extends Record<string, unknown>>({
 }) {
   const kind = field.kind ?? "text",
     Component = registry[kind] ?? registry.text,
-    b = form.field(field.name),
-    emptyValue: Partial<Record<FieldKind, unknown>> = { people: [], tags: [], slider: 0 },
-    props = kind === "checkbox" || kind === "switch"
-      ? { checked: !!b.value, onValueChange: b.onValueChange }
-      : kind === "file"
-        ? {
-            value: Array.isArray(b.value)
-              ? b.value.map((file: File) => file.name).join(", ")
-              : typeof b.value === "string" ? b.value : "",
-            onFiles: b.onValueChange,
-          }
-      : kind === "rotary"
-        ? { value: Number(b.value ?? 0), onValueChange: b.onValueChange }
-      : {
-          value: b.value ?? emptyValue[kind] ?? "",
-          onValueChange: b.onValueChange,
-          error: b.touched ? b.error : undefined,
-          onBlur: b.onBlur,
-        };
+    props = bindings[bindingKind[kind] ?? "value"](form.field(field.name), kind);
   return (
-    <Grid span={field.span ?? "full"}>
+    <Grid span={field.span ?? "full"} className="ad-form-field">
       <Component label={field.label} {...field.props} {...props} />
     </Grid>
   );

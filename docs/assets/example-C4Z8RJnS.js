@@ -1,0 +1,1 @@
+import{r as a,j as s,n,J as o}from"./index-Pyz-R8Vs.js";function l(){const[t,e]=a.useState(!1);return s.jsxs(s.Fragment,{children:[s.jsx(n,{icon:"save",onClick:()=>e(!0),children:"Сохранить"}),s.jsx(o,{floating:!0,open:t,message:"Настройки сохранены",onClose:()=>e(!1)})]})}export{l as default};

@@ -1,5 +1,5 @@
-import { tr, useTr } from "../../../core/i18n";
-import { useRef, useState } from "react";
+import { useTr } from "../../../core/i18n";
+import { useMemo, useRef, useState } from "react";
 import { assignRef, useControllable } from "../../../core/base";
 import { Popover } from "../../feedback/Popover/Popover";
 import { FieldFrame, fieldLabel, useFieldIds, OptionList, toOption } from "../internal";
@@ -7,8 +7,10 @@ import { IconButton } from "../IconButton/IconButton";
 import { InputBase } from "../InputBase/InputBase";
 import type { AutocompleteProps } from "../shared";
 
+const defaultOptions = ["WASAPI Shared", "WASAPI Exclusive", "ASIO"];
+
 export const Autocomplete = ({
-  options = ["WASAPI Shared", "WASAPI Exclusive", "ASIO"],
+  options = defaultOptions,
   onOptionSelect,
   value,
   defaultValue = "",
@@ -40,17 +42,12 @@ export const Autocomplete = ({
   const [active, setActive] = useState(0);
   const inputNode = useRef<HTMLInputElement>(null);
   const box = useRef<HTMLDivElement>(null);
-  const all = options.map(toOption);
-  // A value that already names an option shows the whole list, like a reopened select.
-  const query = all.some((o) => o.label === current)
-    ? ""
-    : current.trim().toLocaleLowerCase();
-  const filtered = all.filter(
-    (o) =>
-      !query ||
-      String(o.label).toLocaleLowerCase().includes(query) ||
-      o.value.toLocaleLowerCase().includes(query),
-  );
+  const filtered = useMemo(() => {
+    const all = options.map(toOption);
+    // A value that already names an option shows the whole list, like a reopened select.
+    const query = all.some((o) => o.label === current) ? "" : current.trim().toLocaleLowerCase();
+    return all.filter((o) => !query || String(o.label).toLocaleLowerCase().includes(query) || o.value.toLocaleLowerCase().includes(query));
+  }, [options, current]);
   const listId = `${input.id ?? "ad-autocomplete"}-listbox`;
   const choose = (next: string) => {
     setCurrent(next);

@@ -1,4 +1,53 @@
 /* FormFields composes existing field primitives. */
+@supports (grid-template-rows: subgrid) {
+  /* Labels and messages size their own tracks, not the controls' center line. */
+  .ad-form-fields.ad-grid {
+    grid-auto-rows: auto auto auto minmax(var(--ad-grid-row-gap), auto);
+    row-gap: 0;
+    align-items: stretch;
+    margin-block-end: calc(var(--ad-grid-row-gap) * -1);
+  }
+  .ad-form-field {
+    display: grid;
+    grid-row-end: span 4;
+    grid-template-rows: subgrid;
+  }
+  .ad-form-field > * {
+    grid-row: 2;
+    align-self: center;
+  }
+  .ad-form-field > :has(> .ad-field) {
+    display: grid;
+    grid-row: 1 / 5;
+    grid-template-rows: subgrid;
+    row-gap: 0;
+    align-self: stretch;
+  }
+  .ad-form-field > .ad-field,
+  .ad-form-field > :has(> .ad-field) > .ad-field {
+    grid-row: 1 / 4;
+    grid-template-rows: subgrid;
+    row-gap: 0;
+    align-self: stretch;
+  }
+  .ad-form-field .ad-field > * {
+    grid-row: 2;
+    align-self: center;
+  }
+  .ad-form-field .ad-field > .ad-field-label {
+    grid-row: 1;
+    align-self: end;
+    margin-block-end: calc(var(--ad-space-1) * 1.5);
+  }
+  .ad-form-field .ad-field > .ad-field-message {
+    grid-row: 3;
+    align-self: start;
+    margin-block-start: calc(var(--ad-space-1) * 1.5);
+  }
+  .ad-form-field > :has(> .ad-field) > :not(.ad-field) {
+    grid-row: 4;
+  }
+}
 /* Fields of a declarative form arrive in a quick cascade. */
 form .ad-grid > .ad-grid-item {
   animation: ad-fields-in 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) both;

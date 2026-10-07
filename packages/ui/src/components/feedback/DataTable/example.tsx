@@ -1,4 +1,5 @@
-import { Badge, DataTable } from "@ad-voice/ui";
+import { useState } from "react";
+import { Badge, Button, DataTable, Stack, Typography, copyText } from "@ad-voice/ui";
 import type { DataTableColumn } from "@ad-voice/ui";
 
 type Track = {
@@ -70,20 +71,56 @@ const columns: DataTableColumn<Track>[] = [
 ];
 
 export default function DataTableExample() {
+  const [largeRows, setLargeRows] = useState<Track[] | null>(null);
   return (
+    <Stack gap={3}>
+      <Stack direction="row" align="center" gap={3} wrap>
+        <Button
+          size="sm"
+          icon="database"
+          aria-label="Переключить объём данных"
+          onClick={() => setLargeRows((rows) => rows ? null : Array.from({ length: 10_000 }, (_, index) => ({
+            ...tracks[index % tracks.length], id: `large-${index}`, title: `${tracks[index % tracks.length].title} · ${index + 1}`,
+          })))}
+        >
+          {largeRows ? "Вернуть 8 строк" : "Проверить 10 000 строк"}
+        </Button>
+        <Typography variant="caption" tone="muted">
+          Shift + заголовок — несколько сортировок. «Столбцы» — порядок и закрепление.
+        </Typography>
+      </Stack>
     <DataTable
+      key={largeRows ? "virtual" : "paged"}
       caption="Треки"
       columns={columns}
-      rows={tracks}
+      rows={largeRows ?? tracks}
       rowKey={(track) => track.id}
-      defaultSort={{ key: "plays", direction: "desc" }}
-      pageSize={6}
+      defaultSorting={[{ key: "artist", direction: "asc" }, { key: "plays", direction: "desc" }]}
+      defaultColumnPinning={{ left: ["title"], right: ["status"] }}
+      pageSize={largeRows ? undefined : 6}
       pageSizeOptions={[6, 12, 24]}
+      virtualize={Boolean(largeRows)}
+      maxHeight={480}
+      rowNumbers
+      densityToggle
+      renderRowDetails={(track) => (
+        <Stack gap={2}>
+          <Typography variant="title">{track.title}</Typography>
+          <Typography tone="muted">{track.artist} · {track.plays.toLocaleString("ru-RU")} прослушиваний</Typography>
+          <Typography variant="mono">ID: {track.id}</Typography>
+        </Stack>
+      )}
+      renderRowActions={(track) => (
+        <Button size="sm" icon="copy" aria-label={`Скопировать название: ${track.title}`} onClick={() => { void copyText(track.title); }}>
+          Копия
+        </Button>
+      )}
       selectable
       searchable
       filterable
       groupable
-      defaultGroupBy="artist"
+      defaultGroupBy={largeRows ? null : "artist"}
     />
+    </Stack>
   );
 }

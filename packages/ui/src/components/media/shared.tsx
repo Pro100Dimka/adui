@@ -8,7 +8,7 @@ export interface WaveformProps extends CommonProps {
   points?: readonly number[];
   /** An audio file (URL, File or Blob) whose peaks are decoded in the browser. */
   src?: string | Blob | null;
-  /** How many bars to decode from `src`. */
+  /** How many bars to decode from `src` (clamped to 1–10,000; non-finite values use 600). */
   bins?: number;
   color?: string;
   label?: string;

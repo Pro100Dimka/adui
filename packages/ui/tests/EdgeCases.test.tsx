@@ -6,6 +6,7 @@ import { useForm } from "../src/components/forms/Form/Form";
 import { Form } from "../src/components/forms/Form/Form";
 import { FormFields } from "../src/components/forms/FormFields/FormFields";
 import { AudioPlayer } from "../src/components/media/AudioPlayer/AudioPlayer";
+import { useWaveformPeaks } from "../src/components/media/Waveform/useWaveformPeaks";
 import { DatePicker } from "../src/components/controls/DatePicker/DatePicker";
 import { Autocomplete } from "../src/components/controls/Autocomplete/Autocomplete";
 import { FilePicker } from "../src/components/controls/FilePicker/FilePicker";
@@ -45,6 +46,41 @@ describe("forms under overlapping work", () => {
     const before = renders;
     act(() => form.setValue("name", "same"));
     expect(renders).toBe(before);
+    act(() => tree.unmount());
+  });
+
+  it("does not rerender when an already touched field is blurred again", async () => {
+    vi.stubGlobal("IS_REACT_ACT_ENVIRONMENT", true);
+    let form!: ReturnType<typeof useForm<{ name: string }>>;
+    let renders = 0;
+    function Probe() {
+      renders++;
+      form = useForm({ initialValues: { name: "same" }, validateOnBlur: false });
+      return null;
+    }
+    let tree!: ReactTestRenderer;
+    act(() => { tree = create(<Probe />); });
+    act(() => form.setTouched("name"));
+    const before = renders;
+    act(() => form.setTouched("name"));
+    expect(renders).toBe(before);
+    act(() => tree.unmount());
+  });
+
+  it("does not serialize stable initial values again for an unrelated form-state change", () => {
+    vi.stubGlobal("IS_REACT_ACT_ENVIRONMENT", true);
+    let reads = 0;
+    const initialValues = { name: "same", get payload() { reads++; return "large initial payload"; } };
+    let form!: ReturnType<typeof useForm<typeof initialValues>>;
+    function Probe() {
+      form = useForm({ initialValues, validateOnBlur: false });
+      return null;
+    }
+    let tree!: ReactTestRenderer;
+    act(() => { tree = create(<Probe />); });
+    const before = reads;
+    act(() => form.setTouched("name"));
+    expect(reads).toBe(before);
     act(() => tree.unmount());
   });
 
@@ -244,6 +280,93 @@ describe("audio playback follows the real media", () => {
       await Promise.resolve();
     });
     expect(tree.root.findAll((node) => node.props["data-playing"] === true)).toHaveLength(0);
+    act(() => tree.unmount());
+  });
+});
+
+describe("waveform decoding remains cooperative", () => {
+  it("yields while measuring a long recording instead of blocking every input task", async () => {
+    vi.stubGlobal("IS_REACT_ACT_ENVIRONMENT", true);
+    vi.useFakeTimers();
+    const length = 300_000;
+    let reads = 0;
+    const channel = new Proxy(new Float32Array(length).fill(0.5), {
+      get(samples, key) {
+        if (typeof key === "string" && /^\d+$/.test(key)) reads++;
+        return Reflect.get(samples, key);
+      },
+    });
+    vi.stubGlobal("performance", { now: () => reads / 1000 });
+    vi.stubGlobal("OfflineAudioContext", class {
+      async decodeAudioData() {
+        return { length, numberOfChannels: 1, getChannelData: () => channel };
+      }
+    });
+    const source = new Blob(["audio"]);
+    let data!: ReturnType<typeof useWaveformPeaks>;
+    function Probe() { data = useWaveformPeaks(source); return null; }
+    let tree!: ReactTestRenderer;
+    await act(async () => { tree = create(<Probe />); });
+    expect(reads).toBeGreaterThan(0);
+    expect(reads).toBeLessThan(length);
+    expect(data).toBeNull();
+    await act(async () => { await vi.runAllTimersAsync(); });
+    expect(data?.peaks).toHaveLength(600);
+    expect(reads).toBe(length);
+    act(() => tree.unmount());
+  });
+
+  it("aborts the previous waveform request when its source changes or unmounts", async () => {
+    vi.stubGlobal("IS_REACT_ACT_ENVIRONMENT", true);
+    const signals: AbortSignal[] = [];
+    vi.stubGlobal("fetch", vi.fn((_src, options) => {
+      signals.push(options?.signal);
+      return new Promise(() => {});
+    }));
+    function Probe({ src }: { src: string }) { useWaveformPeaks(src); return null; }
+    let tree!: ReactTestRenderer;
+    await act(async () => { tree = create(<Probe src="first.mp3" />); });
+    expect(signals[0]).toBeInstanceOf(AbortSignal);
+    await act(async () => { tree.update(<Probe src="second.mp3" />); });
+    expect(signals[0].aborted).toBe(true);
+    expect(signals[1].aborted).toBe(false);
+    act(() => tree.unmount());
+    expect(signals[1].aborted).toBe(true);
+  });
+
+  it("includes the end of a recording when its sample count is not divisible by bins", async () => {
+    vi.stubGlobal("IS_REACT_ACT_ENVIRONMENT", true);
+    const channel = new Float32Array(10);
+    channel[9] = 1;
+    vi.stubGlobal("OfflineAudioContext", class {
+      async decodeAudioData() {
+        return { length: channel.length, numberOfChannels: 1, getChannelData: () => channel };
+      }
+    });
+    const source = new Blob(["audio"]);
+    let data!: ReturnType<typeof useWaveformPeaks>;
+    function Probe() { data = useWaveformPeaks(source, 3); return null; }
+    let tree!: ReactTestRenderer;
+    await act(async () => { tree = create(<Probe />); });
+    expect(data?.peaks).toEqual([0, 0, 1]);
+    expect(data?.rms[2]).toBe(0.5);
+    act(() => tree.unmount());
+  });
+
+  it("normalizes an invalid bin count before measuring the recording", async () => {
+    vi.stubGlobal("IS_REACT_ACT_ENVIRONMENT", true);
+    const channel = new Float32Array(600).fill(1);
+    vi.stubGlobal("OfflineAudioContext", class {
+      async decodeAudioData() {
+        return { length: channel.length, numberOfChannels: 1, getChannelData: () => channel };
+      }
+    });
+    const source = new Blob(["audio"]);
+    let data!: ReturnType<typeof useWaveformPeaks>;
+    function Probe() { data = useWaveformPeaks(source, NaN); return null; }
+    let tree!: ReactTestRenderer;
+    await act(async () => { tree = create(<Probe />); });
+    expect(data?.peaks).toHaveLength(600);
     act(() => tree.unmount());
   });
 });

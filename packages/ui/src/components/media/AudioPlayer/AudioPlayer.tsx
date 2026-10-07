@@ -1,5 +1,5 @@
-import { tr, useTr } from "../../../core/i18n";
-import { useEffect, useRef, useState } from "react";
+import { useTr } from "../../../core/i18n";
+import { useEffect, useRef, useState, type RefObject } from "react";
 import { clamp, mark, timeText, useControllable } from "../../../core/base";
 import { useTick } from "../../../core/motion/hooks";
 import { IconButton } from "../../controls/IconButton/IconButton";
@@ -10,7 +10,6 @@ export const AudioPlayer = (p: AudioPlayerProps) => {
   const tr = useTr();
   const audio = useRef<HTMLAudioElement | null>(null);
   const [playing, setPlaying] = useState(false),
-    [position, setPosition] = useState(0),
     [muted, setMuted] = useState(false);
   const [volume, setVolume] = useControllable(p.volume, p.defaultVolume ?? 0.7);
   const [fileDuration, setFileDuration] = useState<number>();
@@ -46,27 +45,6 @@ export const AudioPlayer = (p: AudioPlayerProps) => {
       setFileDuration(undefined);
     };
   }, [p.src]);
-  // While playing, the position is read on every tick of the shared motion clock (timeupdate
-  // fires only ~4 times a second), so the cursor glides. Without a source the timeline runs on its own,
-  // so the player can be shown alive in demos.
-  const lastTick = useRef(0);
-  useTick((now) => {
-    const media = audio.current;
-    if (media) {
-      setPosition(media.currentTime);
-      p.onTimeChange?.(media.currentTime);
-    } else
-      setPosition((v) => {
-        const next = v + (now - (lastTick.current || now)) / 1000;
-        if (next < duration) return next;
-        setPlaying(false);
-        return 0;
-      });
-    lastTick.current = now;
-  }, playing);
-  useEffect(() => {
-    if (!playing) lastTick.current = 0;
-  }, [playing]);
   useEffect(() => {
     if (audio.current) {
       audio.current.muted = muted;
@@ -82,11 +60,6 @@ export const AudioPlayer = (p: AudioPlayerProps) => {
       else audio.current.pause();
     }
   };
-  const seek = (v: number) => {
-    setPosition(v);
-    if (audio.current) audio.current.currentTime = v;
-    p.onTimeChange?.(v);
-  };
   return (
     <div {...mark("AudioPlayer", p)} data-playing={playing || undefined}>
       <span className="ad-player-play">
@@ -98,19 +71,16 @@ export const AudioPlayer = (p: AudioPlayerProps) => {
           onClick={toggle}
         />
       </span>
-      <div className="ad-player-track">
-        <Waveform
-          duration={duration}
-          position={position}
-          onSeek={seek}
-          points={p.points}
-          src={p.points ? undefined : p.src}
-        />
-        <div className="ad-player-times">
-          <span className="ad-time">{timeText(position)}</span>
-          <span className="ad-time">−{timeText(duration - position)}</span>
-        </div>
-      </div>
+      <PlaybackTrack
+        key={p.src}
+        audio={audio}
+        playing={playing}
+        duration={duration}
+        points={p.points}
+        src={p.src}
+        onTimeChange={p.onTimeChange}
+        onEnded={() => { setPlaying(false); p.onPlayingChange?.(false); }}
+      />
       <div className="ad-player-volume">
         <IconButton
           variant="ghost"
@@ -138,3 +108,42 @@ export const AudioPlayer = (p: AudioPlayerProps) => {
     </div>
   );
 };
+
+/** The clock updates only the timeline; transport and volume controls stay untouched. */
+function PlaybackTrack({ audio, playing, duration, points, src, onTimeChange, onEnded }: Pick<AudioPlayerProps, "points" | "src" | "onTimeChange"> & {
+  audio: RefObject<HTMLAudioElement | null>;
+  playing: boolean;
+  duration: number;
+  onEnded: () => void;
+}) {
+  const [position, setPosition] = useState(0);
+  const current = useRef(0);
+  const lastTick = useRef<number | undefined>(undefined);
+  useTick((now) => {
+    const media = audio.current;
+    const next = media?.currentTime ?? current.current + (now - (lastTick.current ?? now)) / 1000;
+    lastTick.current = now;
+    current.current = !media && next >= duration ? 0 : next;
+    setPosition(current.current);
+    if (media) onTimeChange?.(next);
+    else if (next >= duration) onEnded();
+  }, playing);
+  useEffect(() => {
+    if (!playing) lastTick.current = undefined;
+  }, [playing]);
+  const seek = (next: number) => {
+    current.current = next;
+    setPosition(next);
+    if (audio.current) audio.current.currentTime = next;
+    onTimeChange?.(next);
+  };
+  return (
+    <div className="ad-player-track">
+      <Waveform duration={duration} position={position} onSeek={seek} points={points} src={points ? undefined : src} />
+      <div className="ad-player-times">
+        <span className="ad-time">{timeText(position)}</span>
+        <span className="ad-time">−{timeText(duration - position)}</span>
+      </div>
+    </div>
+  );
+}

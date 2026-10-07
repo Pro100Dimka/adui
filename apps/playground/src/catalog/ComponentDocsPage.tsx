@@ -156,7 +156,7 @@ export function ComponentDocsPage({ item }: { item: CatalogMeta }) {
         border
         padding="md"
       >
-        <HeroBackdrop index={catalog.indexOf(item)} />
+        {item.name !== "AnimatedBorder" && <HeroBackdrop index={catalog.indexOf(item)} />}
         <Stack className="docs-hero-content" gap={4}>
           <Stack
             className="docs-hero-top"
@@ -218,6 +218,7 @@ export function ComponentDocsPage({ item }: { item: CatalogMeta }) {
         className="docs-section docs-section--example"
         id="example"
         material="card"
+        border
         padding="md"
       >
         <Stack gap={4}>
@@ -275,6 +276,7 @@ export function ComponentDocsPage({ item }: { item: CatalogMeta }) {
         className="docs-section docs-section--related"
         id="related"
         material="card"
+        border
         padding="md"
       >
         <Stack gap={4}>

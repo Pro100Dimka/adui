@@ -1,0 +1,1 @@
+import{j as t,t as i,n as a}from"./index-Pyz-R8Vs.js";function r(){return t.jsx(i,{icon:"music",title:"Пока нет записей",description:"Спойте первую песню — запись появится здесь.",action:t.jsx(a,{variant:"primary",icon:"plus",children:"Новое выступление"})})}export{r as default};

@@ -1,4 +1,4 @@
-import { canPaint, createResizeObserver } from "../../core/environment";
+import { canObserveIntersection, canPaint, createResizeObserver } from "../../core/environment";
 import { useEffect, type RefObject } from "react";
 import { paintCanvas, type Painting } from "../../core/noise";
 
@@ -22,8 +22,9 @@ export function useArtwork(
     if (!canvas) return;
     let shown = 0;
     let alive = true;
+    let visible = !canObserveIntersection();
     const paint = () => {
-      if (!canPaint()) return;
+      if (!alive || !visible || !canPaint()) return;
       const box = canvas.getBoundingClientRect();
       const density = window.devicePixelRatio || 1;
       const wanted = Math.max(box.width / width, box.height / height) * density;
@@ -44,9 +45,17 @@ export function useArtwork(
     };
     const observer = createResizeObserver(paint);
     observer.observe(canvas);
+    const intersection = canObserveIntersection()
+      ? new IntersectionObserver(([entry]) => {
+          visible = entry.isIntersecting;
+          if (visible) paint();
+        }, { rootMargin: "25% 0px" })
+      : null;
+    intersection?.observe(canvas);
     return () => {
       alive = false;
       observer.disconnect();
+      intersection?.disconnect();
     };
   }, [ref, key, width, height, painting]);
 }

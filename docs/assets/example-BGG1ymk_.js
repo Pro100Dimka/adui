@@ -1,0 +1,1 @@
+import{j as e,S as a,X as t}from"./index-Pyz-R8Vs.js";function s(){return e.jsxs(a,{gap:2,children:[e.jsx(t,{variant:"eyebrow",children:"Neo UI"}),e.jsx(t,{as:"h3",variant:"title",children:"Настройки комнаты"}),e.jsx(t,{children:"Основной текст интерфейса"}),e.jsx(t,{variant:"muted",children:"Вспомогательная подпись"})]})}export{s as default};

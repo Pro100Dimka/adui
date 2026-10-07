@@ -16,6 +16,7 @@ export default function ThemeProviderExample() {
   const site = useSiteTheme();
   return (
     <Playground
+      key={site.theme}
       stretch
       knobs={{ theme: { options: names, value: site.theme } }}
       code={(v) =>
@@ -27,7 +28,7 @@ export default function ThemeProviderExample() {
       }
     >
       {(v) => (
-        <U.ThemeProvider theme={v.theme}>
+        <U.ThemeProvider theme={v.theme} primary={site.primary} secondary={site.secondary}>
           <FollowSite theme={v.theme} />
           <U.Card material="glass" title="Предпросмотр темы">
             <U.Stack gap={3}>

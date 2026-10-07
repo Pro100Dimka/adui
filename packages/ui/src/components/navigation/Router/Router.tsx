@@ -33,6 +33,8 @@ export interface RouterProps {
   fallback?: ReactNode;
   context?: unknown;
   mode?: "hash" | "history";
+  /** Opt into native view transitions. Captured views may temporarily pause pointer interaction. Default: false. */
+  transition?: boolean;
 }
 const Context = createContext<RouterValue | null>(null),
   clean = (v: string) => {
@@ -41,9 +43,8 @@ const Context = createContext<RouterValue | null>(null),
   },
   current = (m: "hash" | "history") =>
     clean(m === "hash" ? location.hash.slice(1) || "/" : location.pathname);
-/** With motion on, the page change morphs through a view transition where the browser has one. */
-const morph = (update: () => void) =>
-  motionEnabled() && "startViewTransition" in document
+const morph = (update: () => void, transition: boolean) =>
+  transition && motionEnabled() && "startViewTransition" in document
     ? void document.startViewTransition(() => flushSync(update))
     : update();
 function matchPath(pattern: string, pathname: string) {
@@ -81,14 +82,15 @@ export function Router({
   fallback = null,
   context,
   mode = "hash",
+  transition = false,
 }: RouterProps) {
   const [pathname, setPathname] = useState(() => current(mode));
   useEffect(() => {
     const event = mode === "hash" ? "hashchange" : "popstate",
-      sync = () => morph(() => setPathname(current(mode)));
+      sync = () => morph(() => setPathname(current(mode)), transition);
     window.addEventListener(event, sync);
     return () => window.removeEventListener(event, sync);
-  }, [mode]);
+  }, [mode, transition]);
   const match = useMemo(() => matchRoute(routes, pathname), [routes, pathname]);
   const navigate = (to: string, replace = false) => {
     const path = clean(to);
@@ -100,7 +102,7 @@ export function Router({
       } else location.hash = path;
     } else {
       history[replace ? "replaceState" : "pushState"](null, "", path);
-      morph(() => setPathname(path));
+      morph(() => setPathname(current(mode)), transition);
     }
   };
   useEffect(() => {

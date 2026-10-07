@@ -25,6 +25,8 @@
   initial-value: var(--ad-neutral-300);
 }
 .ad-theme {
+  --ad-primary: inherit;
+  --ad-secondary: inherit;
   transition:
     --ad-red 0.7s ease,
     --ad-pink 0.7s ease,

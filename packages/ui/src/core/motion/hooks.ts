@@ -4,6 +4,7 @@ import {
   attachBorder,
   attachTabShape,
   createMotion,
+  refreshMotion,
   subscribeTick,
 } from "../motion-engine.js";
 import { useMotion } from "../providers/context";
@@ -55,7 +56,7 @@ export function useBorder(
 
     const controller = createMotion(node);
     scope.current = controller;
-    const border = attachBorder(node, { shell, round, scope: controller });
+    const border = attachBorder(node, { shell, round, scope: controller, defer: true });
     return () => {
       border.destroy();
       controller.dispose();
@@ -91,6 +92,7 @@ const watchOffscreen = (node: Element) => {
   offscreenObserver ??= new IntersectionObserver(
     (entries) => {
       for (const entry of entries) entry.target.toggleAttribute("data-ad-offscreen", !entry.isIntersecting);
+      refreshMotion();
     },
     { rootMargin: "12% 0px" },
   );
@@ -98,6 +100,7 @@ const watchOffscreen = (node: Element) => {
   return () => {
     offscreenObserver?.unobserve(node);
     node.removeAttribute("data-ad-offscreen");
+    refreshMotion();
   };
 };
 
@@ -188,6 +191,11 @@ export function useSmoothWheel(ref: React.RefObject<HTMLElement | null>) {
         )
           return;
       }
+      if (
+        element.scrollHeight <= element.clientHeight + 1 ||
+        !/auto|scroll/.test(getComputedStyle(element).overflowY)
+      )
+        return;
       event.preventDefault();
       if (!frame) target = position = applied = element.scrollTop;
       target = Math.max(

@@ -1,1 +1,0 @@
-import{j as e,P as r,U as t}from"./index-0UK2-KzX.js";function o(){return e.jsx(r,{stretch:!0,knobs:{},code:()=>"<LoaderGenerator onValueChange={(settings) => save(settings)} />",children:()=>e.jsx(t.LoaderGenerator,{style:{width:"100%"}})})}export{o as default};

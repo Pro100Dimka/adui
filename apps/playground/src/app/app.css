@@ -241,12 +241,50 @@ a {
 .docs-overview-hero .ad-wave-decoration {
   opacity: 0.72;
 }
+.docs-overview-hero .docs-hero-backdrop {
+  opacity: 0.56;
+  mask: radial-gradient(ellipse 80% 110% at 93% 85%, #000 18%, transparent 100%);
+}
+.docs-overview-hero .docs-install.ad-card {
+  background:
+    radial-gradient(ellipse 70% 120% at 82% -45%, rgb(from var(--ad-secondary) r g b / 0.09), transparent 75%) padding-box,
+    linear-gradient(145deg, rgb(from var(--ad-neutral-900) r g b / 0.95), rgb(from var(--ad-neutral-850) r g b / 0.85)) padding-box,
+    linear-gradient(125deg, rgb(from var(--ad-secondary) r g b / 0.13), rgb(from var(--ad-primary) r g b / 0.04) 62%, rgb(from var(--ad-secondary) r g b / 0.1)) border-box;
+  box-shadow: inset 0 0.0625rem 0 rgb(from var(--ad-secondary) r g b / 0.05), 0 0.5rem 1.5rem #0003;
+}
+.docs-overview-hero .docs-install.ad-card::before {
+  content: "";
+  position: absolute;
+  inset: 0.0625rem 0.75rem auto;
+  height: 0.0625rem;
+  background: linear-gradient(90deg, transparent, rgb(from var(--ad-primary) r g b / 0.1) 30%, rgb(from var(--ad-secondary) r g b / 0.27) 72%, transparent);
+  pointer-events: none;
+}
+.docs-overview-hero .docs-install .ad-button[data-ad-variant="ghost"] {
+  border-color: rgb(from var(--ad-secondary) r g b / 0.13);
+  background: linear-gradient(155deg, rgb(from var(--ad-neutral-700) r g b / 0.18), rgb(from var(--ad-neutral-900) r g b / 0.35));
+  box-shadow: inset 0 0.0625rem 0 rgb(from var(--ad-secondary) r g b / 0.12), 0 0.125rem 0.375rem #0004;
+  color: var(--ad-text);
+}
+.docs-overview-hero .docs-install .ad-button[data-ad-variant="ghost"]:hover:not(:disabled) {
+  border-color: rgb(from var(--ad-secondary) r g b / 0.25);
+  box-shadow: inset 0 0.0625rem 0 rgb(from var(--ad-secondary) r g b / 0.18), 0 0.25rem 0.625rem #0005;
+  filter: brightness(1.08);
+}
 /* The component hero: neon strands flow behind the whole block, fading out under the title. */
+.docs-component-hero.ad-card,
+.docs-showcase-tile {
+  /* Four blur sigmas plus the aura stroke, beyond the inset contour. */
+  overflow-clip-margin: 20px;
+}
 .docs-component-hero.ad-card {
   position: relative;
   isolation: isolate;
   overflow: clip;
-  overflow-clip-margin: 0.5rem;
+  background:
+    linear-gradient(135deg, var(--ad-neutral-900), var(--ad-neutral-900)) padding-box,
+    linear-gradient(120deg, rgb(from var(--ad-secondary) r g b / 0.2), rgb(from var(--ad-primary) r g b / 0.06) 58%, rgb(from var(--ad-secondary) r g b / 0.16)) border-box;
+  box-shadow: inset 0 0.0625rem 0 rgb(from var(--ad-secondary) r g b / 0.08), 0 0.875rem 2.5rem #0005;
 }
 .docs-hero-backdrop {
   position: absolute;
@@ -285,7 +323,7 @@ html[data-ad-color-mode="light"] .docs-hero-backdrop {
   height: 88%;
   opacity: 0.6;
 }
-/* Showcase: live tiles, each a link to its page; off-screen tiles are not rendered. */
+/* Showcase: fixed tiles with shared animated borders; off-screen previews are unmounted. */
 .docs-showcase-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr));
@@ -299,7 +337,7 @@ html[data-ad-color-mode="light"] .docs-hero-backdrop {
   grid-template-rows: 1fr auto;
   min-width: 0;
   block-size: 15rem;
-  overflow: hidden;
+  overflow: clip;
   border: 0.0625rem solid rgb(from var(--ad-primary-700) r g b / 0.23);
   border-radius: 1rem;
   background:
@@ -307,8 +345,6 @@ html[data-ad-color-mode="light"] .docs-hero-backdrop {
     rgb(from var(--ad-neutral-900) r g b / 0.95);
   color: inherit;
   text-decoration: none;
-  content-visibility: auto;
-  contain-intrinsic-size: auto 15rem;
   transition:
     translate 0.5s cubic-bezier(0.2, 0.8, 0.2, 1),
     border-color 0.4s,
@@ -358,6 +394,7 @@ html[data-ad-color-mode="light"] .docs-hero-backdrop {
   gap: var(--ad-space-3);
   padding: var(--ad-space-3) var(--ad-space-4);
   border-top: 0.0625rem solid #ffffff0a;
+  border-radius: 0 0 0.9375rem 0.9375rem;
   background: rgb(from var(--ad-neutral-900) r g b / 0.8);
 }
 .docs-showcase-foot > .ad-stack {
@@ -667,7 +704,7 @@ html[data-ad-color-mode="light"] .docs-hero-backdrop {
   overflow-x: auto;
   white-space: nowrap;
   scrollbar-width: none;
-  color: var(--ad-secondary-100);
+  color: var(--ad-text);
 }
 
 /* Site settings: a wide dialog of swatches; each swatch is a native colour input. */

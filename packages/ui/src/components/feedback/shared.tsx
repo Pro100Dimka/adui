@@ -99,7 +99,7 @@ export interface DataTableColumn<T extends DataTableRow = DataTableRow> {
   resizable?: boolean;
   /** Click the header to sort; on by default. */
   sortable?: boolean;
-  /** Cell content; the raw field by default. */
+  /** Cell content; value(row), or the raw field, by default. */
   render?: (row: T, index: number) => ReactNode;
   /** What sorting, search, filters and groups look at; the raw field by default. */
   value?: (row: T) => string | number;
@@ -115,6 +115,8 @@ export interface DataTableColumn<T extends DataTableRow = DataTableRow> {
   aggregate?: (rows: T[]) => ReactNode;
 }
 export type DataTableSort = { key: string; direction: "asc" | "desc" };
+export type DataTablePagination = { pageIndex: number; pageSize: number };
+export type DataTableColumnPinning = { left?: string[]; right?: string[] };
 /** One column's filter: text it contains, values it is one of, or a number range. */
 export type DataTableFilter =
   | { kind: "text"; text: string }
@@ -132,6 +134,10 @@ export interface DataTableProps<
   sort?: DataTableSort | null;
   defaultSort?: DataTableSort | null;
   onSortChange?: (sort: DataTableSort | null) => void;
+  /** Ordered sort priority. Shift-click adds/cycles one column; a normal click replaces the list. */
+  sorting?: DataTableSort[];
+  defaultSorting?: DataTableSort[];
+  onSortingChange?: (sorting: DataTableSort[]) => void;
   /** Checkboxes to pick rows, with "select all" in the header. */
   selectable?: boolean;
   selected?: string[];
@@ -139,6 +145,9 @@ export interface DataTableProps<
   onSelectionChange?: (keys: string[]) => void;
   /** A search field over every column. */
   searchable?: boolean;
+  query?: string;
+  defaultQuery?: string;
+  onQueryChange?: (query: string) => void;
   /** Filters in every column header (see `DataTableColumn.filter`). */
   filterable?: boolean;
   filters?: Record<string, DataTableFilter>;
@@ -153,11 +162,42 @@ export interface DataTableProps<
   pageSize?: number;
   /** Page-size choices in the footer when pagination is enabled. */
   pageSizeOptions?: number[];
+  /** Controlled, zero-based pagination; rows are sliced locally unless manualPagination is enabled. */
+  pagination?: DataTablePagination;
+  defaultPagination?: DataTablePagination;
+  onPaginationChange?: (pagination: DataTablePagination) => void;
+  /** Server-owned data operations: the table emits state changes but never fetches or transforms these rows. */
+  manualFiltering?: boolean;
+  manualSorting?: boolean;
+  manualPagination?: boolean;
+  /** Total matching server rows, not merely the current page length. */
+  rowCount?: number;
+  columnOrder?: string[];
+  defaultColumnOrder?: string[];
+  onColumnOrderChange?: (keys: string[]) => void;
+  columnPinning?: DataTableColumnPinning;
+  defaultColumnPinning?: DataTableColumnPinning;
+  onColumnPinningChange?: (pinning: DataTableColumnPinning) => void;
   /** Allow readers to resize columns; on by default. */
   resizableColumns?: boolean;
   /** Scroll inside the table with a sticky header beyond this height. */
-  maxHeight?: string;
+  maxHeight?: string | number;
+  /** Render only the visible rows, group headings and expanded details. Uses a 480px viewport by default. */
+  virtualize?: boolean;
+  estimatedRowHeight?: number;
+  overscan?: number;
+  /** Detail content is mounted only while its stable row key is expanded and visible. */
+  renderRowDetails?: (row: T, index: number) => ReactNode;
+  expandedRows?: string[];
+  defaultExpandedRows?: string[];
+  onExpandedRowsChange?: (keys: string[]) => void;
+  renderRowActions?: (row: T, index: number) => ReactNode;
+  /** Width reserved for row actions, in pixels; defaults to 96. */
+  rowActionsWidth?: number;
+  rowNumbers?: boolean;
   dense?: boolean;
+  densityToggle?: boolean;
+  onDenseChange?: (dense: boolean) => void;
   striped?: boolean;
   /** Placeholder rows while data loads. */
   loading?: boolean;

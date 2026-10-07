@@ -12,10 +12,12 @@ import { RotaryKnob } from "../src/components/media/RotaryKnob/RotaryKnob";
 import { DataTable, FilterEditor, dataTableCsv } from "../src/components/feedback/DataTable/DataTable";
 import { Form } from "../src/components/forms/Form/Form";
 import { FormFields, defaultFieldRegistry } from "../src/components/forms/FormFields/FormFields";
+import { Autocomplete } from "../src/components/controls/Autocomplete/Autocomplete";
+import type { DataTableFilter } from "../src/components/feedback/shared";
 import { defaultSettings, fonts, siteThemeProps, useSiteSettings } from "../../../apps/playground/src/app/siteSettings";
 import { catalog, componentCount, getCatalogItemBySlug, getDocumentationParts, getExample } from "../../../apps/playground/src/catalog/componentRegistry";
 import { compile, toModule } from "../../../apps/playground/src/catalog/liveCode";
-import { LocaleProvider, getLocale, setLocale } from "../src/core/i18n";
+import { LocaleProvider, getLocale, setLocale, translate } from "../src/core/i18n";
 import { Toast } from "../src/components/feedback/Toast/Toast";
 import { Dialog } from "../src/components/feedback/Dialog/Dialog";
 
@@ -64,6 +66,24 @@ describe("closed dialog work", () => {
 });
 
 describe("locale isolation", () => {
+  it.each([
+    ["Подробности строки {number}", "Row {number} details", "Подробиці рядка {number}"],
+    ["Номер строки", "Row number", "Номер рядка"],
+    ["Подробности", "Details", "Подробиці"],
+    ["Действия", "Actions", "Дії"],
+    ["Компактные строки", "Compact rows", "Компактні рядки"],
+    ["Переместить влево: {title}", "Move left: {title}", "Перемістити ліворуч: {title}"],
+    ["Переместить вправо: {title}", "Move right: {title}", "Перемістити праворуч: {title}"],
+    ["Закрепить слева: {title}", "Pin left: {title}", "Закріпити ліворуч: {title}"],
+    ["Закрепить справа: {title}", "Pin right: {title}", "Закріпити праворуч: {title}"],
+    ["{from}–{to}", "{from}–{to}", "{from}–{to}"],
+  ])("translates table control %s in both built-in alternate locales", (key, en, uk) => {
+    const vars = { number: 7, title: "Name", from: 1, to: 25 };
+    const filled = (text: string) => text.replace(/\{(\w+)\}/g, (_, name: string) => String(vars[name as keyof typeof vars]));
+    expect(translate("en", key, vars)).toBe(filled(en));
+    expect(translate("uk", key, vars)).toBe(filled(uk));
+  });
+
   it("preserves the imperative locale for components without a provider", () => {
     setLocale("en");
     expect(renderToStaticMarkup(createElement(Toast, { duration: 0 }))).toContain("Settings saved");
@@ -204,7 +224,7 @@ describe("documentation layout stability", () => {
     const page = readFileSync("../../apps/playground/src/catalog/CatalogPage.tsx", "utf8");
     const overview = readFileSync("../../apps/playground/src/catalog/CatalogOverview.tsx", "utf8");
 
-    expect(css).toMatch(/\.docs-showcase-tile\s*\{[^}]*block-size:\s*15rem;[^}]*content-visibility:\s*auto;[^}]*contain-intrinsic-size:\s*auto 15rem/s);
+    expect(css).toMatch(/\.docs-showcase-tile\s*\{[^}]*block-size:\s*15rem;/s);
     expect(overview).not.toContain("ResizeObserver");
     expect(overview).not.toContain("style.gridColumn");
     expect(overview).not.toContain("specimen.style.zoom");
@@ -297,13 +317,50 @@ describe("DataTable tools", () => {
       kind: "values", options: ["Аура", "Кай", "Мия"],
       filter: { kind: "values", values: ["Аура", "Мия"] }, onChange: vi.fn(),
     }));
-    const source = readFileSync("src/components/feedback/DataTable/DataTable.tsx", "utf8");
-
     expect(html).toContain('role="combobox"');
     expect(html).toContain("Аура");
     expect(html).toContain("Мия");
     expect(html).toContain("Убрать");
-    expect(source).toMatch(/options=\{distinct\(column as AnyColumn, rows\)\}/);
+  });
+  it.each(["text", "values"] as const)("bounds %s filter suggestions after searching the entire column", (kind) => {
+    vi.stubGlobal("IS_REACT_ACT_ENVIRONMENT", true);
+    const options = Array.from({ length: 10_000 }, (_, index) => `Value${String(index).padStart(5, "0")}`);
+    const original = [...options];
+    const changed = vi.fn();
+    function Probe() {
+      const [filter, setFilter] = useState<DataTableFilter | undefined>(kind === "values"
+        ? { kind: "values", values: [options[0]] }
+        : undefined);
+      return createElement(FilterEditor, { kind, options, filter, onChange: (next) => {
+        changed(next);
+        setFilter(next);
+      } });
+    }
+    let tree!: ReturnType<typeof create>;
+    try {
+      act(() => { tree = create(createElement(Probe)); });
+      const autocomplete = () => tree.root.findByType(Autocomplete);
+      expect(autocomplete().props.options).toHaveLength(100);
+      if (kind === "values") expect(autocomplete().props.options).not.toContain(options[0]);
+
+      act(() => autocomplete().props.onValueChange("value09999"));
+      expect(autocomplete().props.options).toEqual([options[9_999]]);
+      if (kind === "values") {
+        act(() => autocomplete().props.onOptionSelect(options[9_999]));
+        expect(changed).toHaveBeenLastCalledWith({ kind: "values", values: [options[0], options[9_999]] });
+        expect(autocomplete().props.options).not.toContain(options[9_999]);
+        expect(autocomplete().props.value).toBe("");
+      } else {
+        expect(changed).toHaveBeenLastCalledWith({ kind: "text", text: "value09999" });
+        act(() => autocomplete().props.onValueChange("Not listed"));
+        expect(changed).toHaveBeenLastCalledWith({ kind: "text", text: "Not listed" });
+        expect(autocomplete().props.options).toEqual([]);
+      }
+      expect(options).toEqual(original);
+    } finally {
+      if (tree) act(() => tree.unmount());
+      vi.unstubAllGlobals();
+    }
   });
   it("offers a way to clear selected rows without changing the current filters", () => {
     const html = renderToStaticMarkup(createElement(DataTable, {
@@ -363,7 +420,7 @@ describe("DataTable tools", () => {
     const css = readFileSync("src/components/feedback/DataTable/styles.css", "utf8");
 
     expect(html).toContain('data-label="Исполнитель"');
-    expect(css).toMatch(/@media \(max-width: 48rem\)[\s\S]*\.ad-data-table tbody tr:not\(\.ad-data-table-group\)/);
+    expect(css).toMatch(/@media \(max-width: 48rem\)[\s\S]*\.ad-data-table(?::not\(\[data-(?:virtual|pinned)\]\))* tbody tr:not\(\.ad-data-table-group\)/);
     expect(css).toContain("content: attr(data-label)");
   });
 });
@@ -464,6 +521,30 @@ describe("FormFields", () => {
     expect(html).toContain("--ad-grid-align:center");
   });
 
+  it("aligns the control row independently of labels and helper messages", () => {
+    const form = {
+      values: { people: [], confirmed: false, monitor: true },
+      field: (name: string) => ({ value: name === "people" ? [] : false, onValueChange: vi.fn() }),
+    } as any;
+    const html = renderToStaticMarkup(createElement(Form, { form },
+      createElement(FormFields, { fields: [
+        { name: "people", kind: "people", label: "Участники с длинным многострочным названием", span: 6,
+          props: { description: "Сообщение под полем не должно смещать соседний переключатель" } },
+        { name: "confirmed", kind: "checkbox", label: "Настройки проверены", span: 3 },
+        { name: "monitor", kind: "switch", label: "Мониторинг", span: 3 },
+      ] })));
+    const css = readFileSync(new URL("../src/components/forms/FormFields/styles.css", import.meta.url), "utf8");
+
+    expect(html).toContain('class="ad-grid ad-form-fields"');
+    expect(html.match(/class="ad-grid-item ad-form-field"/g)).toHaveLength(3);
+    // One shared auto-sized label/control/message layout per responsive row: no guessed label height.
+    expect(css).toMatch(/\.ad-form-fields\.ad-grid\s*\{[^}]*grid-auto-rows:\s*auto auto auto minmax\(/);
+    expect(css).toMatch(/\.ad-form-field\s*\{[^}]*grid-row-end:\s*span 4;[^}]*grid-template-rows:\s*subgrid;/);
+    expect(css).toMatch(/\.ad-form-field > \*\s*\{[^}]*grid-row:\s*2;[^}]*align-self:\s*center;/);
+    expect(css).toMatch(/\.ad-form-field \.ad-field > \.ad-field-label\s*\{[^}]*grid-row:\s*1;/);
+    expect(css).toMatch(/\.ad-form-field \.ad-field > \.ad-field-message\s*\{[^}]*grid-row:\s*3;/);
+  });
+
   it("binds a file field to its file list and shows selected names", () => {
     const form = {
       values: { upload: [{ name: "demo.wav" }] },
@@ -510,7 +591,58 @@ describe("copyText", () => {
 describe("AnimatedBorder", () => {
   afterEach(() => vi.unstubAllGlobals());
 
-  it("renders smooth gradient strokes that can glow beyond the card edge", () => {
+  it("keeps the light-mode halo restrained without dimming the precise edge", () => {
+    const css = readFileSync("src/theme/base.css", "utf8");
+    expect(css).toMatch(/\[data-ad-color-mode="light"\] \.ad-border path\[filter\]\s*\{[^}]*opacity:\s*0\.4/s);
+  });
+
+  it.each([
+    { name: "rectangle", width: 200, height: 100, radius: "0px", points: [[0, 0.65, 0.65], [0.25, 149.35, 0.65], [0.5, 199.35, 99.35], [0.75, 50.65, 99.35], [1, 0.65, 0.65]] },
+    { name: "square", width: 100, height: 100, radius: "0px", points: [[0.25, 99.35, 0.65], [0.5, 99.35, 99.35], [0.75, 0.65, 99.35]] },
+    { name: "rounded tangents and arc", width: 100, height: 60, radius: "10.65px", points: [[78.7 / (234.8 + 20 * Math.PI), 89.35, 0.65], [(78.7 + 2.5 * Math.PI) / (234.8 + 20 * Math.PI), 89.35 + Math.SQRT1_2 * 10, 10.65 - Math.SQRT1_2 * 10], [(78.7 + 5 * Math.PI) / (234.8 + 20 * Math.PI), 99.35, 10.65], [0.5, 89.35, 59.35]] },
+    { name: "percentage capsule", width: 200, height: 40, radius: "50%", points: [[0, 20, 0.65], [0.5, 180, 39.35]] },
+    { name: "circle", width: 40, height: 40, radius: "50%", points: [[0, 20, 0.65], [0.25, 39.35, 20], [0.5, 20, 39.35], [0.75, 0.65, 20]] },
+    { name: "clamped oversized radius", width: 120, height: 40, radius: "999px", points: [[0, 20, 0.65], [0.5, 100, 39.35]] },
+    { name: "percentage radius", width: 120, height: 80, radius: "25%", points: [[0, 20, 0.65], [0.5, 100, 79.35]] },
+    { name: "one-pixel rectangle", width: 1, height: 1, radius: "0px", points: [[0, 0.65, 0.65], [0.25, 0.35, 0.65], [0.5, 0.35, 0.35], [0.75, 0.65, 0.35]] },
+  ])("paints $name from cached contour geometry without native SVG queries", ({ width, height, radius, points }) => {
+    const nativePoint = vi.fn(() => ({ x: -100, y: -100 }));
+    const node = (tag: string) => ({
+      tagName: tag,
+      children: [] as any[],
+      attributes: {} as Record<string, string>,
+      style: {} as Record<string, any>,
+      append(...children: any[]) { this.children.push(...children); },
+      setAttribute(name: string, value: string) { this.attributes[name] = value; },
+      getTotalLength: vi.fn(() => 400),
+      getPointAtLength: nativePoint,
+      remove: vi.fn(),
+    });
+    const host = Object.assign(node("section"), { offsetWidth: width, offsetHeight: height });
+    vi.stubGlobal("document", { createElementNS: (_namespace: string, tag: string) => node(tag) });
+    vi.stubGlobal("getComputedStyle", () => ({ position: "relative", borderTopLeftRadius: radius }));
+    const border = attachBorder(host as any, {}) as any;
+    nativePoint.mockClear();
+    for (let frame = 1; frame <= 100; frame++) border.paint(frame / 30);
+    expect(nativePoint.mock.calls.length).toBe(0);
+    expect(border.path.getTotalLength).toHaveBeenCalledOnce();
+    border.elapsed = 0;
+    border.previousTime = null;
+    for (const [fraction, x, y] of points) {
+      border.lights.forEach((light: any) => { light.phase = fraction; });
+      border.paint(0);
+      for (const light of border.lights) {
+        expect(Number(light.gradient.attributes.cx)).toBeCloseTo(x, 1);
+        expect(Number(light.gradient.attributes.cy)).toBeCloseTo(y, 1);
+        expect(light.red.attributes.cx).toBe(light.gradient.attributes.cx);
+        expect(light.red.attributes.cy).toBe(light.gradient.attributes.cy);
+      }
+    }
+    border.destroy();
+  });
+
+  it("restores the early-release pair of broad luminous orbits on the real contour", () => {
+    let perimeter = 400;
     const node = (tag: string) => ({
       tagName: tag,
       children: [] as any[],
@@ -519,8 +651,11 @@ describe("AnimatedBorder", () => {
       dataset: {} as Record<string, string>,
       append(...children: any[]) { this.children.push(...children); },
       setAttribute(name: string, value: string) { this.attributes[name] = value; },
-      getTotalLength: () => 400,
-      getPointAtLength: (distance: number) => ({ x: distance, y: 0 }),
+      getTotalLength: () => perimeter,
+      getPointAtLength: vi.fn((distance: number) => ({
+        x: 100 + 60 * Math.cos(distance * 2 * Math.PI / perimeter),
+        y: 50 + 40 * Math.sin(distance * 2 * Math.PI / perimeter),
+      })),
       remove: vi.fn(),
     });
     const host = Object.assign(node("section"), {
@@ -539,23 +674,90 @@ describe("AnimatedBorder", () => {
     const overlay = host.children[0];
     expect(overlay.tagName).toBe("svg");
     expect(overlay.style.overflow).toBe("visible");
-    expect(overlay.children[0].children.filter((child: any) => child.tagName === "radialGradient")).toHaveLength(2);
-    expect(overlay.children[0].children.filter((child: any) => child.tagName === "filter")).toHaveLength(1);
-    expect(overlay.children.filter((child: any) => child.tagName === "path")).toHaveLength(3);
-    expect(overlay.children[0].children.find((child: any) => child.tagName === "filter")?.children[0].tagName).toBe("feGaussianBlur");
+    expect(overlay.children[0].children.filter((child: any) => child.tagName === "filter")).toHaveLength(2);
+    const gradients = overlay.children[0].children.filter((child: any) => child.tagName === "radialGradient");
+    expect(gradients).toHaveLength(4);
+    expect(gradients.flatMap((gradient: any) => gradient.children).every((stop: any) => stop.attributes["stop-color"] !== "var(--ad-on-accent)")).toBe(true);
+    expect(gradients[0].children[0].attributes["stop-color"]).toBe("var(--ad-neutral-200)");
+    expect(gradients[0].children[2].attributes["stop-color"]).toBe("var(--ad-secondary)");
+    expect(gradients[1].children[0].attributes["stop-color"]).toBe("var(--ad-primary)");
+    const paths = overlay.children.filter((child: any) => child.tagName === "path");
+    expect(paths).toHaveLength(5);
+    expect(paths.every((light: any) => light.attributes.d === paths[0].attributes.d)).toBe(true);
+    expect(Number(paths[1].attributes["stroke-width"])).toBe(7.5);
+    expect(Number(paths[2].attributes["stroke-width"])).toBe(1.35);
+    expect(Number(paths[3].attributes["stroke-width"])).toBe(7.5);
+    expect(Number(paths[4].attributes["stroke-width"])).toBe(1.35);
+    expect(paths.every((light: any) => !light.attributes["stroke-dasharray"])).toBe(true);
+    expect(overlay.children[0].children.filter((child: any) => child.tagName === "filter").every((filter: any) => filter.children[0].attributes.stdDeviation === "4.2")).toBe(true);
     expect(add).toHaveBeenCalledOnce();
-    const gradient = overlay.children[0].children[0];
-    expect(gradient.children[0].attributes["stop-color"]).toBe("var(--ad-on-accent)");
-    const initialTransform = gradient.attributes.gradientTransform;
+    const initial = gradients[0].attributes.cx;
+    paths[0].getPointAtLength.mockClear();
     add.mock.calls[0][1](1);
-    expect(gradient.attributes.gradientTransform).toMatch(/^translate\([\d.]+ [\d.]+\)$/);
-    expect(gradient.attributes.gradientTransform).not.toBe(initialTransform);
+    expect(paths[0].getPointAtLength).not.toHaveBeenCalled();
+    expect(gradients[0].attributes.cx).not.toBe(initial);
+    expect(gradients[0].attributes.cx).toBe(gradients[1].attributes.cx);
+    expect(gradients[0].attributes.cx).not.toBe(gradients[2].attributes.cx);
+    const moved = gradients[0].attributes.cx;
+    const lap = perimeter / border.lights[0].speed;
+    for (let step = 1; step <= 32; step++) add.mock.calls[0][1](1 + step * lap / 32);
+    expect(gradients[0].attributes.cx).toBe(moved);
+    const beforePause = border.elapsed;
+    add.mock.calls[0][1](1004.7);
+    expect(border.elapsed - beforePause).toBeCloseTo(0.1);
+    expect(border.lights.map((light: any) => light.speed)).toEqual([125, 86]);
+    for (const light of border.lights) expect(light.radius).toBeCloseTo(61.2);
+    perimeter = 1200;
+    border.sync();
+    for (const light of border.lights) expect(light.radius).toBeCloseTo(183.6);
+    expect(Number(gradients[0].attributes.r)).toBeCloseTo(183.6);
+    expect(Number(gradients[1].attributes.r)).toBeCloseTo(183.6);
+    const other = Object.assign(node("section"), { offsetWidth: 200, offsetHeight: 100 });
+    const second = attachBorder(other as any, { scope: { add } as any });
+    expect(second.lights[0].phase).not.toBe(border.lights[0].phase);
+    const roundHost = Object.assign(node("section"), { offsetWidth: 40, offsetHeight: 40 });
+    const roundBorder = attachBorder(roundHost as any, { round: true, scope: { add } as any });
+    expect(roundBorder.lights.map((light: any) => light.speed)).toEqual([36, 25]);
+    expect(roundBorder.lights.map((light: any) => light.radius)).toEqual([28, 28]);
+    roundBorder.destroy();
+    second.destroy();
     border.destroy();
-    expect(unsubscribe).toHaveBeenCalledOnce();
+    expect(unsubscribe).toHaveBeenCalledTimes(3);
+  });
+
+  it("shows AnimatedBorder itself, not an unrelated wave artwork, in its documentation hero", () => {
+    const page = readFileSync("../../apps/playground/src/catalog/ComponentDocsPage.tsx", "utf8");
+    expect(page).toMatch(/item\.name !== "AnimatedBorder"\s*&&\s*<HeroBackdrop index=\{catalog\.indexOf\(item\)\} \/>/);
+  });
+
+  it("gives the overview one leading light surface and quiet supporting install controls", () => {
+    const overview = readFileSync("../../apps/playground/src/catalog/CatalogOverview.tsx", "utf8");
+    const copyButton = readFileSync("../../apps/playground/src/catalog/CopyButton.tsx", "utf8");
+    const css = readFileSync("../../apps/playground/src/app/app.css", "utf8");
+    expect(css).toMatch(/\.docs-component-hero\.ad-card\s*\{[^}]*box-shadow:\s*inset/s);
+    expect(css).toMatch(/\.docs-overview-hero \.docs-install\.ad-card\s*\{[^}]*box-shadow:\s*inset/s);
+    expect(css).toMatch(/\.docs-overview-hero \.docs-hero-backdrop\s*\{[^}]*opacity:\s*0\.56/s);
+    expect(css).toMatch(/\.docs-install-line\.ad-typography\s*\{[^}]*color:\s*var\(--ad-text\)/s);
+    expect(overview).toContain('<CopyButton text={line} variant="ghost" />');
+    expect(copyButton).toContain('variant = "secondary"');
+  });
+
+  it("gives the install surface, copy controls and hero lines a shared optical finish", () => {
+    const css = readFileSync("../../apps/playground/src/app/app.css", "utf8");
+    expect(css).toMatch(/\.docs-overview-hero \.docs-install\.ad-card::before\s*\{[^}]*linear-gradient/s);
+    expect(css).toMatch(/\.docs-overview-hero \.docs-install \.ad-button\[data-ad-variant="ghost"\]\s*\{[^}]*background:\s*linear-gradient/s);
+    expect(css).toMatch(/\.docs-overview-hero \.docs-hero-backdrop\s*\{[^}]*mask:\s*radial-gradient/s);
   });
 });
 
 describe("documentation motion", () => {
+  it("does not mount every live showcase example before its tile enters the viewport", () => {
+    const overview = readFileSync("../../apps/playground/src/catalog/CatalogOverview.tsx", "utf8");
+    expect(overview).toMatch(/IntersectionObserver/);
+    expect(overview).toMatch(/\{showPreview\s*&&\s*Example\s*&&\s*<Suspense/);
+    expect(overview).toContain("setShowPreview(entry.isIntersecting)");
+  });
+
   it("clips the animated component hero so its orbit cannot widen the page", () => {
     const css = readFileSync("../../apps/playground/src/app/app.css", "utf8");
 

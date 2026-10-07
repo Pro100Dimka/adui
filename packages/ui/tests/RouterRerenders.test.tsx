@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { act, create, type ReactTestRenderer } from "react-test-renderer";
-import { Router } from "../src/components/navigation/Router/Router";
+import { Router, useRouter, type RouterValue } from "../src/components/navigation/Router/Router";
 import RouterExample from "../src/components/navigation/Router/example";
 import { LocaleProvider } from "@ad-voice/ui";
 import { useMotion, useReducedMotion } from "../src/core/providers/context";
@@ -41,6 +41,117 @@ it("documents a usable Router with interactive home and dynamic room routes", ()
 });
 
 describe("Router render stability", () => {
+  it.each(["hash", "history"] as const)("updates %s routes immediately without native snapshots by default", (mode) => {
+    const updates: Array<() => void> = [];
+    const location = { hash: "#/", pathname: "/" };
+    let locationChange = () => {};
+    const transition = vi.fn((update: () => void) => { updates.push(update); });
+    vi.stubGlobal("IS_REACT_ACT_ENVIRONMENT", true);
+    vi.stubGlobal("location", location);
+    vi.stubGlobal("document", { documentElement: { dataset: { adMotion: "on" } }, startViewTransition: transition });
+    vi.stubGlobal("window", {
+      addEventListener: (_event: string, listener: () => void) => { locationChange = listener; },
+      removeEventListener() {},
+    });
+    vi.stubGlobal("history", {
+      pushState: (_state: unknown, _title: string, path: string) => { location.pathname = path; },
+    });
+    let router: RouterValue | undefined;
+    function Page() { router = useRouter(); return <span>{router.pathname}</span>; }
+    const routes = ["/", "/a", "/b"].map((path) => ({ path, element: <Page /> }));
+    let tree!: ReactTestRenderer;
+    act(() => { tree = create(<Router mode={mode} routes={routes} />); });
+    try {
+      for (const path of ["/a", "/b"]) {
+        act(() => {
+          router?.navigate(path);
+          if (mode === "hash") { location.hash = `#${path}`; locationChange(); }
+        });
+        expect(tree.root.findByType("span").children).toEqual([path]);
+      }
+      expect(transition).not.toHaveBeenCalled();
+      expect(updates).toHaveLength(0);
+    } finally { act(() => tree.unmount()); }
+  });
+
+  it("applies a changed transition preference to the location subscription", () => {
+    const location = { hash: "#/", pathname: "/" };
+    let hashChange = () => {};
+    const transition = vi.fn((update: () => void) => update());
+    vi.stubGlobal("IS_REACT_ACT_ENVIRONMENT", true);
+    vi.stubGlobal("location", location);
+    vi.stubGlobal("document", { documentElement: { dataset: { adMotion: "on" } }, startViewTransition: transition });
+    vi.stubGlobal("window", {
+      addEventListener: (_event: string, listener: () => void) => { hashChange = listener; },
+      removeEventListener() {},
+    });
+    const routes = ["/", "/a", "/b"].map((path) => ({ path, element: <span>{path}</span> }));
+    let tree!: ReactTestRenderer;
+    act(() => { tree = create(<Router transition routes={routes} />); });
+    try {
+      act(() => { location.hash = "#/a"; hashChange(); });
+      expect(transition).toHaveBeenCalledTimes(1);
+      act(() => tree.update(<Router transition={false} routes={routes} />));
+      act(() => { location.hash = "#/b"; hashChange(); });
+      expect(tree.root.findByType("span").children).toEqual(["/b"]);
+      expect(transition).toHaveBeenCalledTimes(1);
+    } finally { act(() => tree.unmount()); }
+  });
+
+  it("does not restore an older history route after a deferred transition completes", () => {
+    const updates: Array<() => void> = [];
+    const location = { hash: "#/", pathname: "/" };
+    const documentElement = { dataset: { adMotion: "on" } };
+    vi.stubGlobal("IS_REACT_ACT_ENVIRONMENT", true);
+    vi.stubGlobal("location", location);
+    vi.stubGlobal("document", { documentElement, startViewTransition: (update: () => void) => { updates.push(update); } });
+    vi.stubGlobal("window", { addEventListener() {}, removeEventListener() {} });
+    vi.stubGlobal("history", {
+      pushState: (_state: unknown, _title: string, path: string) => { location.pathname = path; },
+    });
+    let router: RouterValue | undefined;
+    function Page() { router = useRouter(); return <span>{router.pathname}</span>; }
+    const routes = ["/", "/a", "/b"].map((path) => ({ path, element: <Page /> }));
+    let tree!: ReactTestRenderer;
+    act(() => { tree = create(<Router mode="history" transition routes={routes} />); });
+    try {
+      act(() => router?.navigate("/a"));
+      expect(updates).toHaveLength(1);
+      act(() => { documentElement.dataset.adMotion = "off"; router?.navigate("/b"); });
+      expect(tree.root.findByType("span").children).toEqual(["/b"]);
+      act(() => updates[0]());
+      expect(location.pathname).toBe("/b");
+      expect(tree.root.findByType("span").children).toEqual(["/b"]);
+    } finally { act(() => tree.unmount()); }
+  });
+
+  it("uses the latest hash when several transition callbacks are deferred", () => {
+    const updates: Array<() => void> = [];
+    const location = { hash: "#/", pathname: "/" };
+    let hashChange = () => {};
+    vi.stubGlobal("IS_REACT_ACT_ENVIRONMENT", true);
+    vi.stubGlobal("location", location);
+    vi.stubGlobal("document", {
+      documentElement: { dataset: { adMotion: "on" } },
+      startViewTransition: (update: () => void) => { updates.push(update); },
+    });
+    vi.stubGlobal("window", {
+      addEventListener: (_event: string, listener: () => void) => { hashChange = listener; },
+      removeEventListener() {},
+    });
+    const routes = ["/", "/a", "/b"].map((path) => ({ path, element: <span>{path}</span> }));
+    let tree!: ReactTestRenderer;
+    act(() => { tree = create(<Router transition routes={routes} />); });
+    try {
+      act(() => { location.hash = "#/a"; hashChange(); location.hash = "#/b"; hashChange(); });
+      expect(updates).toHaveLength(2);
+      expect(tree.root.findByType("span").children).toEqual(["/"]);
+      act(() => updates[1]());
+      act(() => updates[0]());
+      expect(tree.root.findByType("span").children).toEqual(["/b"]);
+    } finally { act(() => tree.unmount()); }
+  });
+
   it("does not rerender the current page when only the motion preference changes", () => {
     let notifyMotion = () => {};
     let hashChange = () => {};
@@ -64,7 +175,7 @@ describe("Router render stability", () => {
       { path: "/other", element: () => { renders++; return <span>other</span>; } },
     ];
     let tree!: ReactTestRenderer;
-    act(() => { tree = create(<Router routes={routes} />); });
+    act(() => { tree = create(<Router transition routes={routes} />); });
     const initial = renders;
 
     act(() => { documentElement.dataset.adMotion = "off"; notifyMotion(); });
