@@ -1,1 +1,0 @@
-import{j as a,f as e,g as t}from"./index-Pyz-R8Vs.js";function r(){return a.jsx(e,{labelledBy:"tab-audio",children:a.jsx(t,{variant:"body-sm",tone:"muted",children:"Драйвер, задержка и мониторинг голоса."})})}export{r as default};

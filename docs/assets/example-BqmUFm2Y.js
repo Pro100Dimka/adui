@@ -1,1 +1,0 @@
-import{j as a,S as n,n as e}from"./index-Pyz-R8Vs.js";function t(){return a.jsxs(n,{direction:{base:"column",md:"row"},gap:{base:2,md:3},align:{base:"stretch",md:"center"},children:[a.jsx(e,{variant:"primary",icon:"save",children:"Сохранить"}),a.jsx(e,{icon:"eye",children:"Предпросмотр"}),a.jsx(e,{variant:"ghost",children:"Отмена"})]})}export{t as default};

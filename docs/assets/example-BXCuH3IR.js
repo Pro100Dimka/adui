@@ -1,1 +1,0 @@
-import{j as e,P as r,U as l,a as o}from"./index-Pyz-R8Vs.js";function u(){return e.jsx(r,{knobs:{upload:{value:!1}},code:a=>o("ServerArt",{label:"Сервер комнат",upload:a.upload}),children:a=>e.jsx(l.ServerArt,{label:"Сервер комнат",upload:a.upload})})}export{u as default};

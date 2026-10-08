@@ -1,11 +1,15 @@
 import { afterEach, expect, it, vi } from "vitest";
-import { readFileSync } from "node:fs";
+import { readFileSync, readdirSync } from "node:fs";
 import { act, create, type ReactTestRenderer } from "react-test-renderer";
 import { CatalogOverview } from "../../../apps/playground/src/catalog/CatalogOverview";
 import { ComponentDocsPage } from "../../../apps/playground/src/catalog/ComponentDocsPage";
 import { CatalogPage } from "../../../apps/playground/src/catalog/CatalogPage";
 import { catalog } from "../../../apps/playground/src/catalog/componentRegistry";
 import DataTableExample from "../src/components/feedback/DataTable/example";
+
+it("includes QuantumField in the published documentation assets", () => {
+  expect(readdirSync("../../docs/assets").some((name) => /^QuantumField-.*\.js$/.test(name))).toBe(true);
+});
 
 const border = vi.hoisted(() => vi.fn());
 const tablePreview = vi.hoisted(() => vi.fn());

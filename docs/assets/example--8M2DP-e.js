@@ -1,0 +1,1 @@
+import{j as s,P as i,s as e,U as n,a as o}from"./index-CQhejff5.js";function v(){return s.jsx(i,{knobs:{variant:{options:["initials","host"],value:"host"},size:{options:e,value:"md"}},code:(a,t)=>o("Avatar",{name:"Дмитрий",variant:a.variant==="host"?"host":void 0,size:t.size}),children:a=>s.jsx(n.Avatar,{name:"Дмитрий",variant:a.variant,size:a.size})})}export{v as default};
