@@ -93,12 +93,11 @@ it.each([".docs-showcase-tile", ".docs-component-hero.ad-card"])("lets %s's bord
     .map(([, , body]) => body).join("\n");
   const margin = [...declarations.matchAll(/overflow-clip-margin:\s*([\d.]+)(px|rem);/g)].at(-1);
   const engine = readFileSync("src/core/motion-engine.js", "utf8");
-  const sigma = Number(engine.match(/stdDeviation:\s*([\d.]+)/)?.[1]);
-  const stroke = Number(engine.match(/"stroke-width":\s*([\d.]+),\s*filter:/)?.[1]);
+  const widest = Math.max(...JSON.parse(engine.match(/const AURA = (\[.*?\]);/)![1]!).map(([width]: number[]) => width));
   expect(declarations).toMatch(/overflow:\s*clip;/);
   expect(margin).toBeDefined();
-  // The contour is inset 0.65px; leave four blur sigmas beyond the aura's stroke.
-  expect(Number(margin![1]) * (margin![2] === "rem" ? 16 : 1)).toBeGreaterThanOrEqual(stroke / 2 + 4 * sigma - 0.65);
+  // The contour is inset 0.65px; the widest halo stroke reaches half its width beyond it.
+  expect(Number(margin![1]) * (margin![2] === "rem" ? 16 : 1)).toBeGreaterThanOrEqual(widest / 2 - 0.65);
   expect(declarations).not.toMatch(/content-visibility:|contain-intrinsic-size:/);
 });
 

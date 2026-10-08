@@ -1,1 +1,5 @@
 /* Styles owned by WaveDecoration. */
+/* The strands are redrawn on every tick: on a layer of their own, nothing around them repaints. */
+.ad-wave-decoration {
+  will-change: transform;
+}

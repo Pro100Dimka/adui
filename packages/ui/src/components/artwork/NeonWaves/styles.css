@@ -1,4 +1,4 @@
-/* Styles owned by NeonWaves: the strands move by script; the stars twinkle and the comets run on their own. */
+/* Styles owned by NeonWaves: the strands move by script; the stars twinkle on their own and the comets are moved by script. */
 .ad-neon-waves {
   position: relative;
   display: block;
@@ -30,20 +30,20 @@
     opacity: 0.05;
   }
 }
-/* A comet is a short bright dash with a glow, sliding along its strand's full length. */
+/* A comet is a short bright dash with a glow. Its glow is drawn once on its own layer; the
+   script only moves and fades it, so a running comet costs no repaint and no live filter. */
 .ad-neon-waves-comet {
-  stroke: var(--ad-secondary-100, #ffb9cb);
-  stroke-width: 1.6;
-  stroke-linecap: round;
-  stroke-dasharray: 1.6 98.4;
-  filter: drop-shadow(0 0 0.2rem var(--ad-pink)) drop-shadow(0 0 0.5rem var(--ad-primary));
-  animation: ad-neon-comet 6s linear infinite;
-}
-@keyframes ad-neon-comet {
-  from {
-    stroke-dashoffset: 0;
-  }
-  to {
-    stroke-dashoffset: -100;
-  }
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 1.6px;
+  border-radius: 0.8px;
+  background: var(--ad-secondary-100, #ffb9cb);
+  box-shadow:
+    0 0 0.2rem var(--ad-pink),
+    0 0 0.5rem var(--ad-primary),
+    0 0 0.7rem rgb(from var(--ad-primary) r g b / 0.5);
+  opacity: 0;
+  will-change: transform, opacity;
 }

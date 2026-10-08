@@ -43,18 +43,27 @@
 .ad-steps > li[data-state="current"] {
   --ad-steps-glint: 1;
 }
-.ad-steps > li + li[data-state="current"]::after {
-  content: "";
+.ad-steps-glint {
   position: absolute;
   top: calc(var(--ad-step-node) / 2 - 0.0625rem);
   right: calc(50% + var(--ad-step-node) / 2 + 0.25rem);
   left: calc(-50% + var(--ad-step-node) / 2 + 0.25rem);
   height: 0.125rem;
+  overflow: hidden;
   border-radius: 999rem;
-  background: linear-gradient(90deg, transparent, var(--ad-neutral-200), transparent) 0 0 / 30% 100% no-repeat;
   clip-path: inset(0 round 999rem);
-  animation: ad-steps-flow 1.6s linear infinite;
   pointer-events: none;
+}
+/* The glint is 30% of the line and slides from 28% left of it to 98% across, on its own layer. */
+.ad-steps-glint::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  width: 30%;
+  background: linear-gradient(90deg, transparent, var(--ad-neutral-200), transparent);
+  transform: translateX(-93.333%);
+  animation: ad-steps-flow 1.6s linear infinite;
+  will-change: transform;
 }
 .ad-step-node {
   position: relative;
@@ -121,11 +130,8 @@
   color: var(--ad-neutral-200);
 }
 @keyframes ad-steps-flow {
-  from {
-    background-position: -40% 0;
-  }
   to {
-    background-position: 140% 0;
+    transform: translateX(326.667%);
   }
 }
 @keyframes ad-steps-pulse {

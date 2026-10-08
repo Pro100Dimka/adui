@@ -588,12 +588,58 @@ describe("copyText", () => {
   });
 });
 
+const borderNode = (tag: string, length: () => number = () => 400) => ({
+  tagName: tag,
+  className: "",
+  children: [] as any[],
+  attributes: {} as Record<string, string>,
+  style: {} as Record<string, any>,
+  append(...children: any[]) { this.children.push(...children); },
+  setAttribute(name: string, value: string) { this.attributes[name] = value; },
+  getTotalLength: vi.fn(length),
+  getPointAtLength: vi.fn(() => ({ x: -100, y: -100 })),
+  remove: vi.fn(),
+});
+const stubBorderDocument = (length?: () => number) =>
+  vi.stubGlobal("document", {
+    createElement: (tag: string) => borderNode(tag, length),
+    createElementNS: (_namespace: string, tag: string) => borderNode(tag, length),
+  });
+/** Where a light's spots were moved to, back in contour coordinates. */
+const spotAt = (light: any) => {
+  const [x, y] = light.spots[0].style.transform.match(/-?[\d.]+(?=px)/g).map(Number);
+  return { x: x + light.radius - 16, y: y + light.radius - 16 };
+};
+
 describe("AnimatedBorder", () => {
   afterEach(() => vi.unstubAllGlobals());
 
+  it("limits idle frames and restores full-rate motion on hover", () => {
+    let hovered = false;
+    stubBorderDocument();
+    const host = Object.assign(borderNode("section"), { offsetWidth: 200, offsetHeight: 100, matches: () => hovered });
+    vi.stubGlobal("getComputedStyle", () => ({ position: "relative", borderTopLeftRadius: "18px" }));
+    const add = vi.fn(() => vi.fn());
+    const border = attachBorder(host as any, { scope: { add } as any }) as any;
+    const onFrame = add.mock.calls[0]![1] as (time: number) => void;
+    const moves = () => border.lights[0].spots[0].style.transform;
+    let frames = 0, last = moves();
+    const count = () => { if (moves() !== last) { frames++; last = moves(); } };
+
+    for (let frame = 1; frame <= 30; frame++) { onFrame(frame / 30); count(); }
+    expect(frames).toBeLessThanOrEqual(12);
+    expect(frames).toBeGreaterThanOrEqual(8);
+
+    hovered = true;
+    frames = 0;
+    for (let frame = 31; frame <= 40; frame++) { onFrame(frame / 30); count(); }
+    expect(frames).toBe(10);
+    border.destroy();
+  });
+
   it("keeps the light-mode halo restrained without dimming the precise edge", () => {
     const css = readFileSync("src/theme/base.css", "utf8");
-    expect(css).toMatch(/\[data-ad-color-mode="light"\] \.ad-border path\[filter\]\s*\{[^}]*opacity:\s*0\.4/s);
+    expect(css).toMatch(/\[data-ad-color-mode="light"\] \.ad-border \.ad-border-aura\s*\{[^}]*opacity:\s*0\.4/s);
   });
 
   it.each([
@@ -605,26 +651,15 @@ describe("AnimatedBorder", () => {
     { name: "clamped oversized radius", width: 120, height: 40, radius: "999px", points: [[0, 20, 0.65], [0.5, 100, 39.35]] },
     { name: "percentage radius", width: 120, height: 80, radius: "25%", points: [[0, 20, 0.65], [0.5, 100, 79.35]] },
     { name: "one-pixel rectangle", width: 1, height: 1, radius: "0px", points: [[0, 0.65, 0.65], [0.25, 0.35, 0.65], [0.5, 0.35, 0.35], [0.75, 0.65, 0.35]] },
-  ])("paints $name from cached contour geometry without native SVG queries", ({ width, height, radius, points }) => {
-    const nativePoint = vi.fn(() => ({ x: -100, y: -100 }));
-    const node = (tag: string) => ({
-      tagName: tag,
-      children: [] as any[],
-      attributes: {} as Record<string, string>,
-      style: {} as Record<string, any>,
-      append(...children: any[]) { this.children.push(...children); },
-      setAttribute(name: string, value: string) { this.attributes[name] = value; },
-      getTotalLength: vi.fn(() => 400),
-      getPointAtLength: nativePoint,
-      remove: vi.fn(),
-    });
-    const host = Object.assign(node("section"), { offsetWidth: width, offsetHeight: height });
-    vi.stubGlobal("document", { createElementNS: (_namespace: string, tag: string) => node(tag) });
+  ])("moves the lights along $name from cached contour geometry without native SVG queries", ({ width, height, radius, points }) => {
+    stubBorderDocument();
+    const host = Object.assign(borderNode("section"), { offsetWidth: width, offsetHeight: height });
     vi.stubGlobal("getComputedStyle", () => ({ position: "relative", borderTopLeftRadius: radius }));
     const border = attachBorder(host as any, {}) as any;
-    nativePoint.mockClear();
+    const native = border.path.getPointAtLength;
+    native.mockClear();
     for (let frame = 1; frame <= 100; frame++) border.paint(frame / 30);
-    expect(nativePoint.mock.calls.length).toBe(0);
+    expect(native).not.toHaveBeenCalled();
     expect(border.path.getTotalLength).toHaveBeenCalledOnce();
     border.elapsed = 0;
     border.previousTime = null;
@@ -632,76 +667,61 @@ describe("AnimatedBorder", () => {
       border.lights.forEach((light: any) => { light.phase = fraction; });
       border.paint(0);
       for (const light of border.lights) {
-        expect(Number(light.gradient.attributes.cx)).toBeCloseTo(x, 1);
-        expect(Number(light.gradient.attributes.cy)).toBeCloseTo(y, 1);
-        expect(light.red.attributes.cx).toBe(light.gradient.attributes.cx);
-        expect(light.red.attributes.cy).toBe(light.gradient.attributes.cy);
+        expect(light.at.x).toBeCloseTo(x!, 1);
+        expect(light.at.y).toBeCloseTo(y!, 1);
+        // Both spots of a light (aura and core) sit on the same point.
+        expect(spotAt(light).x).toBeCloseTo(x!, 1);
+        expect(spotAt(light).y).toBeCloseTo(y!, 1);
+        expect(light.spots[1].style.transform).toBe(light.spots[0].style.transform);
       }
     }
     border.destroy();
   });
 
-  it("restores the early-release pair of broad luminous orbits on the real contour", () => {
+  it("restores the early-release pair of broad luminous orbits as still rings lit by moving spots", () => {
     let perimeter = 400;
-    const node = (tag: string) => ({
-      tagName: tag,
-      children: [] as any[],
-      attributes: {} as Record<string, string>,
-      style: { setProperty: vi.fn() } as Record<string, any>,
-      dataset: {} as Record<string, string>,
-      append(...children: any[]) { this.children.push(...children); },
-      setAttribute(name: string, value: string) { this.attributes[name] = value; },
-      getTotalLength: () => perimeter,
-      getPointAtLength: vi.fn((distance: number) => ({
-        x: 100 + 60 * Math.cos(distance * 2 * Math.PI / perimeter),
-        y: 50 + 40 * Math.sin(distance * 2 * Math.PI / perimeter),
-      })),
-      remove: vi.fn(),
-    });
-    const host = Object.assign(node("section"), {
-      offsetWidth: 200,
-      offsetHeight: 100,
-    });
-    vi.stubGlobal("document", {
-      createElement: node,
-      createElementNS: (_namespace: string, tag: string) => node(tag),
-    });
+    stubBorderDocument(() => perimeter);
+    const host = Object.assign(borderNode("section"), { offsetWidth: 200, offsetHeight: 100 });
     vi.stubGlobal("getComputedStyle", () => ({ position: "relative", borderTopLeftRadius: "18px" }));
     const unsubscribe = vi.fn();
     const add = vi.fn(() => unsubscribe);
 
-    const border = attachBorder(host as any, { scope: { add } as any });
+    const border = attachBorder(host as any, { scope: { add } as any }) as any;
     const overlay = host.children[0];
-    expect(overlay.tagName).toBe("svg");
-    expect(overlay.style.overflow).toBe("visible");
-    expect(overlay.children[0].children.filter((child: any) => child.tagName === "filter")).toHaveLength(2);
-    const gradients = overlay.children[0].children.filter((child: any) => child.tagName === "radialGradient");
-    expect(gradients).toHaveLength(4);
-    expect(gradients.flatMap((gradient: any) => gradient.children).every((stop: any) => stop.attributes["stop-color"] !== "var(--ad-on-accent)")).toBe(true);
-    expect(gradients[0].children[0].attributes["stop-color"]).toBe("var(--ad-neutral-200)");
-    expect(gradients[0].children[2].attributes["stop-color"]).toBe("var(--ad-secondary)");
-    expect(gradients[1].children[0].attributes["stop-color"]).toBe("var(--ad-primary)");
-    const paths = overlay.children.filter((child: any) => child.tagName === "path");
-    expect(paths).toHaveLength(5);
-    expect(paths.every((light: any) => light.attributes.d === paths[0].attributes.d)).toBe(true);
-    expect(Number(paths[1].attributes["stroke-width"])).toBe(7.5);
-    expect(Number(paths[2].attributes["stroke-width"])).toBe(1.35);
-    expect(Number(paths[3].attributes["stroke-width"])).toBe(7.5);
-    expect(Number(paths[4].attributes["stroke-width"])).toBe(1.35);
-    expect(paths.every((light: any) => !light.attributes["stroke-dasharray"])).toBe(true);
-    expect(overlay.children[0].children.filter((child: any) => child.tagName === "filter").every((filter: any) => filter.children[0].attributes.stdDeviation === "4.2")).toBe(true);
+    expect(overlay.className).toBe("ad-border");
+    const [edge, aura, core] = overlay.children;
+    expect(edge.tagName).toBe("svg");
+    expect([aura.className, core.className]).toEqual(["ad-border-aura", "ad-border-core"]);
+    // The rings are mask pictures of the contour: the halo's stacked strokes and the fine core.
+    const strokes = (ring: any) =>
+      [...decodeURIComponent(ring.style.maskImage).matchAll(/stroke-width='([\d.]+)'/g)].map((m) => Number(m[1]));
+    expect(strokes(aura)).toEqual([25, 22, 19, 16, 13, 10, 7, 4]);
+    expect(strokes(core)).toEqual([1.35]);
+    expect(decodeURIComponent(aura.style.maskImage)).toContain(border.path.attributes.d);
+    expect(aura.style.webkitMaskImage).toBe(aura.style.maskImage);
+    expect(decodeURIComponent(aura.style.maskImage)).not.toMatch(/filter|Blur/);
+    // Each ring carries one spot per light, in the theme colours.
+    expect(aura.children).toHaveLength(2);
+    expect(core.children).toHaveLength(2);
+    expect(core.children[0].style.background).toMatch(
+      /^radial-gradient\(circle closest-side, var\(--ad-neutral-200\) 0%, var\(--ad-neutral-200\) 4%, var\(--ad-secondary\) 16%/,
+    );
+    expect(aura.children[0].style.background).toMatch(/^radial-gradient\(circle closest-side, var\(--ad-primary\) 0%/);
+    expect([...aura.children, ...core.children].every((spot: any) => !/on-accent/.test(spot.style.background))).toBe(true);
+
     expect(add).toHaveBeenCalledOnce();
-    const initial = gradients[0].attributes.cx;
-    paths[0].getPointAtLength.mockClear();
+    const masks = [aura.style.maskImage, core.style.maskImage];
+    const initial = border.lights[0].spots[0].style.transform;
     add.mock.calls[0][1](1);
-    expect(paths[0].getPointAtLength).not.toHaveBeenCalled();
-    expect(gradients[0].attributes.cx).not.toBe(initial);
-    expect(gradients[0].attributes.cx).toBe(gradients[1].attributes.cx);
-    expect(gradients[0].attributes.cx).not.toBe(gradients[2].attributes.cx);
-    const moved = gradients[0].attributes.cx;
+    // A frame only moves the spots: the rings and the edge stay as they were.
+    expect(border.lights[0].spots[0].style.transform).not.toBe(initial);
+    expect([aura.style.maskImage, core.style.maskImage]).toEqual(masks);
+    expect(border.path.getPointAtLength).not.toHaveBeenCalled();
+    expect(border.lights[0].spots[0].style.transform).not.toBe(border.lights[1].spots[0].style.transform);
+    const moved = border.lights[0].spots[0].style.transform;
     const lap = perimeter / border.lights[0].speed;
     for (let step = 1; step <= 32; step++) add.mock.calls[0][1](1 + step * lap / 32);
-    expect(gradients[0].attributes.cx).toBe(moved);
+    expect(border.lights[0].spots[0].style.transform).toBe(moved);
     const beforePause = border.elapsed;
     add.mock.calls[0][1](1004.7);
     expect(border.elapsed - beforePause).toBeCloseTo(0.1);
@@ -709,19 +729,21 @@ describe("AnimatedBorder", () => {
     for (const light of border.lights) expect(light.radius).toBeCloseTo(61.2);
     perimeter = 1200;
     border.sync();
-    for (const light of border.lights) expect(light.radius).toBeCloseTo(183.6);
-    expect(Number(gradients[0].attributes.r)).toBeCloseTo(183.6);
-    expect(Number(gradients[1].attributes.r)).toBeCloseTo(183.6);
-    const other = Object.assign(node("section"), { offsetWidth: 200, offsetHeight: 100 });
-    const second = attachBorder(other as any, { scope: { add } as any });
+    for (const light of border.lights) {
+      expect(light.radius).toBeCloseTo(183.6);
+      for (const spot of light.spots) expect(parseFloat(spot.style.width)).toBeCloseTo(367.2);
+    }
+    const other = Object.assign(borderNode("section"), { offsetWidth: 200, offsetHeight: 100 });
+    const second = attachBorder(other as any, { scope: { add } as any }) as any;
     expect(second.lights[0].phase).not.toBe(border.lights[0].phase);
-    const roundHost = Object.assign(node("section"), { offsetWidth: 40, offsetHeight: 40 });
-    const roundBorder = attachBorder(roundHost as any, { round: true, scope: { add } as any });
+    const roundHost = Object.assign(borderNode("section"), { offsetWidth: 40, offsetHeight: 40 });
+    const roundBorder = attachBorder(roundHost as any, { round: true, scope: { add } as any }) as any;
     expect(roundBorder.lights.map((light: any) => light.speed)).toEqual([36, 25]);
     expect(roundBorder.lights.map((light: any) => light.radius)).toEqual([28, 28]);
     roundBorder.destroy();
     second.destroy();
     border.destroy();
+    expect(overlay.remove).toHaveBeenCalled();
     expect(unsubscribe).toHaveBeenCalledTimes(3);
   });
 

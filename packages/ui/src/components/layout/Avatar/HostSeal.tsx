@@ -1,5 +1,5 @@
-import { useMemo, useRef } from "react";
-import { SvgAsset } from "../../../core/artwork";
+import { createElement, useMemo, useRef, type ReactElement } from "react";
+import { useSvgId, vectorElement } from "../../../core/artwork";
 import type { VectorNode } from "../../../core/base";
 import { useDecoration } from "../../../core/motion/hooks";
 import { illustrations } from "../shared";
@@ -53,26 +53,81 @@ const withPerson = (seal: VectorNode, photo?: string, name?: string): VectorNode
   };
 };
 
+/** One drawing of the stack: the static parts, or a single ring that spins. */
+interface Layer {
+  nodes: VectorNode[];
+  /** Turns per second; absent for a static layer. */
+  spin?: number;
+}
+
+const isOrbit = (node: VectorNode) => node.props?.["data-host-orbit"] !== undefined;
+const spinOf = (node: VectorNode) =>
+  /host-motion__inner-(rear|front)/.test(String(node.props?.className ?? "")) ? 1 / 5.6 : -1 / 8.4;
+/** The orbit group itself keeps its look but no longer carries the moving attribute. */
+const still = (node: VectorNode): VectorNode => {
+  const { "data-host-orbit": _orbit, ...props } = node.props ?? {};
+  return { ...node, props };
+};
+
+/**
+ * Splits the seal into a stack in its own paint order. The static parts are painted once;
+ * every ring becomes a layer of its own that the compositor turns. A blur turned is the same
+ * as a turned shape blurred, so the rings' glows are computed once instead of on every frame.
+ */
+const toLayers = (seal: VectorNode): Layer[] => {
+  const layers: Layer[] = [];
+  const paint = (node: VectorNode) => {
+    const top = layers[layers.length - 1];
+    if (top && top.spin === undefined) top.nodes.push(node);
+    else layers.push({ nodes: [node] });
+  };
+  for (const child of seal.children ?? []) {
+    if (typeof child === "string") continue;
+    if (isOrbit(child)) {
+      layers.push({ nodes: [still(child)], spin: spinOf(child) });
+      continue;
+    }
+    // A shared halo around several rings: each ring takes its own copy of the halo.
+    const orbits = child.children?.filter((c): c is VectorNode => typeof c !== "string" && isOrbit(c));
+    if (child.tag === "g" && orbits?.length) {
+      for (const orbit of orbits)
+        layers.push({ nodes: [{ ...child, children: [still(orbit)] }], spin: spinOf(orbit) });
+      continue;
+    }
+    paint(child);
+  }
+  return layers;
+};
+
 /** The host's neon seal: a crown (or the host's photo) inside two counter-rotating rings of light. */
 export function HostSeal({ photo, name }: { photo?: string; name?: string }) {
   const ref = useRef<HTMLSpanElement>(null);
+  const prefix = `svg-${useSvgId()}-`;
+  // Only the rings' transforms change: no SVG attribute is written, nothing is repainted.
   useDecoration(ref, (t) =>
     ref.current
-      ?.querySelectorAll<SVGGElement>("[data-host-orbit]")
-      .forEach((g) => {
-        const inner =
-          g.classList.contains("host-motion__inner-rear") ||
-          g.classList.contains("host-motion__inner-front");
-        g.setAttribute(
-          "transform",
-          `rotate(${t * (inner ? 360 / 5.6 : -360 / 8.4)} 65 65)`,
-        );
+      ?.querySelectorAll<SVGSVGElement>("[data-host-spin]")
+      .forEach((layer) => {
+        const degrees = (t * Number(layer.dataset.hostSpin) * 360) % 360;
+        layer.style.transform = `rotate(${degrees.toFixed(2)}deg)`;
       }),
   );
-  const node = useMemo(() => withPerson(illustrations.host, photo, name), [photo, name]);
+  const layers = useMemo(() => {
+    const seal = withPerson(illustrations.host, photo, name);
+    const root = (vectorElement({ tag: "svg", props: seal.props }, prefix) as ReactElement<Record<string, unknown>>).props;
+    // Gradients and filters live once, in the bottom drawing (it opens with <defs>); the
+    // layers above refer to them by id.
+    return toLayers(seal).map((layer, i) =>
+      createElement(
+        "svg",
+        { ...root, key: i, "data-host-spin": layer.spin },
+        layer.nodes.map((node, k) => vectorElement(node, prefix, k)),
+      ),
+    );
+  }, [photo, name, prefix]);
   return (
     <span ref={ref} className="ad-host-seal" aria-hidden="true">
-      <SvgAsset node={node} />
+      {layers}
     </span>
   );
 }

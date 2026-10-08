@@ -10,16 +10,38 @@
   min-height: 8rem;
   overflow: hidden;
   isolation: isolate;
-  border: 0.0625rem solid rgb(from var(--ad-primary) r g b / calc(0.18 + var(--ad-roll-beat) * 0.35));
+  /* Room for the hairline edge that the glass layer below draws. */
+  padding: 0.0625rem;
   border-radius: var(--ad-radius-lg, 1rem);
+  box-shadow: 0 0 calc(var(--ad-roll-beat) * 1.6rem) rgb(from var(--ad-primary) r g b / 0.25);
+  transition: box-shadow 0.12s;
+}
+/* The glass: its own still layer, so the frosted backdrop is never redrawn by the beat or by the
+   notes moving over it. */
+.ad-melody-roll::before,
+.ad-melody-roll::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border: 0.0625rem solid rgb(from var(--ad-primary) r g b / 0.18);
+  border-radius: inherit;
+  pointer-events: none;
+}
+.ad-melody-roll::before {
   background:
-    radial-gradient(80% 120% at 25% 50%, rgb(from var(--ad-primary) r g b / calc(0.05 + var(--ad-roll-beat) * 0.12)), transparent 70%),
+    radial-gradient(80% 120% at 25% 50%, rgb(from var(--ad-primary) r g b / 0.05), transparent 70%),
     linear-gradient(180deg, rgb(from var(--ad-neutral-950) r g b / 0.72), rgb(from var(--ad-neutral-900) r g b / 0.6));
-  box-shadow:
-    inset 0 0.0625rem 0 #ffffff12,
-    0 0 calc(var(--ad-roll-beat) * 1.6rem) rgb(from var(--ad-primary) r g b / 0.25);
+  box-shadow: inset 0 0.0625rem 0 #ffffff12;
   backdrop-filter: blur(0.5rem);
-  transition: border-color 0.12s, box-shadow 0.12s;
+}
+/* The beat: a brighter edge and a warmer light over the glass, faded in with the music. */
+.ad-melody-roll::after {
+  border-color: rgb(from var(--ad-primary) r g b / 0.35);
+  background: radial-gradient(80% 120% at 25% 50%, rgb(from var(--ad-primary) r g b / 0.12), transparent 70%);
+  opacity: var(--ad-roll-beat);
+  transition: opacity 0.12s;
+  will-change: opacity;
 }
 .ad-melody-roll-keys.ad-piano-keyboard {
   min-height: 0;
@@ -30,10 +52,25 @@
   container-type: size;
   overflow: hidden;
   border-left: 0.0625rem solid #ffffff22;
-  /* One line per semitone, one per second scrolling with the song. */
-  background:
-    linear-gradient(#ffffff0d 0.0625rem, transparent 0.0625rem) 0 0 / 100% calc(100% / var(--ad-roll-rows)),
-    linear-gradient(90deg, #ffffff0a 0.0625rem, transparent 0.0625rem) var(--ad-roll-shift) 0 / var(--ad-roll-second) 100%;
+  /* One line per semitone; the second lines scroll with the song on a layer of their own. */
+  background: linear-gradient(#ffffff0d 0.0625rem, transparent 0.0625rem) 0 0 / 100% calc(100% / var(--ad-roll-rows));
+}
+/* One line per second, a second wider than the lane, slid back by the song's fraction of a second. */
+.ad-melody-roll-seconds {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: calc(100cqw + var(--ad-roll-second));
+  background: linear-gradient(90deg, #ffffff0a 0.0625rem, transparent 0.0625rem) 0 0 / var(--ad-roll-second) 100%;
+  transform: translateX(var(--ad-roll-shift));
+  will-change: transform;
+  pointer-events: none;
+}
+.ad-melody-roll-strip {
+  position: absolute;
+  inset: 0;
+  will-change: transform;
 }
 /* A note: a glossy capsule in the theme colours. */
 .ad-melody-note {
@@ -92,7 +129,19 @@
   stroke-linecap: round;
   stroke-linejoin: round;
   opacity: 0.75;
-  filter: drop-shadow(0 0 0.25rem currentColor);
+}
+/* The trail's glow without a filter: two wider, faint copies of the line under it, so the
+   growing trail is never re-blurred. */
+.ad-melody-trail > path[data-halo] {
+  stroke: currentColor;
+}
+.ad-melody-trail > path[data-halo="wide"] {
+  stroke-width: calc(0.15rem + 0.5rem);
+  opacity: 0.1;
+}
+.ad-melody-trail > path[data-halo="near"] {
+  stroke-width: calc(0.15rem + 0.25rem);
+  opacity: 0.22;
 }
 .ad-melody-playhead {
   position: absolute;
@@ -102,8 +151,19 @@
   translate: -50% 0;
   background: #fff;
   box-shadow:
-    0 0 calc(0.6rem + var(--ad-roll-beat) * 1rem) #fff,
-    0 0 calc(1rem + var(--ad-roll-beat) * 1.6rem) var(--ad-primary);
+    0 0 0.6rem #fff,
+    0 0 1rem var(--ad-primary);
+}
+/* The playhead flares on the beat: a wider glow, drawn once, faded in. */
+.ad-melody-playhead::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  box-shadow:
+    0 0 1.6rem #fff,
+    0 0 2.6rem var(--ad-primary);
+  opacity: var(--ad-roll-beat);
+  will-change: opacity;
 }
 /* The singer's voice: grows with loudness, greens with accuracy. */
 .ad-melody-voice {

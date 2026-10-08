@@ -78,18 +78,20 @@ function borderFixture() {
     length: vi.fn(() => 400),
   };
   vi.stubGlobal("getComputedStyle", geometry.style);
+  const element = (tag: string) => ({
+    tagName: tag,
+    style: {},
+    attributes: new Map(),
+    setAttribute(name: string, value: string) { this.attributes.set(name, value); },
+    append() {},
+    remove() {},
+    getTotalLength: geometry.length,
+    getPointAtLength: () => ({ x: 0, y: 0 }),
+  });
   vi.stubGlobal("document", {
     ...document,
-    createElementNS: (_namespace: string, tag: string) => ({
-      tagName: tag,
-      style: {},
-      attributes: new Map(),
-      setAttribute(name: string, value: string) { this.attributes.set(name, value); },
-      append() {},
-      remove() {},
-      getTotalLength: geometry.length,
-      getPointAtLength: () => ({ x: 0, y: 0 }),
-    }),
+    createElement: element,
+    createElementNS: (_namespace: string, tag: string) => element(tag),
   });
   const host = () => ({
     isConnected: true,

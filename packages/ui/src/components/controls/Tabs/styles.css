@@ -77,8 +77,6 @@
 }
 .ad-tabs-indicator {
   z-index: -1;
-  filter: drop-shadow(0 0 0.4rem rgb(from var(--ad-primary) r g b / 0.4))
-    drop-shadow(0 0.2rem 0.6rem rgb(from var(--ad-primary) r g b / 0.2));
   transition:
     transform 0.55s var(--ad-tabs-spring),
     width 0.45s var(--ad-tabs-spring),
@@ -95,12 +93,41 @@
   filter: blur(0.45rem);
   opacity: 0;
   animation: ad-tabs-breathe 3.2s ease-in-out infinite;
+  will-change: opacity;
+}
+/* The blade's glow, drawn once: a still copy of its shape under it carries the shadows, so the
+   glint and the breath above never make them re-blur. (A filter on the clipped shape itself
+   would be clipped away, hence the wrapper.) */
+.ad-tabs-halo {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  filter: drop-shadow(0 0 0.4rem rgb(from var(--ad-primary) r g b / 0.4))
+    drop-shadow(0 0.2rem 0.6rem rgb(from var(--ad-primary) r g b / 0.2));
+}
+.ad-tabs-halo::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  clip-path: var(--ad-blade);
+  background: var(--ad-primary-800);
 }
 /* Neon edge: the blade's own background is the edge, a glint runs along it. */
 .ad-tabs-blade {
   position: absolute;
   inset: 0;
+  isolation: isolate;
   clip-path: var(--ad-blade);
+}
+/* The edge: two periods of the glint gradient side by side, sliding one period to the right.
+   It draws exactly what a moving background-position drew, but only moves a layer. */
+.ad-tabs-blade-edge {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: -1;
+  width: 600%;
   background: linear-gradient(
       100deg,
       var(--ad-secondary) 0%,
@@ -109,8 +136,10 @@
       var(--ad-secondary-200) 58%,
       var(--ad-primary-600) 100%
     )
-    0 0 / 300% 100%;
+    0 0 / 50% 100%;
+  transform: translateX(-50%);
   animation: ad-tabs-glint 3.6s linear infinite;
+  will-change: transform;
 }
 /* Fill, one hairline inside the edge, with a hot core near the notch. */
 .ad-tabs-blade::before {
@@ -179,7 +208,7 @@
 
 @keyframes ad-tabs-glint {
   to {
-    background-position: 300% 0;
+    transform: translateX(0);
   }
 }
 @keyframes ad-tabs-sweep {
@@ -201,7 +230,7 @@
   .ad-tabs-indicator,
   .ad-tabs-trail,
   .ad-tabs-rail,
-  .ad-tabs-blade,
+  .ad-tabs-blade-edge,
   .ad-tabs-blade::after,
   .ad-tabs-indicator::after {
     transition: none;

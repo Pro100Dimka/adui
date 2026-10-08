@@ -33,6 +33,8 @@
   opacity: 0;
   animation: ad-planet-rim 6s ease-in-out infinite;
   pointer-events: none;
+  /* A layer of its own: the painted canvas under it is never redrawn by the breath. */
+  will-change: opacity;
 }
 .ad-planet > canvas[data-ready] {
   opacity: 1;

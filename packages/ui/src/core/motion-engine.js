@@ -304,79 +304,81 @@ U.roundedPath = (w, h, r) => {
   };
 };
 const borders = new WeakMap();
+/* [stroke width, opacity] of the halo layers, widest first. Edges 3px apart and opacities fitted
+   to the old feGaussianBlur(4.2) of a 7.5px stroke, so the steps blend instead of banding. */
+const AURA = [[25, 0.016], [22, 0.031], [19, 0.055], [16, 0.087], [13, 0.124], [10, 0.157], [7, 0.17], [4, 0.153]];
 let borderSerial = 0;
-/* The early-release border: two broad lights travel the same SVG edge at
-   different speeds, each with a soft aura and a fine bright core. */
+/* Room around the element for the halo (half the widest AURA stroke, rounded up). */
+const HALO = 16;
+const CORE_STOPS = [
+  ["var(--ad-neutral-200)", 0], ["var(--ad-neutral-200)", 4], ["var(--ad-secondary)", 16],
+  ["rgb(from var(--ad-primary) r g b / 0.85)", 40], ["rgb(from var(--ad-primary) r g b / 0.32)", 72],
+  ["rgb(from var(--ad-primary) r g b / 0)", 100],
+];
+const AURA_STOPS = [
+  ["var(--ad-primary)", 0], ["rgb(from var(--ad-primary) r g b / 0.7)", 40],
+  ["rgb(from var(--ad-primary) r g b / 0)", 100],
+];
+const radial = (stops) =>
+  `radial-gradient(circle closest-side, ${stops.map(([color, at]) => `${color} ${at}%`).join(", ")})`;
+/** The ring a light shows through, as a still mask picture of the contour's strokes. */
+const ringMask = (w, h, d, strokes) => {
+  const paths = strokes
+    .map(([width, opacity]) => `<path d='${d}' stroke-width='${width}' stroke-opacity='${opacity}'/>`)
+    .join("");
+  return `url("data:image/svg+xml,${encodeURIComponent(
+    `<svg xmlns='http://www.w3.org/2000/svg' viewBox='${-HALO} ${-HALO} ${w + 2 * HALO} ${h + 2 * HALO}'>` +
+      `<g fill='none' stroke='#000' stroke-linecap='round' stroke-linejoin='round'>${paths}</g></svg>`,
+  )}")`;
+};
+/* The early-release border: two broad lights travel the edge at different speeds, each with a
+   soft aura and a fine bright core. The rings are still mask pictures, painted once per size;
+   each light is a soft spot under them that only moves. A frame of the border is then four
+   transforms on the compositor: nothing is repainted and nothing is re-blurred. */
 U.attachBorder = (element, { shell = false, round = false, scope, defer = false } = {}) => {
   if (borders.has(element)) return borders.get(element);
   defer &&= !!scope;
   if (defer && canObserveIntersection()) element._adInView = false;
   let radius = round ? 28 : shell ? 102 : 116;
-  const overlay = U.svg("svg", {
-    class: "ad-border",
-    "aria-hidden": "true",
-    focusable: "false",
-    fill: "none",
-    "data-ad-component": "AnimatedBorder",
-  });
-  const defs = U.svg("defs"), path = U.svg("path", {
+  const overlay = document.createElement("div");
+  overlay.className = "ad-border";
+  overlay.setAttribute("aria-hidden", "true");
+  overlay.setAttribute("data-ad-component", "AnimatedBorder");
+  // The fine static edge the lights run along.
+  const edge = U.svg("svg", { fill: "none", preserveAspectRatio: "none" });
+  const path = U.svg("path", {
     stroke: shell ? "rgb(from var(--ad-secondary) r g b / 0.65)" : "rgb(from var(--ad-primary) r g b / 0.16)",
     "stroke-width": shell ? 1.1 : 0.6,
   });
-  overlay.append(defs, path);
+  edge.append(path);
+  const ring = (className) => {
+    const node = document.createElement("div");
+    node.className = className;
+    return node;
+  };
+  const aura = ring("ad-border-aura"), core = ring("ad-border-core");
+  overlay.append(edge, aura, core);
   const instancePhase = (++borderSerial * 0.38196601125) % 1;
   const lights = Array.from({ length: 2 }, (_, k) => {
-    const id = U.uid("ad-orbit");
-    const gradient = U.svg("radialGradient", {
-      id, gradientUnits: "userSpaceOnUse", r: radius,
-    });
-    for (const [offset, color, opacity] of [
-      [0, "var(--ad-neutral-200)", 1], [0.04, "var(--ad-neutral-200)", 1],
-      [0.16, "var(--ad-secondary)", 1], [0.4, "var(--ad-primary)", 0.85],
-      [0.72, "var(--ad-primary)", 0.32], [1, "var(--ad-primary)", 0],
-    ])
-      gradient.append(U.svg("stop", { offset, "stop-color": color, "stop-opacity": opacity }));
-    const red = U.svg("radialGradient", {
-      id: `${id}-red`, gradientUnits: "userSpaceOnUse", r: radius,
-    });
-    for (const [offset, opacity] of [[0, 1], [0.4, 0.7], [1, 0]])
-      red.append(U.svg("stop", { offset, "stop-color": "var(--ad-primary)", "stop-opacity": opacity }));
-    const blur = U.svg("filter", {
-      id: `${id}-blur`, filterUnits: "userSpaceOnUse", x: 0, y: 0,
-      width: radius * 2 + 28, height: radius * 2 + 28,
-      "color-interpolation-filters": "sRGB",
-    });
-    blur.append(U.svg("feGaussianBlur", { stdDeviation: 4.2 }));
-    defs.append(gradient, red, blur);
-    const aura = U.svg("path", {
-      stroke: `url(#${id}-red)`, "stroke-width": 7.5,
-      filter: `url(#${id}-blur)`, opacity: 0.94,
-    });
-    const core = U.svg("path", {
-      stroke: `url(#${id})`, "stroke-width": shell ? 1.9 : 1.35,
-    });
-    overlay.append(aura, core);
+    const spot = (parent, stops) => {
+      const node = ring("ad-border-light");
+      node.style.background = radial(stops);
+      parent.append(node);
+      return node;
+    };
     return {
-      gradient, red, blur, radius,
+      radius,
       phase: (k * 0.48 + 0.535 + instancePhase) % 1,
       speed: round ? (k ? 25 : 36) : k ? 86 : 125,
-      paths: [aura, core],
+      spots: [spot(aura, AURA_STOPS), spot(core, CORE_STOPS)],
+      at: null,
     };
   });
   const previousInlinePosition = element.style.position;
-  Object.assign(overlay.style, {
-    inset: "0",
-    width: "100%",
-    height: "100%",
-    overflow: "visible",
-  });
-  overlay.setAttribute("width", "100%");
-  overlay.setAttribute("height", "100%");
-  overlay.setAttribute("preserveAspectRatio", "none");
   element.append(overlay);
   const item = {
     element, overlay, path, lights, length: 0, elapsed: 0, previousTime: null,
-    patchedPosition: false, previousInlinePosition,
+    lastFrame: -Infinity, patchedPosition: false, previousInlinePosition,
   };
   item.paint = (time) => {
     if (!item.length) return;
@@ -385,12 +387,9 @@ U.attachBorder = (element, { shell = false, round = false, scope, defer = false 
     item.previousTime = time;
     for (const light of lights) {
       const p = item.contour.point(((light.phase * item.length + item.elapsed * light.speed) % item.length) / item.length);
-      for (const gradient of [light.gradient, light.red]) {
-        gradient.setAttribute("cx", p.x.toFixed(2));
-        gradient.setAttribute("cy", p.y.toFixed(2));
-      }
-      light.blur.setAttribute("x", (p.x - radius - 14).toFixed(1));
-      light.blur.setAttribute("y", (p.y - radius - 14).toFixed(1));
+      light.at = p;
+      const transform = `translate3d(${(p.x - radius + HALO).toFixed(2)}px, ${(p.y - radius + HALO).toFixed(2)}px, 0)`;
+      for (const spot of light.spots) spot.style.transform = transform;
     }
   };
   item.sync = () => {
@@ -408,17 +407,21 @@ U.attachBorder = (element, { shell = false, round = false, scope, defer = false 
       : parseFloat(corner) || 0;
     item.contour = U.roundedPath(w, h, r);
     const { d } = item.contour;
-    overlay.setAttribute("viewBox", `0 0 ${w} ${h}`);
+    edge.setAttribute("viewBox", `0 0 ${w} ${h}`);
     path.setAttribute("d", d);
-    for (const light of lights) for (const stroke of light.paths) stroke.setAttribute("d", d);
+    for (const [node, strokes] of [[aura, AURA], [core, [[shell ? 1.9 : 1.35, 1]]]]) {
+      const mask = ringMask(w, h, d, strokes);
+      node.style.maskImage = mask;
+      node.style.webkitMaskImage = mask;
+    }
     item.length = path.getTotalLength();
     radius = round ? 28 : Math.min(260, Math.max(42, item.length * 0.153));
     for (const light of lights) {
       light.radius = radius;
-      light.gradient.setAttribute("r", radius);
-      light.red.setAttribute("r", radius);
-      light.blur.setAttribute("width", radius * 2 + 28);
-      light.blur.setAttribute("height", radius * 2 + 28);
+      for (const spot of light.spots) {
+        spot.style.width = `${radius * 2}px`;
+        spot.style.height = `${radius * 2}px`;
+      }
     }
     item.paint(scope?.time || 0);
   };
@@ -431,7 +434,13 @@ U.attachBorder = (element, { shell = false, round = false, scope, defer = false 
   item.observer.observe(element);
   if (defer) queueMeasurement();
   else item.sync();
-  const unsubscribe = scope?.add(element, item.paint, !defer);
+  const unsubscribe = scope?.add(element, (time) => {
+    // Keep the ambient orbit on a slower clock while idle; interaction immediately restores
+    // the full clock rate.
+    if (!element.matches?.(":hover, :focus-within") && time - item.lastFrame < 0.09) return;
+    item.lastFrame = time;
+    item.paint(time);
+  }, !defer);
   item.destroy = () => {
     item.destroyed = true;
     measurements.delete(item);
@@ -469,10 +478,22 @@ U.attachTabShape = (button) => {
   shape.append(defs);
   const glow = U.svg("path", { class: "tab-shape__glow" }),
     edge = U.svg("path", { class: "tab-shape__edge", fill: `url(#${id})` }),
-    glint = U.svg("path", { class: "tab-shape__glint", pathLength: 100 }),
     floor = U.svg("path", { class: "tab-shape__floor" });
-  shape.append(glow, edge, glint, floor);
-  button.prepend(shape);
+  shape.append(glow, edge, floor);
+  /* The running glint lives in a drawing of its own above the shape: it is the only part that
+     repaints, and its glow is two faint wider copies of the dash instead of a filter, so the
+     blurred glow and floor below are painted once. */
+  const glints = U.svg("svg", {
+    class: "tab-shape ad-tab-shape ad-tab-shape-glint",
+    "aria-hidden": "true",
+    fill: "none",
+    preserveAspectRatio: "none",
+  });
+  const glint = ["wide", "near", "core"].map((part) =>
+    U.svg("path", { class: "tab-shape__glint", "data-part": part, pathLength: 100 }),
+  );
+  glints.append(...glint);
+  button.prepend(shape, glints);
   button.dataset.adShapeReady = "";
   const position = () => {
     const siblings = [...(button.parentElement?.children || [])].filter(
@@ -491,6 +512,7 @@ U.attachTabShape = (button) => {
       h = button.offsetHeight;
     if (!w || !h) return;
     shape.setAttribute("viewBox", `0 0 ${w} ${h}`);
+    glints.setAttribute("viewBox", `0 0 ${w} ${h}`);
     const { first, last, single } = position();
     const top = 1.5,
       bottom = h - 1.5,
@@ -522,7 +544,7 @@ U.attachTabShape = (button) => {
     }
 
     d += `H${w / 2 + notchWidth}L${w / 2} ${bottom + notchDepth}L${w / 2 - notchWidth} ${bottom}Z`;
-    for (const path of [glow, edge, glint]) path.setAttribute("d", d);
+    for (const path of [glow, edge, ...glint]) path.setAttribute("d", d);
 
     const floorLeft = leftOuter ? outer + radius : outer + 5;
     const floorRight = rightOuter ? w - (outer + radius) : w - (outer + 5);
@@ -549,6 +571,7 @@ U.attachTabShape = (button) => {
     destroy() {
       observer.disconnect();
       shape.remove();
+      glints.remove();
       button.removeAttribute("data-ad-shape-ready");
       button.removeAttribute("data-ad-tab-edge");
       seen.delete(button);

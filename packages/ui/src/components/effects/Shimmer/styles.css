@@ -12,19 +12,28 @@
   min-width: 0;
 }
 .ad-shimmer i {
+  position: relative;
   display: block;
   height: 0.75rem;
+  overflow: hidden;
   border-radius: 999rem;
-  background:
-    linear-gradient(
-        100deg,
-        transparent 30%,
-        rgb(from var(--ad-secondary) r g b / 0.2) 50%,
-        transparent 70%
-      ) -150%
-      0 / 60% 100% no-repeat,
-    #ffffff10;
+  background: #ffffff10;
+}
+/* The sweep: a light 60% as wide as the line, slid across it on its own layer (no repaint). */
+.ad-shimmer i::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  width: 60%;
+  background: linear-gradient(
+    100deg,
+    transparent 30%,
+    rgb(from var(--ad-secondary) r g b / 0.2) 50%,
+    transparent 70%
+  );
+  transform: translateX(-100%);
   animation: ad-shimmer-run 1.6s ease-in-out infinite;
+  will-change: transform;
 }
 .ad-shimmer-circle {
   flex: none;
@@ -33,8 +42,7 @@
 }
 @keyframes ad-shimmer-run {
   to {
-    background-position:
-      250% 0,
-      0 0;
+    /* From 60% of the line left of it to just past its right edge, as the old background ran. */
+    transform: translateX(166.667%);
   }
 }

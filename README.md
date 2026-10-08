@@ -49,7 +49,7 @@ npm run check
 Установка в любой проект — из GitHub Release:
 
 ```bash
-npm install https://github.com/Pro100Dimka/adui/releases/download/v2.8.0/ad-voice-ui-2.8.0.tgz
+npm install https://github.com/Pro100Dimka/adui/releases/download/v2.8.1/ad-voice-ui-2.8.1.tgz
 ```
 
 Новая версия:

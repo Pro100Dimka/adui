@@ -17,22 +17,19 @@
     0 0 / 250% 100%;
   background-clip: text;
   -webkit-background-clip: text;
-  filter: drop-shadow(0 0 0.35em rgb(from var(--ad-primary) r g b / 0.53)) drop-shadow(0 0 1em rgb(from var(--ad-primary) r g b / 0.27));
-  animation: ad-glow-flow 5s linear infinite;
-}
-.ad-glow-text[data-text] {
   position: relative;
   isolation: isolate;
-  filter: none;
+  animation: ad-glow-flow 5s linear infinite;
 }
-.ad-glow-text[data-text]::before {
-  content: attr(data-text);
+.ad-glow-text-halo {
   position: absolute;
   inset: 0;
   z-index: -1;
   color: transparent;
   text-shadow: 0 0 0.35em rgb(from var(--ad-primary) r g b / 0.53), 0 0 1em rgb(from var(--ad-primary) r g b / 0.27);
   pointer-events: none;
+  user-select: none;
+  will-change: transform;
 }
 .ad-glow-text[data-flicker] {
   animation:

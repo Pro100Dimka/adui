@@ -128,8 +128,8 @@ export const MelodyRoll = ({
           "--ad-roll-beat": clamp(beat, 0, 1),
           "--ad-roll-level": clamp(level, 0, 1),
           "--ad-roll-accuracy": clamp(accuracy, 0, 1),
-          "--ad-roll-second": `${100 / span}%`,
-          "--ad-roll-shift": `${(-(from % 1) / span) * 100}%`,
+          "--ad-roll-second": `${100 / span}cqw`,
+          "--ad-roll-shift": `${(-(((from % 1) + 1) % 1) / span) * 100}cqw`,
         } as CSSProperties
       }
     >
@@ -143,6 +143,10 @@ export const MelodyRoll = ({
         onKeyPress={onKeyPress}
       />
       <div className="ad-melody-roll-lane" aria-hidden="true">
+        <span className="ad-melody-roll-seconds" />
+        {/* The notes sit on a strip in song time that slides under the playhead: playback moves
+            one layer instead of laying out and repainting every note on every tick. */}
+        <div className="ad-melody-roll-strip" style={{ transform: `translateX(${((-from / span) * 100).toFixed(3)}%)` }}>
         {visible.map((note) => (
           <span
             key={note.id}
@@ -151,7 +155,7 @@ export const MelodyRoll = ({
             data-now={(position >= note.start && position <= note.end) || undefined}
             data-past={position > note.end || undefined}
             style={{
-              left: `${x(note.start)}%`,
+              left: `${(note.start / span) * 100}%`,
               width: `${Math.max(0.6, ((note.end - note.start) / span) * 100)}%`,
               top: `${y(note.pitch)}%`,
             }}
@@ -159,10 +163,13 @@ export const MelodyRoll = ({
             {showLyrics && note.lyric && <span>{note.lyric}</span>}
           </span>
         ))}
+        </div>
         <svg className="ad-melody-trail" viewBox="0 0 100 100" preserveAspectRatio="none">
-          {segments.map((d, i) => (
-            <path key={i} d={d} vectorEffect="non-scaling-stroke" />
-          ))}
+          {segments.flatMap((d, i) => [
+            <path key={`${i}-wide`} data-halo="wide" d={d} vectorEffect="non-scaling-stroke" />,
+            <path key={`${i}-near`} data-halo="near" d={d} vectorEffect="non-scaling-stroke" />,
+            <path key={i} d={d} vectorEffect="non-scaling-stroke" />,
+          ])}
         </svg>
         <span className="ad-melody-playhead" style={{ left: `${lead * 100}%` }} />
         {livePitch !== undefined && (

@@ -1,7 +1,9 @@
 import { useSvgId } from "../../../core/artwork";
-import { useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
+import { createResizeObserver } from "../../../core/environment";
 import { mark, type CommonProps } from "../../../core/base";
 import { useDecoration, usePauseOffscreen } from "../../../core/motion/hooks";
+import { useMotion } from "../../../core/providers/context";
 import { seeded } from "../../../core/noise";
 
 export interface NeonWavesProps extends CommonProps {
@@ -31,16 +33,32 @@ const skyline = (x: number) => {
 };
 const SAMPLES = 36;
 
+/** A strand as cubic Béziers: x0 y0, then c1x c1y c2x c2y x y for every segment. */
+type Curve = number[];
+
+const toPath = (curve: Curve) => {
+  let d = `M${curve[0]!.toFixed(2)} ${curve[1]!.toFixed(2)}`;
+  for (let i = 2; i < curve.length; i += 6)
+    d += `C${curve.slice(i, i + 6).map((n) => n.toFixed(2)).join(" ")}`;
+  return d;
+};
+
+/** Appends an SVG "S" segment: its first control point mirrors the previous one. */
+const smoothTo = (curve: Curve, c2x: number, c2y: number, x: number, y: number) => {
+  const n = curve.length;
+  curve.push(2 * curve[n - 2]! - curve[n - 4]!, 2 * curve[n - 1]! - curve[n - 3]!, c2x, c2y, x, y);
+};
+
 /** A smooth curve through the points (Catmull-Rom as cubic Béziers): few samples, no corners. */
-const smooth = (xs: number[], ys: number[]) => {
-  let d = `M${xs[0]!.toFixed(1)} ${ys[0]!.toFixed(1)}`;
+const smooth = (xs: number[], ys: number[]): Curve => {
+  const curve = [xs[0]!, ys[0]!];
   for (let i = 0; i < xs.length - 1; i += 1) {
     const x0 = xs[i - 1] ?? xs[i]!, y0 = ys[i - 1] ?? ys[i]!;
     const x1 = xs[i]!, y1 = ys[i]!, x2 = xs[i + 1]!, y2 = ys[i + 1]!;
     const x3 = xs[i + 2] ?? x2, y3 = ys[i + 2] ?? y2;
-    d += `C${(x1 + (x2 - x0) / 6).toFixed(1)} ${(y1 + (y2 - y0) / 6).toFixed(1)} ${(x2 - (x3 - x1) / 6).toFixed(1)} ${(y2 - (y3 - y1) / 6).toFixed(1)} ${x2.toFixed(1)} ${y2.toFixed(1)}`;
+    curve.push(x1 + (x2 - x0) / 6, y1 + (y2 - y0) / 6, x2 - (x3 - x1) / 6, y2 - (y3 - y1) / 6, x2, y2);
   }
-  return d;
+  return curve;
 };
 
 /** One strand of the ridge: the skyline, spread apart in the valleys and gathered at the peaks, rippling slowly. */
@@ -59,6 +77,61 @@ const ridgeStrand = (t: number, drift: number) => {
   return smooth(xs, ys);
 };
 
+/** One strand of the twist; most strands form the main twist, the rest run as a lower counter-current. */
+const twistStrand = (t: number, drift: number, main: boolean): Curve => {
+  const a = Math.sin(drift + t * 1.4) * H * 0.095;
+  const b = Math.cos(drift * 0.8 + t * 1.8) * H * 0.08;
+  if (!main) {
+    const curve = [-12, H * (0.9 + t * 0.12) + b, W * 0.21, H * 0.98 + a, W * 0.33, H * 0.24 + t * H * 0.2 + a, W * 0.52, H * 0.75 + t * H * 0.25 + b];
+    smoothTo(curve, W * 0.82, H * 0.38 + t * H * 0.27 + a, W + 8, H * (0.48 + t * 0.5) + b);
+    return curve;
+  }
+  const curve = [-12, H * (0.38 + t * 0.58) + a, W * 0.2, H * 1.28 - t * H * 0.27 + a, W * 0.32, H * 0.34 + t * H * 0.21 + b, W * 0.46, H * 0.62 + t * H * 0.12];
+  smoothTo(curve, W * 0.67, H * 1.14 - t * H * 0.09 + a, W * 0.8, H * 0.69 - t * H * 0.22 + b);
+  smoothTo(curve, W * 0.94, H * 0.43 - t * H * 0.44 + a, W + 8, H * 0.21 + t * H * 0.45);
+  return curve;
+};
+
+/** Points along a curve with their running length, so a comet moves at an even pace like a dash. */
+const STEPS = 16;
+const measure = (curve: Curve) => {
+  const xs = [curve[0]!], ys = [curve[1]!], lengths = [0];
+  for (let i = 2; i < curve.length; i += 6) {
+    const x0 = curve[i - 2]!, y0 = curve[i - 1]!;
+    const [x1, y1, x2, y2, x3, y3] = curve.slice(i, i + 6) as [number, number, number, number, number, number];
+    for (let k = 1; k <= STEPS; k += 1) {
+      const u = k / STEPS, v = 1 - u;
+      const x = v * v * v * x0 + 3 * v * v * u * x1 + 3 * v * u * u * x2 + u * u * u * x3;
+      const y = v * v * v * y0 + 3 * v * v * u * y1 + 3 * v * u * u * y2 + u * u * u * y3;
+      lengths.push(lengths[lengths.length - 1]! + Math.hypot(x - xs[xs.length - 1]!, y - ys[ys.length - 1]!));
+      xs.push(x);
+      ys.push(y);
+    }
+  }
+  return { xs, ys, lengths, total: lengths[lengths.length - 1]! };
+};
+type Track = ReturnType<typeof measure>;
+const pointAt = (track: Track, fraction: number) => {
+  const distance = Math.min(1, Math.max(0, fraction)) * track.total;
+  let low = 0, high = track.lengths.length - 1;
+  while (high - low > 1) {
+    const middle = (low + high) >> 1;
+    if (track.lengths[middle]! < distance) low = middle;
+    else high = middle;
+  }
+  const span = track.lengths[high]! - track.lengths[low]! || 1;
+  const k = (distance - track.lengths[low]!) / span;
+  return {
+    x: track.xs[low]! + (track.xs[high]! - track.xs[low]!) * k,
+    y: track.ys[low]! + (track.ys[high]! - track.ys[low]!) * k,
+  };
+};
+
+/** A comet is a dash 1.6% of its strand long that laps the strand in 6 seconds. */
+const COMET_LAP = 6;
+const COMET_DASH = 0.016;
+const COMET_WIDTH = 1.6;
+
 /** Which strands carry a comet: spread across the bundle so they never run on top of each other. */
 const cometStrand = (i: number, comets: number, strands: number) => Math.min(strands - 1, Math.round(((i + 0.5) / comets) * (strands - 1)));
 
@@ -71,9 +144,13 @@ export function NeonWaves({
   comets = 0,
   ...p
 }: NeonWavesProps) {
+  const rootRef = useRef<HTMLSpanElement>(null);
   const ref = useRef<SVGSVGElement>(null);
-  const cometsRef = useRef<SVGSVGElement>(null);
+  const cometsRef = useRef<HTMLSpanElement>(null);
   const lastDraw = useRef(-1);
+  const tracks = useRef(new Map<number, Track>());
+  const size = useRef({ width: 0, height: 0 });
+  const motion = useMotion();
   const id = useSvgId();
   const dots = useMemo(() => {
     if (!stars) return [];
@@ -86,41 +163,60 @@ export function NeonWaves({
     }));
   }, [stars, phase]);
 
+  // The box is read from the observer, never measured on a frame.
+  useEffect(() => {
+    const root = rootRef.current;
+    if (!root) return;
+    const observer = createResizeObserver(([entry]) => {
+      if (!entry) return;
+      size.current = { width: entry.contentRect.width, height: entry.contentRect.height };
+    });
+    observer.observe(root);
+    return () => observer.disconnect();
+  }, []);
+
   usePauseOffscreen(ref);
   useDecoration(ref, (time) => {
     // The strands drift slowly: redrawing them on every other tick (15 a second) looks the same
-    // and halves their cost; the comets ride their own layer at the full clock rate.
-    if (lastDraw.current >= 0 && time - lastDraw.current < 1 / 16) return;
-    lastDraw.current = time;
-    const paths = ref.current?.querySelectorAll<SVGPathElement>(".ad-neon-waves-strand");
-    paths?.forEach((path, i) => {
-      const t = i / Math.max(1, paths.length - 1);
-      const drift = time * 0.42 + phase;
-      if (shape === "ridge") {
-        path.setAttribute("d", ridgeStrand(t, drift));
-        return;
+    // and halves their cost; the comets ride their own layers at the full clock rate.
+    if (lastDraw.current < 0 || time - lastDraw.current >= 1 / 16) {
+      lastDraw.current = time;
+      const paths = ref.current?.querySelectorAll<SVGPathElement>(".ad-neon-waves-strand");
+      const carried = new Set(Array.from({ length: comets }, (_, i) => cometStrand(i, comets, strands)));
+      tracks.current.clear();
+      paths?.forEach((path, i) => {
+        const t = i / Math.max(1, paths.length - 1);
+        const drift = time * 0.42 + phase;
+        const curve = shape === "ridge" ? ridgeStrand(t, drift) : twistStrand(t, drift, i < paths.length * 0.68);
+        path.setAttribute("d", toPath(curve));
+        if (carried.has(i)) tracks.current.set(i, measure(curve));
+      });
+    }
+    // Each comet is a small glowing layer of its own: it is only moved and faded, never repainted.
+    const { width, height } = size.current;
+    if (!width || !height) return;
+    const sx = width / W, sy = height / H;
+    cometsRef.current?.querySelectorAll<HTMLElement>(".ad-neon-waves-comet").forEach((comet, i) => {
+      const track = tracks.current.get(cometStrand(i, comets, strands));
+      if (!track) return;
+      const start = ((time + ((i * COMET_LAP) / comets + 1.8)) / COMET_LAP) % 1;
+      const tail = pointAt(track, start), head = pointAt(track, start + COMET_DASH);
+      const dx = (head.x - tail.x) * sx, dy = (head.y - tail.y) * sy;
+      const length = Math.round(Math.hypot(dx, dy) + COMET_WIDTH);
+      // Width changes only by whole pixels, so the tiny layer is rarely redrawn.
+      if (comet.dataset.length !== String(length)) {
+        comet.dataset.length = String(length);
+        comet.style.width = `${length}px`;
       }
-      const a = Math.sin(drift + t * 1.4) * H * 0.095;
-      const b = Math.cos(drift * 0.8 + t * 1.8) * H * 0.08;
-      const y = H * (0.38 + t * 0.58);
-      // Most strands form the main twist; the rest run as a lower counter-current.
-      path.setAttribute(
-        "d",
-        i < paths.length * 0.68
-          ? `M-12 ${y + a} C${W * 0.2} ${H * 1.28 - t * H * 0.27 + a} ${W * 0.32} ${H * 0.34 + t * H * 0.21 + b} ${W * 0.46} ${H * 0.62 + t * H * 0.12} S${W * 0.67} ${H * 1.14 - t * H * 0.09 + a} ${W * 0.8} ${H * 0.69 - t * H * 0.22 + b} S${W * 0.94} ${H * 0.43 - t * H * 0.44 + a} ${W + 8} ${H * 0.21 + t * H * 0.45}`
-          : `M-12 ${H * (0.9 + t * 0.12) + b} C${W * 0.21} ${H * 0.98 + a} ${W * 0.33} ${H * 0.24 + t * H * 0.2 + a} ${W * 0.52} ${H * 0.75 + t * H * 0.25 + b} S${W * 0.82} ${H * 0.38 + t * H * 0.27 + a} ${W + 8} ${H * (0.48 + t * 0.5) + b}`,
-      );
-    });
-    // Each comet rides its strand; its own dash animation moves it along.
-    cometsRef.current?.querySelectorAll<SVGPathElement>(".ad-neon-waves-comet").forEach((comet) => {
-      const strand = paths?.[Number(comet.dataset.strand)];
-      const d = strand?.getAttribute("d");
-      if (d) comet.setAttribute("d", d);
+      const x = (tail.x + head.x) / 2, y = (tail.y + head.y) / 2;
+      comet.style.transform = `translate(${(x * sx).toFixed(2)}px, ${(y * sy).toFixed(2)}px) rotate(${Math.atan2(dy, dx).toFixed(4)}rad) translate(-50%, -50%)`;
+      // Comets fade in where the strands themselves come out of the dark.
+      comet.style.opacity = Math.min(1, Math.max(0, (x + 20) / ((W + 40) * 0.35))).toFixed(3);
     });
   });
 
   return (
-    <span {...mark("NeonWaves", p)} aria-hidden="true">
+    <span {...mark("NeonWaves", p)} ref={rootRef} aria-hidden="true">
     <svg
       ref={ref}
       className="ad-neon-waves-strands"
@@ -148,32 +244,13 @@ export function NeonWaves({
         />
       ))}
     </svg>
-    {comets > 0 && (
-    <svg ref={cometsRef} className="ad-neon-waves-comets" viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="none">
-      <defs>
-        {/* Comets fade in where the strands themselves come out of the dark. */}
-        <linearGradient id={`${id}-fade`}>
-          <stop stopColor="#fff" stopOpacity="0" />
-          <stop offset=".35" stopColor="#fff" stopOpacity="1" />
-        </linearGradient>
-        <mask id={`${id}-comets`} maskUnits="userSpaceOnUse" x={-20} y={-H} width={W + 40} height={H * 3}>
-          <rect x={-20} y={-H} width={W + 40} height={H * 3} fill={`url(#${id}-fade)`} />
-        </mask>
-      </defs>
-      <g mask={`url(#${id}-comets)`}>
-      {Array.from({ length: comets }, (_, i) => (
-        <path
-          key={`comet-${i}`}
-          className="ad-neon-waves-comet"
-          data-strand={cometStrand(i, comets, strands)}
-          fill="none"
-          pathLength={100}
-          vectorEffect="non-scaling-stroke"
-          style={{ animationDelay: `${-((i * 6) / comets + 1.8) % 6}s` }}
-        />
-      ))}
-      </g>
-    </svg>
+    {/* Motion off: comets rest at the start of their strand, where the fade hides them. */}
+    {comets > 0 && motion && (
+      <span ref={cometsRef} className="ad-neon-waves-comets">
+        {Array.from({ length: comets }, (_, i) => (
+          <i key={i} className="ad-neon-waves-comet" />
+        ))}
+      </span>
     )}
       {/* Stars are page elements over the drawing, not part of it: their twinkle fades on the
           GPU and never redraws the strands. */}

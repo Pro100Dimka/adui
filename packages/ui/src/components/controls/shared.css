@@ -493,7 +493,20 @@
   stroke-linecap: round;
   stroke-dasharray: 8 92;
   animation: ad-tab-glint 6s linear infinite;
-  filter: drop-shadow(0 0 0.1875rem var(--ad-secondary));
+}
+/* The glint's glow: two faint wider dashes under it, in step with it, instead of a live filter. */
+.ad-tab-shape .tab-shape__glint[data-part="wide"] {
+  stroke: var(--ad-secondary);
+  stroke-width: 7.2;
+  opacity: 0.1;
+}
+.ad-tab-shape .tab-shape__glint[data-part="near"] {
+  stroke: var(--ad-secondary);
+  stroke-width: 4.2;
+  opacity: 0.25;
+}
+.ad-tab-shape-glint {
+  will-change: transform;
 }
 .ad-tab-shape .tab-shape__floor {
   stroke: var(--ad-secondary);

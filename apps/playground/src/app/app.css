@@ -274,7 +274,7 @@ a {
 /* The component hero: neon strands flow behind the whole block, fading out under the title. */
 .docs-component-hero.ad-card,
 .docs-showcase-tile {
-  /* Four blur sigmas plus the aura stroke, beyond the inset contour. */
+  /* Room for the widest halo stroke beyond the inset contour. */
   overflow-clip-margin: 20px;
 }
 .docs-component-hero.ad-card {

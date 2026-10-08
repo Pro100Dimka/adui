@@ -5,22 +5,34 @@
   max-width: 11rem;
   aspect-ratio: 170 / 179;
   height: auto;
+  position: relative;
   overflow: visible;
 }
+/* An artwork stack (see layers.tsx): drawings laid exactly over each other. */
+:is(.ad-database-art, .ad-server-art) > .ad-art-layer {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+/* The orbits are the only drawing that repaints: three thin dashes, with no filter. */
 .ad-art-orbit {
   stroke-dasharray: 14 86;
   stroke-linecap: round;
   animation: ad-art-orbit 4s linear infinite;
 }
-.ad-art-spark {
-  transform-box: fill-box;
-  transform-origin: center;
+/* The same pulses on whole layers: the compositor scales and fades them, nothing repaints.
+   Each layer scales about its own point (set inline from the drawing). */
+.ad-art-spark-layer {
   animation: ad-art-spark 4s ease-in-out var(--ad-delay, 0s) infinite;
+  will-change: transform, opacity;
 }
-.ad-art-aura {
-  transform-box: fill-box;
-  transform-origin: center;
+.ad-art-aura-layer {
   animation: ad-art-aura 5s ease-in-out infinite;
+  will-change: transform, opacity;
 }
 @keyframes ad-art-orbit {
   to {

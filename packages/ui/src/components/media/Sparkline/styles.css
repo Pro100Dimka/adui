@@ -5,7 +5,20 @@
   max-width: 20rem;
   aspect-ratio: 24 / 7;
   height: auto;
+  position: relative;
   overflow: visible;
+}
+/* The drawings lie over each other; the beacon's ring has a layer of its own. */
+.ad-sparkline > svg {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+.ad-sparkline > svg:nth-child(2) {
+  will-change: transform;
 }
 .ad-sparkline-area {
   animation: ad-spark-fade 1.2s 0.4s ease-out both;

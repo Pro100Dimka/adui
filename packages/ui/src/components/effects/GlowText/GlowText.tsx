@@ -23,9 +23,10 @@ export function GlowText({
       ...mark("GlowText", p),
       ref: pauseRef,
       "data-flicker": flicker || undefined,
-      // Plain text gets its halo from a still copy behind it, so the flowing gradient never re-filters.
-      "data-text": typeof children === "string" ? children : undefined,
     },
+    // The halo is a still copy of the text on a layer of its own, painted once: the flowing
+    // gradient repaints only the letters and never re-blurs the glow.
+    <span className="ad-glow-text-halo" aria-hidden="true">{children}</span>,
     children,
   );
 }

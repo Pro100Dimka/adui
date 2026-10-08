@@ -1,10 +1,11 @@
-/* Styles owned by ServerArt. Spark and aura animations come from DatabaseArt. */
+/* Styles owned by ServerArt. The layer stack, spark and aura pulses come from DatabaseArt. */
 .ad-server-art {
   display: block;
   width: 100%;
   max-width: 11rem;
   aspect-ratio: 180 / 170;
   height: auto;
+  position: relative;
   overflow: visible;
 }
 .ad-server-led,
@@ -12,10 +13,12 @@
   stroke: var(--ad-red);
   animation: ad-server-led 3.4s ease-in-out infinite;
 }
+/* A status dot is a layer of its own: its glow is drawn once and the layer only fades. */
 .ad-server-dot {
   fill: var(--ad-pink);
   filter: drop-shadow(0 0 0.2rem var(--ad-red));
   animation: ad-server-led 3.4s ease-in-out infinite;
+  will-change: opacity;
 }
 .ad-server-orbit {
   stroke: color-mix(in srgb, var(--ad-pink) 72%, #fff);
@@ -26,6 +29,7 @@
 }
 .ad-server-cloud {
   animation: ad-server-cloud 3s ease-in-out infinite;
+  will-change: transform;
 }
 @keyframes ad-server-led {
   50% {

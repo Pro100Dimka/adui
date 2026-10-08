@@ -27,6 +27,7 @@ export const Steps = (p: StepsProps) => {
               {state === "done" ? <Icon name="check" /> : i + 1}
             </span>
             <span className="ad-step-label">{label}</span>
+            {state === "current" && i > 0 && <span className="ad-steps-glint" aria-hidden />}
           </li>
         );
       })}

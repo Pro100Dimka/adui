@@ -92,7 +92,10 @@ export function Tabs<V extends string = string>(p: TabsProps<V>) {
         <>
           <span className="ad-tabs-trail" style={place} aria-hidden />
           <span className="ad-tabs-indicator" style={place} aria-hidden>
-            <span className="ad-tabs-blade" />
+            <span className="ad-tabs-halo" />
+            <span className="ad-tabs-blade">
+              <span className="ad-tabs-blade-edge" />
+            </span>
           </span>
           <span className="ad-tabs-rail" style={place} aria-hidden />
         </>

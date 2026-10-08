@@ -19,11 +19,13 @@ export const Sparkline = (p: SparklineProps) => {
   ]);
   const line = points.map(([x, y], i) => `${i ? "L" : "M"}${x},${y}`).join("");
   const [lastX, lastY] = points[points.length - 1];
+  const box = { viewBox: "0 0 240 70", preserveAspectRatio: "none", "aria-hidden": true } as const;
+  // Three drawings in paint order: the line with its glow, the beacon's ring, the dot. The ring
+  // pulses for as long as the sparkline is shown, so it is kept apart from the glowing line and
+  // dot: they are painted once, and only the bare ring is redrawn.
   return (
-    <svg
+    <span
       {...mark("Sparkline", p)}
-      viewBox="0 0 240 70"
-      preserveAspectRatio="none"
       role={p.label ? "img" : undefined}
       aria-label={p.label}
       aria-hidden={!p.label}
@@ -31,20 +33,26 @@ export const Sparkline = (p: SparklineProps) => {
         { ...p.style, "--ad-spark": p.color ?? "var(--ad-primary)" } as CSSProperties
       }
     >
-      <defs>
-        <linearGradient id={`${id}-area`} x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stopColor="var(--ad-spark)" stopOpacity="0.45" />
-          <stop offset="1" stopColor="var(--ad-spark)" stopOpacity="0" />
-        </linearGradient>
-      </defs>
-      <path
-        className="ad-sparkline-area"
-        d={`${line}L240,70L0,70Z`}
-        fill={`url(#${id}-area)`}
-      />
-      <path className="ad-sparkline-line" d={line} pathLength={1} />
-      <circle className="ad-sparkline-ping" cx={lastX} cy={lastY} r="3" />
-      <circle className="ad-sparkline-dot" cx={lastX} cy={lastY} r="3" />
-    </svg>
+      <svg {...box}>
+        <defs>
+          <linearGradient id={`${id}-area`} x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stopColor="var(--ad-spark)" stopOpacity="0.45" />
+            <stop offset="1" stopColor="var(--ad-spark)" stopOpacity="0" />
+          </linearGradient>
+        </defs>
+        <path
+          className="ad-sparkline-area"
+          d={`${line}L240,70L0,70Z`}
+          fill={`url(#${id}-area)`}
+        />
+        <path className="ad-sparkline-line" d={line} pathLength={1} />
+      </svg>
+      <svg {...box}>
+        <circle className="ad-sparkline-ping" cx={lastX} cy={lastY} r="3" />
+      </svg>
+      <svg {...box}>
+        <circle className="ad-sparkline-dot" cx={lastX} cy={lastY} r="3" />
+      </svg>
+    </span>
   );
 };
