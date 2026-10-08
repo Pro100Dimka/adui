@@ -529,3 +529,33 @@ it("smooths a scrollable container without taking wheel input from inner areas, 
     expect(frames.size).toBe(0);
   } finally { act(() => tree.unmount()); }
 });
+
+it("leaves wheel input with an inner interactive canvas that already consumed it", async () => {
+  vi.stubGlobal("IS_REACT_ACT_ENVIRONMENT", true);
+  const { createElement, useRef } = await import("react");
+  const { act, create } = await import("react-test-renderer");
+  const { useSmoothWheel } = await import("../src/core/motion/hooks");
+  let wheel = (_event: WheelEvent) => {};
+  const element = {
+    scrollTop: 0,
+    scrollHeight: 1000,
+    clientHeight: 500,
+    addEventListener: (_name: string, listener: typeof wheel) => { wheel = listener; },
+    removeEventListener: vi.fn(),
+  };
+  vi.stubGlobal("getComputedStyle", () => ({ overflowY: "auto" }));
+  function Block() {
+    const ref = useRef<HTMLElement>(null);
+    useSmoothWheel(ref);
+    return createElement("div", { ref });
+  }
+  let tree!: ReturnType<typeof create>;
+  act(() => { tree = create(createElement(Block), { createNodeMock: () => element }); });
+  try {
+    const preventDefault = vi.fn();
+    wheel({ target: { parentElement: element }, defaultPrevented: true, deltaY: 100, deltaX: 0, deltaMode: 0, preventDefault } as unknown as WheelEvent);
+    expect(preventDefault).not.toHaveBeenCalled();
+    expect(frames.size).toBe(0);
+    expect(element.scrollTop).toBe(0);
+  } finally { act(() => tree.unmount()); }
+});

@@ -1,0 +1,68 @@
+.ad-quantum-field {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: clamp(12rem, 24vw, 28rem);
+  overflow: hidden;
+  isolation: isolate;
+  background: transparent;
+}
+.ad-quantum-field > canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.ad-quantum-field[data-interactive="true"] {
+  cursor: grab;
+  touch-action: none;
+}
+.ad-quantum-field[data-interactive="true"]:active { cursor: grabbing; }
+.ad-quantum-field > :not(canvas) {
+  position: relative;
+  z-index: 1;
+}
+
+.ad-quantum-field-experience {
+  width: 100%;
+  overflow: hidden;
+  border-radius: var(--ad-radius-lg, 1rem);
+  background: transparent;
+}
+.ad-qf-controls {
+  display: grid;
+  gap: 0.75rem;
+  padding: 0.75rem 0;
+}
+.ad-qf-controls > nav { max-width: 100%; overflow-x: auto; }
+.ad-qf-control-panel { display: grid; gap: 0.75rem; }
+.ad-qf-setting-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
+  gap: 0.75rem 1rem;
+  align-items: center;
+}
+.ad-qf-setting { display: flex; align-items: end; gap: 0.5rem; min-width: 0; }
+.ad-qf-setting > .ad-slider-field { flex: 1; min-width: 0; }
+.ad-qf-setting > output { min-width: 3ch; padding-bottom: 0.55rem; color: var(--ad-muted); font-variant-numeric: tabular-nums; text-align: end; }
+.ad-qf-player { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; }
+.ad-qf-player > .ad-slider-field { flex: 1 1 12rem; }
+.ad-qf-track { color: var(--ad-muted); max-width: 12rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ad-qf-fps, .ad-qf-status { color: var(--ad-muted); font-size: 0.75rem; }
+.ad-qf-status { min-height: 1em; }
+.ad-qf-viewport {
+  position: relative;
+  width: 100%;
+  height: clamp(32rem, 65vh, 50rem);
+  background: transparent;
+}
+.ad-qf-viewport > .ad-quantum-field {
+  height: 100%;
+}
+.ad-qf-viewport > iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: transparent;
+}

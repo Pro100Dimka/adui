@@ -171,7 +171,7 @@ export function useSmoothWheel(ref: React.RefObject<HTMLElement | null>) {
       frame = requestAnimationFrame(glide);
     };
     const onWheel = (event: WheelEvent) => {
-      if (event.ctrlKey || Math.abs(event.deltaX) > Math.abs(event.deltaY))
+      if (event.defaultPrevented || event.ctrlKey || Math.abs(event.deltaX) > Math.abs(event.deltaY))
         return;
       const delta = event.deltaMode === 1 ? event.deltaY * 16 : event.deltaY;
       if (event.deltaMode === 0 && Math.abs(delta) < 40) return;

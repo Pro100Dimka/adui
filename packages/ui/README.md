@@ -9,7 +9,7 @@ Live docs: https://pro100dimka.github.io/adui/
 The package is installed from its GitHub release; React and ReactDOM are peer dependencies.
 
 ```bash
-npm install https://github.com/Pro100Dimka/adui/releases/download/v2.8.3/ad-voice-ui-2.8.3.tgz react react-dom
+npm install https://github.com/Pro100Dimka/adui/releases/download/v2.9.0/ad-voice-ui-2.9.0.tgz react react-dom
 ```
 
 Import the stylesheet once in the app entry point:
@@ -49,6 +49,62 @@ export function SettingsCard() {
 ```
 
 Every stateful component works both controlled (`value` + `onValueChange`) and uncontrolled (`defaultValue`).
+
+## QuantumField
+
+`QuantumField` is an original, theme-native 3D audio visualization for backgrounds and panels. It renders immediately—there is no Enter gate—and its seven `mode` values are `orbit`, `vortex`, `lattice`, `wave`, `bloom`, `helix`, and `terrain`. Its bounded WebGL renderer uses static particle and filament buffers without post-processing; Canvas 2D is a fallback when WebGL is unavailable. `quality="auto"` limits pixels and particles, and drawing pauses outside the viewport, in hidden tabs, or when the kit's motion setting is off. `interactive` enables deep wheel zoom, local pointer influence, and drag-to-rotate; hovering alone never rotates the whole field. `density`, `speed`, `quality`, `interactive`, and `paused` are optional. Normally its colours follow the nearest `ThemeProvider`; `palette={[primary, secondary]}` overrides one instance.
+
+```tsx
+import { QuantumField, ThemeProvider } from "@ad-voice/ui";
+
+<ThemeProvider primary="#10c99a" secondary="#7cf3d0">
+  <QuantumField mode="vortex" quality="auto" aria-label="Audio field" />
+</ThemeProvider>
+```
+
+To react to a microphone, request access only from a user click and pass the resulting stream. The component owns and releases its audio analysis graph; your app still owns the stream and stops its tracks when no longer needed.
+
+```tsx
+import { useEffect, useState } from "react";
+import { Button, QuantumField } from "@ad-voice/ui";
+
+function MicrophoneField() {
+  const [stream, setStream] = useState<MediaStream | null>(null);
+  useEffect(() => () => stream?.getTracks().forEach((track) => track.stop()), [stream]);
+  return <>
+    <Button onClick={async () => setStream(await navigator.mediaDevices.getUserMedia({ audio: true }))}>
+      Enable microphone
+    </Button>
+    <QuantumField mode="terrain" stream={stream ?? undefined} />
+  </>;
+}
+```
+
+For a file player, `createQuantumFieldAudio()` provides a small optional transport. Create it in response to a user action, call `loadFile(file)` (which does **not** autoplay), then pass `controller.analyser` as `audio`. Its `play`, `pause`, `seek`, `media`, and `dispose` members let you build the controls with the kit's `FilePicker`, `Button`, and `Slider`. `requestMicrophone()` is explicit and stops only the stream it requested; `connectStream(stream)` accepts an app-owned stream without taking ownership.
+
+```tsx
+import { useEffect, useRef, useState } from "react";
+import { Button, FilePicker, QuantumField, createQuantumFieldAudio } from "@ad-voice/ui";
+
+function FileField() {
+  const controller = useRef<ReturnType<typeof createQuantumFieldAudio> | null>(null);
+  const [analyser, setAnalyser] = useState<AnalyserNode | null>(null);
+  useEffect(() => () => { void controller.current?.dispose(); }, []);
+
+  return <>
+    <FilePicker variant="button" accept="audio/*" label="Choose audio" onFiles={([file]) => {
+      if (!file) return;
+      const audio = controller.current ??= createQuantumFieldAudio();
+      audio.loadFile(file); // does not autoplay
+      setAnalyser(audio.analyser);
+    }} />
+    <Button disabled={!analyser} onClick={() => { void controller.current?.play(); }}>Play</Button>
+    <QuantumField mode="wave" audio={analyser ?? undefined} />
+  </>;
+}
+```
+
+An existing audio engine can also pass its own `AnalyserNode` as `audio`, or a callback returning `{ bands: [bass, …, air], energy, beat }` with seven normalized band levels. Playback and permission handling stay outside the visualizer, so mounting it never captures audio unexpectedly.
 
 ## DataTable
 
@@ -109,3 +165,7 @@ import { ThemeProvider, useMotion } from "@ad-voice/ui/core";
 ## RotaryKnob
 
 Canvas-rendered volume knob. Drag near the edge to rotate, drag from the center to move linearly, click the outer scale to jump. Wheel and arrow keys change the value, Shift gives a fine step, PageUp/PageDown change by 10, Home/End set 0/100, Escape cancels a drag, double-click resets. `onValueChange` fires while adjusting, `onValueCommit` after the gesture. `readOnly` turns it into a gauge.
+
+## Quantum Field experience
+
+`QuantumFieldExperience` restores the full Quantum Fields visualizer inside an iframe, with its settings, song picker, transport, microphone action, seek, screenshot, and fullscreen controls surfaced through the kit. It follows the nearest `ThemeProvider` palette and matches the surrounding surface. This experience includes MIT-licensed upstream code and CDN-loaded Three.js/lil-gui modules; the upstream notice is shipped as `UPSTREAM-LICENSE.txt`. It is not mounted in overview-card previews. For a smaller self-authored field without transport controls, use `QuantumField` directly.

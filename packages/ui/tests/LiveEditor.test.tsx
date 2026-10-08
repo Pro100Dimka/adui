@@ -2,6 +2,7 @@ import { afterEach, expect, it, vi } from "vitest";
 import { act, create, type ReactTestRenderer } from "react-test-renderer";
 import { LiveEditor } from "../../../apps/playground/src/catalog/LiveEditor";
 import { readFileSync } from "node:fs";
+import ts from "typescript";
 
 const state = vi.hoisted(() => ({ compile: vi.fn() }));
 vi.mock("../../../apps/playground/src/catalog/liveCode", () => ({ compile: state.compile }));
@@ -52,7 +53,8 @@ it("serves a self-contained classic dev runtime without opening CORS to opaque o
   expect(buildRuntime).toBeTypeOf("function");
   const code = await buildRuntime!();
   expect(code).toContain("ad-preview-render");
-  expect(code).not.toMatch(/^\s*import\s/m);
+  const script = ts.createSourceFile("sandbox-runtime.js", code, ts.ScriptTarget.ES2022, false, ts.ScriptKind.JS);
+  expect(script.statements.some(ts.isImportDeclaration)).toBe(false);
   expect(readFileSync("../../apps/playground/vite.config.ts", "utf8")).not.toContain('cors: { origin: "null" }');
 });
 

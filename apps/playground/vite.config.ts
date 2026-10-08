@@ -19,6 +19,7 @@ export async function buildSandboxRuntime() {
       part === "index" ? "@ad-voice/ui" : `@ad-voice/ui/${part}`,
       ui(`${part}.ts`),
     ])),
+    loader: { ".html": "text" },
   });
   return result.outputFiles[0].text;
 }

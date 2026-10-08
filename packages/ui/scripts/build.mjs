@@ -30,6 +30,7 @@ await build({
   external: ["react", "react-dom", "react/jsx-runtime"],
   chunkNames: "chunks/[name]-[hash]",
   legalComments: "none",
+  loader: { ".html": "text" },
 });
 // Stylesheets and fonts (with their licence) are copied with the same layout (the docs-only dev
 // helpers stay out).
@@ -37,5 +38,5 @@ cpSync(at("src"), at("dist"), {
   recursive: true,
   filter: (path) =>
     !/[\\/]src[\\/]dev$/.test(path) &&
-    (statSync(path).isDirectory() || /\.(css|woff2)$/.test(path) || /[\\/]fonts[\\/].*\.txt$/.test(path)),
+    (statSync(path).isDirectory() || /\.(css|woff2)$/.test(path) || /[\\/]fonts[\\/].*\.txt$/.test(path) || /UPSTREAM-LICENSE\.txt$/.test(path)),
 });
