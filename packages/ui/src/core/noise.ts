@@ -97,6 +97,7 @@ export function paintCanvas(
       return canvas;
     })();
     paintings.set(id, done);
+    while (paintings.size > 24) paintings.delete(paintings.keys().next().value!);
   }
   return done;
 }

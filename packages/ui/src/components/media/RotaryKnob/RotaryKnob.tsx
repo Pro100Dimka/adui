@@ -12,6 +12,7 @@ import React, {
   useState,
 } from "react";
 import { clamp, mark, normalizeSize } from "../../../core/base";
+import { paintCanvas } from "../../../core/noise";
 import { type RotaryKnobProps, type RotaryKnobController } from "../shared";
 
 export const RotaryKnob = (p: RotaryKnobProps) => {
@@ -73,7 +74,7 @@ export const RotaryKnob = (p: RotaryKnobProps) => {
     const paintable = canPaint();
     const rotorCtx = (paintable ? rotor.getContext("2d") : null)!;
     const feedbackCtx = (paintable ? feedback.getContext("2d") : null)!;
-    const ctx = (paintable ? canvas.getContext("2d", { alpha: true }) : null)!;
+    let ctx = (paintable ? canvas.getContext("2d", { alpha: true }) : null)!;
     const painted = Boolean(rotorCtx && feedbackCtx && ctx);
 
     const TAU = Math.PI * 2;
@@ -112,7 +113,7 @@ export const RotaryKnob = (p: RotaryKnobProps) => {
     let previousFrame = 0;
     let disposed = false;
 
-    function render() {
+    async function render() {
       if (disposed || !painted) return;
       const cssSize = root.getBoundingClientRect().width;
       const size = Math.round(
@@ -125,12 +126,13 @@ export const RotaryKnob = (p: RotaryKnobProps) => {
       canvas.width = canvas.height = size;
       const center = size / 2;
       const radius = size * 0.445;
-      const pixels = ctx.createImageData(size, size);
-      const data = pixels.data;
       const brush = new Float32Array(Math.ceil(radius * 5) + 8);
       for (let i = 0; i < brush.length; i++) brush[i] = noise(i + 17) - 0.5;
 
-      for (let y = 0; y < size; y++) {
+      const picture = await paintCanvas("rotary-knob-base", size, size, {
+        pixels(image, from, to) {
+          const data = image.data;
+          for (let y = from; y < to; y++) {
         const yy = (y + 0.5 - center) / radius;
         for (let x = 0; x < size; x++) {
           const xx = (x + 0.5 - center) / radius;
@@ -260,15 +262,27 @@ export const RotaryKnob = (p: RotaryKnobProps) => {
           data[index + 2] = localClamp(blue, 0, 255);
           data[index + 3] = 255;
         }
-      }
-      ctx.putImageData(pixels, 0, 0);
-      ctx.save();
-      ctx.translate(center, center);
-      ctx.scale(radius, radius);
-      drawKnurl();
-      drawReflections();
-      drawTicks();
-      ctx.restore();
+          }
+        },
+        finish(baseCtx) {
+          // The static metal and markings belong to the shared cached picture too.
+          const instanceCtx = ctx;
+          ctx = baseCtx;
+          try {
+            ctx.save();
+            ctx.translate(center, center);
+            ctx.scale(radius, radius);
+            drawKnurl();
+            drawReflections();
+            drawTicks();
+            ctx.restore();
+          } finally {
+            ctx = instanceCtx;
+          }
+        },
+      });
+      if (disposed || canvas.width !== size || canvas.height !== size) return;
+      ctx.drawImage(picture, 0, 0);
 
       rotor.width = rotor.height = size;
       feedback.width = feedback.height = size;
@@ -282,7 +296,7 @@ export const RotaryKnob = (p: RotaryKnobProps) => {
     }
 
     function drawKnurl() {
-      const columns = 184;
+      const columns = 96;
       const rows = 6;
       const start = 0.744;
       const end = 0.813;

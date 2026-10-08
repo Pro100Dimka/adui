@@ -3,7 +3,7 @@ import { useEffect, type RefObject } from "react";
 import { paintCanvas, type Painting } from "../../core/noise";
 
 /** Most pixels one picture may take: sharp on large hi-dpi screens, still quick to paint. */
-const BUDGET = 3_200_000;
+const BUDGET = 500_000;
 
 /**
  * Paints a procedural picture at the resolution its canvas is actually shown at (the box

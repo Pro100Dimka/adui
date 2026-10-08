@@ -48,3 +48,29 @@ it("does not paint a library artwork until its canvas approaches the viewport", 
   expect(paintCanvas).toHaveBeenCalledTimes(1);
   act(() => tree.unmount());
 });
+
+it("caps procedural artwork pixels on large high-density surfaces", () => {
+  vi.stubGlobal("IS_REACT_ACT_ENVIRONMENT", true);
+  vi.stubGlobal("CanvasRenderingContext2D", class {});
+  vi.stubGlobal("window", { devicePixelRatio: 2 });
+  vi.stubGlobal("ResizeObserver", class {
+    constructor(private callback: ResizeObserverCallback) {}
+    observe() { this.callback([], this as unknown as ResizeObserver); }
+    disconnect() {}
+  });
+  const canvas = {
+    getBoundingClientRect: () => ({ width: 1000, height: 600 }),
+    getContext: () => ({ drawImage() {} }),
+    dataset: {},
+  };
+  function Artwork() {
+    const ref = useRef<HTMLCanvasElement>(null);
+    useArtwork(ref, "large-test", 515, 114, { pixels() {} });
+    return createElement("canvas", { ref });
+  }
+  let tree!: ReturnType<typeof create>;
+  act(() => { tree = create(createElement(Artwork), { createNodeMock: () => canvas }); });
+  const [, width, height] = vi.mocked(paintCanvas).mock.lastCall!;
+  expect(width * height).toBeLessThanOrEqual(512_000);
+  act(() => tree.unmount());
+});
