@@ -615,10 +615,10 @@ export const RotaryKnob = (p: RotaryKnobProps) => {
         y: event.clientY,
         center,
         angle: polar(event, center),
-        mode: distance >= 0.36 ? "circular" : "linear",
+        mode: distance >= 0.8 ? "circular" : "linear",
         value,
         start: value,
-        distance: localClamp(center.radius * 1.2, 160, 420),
+        distance: localClamp(center.radius * 0.8, 80, 240),
         glide: false,
       };
       control.setPointerCapture(event.pointerId);
@@ -740,7 +740,7 @@ export const RotaryKnob = (p: RotaryKnobProps) => {
       event.preventDefault();
       control.focus({ preventScroll: true });
       const step = event.shiftKey ? fineStepRef.current : stepRef.current;
-      if (setValue(value - Math.sign(event.deltaY) * step)) commit();
+      if (setValue(value - Math.sign(event.deltaY) * Math.max(step, event.shiftKey ? 0.5 : 5))) commit();
     }
 
     function doubleClick(event: MouseEvent) {

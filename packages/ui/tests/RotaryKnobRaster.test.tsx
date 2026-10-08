@@ -40,3 +40,37 @@ it("defers the knob's expensive static raster to the shared sliced artwork paint
   expect(fills).toBeLessThan(3500);
   act(() => tree.unmount());
 });
+
+it("turns decisively with a wheel notch and a short vertical drag", () => {
+  vi.stubGlobal("IS_REACT_ACT_ENVIRONMENT", true);
+  vi.stubGlobal("devicePixelRatio", 2);
+  vi.stubGlobal("window", { addEventListener() {}, setTimeout, clearTimeout });
+  vi.stubGlobal("document", { addEventListener() {} });
+  vi.stubGlobal("requestAnimationFrame", () => 1);
+  vi.stubGlobal("cancelAnimationFrame", () => undefined);
+  const handlers = new Map<string, EventListener>();
+  const changes: number[] = [];
+  const context = new Proxy({}, { get: () => () => context }) as CanvasRenderingContext2D;
+  const node = ({ props }: { props: { className?: string } }) => ({
+    width: 0, height: 0, style: { setProperty() {} }, dataset: {},
+    classList: { add() {}, remove() {} },
+    getBoundingClientRect: () => ({ width: 124, height: 124, left: 0, top: 0 }),
+    getContext: () => context,
+    addEventListener(name: string, listener: EventListener) {
+      if (props.className === "knob__control") handlers.set(name, listener);
+    },
+    removeEventListener() {}, setAttribute() {}, focus() {},
+    setPointerCapture() {}, hasPointerCapture: () => true, releasePointerCapture() {},
+  });
+  let tree!: ReturnType<typeof create>;
+  act(() => { tree = create(createElement(RotaryKnob, { label: "Gain", defaultValue: 20, onValueChange: (value) => changes.push(value) }), { createNodeMock: node }); });
+  const event = { preventDefault() {}, ctrlKey: false, metaKey: false, shiftKey: false };
+  act(() => handlers.get("wheel")?.({ ...event, deltaY: -100 } as WheelEvent));
+  expect(changes.at(-1)).toBeGreaterThanOrEqual(24);
+  act(() => {
+    handlers.get("pointerdown")?.({ ...event, button: 0, isPrimary: true, pointerId: 1, clientX: 62, clientY: 62 } as PointerEvent);
+    handlers.get("pointermove")?.({ ...event, pointerId: 1, clientX: 62, clientY: 22 } as PointerEvent);
+  });
+  expect(changes.at(-1)).toBeGreaterThanOrEqual(70);
+  act(() => tree.unmount());
+});
