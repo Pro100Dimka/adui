@@ -37,6 +37,15 @@ it("preserves the source visualizer's MIT notice when restoring it", () => {
   expect(reference).not.toContain("key === 'background'");
 });
 
+it("requests the discrete GPU for the real-time QuantumField renderer", () => {
+  const source = readFileSync(
+    new URL("../src/components/artwork/QuantumField/renderer.ts", import.meta.url),
+    "utf8",
+  );
+  expect(source).toContain('powerPreference: "high-performance"');
+  expect(source).not.toContain('powerPreference: "low-power"');
+});
+
 it("restores the licensed full visualizer instead of the reduced native scene", () => {
   const html = renderToStaticMarkup(createElement(QuantumFieldExperience));
   const reference = new URL("../src/components/artwork/QuantumField/reference.html", import.meta.url);

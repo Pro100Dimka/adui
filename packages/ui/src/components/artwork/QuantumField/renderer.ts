@@ -216,7 +216,7 @@ const rgb = (color: string): [number, number, number] => {
 export function createQuantumFieldRenderer(canvas: HTMLCanvasElement, mode: QuantumFieldMode, count: number) {
   const gl = canvas.getContext("webgl", {
     alpha: true, antialias: false, depth: false, stencil: false,
-    preserveDrawingBuffer: false, powerPreference: "low-power",
+    preserveDrawingBuffer: false, powerPreference: "high-performance",
   });
   if (!gl || typeof gl.createShader !== "function") return null;
   const vertex = compile(gl, gl.VERTEX_SHADER, VERTEX);
