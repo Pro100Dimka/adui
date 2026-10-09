@@ -62,11 +62,17 @@ export interface Painting {
 }
 
 const paintings = new Map<string, Promise<HTMLCanvasElement>>();
-const pause = () => new Promise<void>((resume) => setTimeout(resume));
+const nextSlice = () => new Promise<IdleDeadline | undefined>((resume) => {
+  if (typeof requestIdleCallback === "function") {
+    requestIdleCallback(resume, { timeout: 32 });
+  } else {
+    setTimeout(() => resume(undefined), 16);
+  }
+});
 
 /**
- * Paints a picture into an offscreen canvas in ~8 ms slices, so even a large one never
- * freezes the page, and keeps it: every instance of the same size reuses the result.
+ * Paints a picture into an offscreen canvas in short idle-time slices, so even a large
+ * one stays responsive, and keeps it: every instance of the same size reuses the result.
  */
 export function paintCanvas(
   key: string,
@@ -85,13 +91,15 @@ export function paintCanvas(
       if (!context) return canvas;
       const image = context.createImageData(width, height);
       for (let row = 0; row < height;) {
+        const deadline = await nextSlice();
         const started = performance.now();
-        while (row < height && performance.now() - started < 8) {
+        const budget = Math.max(1, Math.min(4, deadline?.timeRemaining() ?? 4));
+        do {
           painting.pixels(image, row, row + 1);
           row += 1;
-        }
-        if (row < height) await pause();
+        } while (row < height && performance.now() - started < budget);
       }
+      await nextSlice();
       context.putImageData(image, 0, 0);
       painting.finish?.(context, width, height);
       return canvas;
