@@ -1,7 +1,7 @@
 import { createElement, useMemo, useRef, type ReactElement } from "react";
 import { useSvgId, vectorElement } from "../../../core/artwork";
 import type { VectorNode } from "../../../core/base";
-import { useDecoration } from "../../../core/motion/hooks";
+import { usePauseOffscreen } from "../../../core/motion/hooks";
 import { illustrations } from "../shared";
 
 /** The seal's face circle; a photo is clipped to it and drawn under the rings and label. */
@@ -103,15 +103,7 @@ const toLayers = (seal: VectorNode): Layer[] => {
 export function HostSeal({ photo, name }: { photo?: string; name?: string }) {
   const ref = useRef<HTMLSpanElement>(null);
   const prefix = `svg-${useSvgId()}-`;
-  // Only the rings' transforms change: no SVG attribute is written, nothing is repainted.
-  useDecoration(ref, (t) =>
-    ref.current
-      ?.querySelectorAll<SVGSVGElement>("[data-host-spin]")
-      .forEach((layer) => {
-        const degrees = (t * Number(layer.dataset.hostSpin) * 360) % 360;
-        layer.style.transform = `rotate(${degrees.toFixed(2)}deg)`;
-      }),
-  );
+  usePauseOffscreen(ref);
   const layers = useMemo(() => {
     const seal = withPerson(illustrations.host, photo, name);
     const root = (vectorElement({ tag: "svg", props: seal.props }, prefix) as ReactElement<Record<string, unknown>>).props;
@@ -120,7 +112,15 @@ export function HostSeal({ photo, name }: { photo?: string; name?: string }) {
     return toLayers(seal).map((layer, i) =>
       createElement(
         "svg",
-        { ...root, key: i, "data-host-spin": layer.spin },
+        {
+          ...root,
+          key: i,
+          "data-host-spin": layer.spin,
+          style: layer.spin === undefined ? undefined : {
+            animationDuration: `${1 / Math.abs(layer.spin)}s`,
+            animationDirection: layer.spin < 0 ? "reverse" : "normal",
+          },
+        },
         layer.nodes.map((node, k) => vectorElement(node, prefix, k)),
       ),
     );

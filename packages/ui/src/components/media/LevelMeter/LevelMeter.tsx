@@ -50,10 +50,12 @@ export function LevelMeter({
   const id = useSvgId();
   const path = useRef<SVGPathElement>(null);
   const target = useRef(0);
+  const wake = useRef<() => void>(() => undefined);
   const level = clamp(value) / 100;
 
   useEffect(() => {
     target.current = active ? level : 0;
+    if (active && level > 0) wake.current();
   }, [active, level]);
 
   useEffect(() => {
@@ -61,6 +63,7 @@ export function LevelMeter({
     if (!shape) return;
     const samples = Array.from({ length: SAMPLES + 1 }, () => 0);
     shape.setAttribute("d", wavePath(samples));
+    wake.current = () => undefined;
     if (!active) return;
 
     let context: AudioContext | undefined;
@@ -78,8 +81,9 @@ export function LevelMeter({
     let envelope = 0;
     let carry = 0;
     let last = performance.now();
+    let stop: (() => void) | undefined;
     // Drawn on the shared motion clock, in step with every other animation.
-    const stop = subscribeTick(function draw(now) {
+    const draw = (now: number) => {
       carry += Math.min(250, now - last);
       last = now;
       const input = analyser ? loudness(analyser, buffer) : target.current;
@@ -92,13 +96,27 @@ export function LevelMeter({
         samples.push(envelope);
         shape.setAttribute("d", wavePath(samples));
       }
+      if (!analyser && envelope === 0 && samples.every((sample) => sample === 0)) {
+        shape.setAttribute("transform", "translate(0 0)");
+        stop?.();
+        stop = undefined;
+        return;
+      }
       shape.setAttribute(
         "transform",
         `translate(${(-(carry / SAMPLE_MS) * STEP).toFixed(3)} 0)`,
       );
-    });
+    };
+    wake.current = () => {
+      if (stop) return;
+      carry = 0;
+      last = performance.now();
+      stop = subscribeTick(draw);
+    };
+    if (analyser || target.current > 0) wake.current();
     return () => {
-      stop();
+      wake.current = () => undefined;
+      stop?.();
       source?.disconnect();
       void context?.close();
     };

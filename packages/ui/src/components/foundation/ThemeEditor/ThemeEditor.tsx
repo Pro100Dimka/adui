@@ -71,6 +71,7 @@ export function ThemeEditor({ value: controlled, defaultValue = defaultThemeConf
 
   // The values the theme gives every token right now, so untouched tokens show what they are.
   useLayoutEffect(() => {
+    if (config.mode !== "advanced") return;
     const node = root.current;
     if (!node) return;
     const frame = requestAnimationFrame(() =>

@@ -224,19 +224,32 @@ export function createQuantumFieldRenderer(canvas: HTMLCanvasElement, mode: Quan
   if (!vertex || !fragment) return null;
   const program = gl.createProgram();
   const buffer = gl.createBuffer();
+  const haloBuffer = gl.createBuffer();
   const lineBuffer = gl.createBuffer();
   const networkBuffer = gl.createBuffer();
-  if (!program || !buffer || !lineBuffer || !networkBuffer) return null;
+  if (!program || !buffer || !haloBuffer || !lineBuffer || !networkBuffer) return null;
   gl.attachShader(program, vertex);
   gl.attachShader(program, fragment);
   gl.linkProgram(program);
   if (!gl.getProgramParameter(program, gl.LINK_STATUS)) return null;
   const data = quantumFieldGeometry(mode, count);
+  let highlightCount = 0;
+  for (let i = 3; i < data.length; i += 4) if (data[i]! >= 0.976) highlightCount += 1;
+  const highlights = new Float32Array(highlightCount * 4);
+  for (let i = 0, offset = 0; i < data.length; i += 4) {
+    if (data[i + 3]! < 0.976) continue;
+    highlights[offset++] = data[i]!;
+    highlights[offset++] = data[i + 1]!;
+    highlights[offset++] = data[i + 2]!;
+    highlights[offset++] = data[i + 3]!;
+  }
   const lines = quantumFieldFilaments(mode, Math.min(240, Math.max(80, Math.round(count / 100))), 12);
   let network = quantumFieldNetwork(mode, 96, 0);
   let networkEpoch = 0;
   gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
   gl.bufferData(gl.ARRAY_BUFFER, data, gl.STATIC_DRAW);
+  gl.bindBuffer(gl.ARRAY_BUFFER, haloBuffer);
+  gl.bufferData(gl.ARRAY_BUFFER, highlights, gl.STATIC_DRAW);
   gl.bindBuffer(gl.ARRAY_BUFFER, lineBuffer);
   gl.bufferData(gl.ARRAY_BUFFER, lines, gl.STATIC_DRAW);
   gl.bindBuffer(gl.ARRAY_BUFFER, networkBuffer);
@@ -299,13 +312,18 @@ export function createQuantumFieldRenderer(canvas: HTMLCanvasElement, mode: Quan
       gl.uniform1f(uniform.uLine, 0);
       gl.blendFunc(gl.SRC_ALPHA, gl.ONE);
       gl.uniform1f(uniform.uHalo, 1);
-      gl.drawArrays(gl.POINTS, 0, data.length / 4);
+      gl.bindBuffer(gl.ARRAY_BUFFER, haloBuffer);
+      gl.vertexAttribPointer(attribute, 4, gl.FLOAT, false, 0, 0);
+      gl.drawArrays(gl.POINTS, 0, highlightCount);
       gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
       gl.uniform1f(uniform.uHalo, 0);
+      gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+      gl.vertexAttribPointer(attribute, 4, gl.FLOAT, false, 0, 0);
       gl.drawArrays(gl.POINTS, 0, data.length / 4);
     },
     dispose() {
       gl.deleteBuffer(buffer);
+      gl.deleteBuffer(haloBuffer);
       gl.deleteBuffer(lineBuffer);
       gl.deleteBuffer(networkBuffer);
       gl.deleteProgram(program);

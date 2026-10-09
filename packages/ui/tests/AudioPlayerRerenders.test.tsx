@@ -30,6 +30,28 @@ it("moves the live cursor without rebuilding the play and volume controls every 
   act(() => tree.unmount());
 });
 
+it("controls an external transport without starting a second audio source or clock", () => {
+  vi.stubGlobal("IS_REACT_ACT_ENVIRONMENT", true);
+  const onPlayingChange = vi.fn();
+  const onTimeChange = vi.fn();
+  const audio = vi.fn();
+  vi.stubGlobal("Audio", audio);
+  let tree!: ReturnType<typeof create>;
+  act(() => { tree = create(<AudioPlayer playing={false} position={12} duration={30} showVolume={false}
+    onPlayingChange={onPlayingChange} onTimeChange={onTimeChange} />); });
+  try {
+    expect(audio).not.toHaveBeenCalled();
+    expect(clock.tick).toBeNull();
+    expect(tree.root.findByType(Waveform).props.position).toBe(12);
+    expect(tree.root.findAllByType(IconButton)).toHaveLength(1);
+    act(() => tree.root.findByType(IconButton).props.onClick!({} as never));
+    expect(onPlayingChange).toHaveBeenCalledWith(true);
+    act(() => tree.root.findByType(Waveform).props.onSeek!(20));
+    expect(onTimeChange).toHaveBeenCalledWith(20);
+    expect(tree.root.findByType(Waveform).props.position).toBe(12);
+  } finally { act(() => tree.unmount()); }
+});
+
 it("uses elapsed clock time for the demo timeline and announces completion once", () => {
   vi.stubGlobal("IS_REACT_ACT_ENVIRONMENT", true);
   const onPlayingChange = vi.fn();

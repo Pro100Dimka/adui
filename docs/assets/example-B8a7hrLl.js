@@ -1,0 +1,1 @@
+import{j as r,S as i,g as e,z as s}from"./index-BE20j0Y6.js";function t(){return r.jsxs(i,{children:[r.jsx(e,{children:"Аудио"}),r.jsx(s,{}),r.jsxs(i,{direction:"row",align:"center",children:[r.jsx(e,{children:"Вход"}),r.jsx(s,{vertical:!0}),r.jsx(e,{children:"Выход"})]})]})}export{t as default};

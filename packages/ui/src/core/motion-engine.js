@@ -173,12 +173,55 @@ if (typeof window !== "undefined" && typeof document !== "undefined") {
   schedule();
 }
 let scopeCount = 0;
+let preferenceMedia = null;
+const preferenceScopes = new Set();
+const onPreference = (event) => {
+  for (const scope of preferenceScopes)
+    if (!scope.explicit) scope.set(!event.matches, false);
+};
+let visibilityObserver = null;
+const visibilityScopes = new Map();
+const observeScope = (node, scope) => {
+  if (!canObserveIntersection()) return;
+  let scopes = visibilityScopes.get(node);
+  if (!scopes) {
+    scopes = new Set();
+    visibilityScopes.set(node, scopes);
+    visibilityObserver ??= new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          entry.target._adInView = entry.isIntersecting;
+          for (const watcher of visibilityScopes.get(entry.target) || []) watcher.previous = null;
+        }
+        schedule();
+      },
+      { rootMargin: "10%" },
+    );
+    visibilityObserver.observe(node);
+  }
+  scopes.add(scope);
+};
+const unobserveScope = (node, scope) => {
+  const scopes = visibilityScopes.get(node);
+  if (!scopes) return;
+  scopes.delete(scope);
+  if (scopes.size) return;
+  visibilityScopes.delete(node);
+  visibilityObserver.unobserve(node);
+  if (!visibilityScopes.size) {
+    visibilityObserver.disconnect();
+    visibilityObserver = null;
+  }
+};
 U.createMotion = (root = document) => {
   scopeCount++;
-  const media = reducedMotionQuery();
+  if (!preferenceMedia) {
+    preferenceMedia = reducedMotionQuery();
+    preferenceMedia.addEventListener("change", onPreference);
+  }
   const scope = {
     root,
-    enabled: !media.matches,
+    enabled: !preferenceMedia.matches,
     time: 0,
     previous: null,
     explicit: false,
@@ -192,7 +235,7 @@ U.createMotion = (root = document) => {
       for (const [node, fn] of this.callbacks) {
         if (!node.isConnected) {
           this.callbacks.delete(node);
-          this.intersection?.unobserve(node);
+          unobserveScope(node, this);
           continue;
         }
         if (node._adInView === true || (node._adInView !== false && node.getClientRects().length)) {
@@ -210,11 +253,11 @@ U.createMotion = (root = document) => {
     add(node, callback, immediate = true) {
       this.callbacks.set(node, callback);
       if (immediate) callback(this.time);
-      this.intersection?.observe(node);
+      observeScope(node, this);
       schedule();
       return () => {
         this.callbacks.delete(node);
-        this.intersection?.unobserve(node);
+        unobserveScope(node, this);
         schedule();
       };
     },
@@ -237,26 +280,17 @@ U.createMotion = (root = document) => {
       this.disposed = true;
       --scopeCount;
       running.delete(this);
+      for (const node of this.callbacks.keys()) unobserveScope(node, this);
       this.callbacks.clear();
-      this.intersection?.disconnect();
-      media.removeEventListener("change", this.onPreference);
+      preferenceScopes.delete(this);
+      if (!preferenceScopes.size) {
+        preferenceMedia.removeEventListener("change", onPreference);
+        preferenceMedia = null;
+      }
       schedule();
     },
   };
-  scope.intersection = canObserveIntersection()
-    ? new IntersectionObserver(
-        (entries) => {
-          entries.forEach((e) => (e.target._adInView = e.isIntersecting));
-          scope.previous = null;
-          schedule();
-        },
-        { rootMargin: "10%" },
-      )
-    : null;
-  scope.onPreference = (e) => {
-    if (!scope.explicit) scope.set(!e.matches, false);
-  };
-  media.addEventListener("change", scope.onPreference);
+  preferenceScopes.add(scope);
   scope.set(scope.enabled, false);
   return scope;
 };

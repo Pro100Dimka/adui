@@ -149,6 +149,8 @@ export function NeonWaves({
   const cometsRef = useRef<HTMLSpanElement>(null);
   const lastDraw = useRef(-1);
   const tracks = useRef(new Map<number, Track>());
+  const paths = useRef<{ node: SVGSVGElement; elements: NodeListOf<SVGPathElement> } | null>(null);
+  const cometElements = useRef<{ node: HTMLSpanElement; elements: NodeListOf<HTMLElement> } | null>(null);
   const size = useRef({ width: 0, height: 0 });
   const motion = useMotion();
   const id = useSvgId();
@@ -162,6 +164,7 @@ export function NeonWaves({
       o: 0.16 + next() * 0.42,
     }));
   }, [stars, phase]);
+  const carried = useMemo(() => new Set(Array.from({ length: comets }, (_, i) => cometStrand(i, comets, strands))), [comets, strands]);
 
   // The box is read from the observer, never measured on a frame.
   useEffect(() => {
@@ -181,13 +184,14 @@ export function NeonWaves({
     // and halves their cost; the comets ride their own layers at the full clock rate.
     if (lastDraw.current < 0 || time - lastDraw.current >= 1 / 16) {
       lastDraw.current = time;
-      const paths = ref.current?.querySelectorAll<SVGPathElement>(".ad-neon-waves-strand");
-      const carried = new Set(Array.from({ length: comets }, (_, i) => cometStrand(i, comets, strands)));
+      const node = ref.current;
+      if (node && (paths.current?.node !== node || paths.current.elements.length !== strands))
+        paths.current = { node, elements: node.querySelectorAll<SVGPathElement>(".ad-neon-waves-strand") };
       tracks.current.clear();
-      paths?.forEach((path, i) => {
-        const t = i / Math.max(1, paths.length - 1);
+      paths.current?.elements.forEach((path, i, elements) => {
+        const t = i / Math.max(1, elements.length - 1);
         const drift = time * 0.42 + phase;
-        const curve = shape === "ridge" ? ridgeStrand(t, drift) : twistStrand(t, drift, i < paths.length * 0.68);
+        const curve = shape === "ridge" ? ridgeStrand(t, drift) : twistStrand(t, drift, i < elements.length * 0.68);
         path.setAttribute("d", toPath(curve));
         if (carried.has(i)) tracks.current.set(i, measure(curve));
       });
@@ -196,7 +200,11 @@ export function NeonWaves({
     const { width, height } = size.current;
     if (!width || !height) return;
     const sx = width / W, sy = height / H;
-    cometsRef.current?.querySelectorAll<HTMLElement>(".ad-neon-waves-comet").forEach((comet, i) => {
+    const cometNode = cometsRef.current;
+    if (cometNode && (cometElements.current?.node !== cometNode || cometElements.current.elements.length !== comets))
+      cometElements.current = { node: cometNode, elements: cometNode.querySelectorAll<HTMLElement>(".ad-neon-waves-comet") };
+    if (!cometNode) return;
+    cometElements.current?.elements.forEach((comet, i) => {
       const track = tracks.current.get(cometStrand(i, comets, strands));
       if (!track) return;
       const start = ((time + ((i * COMET_LAP) / comets + 1.8)) / COMET_LAP) % 1;

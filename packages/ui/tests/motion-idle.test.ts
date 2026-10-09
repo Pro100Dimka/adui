@@ -3,6 +3,7 @@ import { afterEach, beforeEach, expect, it, vi } from "vitest";
 let engine: typeof import("../src/core/motion-engine.js");
 let frames: Map<number, FrameRequestCallback>;
 let observers: IntersectionObserverCallback[];
+let observerInstances: Array<{ observe: ReturnType<typeof vi.fn>; unobserve: ReturnType<typeof vi.fn>; disconnect: ReturnType<typeof vi.fn> }>;
 let events: Map<string, EventListener>;
 let document: {
   hidden: boolean;
@@ -15,6 +16,7 @@ beforeEach(async () => {
   vi.useFakeTimers();
   frames = new Map();
   observers = [];
+  observerInstances = [];
   events = new Map();
   let frameId = 0;
   document = {
@@ -32,10 +34,13 @@ beforeEach(async () => {
   });
   vi.stubGlobal("cancelAnimationFrame", (id: number) => frames.delete(id));
   vi.stubGlobal("IntersectionObserver", class {
-    constructor(callback: IntersectionObserverCallback) { observers.push(callback); }
-    observe() {}
-    unobserve() {}
-    disconnect() {}
+    observe = vi.fn();
+    unobserve = vi.fn();
+    disconnect = vi.fn();
+    constructor(callback: IntersectionObserverCallback) {
+      observers.push(callback);
+      observerInstances.push(this);
+    }
   });
   vi.resetModules();
   engine = await import("../src/core/motion-engine.js");
@@ -48,7 +53,7 @@ function flushFrame(now = performance.now()) {
 }
 
 function observe(target: Element, isIntersecting: boolean, index = 0) {
-  observers[index]([{ target, isIntersecting } as IntersectionObserverEntry], {} as IntersectionObserver);
+  (observers[index] ?? observers[0])([{ target, isIntersecting } as IntersectionObserverEntry], {} as IntersectionObserver);
 }
 
 function cssLoop() {
@@ -104,6 +109,39 @@ function borderFixture() {
   }) as unknown as HTMLElement;
   return { geometry, host };
 }
+
+it("shares one visibility observer and preference listener across many motion scopes, releasing both at the end", () => {
+  const media = { matches: false, addEventListener: vi.fn(), removeEventListener: vi.fn() };
+  vi.stubGlobal("matchMedia", vi.fn(() => media));
+  const node = { isConnected: true, getClientRects: () => [{}] } as unknown as Element;
+  const scopes = Array.from({ length: 95 }, () => engine.createMotion(document as unknown as Document));
+  const paints = scopes.map(() => vi.fn());
+  const listeners = scopes.map((scope, index) => scope.add(node, paints[index]!));
+  expect(observers).toHaveLength(1);
+  expect(observerInstances[0]!.observe).toHaveBeenCalledTimes(1);
+  expect(media.addEventListener).toHaveBeenCalledTimes(1);
+  paints.forEach((paint) => paint.mockClear());
+  observe(node, true);
+  flushFrame(100);
+  expect(paints.every((paint) => paint.mock.calls.length === 1)).toBe(true);
+  const preference = media.addEventListener.mock.calls[0]![1] as (event: { matches: boolean }) => void;
+  preference({ matches: true });
+  expect(engine.getMotionStats().running).toBe(0);
+  preference({ matches: false });
+  expect(engine.getMotionStats().running).toBe(95);
+  for (let index = 0; index < 94; index += 1) {
+    listeners[index]!();
+    scopes[index]!.dispose();
+  }
+  expect(observerInstances[0]!.unobserve).not.toHaveBeenCalled();
+  expect(observerInstances[0]!.disconnect).not.toHaveBeenCalled();
+  expect(media.removeEventListener).not.toHaveBeenCalled();
+  listeners[94]!();
+  scopes[94]!.dispose();
+  expect(observerInstances[0]!.unobserve).toHaveBeenCalledOnce();
+  expect(observerInstances[0]!.disconnect).toHaveBeenCalledOnce();
+  expect(media.removeEventListener).toHaveBeenCalledOnce();
+});
 
 it("does not force layout when 95 deferred borders mount outside the viewport", async () => {
   const { geometry, host } = borderFixture();

@@ -642,6 +642,12 @@ describe("AnimatedBorder", () => {
     expect(css).toMatch(/\[data-ad-color-mode="light"\] \.ad-border \.ad-border-aura\s*\{[^}]*opacity:\s*0\.4/s);
   });
 
+  it("releases compositor hints for border lights while their host is offscreen", () => {
+    const css = readFileSync("src/theme/base.css", "utf8");
+    expect(css).toMatch(/\.ad-border-light\s*\{[^}]*will-change:\s*transform/s);
+    expect(css).toMatch(/\[data-ad-offscreen\] \.ad-border-light,\s*\[data-ad-motion="off"\] \.ad-border-light\s*\{[^}]*will-change:\s*auto/s);
+  });
+
   it.each([
     { name: "rectangle", width: 200, height: 100, radius: "0px", points: [[0, 0.65, 0.65], [0.25, 149.35, 0.65], [0.5, 199.35, 99.35], [0.75, 50.65, 99.35], [1, 0.65, 0.65]] },
     { name: "square", width: 100, height: 100, radius: "0px", points: [[0.25, 99.35, 0.65], [0.5, 99.35, 99.35], [0.75, 0.65, 99.35]] },

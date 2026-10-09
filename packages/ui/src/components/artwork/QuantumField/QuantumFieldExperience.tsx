@@ -1,11 +1,14 @@
-import { useEffect, useRef, useState, type HTMLAttributes } from "react";
-import { Button } from "../../controls/Button/Button";
+import { memo, useCallback, useEffect, useRef, useState, type HTMLAttributes, type RefObject } from "react";
 import { FilePicker } from "../../controls/FilePicker/FilePicker";
+import { IconButton } from "../../controls/IconButton/IconButton";
 import { Select } from "../../controls/Select/Select";
 import { Slider } from "../../controls/Slider/Slider";
 import { Switch } from "../../controls/Switch/Switch";
 import { Tabs } from "../../controls/Tabs/Tabs";
+import { CollapsibleSection } from "../../feedback/CollapsibleSection/CollapsibleSection";
+import { Tooltip } from "../../feedback/Tooltip/Tooltip";
 import { useThemePalette } from "../../foundation/ThemeProvider/ThemeProvider";
+import { AudioPlayer } from "../../media/AudioPlayer/AudioPlayer";
 import reference from "./reference.html?raw";
 
 type Control = { key: string; label: string; value: number | boolean | string; min?: number; max?: number; step?: number; options?: readonly string[] };
@@ -68,8 +71,64 @@ export const quantumFieldExperienceControls: readonly { id: string; label: strin
 ];
 
 const initial = Object.fromEntries(quantumFieldExperienceControls.flatMap(({ controls }) => controls.map(({ key, value }) => [key, value]))) as Record<string, string | number | boolean>;
+const essentialControls = quantumFieldExperienceControls[0]!.controls.slice(0, 2);
+const detailedGroups = [
+  { ...quantumFieldExperienceControls[0]!, controls: quantumFieldExperienceControls[0]!.controls.slice(2) },
+  ...quantumFieldExperienceControls.slice(1),
+];
+const enabledBy: Record<string, string> = {
+  nebulaIntensity: "nebulaEnabled",
+  connectionThreshold: "connectionsEnabled", connectionOpacity: "connectionsEnabled",
+  particleTrailOpacity: "particleTrailsEnabled",
+  lensFlareIntensity: "lensFlareEnabled",
+  dofFocus: "dofEnabled", dofFocalLength: "dofEnabled", dofBokehStrength: "dofEnabled",
+  godRaysIntensity: "godRaysEnabled",
+  bassGateThreshold: "bassGateEnabled", bassGateAttack: "bassGateEnabled", bassGateRelease: "bassGateEnabled",
+  audioCameraIntensity: "audioCameraEnabled", targetFPS: "adaptiveQualityEnabled",
+};
 type Transport = { mode: string | null; playing: boolean; current: number; duration: number; track: string };
 const emptyTransport: Transport = { mode: null, playing: false, current: 0, duration: 0, track: "" };
+type FrameMessage = { type?: string; value?: unknown };
+const TransportControls = memo(function TransportControls({ send, viewport, receive }: {
+  send: (key: string, value?: unknown) => void;
+  viewport: RefObject<HTMLDivElement | null>;
+  receive: RefObject<((message: FrameMessage) => void) | null>;
+}) {
+  const [transport, setTransport] = useState<Transport>(emptyTransport);
+  const [waveformPoints, setWaveformPoints] = useState<number[]>();
+  useEffect(() => {
+    receive.current = ({ type, value }) => {
+      if (type === "ad-qf-transport") setTransport(value as Transport);
+      if (type === "ad-qf-waveform" && Array.isArray(value)) setWaveformPoints(value);
+    };
+    return () => { receive.current = null; };
+  }, [receive]);
+
+  return <>
+    <FilePicker variant="button" size="sm" label={transport.track || "Выбрать песню"} accept="audio/*" onFiles={([file]) => {
+      if (!file) return;
+      setWaveformPoints(undefined);
+      setTransport({ ...emptyTransport, track: file.name });
+      send("file", file);
+    }} />
+    <AudioPlayer playing={transport.playing} position={transport.current} duration={transport.duration}
+      points={waveformPoints} disabled={transport.mode !== "file"} showVolume={false}
+      onPlayingChange={() => send("play")} onTimeChange={(value) => send("seek", value)} />
+    <div className="ad-qf-actions">
+      <Tooltip content={transport.mode === "mic" ? "Выключить микрофон" : "Включить микрофон"}>
+        <IconButton size="sm" icon="mic" label={transport.mode === "mic" ? "Выключить микрофон" : "Микрофон"} title=""
+          onClick={() => { setWaveformPoints(undefined); send("mic"); }} />
+      </Tooltip>
+      <Tooltip content="Сохранить снимок поля">
+        <IconButton size="sm" icon="photo" label="Снимок" title="" onClick={() => send("screenshot")} />
+      </Tooltip>
+      <Tooltip content="Развернуть поле на весь экран">
+        <IconButton size="sm" icon="fit" label="На весь экран" title=""
+          onClick={() => { if (document.fullscreenElement) void document.exitFullscreen(); else void viewport.current?.requestFullscreen?.(); }} />
+      </Tooltip>
+    </div>
+  </>;
+});
 export type QuantumFieldExperienceProps = Omit<HTMLAttributes<HTMLDivElement>, "children"> & {
   /** Maximum number of visible particles across both field layers. Adaptive quality may draw fewer. */
   particleBudget?: number;
@@ -82,23 +141,32 @@ export function QuantumFieldExperience({ className = "", particleBudget, ...prop
   const theme = useThemePalette();
   const [mounted, setMounted] = useState(typeof IntersectionObserver === "undefined");
   const [ready, setReady] = useState(false);
-  const [tab, setTab] = useState("field");
+  const [tab, setTab] = useState(detailedGroups[0]!.id);
   const [settings, setSettings] = useState(initial);
-  const [transport, setTransport] = useState<Transport>(emptyTransport);
+  const transportReceiver = useRef<((message: FrameMessage) => void) | null>(null);
   const normalizedBudget = typeof particleBudget === "number" && Number.isFinite(particleBudget)
     ? Math.max(0, Math.floor(particleBudget)) : undefined;
-  const group = quantumFieldExperienceControls.find(({ id }) => id === tab) ?? quantumFieldExperienceControls[0]!;
-  const send = (key: string, value?: unknown) => frame.current?.contentWindow?.postMessage({ type: "ad-qf-control", key, value }, "*");
+  const group = detailedGroups.find(({ id }) => id === tab) ?? detailedGroups[0]!;
+  const send = useCallback((key: string, value?: unknown) => frame.current?.contentWindow?.postMessage({ type: "ad-qf-control", key, value }, "*"), []);
   const change = (key: string, value: string | number | boolean) => {
     setSettings((current) => ({ ...current, [key]: value }));
     if (ready) send(key, value);
+  };
+  const renderControl = (control: Control) => {
+    const value = settings[control.key] ?? control.value;
+    if (control.options) return <Select key={control.key} label={control.label} options={[...control.options]} value={String(value)} onValueChange={(next) => { if (next) change(control.key, next); }} />;
+    if (typeof value === "boolean") return <Switch key={control.key} label={control.label} checked={value} onValueChange={(next) => change(control.key, next)} />;
+    return <div className="ad-qf-setting" key={control.key}>
+      <Slider label={control.label} value={Number(value)} min={control.min} max={control.max} step={control.step} onValueChange={(next) => change(control.key, next)} />
+      <output>{Number(value).toFixed(control.step && control.step < 0.001 ? 4 : control.step && control.step < 0.01 ? 3 : 2)}</output>
+    </div>;
   };
 
   useEffect(() => {
     const receive = (event: MessageEvent) => {
       if (event.source !== frame.current?.contentWindow) return;
       if (event.data?.type === "ad-qf-ready") setReady(true);
-      if (event.data?.type === "ad-qf-transport") setTransport(event.data.value);
+      transportReceiver.current?.(event.data);
     };
     window.addEventListener("message", receive);
     return () => window.removeEventListener("message", receive);
@@ -122,50 +190,30 @@ export function QuantumFieldExperience({ className = "", particleBudget, ...prop
     if (!ready || !viewport.current || typeof IntersectionObserver === "undefined") return;
     const observer = new IntersectionObserver(([entry]) => {
       if (entry) send("visible", entry.isIntersecting);
-    }, { rootMargin: "120px" });
+    }, { rootMargin: "0px" });
     observer.observe(viewport.current);
     return () => observer.disconnect();
   }, [ready]);
   useEffect(() => {
     if (!ready) return;
     send("palette", [theme.primary, theme.secondary]);
-    let node: HTMLElement | null = viewport.current;
-    while (node) {
-      const background = getComputedStyle(node).backgroundColor;
-      if (background !== "rgba(0, 0, 0, 0)" && !/rgba\([^)]*,\s*0\)$/.test(background)) {
-        send("background", background);
-        break;
-      }
-      node = node.parentElement;
-    }
   }, [ready, theme.primary, theme.secondary]);
 
   return <div data-ad-component="QuantumFieldExperience" className={`ad-quantum-field-experience ${className}`.trim()} {...props}>
-    <div className="ad-qf-controls">
-      <Tabs label="Настройки Quantum Field" items={quantumFieldExperienceControls.map(({ id, label }) => ({ value: id, label }))} value={tab} onValueChange={setTab} />
-      <div className="ad-qf-control-panel" role="tabpanel" aria-label={group.label}>
-        {tab === "audio" && <div className="ad-qf-player">
-          <FilePicker variant="button" size="sm" label="Выбрать песню" accept="audio/*" onFiles={([file]) => { if (file) send("file", file); }} />
-          <Button size="sm" disabled={transport.mode !== "file"} onClick={() => send("play")}>{transport.playing ? "Пауза" : "Играть"}</Button>
-          <Button size="sm" onClick={() => send("mic")}>{transport.mode === "mic" ? "Микрофон включён" : "Микрофон"}</Button>
-          <Button size="sm" onClick={() => send("screenshot")}>Снимок</Button>
-          <Button size="sm" onClick={() => { if (document.fullscreenElement) void document.exitFullscreen(); else void viewport.current?.requestFullscreen?.(); }}>На весь экран</Button>
-          <span className="ad-qf-track" title={transport.track}>{transport.track || "Песня не выбрана"}</span>
-          <Slider label="Позиция" min={0} max={Math.max(1, transport.duration)} step={0.1} value={transport.current} disabled={transport.mode !== "file"} onValueChange={(value) => send("seek", value)} />
-        </div>}
-        <div className="ad-qf-setting-grid">{group.controls.map((control) => {
-          const value = settings[control.key] ?? control.value;
-          if (control.options) return <Select key={control.key} label={control.label} options={[...control.options]} value={String(value)} onValueChange={(next) => { if (next) change(control.key, next); }} />;
-          if (typeof value === "boolean") return <Switch key={control.key} label={control.label} checked={value} onValueChange={(next) => change(control.key, next)} />;
-          return <div className="ad-qf-setting" key={control.key}>
-            <Slider label={control.label} value={Number(value)} min={control.min} max={control.max} step={control.step} onValueChange={(next) => change(control.key, next)} />
-            <output>{Number(value).toFixed(control.step && control.step < 0.001 ? 4 : control.step && control.step < 0.01 ? 3 : 2)}</output>
-          </div>;
-        })}</div>
-      </div>
-    </div>
     <div className="ad-qf-viewport" ref={viewport}>
-      {mounted && <iframe ref={frame} title="Quantum Field visualizer" srcDoc={reference} allow="microphone" allowTransparency data-particle-budget={normalizedBudget} />}
+      {mounted && <iframe ref={frame} title="Quantum Field visualizer" srcDoc={reference} allow="microphone" data-particle-budget={normalizedBudget} />}
+    </div>
+    <div className="ad-qf-controls">
+      <div className="ad-qf-toolbar">
+        <TransportControls send={send} viewport={viewport} receive={transportReceiver} />
+        <div className="ad-qf-setting-grid ad-qf-essentials">{essentialControls.map(renderControl)}</div>
+      </div>
+      <CollapsibleSection title="Тонкая настройка" description="Среда, камера, эффекты и реакция на звук" icon="settings" defaultOpen={false}>
+        <Tabs label="Тонкая настройка Quantum Field" items={detailedGroups.map(({ id, label }) => ({ value: id, label }))} value={tab} onValueChange={setTab} />
+        <div className="ad-qf-control-panel" role="tabpanel" aria-label={group.label}>
+          <div className="ad-qf-setting-grid">{group.controls.filter(({ key }) => !enabledBy[key] || settings[enabledBy[key]] === true).map(renderControl)}</div>
+        </div>
+      </CollapsibleSection>
     </div>
   </div>;
 }

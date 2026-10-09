@@ -1,0 +1,1 @@
+import{j as r,S as a,l as e,g as n,B as s}from"./index-BE20j0Y6.js";function i(){return r.jsxs(a,{direction:"row",gap:6,align:"center",wrap:!0,children:[r.jsx(e,{count:12,style:{fontSize:"1.5rem"},children:r.jsx(n,{variant:"h3",children:"Лучший вокал"})}),r.jsx(e,{count:6,children:r.jsx(s,{tone:"warning",children:"Топ-1"})})]})}export{i as default};

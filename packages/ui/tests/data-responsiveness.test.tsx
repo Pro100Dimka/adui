@@ -2,8 +2,10 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { act, create, type ReactTestRenderer } from "react-test-renderer";
 import { readFileSync } from "node:fs";
 import { DataTable } from "../src/components/feedback/DataTable/DataTable";
+import { Popover } from "../src/components/feedback/Popover/Popover";
 import { Select } from "../src/components/controls/Select/Select";
 import { Autocomplete } from "../src/components/controls/Autocomplete/Autocomplete";
+import { OptionList } from "../src/components/controls/internal";
 import { PeoplePicker, type PickerPerson } from "../src/components/controls/PeoplePicker/PeoplePicker";
 
 let tree: ReactTestRenderer | undefined;
@@ -14,6 +16,43 @@ afterEach(() => {
   tree = undefined;
   vi.unstubAllGlobals();
   vi.useRealTimers();
+});
+
+describe("popover positioning", () => {
+  it("coalesces nested scroll events into one layout measurement per frame", () => {
+    const box = { left: 20, right: 120, top: 20, bottom: 40, width: 100, height: 20 };
+    const anchor = { getBoundingClientRect: vi.fn(() => box) } as unknown as HTMLElement;
+    const node = {
+      getBoundingClientRect: vi.fn(() => box),
+      style: { setProperty: vi.fn(), removeProperty: vi.fn(), left: "", top: "" },
+      dataset: {},
+      querySelector: vi.fn(() => null),
+    };
+    let onScroll: (() => void) | undefined;
+    const frames = new Map<number, FrameRequestCallback>();
+    vi.stubGlobal("innerWidth", 1280);
+    vi.stubGlobal("innerHeight", 720);
+    vi.stubGlobal("getComputedStyle", () => ({ fontSize: "16px" }));
+    vi.stubGlobal("document", { documentElement: {}, addEventListener: vi.fn(), removeEventListener: vi.fn() });
+    vi.stubGlobal("window", {
+      addEventListener: vi.fn((type: string, listener: () => void) => { if (type === "scroll") onScroll = listener; }),
+      removeEventListener: vi.fn(),
+    });
+    vi.stubGlobal("requestAnimationFrame", vi.fn((callback: FrameRequestCallback) => { frames.set(1, callback); return 1; }));
+    vi.stubGlobal("cancelAnimationFrame", vi.fn((id: number) => frames.delete(id)));
+    act(() => { tree = create(<Popover open anchorRef={{ current: anchor }} autoFocus={false}>Menu</Popover>, {
+      createNodeMock: (element) => element.props.popover ? node : null,
+    }); });
+    expect(node.getBoundingClientRect).toHaveBeenCalledTimes(1);
+    act(() => { onScroll?.(); onScroll?.(); onScroll?.(); });
+    expect(node.getBoundingClientRect).toHaveBeenCalledTimes(1);
+    expect(frames.size).toBe(1);
+    act(() => { frames.get(1)?.(16); frames.clear(); });
+    expect(node.getBoundingClientRect).toHaveBeenCalledTimes(2);
+    act(() => onScroll?.());
+    act(() => tree!.unmount()); tree = undefined;
+    expect(frames.size).toBe(0);
+  });
 });
 
 describe("data controls keep unrelated interactions cheap", () => {
@@ -121,11 +160,60 @@ describe("data controls keep unrelated interactions cheap", () => {
     expect(comparisons).toBeLessThanOrEqual(rows.length * 2);
   });
 
+  it("does not rescan every selected row when an unrelated table prop changes", () => {
+    const rows = Array.from({ length: 2000 }, (_, index) => ({ id: `row-${index}`, name: `Row ${index}` }));
+    const columns = [{ key: "name", title: "Name" }];
+    act(() => { tree = create(<DataTable columns={columns} rows={rows} selectable pageSize={10} caption="Before" />); });
+    const has = vi.spyOn(Set.prototype, "has");
+    try {
+      act(() => tree!.update(<DataTable columns={columns} rows={rows} selectable pageSize={10} caption="After" />));
+      const selectionChecks = has.mock.calls.filter(([key]) => typeof key === "string" && key.startsWith("row-")).length;
+      expect(selectionChecks).toBeLessThan(50);
+    } finally {
+      has.mockRestore();
+    }
+  });
+
+  it("does not scan the dataset for an empty selection", () => {
+    const rows = Array.from({ length: 2000 }, (_, index) => ({ id: `row-${index}`, name: `Row ${index}` }));
+    const has = vi.spyOn(Set.prototype, "has");
+    try {
+      act(() => { tree = create(<DataTable columns={[{ key: "name", title: "Name" }]} rows={rows} selectable pageSize={10} />); });
+      const selectionChecks = has.mock.calls.filter(([key]) => typeof key === "string" && key.startsWith("row-")).length;
+      expect(selectionChecks).toBeLessThan(50);
+    } finally {
+      has.mockRestore();
+    }
+  });
+
+  it("stops selection checks once partial selection is known", () => {
+    const rows = Array.from({ length: 2000 }, (_, index) => ({ id: `row-${index}`, name: `Row ${index}` }));
+    const has = vi.spyOn(Set.prototype, "has");
+    try {
+      act(() => { tree = create(<DataTable columns={[{ key: "name", title: "Name" }]} rows={rows}
+        selectable pageSize={10} defaultSelected={["row-0"]} />); });
+      const selectionChecks = has.mock.calls.filter(([key]) => typeof key === "string" && key.startsWith("row-")).length;
+      expect(selectionChecks).toBeLessThan(50);
+    } finally {
+      has.mockRestore();
+    }
+  });
+
   it("collects automatic text filter values once instead of sorting the same column twice", () => {
     const rows = Array.from({ length: 1000 }, (_, index) => ({ id: String(index), name: `Name ${index % 10}` }));
     const value = vi.fn((row: typeof rows[number]) => row.name);
     act(() => { tree = create(<DataTable columns={[{ key: "name", title: "Name", value }]} rows={rows} filterable pageSize={10} />); });
     expect(value.mock.calls.length).toBeLessThanOrEqual(rows.length + 1);
+  });
+
+  it("collects high-cardinality filter suggestions only when the editor opens", () => {
+    const rows = Array.from({ length: 2000 }, (_, index) => ({ id: String(index), name: `Name ${index}` }));
+    const value = vi.fn((row: typeof rows[number]) => row.name);
+    act(() => { tree = create(<DataTable columns={[{ key: "name", title: "Name", value }]} rows={rows} filterable pageSize={10} />); });
+    expect(value.mock.calls.length).toBeLessThan(50);
+    const filter = tree!.root.findAllByType("button").find((node) => node.props["aria-label"] === "Фильтр: Name")!;
+    act(() => filter.props.onClick());
+    expect(tree!.root.findByType(Autocomplete).props.options).toHaveLength(100);
   });
 
   it("does not construct custom Select option content while its list is closed", () => {
@@ -142,6 +230,19 @@ describe("data controls keep unrelated interactions cheap", () => {
     expect(renderOption).toHaveBeenCalledTimes(1);
   });
 
+  it("reuses keys of unchanged Select options while searching a large list", () => {
+    const options = Array.from({ length: 1000 }, (_, index) => ({ value: { id: index }, label: `Item ${index}` }));
+    const getKey = vi.fn((value: { id: number }) => String(value.id));
+    act(() => { tree = create(<Select options={options} getKey={getKey} searchable />); });
+    const button = tree!.root.findAllByType("button").find((node) => node.props["aria-haspopup"] === "listbox")!;
+    act(() => button.props.onClick());
+    getKey.mockClear();
+    const search = tree!.root.findAllByType("input").find((node) => node.props.placeholder === "Поиск")!;
+    act(() => search.props.onChange({ currentTarget: { value: "Item" } }));
+    expect(getKey.mock.calls.length).toBeLessThanOrEqual(2);
+    expect(tree!.root.findAllByProps({ role: "option" })).toHaveLength(options.length);
+  });
+
   it("does not scan every Autocomplete label again when only the active option changes", () => {
     const label = vi.fn((index: number) => `Item ${index}`);
     const options = Array.from({ length: 1000 }, (_, index) => ({
@@ -153,6 +254,17 @@ describe("data controls keep unrelated interactions cheap", () => {
     act(() => input.props.onKeyDown({ key: "ArrowDown", preventDefault() {} }));
     // Opening draws each option once; filtering must not scan the same 1,000 labels again.
     expect(label.mock.calls.length).toBeLessThanOrEqual(options.length);
+  });
+
+  it("reuses normalized Autocomplete options while the query changes", () => {
+    const options = Array.from({ length: 1000 }, (_, index) => `Item ${index}`);
+    act(() => { tree = create(<Autocomplete options={options} defaultValue="Item" />); });
+    act(() => tree!.root.findByType("input").props.onFocus());
+    const first = tree!.root.findByType(OptionList).props.options[999];
+    act(() => tree!.root.findByType("input").props.onChange({ currentTarget: { value: "Item " } }));
+    const second = tree!.root.findByType(OptionList).props.options[999];
+    expect(second).toBe(first);
+    expect(tree!.root.findAllByProps({ role: "option" })).toHaveLength(options.length);
   });
 });
 

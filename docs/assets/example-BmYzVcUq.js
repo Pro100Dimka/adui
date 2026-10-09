@@ -1,0 +1,1 @@
+import{j as e,P as r,U as t}from"./index-BE20j0Y6.js";function o(){return e.jsx(r,{stretch:!0,knobs:{},code:()=>"<LoaderGenerator onValueChange={(settings) => save(settings)} />",children:()=>e.jsx(t.LoaderGenerator,{style:{width:"100%"}})})}export{o as default};

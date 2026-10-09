@@ -106,6 +106,17 @@
 .ad-host-seal > svg[data-host-spin] {
   transform-origin: 50.78125% 50.78125%;
   will-change: transform;
+  animation: ad-host-spin linear infinite;
+}
+@keyframes ad-host-spin {
+  to {
+    transform: rotate(1turn);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  :root:not([data-ad-motion="on"]) .ad-host-seal > svg[data-host-spin] {
+    animation: none;
+  }
 }
 /* A photo fills the face; inside the host seal it takes the crown's place. */
 .ad-avatar-photo {

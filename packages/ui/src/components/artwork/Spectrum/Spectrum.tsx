@@ -37,9 +37,12 @@ export function Spectrum({ variant = "segmented", ...p }: SpectrumProps) {
  */
 function Segmented(p: CommonProps) {
   const ref = useRef<HTMLDivElement>(null);
+  const columns = useRef<HTMLElement[] | null>(null);
   usePauseOffscreen(ref);
   useDecoration(ref, (time) => {
-    ref.current?.querySelectorAll<HTMLElement>(".ad-spectrum-column").forEach((column, i) => {
+    if (!ref.current) return;
+    columns.current ??= Array.from(ref.current.querySelectorAll<HTMLElement>(".ad-spectrum-column"));
+    columns.current.forEach((column, i) => {
       const hidden = ((232 - columnHeight(i, time)) / 232) * 100;
       column.style.transform = `translateY(${hidden.toFixed(2)}%)`;
       (column.firstElementChild as HTMLElement | null)?.style.setProperty("transform", `translateY(${(-hidden).toFixed(2)}%)`);
@@ -67,12 +70,16 @@ function Segmented(p: CommonProps) {
 /** Smooth glowing bars in a bell shape; the glow is two faint wider bars behind each one. */
 function Bars(p: CommonProps) {
   const ref = useRef<SVGSVGElement>(null);
+  const layers = useRef<SVGRectElement[][] | null>(null);
   const id = useSvgId();
   usePauseOffscreen(ref);
   useDecoration(ref, (time) => {
-    ref.current?.querySelectorAll<SVGGElement>("[data-bar]").forEach((bar, i) => {
+    if (!ref.current) return;
+    layers.current ??= Array.from(ref.current.querySelectorAll<SVGGElement>("[data-bar]"),
+      (bar) => Array.from(bar.querySelectorAll<SVGRectElement>("rect")));
+    layers.current.forEach((rects, i) => {
       const height = barHeight(i, time);
-      bar.querySelectorAll<SVGRectElement>("rect").forEach((rect) => {
+      rects.forEach((rect) => {
         const grow = Number(rect.dataset.grow ?? 0);
         rect.setAttribute("y", (134 - height - grow).toFixed(2));
         rect.setAttribute("height", (height + grow).toFixed(2));

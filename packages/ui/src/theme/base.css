@@ -111,6 +111,11 @@ button.ad:focus-visible {
   left: 0;
   will-change: transform;
 }
+/* Paused borders should not reserve compositor layers for their four static spots. */
+[data-ad-offscreen] .ad-border-light,
+[data-ad-motion="off"] .ad-border-light {
+  will-change: auto;
+}
 [data-ad-color-mode="light"] .ad-border .ad-border-aura {
   opacity: 0.4;
 }

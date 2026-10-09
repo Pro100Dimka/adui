@@ -17,6 +17,11 @@ export interface WaveformProps extends CommonProps {
 export interface AudioPlayerProps extends CommonProps {
   src?: string;
   duration?: number;
+  /** Use an external audio engine instead of creating an HTMLAudioElement. */
+  playing?: boolean;
+  /** Current position supplied by an external audio engine. */
+  position?: number;
+  disabled?: boolean;
   onTimeChange?: (time: number) => void;
   onPlayingChange?: (playing: boolean) => void;
   points?: number[];

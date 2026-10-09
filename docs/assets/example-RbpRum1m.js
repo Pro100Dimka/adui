@@ -1,1 +1,0 @@
-import{r as s,E as u,j as e,P as n,U as t,a as r}from"./index-CQhejff5.js";function i(){const a=s.useContext(u);return e.jsx(n,{knobs:{},code:()=>r("QuantumFieldExperience",{}),children:()=>a?e.jsx(t.QuantumField,{paused:!0,quality:"low"}):e.jsx(t.QuantumFieldExperience,{})})}export{i as default};

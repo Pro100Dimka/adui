@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { mark, type CommonProps } from "../../../core/base";
 import { createResizeObserver } from "../../../core/environment";
 import { useTick } from "../../../core/motion/hooks";
@@ -52,16 +52,24 @@ export function quantumFieldResolution(width: number, height: number, dpr: numbe
 export function quantumFieldAudio(
   analyser: Pick<AnalyserNode, "frequencyBinCount" | "getByteFrequencyData">,
   scratch: Uint8Array,
+  frame?: { bands: number[]; energy: number },
 ): QuantumAudioFrame {
   analyser.getByteFrequencyData(scratch as Uint8Array<ArrayBuffer>);
-  const bands = Array.from({ length: 7 }, (_, band) => {
+  const bands = frame?.bands ?? new Array<number>(7);
+  let energy = 0;
+  for (let band = 0; band < 7; band += 1) {
     const start = Math.floor((band / 7) ** 1.7 * scratch.length);
     const end = Math.max(start + 1, Math.floor(((band + 1) / 7) ** 1.7 * scratch.length));
     let total = 0;
     for (let i = start; i < end; i += 1) total += scratch[i] ?? 0;
-    return clamp(total / ((end - start) * 255));
-  });
-  return { bands, energy: bands.reduce((sum, value) => sum + value, 0) / bands.length };
+    bands[band] = clamp(total / ((end - start) * 255));
+    energy += bands[band]!;
+  }
+  if (frame) {
+    frame.energy = energy / 7;
+    return frame;
+  }
+  return { bands, energy: energy / 7 };
 }
 
 const isAnalyser = (audio: AudioInput): audio is Pick<AnalyserNode, "frequencyBinCount" | "getByteFrequencyData"> =>
@@ -131,8 +139,13 @@ export function QuantumField({
   const camera = useRef({ zoom: 3.5, yaw: 0, pitch: 0.16 });
   const drag = useRef<{ x: number; y: number } | null>(null);
   const visible = useRef(false);
+  const [onscreen, setOnscreen] = useState(typeof IntersectionObserver === "undefined");
   const frame = useRef({ last: 0, time: 0 });
   const connectedAudio = useRef<AnalyserNode | null>(null);
+  const live = useRef({ speed, audio, palette, theme });
+  const updatePalette = useRef<() => void>(() => undefined);
+  const followsTheme = !palette?.[0] || !palette?.[1];
+  live.current = { speed, audio, palette, theme };
 
   useEffect(() => {
     if (!stream) return;
@@ -155,27 +168,35 @@ export function QuantumField({
     const element = canvas.current;
     const host = root.current;
     if (!element || !host) return;
-    const tier = quality === "high" || (quality === "auto" && typeof navigator !== "undefined" && (navigator.hardwareConcurrency ?? 4) >= 8) ? "high" : "low";
+    const device = typeof navigator === "undefined" ? null : navigator as Navigator & { deviceMemory?: number };
+    const tier = quality === "high" || (quality === "auto" && (device?.hardwareConcurrency ?? 4) >= 12 && (device?.deviceMemory ?? 0) >= 8) ? "high" : "low";
     const renderer = createQuantumFieldRenderer(element, mode, Math.round(WEBGL_BUDGET[tier] * clamp(density)));
     const context = renderer ? null : element.getContext("2d", { alpha: true });
     if (!renderer && !context) return;
     let scratch: Uint8Array | null = null;
-    let ink = theme.primary, glint = theme.secondary;
+    const audioFrame = { bands: Array<number>(7).fill(0), energy: 0 };
+    let ink = live.current.theme.primary, glint = live.current.theme.secondary;
     const readPalette = () => {
-      const style = getComputedStyle(host);
-      ink = palette?.[0] || style.getPropertyValue("--ad-primary").trim() || theme.primary;
-      glint = palette?.[1] || style.getPropertyValue("--ad-secondary").trim() || theme.secondary;
+      const supplied = live.current.palette;
+      const style = supplied?.[0] && supplied?.[1] ? null : getComputedStyle(host);
+      ink = supplied?.[0] || style?.getPropertyValue("--ad-primary").trim() || live.current.theme.primary;
+      glint = supplied?.[1] || style?.getPropertyValue("--ad-secondary").trim() || live.current.theme.secondary;
     };
     readPalette();
     renderer?.setPalette(ink, glint);
     const count = Math.round(POINT_BUDGET[tier] * clamp(density));
+    const seeds = renderer ? null : new Float32Array(count * 2);
+    if (seeds) for (let i = 0; i < count; i += 1) {
+      seeds[i * 2] = hash(i * 2 + 3);
+      seeds[i * 2 + 1] = hash(i * 2 + 7);
+    }
     const sample = (): QuantumAudioFrame | undefined => {
-      const input = audio ?? connectedAudio.current;
+      const input = live.current.audio ?? connectedAudio.current;
       if (!input) return undefined;
       if (typeof input === "function") return input();
       if (isAnalyser(input)) {
         if (!scratch || scratch.length !== input.frequencyBinCount) scratch = new Uint8Array(input.frequencyBinCount);
-        return quantumFieldAudio(input, scratch);
+        return quantumFieldAudio(input, scratch, audioFrame);
       }
       return input;
     };
@@ -185,7 +206,7 @@ export function QuantumField({
       if (now) {
         const elapsed = frame.current.last ? Math.min(60, Math.max(0, now - frame.current.last)) : 0;
         frame.current.last = now;
-        frame.current.time += elapsed * 0.001 * clamp(speed, 0, 3);
+        frame.current.time += elapsed * 0.001 * clamp(live.current.speed, 0, 3);
       }
       const sound = sample();
       if (renderer) {
@@ -234,7 +255,7 @@ export function QuantumField({
         context.fillStyle = accent ? glint : ink;
         for (let i = 0; i < count; i += 1) {
           if ((i % 9 === 0) !== accent) continue;
-          const u = hash(i * 2 + 3), v = hash(i * 2 + 7);
+          const u = seeds![i * 2]!, v = seeds![i * 2 + 1]!;
           const [x, y, depth] = place(u, v, time, clamp(bands[i % 7] ?? energy));
           let px = (x * 0.44 + 0.5) * w;
           let py = (y * 0.46 + 0.5) * h;
@@ -256,46 +277,64 @@ export function QuantumField({
       context.globalCompositeOperation = "source-over";
     };
     paint.current = draw;
+    let sized = false, painted = false;
+    updatePalette.current = () => {
+      const previousInk = ink, previousGlint = glint;
+      readPalette();
+      if (ink === previousInk && glint === previousGlint) return;
+      renderer?.setPalette(ink, glint);
+      if (visible.current) draw(0);
+      else painted = false;
+    };
     const resize = () => {
       const bounds = host.getBoundingClientRect();
       const size = quantumFieldResolution(bounds.width, bounds.height, window.devicePixelRatio || 1, tier);
-      if (element.width !== size.width || element.height !== size.height) {
+      const changed = element.width !== size.width || element.height !== size.height;
+      if (changed) {
         element.width = size.width;
         element.height = size.height;
+        painted = false;
       }
-      renderer?.resize(size.width, size.height);
-      if (visible.current) draw(0);
+      if (changed || !sized) renderer?.resize(size.width, size.height);
+      sized = true;
+      if (visible.current && !painted) {
+        draw(0);
+        painted = true;
+      }
     };
     const observer = createResizeObserver(resize);
     observer.observe(host);
     const intersection = typeof IntersectionObserver !== "undefined"
       ? new IntersectionObserver(([entry]) => {
           visible.current = !!entry?.isIntersecting;
+          setOnscreen(visible.current);
           if (visible.current) resize();
         }, { rootMargin: "10% 0px" })
       : null;
     visible.current = !intersection;
     intersection?.observe(host);
     if (!intersection) resize();
-    const tokens = !palette && typeof MutationObserver !== "undefined"
-      ? new MutationObserver(() => {
-          readPalette();
-          renderer?.setPalette(ink, glint);
-          if (visible.current) draw(0);
-        })
-      : null;
-    for (let node: HTMLElement | null = host; node && tokens; node = node.parentElement)
-      tokens.observe(node, { attributes: true, attributeFilter: ["style", "class", "data-ad-theme", "data-ad-color-scheme"] });
     return () => {
       observer.disconnect();
       intersection?.disconnect();
-      tokens?.disconnect();
       renderer?.dispose();
       paint.current = () => undefined;
+      updatePalette.current = () => undefined;
     };
-  }, [mode, quality, density, speed, audio, palette?.[0], palette?.[1], theme.primary, theme.secondary]);
+  }, [mode, quality, density]);
 
-  useTick((now) => paint.current(now), motion && !paused);
+  useEffect(() => updatePalette.current(), [palette?.[0], palette?.[1], theme.primary, theme.secondary]);
+
+  useEffect(() => {
+    const host = root.current;
+    if (!followsTheme || !host || typeof MutationObserver === "undefined") return;
+    const tokens = new MutationObserver(() => updatePalette.current());
+    for (let node: HTMLElement | null = host; node; node = node.parentElement)
+      tokens.observe(node, { attributes: true, attributeFilter: ["style", "class", "data-ad-theme", "data-ad-color-scheme"] });
+    return () => tokens.disconnect();
+  }, [followsTheme]);
+
+  useTick((now) => paint.current(now), motion && !paused && onscreen);
 
   useEffect(() => {
     const surface = canvas.current;

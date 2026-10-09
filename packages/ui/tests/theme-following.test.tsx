@@ -7,11 +7,27 @@ import { ThemeEditor } from "../src/components/foundation/ThemeEditor/ThemeEdito
 import { Loader, loaderDefaultImage } from "../src/components/foundation/Loader/Loader";
 import { LoaderGenerator } from "../src/components/foundation/LoaderGenerator/LoaderGenerator";
 import { ColorPicker } from "../src/components/controls/ColorPicker/ColorPicker";
+import { SegmentedControl } from "../src/components/controls/SegmentedControl/SegmentedControl";
 import { SiteThemeContext } from "../src/dev/exampleHelpers";
 import ThemeEditorExample from "../src/components/foundation/ThemeEditor/example";
 import ThemeProviderExample from "../src/components/foundation/ThemeProvider/example";
 
 afterEach(() => vi.unstubAllGlobals());
+
+it("defers advanced token resolution while ThemeEditor is in simple mode", () => {
+  vi.stubGlobal("IS_REACT_ACT_ENVIRONMENT", true);
+  const frame = vi.fn(() => 1);
+  vi.stubGlobal("requestAnimationFrame", frame);
+  vi.stubGlobal("cancelAnimationFrame", vi.fn());
+  let tree!: ReturnType<typeof create>;
+  act(() => { tree = create(createElement(ThemeEditor), {
+    createNodeMock: ({ props }) => props["data-ad-component"] === "ThemeEditor" ? {} : null,
+  }); });
+  expect(frame).not.toHaveBeenCalled();
+  act(() => tree.root.findByType(SegmentedControl).props.onValueChange("advanced"));
+  expect(frame).toHaveBeenCalledTimes(1);
+  act(() => tree.unmount());
+});
 
 it("uses the effective token palette without rerendering consumers for unrelated styles", () => {
   vi.stubGlobal("IS_REACT_ACT_ENVIRONMENT", true);

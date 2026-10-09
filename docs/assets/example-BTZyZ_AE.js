@@ -1,0 +1,1 @@
+import{j as t,v as i,o as a}from"./index-BE20j0Y6.js";function o(){return t.jsx(i,{icon:"music",title:"Пока нет записей",description:"Спойте первую песню — запись появится здесь.",action:t.jsx(a,{variant:"primary",icon:"plus",children:"Новое выступление"})})}export{o as default};

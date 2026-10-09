@@ -9,6 +9,11 @@ export interface ServerArtProps extends CommonProps {
   label?: string;
 }
 
+const rackRows = Array.from({ length: 15 }, (_, row) => row);
+const rackLines = rackRows.map((row) => `M33 ${50 + row * 3.35} 90 ${38.8 + row * 3.35}`).join(" ");
+const rackHatches = rackRows.flatMap((row) => Array.from({ length: 9 }, (_, col) =>
+  `M${34 + col * 6.15} ${49.8 + row * 3.35 - col * 1.205}l2.6-.51`)).join(" ");
+
 /** Neon server rack: LEDs blink, a light runs along its edge, a spark twinkles above. */
 export function ServerArt({ upload = false, label, ...p }: ServerArtProps) {
   const id = useSvgId();
@@ -104,23 +109,8 @@ export function ServerArt({ upload = false, label, ...p }: ServerArtProps) {
             strokeOpacity=".45"
             strokeWidth=".65"
           />
-          {Array.from({ length: 15 }, (_, row) => (
-            <g key={row}>
-              <path
-                d={`M33 ${50 + row * 3.35} 90 ${38.8 + row * 3.35}`}
-                stroke="var(--ad-primary-700)"
-                strokeOpacity=".58"
-              />
-              {Array.from({ length: 9 }, (__, col) => (
-                <path
-                  key={col}
-                  d={`M${34 + col * 6.15} ${49.8 + row * 3.35 - col * 1.205}l2.6-.51`}
-                  stroke="var(--ad-neutral-950)"
-                  strokeWidth="1.65"
-                />
-              ))}
-            </g>
-          ))}
+          <path d={rackLines} stroke="var(--ad-primary-700)" strokeOpacity=".58" />
+          <path d={rackHatches} stroke="var(--ad-neutral-950)" strokeWidth="1.65" />
           <path
             d="M27 44 98 30 147 45"
             stroke="var(--ad-secondary-200)"

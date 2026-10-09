@@ -42,33 +42,34 @@ export function Select<V = string>(p: SelectProps<V>) {
   const [query, setQuery] = useState("");
   const anchor = useRef<HTMLButtonElement>(null);
   const box = useRef<HTMLDivElement>(null);
+  const keyedOptions = useMemo(() => options.map((option) => ({ option, key: keyOf(option.value) })), [options, keyOf]);
   const selectedKey = value === undefined ? undefined : keyOf(value);
-  const selected = options.find((option) => keyOf(option.value) === selectedKey);
+  const selected = keyedOptions.find(({ key }) => key === selectedKey)?.option;
 
   const rows = useMemo<Option[]>(() => {
     if (!open) return [];
     const needle = query.trim().toLowerCase();
     // Insertion order groups rows in a single pass without repeatedly searching group indices.
-    const groups = new Map<string, SelectOption<V>[]>();
-    for (const option of options) {
+    const groups = new Map<string, typeof keyedOptions>();
+    for (const entry of keyedOptions) {
+      const { option } = entry;
       if (needle && !`${textOf(option as SelectOption<unknown>)} ${option.group ?? ""}`.toLowerCase().includes(needle)) continue;
       const group = option.group ?? "";
       const items = groups.get(group) ?? [];
-      items.push(option);
+      items.push(entry);
       groups.set(group, items);
     }
-    return [...groups.values()].flatMap((group) => group.map((option) => {
-      const key = keyOf(option.value);
+    return [...groups.values()].flatMap((group) => group.map(({ option, key }) => {
       return {
         value: key, label: option.label, disabled: option.disabled, icon: option.icon,
         avatar: option.avatar, description: option.description, group: option.group,
         content: p.renderOption?.(option, { selected: key === selectedKey }),
       };
     }));
-  }, [open, query, options, keyOf, selectedKey, p.renderOption]);
+  }, [open, query, keyedOptions, selectedKey, p.renderOption]);
 
   const choose = (key: string) => {
-    const option = options.find((item) => keyOf(item.value) === key);
+    const option = keyedOptions.find((item) => item.key === key)?.option;
     if (!option) return;
     setValue(option.value);
     setOpen(false);

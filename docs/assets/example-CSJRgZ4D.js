@@ -1,0 +1,1 @@
+import{j as e,n as s,K as t}from"./index-BE20j0Y6.js";function l(){return e.jsx(s,{title:"Технические детали",icon:"braces",children:e.jsx(t,{items:[["Частота","48 kHz"],["Буфер","128 сэмплов"],["Задержка","6.7 мс"]]})})}export{l as default};

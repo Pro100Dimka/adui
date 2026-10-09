@@ -105,6 +105,13 @@ it.each([".docs-showcase-tile", ".docs-component-hero.ad-card"])("lets %s's bord
   expect(declarations).not.toMatch(/content-visibility:|contain-intrinsic-size:/);
 });
 
+it("keeps the sticky documentation toolbar opaque instead of blurring animated content underneath", () => {
+  const css = readFileSync("../../apps/playground/src/app/app.css", "utf8");
+  const toolbar = css.match(/\.site-top\.ad-toolbar\s*\{([^}]+)\}/)?.[1];
+  expect(toolbar).toBeDefined();
+  expect(toolbar).not.toMatch(/backdrop-filter\s*:/);
+});
+
 it("resets both the desktop content and mobile document scroll on navigation", () => {
   vi.stubGlobal("IS_REACT_ACT_ENVIRONMENT", true);
   const contentScroll = vi.fn(), documentScroll = vi.fn();

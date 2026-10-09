@@ -110,6 +110,8 @@ export const RotaryKnob = (p: RotaryKnobProps) => {
     } = null;
     let renderTimer = 0;
     let animationFrame = 0;
+    let hoverFrame = 0;
+    let latestHover: { x: number; y: number } | null = null;
     let previousFrame = 0;
     let disposed = false;
 
@@ -623,7 +625,7 @@ export const RotaryKnob = (p: RotaryKnobProps) => {
       };
       control.setPointerCapture(event.pointerId);
       root.classList.add("is-dragging");
-      tilt(0, 0);
+      resetHover();
       // A press on the glowing scale ring or the ticks sets the value right there.
       if (distance >= 0.8) {
         drag.glide = true;
@@ -643,6 +645,12 @@ export const RotaryKnob = (p: RotaryKnobProps) => {
       root.style.setProperty("--tilt-x", `${(-y * 7).toFixed(2)}deg`);
       root.style.setProperty("--tilt-y", `${(x * 7).toFixed(2)}deg`);
     }
+    function resetHover() {
+      latestHover = null;
+      if (hoverFrame) cancelAnimationFrame(hoverFrame);
+      hoverFrame = 0;
+      tilt(0, 0);
+    }
     function hover(event: PointerEvent) {
       if (
         drag ||
@@ -651,11 +659,17 @@ export const RotaryKnob = (p: RotaryKnobProps) => {
         document.documentElement.dataset.adMotion === "off"
       )
         return;
-      const center = geometry();
-      tilt(
-        localClamp((event.clientX - center.x) / center.radius, -1, 1),
-        localClamp((event.clientY - center.y) / center.radius, -1, 1),
-      );
+      latestHover = { x: event.clientX, y: event.clientY };
+      if (hoverFrame) return;
+      hoverFrame = requestAnimationFrame(() => {
+        hoverFrame = 0;
+        if (!latestHover || drag || disposed || disabledRef.current) return;
+        const center = geometry();
+        tilt(
+          localClamp((latestHover.x - center.x) / center.radius, -1, 1),
+          localClamp((latestHover.y - center.y) / center.radius, -1, 1),
+        );
+      });
     }
 
     function pointerMove(event: PointerEvent) {
@@ -773,7 +787,7 @@ export const RotaryKnob = (p: RotaryKnobProps) => {
     root.addEventListener("pointermove", hover as EventListener, {
       signal: listeners.signal,
     });
-    root.addEventListener("pointerleave", () => tilt(0, 0), {
+    root.addEventListener("pointerleave", resetHover, {
       signal: listeners.signal,
     });
     window.addEventListener("blur", () => finishDrag(true), {
@@ -814,6 +828,7 @@ export const RotaryKnob = (p: RotaryKnobProps) => {
       observer.disconnect();
       clearTimeout(renderTimer);
       cancelAnimationFrame(animationFrame);
+      cancelAnimationFrame(hoverFrame);
       animationFrame = 0;
       controllerRef.current = null;
     };

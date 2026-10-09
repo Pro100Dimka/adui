@@ -43,8 +43,7 @@ a {
   padding: var(--ad-space-3) clamp(var(--ad-space-3), 2vw, var(--ad-space-6));
   border-radius: 0;
   border-width: 0 0 0.0625rem;
-  background: linear-gradient(110deg, rgb(from var(--ad-neutral-850) r g b / 0.95), rgb(from var(--ad-neutral-900) r g b / 0.96) 60%);
-  backdrop-filter: blur(1.25rem);
+  background: linear-gradient(110deg, var(--ad-neutral-850), var(--ad-neutral-900) 60%);
 }
 .site-brand {
   display: inline-flex;
@@ -526,6 +525,11 @@ html[data-ad-color-mode="light"] .docs-hero-backdrop {
     radial-gradient(ellipse 70% 90% at 50% 0%, rgb(from var(--ad-primary) r g b / 0.08), transparent 70%),
     rgb(from var(--ad-neutral-900) r g b / 0.8);
   border: 0.0625rem solid #ffffff0d;
+}
+.example-stage:has(> .ad-quantum-field-experience) {
+  padding: 0;
+  border: 0;
+  background: transparent;
 }
 :where(.example-stage) > * {
   max-width: 100%;

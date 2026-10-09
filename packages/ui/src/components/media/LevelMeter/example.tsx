@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { Playground, U, expr, jsx } from "../../../dev/exampleHelpers";
+import { useContext, useEffect, useState } from "react";
+import { ExamplePreviewContext, Playground, U, expr, jsx } from "../../../dev/exampleHelpers";
 
 /** A voice-like level: syllables rise and fall, with short pauses between phrases. */
 function useDemoVoice(enabled: boolean) {
@@ -20,9 +20,10 @@ function useDemoVoice(enabled: boolean) {
 }
 
 export default function LevelMeterExample() {
+  const preview = useContext(ExamplePreviewContext);
   const [stream, setStream] = useState<MediaStream | null>(null);
   const [error, setError] = useState<string>();
-  const level = useDemoVoice(!stream);
+  const level = useDemoVoice(!stream && !preview);
   useEffect(() => () => stream?.getTracks().forEach((t) => t.stop()), [stream]);
 
   const toggleMicrophone = async () => {
@@ -67,7 +68,7 @@ export default function LevelMeterExample() {
       {(v) => (
         <U.LevelMeter
           label="Микрофон"
-          value={level}
+          value={preview ? 48 : level}
           stream={stream}
           active={v.active}
           compact={v.compact}

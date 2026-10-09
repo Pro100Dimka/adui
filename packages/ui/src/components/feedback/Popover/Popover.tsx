@@ -47,6 +47,11 @@ export const Popover = (p: PopoverProps) => {
     const supports = typeof node.showPopover === "function";
     if (supports) node.showPopover();
     position();
+    let frame = 0;
+    const schedulePosition = () => {
+      if (frame) return;
+      frame = requestAnimationFrame(() => { frame = 0; position(); });
+    };
     if (p.autoFocus !== false)
       (
         node.querySelector<HTMLElement>(
@@ -73,13 +78,14 @@ export const Popover = (p: PopoverProps) => {
     };
     document.addEventListener("pointerdown", dismiss);
     document.addEventListener("keydown", key);
-    window.addEventListener("resize", position);
-    window.addEventListener("scroll", position, true);
+    window.addEventListener("resize", schedulePosition);
+    window.addEventListener("scroll", schedulePosition, true);
     return () => {
+      if (frame) cancelAnimationFrame(frame);
       document.removeEventListener("pointerdown", dismiss);
       document.removeEventListener("keydown", key);
-      window.removeEventListener("resize", position);
-      window.removeEventListener("scroll", position, true);
+      window.removeEventListener("resize", schedulePosition);
+      window.removeEventListener("scroll", schedulePosition, true);
       if (supports && node.matches(":popover-open")) node.hidePopover();
     };
   }, [p.open, p.anchorRef]);

@@ -42,12 +42,12 @@ export const Autocomplete = ({
   const [active, setActive] = useState(0);
   const inputNode = useRef<HTMLInputElement>(null);
   const box = useRef<HTMLDivElement>(null);
+  const all = useMemo(() => options.map(toOption), [options]);
   const filtered = useMemo(() => {
-    const all = options.map(toOption);
     // A value that already names an option shows the whole list, like a reopened select.
     const query = all.some((o) => o.label === current) ? "" : current.trim().toLocaleLowerCase();
     return all.filter((o) => !query || String(o.label).toLocaleLowerCase().includes(query) || o.value.toLocaleLowerCase().includes(query));
-  }, [options, current]);
+  }, [all, current]);
   const listId = `${input.id ?? "ad-autocomplete"}-listbox`;
   const choose = (next: string) => {
     setCurrent(next);

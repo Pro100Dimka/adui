@@ -1,0 +1,1 @@
+import{j as t,P as r,U as n,a as s}from"./index-BE20j0Y6.js";function o(){return t.jsx(r,{knobs:{variant:{options:["segmented","bars"],value:"segmented"}},code:(a,e)=>s("Spectrum",{variant:e.variant}),children:a=>t.jsx(n.Spectrum,{variant:a.variant})})}export{o as default};

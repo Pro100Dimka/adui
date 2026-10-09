@@ -16,10 +16,11 @@
             --ar: 167; --ag: 139; --ab: 250;
         }
 
-        body {
+        html, body {
             margin: 0;
             overflow: hidden;
-            background: transparent;
+            background: transparent !important;
+            color-scheme: dark;
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
         }
 
@@ -240,160 +241,6 @@
             white-space: nowrap;
         }
 
-        /* --- lil-gui Customization --- */
-        .lil-gui {
-            --background-color: rgba(15, 10, 25, 0.9);
-            --text-color: #e2e8f0;
-            --title-background-color: rgba(var(--ar),var(--ag),var(--ab),0.1);
-            --widget-color: #475569;
-            --hover-color: #64748b;
-            --focus-color: rgb(var(--ar),var(--ag),var(--ab));
-            --number-color: rgb(var(--ar),var(--ag),var(--ab));
-            --string-color: rgb(var(--ar),var(--ag),var(--ab));
-            --width: 320px;
-        }
-
-        .lil-gui.root {
-            position: absolute;
-            top: 70px;
-            /* Below the Configure button */
-            right: 24px;
-            z-index: 1000;
-            transition: opacity 0.3s ease, transform 0.3s ease;
-        }
-
-        .lil-gui.root.hidden {
-            opacity: 0;
-            pointer-events: none;
-            transform: translateY(-10px);
-        }
-
-        .lil-gui .title {
-            height: 36px;
-            line-height: 36px;
-            font-weight: 600;
-            background: transparent;
-            color: rgb(var(--ar),var(--ag),var(--ab));
-            border-bottom: 1px solid rgba(var(--ar),var(--ag),var(--ab),0.15);
-        }
-
-        .lil-gui>.children {
-            border: 1px solid rgba(var(--ar),var(--ag),var(--ab),0.3);
-            /* Purple glass border */
-            border-radius: 16px;
-            overflow: hidden;
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
-            background: var(--background-color);
-        }
-
-        /* Compact Rows */
-        .lil-gui .controller {
-            height: 30px;
-            line-height: 30px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
-        }
-
-        .lil-gui .name {
-            width: 55%;
-            font-size: 11px;
-            font-weight: 500;
-            color: #cbd5e1;
-        }
-
-        /* Stylized Inputs */
-        .lil-gui input[type="text"],
-        .lil-gui input[type="number"] {
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 6px;
-            height: 22px;
-            margin-top: 4px;
-            color: rgb(var(--ar),var(--ag),var(--ab));
-        }
-
-        .lil-gui input:focus {
-            border-color: rgb(var(--ar),var(--ag),var(--ab));
-        }
-
-        /* Sliders */
-        .lil-gui .slider {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 4px;
-        }
-
-        .lil-gui .slider-fg {
-            background: rgb(var(--ar),var(--ag),var(--ab));
-            box-shadow: 0 0 10px rgba(var(--ar),var(--ag),var(--ab),0.4);
-        }
-
-        /* Checkboxes */
-        .lil-gui .checkbox {
-            border-radius: 4px;
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .lil-gui .checkbox.checked {
-            background: rgb(var(--ar),var(--ag),var(--ab));
-            border-color: rgb(var(--ar),var(--ag),var(--ab));
-        }
-
-        .lil-gui .checkbox.checked:before {
-            color: #fff;
-        }
-
-        /* Folders */
-        .lil-gui .folder>.title {
-            border-left: 3px solid transparent;
-            transition: all 0.2s;
-            background: rgba(255, 255, 255, 0.02);
-            color: #e2e8f0;
-            font-weight: 600;
-            margin-top: 1px;
-        }
-
-        .lil-gui .folder>.title:hover {
-            background: rgba(var(--ar),var(--ag),var(--ab),0.08);
-            color: #fff;
-        }
-
-        .lil-gui .folder.closed>.title {
-            opacity: 0.8;
-        }
-
-        /* Hide "Controls" label if unnecessary or style it */
-
-        /* --- New GUI Toggle --- */
-        #gui-toggle {
-            position: fixed;
-            top: 24px;
-            right: 24px;
-            z-index: 1001;
-            background: linear-gradient(135deg, rgba(var(--ar),var(--ag),var(--ab),0.15) 0%, rgba(var(--ar),var(--ag),var(--ab),0.08) 100%);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(var(--ar),var(--ag),var(--ab),0.3);
-            color: rgb(var(--ar),var(--ag),var(--ab));
-            padding: 10px 20px;
-            border-radius: 20px;
-            font-size: 11px;
-            font-weight: 600;
-            letter-spacing: 0.8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            text-transform: uppercase;
-        }
-
-        #gui-toggle:hover {
-            background: linear-gradient(135deg, rgba(var(--ar),var(--ag),var(--ab),0.25) 0%, rgba(var(--ar),var(--ag),var(--ab),0.18) 100%);
-            box-shadow: 0 6px 20px rgba(var(--ar),var(--ag),var(--ab),0.25);
-            transform: translateY(-1px);
-            color: #fff;
-        }
-
-
         /* --- Center Panel Refinement --- */
         .hud-panel {
             background: rgba(15, 10, 25, 0.85);
@@ -440,14 +287,13 @@
             border-color: rgb(var(--ar),var(--ag),var(--ab));
             box-shadow: 0 0 20px rgba(var(--ar),var(--ag),var(--ab),0.2);
         }
-        #gui-toggle, #interaction-hint, #audio-controls, #status-bar, #zoom-indicator, .lil-gui { display: none !important; }
+        #interaction-hint, #audio-controls, #status-bar, #zoom-indicator { display: none !important; }
     </style>
 </head>
 
 <body>
     <div id="scanlines" style="display:none"></div>
     <div id="interaction-hint">space · play/pause &nbsp;·&nbsp; scroll · zoom &nbsp;·&nbsp; drag · rotate &nbsp;·&nbsp; F · focus mode</div>
-    <button id="gui-toggle" onclick="document.querySelector('.lil-gui').classList.toggle('hidden')">✦ Configure</button>
     <div id="overlay" style="display:none">
         <div class="hud-panel">
             <h1>Quantum Fields</h1>
@@ -498,8 +344,7 @@
 {
     "imports": {
         "three": "https://unpkg.com/three@0.182.0/build/three.module.js",
-        "three/addons/": "https://unpkg.com/three@0.182.0/examples/jsm/",
-        "lil-gui": "https://unpkg.com/lil-gui@0.19.1/dist/lil-gui.esm.min.js"
+        "three/addons/": "https://unpkg.com/three@0.182.0/examples/jsm/"
     }
 }
 </script>
@@ -514,11 +359,15 @@
         import { ShaderPass } from 'three/addons/postprocessing/ShaderPass.js';
         // BokehPass removed - using custom DOF shader
         import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
-        import { Lensflare, LensflareElement } from 'three/addons/objects/Lensflare.js';
-        import GUI from 'lil-gui';
+
+        function fitPixelRatio() {
+            return Math.min(window.devicePixelRatio || 1, 1.5,
+                Math.sqrt(2_100_000 / Math.max(1, window.innerWidth * window.innerHeight)));
+        }
 
         const CONFIG = {
             maxParticles: 250000,
+            maxDensity: 0.14,
             secondaryParticles: 50000,
             initialDensity: 0.043,
             fieldRadius: 90,
@@ -536,7 +385,7 @@
             trails: 0.66144,
             bloom: 0.3,
             timeScale: 1,
-            pixelRatio: Math.min(window.devicePixelRatio, 1.5),
+            pixelRatio: fitPixelRatio(),
             chromaticAberration: 0.004,
             filmGrain: 0.001,
             cameraShake: 0.65,
@@ -595,7 +444,7 @@
             gatedBands: { subBass: 0, bass: 0, lowMid: 0, mid: 0, highMid: 0, high: 0, ultraHigh: 0 },
             beatThreshold: 0.15, beatDecay: 0.93, beatEnergy: 0,
             lastBeatTime: 0, beatDetected: false, peakHistory: [],
-            spectralCentroid: 0, spectralFlux: 0, prevSpectrum: null, active: false,
+            spectralCentroid: 0, spectralFlux: 0, prevSpectrum: null, active: false, idleCleared: false,
             // === ENHANCEMENT: Onset Detection ===
             onsetEnergy: 0, onsetDetected: false, onsetHistory: [], onsetThreshold: 0,
             // === ENHANCEMENT: Waveform Data ===
@@ -776,6 +625,18 @@
 
             update() {
                 if (!this.active) return;
+                if (!this.isPlaying || !this.source) {
+                    if (!this.idleCleared) {
+                        for (const band in this.bands) this.bands[band] = this.gatedBands[band] = 0;
+                        this.spectralCentroid = this.spectralFlux = 0;
+                        this.beatDetected = this.onsetDetected = false;
+                        this.idleCleared = true;
+                    }
+                    this.beatEnergy *= this.beatDecay;
+                    this.onsetEnergy *= STATE.onsetDecay;
+                    return;
+                }
+                this.idleCleared = false;
                 this.analyser.getByteFrequencyData(this.data);
                 const len = this.data.length, nyquist = this.ctx.sampleRate / 2;
                 const getFreqIndex = (freq) => Math.round(freq / nyquist * len);
@@ -895,7 +756,7 @@
             else if (e.key === '-' || e.key === '_') { camera.position.multiplyScalar(1.1); controls.update(); }
             else if (e.key === '0') { camera.position.normalize().multiplyScalar(CONFIG.defaultZoom); controls.update(); }
             else if (e.key === ' ') { e.preventDefault(); togglePlayPause(); }
-            else if (e.key === 'f' || e.key === 'F') { STATE.dofEnabled = !STATE.dofEnabled; customDOFPass.enabled = STATE.dofEnabled; if (dofController) dofController.updateDisplay(); }
+            else if (e.key === 'f' || e.key === 'F') { STATE.dofEnabled = !STATE.dofEnabled; customDOFPass.enabled = STATE.dofEnabled; }
         });
 
         // Every field type shares one screen-fitted footprint; switching presets never reallocates particles.
@@ -1347,27 +1208,34 @@ void main() {
 
         // ═══════ GEOMETRY ═══════
         const geometry = new THREE.BufferGeometry();
-        const pos = [], rnd = [], phase = [], layer = [];
+        const mainCapacity = Math.ceil(CONFIG.maxParticles * CONFIG.maxDensity);
+        const pos = new Float32Array(mainCapacity * 3);
+        const rnd = new Float32Array(mainCapacity * 3);
+        const phase = new Float32Array(mainCapacity);
+        const layer = new Float32Array(mainCapacity);
         const vec = new THREE.Vector3();
 
-        for (let i = 0; i < CONFIG.maxParticles; i++) {
+        for (let i = 0; i < mainCapacity; i++) {
             vec.setFromSphericalCoords(
                 CONFIG.fieldRadius * Math.pow(Math.random(), 0.33),
                 Math.acos(2 * Math.random() - 1),
                 Math.random() * Math.PI * 2
             );
-            pos.push(vec.x, vec.y, vec.z);
-            rnd.push(Math.random(), Math.random(), Math.random());
-            phase.push(Math.random() * Math.PI * 2);
-            layer.push(0);
+            pos[i * 3] = vec.x;
+            pos[i * 3 + 1] = vec.y;
+            pos[i * 3 + 2] = vec.z;
+            rnd[i * 3] = Math.random();
+            rnd[i * 3 + 1] = Math.random();
+            rnd[i * 3 + 2] = Math.random();
+            phase[i] = Math.random() * Math.PI * 2;
         }
 
         // Secondary particles now use separate instanced system below
 
-        geometry.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
-        geometry.setAttribute('aRandom', new THREE.Float32BufferAttribute(rnd, 3));
-        geometry.setAttribute('aPhase', new THREE.Float32BufferAttribute(phase, 1));
-        geometry.setAttribute('aLayer', new THREE.Float32BufferAttribute(layer, 1));
+        geometry.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+        geometry.setAttribute('aRandom', new THREE.BufferAttribute(rnd, 3));
+        geometry.setAttribute('aPhase', new THREE.BufferAttribute(phase, 1));
+        geometry.setAttribute('aLayer', new THREE.BufferAttribute(layer, 1));
         geometry.setDrawRange(0, Math.floor(CONFIG.maxParticles * STATE.density));
 
         const FIELD_TYPES = {
@@ -1413,8 +1281,8 @@ void main() {
 
             applyQuality() {
                 const q = STATE.qualityLevel;
-                const pixelRatio = Math.max(0.75, STATE.pixelRatio * q);
-                const requestedMain = Math.floor(CONFIG.maxParticles * STATE.density);
+                const pixelRatio = Math.min(STATE.pixelRatio, Math.max(0.35, STATE.pixelRatio * q));
+                const requestedMain = Math.floor(CONFIG.maxParticles * Math.min(STATE.density, CONFIG.maxDensity));
                 const requestedTotal = requestedMain + CONFIG.secondaryParticles;
                 const visibleParticles = Math.floor(Math.min(requestedTotal, particleBudget) * q);
                 const mainCount = Math.round(visibleParticles * requestedMain / requestedTotal);
@@ -1717,7 +1585,7 @@ void main() {
         const secondaryPoints = new THREE.Points(secondaryGeometry, secondaryMaterial);
         scene.add(secondaryPoints);
 
-        // Add to STATE for GUI control
+        // Expose secondary-layer controls to the host component.
         STATE.secondaryEnabled = true;
         STATE.secondaryOpacity = 1.0;
 
@@ -1875,16 +1743,23 @@ void main() {
         function refreshTrackedParticles() {
             trackedParticles.length = 0;
             const visibleParticles = Math.max(1, geometry.drawRange.count);
-            for (let i = 0; i < connectionCount; i++) {
+            const visibleFraction = Math.sqrt(visibleParticles / (CONFIG.maxParticles * CONFIG.initialDensity));
+            const trackedCount = Math.max(2, Math.floor(connectionCount * Math.min(1, STATE.qualityLevel, visibleFraction)));
+            for (let i = 0; i < trackedCount; i++) {
                 trackedParticles.push(Math.floor(Math.random() * visibleParticles));
             }
         }
         refreshTrackedParticles();
+        let lastConnectionState = null;
 
-        function updateConnections(threshold, bassBoost, highMid, mid) {
+        function shouldRebuildConnections(activeAudio, current, previous, idleElapsed) {
+            return activeAudio || idleElapsed >= 2 || !previous || current.some((value, index) => value !== previous[index]);
+        }
+
+        function updateConnections(threshold, bassBoost, highMid, mid, forceRefresh = false) {
             // Refresh particle selection every N frames — network evolves over time
             connectionRefreshCounter++;
-            if (connectionRefreshCounter >= CONNECTION_REFRESH_INTERVAL) {
+            if (forceRefresh || connectionRefreshCounter >= CONNECTION_REFRESH_INTERVAL) {
                 refreshTrackedParticles();
                 connectionRefreshCounter = 0;
             }
@@ -1902,8 +1777,8 @@ void main() {
             const dynamicMax = Math.floor(maxConnections * (0.3 + (mid + highMid) * 0.7));
 
             let connIdx = 0;
-            for (let i = 0; i < positions.length && connIdx < dynamicMax; i++) {
-                for (let j = i + 1; j < positions.length && connIdx < dynamicMax; j++) {
+            for (let i = 0; i < trackedParticles.length && connIdx < dynamicMax; i++) {
+                for (let j = i + 1; j < trackedParticles.length && connIdx < dynamicMax; j++) {
                     const distSq = positions[i].distanceToSquared(positions[j]);
                     if (distSq < thresholdSq && distSq > 0.1) {
                         const dist = Math.sqrt(distSq);
@@ -2229,72 +2104,6 @@ void main() {
         );
         scene.add(nebulaSphere);
 
-        // ═══════ LENS FLARE (3D Object - Cinematic) ═══════
-        function createSoftGlow(size) {
-            const canvas = document.createElement('canvas');
-            canvas.width = canvas.height = size;
-            const ctx = canvas.getContext('2d');
-            const grad = ctx.createRadialGradient(size / 2, size / 2, 0, size / 2, size / 2, size / 2);
-            grad.addColorStop(0, 'rgba(255,250,240,0.9)');
-            grad.addColorStop(0.1, 'rgba(255,240,230,0.6)');
-            grad.addColorStop(0.3, 'rgba(200,180,255,0.3)');
-            grad.addColorStop(0.6, 'rgba(150,120,255,0.1)');
-            grad.addColorStop(1, 'rgba(0,0,0,0)');
-            ctx.fillStyle = grad;
-            ctx.fillRect(0, 0, size, size);
-            return new THREE.CanvasTexture(canvas);
-        }
-
-        function createSoftRing(size) {
-            const canvas = document.createElement('canvas');
-            canvas.width = canvas.height = size;
-            const ctx = canvas.getContext('2d');
-            const grad = ctx.createRadialGradient(size / 2, size / 2, size * 0.3, size / 2, size / 2, size * 0.45);
-            grad.addColorStop(0, 'rgba(0,0,0,0)');
-            grad.addColorStop(0.4, 'rgba(180,160,255,0.15)');
-            grad.addColorStop(0.6, 'rgba(140,120,220,0.2)');
-            grad.addColorStop(0.8, 'rgba(100,80,180,0.1)');
-            grad.addColorStop(1, 'rgba(0,0,0,0)');
-            ctx.fillStyle = grad;
-            ctx.fillRect(0, 0, size, size);
-            return new THREE.CanvasTexture(canvas);
-        }
-
-        function createHexagon(size) {
-            const canvas = document.createElement('canvas');
-            canvas.width = canvas.height = size;
-            const ctx = canvas.getContext('2d');
-            ctx.translate(size / 2, size / 2);
-            ctx.beginPath();
-            for (let i = 0; i < 6; i++) {
-                const angle = i * Math.PI / 3 - Math.PI / 6;
-                const x = Math.cos(angle) * size * 0.35;
-                const y = Math.sin(angle) * size * 0.35;
-                i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
-            }
-            ctx.closePath();
-            const grad = ctx.createRadialGradient(0, 0, 0, 0, 0, size * 0.4);
-            grad.addColorStop(0, 'rgba(150,200,255,0.25)');
-            grad.addColorStop(0.7, 'rgba(100,150,255,0.1)');
-            grad.addColorStop(1, 'rgba(0,0,0,0)');
-            ctx.fillStyle = grad;
-            ctx.fill();
-            return new THREE.CanvasTexture(canvas);
-        }
-
-        const flareGlow = createSoftGlow(256);
-        const flareRing = createSoftRing(256);
-        const flareHex = createHexagon(128);
-
-        const lensflare = new Lensflare();
-        lensflare.addElement(new LensflareElement(flareGlow, 180, 0, new THREE.Color(0xffffff)));
-        lensflare.addElement(new LensflareElement(flareRing, 280, 0, new THREE.Color(0xaaaaff)));
-        lensflare.addElement(new LensflareElement(flareHex, 60, 0.2, new THREE.Color(0x9999ff)));
-        lensflare.addElement(new LensflareElement(flareHex, 40, 0.4, new THREE.Color(0xaabbff)));
-        lensflare.addElement(new LensflareElement(flareGlow, 25, 0.6, new THREE.Color(0x8888ff)));
-        lensflare.position.set(0, 0, 0);
-        scene.add(lensflare);
-
         // ═══════ POST-PROCESSING COMPOSER ═══════
         const composer = new EffectComposer(renderer);
         composer.addPass(new RenderPass(scene, camera));
@@ -2314,13 +2123,14 @@ void main() {
         composer.addPass(godRaysPass);
 
         const lensFlarePass = new ShaderPass(LensFlareShader);
-        lensFlarePass.enabled = STATE.lensFlareEnabled;
+        lensFlarePass.enabled = STATE.lensFlareEnabled && STATE.lensFlareIntensity > 0;
         composer.addPass(lensFlarePass);
 
         const anamorphicPass = new ShaderPass(AnamorphicShader);
         composer.addPass(anamorphicPass);
 
         const chromaticPass = new ShaderPass(ChromaticShader);
+        chromaticPass.enabled = STATE.chromaticAberration > 0;
         composer.addPass(chromaticPass);
 
         // Custom DOF pass (radial focus)
@@ -2336,6 +2146,7 @@ void main() {
         composer.addPass(vignettePass);
 
         const grainPass = new ShaderPass(GrainShader);
+        grainPass.enabled = STATE.filmGrain > 0;
         composer.addPass(grainPass);
 
         const AlphaFromLumaShader = {
@@ -2352,137 +2163,15 @@ void main() {
         composer.addPass(new OutputPass());
         composer.addPass(new ShaderPass(AlphaFromLumaShader));
 
-        // ═══════ GUI ═══════
-        const gui = new GUI({ title: '✦ Quantum Fields', width: 320 });
-        gui.domElement.classList.add('hidden'); // Default closed
-
-        // === MAIN CONTROLS (always visible) ===
-        // Animate lil-gui CSS vars toward target field colours
-        let guiTargetAccent = new THREE.Color(def.c1);
-        let guiTargetAccent2 = new THREE.Color(def.c2);
-        let guiCurrentAccent = new THREE.Color(def.c1);
-        let guiCurrentAccent2 = new THREE.Color(def.c2);
-
-        function applyGuiTheme(accent, accent2) {
-            // Ensure accent is always bright enough to read against the dark GUI
-            const minL = 0.35;
-            const lum = accent.r * 0.299 + accent.g * 0.587 + accent.b * 0.114;
-            const boost = lum < minL ? minL / Math.max(lum, 0.001) : 1.0;
-            const r = Math.min(Math.round(accent.r * boost * 255), 255);
-            const g = Math.min(Math.round(accent.g * boost * 255), 255);
-            const b = Math.min(Math.round(accent.b * boost * 255), 255);
-
-            // Drive all CSS via :root vars — every purple element in the page recolours
-            document.documentElement.style.setProperty('--ar', r);
-            document.documentElement.style.setProperty('--ag', g);
-            document.documentElement.style.setProperty('--ab', b);
-
-            // Also update lil-gui widget/hover colours (these aren’t driven by :root vars)
-            const el = gui.domElement;
-            const wR = Math.round((accent.r * 0.4 + accent2.r * 0.3) * 180 + 30);
-            const wG = Math.round((accent.g * 0.4 + accent2.g * 0.3) * 180 + 30);
-            const wB = Math.round((accent.b * 0.4 + accent2.b * 0.3) * 180 + 30);
-            el.style.setProperty('--widget-color', `rgb(${wR},${wG},${wB})`);
-            el.style.setProperty('--hover-color',  `rgb(${Math.min(wR+25,255)},${Math.min(wG+25,255)},${Math.min(wB+25,255)})`);
-        }
-
-        // Smooth GUI theme transition in animation loop — interpolates over time
-        function tickGuiTheme() {
-            guiCurrentAccent.lerp(guiTargetAccent, 0.04);
-            guiCurrentAccent2.lerp(guiTargetAccent2, 0.04);
-            applyGuiTheme(guiCurrentAccent, guiCurrentAccent2);
-        }
-
-        // Set initial theme
-        applyGuiTheme(guiCurrentAccent, guiCurrentAccent2);
-
-        gui.add(STATE, 'field', Object.keys(FIELD_TYPES)).name('⚡ Field Type').onChange(val => {
-            const d = FIELD_TYPES[val];
-            const c1 = new THREE.Color(d.c1), c2 = new THREE.Color(d.c2), c3 = new THREE.Color(d.c3);
-            const sc1 = new THREE.Color(d.sc1), sc2 = new THREE.Color(d.sc2);
-            // Queue GUI theme transition
-            guiTargetAccent.set(d.c1);
-            guiTargetAccent2.set(d.c2);
-            function step() {
-                material.uniforms.uColor1.value.lerp(c1, 0.05);
-                material.uniforms.uColor2.value.lerp(c2, 0.05);
-                material.uniforms.uColor3.value.lerp(c3, 0.05);
-                secondaryMaterial.uniforms.uColor1.value.lerp(sc1, 0.05);
-                secondaryMaterial.uniforms.uColor2.value.lerp(sc2, 0.05);
-                nebulaMaterial.uniforms.uColor1.value.lerp(c1, 0.03);
-                nebulaMaterial.uniforms.uColor2.value.lerp(c2, 0.03);
-                nebulaMaterial.uniforms.uColor3.value.lerp(c3, 0.03);
-                connectionMaterial.uniforms.uColor.value.lerp(c2, 0.05);
-                connectionMaterial.uniforms.uColor2.value.lerp(c1, 0.05);
-                material.uniforms.uNoiseScale.value = THREE.MathUtils.lerp(material.uniforms.uNoiseScale.value, d.s, 0.04);
-                material.uniforms.uCurlStrength.value = THREE.MathUtils.lerp(material.uniforms.uCurlStrength.value, d.curl, 0.04);
-                material.uniforms.uSizeBase.value = THREE.MathUtils.lerp(material.uniforms.uSizeBase.value, d.sz, 0.04);
-                if (Math.abs(material.uniforms.uNoiseScale.value - d.s) > 0.01) requestAnimationFrame(step);
+        // Keep the embedded CSS accents aligned with the kit palette.
+        function applyCssTheme(accent) {
+            const luminance = accent.r * 0.299 + accent.g * 0.587 + accent.b * 0.114;
+            const boost = luminance < 0.35 ? 0.35 / Math.max(luminance, 0.001) : 1;
+            for (const [channel, value] of Object.entries({ ar: accent.r, ag: accent.g, ab: accent.b })) {
+                document.documentElement.style.setProperty(`--${channel}`, Math.min(Math.round(value * boost * 255), 255));
             }
-            step();
-        });
-        gui.add(STATE, 'sensitivity', 0.1, 3.0).name('🎧 Audio Sensitivity');
-        gui.add(STATE, 'density', 0.017, 0.14).name('⭐ Density').onChange(() => QUALITY_SYSTEM.applyQuality());
-        gui.add(STATE, 'timeScale', 0.0, 3.0).name('⏱ Time Flow');
-
-        // === ENVIRONMENT ===
-        const f_env = gui.addFolder('🌌 Environment');
-        f_env.add(STATE, 'nebulaEnabled').name('Space Nebula').onChange(v => nebulaSphere.visible = v);
-        f_env.add(STATE, 'nebulaIntensity', 0.0, 2.0).name('Nebula Intensity').onChange(v => nebulaMaterial.uniforms.uIntensity.value = v);
-        f_env.add(STATE, 'connectionsEnabled').name('Force Network');
-        f_env.add(STATE, 'connectionThreshold', 5.0, 25.0).name('Network Range');
-        f_env.add(STATE, 'connectionOpacity', 0.1, 1.0).name('Network Opacity');
-        f_env.add(STATE, 'crawlersEnabled').name('Network Crawlers');
-        f_env.add(STATE, 'particleTrailsEnabled').name('Particle Trails');
-        f_env.add(STATE, 'particleTrailOpacity', 0.0, 1.0).name('Trail Opacity');
-        f_env.close();
-
-        // === CAMERA & LENS ===
-        const f_lens = gui.addFolder('🎥 Camera & Lens');
-        f_lens.add(STATE, 'lensFlareEnabled').name('Lens Flare').onChange(v => { lensFlarePass.enabled = v; lensflare.visible = v; });
-        f_lens.add(STATE, 'lensFlareIntensity', 0.0, 2.0).name('Flare Intensity').onChange(v => lensFlarePass.uniforms.uIntensity.value = v);
-        const dofController = f_lens.add(STATE, 'dofEnabled').name('Depth of Field').onChange(v => customDOFPass.enabled = v);
-        f_lens.add(STATE, 'dofFocus', 0.0, 0.1015).name('Focus Ring').onChange(v => customDOFPass.uniforms.uFocus.value = v);
-        f_lens.add(STATE, 'dofFocalLength', 0.05, 0.5).name('Focus Falloff').onChange(v => customDOFPass.uniforms.uFocalLength.value = v);
-        f_lens.add(STATE, 'dofBokehStrength', 0.0, 1.0).name('Blur Amount').onChange(v => customDOFPass.uniforms.uBokehStrength.value = v);
-        f_lens.add(STATE, 'cameraShake', 0.0, 2.0).name('Camera Shake');
-        f_lens.close();
-
-        // === POST FX ===
-        const f_post = gui.addFolder('✨ Post Processing');
-        f_post.add(bloomPass, 'strength', 0.0, 3.0).name('Bloom');
-        f_post.add(afterimagePass.uniforms['damp'], 'value', 0.5, 0.98).name('Motion Blur');
-        f_post.add(STATE, 'chromaticAberration', 0.0, 0.025).name('Chromatic').onChange(v => chromaticPass.uniforms.uIntensity.value = v);
-        f_post.add(STATE, 'anamorphicStretch', 0.0, 1.0).name('Anamorphic').onChange(v => anamorphicPass.uniforms.uStretch.value = v);
-        f_post.add(STATE, 'godRaysEnabled').name('God Rays').onChange(v => godRaysPass.enabled = v);
-        f_post.add(STATE, 'godRaysIntensity', 0.0, 1.0).name('Rays Intensity').onChange(v => godRaysPass.uniforms.uIntensity.value = v);
-        f_post.add(STATE, 'filmGrain', 0.0, 0.2).name('Film Grain').onChange(v => grainPass.uniforms.uIntensity.value = v);
-        f_post.close();
-
-        // === PHYSICS (Advanced) ===
-        const f_phys = gui.addFolder('⚙️ Physics');
-        f_phys.add(STATE, 'vortexStrength', 0.0, 1.0).name('Vortex').onChange(v => material.uniforms.uVortexStrength.value = v);
-        f_phys.add(STATE, 'pulseIntensity', 0.0, 2.5).name('Pulse').onChange(v => material.uniforms.uPulseIntensity.value = v);
-        f_phys.close();
-
-        // === AUDIO (Advanced) ===
-        const f_gate = gui.addFolder('🎤 Audio Gate');
-        f_gate.add(STATE, 'bassGateEnabled').name('Enable');
-        f_gate.add(STATE, 'bassGateThreshold', 0.0, 0.5).name('Threshold');
-        f_gate.add(STATE, 'bassGateAttack', 0.01, 0.3).name('Attack');
-        f_gate.add(STATE, 'bassGateRelease', 0.05, 0.5).name('Release');
-        f_gate.close();
-
-        // === ENHANCEMENT PACK v2.0 ===
-        const f_enhance = gui.addFolder('🚀 Enhancement Pack');
-        f_enhance.add(STATE, 'onsetSensitivity', 0.5, 3.0).name('Onset Punch');
-        f_enhance.add(STATE, 'audioCameraEnabled').name('Audio Camera');
-        f_enhance.add(STATE, 'audioCameraIntensity', 0.0, 1.0).name('Camera React');
-        f_enhance.add(STATE, 'waveformTerrainHeight', 5.0, 30.0).name('Terrain Height');
-        f_enhance.add(STATE, 'adaptiveQualityEnabled').name('Auto Quality');
-        f_enhance.add(STATE, 'targetFPS', 30, 60).name('Target FPS');
-        f_enhance.add({ fps: () => QUALITY_SYSTEM.currentFPS.toFixed(1) }, 'fps').name('Current FPS').listen();
-        f_enhance.close();
+        }
+        applyCssTheme(new THREE.Color(def.c1));
 
         // ═══════ UI & EVENTS ═══════
         const overlay = document.getElementById('overlay');
@@ -2532,7 +2221,18 @@ void main() {
 
         async function loadTrack(file) {
             activate();
-            await AUDIO.loadTrack(await file.arrayBuffer(), file.name);
+            const buffer = await AUDIO.loadTrack(await file.arrayBuffer(), file.name);
+            const samples = buffer.getChannelData(0);
+            const bars = 160;
+            const peaks = Array.from({ length: bars }, (_, bar) => {
+                const from = Math.floor(bar * samples.length / bars);
+                const to = Math.floor((bar + 1) * samples.length / bars);
+                const stride = Math.max(1, Math.floor((to - from) / 64));
+                let peak = 0;
+                for (let i = from; i < to; i += stride) peak = Math.max(peak, Math.abs(samples[i]));
+                return peak;
+            });
+            parent.postMessage({ type: 'ad-qf-waveform', value: peaks }, '*');
             AUDIO.play();
             trackName.textContent = file.name.length > 25 ? file.name.slice(0, 22) + '...' : file.name;
             updateUI();
@@ -2581,17 +2281,40 @@ void main() {
         });
 
         // ═══════ ANIMATION LOOP ═══════
-        const clock = new THREE.Clock();
         let renderVisible = true;
         let connectionElapsed = 1 / 20;
+        let idleConnectionElapsed = 2;
+        let frameRequest = 0;
+        let nextFrameAt = 0;
+        let lastRenderedAt = -1;
+        let elapsed = 0;
 
-        function animate() {
-            requestAnimationFrame(animate);
-            if (!renderVisible || document.hidden) {
-                clock.getDelta();
-                return;
-            }
-            const dt = clock.getDelta(), elapsed = clock.getElapsedTime();
+        function startFrames() {
+            if (!frameRequest && renderVisible && !document.hidden) frameRequest = requestAnimationFrame(animate);
+        }
+
+        function stopFrames() {
+            if (frameRequest) cancelAnimationFrame(frameRequest);
+            frameRequest = 0;
+            nextFrameAt = 0;
+            lastRenderedAt = -1;
+        }
+
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) stopFrames();
+            else startFrames();
+        });
+
+        function animate(now) {
+            frameRequest = 0;
+            if (!renderVisible || document.hidden) return;
+            startFrames();
+            const frameInterval = 1000 / Math.max(1, STATE.targetFPS);
+            if (now < nextFrameAt) return;
+            nextFrameAt = Math.max(nextFrameAt + frameInterval, now);
+            const dt = lastRenderedAt < 0 ? 0 : Math.min((now - lastRenderedAt) / 1000, 0.05);
+            lastRenderedAt = now;
+            elapsed += dt;
 
             material.uniforms.uTime.value += dt * STATE.timeScale;
             grainPass.uniforms.uTime.value = elapsed;
@@ -2602,7 +2325,6 @@ void main() {
             material.uniforms.uMouseVelocity.value.lerp(mouseVelocity, 0.08);
 
             AUDIO.update();
-            updateUI();
 
             const s = STATE.sensitivity, lf = 0.16;
             material.uniforms.uSubBass.value = THREE.MathUtils.lerp(material.uniforms.uSubBass.value, AUDIO.gatedBands.subBass * s, lf);
@@ -2650,21 +2372,37 @@ void main() {
             // Update particle connections
             connectionMesh.visible = STATE.connectionsEnabled;
             if (STATE.connectionsEnabled) {
-                connectionElapsed += dt;
-                if (connectionElapsed >= 1 / 20) {
+                const activeAudio = AUDIO.mode === 'mic' || AUDIO.isPlaying;
+                const connectionState = [
+                    STATE.field, STATE.connectionThreshold, geometry.drawRange.count,
+                    material.uniforms.uViewportAspect.value, material.uniforms.uViewportHalfHeight.value,
+                    STATE.qualityLevel, activeAudio
+                ];
+                connectionElapsed = Math.min(1 / 20, connectionElapsed + dt);
+                idleConnectionElapsed = Math.min(2, idleConnectionElapsed + dt);
+                if (connectionElapsed >= 1 / 20 && shouldRebuildConnections(activeAudio, connectionState, lastConnectionState, idleConnectionElapsed)) {
+                    const refreshSelection = !lastConnectionState || connectionState[2] !== lastConnectionState[2]
+                        || connectionState[5] !== lastConnectionState[5] || (!activeAudio && idleConnectionElapsed >= 2);
                     updateConnections(
                         STATE.connectionThreshold,
-                        material.uniforms.uBass.value,
-                        material.uniforms.uHighMid.value,
-                        material.uniforms.uMid.value
+                        activeAudio ? material.uniforms.uBass.value : 0,
+                        activeAudio ? material.uniforms.uHighMid.value : 0,
+                        activeAudio ? material.uniforms.uMid.value : 0,
+                        refreshSelection
                     );
+                    lastConnectionState = connectionState;
                     connectionElapsed = 0;
+                    idleConnectionElapsed = 0;
                 }
                 connectionMaterial.uniforms.uBeatEnergy.value = material.uniforms.uBeatEnergy.value;
                 connectionMaterial.uniforms.uHighMid.value = material.uniforms.uHighMid.value;
                 connectionMaterial.uniforms.uSpectralCentroid.value = material.uniforms.uSpectralCentroid.value;
                 connectionMaterial.uniforms.uOpacity.value = STATE.connectionOpacity;
-            } else connectionElapsed = 1 / 20;
+            } else {
+                connectionElapsed = 1 / 20;
+                idleConnectionElapsed = 2;
+                lastConnectionState = null;
+            }
 
             // Update crawlers
             crawlerMesh.visible = STATE.crawlersEnabled && STATE.connectionsEnabled && AUDIO.active && (AUDIO.isPlaying || AUDIO.mode === 'mic');
@@ -2685,9 +2423,6 @@ void main() {
                 crawlerMaterial.uniforms.uBeatEnergy.value = material.uniforms.uBeatEnergy.value;
             }
 
-            // Tick GUI theme transition
-            tickGuiTheme();
-
             // Update post-processing
             chromaticPass.uniforms.uBeatEnergy.value = material.uniforms.uBeatEnergy.value;
             godRaysPass.uniforms.uBeatEnergy.value = material.uniforms.uBeatEnergy.value;
@@ -2705,17 +2440,6 @@ void main() {
                 beat: material.uniforms.uBeatEnergy.value
             }, material.uniforms.uColor1.value);
 
-            // Update lens flare
-            if (STATE.lensFlareEnabled) {
-                lensflare.visible = false;
-                lensflare.scale.setScalar((1.0 + AUDIO.beatEnergy * 0.5) * STATE.lensFlareIntensity);
-                lensflare.position.y = Math.sin(elapsed * 0.5) * 5 * material.uniforms.uBass.value;
-            } else {
-                lensflare.visible = false;
-            }
-
-
-
             // === ENHANCEMENT: Adaptive Quality System ===
             QUALITY_SYSTEM.update(dt * 1000);
 
@@ -2731,7 +2455,9 @@ void main() {
 
             controls.autoRotateSpeed = 0.35 + material.uniforms.uMid.value * 2.0 + material.uniforms.uBeatEnergy.value * 2.0;
             bloomPass.strength = STATE.bloom + (AUDIO.gatedBands.bass + AUDIO.gatedBands.mid + AUDIO.beatEnergy) / 6;
+            bloomPass.enabled = bloomPass.strength > 0;
             anamorphicPass.uniforms.uIntensity.value = STATE.anamorphicStretch + AUDIO.gatedBands.bass * 0.4;
+            anamorphicPass.enabled = anamorphicPass.uniforms.uIntensity.value > 0;
 
             controls.update();
             composer.render();
@@ -2746,6 +2472,8 @@ void main() {
             secondaryMaterial.uniforms.uViewportHalfHeight.value = material.uniforms.uViewportHalfHeight.value;
             renderer.setSize(window.innerWidth, window.innerHeight);
             composer.setSize(window.innerWidth, window.innerHeight);
+            STATE.pixelRatio = fitPixelRatio();
+            QUALITY_SYSTEM.applyQuality();
             customDOFPass.uniforms.uResolution.value.set(window.innerWidth, window.innerHeight);
             baseCameraPos.copy(camera.position);
         });
@@ -2754,17 +2482,17 @@ void main() {
         let requestedTimeScale = STATE.timeScale;
         const sideEffects = {
             trails: value => afterimagePass.uniforms['damp'].value = value,
-            chromaticAberration: value => chromaticPass.uniforms.uIntensity.value = value,
-            filmGrain: value => grainPass.uniforms.uIntensity.value = value,
+            chromaticAberration: value => { chromaticPass.uniforms.uIntensity.value = value; chromaticPass.enabled = value > 0; },
+            filmGrain: value => { grainPass.uniforms.uIntensity.value = value; grainPass.enabled = value > 0; },
             nebulaIntensity: value => nebulaMaterial.uniforms.uIntensity.value = value,
-            lensFlareEnabled: value => { lensFlarePass.enabled = value; lensflare.visible = value; },
-            lensFlareIntensity: value => lensFlarePass.uniforms.uIntensity.value = value,
+            lensFlareEnabled: value => lensFlarePass.enabled = value && STATE.lensFlareIntensity > 0,
+            lensFlareIntensity: value => { lensFlarePass.uniforms.uIntensity.value = value; lensFlarePass.enabled = STATE.lensFlareEnabled && value > 0; },
             dofEnabled: value => customDOFPass.enabled = value,
             dofFocus: value => customDOFPass.uniforms.uFocus.value = value,
             dofFocalLength: value => customDOFPass.uniforms.uFocalLength.value = value,
             dofBokehStrength: value => customDOFPass.uniforms.uBokehStrength.value = value,
-            godRaysEnabled: value => godRaysPass.enabled = value,
-            godRaysIntensity: value => godRaysPass.uniforms.uIntensity.value = value,
+            godRaysEnabled: value => godRaysPass.enabled = value && STATE.godRaysIntensity > 0,
+            godRaysIntensity: value => { godRaysPass.uniforms.uIntensity.value = value; godRaysPass.enabled = STATE.godRaysEnabled && value > 0; },
             vortexStrength: value => material.uniforms.uVortexStrength.value = value,
             pulseIntensity: value => material.uniforms.uPulseIntensity.value = value,
         };
@@ -2777,10 +2505,11 @@ void main() {
                 material.uniforms.uNoiseScale.value = selected.s;
                 material.uniforms.uCurlStrength.value = selected.curl;
                 material.uniforms.uSizeBase.value = selected.sz;
-            } else if (key === 'background') {
-                document.documentElement.style.background = value;
-                document.body.style.background = value;
-            } else if (key === 'visible') renderVisible = !!value;
+            } else if (key === 'visible') {
+                renderVisible = !!value;
+                if (renderVisible) startFrames();
+                else stopFrames();
+            }
             else if (key === 'interactive') controls.enabled = !!value;
             else if (key === 'particleBudget') {
                 particleBudget = Number.isFinite(value) ? Math.max(0, Math.floor(value)) : Infinity;
@@ -2798,6 +2527,7 @@ void main() {
             else if (key === 'screenshot') document.getElementById('screenshot-btn').click();
             else if (key === 'palette' && Array.isArray(value)) {
                 const main = new THREE.Color(value[0]), light = new THREE.Color(value[1]);
+                applyCssTheme(main);
                 material.uniforms.uColor1.value.copy(main);
                 material.uniforms.uColor2.value.copy(light);
                 material.uniforms.uColor3.value.copy(light).lerp(new THREE.Color('#ffffff'), 0.32);
@@ -2816,6 +2546,7 @@ void main() {
         });
         let lastTransport = '';
         setInterval(() => {
+            if (!renderVisible || document.hidden) return;
             const value = {
                 mode: AUDIO.mode, playing: AUDIO.isPlaying,
                 current: AUDIO.mode === 'file' ? AUDIO.getCurrentTime() : 0,
@@ -2831,7 +2562,7 @@ void main() {
         parent.postMessage({ type: 'ad-qf-ready' }, '*');
 
         QUALITY_SYSTEM.applyQuality();
-        animate();
+        startFrames();
     </script>
 </body>
 

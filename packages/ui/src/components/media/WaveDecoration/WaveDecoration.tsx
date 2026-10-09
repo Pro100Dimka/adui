@@ -27,9 +27,13 @@ const strand = (j: number, t: number) => {
 
 export const WaveDecoration = (p: CommonProps) => {
   const ref = useRef<SVGSVGElement>(null);
+  const paths = useRef<NodeListOf<SVGPathElement>>(null);
   const uid = useSvgId();
-  const paint = (t: number) =>
-    ref.current?.querySelectorAll("path").forEach((path, j) => path.setAttribute("d", strand(j, t)));
+  const paint = (t: number) => {
+    if (!ref.current) return;
+    paths.current ??= ref.current.querySelectorAll("path");
+    paths.current.forEach((path, j) => path.setAttribute("d", strand(j, t)));
+  };
   usePauseOffscreen(ref);
   useDecoration(ref, paint);
   return (

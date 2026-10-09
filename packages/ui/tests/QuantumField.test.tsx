@@ -11,13 +11,20 @@ import { createQuantumFieldAudio } from "../src/components/artwork/QuantumField/
 import { quantumFieldGeometry, quantumFieldFilaments, quantumFieldNetwork, quantumFieldZoom } from "../src/components/artwork/QuantumField/renderer";
 import { ThemeProvider } from "../src/components/foundation/ThemeProvider/ThemeProvider";
 import { FilePicker } from "../src/components/controls/FilePicker/FilePicker";
+import { IconButton } from "../src/components/controls/IconButton/IconButton";
+import { Slider } from "../src/components/controls/Slider/Slider";
+import { Switch } from "../src/components/controls/Switch/Switch";
 import { Tabs } from "../src/components/controls/Tabs/Tabs";
+import { Tooltip } from "../src/components/feedback/Tooltip/Tooltip";
+import { AudioPlayer } from "../src/components/media/AudioPlayer/AudioPlayer";
 import {
   QuantumField,
   quantumFieldModes,
   quantumFieldResolution,
   quantumFieldAudio,
 } from "../src/components/artwork/QuantumField/QuantumField";
+
+const nodeMock = () => ({ getBoundingClientRect: () => ({}) });
 
 it("preserves the source visualizer's MIT notice when restoring it", () => {
   const license = readFileSync(new URL("../src/components/artwork/QuantumField/UPSTREAM-LICENSE.txt", import.meta.url), "utf8");
@@ -27,7 +34,7 @@ it("preserves the source visualizer's MIT notice when restoring it", () => {
   expect(reference).not.toContain("Auto-starting System Audio");
   expect(reference).toContain("AlphaFromLumaShader");
   expect(reference.indexOf("composer.addPass(new OutputPass())")).toBeLessThan(reference.indexOf("composer.addPass(new ShaderPass(AlphaFromLumaShader))"));
-  expect(reference).toContain("key === 'background'");
+  expect(reference).not.toContain("key === 'background'");
 });
 
 it("restores the licensed full visualizer instead of the reduced native scene", () => {
@@ -48,6 +55,103 @@ it("keeps the restored visualizer's full settings and song transport in the kit"
   const source = readFileSync(new URL("../src/components/artwork/QuantumField/reference.html", import.meta.url), "utf8");
   expect(source).toContain("key === 'seek'");
   expect(source).toContain("ad-qf-transport");
+});
+
+it("shows playback and essential settings first, with detailed controls closed by default", () => {
+  const html = renderToStaticMarkup(createElement(QuantumFieldExperience));
+  expect(html).toContain('data-ad-component="FilePicker"');
+  expect(html).toMatch(/<details[^>]*data-ad-component="CollapsibleSection"[^>]*>/);
+  expect(html).toContain("Тонкая настройка");
+  for (const label of ["Тип поля", "Чувствительность", "Плотность", "Скорость"])
+    expect(html.split(label)).toHaveLength(2);
+});
+
+it("reveals detailed effect sliders only when their effect is enabled", () => {
+  vi.stubGlobal("IS_REACT_ACT_ENVIRONMENT", true);
+  vi.stubGlobal("window", { addEventListener: vi.fn(), removeEventListener: vi.fn(), setTimeout, clearTimeout });
+  let tree!: ReturnType<typeof create>;
+  act(() => { tree = create(createElement(QuantumFieldExperience), { createNodeMock: nodeMock }); });
+  try {
+    act(() => tree.root.findByType(Tabs).props.onValueChange("environment"));
+    const sliders = (label: string) => tree.root.findAllByType(Slider).filter((node) => node.props.label === label);
+    expect(sliders("Яркость туманности")).toHaveLength(0);
+    expect(sliders("Дальность связей")).toHaveLength(1);
+    act(() => tree.root.findAllByType(Switch).find((node) => node.props.label === "Туманность")!.props.onValueChange(true));
+    expect(sliders("Яркость туманности")).toHaveLength(1);
+  } finally { act(() => tree.unmount()); }
+});
+
+it("places a compact kit player and actions below a transparent, shorter field", () => {
+  const html = renderToStaticMarkup(createElement(QuantumFieldExperience));
+  expect(html.indexOf('class="ad-qf-viewport"')).toBeLessThan(html.indexOf('class="ad-qf-controls"'));
+  expect(html).toContain('data-ad-component="AudioPlayer"');
+  const css = readFileSync(new URL("../src/components/artwork/QuantumField/styles.css", import.meta.url), "utf8");
+  const reference = readFileSync(new URL("../src/components/artwork/QuantumField/reference.html", import.meta.url), "utf8");
+  const docsCss = readFileSync(new URL("../../../apps/playground/src/app/app.css", import.meta.url), "utf8");
+  const host = readFileSync(new URL("../src/components/artwork/QuantumField/QuantumFieldExperience.tsx", import.meta.url), "utf8");
+  expect(css).toMatch(/\.ad-qf-viewport\s*\{[^}]*height:\s*clamp\(18rem,\s*42vh,\s*27rem\)/s);
+  expect(css).toMatch(/\.ad-qf-viewport > iframe\s*\{[^}]*color-scheme:\s*dark/s);
+  expect(reference).toMatch(/html, body\s*\{[^}]*color-scheme:\s*dark/s);
+  expect(docsCss).toContain('.example-stage:has(> .ad-quantum-field-experience)');
+  expect(host).not.toContain('send("background"');
+});
+
+it("keeps the iframe transparent without passing unsupported React DOM attributes", () => {
+  const host = readFileSync(new URL("../src/components/artwork/QuantumField/QuantumFieldExperience.tsx", import.meta.url), "utf8");
+  expect(host).not.toContain("allowTransparency");
+  expect(host).toContain("srcDoc={reference}");
+});
+
+it("routes the kit player and labelled icon actions to the iframe", () => {
+  vi.stubGlobal("IS_REACT_ACT_ENVIRONMENT", true);
+  vi.stubGlobal("getComputedStyle", () => ({ backgroundColor: "rgba(0, 0, 0, 0)" }));
+  vi.stubGlobal("window", { setTimeout, clearTimeout, addEventListener: (_type: string, listener: (event: MessageEvent) => void) => { receive = listener; }, removeEventListener: vi.fn() });
+  let receive!: (event: MessageEvent) => void;
+  const postMessage = vi.fn();
+  const contentWindow = { postMessage };
+  let tree!: ReturnType<typeof create>;
+  act(() => { tree = create(createElement(QuantumFieldExperience), { createNodeMock: ({ type }) => type === "iframe" ? { contentWindow } : nodeMock() }); });
+  try {
+    act(() => receive({ source: contentWindow, data: { type: "ad-qf-ready" } } as unknown as MessageEvent));
+    act(() => receive({ source: contentWindow, data: { type: "ad-qf-transport", value: { mode: "file", playing: true, current: 12, duration: 30, track: "song.mp3" } } } as unknown as MessageEvent));
+    act(() => receive({ source: contentWindow, data: { type: "ad-qf-waveform", value: [0.2, 0.5, 0.1] } } as unknown as MessageEvent));
+    const player = tree.root.findByType(AudioPlayer);
+    expect(player.props).toMatchObject({ playing: true, position: 12, duration: 30, points: [0.2, 0.5, 0.1] });
+    expect(tree.root.findByType(FilePicker).props.label).toBe("song.mp3");
+    act(() => player.props.onPlayingChange(false));
+    act(() => player.props.onTimeChange(18));
+    expect(postMessage).toHaveBeenCalledWith({ type: "ad-qf-control", key: "play", value: undefined }, "*");
+    expect(postMessage).toHaveBeenCalledWith({ type: "ad-qf-control", key: "seek", value: 18 }, "*");
+    const labels = tree.root.findAllByType(IconButton).map(({ props }) => props.label);
+    expect(labels).toEqual(expect.arrayContaining(["Микрофон", "Снимок", "На весь экран"]));
+    expect(tree.root.findAllByType(Tooltip)).toHaveLength(3);
+  } finally { act(() => tree.unmount()); }
+});
+
+it("updates playback without rerendering the field settings", () => {
+  vi.stubGlobal("IS_REACT_ACT_ENVIRONMENT", true);
+  const listeners = new Set<(event: MessageEvent) => void>();
+  vi.stubGlobal("window", {
+    setTimeout, clearTimeout,
+    addEventListener: (type: string, listener: (event: MessageEvent) => void) => { if (type === "message") listeners.add(listener); },
+    removeEventListener: (type: string, listener: (event: MessageEvent) => void) => { if (type === "message") listeners.delete(listener); },
+  });
+  const contentWindow = { postMessage: vi.fn() };
+  let tree!: ReturnType<typeof create>;
+  act(() => { tree = create(createElement(QuantumFieldExperience), {
+    createNodeMock: ({ type }) => type === "iframe" ? { contentWindow } : nodeMock(),
+  }); });
+  try {
+    const tabsBefore = tree.root.findByType(Tabs).props.items;
+    act(() => listeners.forEach((listener) => listener({ source: contentWindow, data: {
+      type: "ad-qf-transport", value: { mode: "file", playing: true, current: 8, duration: 42, track: "song.mp3" },
+    } } as unknown as MessageEvent)));
+    expect(tree.root.findByType(AudioPlayer).props.position).toBe(8);
+    expect(tree.root.findByType(Tabs).props.items).toBe(tabsBefore);
+  } finally {
+    act(() => tree.unmount());
+    vi.unstubAllGlobals();
+  }
 });
 
 it("keeps seven field presets while sharing the responsive particle geometry", () => {
@@ -113,8 +217,61 @@ it("adds sparse theme-coloured glints and a field-wide depth wave without extra 
 
 it("starts the restored renderer with bounded resolution and adaptive quality", () => {
   const source = readFileSync(new URL("../src/components/artwork/QuantumField/reference.html", import.meta.url), "utf8");
-  expect(source).toMatch(/pixelRatio:\s*Math\.min\(window\.devicePixelRatio,\s*1\.5\)/);
+  expect(source).toContain("pixelRatio: fitPixelRatio()");
   expect(source).toMatch(/adaptiveQualityEnabled:\s*true/);
+});
+
+it("skips FFT while audio is paused and fades its response before resuming", () => {
+  const source = readFileSync(new URL("../src/components/artwork/QuantumField/reference.html", import.meta.url), "utf8");
+  const body = source.match(/const AUDIO = \{([\s\S]*?)\r?\n        \};\r?\n\r?\n        \/\/ --- SCENE SETUP ---/)?.[1];
+  expect(body).toBeTruthy();
+  const state = { bassGateEnabled: false, onsetDecay: 0.92 };
+  const audio = new Function("STATE", "performance", `return {${body}};`)(state, { now: () => 1_000 });
+  const analyser = { connect: vi.fn(), getByteFrequencyData: vi.fn((data: Uint8Array) => data.fill(180)) };
+  const oldSource = { stop: vi.fn(), disconnect: vi.fn() };
+  const newSource = { connect: vi.fn(), start: vi.fn() };
+  audio.ctx = { sampleRate: 48_000, currentTime: 2, destination: {}, createBufferSource: () => newSource };
+  audio.analyser = analyser;
+  audio.data = new Uint8Array(2_048);
+  audio.prevSpectrum = new Float32Array(2_048);
+  audio.audioBuffer = { duration: 10 };
+  audio.mode = "file";
+  audio.source = oldSource;
+  audio.isPlaying = true;
+  audio.active = true;
+  audio.update();
+  expect(audio.gatedBands.bass).toBeGreaterThan(0);
+  audio.beatEnergy = 0.8;
+  audio.onsetEnergy = 0.5;
+
+  audio.pause();
+  for (let i = 0; i < 60; i++) audio.update();
+  expect(analyser.getByteFrequencyData).toHaveBeenCalledTimes(1);
+  expect(Object.values(audio.gatedBands)).toEqual(Array(7).fill(0));
+  expect(audio.spectralCentroid).toBe(0);
+  expect(audio.spectralFlux).toBe(0);
+  expect(audio.beatEnergy).toBeLessThan(0.02);
+  expect(audio.onsetEnergy).toBeLessThan(0.02);
+
+  audio.play();
+  audio.update();
+  expect(analyser.getByteFrequencyData).toHaveBeenCalledTimes(2);
+  expect(audio.gatedBands.bass).toBeGreaterThan(0);
+});
+
+it("keeps full-screen postprocessing within a pixel budget and recalculates after resize", () => {
+  const source = readFileSync(new URL("../src/components/artwork/QuantumField/reference.html", import.meta.url), "utf8");
+  const body = source.match(/function fitPixelRatio\(\) \{([\s\S]*?)\n        \}/)?.[1];
+  expect(body).toBeTruthy();
+  const fit = new Function("window", body!);
+  expect(fit({ devicePixelRatio: 2, innerWidth: 900, innerHeight: 400 })).toBe(1.5);
+  expect(fit({ devicePixelRatio: 2, innerWidth: 1920, innerHeight: 1080 }))
+    .toBeCloseTo(Math.sqrt(2_100_000 / (1920 * 1080)));
+  expect(fit({ devicePixelRatio: 2, innerWidth: 3840, innerHeight: 2160 }))
+    .toBeCloseTo(Math.sqrt(2_100_000 / (3840 * 2160)));
+  const resize = source.split("window.addEventListener('resize', () => {")[1]?.split("let pausedFromKit")[0] ?? "";
+  expect(resize).toContain("STATE.pixelRatio = fitPixelRatio();");
+  expect(resize).toContain("QUALITY_SYSTEM.applyQuality();");
 });
 
 it("scales the compositor and particles together on slower GPUs", () => {
@@ -125,9 +282,95 @@ it("scales the compositor and particles together on slower GPUs", () => {
   expect(source).toContain("secondaryMaterial.uniforms.uPixelRatio.value = pixelRatio;");
   expect(source).toContain("secondaryGeometry.instanceCount = visibleParticles - mainCount;");
   expect(source).toContain("i < this.trails.length * STATE.qualityLevel");
-  expect(source).toContain("Math.max(0.75, STATE.pixelRatio * q)");
+  expect(source).toContain("Math.min(STATE.pixelRatio, Math.max(0.35, STATE.pixelRatio * q))");
   expect(source).toContain("this.currentFPS < STATE.targetFPS * 0.6 ? 0.2 : 0.1");
   expect(source).toContain("performance.now() - this.lastAdjustTime > 1000");
+});
+
+it("allocates only the primary particle range reachable by the density control", () => {
+  const source = readFileSync(new URL("../src/components/artwork/QuantumField/reference.html", import.meta.url), "utf8");
+  expect(source).toContain("maxDensity: 0.14");
+  expect(source).toContain("const mainCapacity = Math.ceil(CONFIG.maxParticles * CONFIG.maxDensity);");
+  expect(source).toContain("i < mainCapacity");
+  expect(source).toContain("Math.min(STATE.density, CONFIG.maxDensity)");
+});
+
+it("suspends offscreen animation callbacks and caps visual frames at the requested FPS", () => {
+  const source = readFileSync(new URL("../src/components/artwork/QuantumField/reference.html", import.meta.url), "utf8");
+  expect(source).toContain("cancelAnimationFrame(frameRequest)");
+  expect(source).toContain("document.addEventListener('visibilitychange'");
+  expect(source).toContain("1000 / Math.max(1, STATE.targetFPS)");
+  expect(source).not.toMatch(/function animate\([^)]*\)\s*\{\s*requestAnimationFrame\(animate\)/);
+});
+
+it("does not build an invisible 3D lens flare or rewrite the hidden GUI every frame", () => {
+  const source = readFileSync(new URL("../src/components/artwork/QuantumField/reference.html", import.meta.url), "utf8");
+  expect(source).not.toContain("new Lensflare()");
+  expect(source).not.toContain("createSoftGlow(256)");
+  expect(source).not.toContain("lensflare.visible = false");
+  expect(source.split("function animate(now)")[1]?.split("window.addEventListener('resize'")[0]).not.toContain("tickGuiTheme()");
+});
+
+it("does not download or construct the hidden legacy settings GUI", () => {
+  const source = readFileSync(new URL("../src/components/artwork/QuantumField/reference.html", import.meta.url), "utf8");
+  expect(source).not.toContain("lil-gui");
+  expect(source).not.toContain("new GUI(");
+  expect(source).not.toContain("gui.add(");
+  expect(source).toContain("STATE.dofEnabled = !STATE.dofEnabled; customDOFPass.enabled = STATE.dofEnabled;");
+  expect(source).toContain("lensFlareEnabled: value => lensFlarePass.enabled = value");
+  expect(source).toContain("material.uniforms.uColor1.value.copy(main)");
+});
+
+it("reduces connection search work when adaptive quality drops", () => {
+  const source = readFileSync(new URL("../src/components/artwork/QuantumField/reference.html", import.meta.url), "utf8");
+  const body = source.match(/function refreshTrackedParticles\(\) \{([\s\S]*?)\n        \}/)?.[1];
+  expect(body).toBeTruthy();
+  const refresh = new Function("trackedParticles", "geometry", "connectionCount", "STATE", "CONFIG", body!);
+  const tracked: number[] = [];
+  const geometry = { drawRange: { count: 10_750 } };
+  const config = { maxParticles: 250_000, initialDensity: 0.043 };
+  refresh(tracked, geometry, 500, { qualityLevel: 1 }, config);
+  expect(tracked).toHaveLength(500);
+  refresh(tracked, geometry, 500, { qualityLevel: 0.3 }, config);
+  expect(tracked).toHaveLength(150);
+  geometry.drawRange.count = 1_000;
+  refresh(tracked, geometry, 500, { qualityLevel: 1 }, config);
+  expect(tracked).toHaveLength(152);
+  expect(source).toContain("i < trackedParticles.length && connIdx < dynamicMax");
+});
+
+it("rebuilds the connection network only for active audio or changed idle settings", () => {
+  const source = readFileSync(new URL("../src/components/artwork/QuantumField/reference.html", import.meta.url), "utf8");
+  const body = source.match(/function shouldRebuildConnections\(activeAudio, current, previous, idleElapsed\) \{([\s\S]*?)\n        \}/)?.[1];
+  expect(body).toBeTruthy();
+  const shouldRebuild = new Function("activeAudio", "current", "previous", "idleElapsed", body!);
+  const state = ["Gluon (Strong)", 20, 10_750, 1.7, 90, 1, false];
+  expect(shouldRebuild(false, state, state, 0)).toBe(false);
+  expect(shouldRebuild(false, state, null, 0)).toBe(true);
+  expect(shouldRebuild(true, state, state, 0)).toBe(true);
+  expect(shouldRebuild(false, ["Photon (EM)", ...state.slice(1)], state, 0)).toBe(true);
+  expect(shouldRebuild(false, [state[0], 22, ...state.slice(2)], state, 0)).toBe(true);
+  expect(shouldRebuild(false, [state[0], state[1], 1_000, ...state.slice(3)], state, 0)).toBe(true);
+  expect(shouldRebuild(false, state, [...state.slice(0, -1), true], 0)).toBe(true);
+  const render = source.split("// Update particle connections")[1]?.split("// Update crawlers")[0] ?? "";
+  expect(render).toContain("AUDIO.mode === 'mic' || AUDIO.isPlaying");
+  expect(render).toContain("lastConnectionState = null");
+  expect(render).toContain("shouldRebuildConnections(activeAudio, connectionState, lastConnectionState, idleConnectionElapsed)");
+});
+
+it("keeps the idle connection network alive with a slow two-second refresh", () => {
+  const source = readFileSync(new URL("../src/components/artwork/QuantumField/reference.html", import.meta.url), "utf8");
+  const body = source.match(/function shouldRebuildConnections\(activeAudio, current, previous, idleElapsed\) \{([\s\S]*?)\n        \}/)?.[1];
+  expect(body).toBeTruthy();
+  const shouldRebuild = new Function("activeAudio", "current", "previous", "idleElapsed", body!);
+  const state = ["Gluon (Strong)", 20, 10_750, 1.7, 90, 1, false];
+  expect(shouldRebuild(false, state, state, 1.99)).toBe(false);
+  expect(shouldRebuild(false, state, state, 2)).toBe(true);
+  const render = source.split("// Update particle connections")[1]?.split("// Update crawlers")[0] ?? "";
+  expect(render).toContain("idleConnectionElapsed");
+  expect(render).toContain("updateConnections(");
+  expect(render).not.toContain("refreshTrackedParticles();");
+  expect(source).toContain("if (forceRefresh || connectionRefreshCounter >= CONNECTION_REFRESH_INTERVAL)");
 });
 
 it("caps both particle layers with the public budget while adaptive quality can lower it further", () => {
@@ -137,21 +380,36 @@ it("caps both particle layers with the public budget while adaptive quality can 
   const body = source.match(/applyQuality\(\) \{([\s\S]*?)\n            \}\n        \};/)?.[1];
   expect(body).toBeTruthy();
   const apply = new Function("CONFIG", "STATE", "particleBudget", "geometry", "secondaryGeometry", "renderer", "composer", "material", "secondaryMaterial", body!);
-  const config = { maxParticles: 250_000, secondaryParticles: 50_000 };
-  const run = (budget: number, qualityLevel: number) => {
+  const config = { maxParticles: 250_000, maxDensity: 0.14, secondaryParticles: 50_000 };
+  const run = (budget: number, qualityLevel: number, density = 0.043) => {
     const geometry = { setDrawRange: vi.fn() };
     const secondaryGeometry = { instanceCount: 0 };
     const renderer = { getPixelRatio: () => 1, setPixelRatio: vi.fn() };
     const composer = { setPixelRatio: vi.fn() };
     const material = { uniforms: { uPixelRatio: { value: 1 } } };
     const secondaryMaterial = { uniforms: { uPixelRatio: { value: 1 } } };
-    apply(config, { density: 0.043, qualityLevel, pixelRatio: 1 }, budget, geometry, secondaryGeometry, renderer, composer, material, secondaryMaterial);
+    apply(config, { density, qualityLevel, pixelRatio: 1 }, budget, geometry, secondaryGeometry, renderer, composer, material, secondaryMaterial);
     return geometry.setDrawRange.mock.lastCall![1] + secondaryGeometry.instanceCount;
   };
   expect(run(Infinity, 1)).toBe(60_750);
   expect(run(6_000, 1)).toBe(6_000);
   expect(run(6_000, 0.5)).toBe(3_000);
   expect(run(0, 1)).toBe(0);
+  expect(run(Infinity, 1, 1)).toBe(85_000);
+});
+
+it("never raises the pixel ratio above the full-screen pixel cap on 8K screens", () => {
+  const source = readFileSync(new URL("../src/components/artwork/QuantumField/reference.html", import.meta.url), "utf8");
+  const body = source.match(/applyQuality\(\) \{([\s\S]*?)\n            \}\n        \};/)?.[1];
+  expect(body).toBeTruthy();
+  const apply = new Function("CONFIG", "STATE", "particleBudget", "geometry", "secondaryGeometry", "renderer", "composer", "material", "secondaryMaterial", body!);
+  const setPixelRatio = vi.fn();
+  const state = { density: 0.043, qualityLevel: 0.3, pixelRatio: 0.25 };
+  apply({ maxParticles: 250_000, maxDensity: 0.14, secondaryParticles: 50_000 }, state, Infinity,
+    { setDrawRange: vi.fn() }, { instanceCount: 0 }, { getPixelRatio: () => 1, setPixelRatio },
+    { setPixelRatio: vi.fn() }, { uniforms: { uPixelRatio: { value: 1 } } },
+    { uniforms: { uPixelRatio: { value: 1 } } });
+  expect(setPixelRatio.mock.lastCall?.[0]).toBeLessThanOrEqual(state.pixelRatio);
 });
 
 it("updates and removes the particle cap without recreating the visualizer", () => {
@@ -163,7 +421,7 @@ it("updates and removes the particle cap without recreating the visualizer", () 
   const contentWindow = { postMessage };
   let tree!: ReturnType<typeof create>;
   act(() => { tree = create(createElement(QuantumFieldExperience, { particleBudget: 6_000 }), {
-    createNodeMock: ({ type }) => type === "iframe" ? { contentWindow } : {},
+    createNodeMock: ({ type }) => type === "iframe" ? { contentWindow } : nodeMock(),
   }); });
   try {
     act(() => receive({ source: contentWindow, data: { type: "ad-qf-ready" } } as unknown as MessageEvent));
@@ -184,8 +442,48 @@ it("idles offscreen rendering and limits network rebuilds to 20 Hz", () => {
   expect(host).toContain("new IntersectionObserver");
   expect(host).toContain('send("visible", entry.isIntersecting)');
   expect(source).toContain("if (!renderVisible || document.hidden)");
-  expect(source).toContain("else if (key === 'visible') renderVisible = !!value;");
+  expect(source).toContain("else if (key === 'visible') {");
+  expect(source).toContain("if (renderVisible) startFrames();");
   expect(source).toContain("connectionElapsed >= 1 / 20");
+});
+
+it("uses the preload margin only for mounting, not for keeping offscreen WebGL frames alive", () => {
+  const host = readFileSync(new URL("../src/components/artwork/QuantumField/QuantumFieldExperience.tsx", import.meta.url), "utf8");
+  expect(host).toMatch(/setMounted\(true\)[\s\S]*?rootMargin: "120px"/);
+  expect(host).toMatch(/send\("visible", entry\.isIntersecting\)[\s\S]*?rootMargin: "0px"/);
+});
+
+it("does not keep a hidden GUI FPS listener running on every animation frame", () => {
+  const source = readFileSync(new URL("../src/components/artwork/QuantumField/reference.html", import.meta.url), "utf8");
+  expect(source).not.toContain(".name('Current FPS').listen()");
+});
+
+it("skips full-screen effect passes when their intensity is zero", () => {
+  const source = readFileSync(new URL("../src/components/artwork/QuantumField/reference.html", import.meta.url), "utf8");
+  const body = source.match(/const sideEffects = \{([\s\S]*?)\n        \};/)?.[1];
+  expect(body).toBeTruthy();
+  const pass = () => ({ enabled: true, uniforms: { uIntensity: { value: 1 } } });
+  const chromaticPass = pass(), grainPass = pass(), lensFlarePass = pass(), godRaysPass = pass();
+  const state = { lensFlareEnabled: true, lensFlareIntensity: 0, godRaysEnabled: true, godRaysIntensity: 0 };
+  const effects = new Function("STATE", "chromaticPass", "grainPass", "lensFlarePass", "godRaysPass", `return ({${body}});`)(
+    state, chromaticPass, grainPass, lensFlarePass, godRaysPass,
+  );
+  effects.chromaticAberration(0);
+  effects.filmGrain(0);
+  effects.lensFlareIntensity(0);
+  effects.lensFlareEnabled(true);
+  effects.godRaysIntensity(0);
+  effects.godRaysEnabled(true);
+  for (const effect of [chromaticPass, grainPass, lensFlarePass, godRaysPass]) expect(effect.enabled).toBe(false);
+  effects.chromaticAberration(0.004);
+  effects.filmGrain(0.001);
+  state.lensFlareIntensity = 0.1;
+  state.godRaysIntensity = 0.1;
+  effects.lensFlareIntensity(0.1);
+  effects.godRaysIntensity(0.1);
+  for (const effect of [chromaticPass, grainPass, lensFlarePass, godRaysPass]) expect(effect.enabled).toBe(true);
+  expect(source).toMatch(/bloomPass\.strength = [^;]+;\s*bloomPass\.enabled = bloomPass\.strength > 0;/);
+  expect(source).toMatch(/anamorphicPass\.uniforms\.uIntensity\.value = [^;]+;\s*anamorphicPass\.enabled = anamorphicPass\.uniforms\.uIntensity\.value > 0;/);
 });
 
 it("defers the expensive iframe startup until its example approaches the viewport", () => {
@@ -235,7 +533,7 @@ it("sends field and audio controls to the restored visualizer", () => {
   const contentWindow = { postMessage };
   let tree!: ReturnType<typeof create>;
   act(() => { tree = create(createElement(QuantumFieldExperience), {
-    createNodeMock: ({ type }) => type === "iframe" ? { contentWindow } : {},
+    createNodeMock: ({ type }) => type === "iframe" ? { contentWindow } : nodeMock(),
   }); });
   try {
     act(() => receive({ source: contentWindow, data: { type: "ad-qf-ready" } } as unknown as MessageEvent));

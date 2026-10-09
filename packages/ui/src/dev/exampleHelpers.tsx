@@ -198,14 +198,15 @@ export function Playground<K extends Record<string, Knob>>({
   const spread = Object.keys(knobs).find(
     (key) => spreadKeys.includes(key) && "options" in knobs[key],
   ) as keyof K | undefined;
-  const looks = spread
-    ? (knobs[spread] as { options: readonly string[] }).options.map(
-        (option) => ({ option, values: { ...values, [spread]: option } }),
+  const visibleSpread = preview ? undefined : spread;
+  const looks = visibleSpread
+    ? (knobs[visibleSpread] as { options: readonly string[] }).options.map(
+        (option) => ({ option, values: { ...values, [visibleSpread]: option } }),
       )
     : [{ option: "", values }];
-  const source = looks
+  const source = report ? looks
     .map((look) => code(look.values, changed(knobs, look.values)))
-    .join("\n\n");
+    .join("\n\n") : "";
   const reported = useRef("");
   useEffect(() => {
     if (report && reported.current !== source) {
@@ -221,9 +222,9 @@ export function Playground<K extends Record<string, Knob>>({
       <div
         className="example-stage"
         data-stretch={stretch || undefined}
-        data-spread={spread ? true : undefined}
+        data-spread={visibleSpread ? true : undefined}
       >
-        {spread
+        {visibleSpread
           ? looks.map((look) => (
               <figure key={look.option}>
                 {children(look.values)}

@@ -14,6 +14,8 @@ export const AudioPlayer = (p: AudioPlayerProps) => {
   const [volume, setVolume] = useControllable(p.volume, p.defaultVolume ?? 0.7);
   const [fileDuration, setFileDuration] = useState<number>();
   const duration = p.duration ?? fileDuration ?? 51;
+  const controlled = p.playing !== undefined;
+  const active = p.playing ?? playing;
   const start = (media: HTMLAudioElement) => {
     void media.play().catch(() => {
       if (audio.current === media) {
@@ -23,7 +25,7 @@ export const AudioPlayer = (p: AudioPlayerProps) => {
     });
   };
   useEffect(() => {
-    if (!p.src) return;
+    if (controlled || !p.src) return;
     const media = new Audio(p.src);
     audio.current = media;
     media.muted = muted;
@@ -44,7 +46,7 @@ export const AudioPlayer = (p: AudioPlayerProps) => {
       audio.current = null;
       setFileDuration(undefined);
     };
-  }, [p.src]);
+  }, [p.src, controlled]);
   useEffect(() => {
     if (audio.current) {
       audio.current.muted = muted;
@@ -52,36 +54,39 @@ export const AudioPlayer = (p: AudioPlayerProps) => {
     }
   }, [muted, volume]);
   const toggle = () => {
-    const next = !playing;
-    setPlaying(next);
+    const next = !active;
+    if (!controlled) setPlaying(next);
     p.onPlayingChange?.(next);
-    if (audio.current) {
+    if (!controlled && audio.current) {
       if (next) start(audio.current);
       else audio.current.pause();
     }
   };
   return (
-    <div {...mark("AudioPlayer", p)} data-playing={playing || undefined}>
+    <div {...mark("AudioPlayer", p)} data-playing={active || undefined}>
       <span className="ad-player-play">
         <IconButton
           variant="primary"
           round
-          icon={playing ? "pause" : "play"}
-          label={playing ? tr("Пауза") : tr("Воспроизвести")}
+          icon={active ? "pause" : "play"}
+          label={active ? tr("Пауза") : tr("Воспроизвести")}
+          disabled={p.disabled}
           onClick={toggle}
         />
       </span>
       <PlaybackTrack
         key={p.src}
         audio={audio}
-        playing={playing}
+        playing={active}
+        position={p.position}
+        disabled={p.disabled}
         duration={duration}
         points={p.points}
         src={p.src}
         onTimeChange={p.onTimeChange}
         onEnded={() => { setPlaying(false); p.onPlayingChange?.(false); }}
       />
-      <div className="ad-player-volume">
+      {p.showVolume !== false && <div className="ad-player-volume">
         <IconButton
           variant="ghost"
           icon="volume"
@@ -90,33 +95,32 @@ export const AudioPlayer = (p: AudioPlayerProps) => {
           data-muted={muted || undefined}
           onClick={() => setMuted((v) => !v)}
         />
-        {p.showVolume !== false && (
-          <Slider
-            size="sm"
-            min={0}
-            max={1}
-            step={0.01}
-            value={muted ? 0 : volume}
-            onValueChange={(v) => {
-              setMuted(false);
-              setVolume(v);
-            }}
-            label={tr("Громкость")}
-          />
-        )}
-      </div>
+        <Slider
+          size="sm"
+          min={0}
+          max={1}
+          step={0.01}
+          value={muted ? 0 : volume}
+          onValueChange={(v) => {
+            setMuted(false);
+            setVolume(v);
+          }}
+          label={tr("Громкость")}
+        />
+      </div>}
     </div>
   );
 };
 
 /** The clock updates only the timeline; transport and volume controls stay untouched. */
-function PlaybackTrack({ audio, playing, duration, points, src, onTimeChange, onEnded }: Pick<AudioPlayerProps, "points" | "src" | "onTimeChange"> & {
+function PlaybackTrack({ audio, playing, position: controlledPosition, disabled, duration, points, src, onTimeChange, onEnded }: Pick<AudioPlayerProps, "points" | "src" | "onTimeChange" | "position" | "disabled"> & {
   audio: RefObject<HTMLAudioElement | null>;
   playing: boolean;
   duration: number;
   onEnded: () => void;
 }) {
-  const [position, setPosition] = useState(0);
+  const [localPosition, setPosition] = useState(0);
+  const position = controlledPosition ?? localPosition;
   const current = useRef(0);
   const lastTick = useRef<number | undefined>(undefined);
   useTick((now) => {
@@ -127,11 +131,15 @@ function PlaybackTrack({ audio, playing, duration, points, src, onTimeChange, on
     setPosition(current.current);
     if (media) onTimeChange?.(next);
     else if (next >= duration) onEnded();
-  }, playing);
+  }, playing && controlledPosition === undefined);
   useEffect(() => {
     if (!playing) lastTick.current = undefined;
   }, [playing]);
   const seek = (next: number) => {
+    if (controlledPosition !== undefined) {
+      onTimeChange?.(next);
+      return;
+    }
     current.current = next;
     setPosition(next);
     if (audio.current) audio.current.currentTime = next;
@@ -139,7 +147,7 @@ function PlaybackTrack({ audio, playing, duration, points, src, onTimeChange, on
   };
   return (
     <div className="ad-player-track">
-      <Waveform duration={duration} position={position} onSeek={seek} points={points} src={points ? undefined : src} />
+      <Waveform duration={duration} position={position} onSeek={seek} points={points} src={points ? undefined : src} disabled={disabled} />
       <div className="ad-player-times">
         <span className="ad-time">{timeText(position)}</span>
         <span className="ad-time">−{timeText(duration - position)}</span>

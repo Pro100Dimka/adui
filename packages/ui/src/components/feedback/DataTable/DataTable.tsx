@@ -20,7 +20,6 @@ import type {
   DataTableColumnPinning,
 } from "../shared";
 
-type AnyColumn = DataTableColumn<DataTableRow>;
 type Filters = Record<string, DataTableFilter>;
 const sortStates = {
   asc: { next: "desc", aria: "ascending" },
@@ -32,17 +31,18 @@ const compareText = new Intl.Collator(undefined, { numeric: true }).compare;
 const distinct = <T extends DataTableRow>(column: DataTableColumn<T>, rows: T[]) =>
   [...new Set(rows.map((row) => String(cellValue(column, row))))].sort(compareText);
 
-/** Infer the filter and its choices together so a text column is collected only once. */
+/** Infer low-cardinality choices eagerly; defer large suggestion lists until the filter opens. */
 const filterDefinition = <T extends DataTableRow>(column: DataTableColumn<T>, rows: T[], filterable: boolean) => {
   if (column.filter === false || (column.filter === undefined && !filterable)) return { kind: false as const, options: [] };
-  const numeric = column.filter === "range" || (column.filter === undefined && rows.length > 0 && rows.every((row) => typeof cellValue(column, row) === "number"));
-  const options = numeric ? [] : distinct(column, rows);
-  let kind = column.filter;
-  if (kind === undefined) {
-    if (numeric) kind = "range";
-    else kind = options.length <= 12 ? "values" : "text";
+  if (column.filter) return { kind: column.filter, options: [] };
+  if (rows.length && rows.every((row) => typeof cellValue(column, row) === "number"))
+    return { kind: "range" as const, options: [] };
+  const values = new Set<string>();
+  for (const row of rows) {
+    values.add(String(cellValue(column, row)));
+    if (values.size > 12) return { kind: "text" as const, options: [] };
   }
-  return { kind, options };
+  return { kind: "values" as const, options: [...values].sort(compareText) };
 };
 
 const passes = (filter: DataTableFilter, value: string | number) => {
@@ -149,14 +149,16 @@ export function FilterEditor({
 }
 
 /** The funnel button of a column header and the popover behind it. */
-function ColumnFilter({
+function ColumnFilter<T extends DataTableRow>({
   column,
+  rows,
   kind,
   options,
   filter,
   onChange,
 }: {
-  column: Pick<AnyColumn, "key" | "title">;
+  column: DataTableColumn<T>;
+  rows: T[];
   kind: "text" | "values" | "range";
   options: string[];
   filter?: DataTableFilter;
@@ -166,6 +168,8 @@ function ColumnFilter({
   const [open, setOpen] = useState(false);
   const anchor = useRef<HTMLButtonElement>(null);
   const title = typeof column.title === "string" ? column.title : column.key;
+  const suggestions = useMemo(() => open && kind !== "range" && !options.length ? distinct(column, rows) : options,
+    [open, kind, column, rows, options]);
   return (
     <>
       <IconButton
@@ -180,7 +184,7 @@ function ColumnFilter({
         onClick={() => setOpen((v) => !v)}
       />
       <Popover open={open} onOpenChange={setOpen} anchorRef={anchor} label={tr("Фильтр: {title}", { title })} className="ad-data-table-filter-popover">
-        <FilterEditor kind={kind} options={options} filter={filter} onChange={onChange} />
+        <FilterEditor kind={kind} options={suggestions} filter={filter} onChange={onChange} />
       </Popover>
     </>
   );
@@ -499,17 +503,25 @@ export function DataTable<T extends DataTableRow = DataTableRow>({
     </tr>
   );
 
-  const chosen = new Set(selection);
-  const foundKeys = useMemo(() => new Set(found.map(({ key }) => key)), [found]);
-  const allChosen =
-    found.length > 0 && found.every(({ key }) => chosen.has(key));
-  const someChosen = !allChosen && found.some(({ key }) => chosen.has(key));
-  const toggleAll = () =>
+  const chosen = useMemo(() => new Set(selection), [selection]);
+  const { allChosen, someChosen } = useMemo(() => {
+    if (!selectable || !found.length || !chosen.size) return { allChosen: false, someChosen: false };
+    let all = true, some = false;
+    for (const { key } of found) {
+      if (chosen.has(key)) some = true;
+      else all = false;
+      if (some && !all) break;
+    }
+    return { allChosen: all, someChosen: some && !all };
+  }, [selectable, found, chosen]);
+  const toggleAll = () => {
+    const foundKeys = new Set(found.map(({ key }) => key));
     setSelection(
       allChosen
         ? selection.filter((key) => !foundKeys.has(key))
-        : [...new Set([...selection, ...found.map(({ key }) => key)])],
+        : [...new Set([...selection, ...foundKeys])],
     );
+  };
   const toggle = (key: string) =>
     setSelection(
       chosen.has(key)
@@ -911,6 +923,7 @@ export function DataTable<T extends DataTableRow = DataTableRow>({
                       {filter?.kind && (
                         <ColumnFilter
                           column={column}
+                          rows={rows}
                           kind={filter.kind}
                           options={filter.options}
                           filter={filters[column.key]}

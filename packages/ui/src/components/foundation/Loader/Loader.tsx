@@ -49,7 +49,8 @@ export interface LoaderProps extends Omit<CommonProps, "size"> {
 export const loaderCss = `
 .ad-loader{--ad-loader-size:4rem;--ad-loader-speed:1;--ad-loader-color:var(--ad-primary,#ff244c);position:relative;display:inline-grid;place-items:center;width:var(--ad-loader-size);height:var(--ad-loader-size);flex:none}
 .ad-loader>*{grid-area:1/1}
-.ad-loader-img{width:72%;height:72%;object-fit:contain;filter:drop-shadow(0 0 calc(var(--ad-loader-size)*.07) color-mix(in srgb,var(--ad-loader-color) 60%,transparent));user-select:none;pointer-events:none;will-change:transform,opacity}
+.ad-loader-img{width:72%;height:72%;object-fit:contain;filter:drop-shadow(0 0 calc(var(--ad-loader-size)*.07) color-mix(in srgb,var(--ad-loader-color) 60%,transparent));user-select:none;pointer-events:none}
+.ad-loader:is([data-animation=spin],[data-animation=pulse],[data-animation=breathe],[data-animation=bounce],[data-animation=flip],[data-animation=orbit],[data-animation=wobble],[data-animation=palette]) .ad-loader-img,.ad-loader-fill>.ad-loader-img{will-change:transform,opacity}
 .ad-loader-default-image{display:block;background:linear-gradient(135deg,var(--ad-loader-color-2,var(--ad-secondary)),var(--ad-loader-color));-webkit-mask:var(--ad-loader-src) center/contain no-repeat;mask:var(--ad-loader-src) center/contain no-repeat}
 .ad-loader-ring{width:100%;height:100%;border-radius:50%;pointer-events:none}
 .ad-loader[data-animation=spin] .ad-loader-img{animation:ad-loader-spin calc(1.2s/var(--ad-loader-speed)) linear infinite}
