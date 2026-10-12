@@ -1,0 +1,145 @@
+{
+  "directory": "D:\\Git\\adui\\release\\consumer-registry102",
+  "channel": "chrome",
+  "browser": "154.0.8037.98",
+  "results": [
+    {
+      "name": "all declared element refs reach their public DOM targets",
+      "actual": "Button,IconButton,ToggleButton,Tab,InputBase,Select,Slider",
+      "expected": "Button,IconButton,ToggleButton,Tab,InputBase,Select,Slider",
+      "passed": true
+    },
+    {
+      "name": "locale context is shared across split entry points",
+      "actual": "Settings saved",
+      "expected": "Settings saved",
+      "passed": true
+    },
+    {
+      "name": "Select from the installed package opens an anchored listbox",
+      "actual": 1,
+      "expected": 1,
+      "passed": true
+    },
+    {
+      "name": "controlled selection updates its trigger",
+      "actual": "Beta",
+      "expected": "Beta",
+      "passed": true
+    },
+    {
+      "name": "native dialog mounts with public imports",
+      "actual": 1,
+      "expected": 1,
+      "passed": true
+    },
+    {
+      "name": "select opens inside modal top layer",
+      "actual": true,
+      "expected": true,
+      "passed": true
+    },
+    {
+      "name": "first Escape closes only the nested selection layer",
+      "actual": true,
+      "expected": true,
+      "passed": true
+    },
+    {
+      "name": "dialog closes and restores focus",
+      "actual": true,
+      "expected": true,
+      "passed": true
+    },
+    {
+      "name": "styles and SVG contour shipped",
+      "actual": {
+        "position": "relative",
+        "svg": true
+      },
+      "expected": {
+        "position": "relative",
+        "svg": true
+      },
+      "passed": true
+    },
+    {
+      "name": "font CSS and WOFF2 are loadable",
+      "actual": true,
+      "expected": true,
+      "passed": true
+    },
+    {
+      "name": "SVG and accessible relationship IDs are unique across instances",
+      "actual": true,
+      "expected": true,
+      "passed": true
+    },
+    {
+      "name": "host elements keep native box sizing and font family",
+      "actual": true,
+      "expected": true,
+      "passed": true
+    },
+    {
+      "name": "isolated package has no page overflow at 320px",
+      "actual": true,
+      "expected": true,
+      "passed": true
+    },
+    {
+      "name": "isolated package has no page overflow at 375px",
+      "actual": true,
+      "expected": true,
+      "passed": true
+    },
+    {
+      "name": "isolated package has no page overflow at 768px",
+      "actual": true,
+      "expected": true,
+      "passed": true
+    },
+    {
+      "name": "isolated package has no page overflow at 1024px",
+      "actual": true,
+      "expected": true,
+      "passed": true
+    },
+    {
+      "name": "isolated package has no page overflow at 1440px",
+      "actual": true,
+      "expected": true,
+      "passed": true
+    },
+    {
+      "name": "isolated package has no page overflow at 1920px",
+      "actual": true,
+      "expected": true,
+      "passed": true
+    },
+    {
+      "name": "200 percent root text does not overflow the page",
+      "actual": true,
+      "expected": true,
+      "passed": true
+    },
+    {
+      "name": "forced colors keyboard focus remains visible",
+      "actual": true,
+      "expected": true,
+      "passed": true
+    },
+    {
+      "name": "no uncaught browser exceptions",
+      "actual": [],
+      "expected": [],
+      "passed": true
+    },
+    {
+      "name": "no browser console errors",
+      "actual": [],
+      "expected": [],
+      "passed": true
+    }
+  ]
+}

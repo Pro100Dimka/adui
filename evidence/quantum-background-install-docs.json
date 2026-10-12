@@ -1,0 +1,99 @@
+{
+  "baseUrl": "https://pro100dimka.github.io/adui",
+  "browser": "154.0.8037.98",
+  "completedAt": "2026-10-12T13:38:45.096Z",
+  "checks": [
+    {
+      "name": "install command uses npm registry package",
+      "actual": "npm install @neo-ui-kit/react",
+      "expected": "npm install @neo-ui-kit/react",
+      "passed": true
+    },
+    {
+      "name": "overview displays the current package version",
+      "actual": 1,
+      "expected": 1,
+      "passed": true
+    },
+    {
+      "name": "stylesheet example uses renamed public import",
+      "actual": "import \"@neo-ui-kit/react/styles.css\";",
+      "expected": "import \"@neo-ui-kit/react/styles.css\";",
+      "passed": true
+    },
+    {
+      "name": "site branding is uppercase",
+      "actual": "NEO UI · React",
+      "expected": "NEO UI · React",
+      "passed": true
+    },
+    {
+      "name": "overview no longer exposes old package name",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "name": "copy install line 1",
+      "actual": "npm install @neo-ui-kit/react",
+      "expected": "npm install @neo-ui-kit/react",
+      "passed": true
+    },
+    {
+      "name": "copy install line 2",
+      "actual": "import \"@neo-ui-kit/react/styles.css\";",
+      "expected": "import \"@neo-ui-kit/react/styles.css\";",
+      "passed": true
+    },
+    {
+      "name": "generated Button example imports renamed root",
+      "actual": true,
+      "expected": true,
+      "passed": true
+    },
+    {
+      "name": "generated Button example removes old root",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "name": "opaque-origin sandbox resolves root and core/editor/forms/router",
+      "actual": 1,
+      "expected": 1,
+      "passed": true
+    },
+    {
+      "name": "stateful renamed Button responds once",
+      "actual": 1,
+      "expected": 1,
+      "passed": true
+    },
+    {
+      "name": "state survives second click",
+      "actual": 1,
+      "expected": 1,
+      "passed": true
+    },
+    {
+      "name": "live preview reports no compile/runtime error",
+      "actual": 0,
+      "expected": 0,
+      "passed": true
+    },
+    {
+      "name": "editor copies edited module with renamed imports",
+      "actual": "import * as React from \"react\";\nimport { Button } from \"@neo-ui-kit/react\";\nimport * as Core from \"@neo-ui-kit/react/core\";\nimport * as Editor from \"@neo-ui-kit/react/editor\";\nimport * as Forms from \"@neo-ui-kit/react/forms\";\nimport * as Routing from \"@neo-ui-kit/react/router\";\nexport default function Example() {\nconst [count, setCount] = React.useState(0);\nconst resolved = [Core, Editor, Forms, Routing].every((module) => Object.keys(module).length > 0);\nreturn <div><p>{resolved ? \"All public entry points resolved\" : \"Missing module\"}</p><Button onClick={() => setCount(count + 1)}>Renamed counter {count}</Button></div>;\n}",
+      "expected": "import * as React from \"react\";\nimport { Button } from \"@neo-ui-kit/react\";\nimport * as Core from \"@neo-ui-kit/react/core\";\nimport * as Editor from \"@neo-ui-kit/react/editor\";\nimport * as Forms from \"@neo-ui-kit/react/forms\";\nimport * as Routing from \"@neo-ui-kit/react/router\";\nexport default function Example() {\nconst [count, setCount] = React.useState(0);\nconst resolved = [Core, Editor, Forms, Routing].every((module) => Object.keys(module).length > 0);\nreturn <div><p>{resolved ? \"All public entry points resolved\" : \"Missing module\"}</p><Button onClick={() => setCount(count + 1)}>Renamed counter {count}</Button></div>;\n}",
+      "passed": true
+    },
+    {
+      "name": "browser runtime and console errors",
+      "actual": 0,
+      "expected": 0,
+      "passed": true
+    }
+  ],
+  "errors": [],
+  "passed": 15
+}

@@ -1,0 +1,32 @@
+{
+  "directory": "D:\\Git\\adui\\release\\consumer-registry102",
+  "browser": "154.0.8037.98",
+  "checks": [
+    {
+      "name": "canonical npm export mounts the full visualizer iframe",
+      "passed": true
+    },
+    {
+      "name": "installed WebGL visualizer renders changing pixels",
+      "passed": true
+    },
+    {
+      "name": "npm field selector sends the selected mode into its iframe",
+      "passed": true
+    },
+    {
+      "name": "375px full visualizer causes no page overflow",
+      "passed": true
+    },
+    {
+      "name": "1440px full visualizer causes no page overflow",
+      "passed": true
+    },
+    {
+      "name": "installed visualizer has no browser runtime errors",
+      "passed": true
+    }
+  ],
+  "errors": [],
+  "passed": 6
+}

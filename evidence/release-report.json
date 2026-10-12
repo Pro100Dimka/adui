@@ -1,5 +1,5 @@
 {
-  "status": "@neo-ui-kit/react@1.0.1 published through GitHub OIDC, publicly available as latest, installed and verified from npm; public documentation verified.",
+  "status": "@neo-ui-kit/react@1.0.2 published through GitHub OIDC, publicly available as latest and independently verified from npm; restored full QuantumBackground and deployed public documentation verified.",
   "date": "2026-10-12",
   "baseline": {
     "commit": "12387d42ad37d53ea1aa5f4db2c76b4d678aec43",
@@ -41,7 +41,7 @@
       "Installation instructions use npm install @neo-ui-kit/react; local archive instructions remain available for testing unpublished changes.",
       "Root check and prepublish gates build and run the test suite.",
       "ESM entry points share providers/contexts and externalize React; the actual tarball is installed in isolated React 18.2 and 19.3 applications.",
-      "The 1.0.1 documentation snapshot is published on GitHub Pages; registry installation, clipboard and live editor were verified in the public site.",
+      "The 1.0.2 documentation snapshot restores the full QuantumBackground visualizer and routes legacy links to the canonical page; focused public browser checks passed.",
       "The catalog supplies its existing wave mark as a self-contained SVG favicon; the browser check now rejects all console errors and rendered example-error fallbacks.",
       "All 100 catalog descriptions have explicit EN and Ukrainian translations, covered by dedicated dictionary checks."
     ]
@@ -58,10 +58,10 @@
   ],
   "releaseActions": {
     "packageRename": "@ad-voice/ui to @neo-ui/react locally, then to @neo-ui-kit/react after npm rejected the neo-ui scope; replacement explicitly approved.",
-    "publicPublication": "https://www.npmjs.com/package/@neo-ui-kit/react/v/1.0.1",
-    "versionBump": "1.0.0 baseline retained; 1.0.1 explicitly approved for the first verified GitHub OIDC publication.",
+    "publicPublication": "https://www.npmjs.com/package/@neo-ui-kit/react/v/1.0.2",
+    "versionBump": "1.0.2 explicitly approved and published for canonical QuantumBackground and restored full visualizer documentation; immutable 1.0.0 and 1.0.1 retained.",
     "licenseChange": "MIT approved for the whole current library and included in the published package; third-party licenses preserved.",
-    "gitCommitOrPush": "Approved source/documentation pushed to main; successful v1.0.1 points to a3fa2c954622eb18a3ab1d50e436c43dceb1c01c.",
+    "gitCommitOrPush": "Approved source/tag pushed: v1.0.2 -> 4df44959439219c7ef154275d2eafaa12d52ff3d; generated public documentation subsequently pushed at 1d9d52160fb02e998f9462df7ab9fb1216ac6249.",
     "paidActions": "not performed",
     "oldVersionsDeleted": {
       "releases": 35,
@@ -69,35 +69,38 @@
       "remoteTags": 38,
       "backup": "D:/Git/adui-backups/version-reset-20261012"
     },
-    "githubRelease": "https://github.com/Pro100Dimka/adui/releases/tag/v1.0.1",
+    "githubRelease": "https://github.com/Pro100Dimka/adui/releases/tag/v1.0.2",
     "website": "https://pro100dimka.github.io/adui"
   },
-  "completedAt": "2026-10-12T13:22:00.059Z",
+  "completedAt": "2026-10-12T13:39:57.982Z",
   "artifact": {
-    "path": "release/ci/neo-ui-kit-react-1.0.1.tgz",
+    "path": "release/ci/neo-ui-kit-react-1.0.2.tgz",
     "name": "@neo-ui-kit/react",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "format": "ESM",
-    "sizeBytes": 1665955,
-    "unpackedBytes": 2834024,
+    "sizeBytes": 1666216,
+    "unpackedBytes": 2835453,
     "files": 270,
-    "sha256": "39a1a8307214b69314260649e2ee8bfd9033fe4d4292b102060cf306440a1f4c",
-    "sha1": "b3d36f8d7f917d1a0c5708c6de3b161c1140df50",
-    "integrity": "sha512-YsocW3Vn/PHyjnIAzERjBdiQH+FClotum0C0z97OhzbjfzZQNkfhu80iB+1GlBAaPJjQJ4fNgZUbhuAqaJZbOQ==",
-    "registryTarball": "https://registry.npmjs.org/@neo-ui-kit/react/-/react-1.0.1.tgz",
-    "githubDownload": "https://github.com/Pro100Dimka/adui/releases/download/v1.0.1/neo-ui-kit-react-1.0.1.tgz",
-    "metadata": "evidence/npm-1.0.1-published-registry.json",
+    "sha256": "02ec2e3efdc2d3dc34e2989d5df74af0bd4290b0b216168c077575c2352d1a06",
+    "sha1": "7668c764e3eb5f2434b1242e598eb314d358c41d",
+    "integrity": "sha512-QGrYejNt91HxWFn4kcoG8Q/Q0QKnNgUmSyXrAKHvjJpOXPmY1OLmaBsZZkiUFwNkKavOg7e5eX0Ggt3uvOFbcw==",
+    "registryTarball": "https://registry.npmjs.org/@neo-ui-kit/react/-/react-1.0.2.tgz",
+    "githubDownload": "https://github.com/Pro100Dimka/adui/releases/download/v1.0.2/neo-ui-kit-react-1.0.2.tgz",
+    "metadata": "evidence/quantum-background-published-registry.json",
     "registryIntegrityMatches": true,
     "installedConsumerIntegrityMatches": true
   },
   "sourceFingerprint": {
-    "scope": "Published 1.0.1 source pinned by verified GitHub provenance; does not describe subsequent uncommitted work.",
-    "gitCommit": "a3fa2c954622eb18a3ab1d50e436c43dceb1c01c",
-    "evidence": "evidence/npm-1.0.1-registry-provenance-statements.json",
-    "prior1_0_0Fingerprint": {
-      "scope": "All files recursively under packages/ui/src; sorted absolute paths; SHA256 of JSON [relative path, file SHA256] pairs.",
-      "files": 457,
-      "sha256": "05653c468eca91c7ecf9e74135de4777ac13050fb8e0a9fc2f8ae3d751484ae4"
+    "scope": "Published 1.0.2 release source identified by successful GitHub workflow and signed npm provenance; later documentation-only deployment commit is recorded separately.",
+    "gitCommit": "4df44959439219c7ef154275d2eafaa12d52ff3d",
+    "tag": "v1.0.2",
+    "evidence": "evidence/quantum-background-ci.json",
+    "registryEvidence": "evidence/quantum-background-published-registry.json",
+    "signatureVerification": "evidence/quantum-background-registry-signatures.log",
+    "originalRendererFilesUnchanged": {
+      "count": 6,
+      "allUnchanged": true,
+      "evidence": "evidence/quantum-background-report.json"
     }
   },
   "environment": {
@@ -114,14 +117,14 @@
       "os": "GitHub-hosted ubuntu-latest",
       "node": "24.21.0",
       "npm": "11.15.0",
-      "run": "https://github.com/Pro100Dimka/adui/actions/runs/38253722738"
+      "run": "https://github.com/Pro100Dimka/adui/actions/runs/38256372887"
     }
   },
   "coverage": {
-    "components": 100,
+    "components": 101,
     "nonComponentRuntimeExports": 69,
-    "rootExports": 318,
-    "runtimeRootExports": 169,
+    "rootExports": 320,
+    "runtimeRootExports": 170,
     "themeTokens": 96,
     "themes": [
       "ruby",
@@ -155,7 +158,8 @@
       "evidence/feedback-root-review.json",
       "evidence/data-table-audit.json"
     ],
-    "basis": "All exports inventoried and assigned a review. Risk-based actual scenarios and source-only checks are explicitly distinguished; not an exhaustive Cartesian product."
+    "basis": "Current export inventory includes QuantumBackground and its same-object legacy alias. Family audits and complete catalog/axe sweeps are historical; current release validation adds 584 unit tests, exact registry consumers and focused QuantumBackground/public documentation checks.",
+    "canonicalDocumentationPages": 99
   },
   "verification": {
     "fullCheck": {
@@ -163,34 +167,38 @@
       "typecheck": "UI and playground passed",
       "build": "UI and playground passed",
       "unitFiles": 38,
-      "unitTests": 580,
+      "unitTests": 584,
       "result": "passed",
       "environment": "GitHub-hosted ubuntu-latest, Node 24.21.0, npm 11.15.0",
-      "vitestDurationSeconds": 13.83,
-      "log": "evidence/npm-trusted-completed-job-114826272457.log",
-      "localLog": "evidence/npm-publish-path-full-check.log"
+      "vitestDurationSeconds": 9.95,
+      "log": "evidence/quantum-background-ci-verify.log",
+      "localLog": "evidence/quantum-background-full-check.log"
     },
     "dedicatedRegressions": "Red and green evidence linked by family matrices; original behavior was reproduced before implementation changes.",
     "familyBrowser": [
       {
         "evidence": "evidence/controls-browser-badge-green.json",
         "passed": 180,
-        "failed": 0
+        "failed": 0,
+        "scope": "Historical library-hardening check, retained as prior evidence; not rerun for 1.0.2."
       },
       {
         "evidence": "evidence/layers-browser-green.json",
         "passed": 62,
-        "failed": 0
+        "failed": 0,
+        "scope": "Historical library-hardening check, retained as prior evidence; not rerun for 1.0.2."
       },
       {
         "evidence": "evidence/effects-browser-green.json",
         "passed": 37,
-        "failed": 0
+        "failed": 0,
+        "scope": "Historical library-hardening check, retained as prior evidence; not rerun for 1.0.2."
       },
       {
         "evidence": "evidence/effects-docs-green.json",
         "passed": 19,
-        "failed": 0
+        "failed": 0,
+        "scope": "Historical library-hardening check, retained as prior evidence; not rerun for 1.0.2."
       }
     ],
     "productionCatalog": {
@@ -288,6 +296,17 @@
         "channel": "chrome",
         "checks": 22,
         "result": "passed",
+        "source": "public npm registry",
+        "scope": "Historical 1.0.1 validation"
+      },
+      {
+        "evidence": "evidence/consumer-consumer-registry102-registry-1.0.2-chrome.json",
+        "version": "1.0.2",
+        "react": "19.3.0",
+        "browser": "154.0.8037.98",
+        "channel": "chrome",
+        "checks": 22,
+        "result": "passed",
         "source": "public npm registry"
       }
     ],
@@ -295,8 +314,8 @@
       "strict": true,
       "skipLibCheck": false,
       "resolveJsonModule": false,
-      "result": "passed for the fresh 1.0.1 registry consumer; historical 1.0.0 React18/19 checks retained",
-      "evidence": "evidence/npm-1.0.1-registry-consumer-types.log"
+      "result": "passed for fresh 1.0.2 registry consumer, canonical/legacy QuantumBackground props and negative prop checks",
+      "evidence": "evidence/quantum-background-registry-types.log"
     },
     "packageChecks": [
       {
@@ -338,26 +357,43 @@
         "node": "v22.18.0",
         "react": "19.3.0",
         "result": "passed",
+        "source": "public npm registry",
+        "scope": "Historical 1.0.1 validation"
+      },
+      {
+        "evidence": "evidence/package-consumer-registry102-22.json",
+        "version": "1.0.2",
+        "node": "v22.18.0",
+        "react": "19.3.0",
+        "result": "passed",
         "source": "public npm registry"
       }
     ],
     "staticDocumentation": {
-      "path": "D:\\Git\\adui\\docs",
-      "files": 357,
+      "path": "docs",
+      "files": 356,
       "allFilesByteIdentical": true,
-      "backup": "D:/Git/adui-backups/npm-publication-20261012/docs-before-npm",
-      "evidence": "evidence/docs-artifact.json",
-      "relatedTests": 15,
-      "latestBackup": "D:\\Git\\adui-backups\\npm-publication-20261012\\docs-before-oidc",
-      "testLog": "evidence/npm-publish-full-check.log",
-      "previousBackupRelocations": "evidence/version-reset-retired-local.json",
+      "backup": "D:/Git/adui-backups/npm-publication-20261012/docs-before-quantum-background",
+      "evidence": "evidence/quantum-background-report.json",
       "published": true,
       "url": "https://pro100dimka.github.io/adui",
-      "publicEvidence": "evidence/npm-1.0.1-public-docs.json",
-      "scope": "Released 1.0.1 documentation snapshot; later local QuantumBackground edits are excluded."
+      "sourceCommit": "1d9d52160fb02e998f9462df7ab9fb1216ac6249",
+      "publicEvidence": "evidence/quantum-docs-green-public.json",
+      "publicQuantumChecks": 22,
+      "publicQuantumResult": "passed",
+      "generalPublicSiteChecks": {
+        "status": "passed",
+        "checks": 15,
+        "evidence": "evidence/quantum-background-install-docs.json",
+        "completedAt": "2026-10-12T13:38:45.096Z",
+        "scope": "Public installation commands, 1.0.2 display, copied imports, all entry points and interactive live editor."
+      },
+      "scope": "1.0.2 generated documentation; canonical and legacy routes, full renderer, controls and 375/1440px public layouts verified.",
+      "publicScreenshot": "evidence/quantum-background-restored-green-public.png",
+      "deploymentStatus": "built and independently browser-verified"
     },
     "dependencies": {
-      "scope": "Static runtime imports/exports inside UI src; type-only imports excluded. Dynamic/resource references reviewed separately by family audits.",
+      "scope": "Static runtime imports/exports inside UI src; type-only imports excluded. Dynamic/resource references reviewed separately by family audits. Historical graph inspection retained; not rerun for 1.0.2.",
       "modules": 130,
       "cycles": [],
       "productionImportsDemo": []
@@ -371,7 +407,8 @@
       ],
       "checks": 200,
       "red": "evidence/docs-description-locale-red.json",
-      "green": "evidence/docs-description-locale-green.json"
+      "green": "evidence/docs-description-locale-green.json",
+      "scope": "Historical 100-component localization pass; current canonical/alias inventory verified separately."
     },
     "liveEditorManual": {
       "browser": "Codex in-app Chromium",
@@ -383,21 +420,21 @@
     },
     "inventoryRegressions": {
       "result": "passed",
-      "red": "evidence/inventory-contracts-red.json",
-      "green": "evidence/inventory-contracts-green.json",
-      "scope": "Full Icon description and exact QuantumFieldExperience purpose, component and utility coverage counts."
+      "red": "evidence/inventory-contracts-quantum-background-red.json",
+      "green": "evidence/inventory-contracts-quantum-background-green.json",
+      "scope": "Canonical QuantumBackground and compatibility alias/native distinction match current export/documentation inventory."
     },
     "provenance": {
       "result": "verified with npm audit signatures",
       "predicateType": "https://slsa.dev/provenance/v1",
-      "gitCommit": "a3fa2c954622eb18a3ab1d50e436c43dceb1c01c",
+      "gitCommit": "4df44959439219c7ef154275d2eafaa12d52ff3d",
       "workflow": ".github/workflows/release.yml",
-      "ref": "refs/tags/v1.0.1",
-      "run": "https://github.com/Pro100Dimka/adui/actions/runs/38253722738",
-      "transparencyLog": "https://search.sigstore.dev/?logIndex=3228429516",
-      "attestations": "evidence/npm-1.0.1-registry-attestations.json",
-      "decodedStatements": "evidence/npm-1.0.1-registry-provenance-statements.json",
-      "verificationLog": "evidence/npm-1.0.1-registry-signatures.log",
+      "ref": "refs/tags/v1.0.2",
+      "run": "https://github.com/Pro100Dimka/adui/actions/runs/38256372887",
+      "transparencyLog": "https://search.sigstore.dev/?logIndex=3228734733",
+      "attestationsURL": "https://registry.npmjs.org/-/npm/v1/attestations/@neo-ui-kit%2freact@1.0.2",
+      "metadata": "evidence/quantum-background-published-registry.json",
+      "verificationLog": "evidence/quantum-background-registry-signatures.log",
       "registrySignaturesVerified": 7,
       "attestationsVerified": 4,
       "countScope": "Fresh consumer dependency graph; counts include React and related installed packages."
@@ -405,7 +442,7 @@
   },
   "performance": {
     "buttonImport": {
-      "scope": "Button-only consumer using the installed local tarball public root export",
+      "scope": "Button-only consumer using the installed local tarball public root export; original before/after measurement is historical, with the same after-size verified again from registry 1.0.2.",
       "environment": {
         "platform": "win32",
         "node": "v22.18.0",
@@ -459,7 +496,17 @@
       "limitations": [
         "No application runtime speed or physical-device speedup claimed.",
         "Remaining shared-chunk initializers mean the built Button package is larger than direct source bundling; no blanket purity assumptions applied."
-      ]
+      ],
+      "currentReleaseConfirmation": {
+        "version": "1.0.2",
+        "bytes": 76036,
+        "gzipBytes": 16803,
+        "editorRetained": false,
+        "quantumRendererRetained": false,
+        "unrelatedArtworkRetained": false,
+        "audioPlayerRetained": false,
+        "evidence": "evidence/package-consumer-registry102-22.json"
+      }
     },
     "borderMotion": {
       "scenario": "95 simultaneously visible HTML/SVG borders, 1440×1000 installed Chrome headless, 1.5 second comparable samples; navigator.hardwareConcurrency=20",
@@ -569,8 +616,9 @@
     }
   },
   "continuation": {
-    "scope": "Published 1.0.1 release complete. Independent QuantumBackground renaming/routing work is not part of this released snapshot.",
-    "publicationWorkRemaining": false
+    "scope": "Published 1.0.2 package, immutable GitHub release and deployed public documentation verified; inherited environment/legal limitations remain explicitly listed.",
+    "publicationWorkRemaining": false,
+    "documentationFinalReviewPending": false
   },
   "followup": {
     "evidence": "evidence/followup-report.json",
@@ -688,7 +736,8 @@
         "allFilesByteIdentical": true,
         "evidence": "evidence/docs-artifact.json"
       }
-    }
+    },
+    "recordScope": "Historical DataTable/border/header hardening before the published 1.0.x releases; retained evidence is not a fresh full pass of 1.0.2."
   },
   "rename": {
     "evidence": "evidence/package-rename-report.json",
@@ -703,93 +752,109 @@
     "backup": "D:/Git/adui-backups/version-reset-20261012"
   },
   "publication": {
-    "evidence": "evidence/npm-trusted-publisher-report.json",
-    "completedAt": "2026-10-12T13:22:00.059Z",
+    "evidence": "evidence/quantum-background-published-registry.json",
+    "completedAt": "2026-10-12T13:37:30.553Z",
     "status": "published and independently installed from the public npm registry",
     "name": "@neo-ui-kit/react",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "license": "MIT",
-    "url": "https://www.npmjs.com/package/@neo-ui-kit/react/v/1.0.1",
+    "url": "https://www.npmjs.com/package/@neo-ui-kit/react/v/1.0.2",
     "owner": "pro100dimka",
     "scope": "neo-ui-kit",
     "publisher": "GitHub Actions through npm OIDC",
-    "latest": "1.0.1",
+    "latest": "1.0.2",
     "artifact": {
-      "path": "release/ci/neo-ui-kit-react-1.0.1.tgz",
+      "path": "release/ci/neo-ui-kit-react-1.0.2.tgz",
       "name": "@neo-ui-kit/react",
-      "version": "1.0.1",
+      "version": "1.0.2",
       "format": "ESM",
-      "sizeBytes": 1665955,
-      "unpackedBytes": 2834024,
+      "sizeBytes": 1666216,
+      "unpackedBytes": 2835453,
       "files": 270,
-      "sha256": "39a1a8307214b69314260649e2ee8bfd9033fe4d4292b102060cf306440a1f4c",
-      "sha1": "b3d36f8d7f917d1a0c5708c6de3b161c1140df50",
-      "integrity": "sha512-YsocW3Vn/PHyjnIAzERjBdiQH+FClotum0C0z97OhzbjfzZQNkfhu80iB+1GlBAaPJjQJ4fNgZUbhuAqaJZbOQ==",
-      "registryTarball": "https://registry.npmjs.org/@neo-ui-kit/react/-/react-1.0.1.tgz",
-      "githubDownload": "https://github.com/Pro100Dimka/adui/releases/download/v1.0.1/neo-ui-kit-react-1.0.1.tgz",
-      "metadata": "evidence/npm-1.0.1-published-registry.json",
+      "sha256": "02ec2e3efdc2d3dc34e2989d5df74af0bd4290b0b216168c077575c2352d1a06",
+      "sha1": "7668c764e3eb5f2434b1242e598eb314d358c41d",
+      "integrity": "sha512-QGrYejNt91HxWFn4kcoG8Q/Q0QKnNgUmSyXrAKHvjJpOXPmY1OLmaBsZZkiUFwNkKavOg7e5eX0Ggt3uvOFbcw==",
+      "registryTarball": "https://registry.npmjs.org/@neo-ui-kit/react/-/react-1.0.2.tgz",
+      "githubDownload": "https://github.com/Pro100Dimka/adui/releases/download/v1.0.2/neo-ui-kit-react-1.0.2.tgz",
+      "metadata": "evidence/quantum-background-published-registry.json",
       "registryIntegrityMatches": true,
       "installedConsumerIntegrityMatches": true
     },
     "registryIntegrityMatches": true,
     "fullCheck": {
       "command": "npm run check",
-      "tests": 580,
-      "files": 38,
-      "result": "passed",
-      "types": "UI and playground passed",
+      "typecheck": "UI and playground passed",
       "build": "UI and playground passed",
+      "unitFiles": 38,
+      "unitTests": 584,
+      "result": "passed",
       "environment": "GitHub-hosted ubuntu-latest, Node 24.21.0, npm 11.15.0",
-      "vitestDurationSeconds": 13.83,
-      "log": "evidence/npm-trusted-completed-job-114826272457.log",
-      "localLog": "evidence/npm-publish-path-full-check.log"
+      "vitestDurationSeconds": 9.95,
+      "log": "evidence/quantum-background-ci-verify.log",
+      "localLog": "evidence/quantum-background-full-check.log"
     },
     "registryConsumer": {
-      "directory": "release/consumer-npm-1.0.1",
-      "installedFrom": "public npm registry, exact version 1.0.1, independent node_modules",
+      "directory": "release/consumer-registry102",
+      "installedFrom": "public npm registry, exact version 1.0.2, independent node_modules",
       "react": "19.3.0",
       "node": "v22.18.0",
-      "strictTypes": "passed, no skipLibCheck",
-      "typeLog": "evidence/npm-1.0.1-registry-consumer-types.log",
-      "publicEntries": "evidence/package-consumer-npm-1.0.1-22.json",
+      "strictTypes": "passed (main.tsx and canonical/legacy props, without skipLibCheck)",
+      "typeLog": "evidence/quantum-background-registry-types.log",
+      "publicEntries": "evidence/package-consumer-registry102-22.json",
       "publicEntriesResult": "passed",
       "browser": "154.0.8037.98",
       "browserChecks": 22,
       "browserResult": "passed",
-      "browserEvidence": "evidence/consumer-consumer-npm-1.0.1-registry-1.0.1-chrome.json",
-      "integrityEvidence": "evidence/npm-1.0.1-registry-consumer-integrity.json",
+      "browserEvidence": "evidence/consumer-consumer-registry102-registry-1.0.2-chrome.json",
+      "fullRendererChecks": 6,
+      "fullRendererResult": "passed",
+      "fullRendererEvidence": "evidence/quantum-background-registry-render.json",
+      "integrityEvidence": "evidence/quantum-background-registry-consumer-integrity.json",
       "matchesGitHubArtifact": true
     },
     "provenance": {
       "result": "verified with npm audit signatures",
       "predicateType": "https://slsa.dev/provenance/v1",
-      "gitCommit": "a3fa2c954622eb18a3ab1d50e436c43dceb1c01c",
+      "gitCommit": "4df44959439219c7ef154275d2eafaa12d52ff3d",
       "workflow": ".github/workflows/release.yml",
-      "ref": "refs/tags/v1.0.1",
-      "run": "https://github.com/Pro100Dimka/adui/actions/runs/38253722738",
-      "transparencyLog": "https://search.sigstore.dev/?logIndex=3228429516",
-      "attestations": "evidence/npm-1.0.1-registry-attestations.json",
-      "decodedStatements": "evidence/npm-1.0.1-registry-provenance-statements.json",
-      "verificationLog": "evidence/npm-1.0.1-registry-signatures.log",
+      "ref": "refs/tags/v1.0.2",
+      "run": "https://github.com/Pro100Dimka/adui/actions/runs/38256372887",
+      "transparencyLog": "https://search.sigstore.dev/?logIndex=3228734733",
+      "attestationsURL": "https://registry.npmjs.org/-/npm/v1/attestations/@neo-ui-kit%2freact@1.0.2",
+      "metadata": "evidence/quantum-background-published-registry.json",
+      "verificationLog": "evidence/quantum-background-registry-signatures.log",
       "registrySignaturesVerified": 7,
       "attestationsVerified": 4,
       "countScope": "Fresh consumer dependency graph; counts include React and related installed packages."
     },
     "githubRelease": {
-      "url": "https://github.com/Pro100Dimka/adui/releases/tag/v1.0.1",
-      "tag": "v1.0.1",
-      "target": "main",
-      "publishedAt": "2026-10-12T13:11:44Z"
+      "url": "https://github.com/Pro100Dimka/adui/releases/tag/v1.0.2",
+      "tag": "v1.0.2",
+      "target": "4df44959439219c7ef154275d2eafaa12d52ff3d",
+      "publishedAt": "2026-10-12T13:34:17Z"
     },
     "docsBrowser": {
-      "red": "evidence/npm-trusted-publisher-docs-red.log",
-      "green": "evidence/npm-trusted-publisher-docs-suite.log",
-      "browserChecks": 15,
-      "browserResult": "passed",
-      "browserEvidence": "evidence/npm-1.0.1-public-docs.json",
+      "path": "docs",
+      "files": 356,
+      "allFilesByteIdentical": true,
+      "backup": "D:/Git/adui-backups/npm-publication-20261012/docs-before-quantum-background",
+      "evidence": "evidence/quantum-background-report.json",
+      "published": true,
       "url": "https://pro100dimka.github.io/adui",
-      "completedAt": "2026-10-12T12:56:21.347Z",
-      "scope": "Public 1.0.1 site: registry install command, copied stylesheet import, uppercase brand, version, public entry points and interactive live editor."
+      "sourceCommit": "1d9d52160fb02e998f9462df7ab9fb1216ac6249",
+      "publicEvidence": "evidence/quantum-docs-green-public.json",
+      "publicQuantumChecks": 22,
+      "publicQuantumResult": "passed",
+      "generalPublicSiteChecks": {
+        "status": "passed",
+        "checks": 15,
+        "evidence": "evidence/quantum-background-install-docs.json",
+        "completedAt": "2026-10-12T13:38:45.096Z",
+        "scope": "Public installation commands, 1.0.2 display, copied imports, all entry points and interactive live editor."
+      },
+      "scope": "1.0.2 generated documentation; canonical and legacy routes, full renderer, controls and 375/1440px public layouts verified.",
+      "publicScreenshot": "evidence/quantum-background-restored-green-public.png",
+      "deploymentStatus": "built and independently browser-verified"
     }
   },
   "trustedPublishing": {
@@ -798,7 +863,8 @@
     "status": "published and verified; trusted publisher Valid",
     "run": "https://github.com/Pro100Dimka/adui/actions/runs/38253722738",
     "gitCommit": "a3fa2c954622eb18a3ab1d50e436c43dceb1c01c",
-    "validationEvidence": "evidence/npm-trusted-publisher-validated.jpg"
+    "validationEvidence": "evidence/npm-trusted-publisher-validated.jpg",
+    "scope": "Historical initial 1.0.1 trusted-publisher activation; unchanged configuration successfully reused for 1.0.2."
   },
   "publicationHistory": [
     {
@@ -862,6 +928,304 @@
           "Earlier physical-device/browser and legal naming limitations remain in release-report.json."
         ]
       }
+    },
+    {
+      "version": "1.0.1",
+      "report": "evidence/npm-trusted-publisher-report.json",
+      "scope": "Historical first successful trusted-publisher activation and release; immutable published 1.0.1.",
+      "record": {
+        "evidence": "evidence/npm-trusted-publisher-report.json",
+        "completedAt": "2026-10-12T13:22:00.059Z",
+        "status": "published and independently installed from the public npm registry",
+        "name": "@neo-ui-kit/react",
+        "version": "1.0.1",
+        "license": "MIT",
+        "url": "https://www.npmjs.com/package/@neo-ui-kit/react/v/1.0.1",
+        "owner": "pro100dimka",
+        "scope": "neo-ui-kit",
+        "publisher": "GitHub Actions through npm OIDC",
+        "latest": "1.0.1",
+        "artifact": {
+          "path": "release/ci/neo-ui-kit-react-1.0.1.tgz",
+          "name": "@neo-ui-kit/react",
+          "version": "1.0.1",
+          "format": "ESM",
+          "sizeBytes": 1665955,
+          "unpackedBytes": 2834024,
+          "files": 270,
+          "sha256": "39a1a8307214b69314260649e2ee8bfd9033fe4d4292b102060cf306440a1f4c",
+          "sha1": "b3d36f8d7f917d1a0c5708c6de3b161c1140df50",
+          "integrity": "sha512-YsocW3Vn/PHyjnIAzERjBdiQH+FClotum0C0z97OhzbjfzZQNkfhu80iB+1GlBAaPJjQJ4fNgZUbhuAqaJZbOQ==",
+          "registryTarball": "https://registry.npmjs.org/@neo-ui-kit/react/-/react-1.0.1.tgz",
+          "githubDownload": "https://github.com/Pro100Dimka/adui/releases/download/v1.0.1/neo-ui-kit-react-1.0.1.tgz",
+          "metadata": "evidence/npm-1.0.1-published-registry.json",
+          "registryIntegrityMatches": true,
+          "installedConsumerIntegrityMatches": true
+        },
+        "registryIntegrityMatches": true,
+        "fullCheck": {
+          "command": "npm run check",
+          "tests": 580,
+          "files": 38,
+          "result": "passed",
+          "types": "UI and playground passed",
+          "build": "UI and playground passed",
+          "environment": "GitHub-hosted ubuntu-latest, Node 24.21.0, npm 11.15.0",
+          "vitestDurationSeconds": 13.83,
+          "log": "evidence/npm-trusted-completed-job-114826272457.log",
+          "localLog": "evidence/npm-publish-path-full-check.log"
+        },
+        "registryConsumer": {
+          "directory": "release/consumer-npm-1.0.1",
+          "installedFrom": "public npm registry, exact version 1.0.1, independent node_modules",
+          "react": "19.3.0",
+          "node": "v22.18.0",
+          "strictTypes": "passed, no skipLibCheck",
+          "typeLog": "evidence/npm-1.0.1-registry-consumer-types.log",
+          "publicEntries": "evidence/package-consumer-npm-1.0.1-22.json",
+          "publicEntriesResult": "passed",
+          "browser": "154.0.8037.98",
+          "browserChecks": 22,
+          "browserResult": "passed",
+          "browserEvidence": "evidence/consumer-consumer-npm-1.0.1-registry-1.0.1-chrome.json",
+          "integrityEvidence": "evidence/npm-1.0.1-registry-consumer-integrity.json",
+          "matchesGitHubArtifact": true
+        },
+        "provenance": {
+          "result": "verified with npm audit signatures",
+          "predicateType": "https://slsa.dev/provenance/v1",
+          "gitCommit": "a3fa2c954622eb18a3ab1d50e436c43dceb1c01c",
+          "workflow": ".github/workflows/release.yml",
+          "ref": "refs/tags/v1.0.1",
+          "run": "https://github.com/Pro100Dimka/adui/actions/runs/38253722738",
+          "transparencyLog": "https://search.sigstore.dev/?logIndex=3228429516",
+          "attestations": "evidence/npm-1.0.1-registry-attestations.json",
+          "decodedStatements": "evidence/npm-1.0.1-registry-provenance-statements.json",
+          "verificationLog": "evidence/npm-1.0.1-registry-signatures.log",
+          "registrySignaturesVerified": 7,
+          "attestationsVerified": 4,
+          "countScope": "Fresh consumer dependency graph; counts include React and related installed packages."
+        },
+        "githubRelease": {
+          "url": "https://github.com/Pro100Dimka/adui/releases/tag/v1.0.1",
+          "tag": "v1.0.1",
+          "target": "main",
+          "publishedAt": "2026-10-12T13:11:44Z"
+        },
+        "docsBrowser": {
+          "red": "evidence/npm-trusted-publisher-docs-red.log",
+          "green": "evidence/npm-trusted-publisher-docs-suite.log",
+          "browserChecks": 15,
+          "browserResult": "passed",
+          "browserEvidence": "evidence/npm-1.0.1-public-docs.json",
+          "url": "https://pro100dimka.github.io/adui",
+          "completedAt": "2026-10-12T12:56:21.347Z",
+          "scope": "Public 1.0.1 site: registry install command, copied stylesheet import, uppercase brand, version, public entry points and interactive live editor."
+        }
+      },
+      "verification": {
+        "fullCheck": {
+          "command": "npm run check",
+          "typecheck": "UI and playground passed",
+          "build": "UI and playground passed",
+          "unitFiles": 38,
+          "unitTests": 580,
+          "result": "passed",
+          "environment": "GitHub-hosted ubuntu-latest, Node 24.21.0, npm 11.15.0",
+          "vitestDurationSeconds": 13.83,
+          "log": "evidence/npm-trusted-completed-job-114826272457.log",
+          "localLog": "evidence/npm-publish-path-full-check.log"
+        },
+        "consumerTypes": {
+          "strict": true,
+          "skipLibCheck": false,
+          "resolveJsonModule": false,
+          "result": "passed for the fresh 1.0.1 registry consumer; historical 1.0.0 React18/19 checks retained",
+          "evidence": "evidence/npm-1.0.1-registry-consumer-types.log"
+        },
+        "staticDocumentation": {
+          "path": "D:\\Git\\adui\\docs",
+          "files": 357,
+          "allFilesByteIdentical": true,
+          "backup": "D:/Git/adui-backups/npm-publication-20261012/docs-before-npm",
+          "evidence": "evidence/docs-artifact.json",
+          "relatedTests": 15,
+          "latestBackup": "D:\\Git\\adui-backups\\npm-publication-20261012\\docs-before-oidc",
+          "testLog": "evidence/npm-publish-full-check.log",
+          "previousBackupRelocations": "evidence/version-reset-retired-local.json",
+          "published": true,
+          "url": "https://pro100dimka.github.io/adui",
+          "publicEvidence": "evidence/npm-1.0.1-public-docs.json",
+          "scope": "Released 1.0.1 documentation snapshot; later local QuantumBackground edits are excluded."
+        },
+        "provenance": {
+          "result": "verified with npm audit signatures",
+          "predicateType": "https://slsa.dev/provenance/v1",
+          "gitCommit": "a3fa2c954622eb18a3ab1d50e436c43dceb1c01c",
+          "workflow": ".github/workflows/release.yml",
+          "ref": "refs/tags/v1.0.1",
+          "run": "https://github.com/Pro100Dimka/adui/actions/runs/38253722738",
+          "transparencyLog": "https://search.sigstore.dev/?logIndex=3228429516",
+          "attestations": "evidence/npm-1.0.1-registry-attestations.json",
+          "decodedStatements": "evidence/npm-1.0.1-registry-provenance-statements.json",
+          "verificationLog": "evidence/npm-1.0.1-registry-signatures.log",
+          "registrySignaturesVerified": 7,
+          "attestationsVerified": 4,
+          "countScope": "Fresh consumer dependency graph; counts include React and related installed packages."
+        },
+        "inventoryRegressions": {
+          "result": "passed",
+          "red": "evidence/inventory-contracts-red.json",
+          "green": "evidence/inventory-contracts-green.json",
+          "scope": "Full Icon description and exact QuantumFieldExperience purpose, component and utility coverage counts."
+        }
+      },
+      "sourceFingerprint": {
+        "scope": "Published 1.0.1 source pinned by verified GitHub provenance; does not describe subsequent uncommitted work.",
+        "gitCommit": "a3fa2c954622eb18a3ab1d50e436c43dceb1c01c",
+        "evidence": "evidence/npm-1.0.1-registry-provenance-statements.json",
+        "prior1_0_0Fingerprint": {
+          "scope": "All files recursively under packages/ui/src; sorted absolute paths; SHA256 of JSON [relative path, file SHA256] pairs.",
+          "files": 457,
+          "sha256": "05653c468eca91c7ecf9e74135de4777ac13050fb8e0a9fc2f8ae3d751484ae4"
+        }
+      },
+      "coverage": {
+        "components": 100,
+        "nonComponentRuntimeExports": 69,
+        "rootExports": 318,
+        "runtimeRootExports": 169,
+        "themeTokens": 96,
+        "themes": [
+          "ruby",
+          "light",
+          "green",
+          "violet"
+        ],
+        "colorSchemes": [
+          "dark",
+          "light"
+        ],
+        "widths": [
+          320,
+          375,
+          768,
+          1024,
+          1440,
+          1920
+        ],
+        "narrowContainers": [
+          200,
+          240
+        ],
+        "rootTextScale": "200%",
+        "inventory": "evidence/library-inventory.json",
+        "familyAudits": [
+          "evidence/controls-audit.json",
+          "evidence/layers-audit.json",
+          "evidence/effects-media-audit.json",
+          "evidence/foundation-artwork-audit.json",
+          "evidence/feedback-root-review.json",
+          "evidence/data-table-audit.json"
+        ],
+        "basis": "All exports inventoried and assigned a review. Risk-based actual scenarios and source-only checks are explicitly distinguished; not an exhaustive Cartesian product."
+      }
     }
-  ]
+  ],
+  "quantumBackground": {
+    "version": "1.0.2",
+    "evidence": "evidence/quantum-background-report.json",
+    "cause": "Original docs example replaced full visualizer with distinct native primitive during previous hardening; renderer remained unchanged.",
+    "correction": "Full scene restored as QuantumBackground; legacy routes resolve to its page. Experience is a same-object compatibility alias; the distinct native QuantumField API remains unchanged.",
+    "originalFiles": [
+      {
+        "path": "packages/ui/src/components/artwork/QuantumField/reference.html",
+        "before": "1a7fecb9f1c03958272d9b94b40238450a87199d",
+        "after": "1a7fecb9f1c03958272d9b94b40238450a87199d",
+        "unchanged": true
+      },
+      {
+        "path": "packages/ui/src/components/artwork/QuantumField/renderer.ts",
+        "before": "3bc5bd9ace61a9e0e42e1fd42c845612eb3078d9",
+        "after": "3bc5bd9ace61a9e0e42e1fd42c845612eb3078d9",
+        "unchanged": true
+      },
+      {
+        "path": "packages/ui/src/components/artwork/QuantumField/styles.css",
+        "before": "371079b661b77dfa64d035fe97a8cf6325b36a93",
+        "after": "371079b661b77dfa64d035fe97a8cf6325b36a93",
+        "unchanged": true
+      },
+      {
+        "path": "packages/ui/src/components/artwork/QuantumField/QuantumField.tsx",
+        "before": "2191058d32f1f2fe070481e5582b6d9ad2c65e7a",
+        "after": "2191058d32f1f2fe070481e5582b6d9ad2c65e7a",
+        "unchanged": true
+      },
+      {
+        "path": "packages/ui/src/components/artwork/QuantumField/audio.ts",
+        "before": "fb45df5e3b4db04c1bc9d6bfdff35f150c75e07b",
+        "after": "fb45df5e3b4db04c1bc9d6bfdff35f150c75e07b",
+        "unchanged": true
+      },
+      {
+        "path": "packages/ui/src/components/artwork/QuantumField/UPSTREAM-LICENSE.txt",
+        "before": "4c404e2633f28104b1c2e5f933613cb3d90d8220",
+        "after": "4c404e2633f28104b1c2e5f933613cb3d90d8220",
+        "unchanged": true
+      }
+    ],
+    "regressions": {
+      "red": "evidence/quantum-background-red.log",
+      "packedRed": "evidence/quantum-background-package-red.log",
+      "focusedGreen": "evidence/quantum-background-green.log",
+      "fullGreen": "evidence/quantum-background-full-check.log",
+      "fullPassed": 584,
+      "files": 38
+    },
+    "inventory": {
+      "components": 101,
+      "canonicalDocumentationPages": 99,
+      "explanation": "The distinct native QuantumField stays exported and documented in the README; QuantumFieldExperience is a compatibility alias on the canonical background page.",
+      "proof": "evidence/inventory-contracts-quantum-background-green.json"
+    },
+    "registryAPI": {
+      "quantumBackgroundExport": true,
+      "legacyAliasIdentical": true,
+      "nativeDistinct": true
+    },
+    "registrySSR": {
+      "fullIframe": true,
+      "embeddedWebGLRendererSource": true,
+      "particleBudget": 3000,
+      "fullControlTabs": 7,
+      "audioAndActions": true,
+      "nativeHasNoIframe": true,
+      "stylesheetPresent": true
+    },
+    "realRenderer": {
+      "checks": 6,
+      "result": "passed",
+      "browser": "154.0.8037.98",
+      "evidence": "evidence/quantum-background-registry-render.json",
+      "scope": "Actual npm-installed WebGL renderer changing pixels, control messaging, 375/1440px layout and runtime errors."
+    },
+    "publicDocumentation": {
+      "checks": 22,
+      "result": "passed",
+      "evidence": "evidence/quantum-docs-green-public.json",
+      "installEditorChecks": 15,
+      "installEditorEvidence": "evidence/quantum-background-install-docs.json",
+      "screenshot": "evidence/quantum-background-restored-green-public.png",
+      "deployment": {
+        "status": "built and independently browser-verified",
+        "commit": "1d9d52160fb02e998f9462df7ab9fb1216ac6249",
+        "url": "https://pro100dimka.github.io/adui/#/components/quantum-background"
+      }
+    },
+    "preparationArtifact": {
+      "path": "release/neo-ui-kit-react-1.0.2.tgz",
+      "sha256": "93f2d6c19b0ded1d48fa8b62e656281b0b52f052fd602680e19c00e8f75290a7"
+    }
+  }
 }

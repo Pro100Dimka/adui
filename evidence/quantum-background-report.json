@@ -2,7 +2,7 @@
   "preparedAt": "2026-10-12T13:27:06.811Z",
   "baseline": "12387d42ad37d53ea1aa5f4db2c76b4d678aec43",
   "version": "1.0.2",
-  "status": "1.0.2 publication succeeded through GitHub OIDC; npm propagation and public documentation verification pending",
+  "status": "QuantumBackground restored, renamed, published as @neo-ui-kit/react@1.0.2 and verified on the public documentation site and in a fresh npm consumer",
   "cause": "Original docs example replaced full visualizer with distinct native primitive during previous hardening; renderer remained unchanged.",
   "correction": "Full scene restored as QuantumBackground; legacy routes resolve to its page. Experience is a same-object compatibility alias; the distinct native QuantumField API remains unchanged.",
   "renderer": [
@@ -68,14 +68,24 @@
       375,
       1440
     ],
-    "screenshot": "evidence/quantum-background-restored.png"
+    "screenshot": "evidence/quantum-background-restored.png",
+    "public": "evidence/quantum-docs-green-public.json",
+    "publicChecks": 22,
+    "installDocs": "evidence/quantum-background-install-docs.json",
+    "installDocsChecks": 15,
+    "publicScreenshot": "evidence/quantum-background-restored-green-public.png"
   },
   "documentation": {
     "source": "apps/playground/dist",
     "prepared": "docs",
     "filesHashVerified": 356,
     "backup": "D:/Git/adui-backups/npm-publication-20261012/docs-before-quantum-background",
-    "publicDeployment": "Will deploy after 1.0.2 is available in npm"
+    "publicDeployment": {
+      "status": "built and independently browser-verified",
+      "commit": "1d9d52160fb02e998f9462df7ab9fb1216ac6249",
+      "url": "https://pro100dimka.github.io/adui/#/components/quantum-background",
+      "evidence": "evidence/quantum-background-pages.json"
+    }
   },
   "inventory": {
     "components": 101,
@@ -102,5 +112,24 @@
   "preparationArtifact": {
     "path": "release/neo-ui-kit-react-1.0.2.tgz",
     "sha256": "93f2d6c19b0ded1d48fa8b62e656281b0b52f052fd602680e19c00e8f75290a7"
-  }
+  },
+  "completedAt": "2026-10-12T13:39:57.982Z",
+  "registry": {
+    "report": "evidence/quantum-background-published-registry.json",
+    "url": "https://www.npmjs.com/package/@neo-ui-kit/react/v/1.0.2",
+    "version": "1.0.2",
+    "latest": "1.0.2",
+    "consumer": "release/consumer-registry102",
+    "strictTypes": true,
+    "generalBrowserChecks": 22,
+    "fullVisualizerBrowserChecks": 6,
+    "fullVisualizerEvidence": "evidence/quantum-background-registry-render.json",
+    "signatureLog": "evidence/quantum-background-registry-signatures.log",
+    "integrityProof": "evidence/quantum-background-registry-consumer-integrity.json",
+    "integrity": "sha512-QGrYejNt91HxWFn4kcoG8Q/Q0QKnNgUmSyXrAKHvjJpOXPmY1OLmaBsZZkiUFwNkKavOg7e5eX0Ggt3uvOFbcw=="
+  },
+  "limitations": [
+    "Current browser checks used Chrome 154 on Windows; this change does not claim new Firefox, Safari or physical low-end-device coverage.",
+    "The existing full visualizer still loads its Three.js modules from the upstream CDN."
+  ]
 }
