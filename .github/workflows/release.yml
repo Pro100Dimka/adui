@@ -90,7 +90,7 @@ jobs:
           name: npm-package
           path: release
       - name: Publish verified package with npm trusted publishing
-        run: npm publish "$ARCHIVE" --access public --provenance --ignore-scripts --registry https://registry.npmjs.org
+        run: npm publish "./$ARCHIVE" --access public --provenance --ignore-scripts --registry https://registry.npmjs.org
       - uses: softprops/action-gh-release@v2
         with:
           name: "@neo-ui-kit/react ${{ github.ref_name }}"

@@ -32,15 +32,27 @@
   "runtimeChanged": false,
   "rebuildFilesByteIdentical": 267,
   "fullCheck": {
-    "tests": 579,
+    "tests": 580,
     "files": 38,
     "result": "passed",
-    "log": "evidence/npm-ci-recovery-full-check.log"
+    "log": "evidence/npm-publish-path-full-check.log"
   },
   "retry": {
     "version": "1.0.1",
-    "previousCommit": "bd767e2df639aac623f3c55b413f4889b665ec46",
-    "previousTagObject": "0e7d29561c93c68365d9990cef6616a0b953fa5c",
+    "previousCommit": "749fda2ec3c092e0daaf774bfd0f0989184961e3",
+    "previousTagObject": "f13042d729396300aeaa7e77fd77c7715aa26732",
     "method": "Retarget only the unpublished failed-attempt tag using an exact force-with-lease; original commit retained in main history and tag object retained in a local backup ref."
+  },
+  "publishPathRecovery": {
+    "initialRun": "https://github.com/Pro100Dimka/adui/actions/runs/38252999379",
+    "initialRunEvidence": "evidence/npm-trusted-github-run-path-failed.json",
+    "diagnostics": "evidence/npm-trusted-failed-job-114824196702.log",
+    "cause": "npm parses a bare release/name.tgz specifier as a GitHub repository, not a local tarball.",
+    "fix": "Use npm publish \"./$ARCHIVE\"; a regression test resolves the actual workflow argument using npm-package-arg.",
+    "red": "evidence/npm-trusted-publish-path-red.log",
+    "green": "evidence/npm-trusted-publish-path-green.log",
+    "npm11DryRun": "evidence/npm-trusted-publish-path-dry-run-npm11.log",
+    "actionlint": "evidence/npm-trusted-publish-path-actionlint.log",
+    "runtimeChanged": false
   }
 }

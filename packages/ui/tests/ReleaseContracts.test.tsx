@@ -6,6 +6,7 @@ import { ripple, useControllable } from "../src/core/base";
 import ts from "typescript";
 import { fileURLToPath } from "node:url";
 import { runInNewContext } from "node:vm";
+import { createRequire } from "node:module";
 import { ThemeProvider } from "../src/components/foundation/ThemeProvider/ThemeProvider";
 import { ProgressBar } from "../src/components/feedback/ProgressBar/ProgressBar";
 import { catalog, componentCount, getCatalogItemBySlug, getExample, getImportPath, installCommand } from "../../../apps/playground/src/catalog/componentRegistry";
@@ -34,10 +35,20 @@ describe("trusted npm publishing", () => {
     expect(workflow.indexOf("Smoke-test packed consumer")).toBeGreaterThan(workflow.indexOf("npm pack ./packages/ui"));
     expect(workflow.indexOf("actions/upload-artifact@")).toBeGreaterThan(workflow.indexOf("Smoke-test packed consumer"));
     expect(workflow).toContain("actions/download-artifact@");
-    expect(workflow).toContain('npm publish "$ARCHIVE" --access public --provenance --ignore-scripts --registry https://registry.npmjs.org');
+    expect(workflow).toContain('npm publish "./$ARCHIVE" --access public --provenance --ignore-scripts --registry https://registry.npmjs.org');
     expect(workflow).toContain('node-version: "24"');
     expect(workflow).toContain("npm install --global npm@11.15.0");
     expect(workflow).toContain("package-manager-cache: false");
+  });
+
+  it("passes the archive to npm as a local file instead of a GitHub repository", () => {
+    const npmExecPath = process.env.npm_execpath;
+    if (!npmExecPath) throw new Error("Run this npm CLI contract through npm test.");
+    const parsePackage = createRequire(npmExecPath)("npm-package-arg");
+    const argument = workflow.match(/run: npm publish "([^"]+)"/)?.[1]
+      ?.replace("$ARCHIVE", "release/neo-ui-kit-react-1.0.1.tgz");
+    expect(argument).toBeDefined();
+    expect(parsePackage(argument)).toMatchObject({ type: "file" });
   });
 
   it.each([

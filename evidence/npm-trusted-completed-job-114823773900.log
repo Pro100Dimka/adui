@@ -1,0 +1,2006 @@
+2026-10-12T13:03:08.7722673Z Current runner version: '2.337.0'
+2026-10-12T13:03:08.7737407Z ##[group]Runner Image Provisioner
+2026-10-12T13:03:08.7737974Z Hosted Compute Agent
+2026-10-12T13:03:08.7738311Z Version: 20261002.596
+2026-10-12T13:03:08.7738783Z Commit: c3d12f3313a95f25162a1503be624f3b0617f8c0
+2026-10-12T13:03:08.7739363Z Build Date: 2026-10-02T22:28:27Z
+2026-10-12T13:03:08.7739744Z Worker ID: {2a325596-c1d4-4d33-ba3b-a4ce159cbcbb}
+2026-10-12T13:03:08.7740199Z Region: centralus
+2026-10-12T13:03:08.7740524Z Cloud: Azure
+2026-10-12T13:03:08.7740889Z ##[endgroup]
+2026-10-12T13:03:08.7741701Z ##[group]Operating System
+2026-10-12T13:03:08.7742053Z Ubuntu
+2026-10-12T13:03:08.7742390Z 24.04.5
+2026-10-12T13:03:08.7742690Z LTS
+2026-10-12T13:03:08.7743013Z ##[endgroup]
+2026-10-12T13:03:08.7743400Z ##[group]Runner Image
+2026-10-12T13:03:08.7743748Z Image: ubuntu-24.04
+2026-10-12T13:03:08.7744110Z Version: 20261004.327.1
+2026-10-12T13:03:08.7744851Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261004.327/images/ubuntu/Ubuntu2404-Readme.md
+2026-10-12T13:03:08.7745718Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261004.327
+2026-10-12T13:03:08.7746253Z ##[endgroup]
+2026-10-12T13:03:08.7747113Z ##[group]GITHUB_TOKEN Permissions
+2026-10-12T13:03:08.7748427Z Contents: read
+2026-10-12T13:03:08.7748799Z Metadata: read
+2026-10-12T13:03:08.7749269Z ##[endgroup]
+2026-10-12T13:03:08.7750503Z Secret source: Actions
+2026-10-12T13:03:08.7751127Z Cache mode: write
+2026-10-12T13:03:08.7751530Z Prepare workflow directory
+2026-10-12T13:03:08.7955335Z Prepare all required actions
+2026-10-12T13:03:08.7995546Z Getting action download info
+2026-10-12T13:03:09.0096758Z Download action repository 'actions/checkout@v6' (SHA:d23441a48e516b6c34aea4fa41551a30e30af803)
+2026-10-12T13:03:09.0755714Z Download action repository 'actions/setup-node@v6' (SHA:249970729cb0ef3589644e2896645e5dc5ba9c38)
+2026-10-12T13:03:09.2067133Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2026-10-12T13:03:09.4104229Z Complete job name: verify
+2026-10-12T13:03:09.4573462Z ##[group]Run actions/checkout@v6
+2026-10-12T13:03:09.4573846Z with:
+2026-10-12T13:03:09.4574075Z   persist-credentials: false
+2026-10-12T13:03:09.4574346Z   repository: Pro100Dimka/adui
+2026-10-12T13:03:09.4576401Z   token: ***
+2026-10-12T13:03:09.4576621Z   ssh-strict: true
+2026-10-12T13:03:09.4576843Z   ssh-user: git
+2026-10-12T13:03:09.4577059Z   clean: true
+2026-10-12T13:03:09.4577291Z   sparse-checkout-cone-mode: true
+2026-10-12T13:03:09.4577557Z   fetch-depth: 1
+2026-10-12T13:03:09.4577779Z   fetch-tags: false
+2026-10-12T13:03:09.4578011Z   show-progress: true
+2026-10-12T13:03:09.4578241Z   lfs: false
+2026-10-12T13:03:09.4578452Z   submodules: false
+2026-10-12T13:03:09.4578683Z   set-safe-directory: true
+2026-10-12T13:03:09.4578944Z   allow-unsafe-pr-checkout: false
+2026-10-12T13:03:09.4579512Z ##[endgroup]
+2026-10-12T13:03:09.5276152Z Syncing repository: Pro100Dimka/adui
+2026-10-12T13:03:09.5277112Z ##[group]Getting Git version info
+2026-10-12T13:03:09.5277510Z Working directory is '/home/runner/work/adui/adui'
+2026-10-12T13:03:09.5277991Z [command]/usr/bin/git version
+2026-10-12T13:03:09.5356072Z git version 2.55.0
+2026-10-12T13:03:09.5372652Z ##[endgroup]
+2026-10-12T13:03:09.5383368Z Temporarily overriding HOME='/home/runner/work/_temp/b563907d-7f2c-4787-ba77-70e8c33714ca' before making global git config changes
+2026-10-12T13:03:09.5384433Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-12T13:03:09.5386898Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/adui/adui
+2026-10-12T13:03:09.5432214Z Deleting the contents of '/home/runner/work/adui/adui'
+2026-10-12T13:03:09.5436448Z ##[group]Determining repository object format
+2026-10-12T13:03:09.5437934Z ##[endgroup]
+2026-10-12T13:03:09.5438516Z ##[group]Initializing the repository
+2026-10-12T13:03:09.5441285Z [command]/usr/bin/git init /home/runner/work/adui/adui
+2026-10-12T13:03:09.5531558Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-10-12T13:03:09.5532390Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-10-12T13:03:09.5532985Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-10-12T13:03:09.5533365Z hint: call:
+2026-10-12T13:03:09.5533576Z hint:
+2026-10-12T13:03:09.5533854Z hint: 	git config --global init.defaultBranch <name>
+2026-10-12T13:03:09.5534256Z hint:
+2026-10-12T13:03:09.5534712Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-10-12T13:03:09.5535456Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-10-12T13:03:09.5536039Z hint:
+2026-10-12T13:03:09.5536365Z hint: 	git branch -m <name>
+2026-10-12T13:03:09.5536679Z hint:
+2026-10-12T13:03:09.5537183Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-10-12T13:03:09.5537941Z Initialized empty Git repository in /home/runner/work/adui/adui/.git/
+2026-10-12T13:03:09.5544485Z [command]/usr/bin/git remote add origin https://github.com/Pro100Dimka/adui
+2026-10-12T13:03:09.5585493Z ##[endgroup]
+2026-10-12T13:03:09.5585908Z ##[group]Disabling automatic garbage collection
+2026-10-12T13:03:09.5588206Z [command]/usr/bin/git config --local gc.auto 0
+2026-10-12T13:03:09.5623130Z ##[endgroup]
+2026-10-12T13:03:09.5624098Z ##[group]Setting up auth
+2026-10-12T13:03:09.5624577Z Removing SSH command configuration
+2026-10-12T13:03:09.5628348Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-12T13:03:09.5654278Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-12T13:03:09.5934226Z Removing HTTP extra header
+2026-10-12T13:03:09.5938296Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-12T13:03:09.5965316Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-12T13:03:09.6200704Z Removing includeIf entries pointing to credentials config files
+2026-10-12T13:03:09.6204544Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-12T13:03:09.6232680Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-12T13:03:09.6488337Z [command]/usr/bin/git config --file /home/runner/work/_temp/git-credentials-c19bbd8b-bc51-4ffa-a7da-e45627ea5567.config http.https://github.com/.extraheader AUTHORIZATION: basic [REDACTED]
+2026-10-12T13:03:09.6517521Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/adui/adui/.git.path /home/runner/work/_temp/git-credentials-c19bbd8b-bc51-4ffa-a7da-e45627ea5567.config
+2026-10-12T13:03:09.6543485Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/adui/adui/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-c19bbd8b-bc51-4ffa-a7da-e45627ea5567.config
+2026-10-12T13:03:09.6623716Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-c19bbd8b-bc51-4ffa-a7da-e45627ea5567.config
+2026-10-12T13:03:09.6711989Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-c19bbd8b-bc51-4ffa-a7da-e45627ea5567.config
+2026-10-12T13:03:09.6781305Z ##[endgroup]
+2026-10-12T13:03:09.6781938Z ##[group]Fetching the repository
+2026-10-12T13:03:09.6791934Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +refs/tags/v1.0.1:refs/tags/v1.0.1
+2026-10-12T13:03:12.3318475Z From https://github.com/Pro100Dimka/adui
+2026-10-12T13:03:12.3319973Z  * [new tag]         v1.0.1     -> v1.0.1
+2026-10-12T13:03:12.3328039Z [command]/usr/bin/git tag --list v1.0.1
+2026-10-12T13:03:12.3354222Z v1.0.1
+2026-10-12T13:03:12.3360410Z [command]/usr/bin/git rev-parse refs/tags/v1.0.1^{commit}
+2026-10-12T13:03:12.3383455Z 749fda2ec3c092e0daaf774bfd0f0989184961e3
+2026-10-12T13:03:12.3387535Z ##[endgroup]
+2026-10-12T13:03:12.3388762Z ##[group]Determining the checkout info
+2026-10-12T13:03:12.3390343Z ##[endgroup]
+2026-10-12T13:03:12.3391198Z [command]/usr/bin/git sparse-checkout disable
+2026-10-12T13:03:12.3435145Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-10-12T13:03:12.3461449Z ##[group]Checking out the ref
+2026-10-12T13:03:12.3462762Z [command]/usr/bin/git checkout --progress --force refs/tags/v1.0.1
+2026-10-12T13:03:12.4684390Z Note: switching to 'refs/tags/v1.0.1'.
+2026-10-12T13:03:12.4685266Z 
+2026-10-12T13:03:12.4685983Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-10-12T13:03:12.4687784Z changes and commit them, and you can discard any commits you make in this
+2026-10-12T13:03:12.4689844Z state without impacting any branches by switching back to a branch.
+2026-10-12T13:03:12.4690850Z 
+2026-10-12T13:03:12.4691649Z If you want to create a new branch to retain commits you create, you may
+2026-10-12T13:03:12.4693312Z do so (now or later) by using -c with the switch command. Example:
+2026-10-12T13:03:12.4694259Z 
+2026-10-12T13:03:12.4694736Z   git switch -c <new-branch-name>
+2026-10-12T13:03:12.4695281Z 
+2026-10-12T13:03:12.4695642Z Or undo this operation with:
+2026-10-12T13:03:12.4696294Z 
+2026-10-12T13:03:12.4696701Z   git switch -
+2026-10-12T13:03:12.4697249Z 
+2026-10-12T13:03:12.4698044Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-10-12T13:03:12.4699281Z 
+2026-10-12T13:03:12.4699890Z HEAD is now at 749fda2 Make release tests deterministic across CI hardware
+2026-10-12T13:03:12.4703007Z ##[endgroup]
+2026-10-12T13:03:12.4739570Z [command]/usr/bin/git log -1 --format=%H
+2026-10-12T13:03:12.4762169Z 749fda2ec3c092e0daaf774bfd0f0989184961e3
+2026-10-12T13:03:12.4769886Z ##[group]Removing auth
+2026-10-12T13:03:12.4771001Z Removing SSH command configuration
+2026-10-12T13:03:12.4772454Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-12T13:03:12.4799482Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-12T13:03:12.4975462Z Removing HTTP extra header
+2026-10-12T13:03:12.4978281Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-12T13:03:12.5007255Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-12T13:03:12.5181661Z Removing includeIf entries pointing to credentials config files
+2026-10-12T13:03:12.5183519Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-12T13:03:12.5207712Z includeif.gitdir:/home/runner/work/adui/adui/.git.path
+2026-10-12T13:03:12.5209075Z includeif.gitdir:/home/runner/work/adui/adui/.git/worktrees/*.path
+2026-10-12T13:03:12.5210781Z includeif.gitdir:/github/workspace/.git.path
+2026-10-12T13:03:12.5211917Z includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-10-12T13:03:12.5214825Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/adui/adui/.git.path
+2026-10-12T13:03:12.5235032Z /home/runner/work/_temp/git-credentials-c19bbd8b-bc51-4ffa-a7da-e45627ea5567.config
+2026-10-12T13:03:12.5242956Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/adui/adui/.git.path /home/runner/work/_temp/git-credentials-c19bbd8b-bc51-4ffa-a7da-e45627ea5567.config
+2026-10-12T13:03:12.5272147Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/adui/adui/.git/worktrees/*.path
+2026-10-12T13:03:12.5293007Z /home/runner/work/_temp/git-credentials-c19bbd8b-bc51-4ffa-a7da-e45627ea5567.config
+2026-10-12T13:03:12.5300302Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/adui/adui/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-c19bbd8b-bc51-4ffa-a7da-e45627ea5567.config
+2026-10-12T13:03:12.5338820Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git.path
+2026-10-12T13:03:12.5355638Z /github/runner_temp/git-credentials-c19bbd8b-bc51-4ffa-a7da-e45627ea5567.config
+2026-10-12T13:03:12.5375326Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-c19bbd8b-bc51-4ffa-a7da-e45627ea5567.config
+2026-10-12T13:03:12.5406708Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-10-12T13:03:12.5488442Z /github/runner_temp/git-credentials-c19bbd8b-bc51-4ffa-a7da-e45627ea5567.config
+2026-10-12T13:03:12.5494185Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-c19bbd8b-bc51-4ffa-a7da-e45627ea5567.config
+2026-10-12T13:03:12.5497292Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-12T13:03:12.5642163Z Removing credentials config '/home/runner/work/_temp/git-credentials-c19bbd8b-bc51-4ffa-a7da-e45627ea5567.config'
+2026-10-12T13:03:12.5650660Z ##[endgroup]
+2026-10-12T13:03:12.5861846Z ##[group]Run actions/setup-node@v6
+2026-10-12T13:03:12.5862381Z with:
+2026-10-12T13:03:12.5862845Z   node-version: 24
+2026-10-12T13:03:12.5863343Z   package-manager-cache: false
+2026-10-12T13:03:12.5863861Z   check-latest: false
+2026-10-12T13:03:12.5866066Z   token: ***
+2026-10-12T13:03:12.5866541Z ##[endgroup]
+2026-10-12T13:03:12.6839090Z Found in cache @ /opt/hostedtoolcache/node/24.21.0/x64
+2026-10-12T13:03:12.6842094Z ##[group]Environment details
+2026-10-12T13:03:12.9977409Z node: v24.21.0
+2026-10-12T13:03:12.9977674Z npm: 11.19.0
+2026-10-12T13:03:12.9977826Z yarn: 1.22.22
+2026-10-12T13:03:12.9978682Z ##[endgroup]
+2026-10-12T13:03:13.0088299Z ##[group]Run npm install --global npm@11.15.0
+2026-10-12T13:03:13.0088575Z npm install --global npm@11.15.0
+2026-10-12T13:03:13.0310463Z shell: /usr/bin/bash -e {0}
+2026-10-12T13:03:13.0310657Z ##[endgroup]
+2026-10-12T13:03:16.2314723Z 
+2026-10-12T13:03:16.2319456Z changed 28 packages in 3s
+2026-10-12T13:03:16.2319913Z 
+2026-10-12T13:03:16.2320275Z 15 packages are looking for funding
+2026-10-12T13:03:16.2320485Z   run `npm fund` for details
+2026-10-12T13:03:16.2823753Z ##[group]Run VERSION=$(node -p "require('./packages/ui/package.json').version")
+2026-10-12T13:03:16.2824228Z VERSION=$(node -p "require('./packages/ui/package.json').version")
+2026-10-12T13:03:16.2824695Z test "v$VERSION" = "$GITHUB_REF_NAME" || { echo "Tag $GITHUB_REF_NAME != v$VERSION"; exit 1; }
+2026-10-12T13:03:16.2825076Z echo "VERSION=$VERSION" >> "$GITHUB_ENV"
+2026-10-12T13:03:16.2825368Z echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+2026-10-12T13:03:16.2825716Z echo "archive=release/neo-ui-kit-react-$VERSION.tgz" >> "$GITHUB_OUTPUT"
+2026-10-12T13:03:16.2879341Z shell: /usr/bin/bash -e {0}
+2026-10-12T13:03:16.2879484Z ##[endgroup]
+2026-10-12T13:03:16.3821692Z ##[group]Run node --input-type=module <<'NODE'
+2026-10-12T13:03:16.3821991Z node --input-type=module <<'NODE'
+2026-10-12T13:03:16.3822241Z const version = process.env.VERSION;
+2026-10-12T13:03:16.3822709Z const response = await fetch(`https://registry.npmjs.org/${encodeURIComponent('@neo-ui-kit/react')}/${version}`, {
+2026-10-12T13:03:16.3823200Z   cache: "no-store", signal: AbortSignal.timeout(15000),
+2026-10-12T13:03:16.3823473Z });
+2026-10-12T13:03:16.3823647Z if (response.status !== 404) {
+2026-10-12T13:03:16.3823887Z   throw new Error(response.ok
+2026-10-12T13:03:16.3824437Z     ? `@neo-ui-kit/react@${version} is already published; use a new version and tag.`
+2026-10-12T13:03:16.3824856Z     : `Cannot verify the npm version: HTTP ${response.status}`);
+2026-10-12T13:03:16.3825137Z }
+2026-10-12T13:03:16.3825308Z NODE
+2026-10-12T13:03:16.3874742Z shell: /usr/bin/bash -e {0}
+2026-10-12T13:03:16.3874883Z env:
+2026-10-12T13:03:16.3874986Z   VERSION: 1.0.1
+2026-10-12T13:03:16.3875095Z ##[endgroup]
+2026-10-12T13:03:16.6823763Z ##[group]Run npm ci
+2026-10-12T13:03:16.6823912Z npm ci
+2026-10-12T13:03:16.6876832Z shell: /usr/bin/bash -e {0}
+2026-10-12T13:03:16.6876976Z env:
+2026-10-12T13:03:16.6877082Z   VERSION: 1.0.1
+2026-10-12T13:03:16.6877196Z ##[endgroup]
+2026-10-12T13:03:19.0356389Z 
+2026-10-12T13:03:19.0357151Z added 79 packages, and audited 82 packages in 2s
+2026-10-12T13:03:19.0357416Z 
+2026-10-12T13:03:19.0357581Z 15 packages are looking for funding
+2026-10-12T13:03:19.0357775Z   run `npm fund` for details
+2026-10-12T13:03:19.0425157Z 
+2026-10-12T13:03:19.0425750Z 5 vulnerabilities (2 low, 1 moderate, 2 critical)
+2026-10-12T13:03:19.0425982Z 
+2026-10-12T13:03:19.0426245Z To address all issues (including breaking changes), run:
+2026-10-12T13:03:19.0426721Z   npm audit fix --force
+2026-10-12T13:03:19.0426847Z 
+2026-10-12T13:03:19.0426972Z Run `npm audit` for details.
+2026-10-12T13:03:19.1027098Z ##[group]Run npm run check
+2026-10-12T13:03:19.1027259Z npm run check
+2026-10-12T13:03:19.1077556Z shell: /usr/bin/bash -e {0}
+2026-10-12T13:03:19.1077688Z env:
+2026-10-12T13:03:19.1077791Z   VERSION: 1.0.1
+2026-10-12T13:03:19.1077897Z ##[endgroup]
+2026-10-12T13:03:19.1705255Z 
+2026-10-12T13:03:19.1705843Z > neo-ui-workspace@1.0.0 check
+2026-10-12T13:03:19.1706172Z > npm run typecheck && npm run build && npm test --workspace @neo-ui-kit/react
+2026-10-12T13:03:19.1706342Z 
+2026-10-12T13:03:19.2265471Z 
+2026-10-12T13:03:19.2266125Z > neo-ui-workspace@1.0.0 typecheck
+2026-10-12T13:03:19.2266554Z > npm run typecheck --workspace @neo-ui-kit/react && npm run typecheck --workspace @neo-ui-kit/playground
+2026-10-12T13:03:19.2266802Z 
+2026-10-12T13:03:19.2929295Z 
+2026-10-12T13:03:19.2929668Z > @neo-ui-kit/react@1.0.1 typecheck
+2026-10-12T13:03:19.2929975Z > tsc -p tsconfig.json
+2026-10-12T13:03:19.2930082Z 
+2026-10-12T13:03:22.2394413Z 
+2026-10-12T13:03:22.2395153Z > @neo-ui-kit/playground@1.0.0 typecheck
+2026-10-12T13:03:22.2395398Z > tsc --noEmit
+2026-10-12T13:03:22.2395491Z 
+2026-10-12T13:03:25.6959413Z 
+2026-10-12T13:03:25.6960147Z > neo-ui-workspace@1.0.0 build
+2026-10-12T13:03:25.6960779Z > npm run build --workspace @neo-ui-kit/react && npm run build --workspace @neo-ui-kit/playground
+2026-10-12T13:03:25.6961132Z 
+2026-10-12T13:03:25.7687301Z 
+2026-10-12T13:03:25.7687994Z > @neo-ui-kit/react@1.0.1 build
+2026-10-12T13:03:25.7688348Z > node scripts/build.mjs
+2026-10-12T13:03:25.7688522Z 
+2026-10-12T13:03:29.2170015Z 
+2026-10-12T13:03:29.2170675Z > @neo-ui-kit/playground@1.0.0 build
+2026-10-12T13:03:29.2170941Z > tsc --noEmit && vite build
+2026-10-12T13:03:29.2171066Z 
+2026-10-12T13:03:32.6348561Z vite v6.4.3 building for production...
+2026-10-12T13:03:32.6786884Z transforming...
+2026-10-12T13:03:55.6524608Z ✓ 2025 modules transformed.
+2026-10-12T13:03:56.1992270Z rendering chunks...
+2026-10-12T13:03:57.2284447Z computing gzip size...
+2026-10-12T13:03:57.5071598Z dist/index.html                                     0.91 kB │ gzip:     0.51 kB
+2026-10-12T13:03:57.5130202Z 
+2026-10-12T13:03:57.5130905Z dist/assets/MelodixText-600-hCHLX-Jz.woff2         49.26 kB
+2026-10-12T13:03:57.5131615Z (!) Some chunks are larger than 1500 kB after minification. Consider:
+2026-10-12T13:03:57.5160360Z - Using dynamic import() to code-split the application
+2026-10-12T13:03:57.5192386Z - Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+2026-10-12T13:03:57.5194001Z dist/assets/MelodixText-700-DK1QpEHt.woff2         50.08 kB
+2026-10-12T13:03:57.5210161Z dist/assets/MelodixText-500-Bb05MmCQ.woff2         50.78 kB
+2026-10-12T13:03:57.5211384Z - Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+2026-10-12T13:03:57.5270143Z dist/assets/MelodixText-800-WGXvo1aj.woff2         51.47 kB
+2026-10-12T13:03:57.5299970Z dist/assets/MelodixText-900-BRGoNORD.woff2         51.91 kB
+2026-10-12T13:03:57.5329929Z dist/assets/MelodixText-400-Fd7OHz5A.woff2         53.42 kB
+2026-10-12T13:03:57.5390255Z dist/assets/MelodixText-300-CT_PYRAW.woff2         57.28 kB
+2026-10-12T13:03:57.5429809Z dist/assets/MelodixText-200-D4bv5AbX.woff2         60.88 kB
+2026-10-12T13:03:57.5489831Z dist/assets/MelodixText-100-CEDIqC7e.woff2         62.04 kB
+2026-10-12T13:03:57.5519785Z dist/assets/Melodix-400-C5pzQxb4.woff2             80.67 kB
+2026-10-12T13:03:57.5550610Z dist/assets/Melodix-300-or4EARLq.woff2             89.17 kB
+2026-10-12T13:03:57.5609804Z dist/assets/Melodix-900-P-iTCOh0.woff2             95.28 kB
+2026-10-12T13:03:57.5639753Z dist/assets/Melodix-800-Zb3gCB2U.woff2             96.08 kB
+2026-10-12T13:03:57.5699808Z dist/assets/Melodix-600-BTQfd2XW.woff2             96.40 kB
+2026-10-12T13:03:57.5722242Z dist/assets/Melodix-700-Bdrql3SJ.woff2             96.74 kB
+2026-10-12T13:03:57.5730415Z dist/assets/Melodix-200-DU5zZnAB.woff2             98.02 kB
+2026-10-12T13:03:57.5750498Z dist/assets/Melodix-500-B02Gfpkf.woff2             98.04 kB
+2026-10-12T13:03:57.5753134Z dist/assets/Melodix-100-Cx5X0wk6.woff2            107.02 kB
+2026-10-12T13:03:57.5754040Z dist/assets/codicon-DF1abBS2.ttf                  153.23 kB
+2026-10-12T13:03:57.5754896Z dist/assets/editor.worker-q1rhPORV.js             275.49 kB
+2026-10-12T13:03:57.5755757Z dist/assets/json.worker-CWVwQAse.js               406.80 kB
+2026-10-12T13:03:57.5756851Z dist/assets/html.worker-Ba0ILV5R.js               716.87 kB
+2026-10-12T13:03:57.5757605Z dist/assets/sandboxRuntime-v8nXR_Ao.js          1,023.69 kB
+2026-10-12T13:03:57.5758361Z dist/assets/css.worker-D0i09_DZ.js              1,054.12 kB
+2026-10-12T13:03:57.5759070Z dist/assets/ts.worker-BYTy1TD1.js               7,035.87 kB
+2026-10-12T13:03:57.5760109Z dist/assets/index-D-R6XE0s.css                    175.37 kB │ gzip:    27.46 kB
+2026-10-12T13:03:57.5760957Z dist/assets/index-CTbx4egx.css                    207.01 kB │ gzip:    38.18 kB
+2026-10-12T13:03:57.5761798Z dist/assets/example-CflagS51.js                     0.10 kB │ gzip:     0.11 kB
+2026-10-12T13:03:57.5762710Z dist/assets/example-hKF0jeTh.js                     0.10 kB │ gzip:     0.11 kB
+2026-10-12T13:03:57.5764059Z dist/assets/example-BabPGK_d.js                     0.10 kB │ gzip:     0.11 kB
+2026-10-12T13:03:57.5764908Z dist/assets/example-7jbzmeMn.js                     0.10 kB │ gzip:     0.11 kB
+2026-10-12T13:03:57.5765761Z dist/assets/html.d-BV9nBu29.js                      0.11 kB │ gzip:     0.11 kB
+2026-10-12T13:03:57.5766605Z dist/assets/Toolbar-DXGti9K1.js                     0.12 kB │ gzip:     0.12 kB
+2026-10-12T13:03:57.5767520Z dist/assets/ts.worker-CzGYencd.js                   0.13 kB │ gzip:     0.14 kB
+2026-10-12T13:03:57.5768367Z dist/assets/example-BktmmwLg.js                     0.13 kB │ gzip:     0.14 kB
+2026-10-12T13:03:57.5769587Z dist/assets/DialogBody-D_Gdbn4N.js                  0.13 kB │ gzip:     0.12 kB
+2026-10-12T13:03:57.5770441Z dist/assets/editor.worker-C5VIKEOP.js               0.13 kB │ gzip:     0.14 kB
+2026-10-12T13:03:57.5771570Z dist/assets/ButtonGroup-C_zt4xYz.js                 0.13 kB │ gzip:     0.13 kB
+2026-10-12T13:03:57.5772434Z dist/assets/DialogActions-bMSaqkuN.js               0.14 kB │ gzip:     0.13 kB
+2026-10-12T13:03:57.5773264Z dist/assets/example-Dm2oitmc.js                     0.14 kB │ gzip:     0.16 kB
+2026-10-12T13:03:57.5774099Z dist/assets/Switch-JdnYL9yf.js                      0.19 kB │ gzip:     0.15 kB
+2026-10-12T13:03:57.5774943Z dist/assets/Checkbox-ERYl0-PG.js                    0.19 kB │ gzip:     0.15 kB
+2026-10-12T13:03:57.5775802Z dist/assets/example-CG86-7Hh.js                     0.20 kB │ gzip:     0.20 kB
+2026-10-12T13:03:57.5776671Z dist/assets/example-ma-G76ej.js                     0.21 kB │ gzip:     0.20 kB
+2026-10-12T13:03:57.5777577Z dist/assets/example-YtEkvtKW.js                     0.21 kB │ gzip:     0.21 kB
+2026-10-12T13:03:57.5778463Z dist/assets/editor-DQx1QbPv.js                      0.23 kB │ gzip:     0.14 kB
+2026-10-12T13:03:57.5779515Z dist/assets/example-CcVUUgsh.js                     0.26 kB │ gzip:     0.24 kB
+2026-10-12T13:03:57.5780388Z dist/assets/example-BAz0n9nU.js                     0.26 kB │ gzip:     0.22 kB
+2026-10-12T13:03:57.5781284Z dist/assets/router-wuGPPYZY.js                      0.27 kB │ gzip:     0.17 kB
+2026-10-12T13:03:57.5782143Z dist/assets/example-DpebIaRg.js                     0.28 kB │ gzip:     0.21 kB
+2026-10-12T13:03:57.5783003Z dist/assets/Button-DBzrexC2.js                      0.28 kB │ gzip:     0.20 kB
+2026-10-12T13:03:57.5783869Z dist/assets/example-dpv623I1.js                     0.29 kB │ gzip:     0.27 kB
+2026-10-12T13:03:57.5784738Z dist/assets/example-Bo5Dh96_.js                     0.29 kB │ gzip:     0.25 kB
+2026-10-12T13:03:57.5785582Z dist/assets/Divider-B9G_r4MN.js                     0.30 kB │ gzip:     0.21 kB
+2026-10-12T13:03:57.5786677Z dist/assets/example-UmjKQiG2.js                     0.30 kB │ gzip:     0.23 kB
+2026-10-12T13:03:57.5787489Z dist/assets/experienceExample-Bw85nDZe.js           0.30 kB │ gzip:     0.23 kB
+2026-10-12T13:03:57.5788369Z dist/assets/example-BBDrbwvv.js                     0.31 kB │ gzip:     0.23 kB
+2026-10-12T13:03:57.5789441Z dist/assets/example-CeG0Eeji.js                     0.31 kB │ gzip:     0.22 kB
+2026-10-12T13:03:57.5790257Z dist/assets/example-DjlaMZXo.js                     0.32 kB │ gzip:     0.27 kB
+2026-10-12T13:03:57.5791097Z dist/assets/example-C-Yz4NfH.js                     0.32 kB │ gzip:     0.29 kB
+2026-10-12T13:03:57.5791952Z dist/assets/example-kA4k8guH.js                     0.33 kB │ gzip:     0.22 kB
+2026-10-12T13:03:57.5793022Z dist/assets/Text-BnuNHixu.js                        0.33 kB │ gzip:     0.22 kB
+2026-10-12T13:03:57.5793847Z dist/assets/example-Vj6qbP6N.js                     0.33 kB │ gzip:     0.25 kB
+2026-10-12T13:03:57.5794686Z dist/assets/example-D6Bqv6WA.js                     0.34 kB │ gzip:     0.24 kB
+2026-10-12T13:03:57.5795506Z dist/assets/example-B5okLUsA.js                     0.35 kB │ gzip:     0.27 kB
+2026-10-12T13:03:57.5796340Z dist/assets/example-BgfpI8MM.js                     0.35 kB │ gzip:     0.30 kB
+2026-10-12T13:03:57.5797181Z dist/assets/BrandMark-DR_B9o0O.js                   0.36 kB │ gzip:     0.24 kB
+2026-10-12T13:03:57.5798018Z dist/assets/Badge-B3Uvkbl-.js                       0.36 kB │ gzip:     0.26 kB
+2026-10-12T13:03:57.5798853Z dist/assets/example-CgdubGSL.js                     0.37 kB │ gzip:     0.29 kB
+2026-10-12T13:03:57.5799868Z dist/assets/example-Dx7f6AGd.js                     0.37 kB │ gzip:     0.26 kB
+2026-10-12T13:03:57.5800690Z dist/assets/example-C8qr2DS6.js                     0.37 kB │ gzip:     0.26 kB
+2026-10-12T13:03:57.5801528Z dist/assets/example-CzYxBuoC.js                     0.39 kB │ gzip:     0.31 kB
+2026-10-12T13:03:57.5802378Z dist/assets/example-Dpc1FEG4.js                     0.39 kB │ gzip:     0.29 kB
+2026-10-12T13:03:57.5803225Z dist/assets/example-o0_LV5yR.js                     0.39 kB │ gzip:     0.27 kB
+2026-10-12T13:03:57.5804042Z dist/assets/example-Dso0kg8O.js                     0.40 kB │ gzip:     0.32 kB
+2026-10-12T13:03:57.5804887Z dist/assets/example-Bax4CvT8.js                     0.41 kB │ gzip:     0.31 kB
+2026-10-12T13:03:57.5805725Z dist/assets/example-BglNDUW2.js                     0.41 kB │ gzip:     0.31 kB
+2026-10-12T13:03:57.5806568Z dist/assets/example-LGJsszjz.js                     0.41 kB │ gzip:     0.31 kB
+2026-10-12T13:03:57.5807666Z dist/assets/example-B6skxrPl.js                     0.42 kB │ gzip:     0.28 kB
+2026-10-12T13:03:57.5808519Z dist/assets/example-B9Z9pOxS.js                     0.43 kB │ gzip:     0.35 kB
+2026-10-12T13:03:57.5809911Z dist/assets/example-Mt7Emc5a.js                     0.43 kB │ gzip:     0.32 kB
+2026-10-12T13:03:57.5810761Z dist/assets/example-C-q-MBin.js                     0.43 kB │ gzip:     0.31 kB
+2026-10-12T13:03:57.5811589Z dist/assets/example-jODep45D.js                     0.44 kB │ gzip:     0.31 kB
+2026-10-12T13:03:57.5812416Z dist/assets/forms-S3Ef8qae.js                       0.46 kB │ gzip:     0.20 kB
+2026-10-12T13:03:57.5813276Z dist/assets/localeExample-Xev5tPnX.js               0.46 kB │ gzip:     0.32 kB
+2026-10-12T13:03:57.5814325Z dist/assets/example-VKoxjcdz.js                     0.47 kB │ gzip:     0.37 kB
+2026-10-12T13:03:57.5815212Z dist/assets/experienceExample-B2oULAwq.js           0.48 kB │ gzip:     0.28 kB
+2026-10-12T13:03:57.5816085Z dist/assets/example-DTohSIzh.js                     0.48 kB │ gzip:     0.35 kB
+2026-10-12T13:03:57.5816937Z dist/assets/IconButton-6gmCh3Or.js                  0.49 kB │ gzip:     0.29 kB
+2026-10-12T13:03:57.5817776Z dist/assets/example-BXOvgeEy.js                     0.49 kB │ gzip:     0.31 kB
+2026-10-12T13:03:57.5818626Z dist/assets/example-Dc6NldM5.js                     0.49 kB │ gzip:     0.35 kB
+2026-10-12T13:03:57.5819640Z dist/assets/TabPanel-M3q3a0r2.js                    0.49 kB │ gzip:     0.31 kB
+2026-10-12T13:03:57.5820498Z dist/assets/example-D84IYodf.js                     0.50 kB │ gzip:     0.37 kB
+2026-10-12T13:03:57.5821323Z dist/assets/example-B3NMm4tA.js                     0.50 kB │ gzip:     0.38 kB
+2026-10-12T13:03:57.5822199Z dist/assets/example-B2Dwf3XJ.js                     0.50 kB │ gzip:     0.32 kB
+2026-10-12T13:03:57.5823066Z dist/assets/booleanExample-D1I1ORfF.js              0.52 kB │ gzip:     0.33 kB
+2026-10-12T13:03:57.5823943Z dist/assets/example-UOY9PChf.js                     0.53 kB │ gzip:     0.36 kB
+2026-10-12T13:03:57.5824789Z dist/assets/example-VdibJaeB.js                     0.53 kB │ gzip:     0.34 kB
+2026-10-12T13:03:57.5825644Z dist/assets/example-CLgBBfrE.js                     0.53 kB │ gzip:     0.31 kB
+2026-10-12T13:03:57.5826492Z dist/assets/example-C4lY_PzT.js                     0.54 kB │ gzip:     0.33 kB
+2026-10-12T13:03:57.5827338Z dist/assets/example-D9l9LC_1.js                     0.54 kB │ gzip:     0.35 kB
+2026-10-12T13:03:57.5828180Z dist/assets/example-B3FDFZli.js                     0.57 kB │ gzip:     0.43 kB
+2026-10-12T13:03:57.5829444Z dist/assets/jsx-runtime.d-vlk9vwzr.js               0.57 kB │ gzip:     0.24 kB
+2026-10-12T13:03:57.5830306Z dist/assets/example-DsK7W4_N.js                     0.57 kB │ gzip:     0.42 kB
+2026-10-12T13:03:57.5831167Z dist/assets/EmptyState-BednCOna.js                  0.57 kB │ gzip:     0.37 kB
+2026-10-12T13:03:57.5832025Z dist/assets/example-BrwHWBva.js                     0.57 kB │ gzip:     0.37 kB
+2026-10-12T13:03:57.5832875Z dist/assets/example-BYJPvI7g.js                     0.58 kB │ gzip:     0.37 kB
+2026-10-12T13:03:57.5833725Z dist/assets/example-DPAlEwgP.js                     0.58 kB │ gzip:     0.33 kB
+2026-10-12T13:03:57.5834580Z dist/assets/example-ffQoMDoe.js                     0.58 kB │ gzip:     0.42 kB
+2026-10-12T13:03:57.5835422Z dist/assets/example-AcO_fR_h.js                     0.60 kB │ gzip:     0.40 kB
+2026-10-12T13:03:57.5836466Z dist/assets/KeyValueList-DKKCPh2z.js                0.60 kB │ gzip:     0.38 kB
+2026-10-12T13:03:57.5837340Z dist/assets/example-D8r6wcy5.js                     0.61 kB │ gzip:     0.40 kB
+2026-10-12T13:03:57.5838185Z dist/assets/example-5FUMF87L.js                     0.61 kB │ gzip:     0.44 kB
+2026-10-12T13:03:57.5839030Z dist/assets/example-dqd3u5W8.js                     0.62 kB │ gzip:     0.43 kB
+2026-10-12T13:03:57.5840034Z dist/assets/example-BMsLoAjF.js                     0.62 kB │ gzip:     0.39 kB
+2026-10-12T13:03:57.5840857Z dist/assets/example-CJZChMXI.js                     0.62 kB │ gzip:     0.42 kB
+2026-10-12T13:03:57.5841693Z dist/assets/example-CW8-90Cn.js                     0.63 kB │ gzip:     0.36 kB
+2026-10-12T13:03:57.5842535Z dist/assets/example-29BQnlVO.js                     0.63 kB │ gzip:     0.40 kB
+2026-10-12T13:03:57.5843357Z dist/assets/example-BpVVFBcv.js                     0.64 kB │ gzip:     0.39 kB
+2026-10-12T13:03:57.5844322Z dist/assets/example-CdU6tjcv.js                     0.64 kB │ gzip:     0.37 kB
+2026-10-12T13:03:57.5845220Z dist/assets/example-OljSYGzK.js                     0.64 kB │ gzip:     0.51 kB
+2026-10-12T13:03:57.5846100Z dist/assets/SegmentedControl-D4XZYuc6.js            0.64 kB │ gzip:     0.37 kB
+2026-10-12T13:03:57.5846962Z dist/assets/example-CiIStHaE.js                     0.66 kB │ gzip:     0.41 kB
+2026-10-12T13:03:57.5847801Z dist/assets/example-DXG_2-yB.js                     0.67 kB │ gzip:     0.36 kB
+2026-10-12T13:03:57.5848665Z dist/assets/typography-Cara87qI.js                  0.68 kB │ gzip:     0.27 kB
+2026-10-12T13:03:57.5849705Z dist/assets/booleanExample-CUEiNwDw.js              0.68 kB │ gzip:     0.40 kB
+2026-10-12T13:03:57.5850576Z dist/assets/example-C7GL0pRH.js                     0.69 kB │ gzip:     0.38 kB
+2026-10-12T13:03:57.5851624Z dist/assets/example-ervAgtqx.js                     0.71 kB │ gzip:     0.44 kB
+2026-10-12T13:03:57.5852466Z dist/assets/azcli-Y6nb8tq_.js                       0.71 kB │ gzip:     0.28 kB
+2026-10-12T13:03:57.5853305Z dist/assets/example-C5v4eqlC.js                     0.72 kB │ gzip:     0.40 kB
+2026-10-12T13:03:57.5854154Z dist/assets/example-N9sLZcb-.js                     0.73 kB │ gzip:     0.41 kB
+2026-10-12T13:03:57.5855004Z dist/assets/example-CIXKRKCg.js                     0.73 kB │ gzip:     0.53 kB
+2026-10-12T13:03:57.5855845Z dist/assets/example-BM7EPaxS.js                     0.74 kB │ gzip:     0.40 kB
+2026-10-12T13:03:57.5856717Z dist/assets/ScrollArea-pm0Ms_47.js                  0.75 kB │ gzip:     0.44 kB
+2026-10-12T13:03:57.5857773Z dist/assets/AnimatedBorder-B7j6aBoQ.js              0.77 kB │ gzip:     0.39 kB
+2026-10-12T13:03:57.5858661Z dist/assets/example-CRE6XWh0.js                     0.78 kB │ gzip:     0.53 kB
+2026-10-12T13:03:57.5859645Z dist/assets/core-CWI0wNpv.js                        0.80 kB │ gzip:     0.35 kB
+2026-10-12T13:03:57.5860489Z dist/assets/javascript-CJmYXdcF.js                  0.83 kB │ gzip:     0.46 kB
+2026-10-12T13:03:57.5861362Z dist/assets/StatusIndicator-DAA7GgOj.js             0.83 kB │ gzip:     0.48 kB
+2026-10-12T13:03:57.5862216Z dist/assets/example-BHSIqAxF.js                     0.85 kB │ gzip:     0.46 kB
+2026-10-12T13:03:57.5863069Z dist/assets/ToggleButton-BwTPTy_M.js                0.87 kB │ gzip:     0.44 kB
+2026-10-12T13:03:57.5863909Z dist/assets/Tab-DLqlyTZP.js                         0.89 kB │ gzip:     0.49 kB
+2026-10-12T13:03:57.5864733Z dist/assets/MenuItem-CuCg4xfY.js                    0.89 kB │ gzip:     0.45 kB
+2026-10-12T13:03:57.5865603Z dist/assets/MelodixText-612OVQKU.js                 0.91 kB │ gzip:     0.50 kB
+2026-10-12T13:03:57.5866476Z dist/assets/MessageBar-Dp7EBnkx.js                  0.92 kB │ gzip:     0.52 kB
+2026-10-12T13:03:57.5867344Z dist/assets/example-CZrv1hvv.js                     0.92 kB │ gzip:     0.61 kB
+2026-10-12T13:03:57.5868197Z dist/assets/example-B_g__D7S.js                     0.94 kB │ gzip:     0.49 kB
+2026-10-12T13:03:57.5869032Z dist/assets/Link-DuDlWMcS.js                        0.95 kB │ gzip:     0.47 kB
+2026-10-12T13:03:57.5870017Z dist/assets/ini-Kd9XrMLS.js                         0.96 kB │ gzip:     0.50 kB
+2026-10-12T13:03:57.5870858Z dist/assets/Beacon-C1KRD-rR.js                      0.98 kB │ gzip:     0.50 kB
+2026-10-12T13:03:57.5871706Z dist/assets/svgExample-VjGPBggs.js                  0.99 kB │ gzip:     0.55 kB
+2026-10-12T13:03:57.5872780Z dist/assets/Avatar-C75RDU5_.js                      1.00 kB │ gzip:     0.54 kB
+2026-10-12T13:03:57.5873613Z dist/assets/Icon-Dbm_hhJO.js                        1.01 kB │ gzip:     0.55 kB
+2026-10-12T13:03:57.5874443Z dist/assets/example-C1-BuLBT.js                     1.02 kB │ gzip:     0.63 kB
+2026-10-12T13:03:57.5875285Z dist/assets/GlowText-BL3Zd_Zf.js                    1.04 kB │ gzip:     0.57 kB
+2026-10-12T13:03:57.5876145Z dist/assets/environment-7hcENsHl.js                 1.05 kB │ gzip:     0.53 kB
+2026-10-12T13:03:57.5877008Z dist/assets/example-BW6ygbUX.js                     1.07 kB │ gzip:     0.76 kB
+2026-10-12T13:03:57.5877856Z dist/assets/example-CX_IbQUi.js                     1.08 kB │ gzip:     0.65 kB
+2026-10-12T13:03:57.5878693Z dist/assets/example-BFVqFiuL.js                     1.10 kB │ gzip:     0.61 kB
+2026-10-12T13:03:57.5879865Z dist/assets/example-Bg2_t2gC.js                     1.14 kB │ gzip:     0.60 kB
+2026-10-12T13:03:57.5880706Z dist/assets/Spotlight-CBtiukR_.js                   1.15 kB │ gzip:     0.54 kB
+2026-10-12T13:03:57.5881546Z dist/assets/example-BuSxeAXX.js                     1.16 kB │ gzip:     0.64 kB
+2026-10-12T13:03:57.5882388Z dist/assets/SignalBars-DtnA_YFl.js                  1.17 kB │ gzip:     0.66 kB
+2026-10-12T13:03:57.5883231Z dist/assets/Steps-BGktonGX.js                       1.17 kB │ gzip:     0.56 kB
+2026-10-12T13:03:57.5884078Z dist/assets/layers-CzKaKiIv.js                      1.18 kB │ gzip:     0.65 kB
+2026-10-12T13:03:57.5884919Z dist/assets/Shimmer-DSERXmeP.js                     1.19 kB │ gzip:     0.65 kB
+2026-10-12T13:03:57.5885750Z dist/assets/example-CFTbGsCN.js                     1.21 kB │ gzip:     0.55 kB
+2026-10-12T13:03:57.5886588Z dist/assets/example-CeBRsXWm.js                     1.21 kB │ gzip:     0.56 kB
+2026-10-12T13:03:57.5887432Z dist/assets/color-DfIqQghc.js                       1.22 kB │ gzip:     0.64 kB
+2026-10-12T13:03:57.5888316Z dist/assets/CollapsibleSection-s-yPiAIp.js          1.23 kB │ gzip:     0.63 kB
+2026-10-12T13:03:57.5889344Z dist/assets/workers-DNscL8I5.js                     1.23 kB │ gzip:     0.57 kB
+2026-10-12T13:03:57.5890188Z dist/assets/example-CU42d33f.js                     1.24 kB │ gzip:     0.63 kB
+2026-10-12T13:03:57.5891022Z dist/assets/csp-D-4FJmMZ.js                         1.28 kB │ gzip:     0.49 kB
+2026-10-12T13:03:57.5891867Z dist/assets/example-e1ApHdee.js                     1.32 kB │ gzip:     0.73 kB
+2026-10-12T13:03:57.5892764Z dist/assets/example-ERX-OCkJ.js                     1.34 kB │ gzip:     0.76 kB
+2026-10-12T13:03:57.5893590Z dist/assets/Slider-C9XM4bzn.js                      1.36 kB │ gzip:     0.71 kB
+2026-10-12T13:03:57.5894646Z dist/assets/Header-BvmFUc0a.js                      1.45 kB │ gzip:     0.65 kB
+2026-10-12T13:03:57.5895480Z dist/assets/ImageShine-C_8YRrMp.js                  1.46 kB │ gzip:     0.73 kB
+2026-10-12T13:03:57.5896330Z dist/assets/example-CnJR6Q6b.js                     1.47 kB │ gzip:     0.67 kB
+2026-10-12T13:03:57.5897179Z dist/assets/example-Bjb97fH5.js                     1.49 kB │ gzip:     0.91 kB
+2026-10-12T13:03:57.5898021Z dist/assets/Menu-CEMWSrKp.js                        1.51 kB │ gzip:     0.67 kB
+2026-10-12T13:03:57.5898862Z dist/assets/Card-D6zWqazr.js                        1.53 kB │ gzip:     0.68 kB
+2026-10-12T13:03:57.5899894Z dist/assets/SplitButton-DI3Hs50b.js                 1.53 kB │ gzip:     0.71 kB
+2026-10-12T13:03:57.5900909Z dist/assets/pla-DSh2-awV.js                         1.55 kB │ gzip:     0.61 kB
+2026-10-12T13:03:57.5901739Z dist/assets/Toast-DdFegCVJ.js                       1.56 kB │ gzip:     0.72 kB
+2026-10-12T13:03:57.5902583Z dist/assets/context-D2Irg_T5.js                     1.58 kB │ gzip:     0.63 kB
+2026-10-12T13:03:57.5903435Z dist/assets/responsive-Bbu5-Dlu.js                  1.61 kB │ gzip:     0.81 kB
+2026-10-12T13:03:57.5904308Z dist/assets/motion-engine.d-DdEiArDG.js             1.63 kB │ gzip:     0.68 kB
+2026-10-12T13:03:57.5905181Z dist/assets/scheme-BPhDTwHR.js                      1.63 kB │ gzip:     0.78 kB
+2026-10-12T13:03:57.5906040Z dist/assets/Equalizer-CWvho8J7.js                   1.67 kB │ gzip:     0.86 kB
+2026-10-12T13:03:57.5906883Z dist/assets/flow9-BeJ5waoc.js                       1.67 kB │ gzip:     0.81 kB
+2026-10-12T13:03:57.5907740Z dist/assets/Sparkles-ChWOyK3q.js                    1.69 kB │ gzip:     0.83 kB
+2026-10-12T13:03:57.5908580Z dist/assets/sb-BBc9UKZt.js                          1.69 kB │ gzip:     0.79 kB
+2026-10-12T13:03:57.5909557Z dist/assets/bat-BwHxbl9M.js                         1.71 kB │ gzip:     0.83 kB
+2026-10-12T13:03:57.5910409Z dist/assets/dockerfile-BG73LgW2.js                  1.73 kB │ gzip:     0.63 kB
+2026-10-12T13:03:57.5911244Z dist/assets/TextArea-BphTLPin.js                    1.78 kB │ gzip:     0.72 kB
+2026-10-12T13:03:57.5912086Z dist/assets/Tilt-lG1_67Kc.js                        1.79 kB │ gzip:     0.79 kB
+2026-10-12T13:03:57.5912907Z dist/assets/Marquee-yiHwF2MX.js                     1.79 kB │ gzip:     0.82 kB
+2026-10-12T13:03:57.5913757Z dist/assets/Typography-DjN3Cg8T.js                  1.81 kB │ gzip:     0.78 kB
+2026-10-12T13:03:57.5914615Z dist/assets/ProgressBar-OqMOs-Vx.js                 1.83 kB │ gzip:     0.94 kB
+2026-10-12T13:03:57.5915673Z dist/assets/pascaligo-DtZ0uQbO.js                   1.86 kB │ gzip:     0.87 kB
+2026-10-12T13:03:57.5916544Z dist/assets/FloatingPanel-vnh3t54L.js               1.86 kB │ gzip:     0.88 kB
+2026-10-12T13:03:57.5917409Z dist/assets/InputBase-C9x5p2D8.js                   1.90 kB │ gzip:     0.77 kB
+2026-10-12T13:03:57.5918247Z dist/assets/StatTile-hH9icy0M.js                    1.94 kB │ gzip:     0.85 kB
+2026-10-12T13:03:57.5919073Z dist/assets/example--vKivSow.js                     1.95 kB │ gzip:     1.02 kB
+2026-10-12T13:03:57.5920073Z dist/assets/xml-CrLwicfJ.js                         1.96 kB │ gzip:     0.75 kB
+2026-10-12T13:03:57.5920914Z dist/assets/Chip-VEbd1LNh.js                        1.98 kB │ gzip:     0.85 kB
+2026-10-12T13:03:57.5921932Z dist/assets/lua-Cyyb5UIc.js                         1.99 kB │ gzip:     0.89 kB
+2026-10-12T13:03:57.5922776Z dist/assets/cameligo-Bf6VGUru.js                    2.05 kB │ gzip:     0.92 kB
+2026-10-12T13:03:57.5923619Z dist/assets/NumberField-DqlpQh7s.js                 2.07 kB │ gzip:     0.85 kB
+2026-10-12T13:03:57.5924467Z dist/assets/graphql-BxJiqAUM.js                     2.12 kB │ gzip:     0.99 kB
+2026-10-12T13:03:57.5925299Z dist/assets/Reveal-CkDN7IpK.js                      2.15 kB │ gzip:     0.95 kB
+2026-10-12T13:03:57.5926144Z dist/assets/artwork-BsoHQQjG.js                     2.22 kB │ gzip:     1.04 kB
+2026-10-12T13:03:57.5926991Z dist/assets/TextField-GVdtC72D.js                   2.26 kB │ gzip:     0.86 kB
+2026-10-12T13:03:57.5927855Z dist/assets/objective-c-BDtDVThU.js                 2.26 kB │ gzip:     1.02 kB
+2026-10-12T13:03:57.5928701Z dist/assets/shared-C8nYvjst.js                      2.30 kB │ gzip:     0.90 kB
+2026-10-12T13:03:57.5929588Z dist/assets/lexon-OrD6JF1K.js                       2.30 kB │ gzip:     0.89 kB
+2026-10-12T13:03:57.5930108Z dist/assets/KaraokeLyrics-PE2fC0RD.js               2.30 kB │ gzip:     1.06 kB
+2026-10-12T13:03:57.5930637Z dist/assets/useArtwork-DbCxbctF.js                  2.34 kB │ gzip:     1.05 kB
+2026-10-12T13:03:57.5931143Z dist/assets/bicep-CFznDFnq.js                       2.40 kB │ gzip:     0.93 kB
+2026-10-12T13:03:57.5931636Z dist/assets/sparql-CJmd_6j2.js                      2.41 kB │ gzip:     1.12 kB
+2026-10-12T13:03:57.5932129Z dist/assets/MediaCard-DE9GFB_m.js                   2.43 kB │ gzip:     1.08 kB
+2026-10-12T13:03:57.5932624Z dist/assets/mips-CiqrrVzr.js                        2.44 kB │ gzip:     1.03 kB
+2026-10-12T13:03:57.5933117Z dist/assets/audio-BG2CVWYi.js                       2.45 kB │ gzip:     0.94 kB
+2026-10-12T13:03:57.5934010Z dist/assets/go-acbASCJo.js                          2.52 kB │ gzip:     1.11 kB
+2026-10-12T13:03:57.5934498Z dist/assets/sophia-CnS9iZB_.js                      2.63 kB │ gzip:     1.17 kB
+2026-10-12T13:03:57.5934998Z dist/assets/example-AKhWq6Iq.js                     2.65 kB │ gzip:     1.14 kB
+2026-10-12T13:03:57.5935500Z dist/assets/typespec-Btyra-wh.js                    2.66 kB │ gzip:     1.05 kB
+2026-10-12T13:03:57.5935998Z dist/assets/Stack-Bbn9u1Rg.js                       2.67 kB │ gzip:     0.98 kB
+2026-10-12T13:03:57.5936482Z dist/assets/m3-B8OfTtLu.js                          2.68 kB │ gzip:     1.28 kB
+2026-10-12T13:03:57.5936977Z dist/assets/ChipField-bjdkqzYO.js                   2.71 kB │ gzip:     1.04 kB
+2026-10-12T13:03:57.5937494Z dist/assets/WaveDecoration-B66xN51Z.js              2.72 kB │ gzip:     1.27 kB
+2026-10-12T13:03:57.5938094Z dist/assets/fsharp-PahG7c26.js                      2.85 kB │ gzip:     1.28 kB
+2026-10-12T13:03:57.5938593Z dist/assets/pascal-vHIfCaH5.js                      2.86 kB │ gzip:     1.36 kB
+2026-10-12T13:03:57.5939091Z dist/assets/example-zDuquL3x.js                     2.89 kB │ gzip:     1.54 kB
+2026-10-12T13:03:57.5939685Z dist/assets/Illustration-C9ABur5o.js                2.90 kB │ gzip:     1.32 kB
+2026-10-12T13:03:57.5940199Z dist/assets/Planet-STJmJp8W.js                      2.91 kB │ gzip:     1.17 kB
+2026-10-12T13:03:57.5940717Z dist/assets/useWaveformPeaks-B9DON6ih.js            2.92 kB │ gzip:     1.30 kB
+2026-10-12T13:03:57.5941232Z dist/assets/shell-DiJ1NA_G.js                       2.94 kB │ gzip:     1.16 kB
+2026-10-12T13:03:57.5941725Z dist/assets/shared-gEIIGNtH.js                      2.94 kB │ gzip:     1.21 kB
+2026-10-12T13:03:57.5942216Z dist/assets/r-j7ic8hl3.js                           2.99 kB │ gzip:     1.24 kB
+2026-10-12T13:03:57.5942702Z dist/assets/qsharp-Bw9ernYp.js                      3.05 kB │ gzip:     1.37 kB
+2026-10-12T13:03:57.5943193Z dist/assets/java-CXBNlu9o.js                        3.08 kB │ gzip:     1.36 kB
+2026-10-12T13:03:57.5943688Z dist/assets/cssMode-QR8L5LS6.js                     3.10 kB │ gzip:     1.17 kB
+2026-10-12T13:03:57.5944197Z dist/assets/powershell-COWaemsV.js                  3.13 kB │ gzip:     1.34 kB
+2026-10-12T13:03:57.5944696Z dist/assets/cypher-cTPe9QuQ.js                      3.25 kB │ gzip:     1.40 kB
+2026-10-12T13:03:57.5945190Z dist/assets/kotlin-s7OhZKlX.js                      3.26 kB │ gzip:     1.43 kB
+2026-10-12T13:03:57.5945721Z dist/assets/redis-Bu5POkcn.js                       3.42 kB │ gzip:     1.44 kB
+2026-10-12T13:03:57.5946216Z dist/assets/tcl-Dm6ycUr_.js                         3.43 kB │ gzip:     1.33 kB
+2026-10-12T13:03:57.5946791Z dist/assets/coffee-Bd8akH9Z.js                      3.45 kB │ gzip:     1.26 kB
+2026-10-12T13:03:57.5947287Z dist/assets/hcl-DtV1sZF8.js                         3.45 kB │ gzip:     1.45 kB
+2026-10-12T13:03:57.5947773Z dist/assets/liquid-c3jZYMfw.js                      3.50 kB │ gzip:     1.44 kB
+2026-10-12T13:03:57.5948270Z dist/assets/htmlMode-CQjgoBv1.js                    3.56 kB │ gzip:     1.28 kB
+2026-10-12T13:03:57.5948762Z dist/assets/yaml-BSu_9Upf.js                        3.57 kB │ gzip:     1.30 kB
+2026-10-12T13:03:57.5949315Z dist/assets/i18n-BI2tZ22w.js                        3.65 kB │ gzip:     1.44 kB
+2026-10-12T13:03:57.5949812Z dist/assets/markdown-BFxVWTOG.js                    3.65 kB │ gzip:     1.35 kB
+2026-10-12T13:03:57.5950474Z dist/assets/Grid-DFIn7O7m.js                        3.65 kB │ gzip:     1.25 kB
+2026-10-12T13:03:57.5950966Z dist/assets/noise-4Io7Hass.js                       3.70 kB │ gzip:     1.64 kB
+2026-10-12T13:03:57.5951464Z dist/assets/python-Ld3baWU0.js                      3.75 kB │ gzip:     1.46 kB
+2026-10-12T13:03:57.5951968Z dist/assets/Sparkline-BFdCfx-t.js                   3.75 kB │ gzip:     1.61 kB
+2026-10-12T13:03:57.5952486Z dist/assets/restructuredtext-CqXO7rUv.js            3.76 kB │ gzip:     1.33 kB
+2026-10-12T13:03:57.5952997Z dist/assets/less-9HpZscsL.js                        3.76 kB │ gzip:     1.38 kB
+2026-10-12T13:03:57.5953489Z dist/assets/apex-DNDY2TF8.js                        3.82 kB │ gzip:     1.73 kB
+2026-10-12T13:03:57.5953981Z dist/assets/Tooltip-CgC_noIv.js                     3.96 kB │ gzip:     1.50 kB
+2026-10-12T13:03:57.5954471Z dist/assets/rust-BzKRNQWT.js                        4.02 kB │ gzip:     1.79 kB
+2026-10-12T13:03:57.5954970Z dist/assets/ThemePicker-GXZF55QH.js                 4.09 kB │ gzip:     1.65 kB
+2026-10-12T13:03:57.5955470Z dist/assets/dart-BOtBlQCF.js                        4.11 kB │ gzip:     1.61 kB
+2026-10-12T13:03:57.5955979Z dist/assets/PianoKeyboard-E_Wrt-Jr.js               4.20 kB │ gzip:     1.82 kB
+2026-10-12T13:03:57.5956498Z dist/assets/ThemeProvider-Bj6-kCgr.js               4.26 kB │ gzip:     1.71 kB
+2026-10-12T13:03:57.5957001Z dist/assets/mdx-IXyRLl9r.js                         4.35 kB │ gzip:     1.23 kB
+2026-10-12T13:03:57.5957495Z dist/assets/TagInput-Bu5srYsq.js                    4.35 kB │ gzip:     1.70 kB
+2026-10-12T13:03:57.5957989Z dist/assets/css-DdJfP1eB.js                         4.37 kB │ gzip:     1.34 kB
+2026-10-12T13:03:57.5958485Z dist/assets/FilePicker-CPRIMu37.js                  4.38 kB │ gzip:     1.53 kB
+2026-10-12T13:03:57.5959342Z dist/assets/csharp-Co3qMtFm.js                      4.39 kB │ gzip:     1.69 kB
+2026-10-12T13:03:57.5959986Z dist/assets/Tabs-BBzcZwM0.js                        4.46 kB │ gzip:     1.70 kB
+2026-10-12T13:03:57.5960481Z dist/assets/Router-DrCX2UAG.js                      4.47 kB │ gzip:     1.61 kB
+2026-10-12T13:03:57.5960971Z dist/assets/html-DsCJnD8J.js                        4.56 kB │ gzip:     1.18 kB
+2026-10-12T13:03:57.5961457Z dist/assets/pug-8SOpv6rk.js                         4.69 kB │ gzip:     1.61 kB
+2026-10-12T13:03:57.5961945Z dist/assets/msdax-DmeGPVcC.js                       4.77 kB │ gzip:     1.91 kB
+2026-10-12T13:03:57.5962444Z dist/assets/typescript-D__BANu_.js                  4.93 kB │ gzip:     1.96 kB
+2026-10-12T13:03:57.5963034Z dist/assets/FormFields-BTTaKWBn.js                  4.95 kB │ gzip:     1.69 kB
+2026-10-12T13:03:57.5963535Z dist/assets/swift-Bqt4WxQ4.js                       5.03 kB │ gzip:     2.06 kB
+2026-10-12T13:03:57.5964022Z dist/assets/cpp-BbWJElDN.js                         5.16 kB │ gzip:     2.06 kB
+2026-10-12T13:03:57.5964506Z dist/assets/ecl-BEgZUVRK.js                         5.20 kB │ gzip:     2.19 kB
+2026-10-12T13:03:57.5965001Z dist/assets/HostSeal-CNoDN6BZ.js                    5.25 kB │ gzip:     2.15 kB
+2026-10-12T13:03:57.5965507Z dist/assets/LevelMeter-CYU-N0-K.js                  5.26 kB │ gzip:     2.21 kB
+2026-10-12T13:03:57.5966008Z dist/assets/Spectrum-C7ZPp8gH.js                    5.35 kB │ gzip:     2.05 kB
+2026-10-12T13:03:57.5966505Z dist/assets/vb-Db0cS2oM.js                          5.65 kB │ gzip:     2.02 kB
+2026-10-12T13:03:57.5966990Z dist/assets/base-xWFjz1ZR.js                        5.72 kB │ gzip:     2.35 kB
+2026-10-12T13:03:57.5967488Z dist/assets/AudioPlayer-C9A5uD30.js                 5.74 kB │ gzip:     1.89 kB
+2026-10-12T13:03:57.5967986Z dist/assets/twig-Csy3S7wG.js                        5.84 kB │ gzip:     1.49 kB
+2026-10-12T13:03:57.5968479Z dist/assets/Popover-BMXENZRC.js                     5.91 kB │ gzip:     1.95 kB
+2026-10-12T13:03:57.5968985Z dist/assets/DatabaseArt-IptH4JFr.js                 6.12 kB │ gzip:     1.67 kB
+2026-10-12T13:03:57.5969639Z dist/assets/scss-CBJaRo0y.js                        6.27 kB │ gzip:     1.71 kB
+2026-10-12T13:03:57.5970153Z dist/assets/Autocomplete-PYS-MqLp.js                6.32 kB │ gzip:     2.09 kB
+2026-10-12T13:03:57.5970664Z dist/assets/handlebars-CgPTU2kR.js                  6.32 kB │ gzip:     1.39 kB
+2026-10-12T13:03:57.5971170Z dist/assets/Dialog-Dpz2Uc23.js                      6.34 kB │ gzip:     2.14 kB
+2026-10-12T13:03:57.5971761Z dist/assets/internal-COjk3vQ7.js                    6.72 kB │ gzip:     2.47 kB
+2026-10-12T13:03:57.5972256Z dist/assets/Form-CafvhpO7.js                        6.93 kB │ gzip:     2.13 kB
+2026-10-12T13:03:57.5972755Z dist/assets/hooks-D-BgtTYH.js                       6.99 kB │ gzip:     2.30 kB
+2026-10-12T13:03:57.5973250Z dist/assets/julia-cl7-CwDS.js                       7.01 kB │ gzip:     2.62 kB
+2026-10-12T13:03:57.5973743Z dist/assets/scala-D9hQfWCl.js                       7.18 kB │ gzip:     2.06 kB
+2026-10-12T13:03:57.5974232Z dist/assets/wgsl-DumH7NcR.js                        7.19 kB │ gzip:     2.71 kB
+2026-10-12T13:03:57.5974731Z dist/assets/DatePicker-kuOnWead.js                  7.23 kB │ gzip:     2.58 kB
+2026-10-12T13:03:57.5975228Z dist/assets/st-CHwy0fLd.js                          7.26 kB │ gzip:     2.21 kB
+2026-10-12T13:03:57.5975803Z dist/assets/MelodyRoll-2IGR83Mw.js                  7.29 kB │ gzip:     2.78 kB
+2026-10-12T13:03:57.5976313Z dist/assets/ColorPicker-WGNAyUz5.js                 7.34 kB │ gzip:     2.51 kB
+2026-10-12T13:03:57.5976827Z dist/assets/systemverilog-Bs9z6M-B.js               7.47 kB │ gzip:     2.72 kB
+2026-10-12T13:03:57.5977335Z dist/assets/ServerArt-B3QbVThZ.js                   7.51 kB │ gzip:     2.05 kB
+2026-10-12T13:03:57.5977838Z dist/assets/global.d-BAGuXEwT.js                    7.56 kB │ gzip:     1.24 kB
+2026-10-12T13:03:57.5978361Z dist/assets/postiats-CocnycG-.js                    7.72 kB │ gzip:     2.40 kB
+2026-10-12T13:03:57.5978864Z dist/assets/php-BBUBE1dy.js                         7.89 kB │ gzip:     2.04 kB
+2026-10-12T13:03:57.5979531Z dist/assets/perl-Ub6l9XKa.js                        8.12 kB │ gzip:     3.10 kB
+2026-10-12T13:03:57.5980031Z dist/assets/Landscape-47JMUN06.js                   8.17 kB │ gzip:     2.95 kB
+2026-10-12T13:03:57.5980530Z dist/assets/razor-B8jEtz5q.js                       8.32 kB │ gzip:     2.08 kB
+2026-10-12T13:03:57.5981021Z dist/assets/ruby-zBfavPgS.js                        8.37 kB │ gzip:     2.54 kB
+2026-10-12T13:03:57.5981529Z dist/assets/themeConfig-bFB55r-P.js                 8.41 kB │ gzip:     3.32 kB
+2026-10-12T13:03:57.5982044Z dist/assets/PeoplePicker-CTs9_C--.js                8.42 kB │ gzip:     2.97 kB
+2026-10-12T13:03:57.5982550Z dist/assets/Select-Bby3646x.js                      8.57 kB │ gzip:     3.00 kB
+2026-10-12T13:03:57.5983043Z dist/assets/shared-CVT5QI4u.js                      8.83 kB │ gzip:     2.98 kB
+2026-10-12T13:03:57.5983541Z dist/assets/protobuf-Brw8urJB.js                    8.91 kB │ gzip:     2.04 kB
+2026-10-12T13:03:57.5984054Z dist/assets/useFloatingPanel-DISDUYhX.js            8.97 kB │ gzip:     2.93 kB
+2026-10-12T13:03:57.5984659Z dist/assets/clojure-Dnu-v4kV.js                     9.51 kB │ gzip:     3.57 kB
+2026-10-12T13:03:57.5985160Z dist/assets/elixir-BkW5O-1t.js                     10.12 kB │ gzip:     2.50 kB
+2026-10-12T13:03:57.5985651Z dist/assets/sql-ClhHkBeG.js                        10.16 kB │ gzip:     3.79 kB
+2026-10-12T13:03:57.5986140Z dist/assets/shared-ChLynYju.js                     10.38 kB │ gzip:     3.23 kB
+2026-10-12T13:03:57.5986632Z dist/assets/mysql-C_tMU-Nz.js                      11.14 kB │ gzip:     4.01 kB
+2026-10-12T13:03:57.5987118Z dist/assets/Loader-DJoGKTHz.js                     11.50 kB │ gzip:     3.64 kB
+2026-10-12T13:03:57.5987616Z dist/assets/redshift-Bs9aos_-.js                   11.66 kB │ gzip:     4.30 kB
+2026-10-12T13:03:57.5988197Z dist/assets/ThemeEditor-BcX_ecRn.js                11.80 kB │ gzip:     3.84 kB
+2026-10-12T13:03:57.5988697Z dist/assets/jsonMode-BQ_u-aSM.js                   12.48 kB │ gzip:     4.58 kB
+2026-10-12T13:03:57.5989260Z dist/assets/NeonWaves-BZ0vlRVp.js                  12.77 kB │ gzip:     4.69 kB
+2026-10-12T13:03:57.5989757Z dist/assets/index-2-SPK-lC.js                      12.85 kB │ gzip:     2.42 kB
+2026-10-12T13:03:57.5990254Z dist/assets/PianoRoll-C7vPX0ZH.js                  12.87 kB │ gzip:     3.89 kB
+2026-10-12T13:03:57.5990760Z dist/assets/Waveform-CBJq2N_R.js                   13.13 kB │ gzip:     4.36 kB
+2026-10-12T13:03:57.5991259Z dist/assets/pgsql-BlNEE0v7.js                      13.33 kB │ gzip:     4.46 kB
+2026-10-12T13:03:57.5991750Z dist/assets/abap-DLDM7-KI.js                       14.03 kB │ gzip:     5.27 kB
+2026-10-12T13:03:57.5992295Z dist/assets/QuantumFieldExperience-CH5omoPz.js     14.13 kB │ gzip:     4.43 kB
+2026-10-12T13:03:57.5992820Z dist/assets/renderer-D4r7i5e6.js                   14.97 kB │ gzip:     4.85 kB
+2026-10-12T13:03:57.5993329Z dist/assets/freemarker2-zn_IY4RI.js                15.62 kB │ gzip:     3.92 kB
+2026-10-12T13:03:57.5993838Z dist/assets/powerquery-tScXyioY.js                 16.80 kB │ gzip:     4.81 kB
+2026-10-12T13:03:57.5994352Z dist/assets/QuantumField-BJS6D2xB.js               17.57 kB │ gzip:     5.76 kB
+2026-10-12T13:03:57.5994858Z dist/assets/solidity-Db0IVjzk.js                   18.46 kB │ gzip:     4.41 kB
+2026-10-12T13:03:57.5995358Z dist/assets/messages-DnNoGkcm.js                   18.77 kB │ gzip:     6.15 kB
+2026-10-12T13:03:57.5995855Z dist/assets/tsMode-DJiklmmZ.js                     22.05 kB │ gzip:     6.26 kB
+2026-10-12T13:03:57.5996354Z dist/assets/LiveEditor-D0rQuyZ5.js                 27.51 kB │ gzip:     6.38 kB
+2026-10-12T13:03:57.5996958Z dist/assets/lspLanguageFeatures-CYE8iFpU.js        28.68 kB │ gzip:     7.73 kB
+2026-10-12T13:03:57.5997494Z dist/assets/LoaderGenerator-aUZfGPKR.js            29.66 kB │ gzip:     8.69 kB
+2026-10-12T13:03:57.5998008Z dist/assets/RotaryKnob-BDt1mr-u.js                 35.14 kB │ gzip:     9.70 kB
+2026-10-12T13:03:57.5998517Z dist/assets/DataTable-WpofoL57.js                  54.41 kB │ gzip:    13.86 kB
+2026-10-12T13:03:57.5999019Z dist/assets/sources-C7W-S_BW.js                   155.43 kB │ gzip:    37.38 kB
+2026-10-12T13:03:57.5999582Z dist/assets/index.d-C4NZ-ViY.js                   183.45 kB │ gzip:    34.06 kB
+2026-10-12T13:03:57.6000080Z dist/assets/index-sKVIvFC2.js                     206.06 kB │ gzip:    48.04 kB
+2026-10-12T13:03:57.6000572Z dist/assets/index.d-DbnXNTka.js                   901.77 kB │ gzip:    85.69 kB
+2026-10-12T13:03:57.6001149Z dist/assets/index-CEqOv0dV.js                   1,139.25 kB │ gzip:   289.92 kB
+2026-10-12T13:03:57.6001649Z dist/assets/index-BquAE4rB.js                   4,078.59 kB │ gzip: 1,049.28 kB
+2026-10-12T13:03:57.6001975Z ✓ built in 24.86s
+2026-10-12T13:03:57.9423887Z 
+2026-10-12T13:03:57.9424486Z > @neo-ui-kit/react@1.0.1 test
+2026-10-12T13:03:57.9424792Z > vitest run
+2026-10-12T13:03:57.9424903Z 
+2026-10-12T13:03:58.0993933Z 
+2026-10-12T13:03:58.0996538Z  RUN  v3.2.7 /home/runner/work/adui/adui/packages/ui
+2026-10-12T13:03:58.0996904Z 
+2026-10-12T13:03:58.6781385Z stderr | tests/data-responsiveness.test.tsx > popover positioning > coalesces nested scroll events into one layout measurement per frame
+2026-10-12T13:03:58.6782322Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:03:58.6782654Z 
+2026-10-12T13:03:58.7097529Z stderr | tests/data-responsiveness.test.tsx > data controls keep unrelated interactions cheap > does not re-key, re-sort or rescan filters on selection, resize and pagination
+2026-10-12T13:03:58.7099093Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:03:58.7099614Z 
+2026-10-12T13:03:58.7166028Z stderr | tests/data-responsiveness.test.tsx > data controls keep unrelated interactions cheap > invalidates cached sort and filter options when data or columns change
+2026-10-12T13:03:58.7168043Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:03:58.7177803Z 
+2026-10-12T13:03:58.7944168Z stderr | tests/data-responsiveness.test.tsx > data controls keep unrelated interactions cheap > keeps sort cycling, search and group collapse coherent after caching the data pipeline
+2026-10-12T13:03:58.7945255Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:03:58.7945515Z 
+2026-10-12T13:03:58.7945986Z stderr | tests/data-responsiveness.test.tsx > data controls keep unrelated interactions cheap > does not recompute all group aggregates when selecting a row
+2026-10-12T13:03:58.7946578Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:03:58.7946781Z 
+2026-10-12T13:03:58.7947663Z stderr | tests/data-responsiveness.test.tsx > data controls keep unrelated interactions cheap > clears a large matching selection in linear work and preserves selections outside the result
+2026-10-12T13:03:58.7949250Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:03:58.7949513Z 
+2026-10-12T13:03:58.7950012Z stderr | tests/data-responsiveness.test.tsx > data controls keep unrelated interactions cheap > does not rescan every selected row when an unrelated table prop changes
+2026-10-12T13:03:58.7950610Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:03:58.7950807Z 
+2026-10-12T13:03:58.7951236Z stderr | tests/data-responsiveness.test.tsx > data controls keep unrelated interactions cheap > does not scan the dataset for an empty selection
+2026-10-12T13:03:58.7951788Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:03:58.7951994Z 
+2026-10-12T13:03:58.7952442Z stderr | tests/data-responsiveness.test.tsx > data controls keep unrelated interactions cheap > stops selection checks once partial selection is known
+2026-10-12T13:03:58.7953148Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:03:58.7953345Z 
+2026-10-12T13:03:58.7953864Z stderr | tests/data-responsiveness.test.tsx > data controls keep unrelated interactions cheap > collects automatic text filter values once instead of sorting the same column twice
+2026-10-12T13:03:58.7954479Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:03:58.7954678Z 
+2026-10-12T13:03:58.8001006Z stderr | tests/data-responsiveness.test.tsx > data controls keep unrelated interactions cheap > collects high-cardinality filter suggestions only when the editor opens
+2026-10-12T13:03:58.8002188Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:03:58.8002684Z 
+2026-10-12T13:03:58.8323619Z stderr | tests/data-responsiveness.test.tsx > data controls keep unrelated interactions cheap > does not construct custom Select option content while its list is closed
+2026-10-12T13:03:58.8327569Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:03:58.8358244Z 
+2026-10-12T13:03:59.0010421Z stderr | tests/data-responsiveness.test.tsx > data controls keep unrelated interactions cheap > reuses keys of unchanged Select options while searching a large list
+2026-10-12T13:03:59.0011288Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:03:59.0011501Z 
+2026-10-12T13:03:59.0019968Z stderr | tests/data-responsiveness.test.tsx > data controls keep unrelated interactions cheap > does not scan every Autocomplete label again when only the active option changes
+2026-10-12T13:03:59.0021141Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:03:59.0021459Z 
+2026-10-12T13:03:59.0022224Z stderr | tests/data-responsiveness.test.tsx > data controls keep unrelated interactions cheap > reuses normalized Autocomplete options while the query changes
+2026-10-12T13:03:59.0023176Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:03:59.0023479Z 
+2026-10-12T13:03:59.0024262Z stderr | tests/data-responsiveness.test.tsx > remote people search stays responsive > stops loading when a pending query is cleared and ignores its late answer
+2026-10-12T13:03:59.0025208Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:03:59.0025936Z 
+2026-10-12T13:03:59.0026772Z stderr | tests/data-responsiveness.test.tsx > remote people search stays responsive > does not restart an unchanged query merely because the search callback was recreated
+2026-10-12T13:03:59.0027762Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:03:59.0028070Z 
+2026-10-12T13:03:59.0028806Z stderr | tests/data-responsiveness.test.tsx > remote people search stays responsive > cancels superseded searches and never shows their stale results
+2026-10-12T13:03:59.0029885Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:03:59.0030215Z 
+2026-10-12T13:03:59.0181565Z stderr | tests/data-responsiveness.test.tsx > DataTable scalable and controlled views > keeps 10,000 virtual rows bounded, coalesces scroll and cancels pending work on unmount
+2026-10-12T13:03:59.0185550Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:03:59.0185897Z 
+2026-10-12T13:03:59.0235880Z stderr | tests/data-responsiveness.test.tsx > DataTable scalable and controlled views > uses server rows unchanged and emits controlled query, multi-sort and pagination without fetching
+2026-10-12T13:03:59.0245479Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:03:59.0246379Z 
+2026-10-12T13:03:59.0289546Z stderr | tests/data-responsiveness.test.tsx > DataTable scalable and controlled views > sorts by priority, Shift appends/cycles one key and normal clicks replace the sorting
+2026-10-12T13:03:59.0292763Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:03:59.0293293Z 
+2026-10-12T13:03:59.0310692Z stderr | tests/data-responsiveness.test.tsx > DataTable scalable and controlled views > normalizes duplicate/stale column order and pin ids and keeps sticky offsets aligned after resize
+2026-10-12T13:03:59.0317247Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:03:59.0317925Z 
+2026-10-12T13:03:59.0405812Z stderr | tests/data-responsiveness.test.tsx > DataTable scalable and controlled views > offers accessible column reorder and pin actions and never hides the final current column after columns change
+2026-10-12T13:03:59.0407741Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:03:59.0422536Z 
+2026-10-12T13:03:59.0446752Z stderr | tests/data-responsiveness.test.tsx > DataTable scalable and controlled views > mounts details only when expanded, preserves identity across sorting and isolates actions from row clicks
+2026-10-12T13:03:59.0448037Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:03:59.0448476Z 
+2026-10-12T13:03:59.0580515Z stderr | tests/data-responsiveness.test.tsx > DataTable scalable and controlled views > ignores invalid legacy pageSize 0 instead of losing all rows
+2026-10-12T13:03:59.0601019Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:03:59.0627232Z 
+2026-10-12T13:03:59.0628386Z stderr | tests/data-responsiveness.test.tsx > DataTable scalable and controlled views > ignores invalid legacy pageSize -5 instead of losing all rows
+2026-10-12T13:03:59.0629912Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:03:59.0630427Z 
+2026-10-12T13:03:59.0631315Z stderr | tests/data-responsiveness.test.tsx > DataTable scalable and controlled views > ignores invalid legacy pageSize NaN instead of losing all rows
+2026-10-12T13:03:59.0632782Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:03:59.0633357Z 
+2026-10-12T13:03:59.0634310Z stderr | tests/data-responsiveness.test.tsx > DataTable scalable and controlled views > ignores invalid legacy pageSize Infinity instead of losing all rows
+2026-10-12T13:03:59.0635575Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:03:59.0636055Z 
+2026-10-12T13:03:59.0636935Z stderr | tests/data-responsiveness.test.tsx > DataTable scalable and controlled views > ignores invalid legacy pageSize 0.5 instead of losing all rows
+2026-10-12T13:03:59.0638133Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:03:59.0638610Z 
+2026-10-12T13:03:59.0639691Z stderr | tests/data-responsiveness.test.tsx > DataTable scalable and controlled views > renders a column value getter when no custom renderer is supplied
+2026-10-12T13:03:59.0640904Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:03:59.0641622Z 
+2026-10-12T13:03:59.0670183Z stderr | tests/data-responsiveness.test.tsx > DataTable scalable and controlled views > retains an unknown-total server page and selection while loading or replacing its rows
+2026-10-12T13:03:59.0671525Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:03:59.0672005Z 
+2026-10-12T13:03:59.0739995Z stderr | tests/data-responsiveness.test.tsx > DataTable scalable and controlled views > measures tall virtual rows without losing first measurements and anchors the visible row
+2026-10-12T13:03:59.0750081Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:03:59.0769732Z 
+2026-10-12T13:03:59.0777266Z stderr | tests/data-responsiveness.test.tsx > DataTable scalable and controlled views > virtualizes group headers and expanded details, then clamps a distant scroll after collapse
+2026-10-12T13:03:59.0778576Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:03:59.0779062Z 
+2026-10-12T13:03:59.0810146Z stderr | tests/data-responsiveness.test.tsx > DataTable scalable and controlled views > supports Shift multi-sort by default but respects a legacy controlled single sort
+2026-10-12T13:03:59.0811392Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:03:59.0811904Z 
+2026-10-12T13:03:59.0818544Z stderr | tests/data-responsiveness.test.tsx > DataTable scalable and controlled views > does not activate a clickable row from interactive custom cell content
+2026-10-12T13:03:59.0819987Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:03:59.0820464Z 
+2026-10-12T13:03:59.0838247Z stderr | tests/data-responsiveness.test.tsx > DataTable scalable and controlled views > keeps the controlled page-size choice and resets query without sending a zero server limit
+2026-10-12T13:03:59.0840665Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:03:59.0841202Z 
+2026-10-12T13:03:59.0848950Z stderr | tests/data-responsiveness.test.tsx > DataTable scalable and controlled views > reserves a usable action slot and includes it in right pin offsets
+2026-10-12T13:03:59.0850293Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:03:59.0851127Z 
+2026-10-12T13:03:59.0906335Z stderr | tests/data-responsiveness.test.tsx > DataTable scalable and controlled views > collapses a real virtual group and unmounts its expanded detail panel
+2026-10-12T13:03:59.0907591Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:03:59.0908090Z 
+2026-10-12T13:03:59.0918484Z stderr | tests/data-responsiveness.test.tsx > DataTable scalable and controlled views > does not fabricate a server page total or an empty-page range
+2026-10-12T13:03:59.0919843Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:03:59.0920311Z 
+2026-10-12T13:03:59.0946639Z stderr | tests/data-responsiveness.test.tsx > DataTable scalable and controlled views > reuses numeric collation instead of constructing locale comparison options per row pair
+2026-10-12T13:03:59.0947884Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:03:59.0948355Z 
+2026-10-12T13:03:59.0962263Z stderr | tests/data-responsiveness.test.tsx > DataTable scalable and controlled views > keeps a pinned mobile table scrollable and gives virtual group/detail rows consecutive indices
+2026-10-12T13:03:59.0963600Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:03:59.0964081Z 
+2026-10-12T13:03:59.0969897Z stderr | tests/data-responsiveness.test.tsx > DataTable scalable and controlled views > keeps equal NaN values stable in both sort directions
+2026-10-12T13:03:59.0971031Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:03:59.0971501Z 
+2026-10-12T13:03:59.0998616Z  ✓ tests/data-responsiveness.test.tsx (43 tests) 432ms
+2026-10-12T13:03:59.5180485Z stderr | tests/QuantumField.test.tsx > reveals detailed effect sliders only when their effect is enabled
+2026-10-12T13:03:59.5187409Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:03:59.5189567Z 
+2026-10-12T13:03:59.5511161Z stderr | tests/QuantumField.test.tsx > routes the kit player and labelled icon actions to the iframe
+2026-10-12T13:03:59.5543499Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:03:59.5572714Z 
+2026-10-12T13:03:59.5573745Z stderr | tests/QuantumField.test.tsx > updates playback without rerendering the field settings
+2026-10-12T13:03:59.5575044Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:03:59.5575521Z 
+2026-10-12T13:03:59.5810732Z stderr | tests/base.test.ts > locale isolation > does not change the imperative default locale during provider rendering
+2026-10-12T13:03:59.5826750Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:03:59.5829702Z 
+2026-10-12T13:03:59.5859903Z stderr | tests/base.test.ts > locale isolation > keeps per-provider custom messages out of other roots
+2026-10-12T13:03:59.5861211Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:03:59.5863539Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:03:59.5864114Z 
+2026-10-12T13:03:59.5886999Z stderr | tests/base.test.ts > locale isolation > keeps translated components bound to their own provider after another root renders
+2026-10-12T13:03:59.5888129Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:03:59.5889411Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:03:59.5889883Z 
+2026-10-12T13:03:59.5953296Z stderr | tests/QuantumField.test.tsx > updates and removes the particle cap without recreating the visualizer
+2026-10-12T13:03:59.5954803Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:03:59.5955340Z 
+2026-10-12T13:03:59.6436271Z stderr | tests/base.test.ts > site settings updates > ignores a patch that does not change any setting
+2026-10-12T13:03:59.6450201Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:03:59.6450709Z 
+2026-10-12T13:03:59.6813705Z stderr | tests/QuantumField.test.tsx > sends field and audio controls to the restored visualizer
+2026-10-12T13:03:59.6840439Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:03:59.6841129Z 
+2026-10-12T13:03:59.6841908Z stderr | tests/base.test.ts > DataTable tools > bounds text filter suggestions after searching the entire column
+2026-10-12T13:03:59.6844265Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:03:59.6845853Z 
+2026-10-12T13:03:59.6905634Z stderr | tests/QuantumField.test.tsx > connects the canvas to the renderer and sizes it before the first visible frame
+2026-10-12T13:03:59.6906726Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:03:59.6907231Z 
+2026-10-12T13:03:59.6913864Z stderr | tests/base.test.ts > DataTable tools > bounds values filter suggestions after searching the entire column
+2026-10-12T13:03:59.6914885Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:03:59.6915395Z 
+2026-10-12T13:03:59.6928080Z stderr | tests/QuantumField.test.tsx > connects an explicitly supplied microphone stream and releases its audio graph
+2026-10-12T13:03:59.6931704Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:03:59.6932220Z 
+2026-10-12T13:03:59.7158284Z stderr | tests/QuantumField.test.tsx > repaints when an ancestor changes CSS theme tokens without React rerender
+2026-10-12T13:03:59.7166770Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:03:59.7167295Z 
+2026-10-12T13:03:59.7181375Z stderr | tests/QuantumField.test.tsx > does not paint an offscreen field until it enters the viewport
+2026-10-12T13:03:59.7184358Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:03:59.7184948Z 
+2026-10-12T13:03:59.7430986Z stderr | tests/QuantumField.test.tsx > wires wheel zoom to the interactive component without scrolling the page
+2026-10-12T13:03:59.7460302Z  ✓ tests/QuantumField.test.tsx (61 tests) 287ms
+2026-10-12T13:03:59.7500281Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:03:59.7530124Z 
+2026-10-12T13:03:59.7973664Z  ✓ tests/base.test.ts (81 tests) 237ms
+2026-10-12T13:04:00.1149350Z stderr | tests/motion-idle.test.ts > wakes CSS-only loops when the shared offscreen hook reveals their block
+2026-10-12T13:04:00.1180479Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.1201116Z 
+2026-10-12T13:04:00.1280560Z stderr | tests/motion-idle.test.ts > disconnects the shared CSS visibility observer after its last boundary unmounts
+2026-10-12T13:04:00.1281743Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.1309347Z 
+2026-10-12T13:04:00.1842725Z stderr | tests/motion-idle.test.ts > lets native page scrolling handle wheel notches over 'a fitted container'
+2026-10-12T13:04:00.1843723Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.1866093Z 
+2026-10-12T13:04:00.1946196Z stderr | tests/motion-idle.test.ts > lets native page scrolling handle wheel notches over 'visible overflow'
+2026-10-12T13:04:00.1976829Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.1993512Z 
+2026-10-12T13:04:00.2024200Z stderr | tests/motion-idle.test.ts > lets native page scrolling handle wheel notches over 'hidden overflow'
+2026-10-12T13:04:00.2070174Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.2106435Z 
+2026-10-12T13:04:00.2138083Z stderr | tests/motion-idle.test.ts > lets native page scrolling handle wheel notches over 'clipped overflow'
+2026-10-12T13:04:00.2149999Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.2176058Z 
+2026-10-12T13:04:00.2240364Z stderr | tests/motion-idle.test.ts > smooths a scrollable container without taking wheel input from inner areas, gestures or trackpads
+2026-10-12T13:04:00.2250326Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.2251196Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.2251661Z 
+2026-10-12T13:04:00.2337170Z stderr | tests/motion-idle.test.ts > leaves wheel input with an inner interactive canvas that already consumed it
+2026-10-12T13:04:00.2360405Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.2394893Z 
+2026-10-12T13:04:00.2395563Z  ✓ tests/motion-idle.test.ts (31 tests) 244ms
+2026-10-12T13:04:00.2814542Z stderr | tests/EdgeCases.test.tsx > forms under overlapping work > does not rerender merely to reinitialize unchanged mount values
+2026-10-12T13:04:00.2844239Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.2844982Z 
+2026-10-12T13:04:00.2849059Z stderr | tests/EdgeCases.test.tsx > forms under overlapping work > ignores setting a field to its existing value
+2026-10-12T13:04:00.2850480Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.2851033Z 
+2026-10-12T13:04:00.2851967Z stderr | tests/EdgeCases.test.tsx > forms under overlapping work > does not rerender when an already touched field is blurred again
+2026-10-12T13:04:00.2853110Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.2853680Z 
+2026-10-12T13:04:00.2870477Z stderr | tests/EdgeCases.test.tsx > forms under overlapping work > does not serialize stable initial values again for an unrelated form-state change
+2026-10-12T13:04:00.2932254Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.2972558Z 
+2026-10-12T13:04:00.3010714Z stderr | tests/EdgeCases.test.tsx > forms under overlapping work > updates one nested field without cloning unrelated values
+2026-10-12T13:04:00.3030036Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.3053917Z 
+2026-10-12T13:04:00.3054835Z stderr | tests/EdgeCases.test.tsx > forms under overlapping work > does not rerender an unchanged sibling field
+2026-10-12T13:04:00.3056316Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.3056922Z 
+2026-10-12T13:04:00.3057683Z stderr | tests/EdgeCases.test.tsx > forms under overlapping work > ignores a stale asynchronous validation result
+2026-10-12T13:04:00.3058699Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.3059333Z 
+2026-10-12T13:04:00.3060074Z stderr | tests/EdgeCases.test.tsx > forms under overlapping work > does not run concurrent submissions twice
+2026-10-12T13:04:00.3061052Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.3061536Z 
+2026-10-12T13:04:00.3230842Z stderr | tests/EdgeCases.test.tsx > input edge cases > rejects an impossible month typed into the calendar field
+2026-10-12T13:04:00.3252339Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.3279391Z 
+2026-10-12T13:04:00.3290910Z stderr | tests/EdgeCases.test.tsx > input edge cases > does not let a disabled autocomplete change its value through an adornment
+2026-10-12T13:04:00.3292116Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.3292978Z 
+2026-10-12T13:04:00.3301356Z stderr | tests/EdgeCases.test.tsx > input edge cases > rejects a dropped file outside the accepted types and ignores a disabled drop
+2026-10-12T13:04:00.3302816Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.3303410Z 
+2026-10-12T13:04:00.3346476Z stderr | tests/EdgeCases.test.tsx > input edge cases > never accepts non-image files for an avatar even with a broad accept prop
+2026-10-12T13:04:00.3350238Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.3350771Z 
+2026-10-12T13:04:00.3398516Z stderr | tests/EdgeCases.test.tsx > input edge cases > deduplicates case-insensitive tags within one pasted batch
+2026-10-12T13:04:00.3428973Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.3429491Z 
+2026-10-12T13:04:00.3430103Z stderr | tests/EdgeCases.test.tsx > input edge cases > shows a failed remote people search without an unhandled rejection
+2026-10-12T13:04:00.3430923Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.3431237Z 
+2026-10-12T13:04:00.3490427Z stderr | tests/EdgeCases.test.tsx > audio playback follows the real media > moves playing state and volume to a replacement source
+2026-10-12T13:04:00.3510480Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.3511082Z 
+2026-10-12T13:04:00.3685441Z stderr | tests/EdgeCases.test.tsx > audio playback follows the real media > does not claim to be playing when the browser refuses playback
+2026-10-12T13:04:00.3686701Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.3687242Z 
+2026-10-12T13:04:00.3785386Z stderr | tests/EdgeCases.test.tsx > waveform decoding remains cooperative > yields while measuring a long recording instead of blocking every input task
+2026-10-12T13:04:00.3786753Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.3787363Z 
+2026-10-12T13:04:00.5181530Z stderr | tests/EdgeCases.test.tsx > waveform decoding remains cooperative > aborts the previous waveform request when its source changes or unmounts
+2026-10-12T13:04:00.5183055Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.5197579Z 
+2026-10-12T13:04:00.5198707Z stderr | tests/EdgeCases.test.tsx > waveform decoding remains cooperative > includes the end of a recording when its sample count is not divisible by bins
+2026-10-12T13:04:00.5200150Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.5200647Z 
+2026-10-12T13:04:00.5201508Z stderr | tests/EdgeCases.test.tsx > waveform decoding remains cooperative > normalizes an invalid bin count before measuring the recording
+2026-10-12T13:04:00.5202625Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.5203131Z 
+2026-10-12T13:04:00.5204433Z stderr | tests/EdgeCases.test.tsx > routing, persistence and row identity > recovers from a saved theme with an unknown name
+2026-10-12T13:04:00.5205817Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.5206357Z 
+2026-10-12T13:04:00.5284960Z stderr | tests/EdgeCases.test.tsx > routing, persistence and row identity > keeps selection attached to a row when the parent reorders rows
+2026-10-12T13:04:00.5300771Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.5304814Z 
+2026-10-12T13:04:00.5346483Z stderr | tests/EdgeCases.test.tsx > routing, persistence and row identity > keeps id-less row identity and does not collide with an explicit id
+2026-10-12T13:04:00.5347505Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.5347879Z 
+2026-10-12T13:04:00.5467410Z  ✓ tests/EdgeCases.test.tsx (26 tests) 274ms
+2026-10-12T13:04:00.5534126Z stderr | tests/LoaderGenerator.test.ts > LoaderGenerator > encodes processed images asynchronously and bounds the loader image working size
+2026-10-12T13:04:00.5543199Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.5543818Z 
+2026-10-12T13:04:00.5830573Z stderr | tests/LoaderGenerator.test.ts > LoaderGenerator > ignores encoded images when the generator closed during encoding
+2026-10-12T13:04:00.5850113Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.5855193Z 
+2026-10-12T13:04:00.6311536Z stderr | tests/LoaderGenerator.test.ts > LoaderGenerator > does not process a pending upload after the generator unmounts
+2026-10-12T13:04:00.6322683Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.6326520Z 
+2026-10-12T13:04:00.7395516Z  ✓ tests/LoaderGenerator.test.ts (23 tests) 211ms
+2026-10-12T13:04:00.7892974Z stderr | tests/ControlsContracts.test.tsx > control and form type boundaries > updates array paths without mutating initial values or replacing siblings
+2026-10-12T13:04:00.7893686Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.7893902Z 
+2026-10-12T13:04:00.7952695Z stderr | tests/ControlsContracts.test.tsx > field public host attributes > 'Select' keeps its rendered value connected to an explicit accessible name
+2026-10-12T13:04:00.7953959Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.7962816Z 
+2026-10-12T13:04:00.7963942Z stderr | tests/ControlsContracts.test.tsx > field public host attributes > 'ColorPicker' keeps its rendered value connected to an explicit accessible name
+2026-10-12T13:04:00.7965297Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.7965836Z 
+2026-10-12T13:04:00.7978960Z stderr | tests/ControlsContracts.test.tsx > field public host attributes > 'Select' preserves layout style, a unique public id and data hooks
+2026-10-12T13:04:00.8012998Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.8013642Z 
+2026-10-12T13:04:00.8014594Z stderr | tests/ControlsContracts.test.tsx > field public host attributes > 'TextField' preserves layout style, a unique public id and data hooks
+2026-10-12T13:04:00.8017927Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.8018522Z 
+2026-10-12T13:04:00.8020002Z stderr | tests/ControlsContracts.test.tsx > field public host attributes > 'TextArea' preserves layout style, a unique public id and data hooks
+2026-10-12T13:04:00.8021187Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.8021701Z 
+2026-10-12T13:04:00.8022634Z stderr | tests/ControlsContracts.test.tsx > field public host attributes > 'Autocomplete' preserves layout style, a unique public id and data hooks
+2026-10-12T13:04:00.8023764Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.8024271Z 
+2026-10-12T13:04:00.8029654Z stderr | tests/ControlsContracts.test.tsx > field public host attributes > 'NumberField' preserves layout style, a unique public id and data hooks
+2026-10-12T13:04:00.8030837Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.8031355Z 
+2026-10-12T13:04:00.8041533Z stderr | tests/ControlsContracts.test.tsx > field public host attributes > 'Slider' preserves layout style, a unique public id and data hooks
+2026-10-12T13:04:00.8043030Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.8043591Z 
+2026-10-12T13:04:00.8181674Z stderr | tests/ControlsContracts.test.tsx > field public host attributes > 'DatePicker' preserves layout style, a unique public id and data hooks
+2026-10-12T13:04:00.8183291Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.8183857Z 
+2026-10-12T13:04:00.8197641Z stderr | tests/ControlsContracts.test.tsx > field public host attributes > 'ColorPicker' preserves layout style, a unique public id and data hooks
+2026-10-12T13:04:00.8206479Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.8207032Z 
+2026-10-12T13:04:00.8215316Z stderr | tests/ControlsContracts.test.tsx > field public host attributes > 'TagInput' preserves layout style, a unique public id and data hooks
+2026-10-12T13:04:00.8216399Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.8216888Z 
+2026-10-12T13:04:00.8241408Z stderr | tests/ControlsContracts.test.tsx > field public host attributes > 'PeoplePicker' preserves layout style, a unique public id and data hooks
+2026-10-12T13:04:00.8247679Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.8248499Z 
+2026-10-12T13:04:00.8249552Z stderr | tests/ControlsContracts.test.tsx > field public host attributes > 'Select' applies an explicit accessible label to the actual control
+2026-10-12T13:04:00.8250519Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.8250946Z 
+2026-10-12T13:04:00.8251721Z stderr | tests/ControlsContracts.test.tsx > field public host attributes > 'TextField' applies an explicit accessible label to the actual control
+2026-10-12T13:04:00.8295421Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.8300177Z 
+2026-10-12T13:04:00.8301250Z stderr | tests/ControlsContracts.test.tsx > field public host attributes > 'TextArea' applies an explicit accessible label to the actual control
+2026-10-12T13:04:00.8302352Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.8302851Z 
+2026-10-12T13:04:00.8303814Z stderr | tests/ControlsContracts.test.tsx > field public host attributes > 'Autocomplete' applies an explicit accessible label to the actual control
+2026-10-12T13:04:00.8305318Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.8305822Z 
+2026-10-12T13:04:00.8306740Z stderr | tests/ControlsContracts.test.tsx > field public host attributes > 'NumberField' applies an explicit accessible label to the actual control
+2026-10-12T13:04:00.8308022Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.8308513Z 
+2026-10-12T13:04:00.8309559Z stderr | tests/ControlsContracts.test.tsx > field public host attributes > 'Slider' applies an explicit accessible label to the actual control
+2026-10-12T13:04:00.8310813Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.8311477Z 
+2026-10-12T13:04:00.8312451Z stderr | tests/ControlsContracts.test.tsx > field public host attributes > 'DatePicker' applies an explicit accessible label to the actual control
+2026-10-12T13:04:00.8313607Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.8314202Z 
+2026-10-12T13:04:00.8315113Z stderr | tests/ControlsContracts.test.tsx > field public host attributes > 'ColorPicker' applies an explicit accessible label to the actual control
+2026-10-12T13:04:00.8316370Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.8316846Z 
+2026-10-12T13:04:00.8317878Z stderr | tests/ControlsContracts.test.tsx > field public host attributes > 'TagInput' applies an explicit accessible label to the actual control
+2026-10-12T13:04:00.8328591Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.8331524Z 
+2026-10-12T13:04:00.8332524Z stderr | tests/ControlsContracts.test.tsx > field public host attributes > 'PeoplePicker' applies an explicit accessible label to the actual control
+2026-10-12T13:04:00.8333654Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.8334111Z 
+2026-10-12T13:04:00.8344705Z stderr | tests/ControlsContracts.test.tsx > field public host attributes > 'Select' honors external label and description references
+2026-10-12T13:04:00.8345893Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.8346399Z 
+2026-10-12T13:04:00.8363957Z stderr | tests/ControlsContracts.test.tsx > field public host attributes > 'TextField' honors external label and description references
+2026-10-12T13:04:00.8380038Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.8413244Z 
+2026-10-12T13:04:00.8422585Z stderr | tests/ControlsContracts.test.tsx > field public host attributes > 'TextArea' honors external label and description references
+2026-10-12T13:04:00.8423779Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.8424289Z 
+2026-10-12T13:04:00.8425161Z stderr | tests/ControlsContracts.test.tsx > field public host attributes > 'Autocomplete' honors external label and description references
+2026-10-12T13:04:00.8426284Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.8426783Z 
+2026-10-12T13:04:00.8427693Z stderr | tests/ControlsContracts.test.tsx > field public host attributes > 'NumberField' honors external label and description references
+2026-10-12T13:04:00.8428791Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.8429445Z 
+2026-10-12T13:04:00.8430504Z stderr | tests/ControlsContracts.test.tsx > field public host attributes > 'Slider' honors external label and description references
+2026-10-12T13:04:00.8431619Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.8432113Z 
+2026-10-12T13:04:00.8445439Z stderr | tests/ControlsContracts.test.tsx > field public host attributes > 'DatePicker' honors external label and description references
+2026-10-12T13:04:00.8451917Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.8452520Z 
+2026-10-12T13:04:00.8453884Z stderr | tests/ControlsContracts.test.tsx > field public host attributes > 'ColorPicker' honors external label and description references
+2026-10-12T13:04:00.8454925Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.8455407Z 
+2026-10-12T13:04:00.8471883Z stderr | tests/ControlsContracts.test.tsx > field public host attributes > 'TagInput' honors external label and description references
+2026-10-12T13:04:00.8472964Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.8473465Z 
+2026-10-12T13:04:00.8481209Z stderr | tests/ControlsContracts.test.tsx > field public host attributes > 'PeoplePicker' honors external label and description references
+2026-10-12T13:04:00.8485193Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.8485765Z 
+2026-10-12T13:04:00.8505843Z stderr | tests/ControlsContracts.test.tsx > autocomplete interaction contract > reopens all choices when the selected value differs from its label
+2026-10-12T13:04:00.8508303Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.8508872Z 
+2026-10-12T13:04:00.8539518Z stderr | tests/ControlsContracts.test.tsx > autocomplete interaction contract > gives each open list a unique id and announces the active option
+2026-10-12T13:04:00.8541961Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.8542540Z 
+2026-10-12T13:04:00.8570942Z stderr | tests/ControlsContracts.test.tsx > autocomplete interaction contract > preserves native focus/key handlers and respects preventDefault
+2026-10-12T13:04:00.8581839Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.8602351Z 
+2026-10-12T13:04:00.8610614Z stderr | tests/ControlsContracts.test.tsx > autocomplete interaction contract > closes an open list when disabled changes
+2026-10-12T13:04:00.8611697Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.8612235Z 
+2026-10-12T13:04:00.8639489Z stderr | tests/ControlsContracts.test.tsx > autocomplete interaction contract > closes an open list when readOnly changes
+2026-10-12T13:04:00.8640645Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.8641145Z 
+2026-10-12T13:04:00.8642049Z stderr | tests/ControlsContracts.test.tsx > autocomplete interaction contract > does not select a suggestion with Enter during IME composition
+2026-10-12T13:04:00.8643156Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.8643643Z 
+2026-10-12T13:04:00.8668813Z stderr | tests/ControlsContracts.test.tsx > autocomplete interaction contract > keeps popup options out of the tab order and closes on Tab
+2026-10-12T13:04:00.8700151Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.8700516Z 
+2026-10-12T13:04:00.8701280Z stderr | tests/ControlsContracts.test.tsx > autocomplete interaction contract > recovers the active option when an externally supplied list shrinks
+2026-10-12T13:04:00.8702228Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.8702548Z 
+2026-10-12T13:04:00.8711380Z stderr | tests/ControlsContracts.test.tsx > field semantics and native contracts > includes ColorPicker's visible color value in its accessible name
+2026-10-12T13:04:00.8712562Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.8713190Z 
+2026-10-12T13:04:00.8763357Z stderr | tests/ControlsContracts.test.tsx > field semantics and native contracts > includes the visible avatar owner in the file chooser name
+2026-10-12T13:04:00.8764509Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.8765022Z 
+2026-10-12T13:04:00.8770743Z stderr | tests/ControlsContracts.test.tsx > field semantics and native contracts > preserves the public inline style on 'TextField'
+2026-10-12T13:04:00.8771841Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.8772355Z 
+2026-10-12T13:04:00.8775568Z stderr | tests/ControlsContracts.test.tsx > field semantics and native contracts > preserves the public inline style on 'TextArea'
+2026-10-12T13:04:00.8776662Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.8777172Z 
+2026-10-12T13:04:00.8783313Z stderr | tests/ControlsContracts.test.tsx > field semantics and native contracts > preserves the public inline style on 'Autocomplete'
+2026-10-12T13:04:00.8784403Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.8784897Z 
+2026-10-12T13:04:00.8792521Z stderr | tests/ControlsContracts.test.tsx > field semantics and native contracts > exposes the error state to assistive technology on 'TextArea'
+2026-10-12T13:04:00.8793639Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.8794144Z 
+2026-10-12T13:04:00.8808320Z stderr | tests/ControlsContracts.test.tsx > field semantics and native contracts > exposes the error state to assistive technology on 'Autocomplete'
+2026-10-12T13:04:00.8810605Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.8811151Z 
+2026-10-12T13:04:00.8812043Z stderr | tests/ControlsContracts.test.tsx > field semantics and native contracts > exposes the error state to assistive technology on undefined
+2026-10-12T13:04:00.8813184Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.8813687Z 
+2026-10-12T13:04:00.8835027Z stderr | tests/ControlsContracts.test.tsx > field semantics and native contracts > exposes the error state to assistive technology on 'DatePicker'
+2026-10-12T13:04:00.8850762Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.8851438Z 
+2026-10-12T13:04:00.8880397Z stderr | tests/ControlsContracts.test.tsx > field semantics and native contracts > puts an explicitly supplied accessible name on the actual control 'Checkbox'
+2026-10-12T13:04:00.8881632Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.8889838Z 
+2026-10-12T13:04:00.8890967Z stderr | tests/ControlsContracts.test.tsx > field semantics and native contracts > puts an explicitly supplied accessible name on the actual control 'Switch'
+2026-10-12T13:04:00.8893228Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.8893721Z 
+2026-10-12T13:04:00.8894563Z stderr | tests/ControlsContracts.test.tsx > field semantics and native contracts > prevents further input at the maximum in 'TagInput'
+2026-10-12T13:04:00.8895631Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.8896102Z 
+2026-10-12T13:04:00.8896910Z stderr | tests/ControlsContracts.test.tsx > field semantics and native contracts > prevents further input at the maximum in 'PeoplePicker'
+2026-10-12T13:04:00.8897970Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.8898468Z 
+2026-10-12T13:04:00.8899483Z stderr | tests/ControlsContracts.test.tsx > field semantics and native contracts > does not commit a tag during IME composition
+2026-10-12T13:04:00.8901752Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.8902222Z 
+2026-10-12T13:04:00.8903162Z stderr | tests/ControlsContracts.test.tsx > field semantics and native contracts > honours multiple=false for dropped files just as for the native picker
+2026-10-12T13:04:00.8904290Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.8904748Z 
+2026-10-12T13:04:00.8922684Z stderr | tests/ControlsContracts.test.tsx > field semantics and native contracts > makes every inline color input inert when disabled
+2026-10-12T13:04:00.8933745Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.8935024Z 
+2026-10-12T13:04:00.9241481Z stderr | tests/ControlsContracts.test.tsx > field semantics and native contracts > selects the first enabled option by default
+2026-10-12T13:04:00.9260178Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.9260540Z 
+2026-10-12T13:04:00.9261303Z stderr | tests/ControlsContracts.test.tsx > field semantics and native contracts > does not submit a disabled select's hidden value
+2026-10-12T13:04:00.9262707Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.9263045Z 
+2026-10-12T13:04:00.9263749Z stderr | tests/ControlsContracts.test.tsx > field semantics and native contracts > puts required validation on the visible date input
+2026-10-12T13:04:00.9264660Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.9264982Z 
+2026-10-12T13:04:00.9265772Z stderr | tests/ControlsContracts.test.tsx > form error paths and invalid submission > reads flat dotted-path errors produced by the public FormErrors contract
+2026-10-12T13:04:00.9266738Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.9267060Z 
+2026-10-12T13:04:00.9267831Z stderr | tests/ControlsContracts.test.tsx > form error paths and invalid submission > reveals invalid fields after submit without requiring a prior blur
+2026-10-12T13:04:00.9268827Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.9269317Z 
+2026-10-12T13:04:00.9270446Z stderr | tests/ControlsContracts.test.tsx > dynamic control state and field associations > announces a numeric saturation and textual brightness for ColorPicker's color plane
+2026-10-12T13:04:00.9271504Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.9271838Z 
+2026-10-12T13:04:00.9272682Z stderr | tests/ControlsContracts.test.tsx > dynamic control state and field associations > exposes calendar buttons as a labelled group instead of an incomplete ARIA grid
+2026-10-12T13:04:00.9273643Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.9273973Z 
+2026-10-12T13:04:00.9274711Z stderr | tests/ControlsContracts.test.tsx > dynamic control state and field associations > gives theme choices radio semantics and one tab stop (undefined)
+2026-10-12T13:04:00.9275645Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.9275948Z 
+2026-10-12T13:04:00.9276739Z stderr | tests/ControlsContracts.test.tsx > dynamic control state and field associations > gives theme choices radio semantics and one tab stop ({ value: 'ruby', label: 'Ruby' })
+2026-10-12T13:04:00.9277742Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.9278034Z 
+2026-10-12T13:04:00.9278738Z stderr | tests/ControlsContracts.test.tsx > dynamic control state and field associations > includes a native validation control when Select is required
+2026-10-12T13:04:00.9279766Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.9280088Z 
+2026-10-12T13:04:00.9280939Z stderr | tests/ControlsContracts.test.tsx > dynamic control state and field associations > associates 'TextField''s label with its control when an adornment button precedes it
+2026-10-12T13:04:00.9281910Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.9282202Z 
+2026-10-12T13:04:00.9282987Z stderr | tests/ControlsContracts.test.tsx > dynamic control state and field associations > associates 'TextArea''s label with its control when an adornment button precedes it
+2026-10-12T13:04:00.9283893Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.9284122Z 
+2026-10-12T13:04:00.9284624Z stderr | tests/ControlsContracts.test.tsx > dynamic control state and field associations > associates 'Autocomplete''s label with its control when an adornment button precedes it
+2026-10-12T13:04:00.9285467Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.9285779Z 
+2026-10-12T13:04:00.9286549Z stderr | tests/ControlsContracts.test.tsx > dynamic control state and field associations > does not offer actionable tag suggestions after becoming disabled
+2026-10-12T13:04:00.9287513Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.9287840Z 
+2026-10-12T13:04:00.9288621Z stderr | tests/ControlsContracts.test.tsx > dynamic control state and field associations > announces PeoplePicker's active option and closes the popup on Tab
+2026-10-12T13:04:00.9290014Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.9290351Z 
+2026-10-12T13:04:00.9327822Z stderr | tests/ControlsContracts.test.tsx > dynamic control state and field associations > does not choose a person during IME composition
+2026-10-12T13:04:00.9328744Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.9329284Z 
+2026-10-12T13:04:00.9329736Z stderr | tests/ControlsContracts.test.tsx > dynamic control state and field associations > closes 'Select' when it becomes disabled
+2026-10-12T13:04:00.9330265Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.9330464Z 
+2026-10-12T13:04:00.9351857Z stderr | tests/ControlsContracts.test.tsx > dynamic control state and field associations > closes 'DatePicker' when it becomes disabled
+2026-10-12T13:04:00.9352501Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.9352701Z 
+2026-10-12T13:04:00.9380128Z stderr | tests/ControlsContracts.test.tsx > dynamic control state and field associations > closes 'ColorPicker' when it becomes disabled
+2026-10-12T13:04:00.9390285Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.9390787Z 
+2026-10-12T13:04:00.9398714Z stderr | tests/ControlsContracts.test.tsx > dynamic control state and field associations > closes 'PeoplePicker' when it becomes disabled
+2026-10-12T13:04:00.9400063Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.9400566Z 
+2026-10-12T13:04:00.9423905Z stderr | tests/ControlsContracts.test.tsx > dynamic control state and field associations > updates Select's built-in options when its provider language changes
+2026-10-12T13:04:00.9429701Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.9430211Z 
+2026-10-12T13:04:00.9499619Z stderr | tests/ControlsContracts.test.tsx > dynamic control state and field associations > allows DatePicker to switch from an explicit to an inherited locale without changing hook order
+2026-10-12T13:04:00.9500961Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.9501481Z 
+2026-10-12T13:04:00.9590891Z stderr | tests/ControlsContracts.test.tsx > dynamic control state and field associations > keeps NumberField step=any finite when using its step buttons
+2026-10-12T13:04:00.9592063Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.9592497Z 
+2026-10-12T13:04:00.9593726Z stderr | tests/ControlsContracts.test.tsx > controls family verification > keeps controlled and uncontrolled 'TextField' values in sync
+2026-10-12T13:04:00.9602694Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.9603269Z 
+2026-10-12T13:04:00.9604157Z stderr | tests/ControlsContracts.test.tsx > controls family verification > keeps controlled and uncontrolled 'TextArea' values in sync
+2026-10-12T13:04:00.9605246Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.9605705Z 
+2026-10-12T13:04:00.9606588Z stderr | tests/ControlsContracts.test.tsx > controls family verification > keeps controlled and uncontrolled 'Autocomplete' values in sync
+2026-10-12T13:04:00.9607686Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.9608141Z 
+2026-10-12T13:04:00.9608988Z stderr | tests/ControlsContracts.test.tsx > controls family verification > keeps 'Checkbox' checked state controlled and reports one request
+2026-10-12T13:04:00.9610288Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.9610772Z 
+2026-10-12T13:04:00.9611868Z stderr | tests/ControlsContracts.test.tsx > controls family verification > keeps 'Switch' checked state controlled and reports one request
+2026-10-12T13:04:00.9613579Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.9614504Z 
+2026-10-12T13:04:00.9615335Z stderr | tests/ControlsContracts.test.tsx > controls family verification > lets a prevented ToggleButton click cancel its state change
+2026-10-12T13:04:00.9616423Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.9616887Z 
+2026-10-12T13:04:00.9617663Z stderr | tests/ControlsContracts.test.tsx > controls family verification > keeps loading Button disabled and announced busy
+2026-10-12T13:04:00.9618699Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.9619419Z 
+2026-10-12T13:04:00.9620821Z stderr | tests/ControlsContracts.test.tsx > controls family verification > clamps Slider's painted and native value to the same range
+2026-10-12T13:04:00.9621891Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.9622365Z 
+2026-10-12T13:04:00.9623136Z stderr | tests/ControlsContracts.test.tsx > controls family verification > keeps chip selection and removal separate
+2026-10-12T13:04:00.9624225Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.9624882Z 
+2026-10-12T13:04:00.9625858Z stderr | tests/ControlsContracts.test.tsx > controls family verification > preserves native external link navigation attributes
+2026-10-12T13:04:00.9626915Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.9627388Z 
+2026-10-12T13:04:00.9628248Z stderr | tests/ControlsContracts.test.tsx > controls family verification > runs a SplitButton menu action exactly once and closes the menu
+2026-10-12T13:04:00.9629446Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.9629922Z 
+2026-10-12T13:04:00.9691283Z stderr | tests/ControlsContracts.test.tsx > controls family verification > accepts a valid leap date inside the range and rejects an out-of-range date
+2026-10-12T13:04:00.9699862Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:00.9700428Z 
+2026-10-12T13:04:00.9715738Z  ✓ tests/ControlsContracts.test.tsx (94 tests) 1341ms
+2026-10-12T13:04:00.9720275Z    ✓ control and form type boundaries > rejects malformed SplitButton menu items and keeps path helper inputs checked  1085ms
+2026-10-12T13:04:01.3246622Z stderr | tests/RouterRerenders.test.tsx > translates the Router example with the selected documentation locale
+2026-10-12T13:04:01.3247569Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:01.3247925Z 
+2026-10-12T13:04:01.3300748Z stderr | tests/RouterRerenders.test.tsx > documents a usable Router with interactive home and dynamic room routes
+2026-10-12T13:04:01.3301671Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:01.3302015Z 
+2026-10-12T13:04:01.3339549Z stderr | tests/RouterRerenders.test.tsx > Router render stability > updates hash routes immediately without native snapshots by default
+2026-10-12T13:04:01.3340416Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:01.3340686Z 
+2026-10-12T13:04:01.3354456Z stderr | tests/RouterRerenders.test.tsx > Router render stability > updates history routes immediately without native snapshots by default
+2026-10-12T13:04:01.3355614Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:01.3357558Z 
+2026-10-12T13:04:01.3376848Z stderr | tests/RouterRerenders.test.tsx > Router render stability > applies a changed transition preference to the location subscription
+2026-10-12T13:04:01.3378312Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:01.3378679Z 
+2026-10-12T13:04:01.3387816Z stderr | tests/RouterRerenders.test.tsx > Router render stability > does not restore an older history route after a deferred transition completes
+2026-10-12T13:04:01.3388829Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:01.3389319Z 
+2026-10-12T13:04:01.3396323Z stderr | tests/RouterRerenders.test.tsx > Router render stability > uses the latest hash when several transition callbacks are deferred
+2026-10-12T13:04:01.3397542Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:01.3398092Z 
+2026-10-12T13:04:01.3410005Z stderr | tests/RouterRerenders.test.tsx > Router render stability > does not rerender the current page when only the motion preference changes
+2026-10-12T13:04:01.3411103Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:01.3413158Z 
+2026-10-12T13:04:01.3421764Z stderr | tests/RouterRerenders.test.tsx > motion preference > shares one media listener and one DOM observer across all motion consumers
+2026-10-12T13:04:01.3422864Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:01.3423376Z 
+2026-10-12T13:04:01.3438771Z stderr | tests/RouterRerenders.test.tsx > motion preference > updates subscribers only when the effective setting changes
+2026-10-12T13:04:01.3442153Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:01.3442507Z 
+2026-10-12T13:04:01.3450222Z  ✓ tests/RouterRerenders.test.tsx (10 tests) 30ms
+2026-10-12T13:04:01.3770993Z stderr | tests/ReleaseContracts.test.tsx > theme and feedback contracts > keeps rejected controlled requests based on the actual prop while accumulating uncontrolled updates
+2026-10-12T13:04:01.3772628Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:01.3773048Z 
+2026-10-12T13:04:01.6237629Z stderr | tests/QuantumFieldPointer.test.tsx > unsubscribes the native field from the shared animation clock while offscreen
+2026-10-12T13:04:01.6238581Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:01.6242437Z 
+2026-10-12T13:04:01.6285555Z stderr | tests/QuantumFieldPointer.test.tsx > disturbs only particles near the pointer without rotating the entire scene on hover
+2026-10-12T13:04:01.6287000Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:01.6287645Z 
+2026-10-12T13:04:01.6297781Z stderr | tests/QuantumFieldPointer.test.tsx > keeps the GPU renderer and geometry when only live audio, speed, or palette changes
+2026-10-12T13:04:01.6304095Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:01.6304819Z 
+2026-10-12T13:04:01.6317442Z stderr | tests/QuantumFieldPointer.test.tsx > keeps automatic quality conservative on an eight-thread machine while allowing explicit high quality
+2026-10-12T13:04:01.6330889Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:01.6331928Z 
+2026-10-12T13:04:01.6332553Z stderr | tests/QuantumFieldPointer.test.tsx > does not redraw or reset the viewport for unchanged ResizeObserver notifications
+2026-10-12T13:04:01.6333400Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:01.6333721Z 
+2026-10-12T13:04:01.6355359Z stderr | tests/QuantumFieldPointer.test.tsx > observes ancestor theme tokens only when the instance has no explicit palette
+2026-10-12T13:04:01.6356437Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:01.6356887Z 
+2026-10-12T13:04:01.6367880Z stderr | tests/QuantumFieldPointer.test.tsx > repaints a paused field on visibility return when its palette changed offscreen
+2026-10-12T13:04:01.6369073Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:01.6369935Z 
+2026-10-12T13:04:01.6381930Z  ✓ tests/QuantumFieldPointer.test.tsx (7 tests) 28ms
+2026-10-12T13:04:01.9232340Z stderr | tests/LayersContracts.test.tsx > keeps the default MessageBar warning tone and its icon consistent
+2026-10-12T13:04:01.9256980Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:01.9259559Z 
+2026-10-12T13:04:01.9310495Z stderr | tests/LayersContracts.test.tsx > layer ownership > Escape dismisses only the most recently opened popover
+2026-10-12T13:04:01.9349987Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:01.9350599Z 
+2026-10-12T13:04:01.9383332Z stderr | tests/LayersContracts.test.tsx > layer ownership > outside presses dismiss only the top layer
+2026-10-12T13:04:01.9402375Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:01.9439291Z 
+2026-10-12T13:04:01.9440225Z stderr | tests/LayersContracts.test.tsx > layer ownership > respects an Escape already handled by a child
+2026-10-12T13:04:01.9470044Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:01.9470464Z 
+2026-10-12T13:04:01.9471245Z stderr | tests/LayersContracts.test.tsx > layer ownership > updates positioning props without reopening or refocusing
+2026-10-12T13:04:01.9471904Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:01.9472227Z 
+2026-10-12T13:04:01.9472778Z stderr | tests/LayersContracts.test.tsx > layer ownership > repositions when the anchor or content resizes and removes pending work on unmount
+2026-10-12T13:04:01.9473450Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:01.9473774Z 
+2026-10-12T13:04:01.9474283Z stderr | tests/LayersContracts.test.tsx > layer ownership > keeps the popup above a software keyboard's visual viewport boundary
+2026-10-12T13:04:01.9474929Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:01.9475253Z 
+2026-10-12T13:04:01.9475822Z stderr | tests/LayersContracts.test.tsx > layer ownership > positions by untransformed dimensions while the entry animation scales the panel
+2026-10-12T13:04:01.9476488Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:01.9476932Z 
+2026-10-12T13:04:01.9477439Z stderr | tests/LayersContracts.test.tsx > layer ownership > Menu preserves the consumer key handler and its prevented navigation
+2026-10-12T13:04:01.9478078Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:01.9478395Z 
+2026-10-12T13:04:01.9490819Z stderr | tests/LayersContracts.test.tsx > Tooltip descriptions and motion > keeps the trigger's existing accessible description
+2026-10-12T13:04:01.9491850Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:01.9492380Z 
+2026-10-12T13:04:01.9529553Z stderr | tests/LayersContracts.test.tsx > Tooltip descriptions and motion > follows scrolling while visible
+2026-10-12T13:04:01.9530180Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:01.9530559Z 
+2026-10-12T13:04:01.9552689Z stderr | tests/LayersContracts.test.tsx > Tooltip descriptions and motion > does not hide a keyboard-focused description merely when the pointer leaves
+2026-10-12T13:04:01.9553392Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:01.9553763Z 
+2026-10-12T13:04:01.9657756Z stderr | tests/LayersContracts.test.tsx > Dialog asynchronous confirmation > ignores a pending confirmation after the dialog closes and reopens
+2026-10-12T13:04:01.9658477Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:01.9658873Z 
+2026-10-12T13:04:01.9697537Z stderr | tests/LayersContracts.test.tsx > Dialog asynchronous confirmation > does not submit twice before the pending render commits
+2026-10-12T13:04:01.9700379Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:01.9700826Z 
+2026-10-12T13:04:01.9752903Z  ✓ tests/LayersContracts.test.tsx (14 tests) 66ms
+2026-10-12T13:04:02.4502095Z stderr | tests/FeedbackContracts.test.tsx > secondary feedback contract audit > keeps visible DataTable example action text in explicit accessible names
+2026-10-12T13:04:02.4503483Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:02.4504015Z 
+2026-10-12T13:04:02.4606557Z stderr | tests/FeedbackContracts.test.tsx > secondary feedback contract audit > restores a controlled details element when the parent refuses a toggle
+2026-10-12T13:04:02.4608110Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:02.4608648Z 
+2026-10-12T13:04:02.4609712Z stderr | tests/FeedbackContracts.test.tsx > secondary feedback contract audit > keeps SignalBars finite for bars=Infinity
+2026-10-12T13:04:02.4624033Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:02.4624593Z 
+2026-10-12T13:04:02.4631292Z stderr | tests/FeedbackContracts.test.tsx > secondary feedback contract audit > keeps SignalBars finite for bars=NaN
+2026-10-12T13:04:02.4632325Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:02.4632810Z 
+2026-10-12T13:04:02.4633616Z stderr | tests/FeedbackContracts.test.tsx > secondary feedback contract audit > keeps SignalBars finite for bars=-1
+2026-10-12T13:04:02.4634657Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:02.4635140Z 
+2026-10-12T13:04:02.4636272Z stderr | tests/FeedbackContracts.test.tsx > secondary feedback contract audit > announces the same clamped signal strength that it paints
+2026-10-12T13:04:02.4637369Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:02.4637861Z 
+2026-10-12T13:04:02.4714644Z stderr | tests/FeedbackContracts.test.tsx > secondary feedback contract audit > emits one pagination change when selecting a controlled page size
+2026-10-12T13:04:02.4715811Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:02.4719351Z 
+2026-10-12T13:04:02.4739070Z stderr | tests/FeedbackContracts.test.tsx > secondary feedback contract audit > includes visible detail rows in the table's announced row count
+2026-10-12T13:04:02.4740327Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:02.4740850Z 
+2026-10-12T13:04:02.4753487Z stderr | tests/FeedbackContracts.test.tsx > secondary feedback contract audit > announces a column resize separator's explicit initial width
+2026-10-12T13:04:02.4755733Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:02.4756299Z 
+2026-10-12T13:04:02.4840267Z stderr | tests/FeedbackContracts.test.tsx > secondary feedback contract audit > fills a changing pinned container and disconnects its width observer
+2026-10-12T13:04:02.4841549Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:02.4842120Z 
+2026-10-12T13:04:02.4862903Z stderr | tests/FeedbackContracts.test.tsx > secondary feedback contract audit > keeps the public column key constructor finite and renders only own row data
+2026-10-12T13:04:02.4865655Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:02.4866224Z 
+2026-10-12T13:04:02.4891456Z stderr | tests/FeedbackContracts.test.tsx > secondary feedback contract audit > keeps the public column key toString finite and renders only own row data
+2026-10-12T13:04:02.4892643Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:02.4893161Z 
+2026-10-12T13:04:02.4918492Z stderr | tests/FeedbackContracts.test.tsx > secondary feedback contract audit > keeps the public column key __proto__ finite and renders only own row data
+2026-10-12T13:04:02.4920276Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:02.4920785Z 
+2026-10-12T13:04:02.5021760Z stderr | tests/FeedbackContracts.test.tsx > secondary feedback contract audit > offers reset when only row density or details changed and restores both
+2026-10-12T13:04:02.5022996Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:02.5023524Z 
+2026-10-12T13:04:02.5131150Z stderr | tests/FeedbackContracts.test.tsx > secondary feedback contract audit > stores a __proto__ column filter as an own field without changing the object prototype
+2026-10-12T13:04:02.5193700Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:02.5202367Z 
+2026-10-12T13:04:02.5227392Z stderr | tests/FeedbackContracts.test.tsx > secondary feedback contract audit > Toast uses the newest close callback and cleans up its timer on unmount
+2026-10-12T13:04:02.5228515Z  ✓ tests/FeedbackContracts.test.tsx (17 tests) 115ms
+2026-10-12T13:04:02.5247050Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:02.5248019Z 
+2026-10-12T13:04:02.5248993Z stderr | tests/FeedbackContracts.test.tsx > secondary feedback contract audit > Steps marks one current step, permits completion, and handles an empty list
+2026-10-12T13:04:02.5250255Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:02.5250724Z 
+2026-10-12T13:04:02.7382896Z stderr | tests/FoundationContracts.test.tsx > documentation sizing controls > uses the four named size choices on Icon
+2026-10-12T13:04:02.7383900Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:02.7384292Z 
+2026-10-12T13:04:02.7451392Z stderr | tests/FoundationContracts.test.tsx > documentation sizing controls > uses the four named size choices on Loader
+2026-10-12T13:04:02.7472295Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:02.7472961Z 
+2026-10-12T13:04:02.7473844Z stderr | tests/FoundationContracts.test.tsx > documentation sizing controls > uses the four named size choices on SvgAsset
+2026-10-12T13:04:02.7474927Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:02.7475422Z 
+2026-10-12T13:04:02.7612332Z stderr | tests/FoundationContracts.test.tsx > documentation sizing controls > uses a bounded NumberField for genuine numeric parameters while allowing an empty input draft
+2026-10-12T13:04:02.7620288Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:02.7620954Z 
+2026-10-12T13:04:02.7687304Z stderr | tests/FoundationContracts.test.tsx > documentation sizing controls > keeps Loader generated code consistent with its selected size and built-in picture
+2026-10-12T13:04:02.7688543Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:02.7689318Z 
+2026-10-12T13:04:02.7729307Z stderr | tests/FoundationContracts.test.tsx > documentation sizing controls > includes the selected numeric font weight in the MelodixText example code
+2026-10-12T13:04:02.7730448Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:02.7734281Z 
+2026-10-12T13:04:02.7764491Z stderr | tests/FoundationContracts.test.tsx > keeps field constructor untouched until an explicit user action
+2026-10-12T13:04:02.7775212Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:02.7775767Z 
+2026-10-12T13:04:02.7794390Z stderr | tests/FoundationContracts.test.tsx > keeps field toString untouched until an explicit user action
+2026-10-12T13:04:02.7799359Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:02.7807097Z 
+2026-10-12T13:04:02.7807959Z stderr | tests/FoundationContracts.test.tsx > keeps field __proto__ untouched until an explicit user action
+2026-10-12T13:04:02.7808937Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:02.7809573Z 
+2026-10-12T13:04:02.7925230Z stderr | tests/FoundationContracts.test.tsx > theme editing > keeps the most recently selected theme import when file reads resolve out of order
+2026-10-12T13:04:02.7990343Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:02.8043536Z 
+2026-10-12T13:04:02.8093555Z stderr | tests/FoundationContracts.test.tsx > theme editing > reports unreadable imported files inside the editor
+2026-10-12T13:04:02.8100768Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:02.8101440Z 
+2026-10-12T13:04:02.8377241Z stderr | tests/FoundationContracts.test.tsx > theme editing > opens a previously collapsed group when token search matches it
+2026-10-12T13:04:02.8406037Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:02.8416997Z 
+2026-10-12T13:04:03.2658919Z stderr | tests/DocumentationBorders.test.tsx > demonstrates table details, actions, pinning, multi-sort and opt-in large-data virtualization with complete rows
+2026-10-12T13:04:03.2675825Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:03.2677025Z 
+2026-10-12T13:04:03.3958978Z stderr | tests/DocumentationBorders.test.tsx > uses the kit's animated border on every overview tile and panel
+2026-10-12T13:04:03.3970103Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:03.3999511Z 
+2026-10-12T13:04:03.4055551Z stderr | tests/DocumentationBorders.test.tsx > animates the Example and Related section borders on component pages
+2026-10-12T13:04:03.4081300Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:03.4101749Z 
+2026-10-12T13:04:03.4161544Z stderr | tests/DocumentationBorders.test.tsx > resets both the desktop content and mobile document scroll on navigation
+2026-10-12T13:04:03.4223233Z  ✓ tests/DocumentationBorders.test.tsx (15 tests) 174ms
+2026-10-12T13:04:03.4240363Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:03.4271372Z 
+2026-10-12T13:04:03.7377008Z stderr | tests/FoundationContracts.test.tsx > public component documentation > demonstrates provider-local language changes and custom messages on the LocaleProvider page
+2026-10-12T13:04:03.7378423Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:03.7378922Z 
+2026-10-12T13:04:03.7439894Z  ✓ tests/FoundationContracts.test.tsx (42 tests) 1028ms
+2026-10-12T13:04:03.7441360Z    ✓ public component documentation > keeps documentation examples and their playground helpers out of package declarations  871ms
+2026-10-12T13:04:03.7891650Z stderr | tests/LayoutNavigationContracts.test.tsx > dynamic tab accessibility > starts from the first enabled tab instead of an unfocusable disabled item
+2026-10-12T13:04:03.7893577Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:03.7919585Z 
+2026-10-12T13:04:03.7950680Z stderr | tests/LayoutNavigationContracts.test.tsx > dynamic tab accessibility > recovers uncontrolled selection and informs its panel after removal
+2026-10-12T13:04:03.7980072Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:03.7980643Z 
+2026-10-12T13:04:03.8008094Z stderr | tests/LayoutNavigationContracts.test.tsx > dynamic tab accessibility > keeps a tab stop when a controlled value is absent without inventing selection
+2026-10-12T13:04:03.8009565Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:03.8010340Z 
+2026-10-12T13:04:03.8015298Z stderr | tests/LayoutNavigationContracts.test.tsx > floating panel gesture lifecycle > accepts a saved layout update after a completed move
+2026-10-12T13:04:03.8016796Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:03.8017365Z 
+2026-10-12T13:04:03.8037063Z stderr | tests/LayoutNavigationContracts.test.tsx > floating panel gesture lifecycle > preserves the opposite edge when a west resize reaches its minimum
+2026-10-12T13:04:03.8038282Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:03.8038911Z 
+2026-10-12T13:04:03.8047048Z stderr | tests/LayoutNavigationContracts.test.tsx > floating panel gesture lifecycle > ignores a secondary-button resize gesture
+2026-10-12T13:04:03.8048180Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:03.8048862Z 
+2026-10-12T13:04:03.8066680Z stderr | tests/LayoutNavigationContracts.test.tsx > floating panel gesture lifecycle > canceling a pointer restores placement and does not commit
+2026-10-12T13:04:03.8067880Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:03.8068414Z 
+2026-10-12T13:04:03.8109396Z stderr | tests/LayoutNavigationContracts.test.tsx > floating panel gesture lifecycle > lets keyboard users move and resize a focused panel
+2026-10-12T13:04:03.8111990Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:03.8112686Z 
+2026-10-12T13:04:03.8133321Z stderr | tests/LayoutNavigationContracts.test.tsx > floating panel gesture lifecycle > passes defaultSize to its drag fallback before a layout can be measured
+2026-10-12T13:04:03.8134640Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:03.8135217Z 
+2026-10-12T13:04:03.8203240Z stderr | tests/LayoutNavigationContracts.test.tsx > layout and navigation identity > keeps child state by key when a divided Stack is reordered
+2026-10-12T13:04:03.8204356Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:03.8243332Z 
+2026-10-12T13:04:03.8260668Z stderr | tests/LayoutNavigationContracts.test.tsx > layout and navigation identity > resynchronizes location when router mode changes
+2026-10-12T13:04:03.8261926Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:03.8262714Z 
+2026-10-12T13:04:03.8320420Z  ✓ tests/LayoutNavigationContracts.test.tsx (12 tests) 61ms
+2026-10-12T13:04:03.9611214Z  ✓ tests/ReleaseContracts.test.tsx (28 tests) 2599ms
+2026-10-12T13:04:03.9612257Z    ✓ shipped documentation > exports form component props beside their root component exports  912ms
+2026-10-12T13:04:03.9647958Z    ✓ shipped documentation > ships declarations that typecheck without skipLibCheck or resolveJsonModule  1647ms
+2026-10-12T13:04:04.0207336Z stderr | tests/MediaContracts.test.tsx > activates piano keys through the native click used by keyboard and assistive input, once
+2026-10-12T13:04:04.0208582Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:04.0209350Z 
+2026-10-12T13:04:04.0220142Z stderr | tests/MediaContracts.test.tsx > cleans up the piano pressed feedback timer on unmount
+2026-10-12T13:04:04.0221175Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:04.0221725Z 
+2026-10-12T13:04:04.0336681Z stderr | tests/MediaContracts.test.tsx > stops the waveform playback decoration when a seek interrupts a small playback step
+2026-10-12T13:04:04.0338372Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:04.0339004Z 
+2026-10-12T13:04:04.0351620Z stderr | tests/MediaContracts.test.tsx > clamps the waveform's spoken value to the same track position that is rendered
+2026-10-12T13:04:04.0352671Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:04.0353201Z 
+2026-10-12T13:04:04.0370143Z stderr | tests/MediaContracts.test.tsx > keeps decorative marquee copies out of keyboard and pointer interaction
+2026-10-12T13:04:04.0371193Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:04.0371739Z 
+2026-10-12T13:04:04.0424615Z stderr | tests/MediaContracts.test.tsx > renders explicit empty waveform peaks as silence rather than fabricated demo audio
+2026-10-12T13:04:04.0425672Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:04.0426499Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:04.0427078Z 
+2026-10-12T13:04:04.0443001Z stderr | tests/MediaContracts.test.tsx > does not invent a sparkline when a supplied series is empty
+2026-10-12T13:04:04.0452591Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:04.0519514Z 
+2026-10-12T13:04:04.0546501Z stderr | tests/MediaContracts.test.tsx > keeps pointer-driven tilt still for a reduced-motion preference
+2026-10-12T13:04:04.0547940Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:04.0548495Z 
+2026-10-12T13:04:04.0549379Z stderr | tests/MediaContracts.test.tsx > tracks visibility and releases the observer for offscreen 'Shimmer' animations
+2026-10-12T13:04:04.0550428Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:04.0550934Z 
+2026-10-12T13:04:04.0551739Z stderr | tests/MediaContracts.test.tsx > tracks visibility and releases the observer for offscreen 'Sparkline' animations
+2026-10-12T13:04:04.0552785Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:04.0553288Z 
+2026-10-12T13:04:04.0563673Z stderr | tests/MediaContracts.test.tsx > ignores a context-menu press on the waveform instead of seeking
+2026-10-12T13:04:04.0580297Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:04.0581295Z 
+2026-10-12T13:04:04.0624513Z stderr | tests/MediaContracts.test.tsx > restores a cancelled waveform seek and returns keyboard focus to the track
+2026-10-12T13:04:04.0625632Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:04.0626220Z 
+2026-10-12T13:04:04.0640554Z  ✓ tests/MediaContracts.test.tsx (12 tests) 56ms
+2026-10-12T13:04:04.1627610Z stderr | tests/AudioPlayerRerenders.test.tsx > moves the live cursor without rebuilding the play and volume controls every frame
+2026-10-12T13:04:04.1650633Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:04.1679805Z 
+2026-10-12T13:04:04.1703526Z stderr | tests/AudioPlayerRerenders.test.tsx > controls an external transport without starting a second audio source or clock
+2026-10-12T13:04:04.1704795Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:04.1705420Z 
+2026-10-12T13:04:04.1860651Z stderr | tests/AudioPlayerRerenders.test.tsx > uses elapsed clock time for the demo timeline and announces completion once
+2026-10-12T13:04:04.1862162Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:04.1862652Z 
+2026-10-12T13:04:04.1873010Z stderr | tests/AudioPlayerRerenders.test.tsx > resets a paused timeline when its audio source is replaced without emitting a seek
+2026-10-12T13:04:04.1879566Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:04.1880273Z 
+2026-10-12T13:04:04.2016742Z stderr | tests/AudioPlayerRerenders.test.tsx > disables every audio player control including mute and volume
+2026-10-12T13:04:04.2024235Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:04.2024884Z 
+2026-10-12T13:04:04.2082831Z stderr | tests/AudioPlayerRerenders.test.tsx > announces native playback completion to the latest callback after a props update
+2026-10-12T13:04:04.2083978Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:04.2088721Z 
+2026-10-12T13:04:04.2106160Z stderr | tests/AudioPlayerRerenders.test.tsx > lets a controlled audio volume report the requested value without changing its readout
+2026-10-12T13:04:04.2107937Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:04.2108447Z 
+2026-10-12T13:04:04.2118963Z  ✓ tests/AudioPlayerRerenders.test.tsx (7 tests) 112ms
+2026-10-12T13:04:04.2922969Z stderr | tests/RotaryKnobContracts.test.tsx > keeps the knob operable by keyboard when its optional readout is hidden
+2026-10-12T13:04:04.2924145Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:04.2924635Z 
+2026-10-12T13:04:04.2977685Z stderr | tests/RotaryKnobContracts.test.tsx > keeps controlled display at the supplied value while reporting keyboard proposals
+2026-10-12T13:04:04.3010481Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:04.3017506Z 
+2026-10-12T13:04:04.3018551Z stderr | tests/RotaryKnobContracts.test.tsx > reports typed controlled proposals without replacing the externally supplied value
+2026-10-12T13:04:04.3019737Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:04.3020210Z 
+2026-10-12T13:04:04.3041097Z stderr | tests/RotaryKnobContracts.test.tsx > uses controlled value before defaultValue in the initial accessible markup
+2026-10-12T13:04:04.3054600Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:04.3059708Z 
+2026-10-12T13:04:04.3060538Z stderr | tests/RotaryKnobContracts.test.tsx > does not emit a user commit when a drag is disposed by unmount
+2026-10-12T13:04:04.3061523Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:04.3061944Z 
+2026-10-12T13:04:04.3073252Z stderr | tests/RotaryKnobContracts.test.tsx > stops a drag when disabled changes during the interaction
+2026-10-12T13:04:04.3074223Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:04.3074715Z 
+2026-10-12T13:04:04.3093879Z stderr | tests/RotaryKnobContracts.test.tsx > stops a drag when readOnly changes during the interaction
+2026-10-12T13:04:04.3094881Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:04.3095383Z 
+2026-10-12T13:04:04.3109350Z  ✓ tests/RotaryKnobContracts.test.tsx (7 tests) 43ms
+2026-10-12T13:04:04.4483471Z stderr | tests/theme-following.test.tsx > defers advanced token resolution while ThemeEditor is in simple mode
+2026-10-12T13:04:04.4491511Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:04.4492105Z 
+2026-10-12T13:04:04.4521897Z stderr | tests/theme-following.test.tsx > uses the effective token palette without rerendering consumers for unrelated styles
+2026-10-12T13:04:04.4523126Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:04.4525600Z 
+2026-10-12T13:04:04.4541079Z stderr | tests/theme-following.test.tsx > lets a nested provider inherit changing colours unless it explicitly selects a theme
+2026-10-12T13:04:04.4542229Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:04.4542723Z 
+2026-10-12T13:04:04.4827535Z stderr | tests/theme-following.test.tsx > follows theme changes in LoaderGenerator until its colour is edited
+2026-10-12T13:04:04.4828715Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:04.4829331Z 
+2026-10-12T13:04:04.5074778Z stderr | tests/theme-following.test.tsx > keeps theme examples in sync with the site until the editor is changed locally
+2026-10-12T13:04:04.5090394Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:04.5090942Z 
+2026-10-12T13:04:04.5100259Z  ✓ tests/theme-following.test.tsx (6 tests) 103ms
+2026-10-12T13:04:04.5324977Z stderr | tests/ArtworkAnimationPerformance.test.tsx > keeps spectrum columns moving without querying them on every animation tick
+2026-10-12T13:04:04.5338295Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:04.5339002Z 
+2026-10-12T13:04:04.5413971Z stderr | tests/ArtworkAnimationPerformance.test.tsx > keeps spectrum bars moving without repeatedly searching every SVG bar and layer
+2026-10-12T13:04:04.5429960Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:04.5437390Z 
+2026-10-12T13:04:04.5451733Z stderr | tests/ArtworkAnimationPerformance.test.tsx > keeps neon strands and comets moving without repeating DOM searches each frame
+2026-10-12T13:04:04.5452813Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:04.5453278Z 
+2026-10-12T13:04:04.5486533Z stderr | tests/ArtworkAnimationPerformance.test.tsx > draws the server rack's unchanged ventilation detail without a DOM node per hatch
+2026-10-12T13:04:04.5495027Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:04.5495500Z 
+2026-10-12T13:04:04.5497344Z  ✓ tests/ArtworkAnimationPerformance.test.tsx (4 tests) 37ms
+2026-10-12T13:04:04.6174616Z stderr | tests/AppRerenders.test.tsx > documentation theme rendering > does not rerender the catalogue when only the settings dialog opens, but does for a theme change
+2026-10-12T13:04:04.6175805Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:04.6179725Z 
+2026-10-12T13:04:04.6201079Z stderr | tests/AppRerenders.test.tsx > ThemeProvider render stability > reuses its token style when a parent rerenders without changing the theme
+2026-10-12T13:04:04.6202215Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:04.6202707Z 
+2026-10-12T13:04:04.6205997Z  ✓ tests/AppRerenders.test.tsx (2 tests) 24ms
+2026-10-12T13:04:04.6881525Z  ✓ tests/AnimatedBorderGeometry.test.ts (6 tests) 22ms
+2026-10-12T13:04:04.7808387Z stderr | tests/RotaryKnobRaster.test.tsx > defers the knob's expensive static raster to the shared sliced artwork painter
+2026-10-12T13:04:04.7809952Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:04.7826549Z 
+2026-10-12T13:04:04.7870433Z stderr | tests/RotaryKnobRaster.test.tsx > turns decisively with a wheel notch and a short vertical drag
+2026-10-12T13:04:04.7872218Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:04.7872707Z 
+2026-10-12T13:04:04.7927581Z  ✓ tests/RotaryKnobRaster.test.tsx (2 tests) 42ms
+2026-10-12T13:04:04.8173096Z stderr | tests/artwork-visibility.test.tsx > paints its initial artwork when optional observer APIs are unavailable
+2026-10-12T13:04:04.8174382Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:04.8179720Z 
+2026-10-12T13:04:04.8261561Z stderr | tests/artwork-visibility.test.tsx > does not paint a library artwork until its canvas approaches the viewport
+2026-10-12T13:04:04.8262595Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:04.8263104Z 
+2026-10-12T13:04:04.8263829Z stderr | tests/artwork-visibility.test.tsx > caps procedural artwork pixels on large high-density surfaces
+2026-10-12T13:04:04.8264773Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:04.8265592Z  ✓ tests/artwork-visibility.test.tsx (3 tests) 13ms
+2026-10-12T13:04:04.8266062Z 
+2026-10-12T13:04:04.9881358Z  ✓ tests/artwork-cache.test.ts (3 tests) 4ms
+2026-10-12T13:04:05.0229484Z stderr | tests/PianoRollContracts.test.tsx > selects a piano-roll note through native keyboard activation without starting a drag
+2026-10-12T13:04:05.0250340Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:05.0279389Z 
+2026-10-12T13:04:05.0300848Z stderr | tests/PianoRollContracts.test.tsx > does not seek or select an area when the browser cancels a pointer gesture
+2026-10-12T13:04:05.0310200Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:05.0339736Z 
+2026-10-12T13:04:05.0340603Z stderr | tests/PianoRollContracts.test.tsx > ignores secondary pointers while a note drag is in progress
+2026-10-12T13:04:05.0341137Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:05.0341349Z 
+2026-10-12T13:04:05.0341711Z stderr | tests/PianoRollContracts.test.tsx > restores the original note gesture before completing a cancelled drag
+2026-10-12T13:04:05.0342205Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:05.0342406Z 
+2026-10-12T13:04:05.0342706Z  ✓ tests/PianoRollContracts.test.tsx (4 tests) 23ms
+2026-10-12T13:04:05.1013465Z stderr | tests/LiveEditor.test.tsx > removes an old preview when the edited source fails to compile
+2026-10-12T13:04:05.1014537Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:05.1015012Z 
+2026-10-12T13:04:05.1991460Z stderr | tests/QuantumFieldFallbackPerformance.test.tsx > reuses deterministic particle seeds instead of recalculating their trigonometric hashes on every 2D frame
+2026-10-12T13:04:05.1993054Z  ✓ tests/QuantumFieldFallbackPerformance.test.tsx (2 tests) 23ms
+2026-10-12T13:04:05.2000489Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:05.2029552Z 
+2026-10-12T13:04:05.3009347Z stderr | tests/RotaryKnobHover.test.tsx > coalesces rapid pointer hover updates into one visual frame
+2026-10-12T13:04:05.3010561Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:05.3011171Z 
+2026-10-12T13:04:05.3015633Z  ✓ tests/RotaryKnobHover.test.tsx (1 test) 32ms
+2026-10-12T13:04:05.4682415Z stderr | tests/LevelMeterIdle.test.tsx > keeps a silent meter off the shared frame clock until it receives a level
+2026-10-12T13:04:05.4709719Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:05.4710627Z 
+2026-10-12T13:04:05.4759358Z stderr | tests/LevelMeterIdle.test.tsx > lets a fading meter settle and releases the frame clock after silence
+2026-10-12T13:04:05.4760602Z  ✓ tests/LevelMeterIdle.test.tsx (2 tests) 23ms
+2026-10-12T13:04:05.4761697Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:05.4762135Z 
+2026-10-12T13:04:05.7150586Z stderr | tests/NeonWavesResize.test.tsx > resizes comet coordinates immediately without waiting for another motion tick
+2026-10-12T13:04:05.7166686Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:05.7171918Z 
+2026-10-12T13:04:05.7172501Z  ✓ tests/NeonWavesResize.test.tsx (1 test) 21ms
+2026-10-12T13:04:05.7220602Z  ✓ tests/LiveEditor.test.tsx (3 tests) 621ms
+2026-10-12T13:04:05.7233527Z    ✓ serves a self-contained classic dev runtime without opening CORS to opaque origins  601ms
+2026-10-12T13:04:05.7742671Z stderr | tests/OverviewPreviewPerformance.test.tsx > does not run the LevelMeter demo state interval inside overview previews
+2026-10-12T13:04:05.7745575Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:05.7746740Z Detected multiple renderers concurrently rendering the same context provider. This is currently unsupported.
+2026-10-12T13:04:05.7747634Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:05.7748617Z 
+2026-10-12T13:04:05.7769504Z  ✓ tests/OverviewPreviewPerformance.test.tsx (2 tests) 18ms
+2026-10-12T13:04:05.9051048Z  ✓ tests/QuantumFieldRendererPerformance.test.ts (1 test) 18ms
+2026-10-12T13:04:05.9296248Z  ✓ tests/ArtworkLayerPerformance.test.ts (3 tests) 2ms
+2026-10-12T13:04:05.9357826Z  ✓ tests/HostSealMotionPerformance.test.tsx (1 test) 12ms
+2026-10-12T13:04:06.1198318Z stderr | tests/WaveDecorationFrames.test.tsx > reuses the strand nodes instead of querying the SVG on each animation frame
+2026-10-12T13:04:06.1212250Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:06.1244760Z 
+2026-10-12T13:04:06.1245371Z  ✓ tests/LoaderMotionPerformance.test.ts (1 test) 2ms
+2026-10-12T13:04:06.1326146Z  ✓ tests/WaveDecorationFrames.test.tsx (1 test) 37ms
+2026-10-12T13:04:06.1583542Z stderr | tests/SparklineLargeSeries.test.tsx > keeps a large series bounded to screen resolution without losing its spike or last point
+2026-10-12T13:04:06.1595940Z  ✓ tests/SparklineLargeSeries.test.tsx (1 test) 19ms
+2026-10-12T13:04:06.1596836Z react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+2026-10-12T13:04:06.1597188Z 
+2026-10-12T13:04:06.1799924Z 
+2026-10-12T13:04:06.1820307Z  Test Files  38 passed (38)
+2026-10-12T13:04:06.1826549Z       Tests  579 passed (579)
+2026-10-12T13:04:06.1840989Z    Start at  13:03:58
+2026-10-12T13:04:06.1890538Z    Duration  8.08s (transform 2.82s, setup 0ms, collect 9.18s, tests 8.44s, environment 5ms, prepare 2.02s)
+2026-10-12T13:04:06.1901850Z 
+2026-10-12T13:04:06.3040712Z ##[group]Run mkdir -p release && npm pack ./packages/ui --pack-destination release
+2026-10-12T13:04:06.3041034Z mkdir -p release && npm pack ./packages/ui --pack-destination release
+2026-10-12T13:04:06.3093070Z shell: /usr/bin/bash -e {0}
+2026-10-12T13:04:06.3093213Z env:
+2026-10-12T13:04:06.3093322Z   VERSION: 1.0.1
+2026-10-12T13:04:06.3093435Z ##[endgroup]
+2026-10-12T13:04:06.7173198Z npm notice
+2026-10-12T13:04:06.7176230Z npm notice 📦  @neo-ui-kit/react@1.0.1
+2026-10-12T13:04:06.7176569Z npm notice Tarball Contents
+2026-10-12T13:04:06.7203983Z npm notice 1.1kB LICENSE
+2026-10-12T13:04:06.7204288Z npm notice 17.4kB README.md
+2026-10-12T13:04:06.7204582Z npm notice 966B dist/artwork/icons.json.d.ts
+2026-10-12T13:04:06.7204915Z npm notice 214B dist/artwork/illustrations.json.d.ts
+2026-10-12T13:04:06.7205257Z npm notice 3.5kB dist/chunks/chunk-347P6ZE4.js
+2026-10-12T13:04:06.7205607Z npm notice 45.5kB dist/chunks/chunk-BJSFN52W.js
+2026-10-12T13:04:06.7205999Z npm notice 2.1kB dist/chunks/chunk-FCOU3ODR.js
+2026-10-12T13:04:06.7206333Z npm notice 3.1kB dist/chunks/chunk-JZ4GDTH5.js
+2026-10-12T13:04:06.7206650Z npm notice 551.1kB dist/chunks/chunk-UGDRXR7P.js
+2026-10-12T13:04:06.7206980Z npm notice 14.4kB dist/chunks/chunk-VK6GHRLV.js
+2026-10-12T13:04:06.7207283Z npm notice 27.4kB dist/chunks/chunk-YKCUOZ7V.js
+2026-10-12T13:04:06.7207584Z npm notice 5.3kB dist/components.css
+2026-10-12T13:04:06.7207988Z npm notice 325B dist/components/artwork/DatabaseArt/DatabaseArt.d.ts
+2026-10-12T13:04:06.7208462Z npm notice 1.4kB dist/components/artwork/DatabaseArt/styles.css
+2026-10-12T13:04:06.7208872Z npm notice 386B dist/components/artwork/Landscape/Landscape.d.ts
+2026-10-12T13:04:06.7209434Z npm notice 1.9kB dist/components/artwork/Landscape/styles.css
+2026-10-12T13:04:06.7209802Z npm notice 749B dist/components/artwork/layers.d.ts
+2026-10-12T13:04:06.7210426Z npm notice 805B dist/components/artwork/NeonWaves/NeonWaves.d.ts
+2026-10-12T13:04:06.7210844Z npm notice 1.3kB dist/components/artwork/NeonWaves/styles.css
+2026-10-12T13:04:06.7211234Z npm notice 256B dist/components/artwork/Planet/Planet.d.ts
+2026-10-12T13:04:06.7211618Z npm notice 1.5kB dist/components/artwork/Planet/styles.css
+2026-10-12T13:04:06.7212014Z npm notice 756B dist/components/artwork/QuantumField/audio.d.ts
+2026-10-12T13:04:06.7212461Z npm notice 2.3kB dist/components/artwork/QuantumField/QuantumField.d.ts
+2026-10-12T13:04:06.7212966Z npm notice 833B dist/components/artwork/QuantumField/QuantumFieldExperience.d.ts
+2026-10-12T13:04:06.7213451Z npm notice 1.5kB dist/components/artwork/QuantumField/renderer.d.ts
+2026-10-12T13:04:06.7213875Z npm notice 2.6kB dist/components/artwork/QuantumField/styles.css
+2026-10-12T13:04:06.7214254Z npm notice 1.1kB dist/components/artwork/QuantumField/UPSTREAM-LICENSE.txt
+2026-10-12T13:04:06.7214581Z npm notice 416B dist/components/artwork/ServerArt/ServerArt.d.ts
+2026-10-12T13:04:06.7214841Z npm notice 1.1kB dist/components/artwork/ServerArt/styles.css
+2026-10-12T13:04:06.7215099Z npm notice 405B dist/components/artwork/Spectrum/Spectrum.d.ts
+2026-10-12T13:04:06.7215350Z npm notice 762B dist/components/artwork/Spectrum/styles.css
+2026-10-12T13:04:06.7215587Z npm notice 514B dist/components/artwork/useArtwork.d.ts
+2026-10-12T13:04:06.7215847Z npm notice 396B dist/components/controls/Autocomplete/Autocomplete.d.ts
+2026-10-12T13:04:06.7216121Z npm notice 80B dist/components/controls/Autocomplete/styles.css
+2026-10-12T13:04:06.7216375Z npm notice 195B dist/components/controls/Button/Button.d.ts
+2026-10-12T13:04:06.7216616Z npm notice 30B dist/components/controls/Button/styles.css
+2026-10-12T13:04:06.7216862Z npm notice 128B dist/components/controls/Checkbox/Checkbox.d.ts
+2026-10-12T13:04:06.7217114Z npm notice 1.9kB dist/components/controls/Checkbox/styles.css
+2026-10-12T13:04:06.7217353Z npm notice 810B dist/components/controls/Chip/Chip.d.ts
+2026-10-12T13:04:06.7217585Z npm notice 1.9kB dist/components/controls/Chip/styles.css
+2026-10-12T13:04:06.7217984Z npm notice 1.1kB dist/components/controls/ChipField.d.ts
+2026-10-12T13:04:06.7218257Z npm notice 305B dist/components/controls/ColorPicker/color.d.ts
+2026-10-12T13:04:06.7218529Z npm notice 771B dist/components/controls/ColorPicker/ColorPicker.d.ts
+2026-10-12T13:04:06.7218800Z npm notice 2.5kB dist/components/controls/ColorPicker/styles.css
+2026-10-12T13:04:06.7219065Z npm notice 823B dist/components/controls/DatePicker/DatePicker.d.ts
+2026-10-12T13:04:06.7219484Z npm notice 1.6kB dist/components/controls/DatePicker/styles.css
+2026-10-12T13:04:06.7219752Z npm notice 136B dist/components/controls/FilePicker/FilePicker.d.ts
+2026-10-12T13:04:06.7220013Z npm notice 4.2kB dist/components/controls/FilePicker/styles.css
+2026-10-12T13:04:06.7220274Z npm notice 207B dist/components/controls/IconButton/IconButton.d.ts
+2026-10-12T13:04:06.7220528Z npm notice 93B dist/components/controls/IconButton/styles.css
+2026-10-12T13:04:06.7220786Z npm notice 938B dist/components/controls/InputBase/InputBase.d.ts
+2026-10-12T13:04:06.7221049Z npm notice 10.5kB dist/components/controls/InputBase/styles.css
+2026-10-12T13:04:06.7221340Z npm notice 2.7kB dist/components/controls/internal.d.ts
+2026-10-12T13:04:06.7221639Z npm notice 535B dist/components/controls/Link/Link.d.ts
+2026-10-12T13:04:06.7230882Z npm notice 1.2kB dist/components/controls/Link/styles.css
+2026-10-12T13:04:06.7231305Z npm notice 233B dist/components/controls/NumberField/NumberField.d.ts
+2026-10-12T13:04:06.7231617Z npm notice 35B dist/components/controls/NumberField/styles.css
+2026-10-12T13:04:06.7231950Z npm notice 1.6kB dist/components/controls/PeoplePicker/PeoplePicker.d.ts
+2026-10-12T13:04:06.7232268Z npm notice 197B dist/components/controls/PeoplePicker/styles.css
+2026-10-12T13:04:06.7232618Z npm notice 160B dist/components/controls/SegmentedControl/SegmentedControl.d.ts
+2026-10-12T13:04:06.7233008Z npm notice 226B dist/components/controls/SegmentedControl/styles.css
+2026-10-12T13:04:06.7233418Z npm notice 398B dist/components/controls/Select/Select.d.ts
+2026-10-12T13:04:06.7233667Z npm notice 3.4kB dist/components/controls/Select/styles.css
+2026-10-12T13:04:06.7233907Z npm notice 19.6kB dist/components/controls/shared.css
+2026-10-12T13:04:06.7234129Z npm notice 7.7kB dist/components/controls/shared.d.ts
+2026-10-12T13:04:06.7234365Z npm notice 201B dist/components/controls/Slider/Slider.d.ts
+2026-10-12T13:04:06.7234609Z npm notice 4.2kB dist/components/controls/Slider/styles.css
+2026-10-12T13:04:06.7234872Z npm notice 139B dist/components/controls/SplitButton/SplitButton.d.ts
+2026-10-12T13:04:06.7235144Z npm notice 4.9kB dist/components/controls/SplitButton/styles.css
+2026-10-12T13:04:06.7235397Z npm notice 1.8kB dist/components/controls/Switch/styles.css
+2026-10-12T13:04:06.7235638Z npm notice 126B dist/components/controls/Switch/Switch.d.ts
+2026-10-12T13:04:06.7235875Z npm notice 3.1kB dist/components/controls/Tab/styles.css
+2026-10-12T13:04:06.7236102Z npm notice 186B dist/components/controls/Tab/Tab.d.ts
+2026-10-12T13:04:06.7236329Z npm notice 7.1kB dist/components/controls/Tabs/styles.css
+2026-10-12T13:04:06.7236564Z npm notice 147B dist/components/controls/Tabs/Tabs.d.ts
+2026-10-12T13:04:06.7236802Z npm notice 495B dist/components/controls/TagInput/styles.css
+2026-10-12T13:04:06.7237058Z npm notice 1.1kB dist/components/controls/TagInput/TagInput.d.ts
+2026-10-12T13:04:06.7237312Z npm notice 420B dist/components/controls/TextArea/styles.css
+2026-10-12T13:04:06.7237564Z npm notice 328B dist/components/controls/TextArea/TextArea.d.ts
+2026-10-12T13:04:06.7237828Z npm notice 362B dist/components/controls/TextField/TextField.d.ts
+2026-10-12T13:04:06.7238093Z npm notice 3.5kB dist/components/controls/ThemePicker/styles.css
+2026-10-12T13:04:06.7238366Z npm notice 1.1kB dist/components/controls/ThemePicker/ThemePicker.d.ts
+2026-10-12T13:04:06.7238640Z npm notice 1.5kB dist/components/controls/ToggleButton/styles.css
+2026-10-12T13:04:06.7238917Z npm notice 213B dist/components/controls/ToggleButton/ToggleButton.d.ts
+2026-10-12T13:04:06.7239389Z npm notice 2.5kB dist/components/editor/PianoRoll/PianoRoll.d.ts
+2026-10-12T13:04:06.7239774Z npm notice 5.0kB dist/components/editor/PianoRoll/styles.css
+2026-10-12T13:04:06.7239999Z npm notice 41B dist/components/editor/shared.css
+2026-10-12T13:04:06.7240265Z npm notice 450B dist/components/effects/AnimatedBorder/AnimatedBorder.d.ts
+2026-10-12T13:04:06.7240556Z npm notice 189B dist/components/effects/AnimatedBorder/styles.css
+2026-10-12T13:04:06.7240810Z npm notice 439B dist/components/effects/Beacon/Beacon.d.ts
+2026-10-12T13:04:06.7241048Z npm notice 764B dist/components/effects/Beacon/styles.css
+2026-10-12T13:04:06.7241300Z npm notice 654B dist/components/effects/Equalizer/Equalizer.d.ts
+2026-10-12T13:04:06.7241552Z npm notice 854B dist/components/effects/Equalizer/styles.css
+2026-10-12T13:04:06.7241802Z npm notice 491B dist/components/effects/GlowText/GlowText.d.ts
+2026-10-12T13:04:06.7242055Z npm notice 1.2kB dist/components/effects/GlowText/styles.css
+2026-10-12T13:04:06.7242314Z npm notice 646B dist/components/effects/ImageShine/ImageShine.d.ts
+2026-10-12T13:04:06.7242579Z npm notice 1.6kB dist/components/effects/ImageShine/styles.css
+2026-10-12T13:04:06.7242829Z npm notice 447B dist/components/effects/Marquee/Marquee.d.ts
+2026-10-12T13:04:06.7243073Z npm notice 1.0kB dist/components/effects/Marquee/styles.css
+2026-10-12T13:04:06.7243336Z npm notice 791B dist/components/effects/MelodixText/MelodixText.d.ts
+2026-10-12T13:04:06.7243606Z npm notice 1.1kB dist/components/effects/MelodixText/styles.css
+2026-10-12T13:04:06.7243854Z npm notice 681B dist/components/effects/Reveal/Reveal.d.ts
+2026-10-12T13:04:06.7244097Z npm notice 636B dist/components/effects/Reveal/styles.css
+2026-10-12T13:04:06.7244338Z npm notice 459B dist/components/effects/Shimmer/Shimmer.d.ts
+2026-10-12T13:04:06.7244581Z npm notice 1.1kB dist/components/effects/Shimmer/styles.css
+2026-10-12T13:04:06.7244923Z npm notice 413B dist/components/effects/Sparkles/Sparkles.d.ts
+2026-10-12T13:04:06.7245411Z npm notice 540B dist/components/effects/Sparkles/styles.css
+2026-10-12T13:04:06.7245814Z npm notice 605B dist/components/effects/Spotlight/Spotlight.d.ts
+2026-10-12T13:04:06.7246222Z npm notice 1.1kB dist/components/effects/Spotlight/styles.css
+2026-10-12T13:04:06.7246601Z npm notice 1.7kB dist/components/effects/Tilt/styles.css
+2026-10-12T13:04:06.7246960Z npm notice 548B dist/components/effects/Tilt/Tilt.d.ts
+2026-10-12T13:04:06.7247323Z npm notice 181B dist/components/feedback/Badge/Badge.d.ts
+2026-10-12T13:04:06.7247695Z npm notice 2.4kB dist/components/feedback/Badge/styles.css
+2026-10-12T13:04:06.7248177Z npm notice 160B dist/components/feedback/CollapsibleSection/CollapsibleSection.d.ts
+2026-10-12T13:04:06.7248681Z npm notice 2.0kB dist/components/feedback/CollapsibleSection/styles.css
+2026-10-12T13:04:06.7249221Z npm notice 2.0kB dist/components/feedback/DataTable/DataTable.d.ts
+2026-10-12T13:04:06.7249632Z npm notice 16.1kB dist/components/feedback/DataTable/styles.css
+2026-10-12T13:04:06.7250025Z npm notice 131B dist/components/feedback/Dialog/Dialog.d.ts
+2026-10-12T13:04:06.7250412Z npm notice 2.4kB dist/components/feedback/Dialog/styles.css
+2026-10-12T13:04:06.7250819Z npm notice 136B dist/components/feedback/EmptyState/EmptyState.d.ts
+2026-10-12T13:04:06.7251234Z npm notice 1.7kB dist/components/feedback/EmptyState/styles.css
+2026-10-12T13:04:06.7251668Z npm notice 142B dist/components/feedback/KeyValueList/KeyValueList.d.ts
+2026-10-12T13:04:06.7252104Z npm notice 1.2kB dist/components/feedback/KeyValueList/styles.css
+2026-10-12T13:04:06.7252490Z npm notice 118B dist/components/feedback/Menu/Menu.d.ts
+2026-10-12T13:04:06.7252859Z npm notice 4.0kB dist/components/feedback/Menu/styles.css
+2026-10-12T13:04:06.7253247Z npm notice 130B dist/components/feedback/MenuItem/MenuItem.d.ts
+2026-10-12T13:04:06.7253647Z npm notice 1.7kB dist/components/feedback/MenuItem/styles.css
+2026-10-12T13:04:06.7254057Z npm notice 157B dist/components/feedback/MessageBar/MessageBar.d.ts
+2026-10-12T13:04:06.7254474Z npm notice 2.9kB dist/components/feedback/MessageBar/styles.css
+2026-10-12T13:04:06.7254986Z npm notice 134B dist/components/feedback/Popover/Popover.d.ts
+2026-10-12T13:04:06.7255382Z npm notice 1.4kB dist/components/feedback/Popover/styles.css
+2026-10-12T13:04:06.7255806Z npm notice 139B dist/components/feedback/ProgressBar/ProgressBar.d.ts
+2026-10-12T13:04:06.7256231Z npm notice 2.1kB dist/components/feedback/ProgressBar/styles.css
+2026-10-12T13:04:06.7256601Z npm notice 481B dist/components/feedback/shared.css
+2026-10-12T13:04:06.7256948Z npm notice 9.2kB dist/components/feedback/shared.d.ts
+2026-10-12T13:04:06.7257348Z npm notice 514B dist/components/feedback/SignalBars/SignalBars.d.ts
+2026-10-12T13:04:06.7257758Z npm notice 884B dist/components/feedback/SignalBars/styles.css
+2026-10-12T13:04:06.7258217Z npm notice 166B dist/components/feedback/StatusIndicator/StatusIndicator.d.ts
+2026-10-12T13:04:06.7258687Z npm notice 2.2kB dist/components/feedback/StatusIndicator/styles.css
+2026-10-12T13:04:06.7259094Z npm notice 121B dist/components/feedback/Steps/Steps.d.ts
+2026-10-12T13:04:06.7259574Z npm notice 4.4kB dist/components/feedback/Steps/styles.css
+2026-10-12T13:04:06.7259955Z npm notice 2.2kB dist/components/feedback/Toast/styles.css
+2026-10-12T13:04:06.7260324Z npm notice 160B dist/components/feedback/Toast/Toast.d.ts
+2026-10-12T13:04:06.7260703Z npm notice 1.1kB dist/components/feedback/Tooltip/styles.css
+2026-10-12T13:04:06.7261131Z npm notice 719B dist/components/feedback/Tooltip/Tooltip.d.ts
+2026-10-12T13:04:06.7261511Z npm notice 1.5kB dist/components/forms/Form/Form.d.ts
+2026-10-12T13:04:06.7261870Z npm notice 61B dist/components/forms/Form/styles.css
+2026-10-12T13:04:06.7262265Z npm notice 1.1kB dist/components/forms/FormFields/FormFields.d.ts
+2026-10-12T13:04:06.7262680Z npm notice 1.9kB dist/components/forms/FormFields/styles.css
+2026-10-12T13:04:06.7263077Z npm notice 8.6kB dist/components/foundation/Loader/Loader.d.ts
+2026-10-12T13:04:06.7263544Z npm notice 2.2kB dist/components/foundation/LoaderGenerator/LoaderGenerator.d.ts
+2026-10-12T13:04:06.7264186Z npm notice 2.8kB dist/components/foundation/LoaderGenerator/styles.css
+2026-10-12T13:04:06.7264617Z npm notice 2.5kB dist/components/foundation/ThemeEditor/styles.css
+2026-10-12T13:04:06.7265060Z npm notice 2.2kB dist/components/foundation/ThemeEditor/themeConfig.d.ts
+2026-10-12T13:04:06.7265524Z npm notice 761B dist/components/foundation/ThemeEditor/ThemeEditor.d.ts
+2026-10-12T13:04:06.7265960Z npm notice 2.0kB dist/components/foundation/ThemeProvider/styles.css
+2026-10-12T13:04:06.7266414Z npm notice 1.5kB dist/components/foundation/ThemeProvider/ThemeProvider.d.ts
+2026-10-12T13:04:06.7266857Z npm notice 3.8kB dist/components/foundation/Typography/styles.css
+2026-10-12T13:04:06.7267279Z npm notice 1.0kB dist/components/foundation/Typography/Typography.d.ts
+2026-10-12T13:04:06.7267670Z npm notice 162B dist/components/layout/Avatar/Avatar.d.ts
+2026-10-12T13:04:06.7268031Z npm notice 227B dist/components/layout/Avatar/HostSeal.d.ts
+2026-10-12T13:04:06.7268398Z npm notice 4.4kB dist/components/layout/Avatar/styles.css
+2026-10-12T13:04:06.7268776Z npm notice 136B dist/components/layout/BrandMark/BrandMark.d.ts
+2026-10-12T13:04:06.7269252Z npm notice 913B dist/components/layout/BrandMark/styles.css
+2026-10-12T13:04:06.7269647Z npm notice 521B dist/components/layout/ButtonGroup/ButtonGroup.d.ts
+2026-10-12T13:04:06.7270047Z npm notice 1.1kB dist/components/layout/ButtonGroup/styles.css
+2026-10-12T13:04:06.7270410Z npm notice 753B dist/components/layout/Card/Card.d.ts
+2026-10-12T13:04:06.7270751Z npm notice 807B dist/components/layout/Card/styles.css
+2026-10-12T13:04:06.7271160Z npm notice 523B dist/components/layout/DialogActions/DialogActions.d.ts
+2026-10-12T13:04:06.7271571Z npm notice 743B dist/components/layout/DialogActions/styles.css
+2026-10-12T13:04:06.7271968Z npm notice 520B dist/components/layout/DialogBody/DialogBody.d.ts
+2026-10-12T13:04:06.7272353Z npm notice 715B dist/components/layout/DialogBody/styles.css
+2026-10-12T13:04:06.7272732Z npm notice 127B dist/components/layout/Divider/Divider.d.ts
+2026-10-12T13:04:06.7273204Z npm notice 1.3kB dist/components/layout/Divider/styles.css
+2026-10-12T13:04:06.7273613Z npm notice 864B dist/components/layout/FloatingPanel/FloatingPanel.d.ts
+2026-10-12T13:04:06.7274028Z npm notice 1.7kB dist/components/layout/FloatingPanel/styles.css
+2026-10-12T13:04:06.7274469Z npm notice 2.5kB dist/components/layout/FloatingPanel/useFloatingPanel.d.ts
+2026-10-12T13:04:06.7274875Z npm notice 1.3kB dist/components/layout/Grid/Grid.d.ts
+2026-10-12T13:04:06.7275221Z npm notice 3.0kB dist/components/layout/Grid/styles.css
+2026-10-12T13:04:06.7275574Z npm notice 195B dist/components/layout/Header/Header.d.ts
+2026-10-12T13:04:06.7275928Z npm notice 1.0kB dist/components/layout/Header/styles.css
+2026-10-12T13:04:06.7276275Z npm notice 285B dist/components/layout/Icon/Icon.d.ts
+2026-10-12T13:04:06.7276611Z npm notice 1.8kB dist/components/layout/Icon/styles.css
+2026-10-12T13:04:06.7277007Z npm notice 178B dist/components/layout/Illustration/Illustration.d.ts
+2026-10-12T13:04:06.7277424Z npm notice 2.4kB dist/components/layout/Illustration/styles.css
+2026-10-12T13:04:06.7277831Z npm notice 135B dist/components/layout/ScrollArea/ScrollArea.d.ts
+2026-10-12T13:04:06.7278227Z npm notice 1.5kB dist/components/layout/ScrollArea/styles.css
+2026-10-12T13:04:06.7278580Z npm notice 2.0kB dist/components/layout/shared.css
+2026-10-12T13:04:06.7278912Z npm notice 2.3kB dist/components/layout/shared.d.ts
+2026-10-12T13:04:06.7279354Z npm notice 1.2kB dist/components/layout/Stack/Stack.d.ts
+2026-10-12T13:04:06.7279710Z npm notice 1.6kB dist/components/layout/Stack/styles.css
+2026-10-12T13:04:06.7280083Z npm notice 916B dist/components/layout/StatTile/StatTile.d.ts
+2026-10-12T13:04:06.7280465Z npm notice 2.2kB dist/components/layout/StatTile/styles.css
+2026-10-12T13:04:06.7280838Z npm notice 382B dist/components/layout/TabPanel/styles.css
+2026-10-12T13:04:06.7281261Z npm notice 130B dist/components/layout/TabPanel/TabPanel.d.ts
+2026-10-12T13:04:06.7281745Z npm notice 962B dist/components/layout/Text/styles.css
+2026-10-12T13:04:06.7282097Z npm notice 188B dist/components/layout/Text/Text.d.ts
+2026-10-12T13:04:06.7282455Z npm notice 208B dist/components/layout/Toolbar/styles.css
+2026-10-12T13:04:06.7282833Z npm notice 517B dist/components/layout/Toolbar/Toolbar.d.ts
+2026-10-12T13:04:06.7283248Z npm notice 139B dist/components/media/AudioPlayer/AudioPlayer.d.ts
+2026-10-12T13:04:06.7283664Z npm notice 2.0kB dist/components/media/AudioPlayer/styles.css
+2026-10-12T13:04:06.7284095Z npm notice 1.2kB dist/components/media/KaraokeLyrics/KaraokeLyrics.d.ts
+2026-10-12T13:04:06.7284527Z npm notice 1.9kB dist/components/media/KaraokeLyrics/styles.css
+2026-10-12T13:04:06.7284943Z npm notice 461B dist/components/media/LevelMeter/LevelMeter.d.ts
+2026-10-12T13:04:06.7285347Z npm notice 733B dist/components/media/LevelMeter/styles.css
+2026-10-12T13:04:06.7285754Z npm notice 1.2kB dist/components/media/MediaCard/MediaCard.d.ts
+2026-10-12T13:04:06.7286154Z npm notice 2.9kB dist/components/media/MediaCard/styles.css
+2026-10-12T13:04:06.7286564Z npm notice 2.2kB dist/components/media/MelodyRoll/MelodyRoll.d.ts
+2026-10-12T13:04:06.7286974Z npm notice 6.1kB dist/components/media/MelodyRoll/styles.css
+2026-10-12T13:04:06.7287408Z npm notice 1.1kB dist/components/media/PianoKeyboard/PianoKeyboard.d.ts
+2026-10-12T13:04:06.7287845Z npm notice 2.3kB dist/components/media/PianoKeyboard/styles.css
+2026-10-12T13:04:06.7288262Z npm notice 153B dist/components/media/RotaryKnob/RotaryKnob.d.ts
+2026-10-12T13:04:06.7288667Z npm notice 9.7kB dist/components/media/RotaryKnob/styles.css
+2026-10-12T13:04:06.7289024Z npm notice 142B dist/components/media/shared.css
+2026-10-12T13:04:06.7289460Z npm notice 3.0kB dist/components/media/shared.d.ts
+2026-10-12T13:04:06.7289836Z npm notice 133B dist/components/media/Sparkline/Sparkline.d.ts
+2026-10-12T13:04:06.7290232Z npm notice 1.4kB dist/components/media/Sparkline/styles.css
+2026-10-12T13:04:06.7290641Z npm notice 100B dist/components/media/WaveDecoration/styles.css
+2026-10-12T13:04:06.7291094Z npm notice 141B dist/components/media/WaveDecoration/WaveDecoration.d.ts
+2026-10-12T13:04:06.7291627Z npm notice 9.4kB dist/components/media/Waveform/styles.css
+2026-10-12T13:04:06.7292045Z npm notice 545B dist/components/media/Waveform/useWaveformPeaks.d.ts
+2026-10-12T13:04:06.7292469Z npm notice 653B dist/components/media/Waveform/Waveform.d.ts
+2026-10-12T13:04:06.7292871Z npm notice 1.2kB dist/components/navigation/Router/Router.d.ts
+2026-10-12T13:04:06.7293267Z npm notice 31B dist/components/navigation/Router/styles.css
+2026-10-12T13:04:06.7293589Z npm notice 747B dist/core.d.ts
+2026-10-12T13:04:06.7293818Z npm notice 878B dist/core.js
+2026-10-12T13:04:06.7294074Z npm notice 993B dist/core/artwork.d.ts
+2026-10-12T13:04:06.7294348Z npm notice 3.2kB dist/core/base.d.ts
+2026-10-12T13:04:06.7294629Z npm notice 360B dist/core/environment.d.ts
+2026-10-12T13:04:06.7294900Z npm notice 2.2kB dist/core/i18n.d.ts
+2026-10-12T13:04:06.7295159Z npm notice 71B dist/core/messages.d.ts
+2026-10-12T13:04:06.7295443Z npm notice 407B dist/core/motion-engine.d.ts
+2026-10-12T13:04:06.7295739Z npm notice 1.2kB dist/core/motion/hooks.d.ts
+2026-10-12T13:04:06.7296020Z npm notice 1.3kB dist/core/noise.d.ts
+2026-10-12T13:04:06.7296313Z npm notice 223B dist/core/providers/context.d.ts
+2026-10-12T13:04:06.7296610Z npm notice 801B dist/core/responsive.d.ts
+2026-10-12T13:04:06.7296879Z npm notice 196B dist/editor.d.ts
+2026-10-12T13:04:06.7297119Z npm notice 156B dist/editor.js
+2026-10-12T13:04:06.7297370Z npm notice 3.8kB dist/fonts/melodix.css
+2026-10-12T13:04:06.7297686Z npm notice 107.0kB dist/fonts/melodix/Melodix-100.woff2
+2026-10-12T13:04:06.7298081Z npm notice 98.0kB dist/fonts/melodix/Melodix-200.woff2
+2026-10-12T13:04:06.7298424Z npm notice 89.2kB dist/fonts/melodix/Melodix-300.woff2
+2026-10-12T13:04:06.7298766Z npm notice 80.7kB dist/fonts/melodix/Melodix-400.woff2
+2026-10-12T13:04:06.7299195Z npm notice 98.0kB dist/fonts/melodix/Melodix-500.woff2
+2026-10-12T13:04:06.7299635Z npm notice 96.4kB dist/fonts/melodix/Melodix-600.woff2
+2026-10-12T13:04:06.7299979Z npm notice 96.7kB dist/fonts/melodix/Melodix-700.woff2
+2026-10-12T13:04:06.7300321Z npm notice 96.1kB dist/fonts/melodix/Melodix-800.woff2
+2026-10-12T13:04:06.7300661Z npm notice 95.3kB dist/fonts/melodix/Melodix-900.woff2
+2026-10-12T13:04:06.7301015Z npm notice 62.0kB dist/fonts/melodix/MelodixText-100.woff2
+2026-10-12T13:04:06.7301384Z npm notice 60.9kB dist/fonts/melodix/MelodixText-200.woff2
+2026-10-12T13:04:06.7301752Z npm notice 57.3kB dist/fonts/melodix/MelodixText-300.woff2
+2026-10-12T13:04:06.7302125Z npm notice 53.4kB dist/fonts/melodix/MelodixText-400.woff2
+2026-10-12T13:04:06.7302489Z npm notice 50.8kB dist/fonts/melodix/MelodixText-500.woff2
+2026-10-12T13:04:06.7302854Z npm notice 49.3kB dist/fonts/melodix/MelodixText-600.woff2
+2026-10-12T13:04:06.7303272Z npm notice 50.1kB dist/fonts/melodix/MelodixText-700.woff2
+2026-10-12T13:04:06.7303635Z npm notice 51.5kB dist/fonts/melodix/MelodixText-800.woff2
+2026-10-12T13:04:06.7304007Z npm notice 51.9kB dist/fonts/melodix/MelodixText-900.woff2
+2026-10-12T13:04:06.7304390Z npm notice 4.4kB dist/fonts/melodix/OFL-PlayfairDisplay.txt
+2026-10-12T13:04:06.7304701Z npm notice 402B dist/forms.d.ts
+2026-10-12T13:04:06.7304925Z npm notice 317B dist/forms.js
+2026-10-12T13:04:06.7305172Z npm notice 12.8kB dist/index.d.ts
+2026-10-12T13:04:06.7305423Z npm notice 432.3kB dist/index.js
+2026-10-12T13:04:06.7305672Z npm notice 225B dist/router.d.ts
+2026-10-12T13:04:06.7305912Z npm notice 167B dist/router.js
+2026-10-12T13:04:06.7306150Z npm notice 58B dist/styles.css
+2026-10-12T13:04:06.7306394Z npm notice 6.4kB dist/theme/base.css
+2026-10-12T13:04:06.7306657Z npm notice 10.0kB dist/theme/tokens.css
+2026-10-12T13:04:06.7306938Z npm notice 887B dist/theme/typography.d.ts
+2026-10-12T13:04:06.7307204Z npm notice 30B dist/tokens.css
+2026-10-12T13:04:06.7307432Z npm notice 2.1kB package.json
+2026-10-12T13:04:06.7307655Z npm notice Tarball Details
+2026-10-12T13:04:06.7307903Z npm notice name: @neo-ui-kit/react
+2026-10-12T13:04:06.7308140Z npm notice version: 1.0.1
+2026-10-12T13:04:06.7308518Z npm notice filename: neo-ui-kit-react-1.0.1.tgz
+2026-10-12T13:04:06.7308808Z npm notice package size: 1.7 MB
+2026-10-12T13:04:06.7309058Z npm notice unpacked size: 2.8 MB
+2026-10-12T13:04:06.7309476Z npm notice shasum: b3d36f8d7f917d1a0c5708c6de3b161c1140df50
+2026-10-12T13:04:06.7309866Z npm notice integrity: sha512-YsocW3Vn/PHyj[...]ZUbhuAqaJZbOQ==
+2026-10-12T13:04:06.7310172Z npm notice total files: 270
+2026-10-12T13:04:06.7310365Z npm notice
+2026-10-12T13:04:06.7310581Z neo-ui-kit-react-1.0.1.tgz
+2026-10-12T13:04:06.7368134Z ##[group]Run mkdir consumer-smoke
+2026-10-12T13:04:06.7368442Z mkdir consumer-smoke
+2026-10-12T13:04:06.7368659Z cd consumer-smoke
+2026-10-12T13:04:06.7368861Z npm init -y
+2026-10-12T13:04:06.7371474Z npm install ../release/neo-ui-kit-react-${VERSION}.tgz react@19 react-dom@19 --no-audit --no-fund
+2026-10-12T13:04:06.7372596Z node --input-type=module -e 'import { createElement } from "react"; import { renderToStaticMarkup } from "react-dom/server"; import { Button } from "@neo-ui-kit/react"; if (!renderToStaticMarkup(createElement(Button, null, "Smoke")).includes("Smoke")) process.exit(1)'
+2026-10-12T13:04:06.7373596Z test -f node_modules/@neo-ui-kit/react/dist/styles.css
+2026-10-12T13:04:06.7430375Z shell: /usr/bin/bash -e {0}
+2026-10-12T13:04:06.7430524Z env:
+2026-10-12T13:04:06.7430630Z   VERSION: 1.0.1
+2026-10-12T13:04:06.7430745Z ##[endgroup]
+2026-10-12T13:04:06.8998239Z Wrote to /home/runner/work/adui/adui/consumer-smoke/package.json:
+2026-10-12T13:04:06.8998448Z 
+2026-10-12T13:04:06.8998506Z {
+2026-10-12T13:04:06.8998644Z   "name": "consumer-smoke",
+2026-10-12T13:04:06.8998795Z   "version": "1.0.0",
+2026-10-12T13:04:06.8998924Z   "description": "",
+2026-10-12T13:04:06.8999053Z   "main": "index.js",
+2026-10-12T13:04:06.8999361Z   "scripts": {
+2026-10-12T13:04:06.8999615Z     "test": "echo \"Error: no test specified\" && exit 1"
+2026-10-12T13:04:06.9000115Z   },
+2026-10-12T13:04:06.9000279Z   "keywords": [],
+2026-10-12T13:04:06.9000447Z   "author": "",
+2026-10-12T13:04:06.9000611Z   "license": "ISC",
+2026-10-12T13:04:06.9000784Z   "type": "commonjs"
+2026-10-12T13:04:06.9000955Z }
+2026-10-12T13:04:06.9001046Z 
+2026-10-12T13:04:06.9001052Z 
+2026-10-12T13:04:08.1608256Z 
+2026-10-12T13:04:08.1608861Z added 4 packages in 1s
+2026-10-12T13:04:08.2423036Z ##[group]Run actions/upload-artifact@v4
+2026-10-12T13:04:08.2423213Z with:
+2026-10-12T13:04:08.2423328Z   name: npm-package
+2026-10-12T13:04:08.2423466Z   path: release/neo-ui-kit-react-1.0.1.tgz
+2026-10-12T13:04:08.2423621Z   if-no-files-found: error
+2026-10-12T13:04:08.2423756Z   compression-level: 6
+2026-10-12T13:04:08.2423876Z   overwrite: false
+2026-10-12T13:04:08.2423996Z   include-hidden-files: false
+2026-10-12T13:04:08.2424124Z env:
+2026-10-12T13:04:08.2424230Z   VERSION: 1.0.1
+2026-10-12T13:04:08.2424343Z ##[endgroup]
+2026-10-12T13:04:08.3440686Z (node:3366) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-12T13:04:08.3441163Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-12T13:04:08.3469471Z With the provided path, there will be 1 file uploaded
+2026-10-12T13:04:08.3475294Z Artifact name is valid!
+2026-10-12T13:04:08.3481136Z Root directory input is valid!
+2026-10-12T13:04:08.6196817Z Beginning upload of artifact content to blob storage
+2026-10-12T13:04:08.6658032Z (node:3366) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-10-12T13:04:09.0179640Z Uploaded bytes 1666567
+2026-10-12T13:04:09.0595733Z Finished uploading artifact content to blob storage!
+2026-10-12T13:04:09.0596298Z SHA256 digest of uploaded artifact zip is 82b34f8d314ed83675921df903ba93633ec74a6d78e194c24326f6963d2ebd93
+2026-10-12T13:04:09.0597576Z Finalizing artifact upload
+2026-10-12T13:04:09.3236137Z Artifact npm-package.zip successfully finalized. Artifact ID 11748742678
+2026-10-12T13:04:09.3236775Z Artifact npm-package has been successfully uploaded! Final size is 1666567 bytes. Artifact ID is 11748742678
+2026-10-12T13:04:09.3238026Z Artifact download URL: https://github.com/Pro100Dimka/adui/actions/runs/38252999379/artifacts/11748742678
+2026-10-12T13:04:09.3377717Z Post job cleanup.
+2026-10-12T13:04:09.4220778Z Post job cleanup.
+2026-10-12T13:04:09.4797982Z [command]/usr/bin/git version
+2026-10-12T13:04:09.4827738Z git version 2.55.0
+2026-10-12T13:04:09.4852503Z Temporarily overriding HOME='/home/runner/work/_temp/4b02bdf9-72bc-47de-8224-0e26ad0c2155' before making global git config changes
+2026-10-12T13:04:09.4853258Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-12T13:04:09.4856246Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/adui/adui
+2026-10-12T13:04:09.4882528Z Removing SSH command configuration
+2026-10-12T13:04:09.4887297Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-12T13:04:09.4914098Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-12T13:04:09.5095360Z Removing HTTP extra header
+2026-10-12T13:04:09.5100069Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-12T13:04:09.5137423Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-12T13:04:09.5321339Z Removing includeIf entries pointing to credentials config files
+2026-10-12T13:04:09.5326443Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-12T13:04:09.5365618Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-12T13:04:09.5655802Z Evaluate and set job outputs
+2026-10-12T13:04:09.5659971Z Set output 'version'
+2026-10-12T13:04:09.5661036Z Set output 'archive'
+2026-10-12T13:04:09.5661683Z Cleaning up orphan processes
+2026-10-12T13:04:09.5877669Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

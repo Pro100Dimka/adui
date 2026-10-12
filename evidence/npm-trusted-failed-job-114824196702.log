@@ -1,0 +1,255 @@
+2026-10-12T13:04:15.9256565Z Current runner version: '2.337.0'
+2026-10-12T13:04:15.9277962Z ##[group]Runner Image Provisioner
+2026-10-12T13:04:15.9278661Z Hosted Compute Agent
+2026-10-12T13:04:15.9279202Z Version: 20261002.596
+2026-10-12T13:04:15.9279711Z Commit: c3d12f3313a95f25162a1503be624f3b0617f8c0
+2026-10-12T13:04:15.9280278Z Build Date: 2026-10-02T22:28:27Z
+2026-10-12T13:04:15.9280885Z Worker ID: {881d1cae-201a-458d-acc0-a1388084ea98}
+2026-10-12T13:04:15.9281518Z Region: westus3
+2026-10-12T13:04:15.9282000Z Cloud: Azure
+2026-10-12T13:04:15.9282445Z ##[endgroup]
+2026-10-12T13:04:15.9283488Z ##[group]Operating System
+2026-10-12T13:04:15.9284087Z Ubuntu
+2026-10-12T13:04:15.9284513Z 24.04.5
+2026-10-12T13:04:15.9285135Z LTS
+2026-10-12T13:04:15.9285571Z ##[endgroup]
+2026-10-12T13:04:15.9286020Z ##[group]Runner Image
+2026-10-12T13:04:15.9286924Z Image: ubuntu-24.04
+2026-10-12T13:04:15.9287442Z Version: 20261004.327.1
+2026-10-12T13:04:15.9288503Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261004.327/images/ubuntu/Ubuntu2404-Readme.md
+2026-10-12T13:04:15.9289706Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261004.327
+2026-10-12T13:04:15.9290608Z ##[endgroup]
+2026-10-12T13:04:15.9291489Z ##[group]GITHUB_TOKEN Permissions
+2026-10-12T13:04:15.9293275Z Contents: write
+2026-10-12T13:04:15.9293765Z Metadata: read
+2026-10-12T13:04:15.9294271Z ##[endgroup]
+2026-10-12T13:04:15.9296140Z Secret source: Actions
+2026-10-12T13:04:15.9296959Z Cache mode: write
+2026-10-12T13:04:15.9297704Z Prepare workflow directory
+2026-10-12T13:04:15.9691001Z Prepare all required actions
+2026-10-12T13:04:15.9735885Z Getting action download info
+2026-10-12T13:04:16.2896762Z Download action repository 'actions/checkout@v6' (SHA:d23441a48e516b6c34aea4fa41551a30e30af803)
+2026-10-12T13:04:16.4241351Z Download action repository 'actions/setup-node@v6' (SHA:249970729cb0ef3589644e2896645e5dc5ba9c38)
+2026-10-12T13:04:16.7333065Z Download action repository 'actions/download-artifact@v4' (SHA:d3f86a106a0bac45b974a628896c90dbdf5c8093)
+2026-10-12T13:04:17.5079823Z Download action repository 'softprops/action-gh-release@v2' (SHA:3bb12739c298aeb8a4eeaf626c5b8d85266b0e65)
+2026-10-12T13:04:18.3550121Z Complete job name: publish
+2026-10-12T13:04:18.4295475Z ##[group]Run actions/checkout@v6
+2026-10-12T13:04:18.4296596Z with:
+2026-10-12T13:04:18.4297305Z   persist-credentials: false
+2026-10-12T13:04:18.4298146Z   repository: Pro100Dimka/adui
+2026-10-12T13:04:18.4304821Z   token: ***
+2026-10-12T13:04:18.4305631Z   ssh-strict: true
+2026-10-12T13:04:18.4306330Z   ssh-user: git
+2026-10-12T13:04:18.4307007Z   clean: true
+2026-10-12T13:04:18.4307731Z   sparse-checkout-cone-mode: true
+2026-10-12T13:04:18.4308587Z   fetch-depth: 1
+2026-10-12T13:04:18.4309322Z   fetch-tags: false
+2026-10-12T13:04:18.4310058Z   show-progress: true
+2026-10-12T13:04:18.4310785Z   lfs: false
+2026-10-12T13:04:18.4311460Z   submodules: false
+2026-10-12T13:04:18.4312192Z   set-safe-directory: true
+2026-10-12T13:04:18.4313009Z   allow-unsafe-pr-checkout: false
+2026-10-12T13:04:18.4314073Z env:
+2026-10-12T13:04:18.4314795Z   ARCHIVE: release/neo-ui-kit-react-1.0.1.tgz
+2026-10-12T13:04:18.4315865Z ##[endgroup]
+2026-10-12T13:04:18.5155053Z Syncing repository: Pro100Dimka/adui
+2026-10-12T13:04:18.5158169Z ##[group]Getting Git version info
+2026-10-12T13:04:18.5159612Z Working directory is '/home/runner/work/adui/adui'
+2026-10-12T13:04:18.5161884Z [command]/usr/bin/git version
+2026-10-12T13:04:18.5493079Z git version 2.55.0
+2026-10-12T13:04:18.5512143Z ##[endgroup]
+2026-10-12T13:04:18.5525374Z Temporarily overriding HOME='/home/runner/work/_temp/4c851d42-faa4-49e6-80e8-013a589091fb' before making global git config changes
+2026-10-12T13:04:18.5528707Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-12T13:04:18.5531186Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/adui/adui
+2026-10-12T13:04:18.5629701Z Deleting the contents of '/home/runner/work/adui/adui'
+2026-10-12T13:04:18.5633592Z ##[group]Determining repository object format
+2026-10-12T13:04:18.5636190Z ##[endgroup]
+2026-10-12T13:04:18.5637953Z ##[group]Initializing the repository
+2026-10-12T13:04:18.5640775Z [command]/usr/bin/git init /home/runner/work/adui/adui
+2026-10-12T13:04:18.5996740Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-10-12T13:04:18.5998787Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-10-12T13:04:18.6000380Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-10-12T13:04:18.6002008Z hint: call:
+2026-10-12T13:04:18.6002747Z hint:
+2026-10-12T13:04:18.6003679Z hint: 	git config --global init.defaultBranch <name>
+2026-10-12T13:04:18.6004704Z hint:
+2026-10-12T13:04:18.6006144Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-10-12T13:04:18.6007964Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-10-12T13:04:18.6009208Z hint:
+2026-10-12T13:04:18.6009937Z hint: 	git branch -m <name>
+2026-10-12T13:04:18.6010828Z hint:
+2026-10-12T13:04:18.6011892Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-10-12T13:04:18.6013555Z Initialized empty Git repository in /home/runner/work/adui/adui/.git/
+2026-10-12T13:04:18.6016618Z [command]/usr/bin/git remote add origin https://github.com/Pro100Dimka/adui
+2026-10-12T13:04:18.6188045Z ##[endgroup]
+2026-10-12T13:04:18.6189443Z ##[group]Disabling automatic garbage collection
+2026-10-12T13:04:18.6191721Z [command]/usr/bin/git config --local gc.auto 0
+2026-10-12T13:04:18.6269751Z ##[endgroup]
+2026-10-12T13:04:18.6271646Z ##[group]Setting up auth
+2026-10-12T13:04:18.6272870Z Removing SSH command configuration
+2026-10-12T13:04:18.6276381Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-12T13:04:18.6309038Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-12T13:04:18.6597360Z Removing HTTP extra header
+2026-10-12T13:04:18.6603110Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-12T13:04:18.6634636Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-12T13:04:18.6829220Z Removing includeIf entries pointing to credentials config files
+2026-10-12T13:04:18.6836008Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-12T13:04:18.6868433Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-12T13:04:18.7066870Z [command]/usr/bin/git config --file /home/runner/work/_temp/git-credentials-d90ac2ab-5a5b-4204-a9c7-f41201a79ad4.config http.https://github.com/.extraheader AUTHORIZATION: basic [REDACTED]
+2026-10-12T13:04:18.7104362Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/adui/adui/.git.path /home/runner/work/_temp/git-credentials-d90ac2ab-5a5b-4204-a9c7-f41201a79ad4.config
+2026-10-12T13:04:18.7271587Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/adui/adui/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-d90ac2ab-5a5b-4204-a9c7-f41201a79ad4.config
+2026-10-12T13:04:18.7476186Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-d90ac2ab-5a5b-4204-a9c7-f41201a79ad4.config
+2026-10-12T13:04:18.7652737Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-d90ac2ab-5a5b-4204-a9c7-f41201a79ad4.config
+2026-10-12T13:04:18.7809336Z ##[endgroup]
+2026-10-12T13:04:18.7815628Z ##[group]Fetching the repository
+2026-10-12T13:04:18.7817432Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +refs/tags/v1.0.1:refs/tags/v1.0.1
+2026-10-12T13:04:21.0392255Z From https://github.com/Pro100Dimka/adui
+2026-10-12T13:04:21.0392895Z  * [new tag]         v1.0.1     -> v1.0.1
+2026-10-12T13:04:21.0402906Z [command]/usr/bin/git tag --list v1.0.1
+2026-10-12T13:04:21.0430048Z v1.0.1
+2026-10-12T13:04:21.0438578Z [command]/usr/bin/git rev-parse refs/tags/v1.0.1^{commit}
+2026-10-12T13:04:21.0466271Z 749fda2ec3c092e0daaf774bfd0f0989184961e3
+2026-10-12T13:04:21.0496037Z ##[endgroup]
+2026-10-12T13:04:21.0496452Z ##[group]Determining the checkout info
+2026-10-12T13:04:21.0496880Z ##[endgroup]
+2026-10-12T13:04:21.0497194Z [command]/usr/bin/git sparse-checkout disable
+2026-10-12T13:04:21.1381192Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-10-12T13:04:21.1685436Z ##[group]Checking out the ref
+2026-10-12T13:04:21.1694400Z [command]/usr/bin/git checkout --progress --force refs/tags/v1.0.1
+2026-10-12T13:04:21.3065793Z Note: switching to 'refs/tags/v1.0.1'.
+2026-10-12T13:04:21.3069559Z 
+2026-10-12T13:04:21.3069899Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-10-12T13:04:21.3070349Z changes and commit them, and you can discard any commits you make in this
+2026-10-12T13:04:21.3070796Z state without impacting any branches by switching back to a branch.
+2026-10-12T13:04:21.3071087Z 
+2026-10-12T13:04:21.3071537Z If you want to create a new branch to retain commits you create, you may
+2026-10-12T13:04:21.3075626Z do so (now or later) by using -c with the switch command. Example:
+2026-10-12T13:04:21.3076238Z 
+2026-10-12T13:04:21.3076691Z   git switch -c <new-branch-name>
+2026-10-12T13:04:21.3077008Z 
+2026-10-12T13:04:21.3077152Z Or undo this operation with:
+2026-10-12T13:04:21.3077393Z 
+2026-10-12T13:04:21.3144006Z   git switch -
+2026-10-12T13:04:21.3144346Z 
+2026-10-12T13:04:21.3144675Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-10-12T13:04:21.3145150Z 
+2026-10-12T13:04:21.3145395Z HEAD is now at 749fda2 Make release tests deterministic across CI hardware
+2026-10-12T13:04:21.3146758Z ##[endgroup]
+2026-10-12T13:04:21.3156194Z [command]/usr/bin/git log -1 --format=%H
+2026-10-12T13:04:21.3156867Z 749fda2ec3c092e0daaf774bfd0f0989184961e3
+2026-10-12T13:04:21.3158051Z ##[group]Removing auth
+2026-10-12T13:04:21.3158520Z Removing SSH command configuration
+2026-10-12T13:04:21.3161016Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-12T13:04:21.3200705Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-12T13:04:21.3397213Z Removing HTTP extra header
+2026-10-12T13:04:21.3401700Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-12T13:04:21.3435806Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-12T13:04:21.3623210Z Removing includeIf entries pointing to credentials config files
+2026-10-12T13:04:21.3627170Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-12T13:04:21.3655063Z includeif.gitdir:/home/runner/work/adui/adui/.git.path
+2026-10-12T13:04:21.3657030Z includeif.gitdir:/home/runner/work/adui/adui/.git/worktrees/*.path
+2026-10-12T13:04:21.3657611Z includeif.gitdir:/github/workspace/.git.path
+2026-10-12T13:04:21.3658071Z includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-10-12T13:04:21.3663308Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/adui/adui/.git.path
+2026-10-12T13:04:21.3686062Z /home/runner/work/_temp/git-credentials-d90ac2ab-5a5b-4204-a9c7-f41201a79ad4.config
+2026-10-12T13:04:21.3694966Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/adui/adui/.git.path /home/runner/work/_temp/git-credentials-d90ac2ab-5a5b-4204-a9c7-f41201a79ad4.config
+2026-10-12T13:04:21.3835578Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/adui/adui/.git/worktrees/*.path
+2026-10-12T13:04:21.3859811Z /home/runner/work/_temp/git-credentials-d90ac2ab-5a5b-4204-a9c7-f41201a79ad4.config
+2026-10-12T13:04:21.3866066Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/adui/adui/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-d90ac2ab-5a5b-4204-a9c7-f41201a79ad4.config
+2026-10-12T13:04:21.4027172Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git.path
+2026-10-12T13:04:21.4049353Z /github/runner_temp/git-credentials-d90ac2ab-5a5b-4204-a9c7-f41201a79ad4.config
+2026-10-12T13:04:21.4061984Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-d90ac2ab-5a5b-4204-a9c7-f41201a79ad4.config
+2026-10-12T13:04:21.4089612Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-10-12T13:04:21.4110256Z /github/runner_temp/git-credentials-d90ac2ab-5a5b-4204-a9c7-f41201a79ad4.config
+2026-10-12T13:04:21.4115873Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-d90ac2ab-5a5b-4204-a9c7-f41201a79ad4.config
+2026-10-12T13:04:21.4165828Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-12T13:04:21.4357932Z Removing credentials config '/home/runner/work/_temp/git-credentials-d90ac2ab-5a5b-4204-a9c7-f41201a79ad4.config'
+2026-10-12T13:04:21.4366227Z ##[endgroup]
+2026-10-12T13:04:21.4624576Z ##[group]Run actions/setup-node@v6
+2026-10-12T13:04:21.4624814Z with:
+2026-10-12T13:04:21.4625260Z   node-version: 24
+2026-10-12T13:04:21.4625479Z   registry-url: https://registry.npmjs.org
+2026-10-12T13:04:21.4625735Z   package-manager-cache: false
+2026-10-12T13:04:21.4625959Z   check-latest: false
+2026-10-12T13:04:21.4627877Z   token: ***
+2026-10-12T13:04:21.4628052Z env:
+2026-10-12T13:04:21.4628240Z   ARCHIVE: release/neo-ui-kit-react-1.0.1.tgz
+2026-10-12T13:04:21.4628473Z ##[endgroup]
+2026-10-12T13:04:21.6181853Z Found in cache @ /opt/hostedtoolcache/node/24.21.0/x64
+2026-10-12T13:04:21.6183677Z ##[group]Environment details
+2026-10-12T13:04:25.6770628Z node: v24.21.0
+2026-10-12T13:04:25.6770937Z npm: 11.19.0
+2026-10-12T13:04:25.6771137Z yarn: 1.22.22
+2026-10-12T13:04:25.6772186Z ##[endgroup]
+2026-10-12T13:04:25.6898843Z ##[group]Run npm install --global npm@11.15.0
+2026-10-12T13:04:25.6899172Z npm install --global npm@11.15.0
+2026-10-12T13:04:25.7279973Z shell: /usr/bin/bash -e {0}
+2026-10-12T13:04:25.7280225Z env:
+2026-10-12T13:04:25.7280434Z   ARCHIVE: release/neo-ui-kit-react-1.0.1.tgz
+2026-10-12T13:04:25.7280729Z   NPM_CONFIG_USERCONFIG: /home/runner/work/_temp/.npmrc
+2026-10-12T13:04:25.7281007Z   NODE_AUTH_TOKEN: XXXXX-XXXXX-XXXXX-XXXXX
+2026-10-12T13:04:25.7281253Z ##[endgroup]
+2026-10-12T13:04:30.1412694Z 
+2026-10-12T13:04:30.1421379Z changed 28 packages in 4s
+2026-10-12T13:04:30.1421674Z 
+2026-10-12T13:04:30.1421910Z 15 packages are looking for funding
+2026-10-12T13:04:30.1422302Z   run `npm fund` for details
+2026-10-12T13:04:30.1877869Z ##[group]Run actions/download-artifact@v4
+2026-10-12T13:04:30.1878123Z with:
+2026-10-12T13:04:30.1878292Z   name: npm-package
+2026-10-12T13:04:30.1878477Z   path: release
+2026-10-12T13:04:30.1878654Z   merge-multiple: false
+2026-10-12T13:04:30.1878845Z   repository: Pro100Dimka/adui
+2026-10-12T13:04:30.1879044Z   run-id: 38252999379
+2026-10-12T13:04:30.1879210Z env:
+2026-10-12T13:04:30.1879390Z   ARCHIVE: release/neo-ui-kit-react-1.0.1.tgz
+2026-10-12T13:04:30.1879662Z   NPM_CONFIG_USERCONFIG: /home/runner/work/_temp/.npmrc
+2026-10-12T13:04:30.1879922Z   NODE_AUTH_TOKEN: XXXXX-XXXXX-XXXXX-XXXXX
+2026-10-12T13:04:30.1880134Z ##[endgroup]
+2026-10-12T13:04:30.3073823Z Downloading single artifact
+2026-10-12T13:04:30.3189396Z (node:2239) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-12T13:04:30.3190048Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-12T13:04:30.5320312Z Preparing to download the following artifacts:
+2026-10-12T13:04:30.5321371Z - npm-package (ID: 11748742678, Size: 1666567, Expected Digest: sha256:82b34f8d314ed83675921df903ba93633ec74a6d78e194c24326f6963d2ebd93)
+2026-10-12T13:04:30.7497912Z Redirecting to blob download url: https://productionresultssa7.blob.core.windows.net/actions-results/877d0f52-2bc8-86a0-991c-1d3da3b35346/workflow-job-run-c21ad583-ab19-515e-8929-40056e08c707/artifacts/3dfb8a7c0b08804a37fc8735e76abbab9b2f08220e5e7268c5107c9d3f5fc25b.zip
+2026-10-12T13:04:30.7499672Z Starting download of artifact to: /home/runner/work/adui/adui/release
+2026-10-12T13:04:30.9769487Z (node:2239) [DEP0005] DeprecationWarning: Buffer() is deprecated due to security and usability issues. Please use the Buffer.alloc(), Buffer.allocUnsafe(), or Buffer.from() methods instead.
+2026-10-12T13:04:31.3773490Z SHA256 digest of downloaded artifact is 82b34f8d314ed83675921df903ba93633ec74a6d78e194c24326f6963d2ebd93
+2026-10-12T13:04:31.3774040Z Artifact download completed successfully.
+2026-10-12T13:04:31.3774342Z Total of 1 artifact(s) downloaded
+2026-10-12T13:04:31.3777813Z Download artifact has finished successfully
+2026-10-12T13:04:31.3883514Z ##[group]Run npm publish "$ARCHIVE" --access public --provenance --ignore-scripts --registry https://registry.npmjs.org
+2026-10-12T13:04:31.3884232Z npm publish "$ARCHIVE" --access public --provenance --ignore-scripts --registry https://registry.npmjs.org
+2026-10-12T13:04:31.3942875Z shell: /usr/bin/bash -e {0}
+2026-10-12T13:04:31.3943079Z env:
+2026-10-12T13:04:31.3943273Z   ARCHIVE: release/neo-ui-kit-react-1.0.1.tgz
+2026-10-12T13:04:31.3943560Z   NPM_CONFIG_USERCONFIG: /home/runner/work/_temp/.npmrc
+2026-10-12T13:04:31.3943839Z   NODE_AUTH_TOKEN: XXXXX-XXXXX-XXXXX-XXXXX
+2026-10-12T13:04:31.3944080Z ##[endgroup]
+2026-10-12T13:04:32.3169421Z npm error code 128
+2026-10-12T13:04:32.3171887Z npm error An unknown git error occurred
+2026-10-12T13:04:32.3173265Z npm error command git --no-replace-objects ls-remote ssh://git@github.com/release/neo-ui-kit-react-1.0.1.tgz.git
+2026-10-12T13:04:32.3176618Z npm error git@github.com: Permission denied (publickey).
+2026-10-12T13:04:32.3177042Z npm error fatal: Could not read from remote repository.
+2026-10-12T13:04:32.3177471Z npm error
+2026-10-12T13:04:32.3177887Z npm error Please make sure you have the correct access rights
+2026-10-12T13:04:32.3178410Z npm error and the repository exists.
+2026-10-12T13:04:32.3185827Z npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-10-12T13_04_31_444Z-debug-0.log
+2026-10-12T13:04:32.3331392Z ##[error]Process completed with exit code 128.
+2026-10-12T13:04:32.3443955Z Post job cleanup.
+2026-10-12T13:04:32.4126269Z [command]/usr/bin/git version
+2026-10-12T13:04:32.4160244Z git version 2.55.0
+2026-10-12T13:04:32.4192536Z Temporarily overriding HOME='/home/runner/work/_temp/e2e473a2-06ff-4ea7-b858-bb0ea7e9582a' before making global git config changes
+2026-10-12T13:04:32.4193668Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-12T13:04:32.4198151Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/adui/adui
+2026-10-12T13:04:32.4224783Z Removing SSH command configuration
+2026-10-12T13:04:32.4231146Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-12T13:04:32.4261416Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-12T13:04:32.4469844Z Removing HTTP extra header
+2026-10-12T13:04:32.4470874Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-12T13:04:32.4502531Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-12T13:04:32.4712888Z Removing includeIf entries pointing to credentials config files
+2026-10-12T13:04:32.4713419Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-12T13:04:32.4749880Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-12T13:04:32.5087501Z Cleaning up orphan processes
+2026-10-12T13:04:32.5315620Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/download-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
