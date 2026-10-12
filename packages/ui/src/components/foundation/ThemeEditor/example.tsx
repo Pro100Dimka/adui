@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { Playground, U, jsx, useSiteTheme } from "../../../dev/exampleHelpers";
-import type { ThemeConfig } from "@ad-voice/ui";
+import type { ThemeConfig } from "@neo-ui-kit/react";
 
 export default function ThemeEditorExample() {
   const site = useSiteTheme();

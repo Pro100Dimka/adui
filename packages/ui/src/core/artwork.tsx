@@ -29,19 +29,17 @@ export function vectorElement(
     node.children?.map((child, i) => vectorElement(child, prefix, i)),
   );
 }
-export function SvgAsset({
-  node,
-  className,
-  style,
-  label,
-  component,
-}: {
+export interface SvgAssetProps {
+  /** Trusted React-ready SVG tree. Repeated copies receive independent ids and references. */
   node: VectorNode;
   className?: string;
   style?: React.CSSProperties;
+  /** Accessible image name. Decorative SVG trees should set aria-hidden in node.props. */
   label?: string;
+  /** Optional data-ad-component attribute for styling and diagnostics. */
   component?: string;
-}) {
+}
+export function SvgAsset({ node, className, style, label, component }: SvgAssetProps) {
   const prefix = `svg-${useSvgId()}-`;
   const element = useMemo(
     () =>

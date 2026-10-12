@@ -1,10 +1,10 @@
-import { Button, Stack, type PickerPerson } from "@ad-voice/ui";
+import { Button, Stack, type PickerPerson } from "@neo-ui-kit/react";
 import {
   Form,
   FormFields,
   useForm,
   type FormFieldDefinition,
-} from "@ad-voice/ui/forms";
+} from "@neo-ui-kit/react/forms";
 
 type Values = {
   name: string;

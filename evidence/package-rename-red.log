@@ -1,0 +1,235 @@
+
+> @ad-voice/ui@2.9.3 test
+> vitest run ReleaseContracts.test.tsx
+
+
+ RUN  v3.2.7 D:/Git/adui/packages/ui
+
+stderr | tests/ReleaseContracts.test.tsx > theme and feedback contracts > keeps rejected controlled requests based on the actual prop while accumulating uncontrolled updates
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+ ❯ tests/ReleaseContracts.test.tsx (21 tests | 5 failed) 1240ms
+   ✓ theme and feedback contracts > removes a ripple when its animation is cancelled 1ms
+   ✓ theme and feedback contracts > does not accumulate invisible ripple nodes when motion is disabled 0ms
+   ✓ theme and feedback contracts > keeps rejected controlled requests based on the actual prop while accumulating uncontrolled updates 6ms
+   ✓ theme and feedback contracts > forwards the ThemeProvider root accessibility and data attributes 4ms
+   ✓ theme and feedback contracts > applies the light border halo rule to the attribute emitted by ThemeProvider 1ms
+   ✓ theme and feedback contracts > renders finite progress geometry and semantics for max=NaN 1ms
+   ✓ theme and feedback contracts > renders finite progress geometry and semantics for max=Infinity 0ms
+   ✓ theme and feedback contracts > renders finite progress geometry and semantics for max=-Infinity 0ms
+   ✓ theme and feedback contracts > preserves an explicit accessible name on ProgressBar 1ms
+   × shipped documentation > uses the approved package identity in the manifest and playground dependency 4ms
+     → expected '@ad-voice/ui' to be '@neo-ui/react' // Object.is equality
+   × shipped documentation > generates catalog imports from the renamed public package 1ms
+     → expected '@ad-voice/ui' to be '@neo-ui/react' // Object.is equality
+   × shipped documentation > adds the renamed package when a live example omits its component import 2ms
+     → expected 'import { Button } from "@ad-voice/ui"…' to contain 'from "@neo-ui/react"'
+   ✓ shipped documentation > declares a self-contained SVG favicon instead of requesting a missing favicon.ico 0ms
+   × shipped documentation > copies an installation command for the current checkout archive from the live catalog 0ms
+     → expected 'npm install /path/to/adui/release/ad-…' to be 'npm install /path/to/adui/release/neo…' // Object.is equality
+   × shipped documentation > documents installation from the current local package without relying on an older release 3ms
+     → expected '# Neo UI\n\nБиблиотека React-компонен…' to contain 'neo-ui-react-2.9.3.tgz'
+   ✓ shipped documentation > includes automated tests in the root verification and publish gates 0ms
+   ✓ shipped documentation > exports form component props beside their root component exports  484ms
+   ✓ shipped documentation > ships declarations that typecheck without skipLibCheck or resolveJsonModule  721ms
+   ✓ shipped documentation > gives every documented public component its own working page and example 2ms
+   ✓ shipped documentation > keeps font generation source scripts out of the shipped package 0ms
+   ✓ shipped documentation > only documents exports present in each package entry 6ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 5 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/ReleaseContracts.test.tsx > shipped documentation > uses the approved package identity in the manifest and playground dependency
+AssertionError: expected '@ad-voice/ui' to be '@neo-ui/react' // Object.is equality
+
+Expected: "@neo-ui/react"
+Received: "@ad-voice/ui"
+
+ ❯ tests/ReleaseContracts.test.tsx:94:27
+     92|     const manifest = JSON.parse(readFileSync(new URL("../package.json"…
+     93|     const playground = JSON.parse(readFileSync(new URL("../../../apps/…
+     94|     expect(manifest.name).toBe("@neo-ui/react");
+       |                           ^
+     95|     expect(playground.dependencies[manifest.name]).toBe("file:../../pa…
+     96|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/5]⎯
+
+ FAIL  tests/ReleaseContracts.test.tsx > shipped documentation > generates catalog imports from the renamed public package
+AssertionError: expected '@ad-voice/ui' to be '@neo-ui/react' // Object.is equality
+
+Expected: "@neo-ui/react"
+Received: "@ad-voice/ui"
+
+ ❯ tests/ReleaseContracts.test.tsx:100:35
+     98|   it("generates catalog imports from the renamed public package", () =…
+     99|     for (const item of catalog) {
+    100|       expect(getImportPath(item)).toBe(item.category === "editor" ? "@…
+       |                                   ^
+    101|     }
+    102|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/5]⎯
+
+ FAIL  tests/ReleaseContracts.test.tsx > shipped documentation > adds the renamed package when a live example omits its component import
+AssertionError: expected 'import { Button } from "@ad-voice/ui"…' to contain 'from "@neo-ui/react"'
+
+- Expected
++ Received
+
+- from "@neo-ui/react"
++ import { Button } from "@ad-voice/ui";
++ export default function Example() {
++   return (
++     <>
++       <Button>Preview</Button>
++     </>
++   );
++ }
+
+ ❯ tests/ReleaseContracts.test.tsx:105:50
+    103| 
+    104|   it("adds the renamed package when a live example omits its component…
+    105|     expect(toModule('<Button>Preview</Button>')).toContain('from "@neo…
+       |                                                  ^
+    106|   });
+    107| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/5]⎯
+
+ FAIL  tests/ReleaseContracts.test.tsx > shipped documentation > copies an installation command for the current checkout archive from the live catalog
+AssertionError: expected 'npm install /path/to/adui/release/ad-…' to be 'npm install /path/to/adui/release/neo…' // Object.is equality
+
+Expected: "npm install /path/to/adui/release/neo-ui-react-2.9.3.tgz"
+Received: "npm install /path/to/adui/release/ad-voice-ui-2.9.3.tgz"
+
+ ❯ tests/ReleaseContracts.test.tsx:116:28
+    114| 
+    115|   it("copies an installation command for the current checkout archive …
+    116|     expect(installCommand).toBe(`npm install /path/to/adui/release/neo…
+       |                            ^
+    117|     const overview = readFileSync(new URL("../../../apps/playground/sr…
+    118|     expect(overview).toContain("npm run package");
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/5]⎯
+
+ FAIL  tests/ReleaseContracts.test.tsx > shipped documentation > documents installation from the current local package without relying on an older release
+AssertionError: expected '# Neo UI\n\nБиблиотека React-компонен…' to contain 'neo-ui-react-2.9.3.tgz'
+
+- Expected
++ Received
+
+- neo-ui-react-2.9.3.tgz
++ # Neo UI
++
++ Библиотека React-компонентов `@ad-voice/ui` и документация к ней (playground).
++
++ Документация: https://pro100dimka.github.io/adui/
++
++ ```text
++ packages/ui/       — библиотека (публикуется как npm-пакет)
++ apps/playground/   — сайт документации: по странице на компонент
++ ```
++
++ ## Разработка
++
++ Нужен Node.js 20+.
++
++ ```bash
++ npm install
++ npm run dev
++ ```
++
++ На Windows можно дважды щёлкнуть `START_DEV.cmd`.
++
++ Playground подключает исходники `packages/ui/src` напрямую, поэтому изменения видны сразу, без пересборки пакета.
++
++ ## Компонент
++
++ Один компонент — одна папка:
++
++ ```text
++ packages/ui/src/components/<категория>/<Component>/
++ ├─ <Component>.tsx   реализация
++ ├─ styles.css        стили (подключить в src/components.css)
++ ├─ example.tsx       живой пример для документации
++ └─ meta.ts           название, описание, категория навигации
++ ```
++
++ Новый публичный компонент нужно экспортировать из `packages/ui/src/index.ts`. Поле `category` в `meta.ts` — это id раздела из `apps/playground/src/catalog/catalogNavigation.ts`.
++
++ ## Проверка
++
++ ```bash
++ npm run check
++ ```
++
++ Запускает typecheck, сборку библиотеки и playground, затем весь набор автоматических тестов.
++
++ ## npm-пакет
++
++ Собрать текущие исходники в локальный пакет:
++
++ ```bash
++ npm run package
++ ```
++
++ Установить полученный архив в отдельное приложение (путь задаётся относительно приложения):
++
++ ```bash
++ npm install /path/to/adui/release/ad-voice-ui-2.9.3.tgz react react-dom
++ ```
++
++ Пакет содержит ESM, декларации типов и CSS; React 18.2–19 устанавливает приложение. Стили нужно подключить один раз: `import "@ad-voice/ui/styles.css"`.
++
++ Подготовка новой версии:
++
++ ```bash
++ npm run release:patch          # или release:minor / release:major — поднимает версию
++ npm run check
++ npm run package
++ ```
++
++ Создание и отправка тега `v<версия>` запускает публичный GitHub Release. Это отдельный шаг после проверки архива и разрешения владельца. Локальные команды выше ничего не публикуют. Лицензия пакета сейчас `UNLICENSED`.
++
++ ## Документация
++
++ ```bash
++ npm run docs     # собирает сайт в docs/, его раздаёт GitHub Pages
++ ```
++
++ Использование — в [packages/ui/README.md](packages/ui/README.md).
++
++ ## Доказательства проверки текущего checkout
++
++ [Итоговый отчёт](evidence/release-report.json) содержит идентификатор и SHA-256 проверенного архива, результаты проверок, измерения до/после и ограничения доступных окружений. [Реестр библиотеки](evidence/library-inventory.json) связывает публичные компоненты, props, экспорты и токены с матрицами сценариев. Файлы `*-audit.json`, исходные `*-red.json`, итоговые `*-green.json` и снимки в `evidence/` сохраняют ход исправлений.
++
++ Браузерные проверки используют установленный Playwright и Chrome; задайте `PLAYWRIGHT_PATH` как путь к модулю Playwright, если он не доступен по указанному в скриптах локальному пути. Для проверки production-документации запустите `npm run preview`, задайте `UI_BASE_URL` с её адресом и выполните `node evidence/check-docs.mjs --sweep`. Проверка доступности — `node evidence/check-accessibility.mjs`; ей нужен `axe-core` в `release/consumer-react19/node_modules`.
++
++ `evidence/consumer.tsx` — минимальный потребитель только публичных импортов. `check-consumer.mjs <каталог приложения> <имя прогона>` проверяет установленный `.tgz` в браузере; `BROWSER_CHANNEL=msedge` выбирает Edge. `check-package.mjs <каталог приложения>` проверяет entry points, серверную разметку и исключение постороннего кода из bundle Button. Зависимости тестовых приложений находятся в `release/consumer-react18` и `release/consumer-react19` и не входят в Git или npm-пакет.
++
++ Ограничения проверки названия Neo UI для международного использования, включая ЕС и США, записаны в [name-screening.json](evidence/name-screening.json). Имя npm-пакета остаётся `@ad-voice/ui`; локальная подготовка артефактов не публикует библиотеку или сайт.
++
+
+ ❯ tests/ReleaseContracts.test.tsx:126:22
+    124|     for (const file of ["../../../README.md", "../README.md"]) {
+    125|       const readme = readFileSync(new URL(file, import.meta.url), "utf…
+    126|       expect(readme).toContain(`neo-ui-react-${manifest.version}.tgz`);
+       |                      ^
+    127|       expect(readme).not.toMatch(/releases\/download\/v\d+\.\d+\.\d+\/…
+    128|     }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/5]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  5 failed | 16 passed (21)
+   Start at  14:54:58
+   Duration  2.54s (transform 359ms, setup 0ms, collect 1.10s, tests 1.24s, environment 0ms, prepare 70ms)
+
+npm error Lifecycle script `test` failed with error:
+npm error code 1
+npm error path D:\Git\adui\packages\ui
+npm error workspace @ad-voice/ui@2.9.3
+npm error location D:\Git\adui\packages\ui
+npm error command failed
+npm error command C:\Windows\system32\cmd.exe /d /s /c vitest run ReleaseContracts.test.tsx

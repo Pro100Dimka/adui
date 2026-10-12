@@ -143,6 +143,15 @@ it("shares one visibility observer and preference listener across many motion sc
   expect(media.removeEventListener).toHaveBeenCalledOnce();
 });
 
+it("keeps SVG motion preferences local instead of locking the entire document off", () => {
+  const node = { dataset: {} as Record<string, string> };
+  const scope = engine.createMotion(node as unknown as SVGElement);
+  scope.set(false);
+  expect(node.dataset.adMotion).toBe("off");
+  expect(document.documentElement.dataset.adMotion).toBeUndefined();
+  scope.dispose();
+});
+
 it("does not force layout when 95 deferred borders mount outside the viewport", async () => {
   const { geometry, host } = borderFixture();
   const borders = Array.from({ length: 95 }, () => {
@@ -360,6 +369,25 @@ it("wakes CSS-only loops when the shared offscreen hook reveals their block", as
   observe(boundary as unknown as Element, true);
   expect(engine.getMotionStats().scheduled).toBe(true);
   act(() => tree.unmount());
+});
+
+it("disconnects the shared CSS visibility observer after its last boundary unmounts", async () => {
+  vi.stubGlobal("IS_REACT_ACT_ENVIRONMENT", true);
+  const { createElement, useRef } = await import("react");
+  const { act, create } = await import("react-test-renderer");
+  const { usePauseOffscreen } = await import("../src/core/motion/hooks");
+  function Block() {
+    const ref = useRef<Element>(null);
+    usePauseOffscreen(ref);
+    return createElement("div", { ref });
+  }
+  let tree!: ReturnType<typeof create>;
+  act(() => { tree = create(createElement(Block), { createNodeMock: () => ({ removeAttribute() {} }) }); });
+  const observer = observerInstances.at(-1)!;
+  expect(observer.observe).toHaveBeenCalledOnce();
+  act(() => tree.unmount());
+  expect(observer.unobserve).toHaveBeenCalledOnce();
+  expect(observer.disconnect).toHaveBeenCalledOnce();
 });
 
 it("does not add hidden elapsed time when the whole clock sleeps offscreen", async () => {

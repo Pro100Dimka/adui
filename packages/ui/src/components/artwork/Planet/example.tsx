@@ -1,4 +1,4 @@
-import { Planet } from "@ad-voice/ui";
+import { Planet } from "@neo-ui-kit/react";
 
 export default function PlanetExample() {
   return <Planet />;

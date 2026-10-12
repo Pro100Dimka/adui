@@ -1,4 +1,4 @@
-import type { MouseEventHandler, ReactNode, Ref } from "react";
+import { forwardRef, type MouseEventHandler, type ReactNode, type Ref } from "react";
 import { mark, type CommonProps } from "../../../core/base";
 import type { InputVariant } from "../shared";
 
@@ -20,7 +20,7 @@ export interface InputBaseProps extends CommonProps {
   onClick?: MouseEventHandler<HTMLDivElement>;
 }
 
-export const InputBase = ({
+export const InputBase = /* @__PURE__ */ forwardRef<HTMLDivElement, InputBaseProps>(function InputBase({
   startAdornment,
   endAdornment,
   disabled,
@@ -31,11 +31,10 @@ export const InputBase = ({
   label,
   labelId,
   filled,
-  ref,
   onClick,
   children,
   ...p
-}: InputBaseProps) => (
+}, ref) { return (
   <div
     {...mark("InputBase", p, "input")}
     ref={ref}
@@ -63,4 +62,4 @@ export const InputBase = ({
       </span>
     )}
   </div>
-);
+); });

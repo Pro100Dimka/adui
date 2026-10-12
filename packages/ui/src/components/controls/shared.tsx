@@ -13,6 +13,7 @@ import {
   type Variant,
 } from "../../core/base";
 import { Icon } from "../layout/Icon/Icon";
+import type { MenuProps } from "../feedback/shared";
 import { variantMaterial } from "./internal";
 
 export interface ButtonProps
@@ -99,7 +100,7 @@ export interface SplitButtonProps extends CommonProps {
   variant?: Variant;
   icon?: string;
   label?: string;
-  items?: any[];
+  items?: MenuProps["items"];
   onClick?: () => void;
   children?: ReactNode;
 }
@@ -208,6 +209,9 @@ export interface SelectOption<V = string> {
 /**
  * `V` is the type of the values: strings, numbers or whole objects, e.g. `Select<User>`;
  * the handler gets that exact type back.
+ * `className` and `style` size the field wrapper; `id`, ARIA and data attributes target
+ * the native trigger button. Explicit ARIA replaces the field label; the rendered value
+ * remains part of the button's accessible name for voice control.
  */
 export interface SelectProps<V = string> extends CommonProps {
   label?: ReactNode;
@@ -250,10 +254,13 @@ export interface BooleanProps extends CommonProps {
   /** Checkbox only: neither on nor off, e.g. "select all" when some rows are chosen. */
   indeterminate?: boolean;
 }
+export interface BooleanControlProps extends BooleanProps {
+  kind: "Switch" | "Checkbox";
+}
 export function BooleanControl({
   kind,
   ...p
-}: BooleanProps & { kind: "Switch" | "Checkbox" }) {
+}: BooleanControlProps) {
   const [checked, setChecked] = useControllable(
     p.checked,
     p.defaultChecked ?? false,
@@ -273,6 +280,9 @@ export function BooleanControl({
         checked={checked}
         disabled={p.disabled}
         required={p.required}
+        aria-label={p["aria-label"]}
+        aria-labelledby={p["aria-labelledby"]}
+        aria-describedby={p["aria-describedby"]}
         onChange={(e) => setChecked(e.currentTarget.checked)}
       />
       <span className="ad-toggle-track" aria-hidden="true">

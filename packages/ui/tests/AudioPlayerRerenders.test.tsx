@@ -87,3 +87,40 @@ it("resets a paused timeline when its audio source is replaced without emitting 
   expect(onTimeChange.mock.calls).toEqual([[12]]);
   act(() => tree.unmount());
 });
+
+it("disables every audio player control including mute and volume", () => {
+  vi.stubGlobal("IS_REACT_ACT_ENVIRONMENT", true);
+  let tree!: ReturnType<typeof create>;
+  act(() => { tree = create(<AudioPlayer disabled />); });
+  expect(tree.root.findAllByType(IconButton).every((button) => button.props.disabled)).toBe(true);
+  expect(tree.root.findByType(Slider).props.disabled).toBe(true);
+  act(() => tree.unmount());
+});
+
+it("announces native playback completion to the latest callback after a props update", () => {
+  vi.stubGlobal("IS_REACT_ACT_ENVIRONMENT", true);
+  let media!: EventTarget;
+  vi.stubGlobal("Audio", class extends EventTarget {
+    constructor() { super(); media = this; }
+    pause() {}
+  });
+  const first = vi.fn(), latest = vi.fn();
+  let tree!: ReturnType<typeof create>;
+  act(() => { tree = create(<AudioPlayer src="track.mp3" points={[1]} onPlayingChange={first} />); });
+  act(() => tree.update(<AudioPlayer src="track.mp3" points={[1]} onPlayingChange={latest} />));
+  act(() => media.dispatchEvent(new Event("ended")));
+  expect(first).not.toHaveBeenCalled();
+  expect(latest).toHaveBeenCalledExactlyOnceWith(false);
+  act(() => tree.unmount());
+});
+
+it("lets a controlled audio volume report the requested value without changing its readout", () => {
+  vi.stubGlobal("IS_REACT_ACT_ENVIRONMENT", true);
+  const onVolumeChange = vi.fn();
+  let tree!: ReturnType<typeof create>;
+  act(() => { tree = create(<AudioPlayer volume={0.2} onVolumeChange={onVolumeChange} />); });
+  act(() => tree.root.findByType(Slider).props.onValueChange?.(0.7));
+  expect(onVolumeChange).toHaveBeenCalledExactlyOnceWith(0.7);
+  expect(tree.root.findByType(Slider).props.value).toBe(0.2);
+  act(() => tree.unmount());
+});

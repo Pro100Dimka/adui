@@ -1,5 +1,6 @@
 import { createElement, useCallback, useRef, useState } from "react";
 import type { AriaRole, CSSProperties, ReactNode, Ref } from "react";
+import { motionEnabled } from "./providers/context";
 
 export type Material =
   | "shell"
@@ -113,7 +114,7 @@ export function useControllable<T>(
         : next;
     if (old.value === undefined) setInternal(resolved);
     if (!Object.is(resolved, old.current)) old.onChange?.(resolved);
-    latest.current.current = resolved;
+    if (old.value === undefined) latest.current.current = resolved;
   }, []);
   return [current, update] as const;
 }
@@ -163,11 +164,13 @@ export function downloadFile(
 
 /** Spreads a ring of light from the pointer inside `host` (which should clip its overflow). */
 export function ripple(host: HTMLElement, clientX: number, clientY: number) {
+  if (!motionEnabled()) return;
   const rect = host.getBoundingClientRect();
   const ring = document.createElement("span");
   ring.className = "ad-ripple";
   ring.style.left = `${clientX - rect.left}px`;
   ring.style.top = `${clientY - rect.top}px`;
   ring.addEventListener("animationend", () => ring.remove());
+  ring.addEventListener("animationcancel", () => ring.remove());
   host.append(ring);
 }

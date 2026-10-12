@@ -1,4 +1,4 @@
-import { Button, Stack } from "@ad-voice/ui";
+import { Button, Stack } from "@neo-ui-kit/react";
 
 /** Column on phones, row from md: one prop instead of media queries. */
 export default function StackExample() {

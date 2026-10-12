@@ -1,4 +1,4 @@
-import { KeyValueList, StatusIndicator } from "@ad-voice/ui";
+import { KeyValueList, StatusIndicator } from "@neo-ui-kit/react";
 
 export default function KeyValueListExample() {
   return (

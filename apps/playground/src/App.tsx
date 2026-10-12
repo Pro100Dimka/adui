@@ -1,22 +1,22 @@
-import { LocaleProvider, addMessages, translate } from "@ad-voice/ui";
+import { LocaleProvider, addMessages, translate } from "@neo-ui-kit/react";
 import { docsMessages } from "./app/docsMessages";
-import { memo, useCallback, useEffect, useMemo, useState } from "react";
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   Badge,
   Button,
   Icon,
+  IconButton,
   Link,
+  Menu,
   Router,
-  SegmentedControl,
   Stack,
-  Switch,
   ThemeProvider,
+  Tooltip,
   Toolbar,
-  themes,
   Typography,
   useReducedMotion,
   type RouteDefinition,
-} from "@ad-voice/ui";
+} from "@neo-ui-kit/react";
 import { CatalogPage } from "./catalog/CatalogPage";
 import { componentCount } from "./catalog/componentRegistry";
 import { SettingsPanel } from "./app/SettingsPanel";
@@ -25,8 +25,13 @@ import {
   siteAppearanceTokens,
   siteThemeProps,
   useSiteSettings,
-  type SiteSettings,
 } from "./app/siteSettings";
+
+const languages = {
+  ru: { label: "RU", name: "Русский" },
+  en: { label: "EN", name: "English" },
+  uk: { label: "UA", name: "Українська" },
+} as const;
 
 const routes: RouteDefinition[] = [
   {
@@ -48,6 +53,8 @@ export default function App() {
   const [settings, update, reset] = useSiteSettings();
   const tr = (text: string) => translate(settings.locale, text);
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const [languageOpen, setLanguageOpen] = useState(false);
+  const languageAnchor = useRef<HTMLButtonElement>(null);
   const themed = useMemo(
     () => siteThemeProps(settings),
     [settings.themeConfig, settings.appearance, settings.font, settings.headingFont],
@@ -106,7 +113,7 @@ export default function App() {
               <Icon name="wave" size="1.55rem" surface="tile" />
               <Stack gap={0}>
                 <Typography variant="title" weight="bold">
-                  Neo UI
+                  NEO UI
                 </Typography>
                 <Typography variant="eyebrow" tone="muted">
                   React component system
@@ -117,42 +124,59 @@ export default function App() {
               className="site-tools"
               direction="row"
               align="center"
-              gap={3}
+              gap={2}
             >
               <Badge>{componentCount} {tr("компонентов")}</Badge>
-              <SegmentedControl<SiteSettings["appearance"]>
-                className="site-appearance"
-                label={tr("Оформление")}
-                value={settings.appearance}
-                onValueChange={(appearance) => update({ appearance })}
-                items={[
-                  { value: "light", label: tr("Светлая") },
-                  { value: "dark", label: tr("Тёмная") },
-                ]}
-              />
-              <SegmentedControl<SiteSettings["locale"]>
-                className="site-locale"
-                label={tr("Язык")}
-                value={settings.locale}
-                onValueChange={(locale) => update({ locale })}
-                items={[
-                  { value: "ru", label: "RU" },
-                  { value: "en", label: "EN" },
-                  { value: "uk", label: "UA" },
-                ]}
-              />
+              {[
+                {
+                  className: "site-appearance", icon: "bulb", label: tr("Светлая"),
+                  hint: tr(settings.appearance === "dark" ? "Включить светлую тему" : "Включить тёмную тему"),
+                  "aria-pressed": settings.appearance === "light",
+                  onClick: () => update({ appearance: settings.appearance === "dark" ? "light" : "dark" }),
+                },
+                {
+                  className: "site-settings-trigger", icon: "palette", label: tr("Тема и настройки"),
+                  onClick: () => setSettingsOpen(true),
+                },
+                {
+                  className: "site-motion", icon: "motion", label: tr("Анимации"),
+                  "aria-pressed": motion, onClick: () => setExplicit(!motion),
+                },
+              ].map(({ hint, ...action }) => (
+                <Tooltip key={action.className} content={hint ?? action.label} placement="bottom">
+                  <IconButton {...action} size="sm" variant="ghost" title="" />
+                </Tooltip>
+              ))}
               <Button
+                ref={languageAnchor}
+                className="site-locale"
                 size="sm"
-                variant="secondary"
-                icon="palette"
-                onClick={() => setSettingsOpen(true)}
+                variant="ghost"
+                aria-label={`${tr("Язык")}: ${languages[settings.locale].label}`}
+                aria-haspopup="menu"
+                aria-expanded={languageOpen}
+                onClick={() => setLanguageOpen((open) => !open)}
+                onKeyDown={(event) => {
+                  if (event.key === "ArrowDown") {
+                    event.preventDefault();
+                    setLanguageOpen(true);
+                  }
+                }}
               >
-                {tr("Тема")}
+                {languages[settings.locale].label}
               </Button>
-              <Switch
-                label={tr("Анимации")}
-                checked={motion}
-                onValueChange={setExplicit}
+              <Menu
+                className="site-language-menu"
+                open={languageOpen}
+                onOpenChange={setLanguageOpen}
+                anchorRef={languageAnchor}
+                label={`${tr("Язык")}: ${languages[settings.locale].name}`}
+                items={Object.entries(languages).map(([locale, language]) => ({
+                  id: locale,
+                  label: language.name,
+                  endIcon: locale === settings.locale ? "check" : undefined,
+                  onSelect: () => update({ locale: locale as keyof typeof languages }),
+                }))}
               />
             </Stack>
           </Toolbar>

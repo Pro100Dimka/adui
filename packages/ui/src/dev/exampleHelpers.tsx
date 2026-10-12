@@ -1,4 +1,4 @@
-import { tr, useTr } from "../core/i18n";
+import { useTr } from "../core/i18n";
 import {
   createContext,
   useContext,
@@ -57,9 +57,11 @@ export const ExampleCodeContext = createContext<
   ((code: string) => void) | null
 >(null);
 
-/** A prop the reader can change: a list of options (segmented) or a flag (switch). */
+/** Named choices, a numeric parameter or a boolean flag. */
 export type Knob =
-  { options: readonly string[]; value: string } | { value: boolean };
+  | { options: readonly string[]; value: string }
+  | { value: number; min?: number; max?: number; step?: number }
+  | { value: boolean };
 type KnobValue<K> = K extends { options: readonly (infer O)[] }
   ? O
   : K extends { value: infer V }
@@ -187,12 +189,18 @@ export function Playground<K extends Record<string, Knob>>({
   extra?: ReactNode;
 }) {
   const tr = useTr();
-  const [values, setValues] = useState(
+  const [drafts, setDrafts] = useState(
     () =>
       Object.fromEntries(
         Object.entries(knobs).map(([k, v]) => [k, v.value]),
-      ) as KnobValues<K>,
+      ) as Record<keyof K, string | number | boolean>,
   );
+  const values = Object.fromEntries(Object.entries(knobs).map(([key, knob]) => {
+    if (typeof knob.value !== "number") return [key, drafts[key]];
+    const step = knob.step ?? 1, start = knob.min ?? 0;
+    const number = Number(drafts[key] === "" ? knob.value : drafts[key]);
+    return [key, UI.clamp(start + Math.round((number - start) / step) * step, knob.min ?? -Infinity, knob.max ?? Infinity)];
+  })) as KnobValues<K>;
   const report = useContext(ExampleCodeContext);
   const preview = useContext(ExamplePreviewContext);
   const spread = Object.keys(knobs).find(
@@ -214,8 +222,8 @@ export function Playground<K extends Record<string, Knob>>({
       report(source);
     }
   }, [report, source]);
-  const set = (key: keyof K, value: string | boolean) =>
-    setValues((old) => ({ ...old, [key]: value }));
+  const set = (key: keyof K, value: string | number | boolean) =>
+    setDrafts((old) => ({ ...old, [key]: value }));
 
   return (
     <div className="example-playground">
@@ -238,16 +246,26 @@ export function Playground<K extends Record<string, Knob>>({
           {Object.entries(knobs)
             .filter(([key]) => key !== spread)
             .map(([key, knob]) =>
-              "options" in knob ? (
+              typeof knob.value !== "boolean" ? (
                 <div className="example-knob" key={key}>
                   <span>{tr(knobLabels[key] ?? key)}</span>
-                  <U.SegmentedControl
+                  {"options" in knob ? <U.SegmentedControl
                     size="xs"
                     label={tr(knobLabels[key] ?? key)}
                     value={values[key] as string}
                     onValueChange={(v) => set(key, v)}
                     items={knob.options.map((o) => ({ value: o, label: o }))}
-                  />
+                  /> : <U.NumberField
+                    size="xs"
+                    aria-label={tr(knobLabels[key] ?? key)}
+                    value={drafts[key] as number | ""}
+                    min={knob.min}
+                    max={knob.max}
+                    step={knob.step ?? 1}
+                    style={{ width: "8rem", maxWidth: "100%" }}
+                    onValueChange={(value) => set(key, value)}
+                    onBlur={() => set(key, values[key] as number)}
+                  />}
                 </div>
               ) : (
                 <U.Switch

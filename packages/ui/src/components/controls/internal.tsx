@@ -1,5 +1,5 @@
-import { Fragment, useId, type ReactNode } from "react";
-import type { Material, Variant } from "../../core/base";
+import { Fragment, useId, useLayoutEffect, type ReactNode } from "react";
+import type { CommonProps, Material, TokenStyle, Variant } from "../../core/base";
 import { Icon } from "../layout/Icon/Icon";
 import { Avatar } from "../layout/Avatar/Avatar";
 
@@ -40,24 +40,49 @@ export const fieldLabel = (label: ReactNode, required?: boolean) => (
 /**
  * Ids that tie a control to its own label and message. The frame is a wrapping label (a click
  * anywhere on the field focuses the control), but its text also holds the message and any
- * adornment buttons, so the accessible name is pointed at the label text alone.
+ * adornment buttons, so the generated name points at the label text. Explicit ARIA names
+ * and descriptions take precedence over the generated connections.
  */
-export const useFieldIds = (label: ReactNode, message: ReactNode) => {
+export const useFieldIds = (
+  label: ReactNode,
+  message: ReactNode,
+  controlId?: string,
+  aria: Pick<CommonProps, "aria-label" | "aria-labelledby" | "aria-describedby"> = {},
+) => {
   const id = useId();
-  const ids = { label: `${id}label`, message: `${id}message` };
+  const ids = { label: `${id}label`, message: `${id}message`, control: controlId ?? `${id}control`, value: `${id}value` };
+  const labelledBy = aria["aria-labelledby"] ?? (!aria["aria-label"] && label ? ids.label : undefined);
+  const valueLabel = labelledBy ?? (aria["aria-label"] ? ids.control : undefined);
   return {
     ...ids,
+    // Button fields expose their visible selection through the name, unlike native input values.
+    valueLabelledBy: valueLabel ? `${valueLabel} ${ids.value}` : undefined,
     aria: {
-      "aria-labelledby": label ? ids.label : undefined,
-      "aria-describedby": message ? ids.message : undefined,
+      "aria-label": aria["aria-label"],
+      "aria-labelledby": labelledBy,
+      "aria-describedby": aria["aria-describedby"] ?? (message ? ids.message : undefined),
     },
   };
 };
 export type FieldIds = ReturnType<typeof useFieldIds>;
 
+/** Keep a combobox's virtual focus visible without moving its typing focus or the page. */
+export function useActiveOption(listId: string, active: number, open: boolean) {
+  useLayoutEffect(() => {
+    if (!open || typeof document === "undefined") return;
+    const option = document.getElementById(`${listId}-option-${active}`);
+    const list = option?.closest<HTMLElement>(".ad-option-list");
+    if (!option || !list) return;
+    const row = option.getBoundingClientRect(), viewport = list.getBoundingClientRect();
+    if (row.top < viewport.top) list.scrollTop -= viewport.top - row.top;
+    else if (row.bottom > viewport.bottom) list.scrollTop += row.bottom - viewport.bottom;
+  }, [listId, active, open]);
+}
+
 /** Label, control and description/error line shared by every text-like field. */
 export function FieldFrame({
   className,
+  style,
   label,
   required,
   description,
@@ -66,6 +91,7 @@ export function FieldFrame({
   children,
 }: {
   className: string;
+  style?: TokenStyle;
   ids: FieldIds;
   label?: ReactNode;
   required?: boolean;
@@ -74,7 +100,7 @@ export function FieldFrame({
   children: ReactNode;
 }) {
   return (
-    <label className={`ad-field ${className}`}>
+    <label className={`ad-field ${className}`} style={style} htmlFor={ids.control}>
       {label && (
         <span className="ad-field-label" id={ids.label}>{fieldLabel(label, required)}</span>
       )}
@@ -107,7 +133,6 @@ export function OptionList({
 }) {
   return (
     <div
-      id={id}
       className="ad-option-list"
       onKeyDown={(e) => {
         const keys = ["ArrowDown", "ArrowUp", "Home", "End"];
@@ -135,12 +160,15 @@ export function OptionList({
             <div className="ad-option-group" role="presentation">{option.group}</div>
           )}
           <button
+            id={id ? `${id}-option-${index}` : undefined}
             type="button"
             role="option"
             className="ad-option"
             aria-selected={option.value === selected}
             data-active={index === active || undefined}
             disabled={option.disabled}
+            tabIndex={active === undefined ? undefined : -1}
+            onPointerDown={active === undefined ? undefined : (event) => event.preventDefault()}
             onPointerMove={() => onHover?.(index)}
             onClick={() => onChoose(option.value)}
           >

@@ -1,0 +1,94 @@
+[
+  {
+    "slug": "data-table",
+    "issues": [],
+    "buttonNames": [
+      {
+        "visible": "Исполнитель",
+        "name": "Групувати за Исполнитель"
+      },
+      {
+        "visible": "6",
+        "name": "Рядків на сторінці 6"
+      }
+    ]
+  },
+  {
+    "slug": "select",
+    "issues": [],
+    "buttonNames": [
+      {
+        "visible": "Выберите устройство",
+        "name": "Микрофон Выберите устройство"
+      },
+      {
+        "visible": "Выберите устройство",
+        "name": "Микрофон Выберите устройство"
+      },
+      {
+        "visible": "Выберите устройство",
+        "name": "Микрофон Выберите устройство"
+      }
+    ]
+  },
+  {
+    "slug": "color-picker",
+    "issues": [],
+    "buttonNames": [
+      {
+        "visible": "#FF244C",
+        "name": "Основной цвет #FF244C"
+      }
+    ]
+  },
+  {
+    "slug": "form-fields",
+    "issues": [
+      {
+        "id": "label-content-name-mismatch",
+        "nodes": [
+          {
+            "html": "<button type=\"button\" class=\"ad-file-picker-avatar-button\" aria-label=\"Изменить фото: Дмитрий\">",
+            "target": [
+              ".ad-file-picker-avatar-button"
+            ]
+          }
+        ]
+      }
+    ],
+    "buttonNames": [
+      {
+        "visible": "ASIO",
+        "name": "Драйвер ASIO"
+      },
+      {
+        "visible": "#FF244C",
+        "name": "Цвет комнаты #FF244C"
+      }
+    ]
+  },
+  {
+    "slug": "theme-editor",
+    "issues": [],
+    "buttonNames": [
+      {
+        "visible": "#FF244C",
+        "name": "Основний колір #FF244C"
+      },
+      {
+        "visible": "#FF7C97",
+        "name": "Другий колір #FF7C97"
+      }
+    ]
+  },
+  {
+    "slug": "loader-generator",
+    "issues": [],
+    "buttonNames": [
+      {
+        "visible": "#FF244C",
+        "name": "Колір ефектів #FF244C"
+      }
+    ]
+  }
+]

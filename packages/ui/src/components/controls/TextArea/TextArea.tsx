@@ -19,7 +19,7 @@ export const TextArea = ({
   resize = "vertical",
   tone: _tone,
   material: _material,
-  style: _style,
+  style,
   ...textarea
 }: TextAreaProps) => {
   const [current, setCurrent] = useControllable(
@@ -27,11 +27,12 @@ export const TextArea = ({
     defaultValue,
     onValueChange,
   );
-  const ids = useFieldIds(label, description || error);
+  const ids = useFieldIds(label, description || error, textarea.id, textarea);
   const floating = labelPlacement === "floating" && !!label;
   return (
     <FieldFrame
       ids={ids}
+      style={style}
       className={`ad-text-area ad-text-area--resize-${resize} ${className ?? ""}`}
       label={floating ? undefined : label}
       required={textarea.required}
@@ -54,7 +55,9 @@ export const TextArea = ({
         <textarea
           {...ids.aria}
           {...textarea}
+          id={ids.control}
           value={current}
+          aria-invalid={!!error || textarea["aria-invalid"]}
           onChange={(e) => setCurrent(e.currentTarget.value)}
         />
       </InputBase>

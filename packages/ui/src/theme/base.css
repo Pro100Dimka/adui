@@ -83,6 +83,8 @@ button.ad:focus-visible {
   max-width: none;
   max-height: none;
   overflow: visible;
+  /* Decorative overflow can paint outside the host without enlarging its scroll area. */
+  contain: layout;
   pointer-events: none;
   user-select: none;
   z-index: 20;
@@ -100,6 +102,8 @@ button.ad:focus-visible {
 .ad-border-core {
   position: absolute;
   inset: -16px;
+  /* The mask hides paint, but only clipping keeps moving lights out of scroll geometry. */
+  overflow: clip;
   mask-size: 100% 100%;
   mask-repeat: no-repeat;
   -webkit-mask-size: 100% 100%;
@@ -116,7 +120,7 @@ button.ad:focus-visible {
 [data-ad-motion="off"] .ad-border-light {
   will-change: auto;
 }
-[data-ad-color-mode="light"] .ad-border .ad-border-aura {
+[data-ad-color-scheme="light"] .ad-border .ad-border-aura {
   opacity: 0.4;
 }
 .ad-spinner {
@@ -144,7 +148,13 @@ button.ad:focus-visible {
   transition-duration: 0.01ms !important;
 }
 @media (prefers-reduced-motion: reduce) {
-  .ad * {
+  :root:not([data-ad-motion="on"]) :is(.ad, .ad *),
+  :root:not([data-ad-motion="on"]) :is(.ad, .ad *)::before,
+  :root:not([data-ad-motion="on"]) :is(.ad, .ad *)::after,
+  :root:not([data-ad-motion="on"]) .ad-dialog::backdrop {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0s !important;
+    animation-iteration-count: 1 !important;
     transition: none !important;
   }
 }

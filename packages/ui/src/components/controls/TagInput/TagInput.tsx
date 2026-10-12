@@ -1,6 +1,6 @@
-import { tr, useTr } from "../../../core/i18n";
+import { useTr } from "../../../core/i18n";
 import { useState } from "react";
-import { useControllable, type CommonProps } from "../../../core/base";
+import { mark, useControllable, type CommonProps } from "../../../core/base";
 import { Chip } from "../Chip/Chip";
 import { ChipField } from "../ChipField";
 import { Icon } from "../../layout/Icon/Icon";
@@ -46,6 +46,7 @@ export function TagInput({
   const full = max !== undefined && tags.length >= max;
 
   const add = (raw: string) => {
+    if (p.disabled || full) return;
     const seen = new Set(tags.map((tag) => tag.toLowerCase()));
     const fresh = raw
       .split(/[,\n;]/)
@@ -67,7 +68,7 @@ export function TagInput({
     : [];
 
   return (
-    <div className={`ad-tag-input ${p.className ?? ""}`} style={p.style} id={p.id}>
+    <div {...mark("TagInput", p)}>
       <ChipField
         className=""
         label={p.label}
@@ -86,7 +87,9 @@ export function TagInput({
           if (/[,;]/.test(next)) add(next);
           else setQuery(next);
         }}
-        inputProps={{ disabled: p.disabled || full, onPaste: (event) => {
+        inputProps={{ disabled: p.disabled || full,
+          "aria-label": p["aria-label"], "aria-labelledby": p["aria-labelledby"], "aria-describedby": p["aria-describedby"],
+          onPaste: (event) => {
           const text = event.clipboardData.getData("text");
           if (/[,;\n]/.test(text)) {
             event.preventDefault();
@@ -94,6 +97,7 @@ export function TagInput({
           }
         } }}
         onKeyDown={(event) => {
+          if (event.nativeEvent?.isComposing) return;
           if (event.key === "Enter") {
             event.preventDefault();
             add(offered[0] && !query.includes(" ") && offered[0].toLowerCase().startsWith(query.toLowerCase()) ? offered[0] : query);
@@ -105,7 +109,7 @@ export function TagInput({
           <Chip key={tag} label={tag} disabled={p.disabled} onRemove={() => setTags(tags.filter((t) => t !== tag))} />
         ))}
       />
-      {offered.length > 0 && (
+      {!p.disabled && !full && offered.length > 0 && (
         <div className="ad-tag-input-suggestions" role="listbox" aria-label={tr("Подсказки")}>
           {offered.map((tag) => (
             <Chip key={tag} label={tag} icon="plus" onClick={() => add(tag)} />

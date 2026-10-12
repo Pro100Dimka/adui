@@ -1,4 +1,6 @@
 import { useTr } from "../../../core/i18n";
+import { useRef } from "react";
+import { usePauseOffscreen } from "../../../core/motion/hooks";
 import { mark, type CommonProps } from "../../../core/base";
 
 export interface ShimmerProps extends CommonProps {
@@ -17,9 +19,12 @@ export function Shimmer({
   ...p
 }: ShimmerProps) {
   const tr = useTr();
+  const ref = useRef<HTMLDivElement>(null);
+  usePauseOffscreen(ref);
   return (
     <div
       {...mark("Shimmer", p)}
+      ref={ref}
       role="status"
       aria-label={label ?? tr("Загрузка")}
       aria-busy="true"

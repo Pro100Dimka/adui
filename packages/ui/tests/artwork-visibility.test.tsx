@@ -11,6 +11,22 @@ afterEach(() => {
   vi.clearAllMocks();
 });
 
+it("paints its initial artwork when optional observer APIs are unavailable", async () => {
+  vi.stubGlobal("IS_REACT_ACT_ENVIRONMENT", true);
+  vi.stubGlobal("CanvasRenderingContext2D", class {});
+  vi.stubGlobal("window", { devicePixelRatio: 1 });
+  vi.stubGlobal("ResizeObserver", undefined);
+  vi.stubGlobal("IntersectionObserver", undefined);
+  const drawImage = vi.fn();
+  const canvas = { getBoundingClientRect: () => ({ width: 160, height: 40 }), getContext: () => ({ drawImage }), dataset: {} };
+  const painting = { pixels() {} };
+  function Artwork() { const ref = useRef<HTMLCanvasElement>(null); useArtwork(ref, "fallback", 160, 40, painting); return createElement("canvas", { ref }); }
+  let tree!: ReturnType<typeof create>;
+  await act(async () => { tree = create(createElement(Artwork), { createNodeMock: () => canvas }); });
+  expect(drawImage).toHaveBeenCalledOnce();
+  act(() => tree.unmount());
+});
+
 it("does not paint a library artwork until its canvas approaches the viewport", () => {
   vi.stubGlobal("IS_REACT_ACT_ENVIRONMENT", true);
   vi.stubGlobal("CanvasRenderingContext2D", class {});

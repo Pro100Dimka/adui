@@ -1,0 +1,1 @@
+import{r as n,E as r,j as e,P as s,U as t,a as u}from"./index-Gx8pVUf1.js";function i(){const a=n.useContext(r);return e.jsx(s,{knobs:{},code:()=>u("QuantumFieldExperience",{}),children:()=>a?e.jsx(t.QuantumField,{paused:!0,quality:"low"}):e.jsx(t.QuantumFieldExperience,{})})}export{i as default};

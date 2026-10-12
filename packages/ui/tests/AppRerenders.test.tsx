@@ -10,18 +10,17 @@ const counts = vi.hoisted(() => ({
   update: null as null | ((patch: object) => void),
 }));
 
-vi.mock("@ad-voice/ui", async () => {
+vi.mock("@neo-ui-kit/react", async () => {
   const React = await import("react");
   const { SiteThemeContext } = await import("../src/dev/exampleHelpers");
   const Frame = ({ children }: { children?: React.ReactNode }) => <>{children}</>;
+  const Action = ({ children, label, onClick }: { children?: React.ReactNode; label?: string; onClick?: () => void }) =>
+    <button aria-label={label} onClick={onClick}>{children}</button>;
   return {
     LocaleProvider: Frame, ThemeProvider: Frame, Stack: Frame, Toolbar: Frame,
-    Typography: Frame, Badge: Frame, Link: Frame,
+    Typography: Frame, Badge: Frame, Link: Frame, Tooltip: Frame,
     Icon: () => null,
-    Button: ({ children, onClick }: { children?: React.ReactNode; onClick?: () => void }) => <button onClick={onClick}>{children}</button>,
-    Switch: ({ label, checked, onValueChange }: { label: string; checked: boolean; onValueChange: (value: boolean) => void }) =>
-      <button onClick={() => onValueChange(!checked)}>{label}</button>,
-    SegmentedControl: () => null,
+    Button: Action, IconButton: Action, Menu: () => null,
     Router: () => {
       counts.route++;
       counts.theme = React.useContext(SiteThemeContext);
@@ -66,11 +65,11 @@ describe("documentation theme rendering", () => {
     const initial = counts.route;
     expect(counts.settings).toBe(0);
 
-    act(() => { tree.root.findAllByType("button").find((node) => node.props.children === "Тема")?.props.onClick(); });
+    act(() => { tree.root.findByProps({ "aria-label": "Тема и настройки" }).props.onClick(); });
     expect(counts.route).toBe(initial);
     expect(counts.settings).toBe(1);
 
-    act(() => { tree.root.findAllByType("button").find((node) => node.props.children === "Анимации")?.props.onClick(); });
+    act(() => { tree.root.findByProps({ "aria-label": "Анимации" }).props.onClick(); });
     expect(counts.settings).toBe(1);
 
     act(() => { counts.update?.({ font: "melodix" }); });

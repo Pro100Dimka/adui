@@ -191,7 +191,7 @@ function ColumnFilter<T extends DataTableRow>({
 }
 
 const field = (row: DataTableRow, key: string) =>
-  (row as Record<string, unknown>)[key];
+  Object.hasOwn(row, key) ? (row as Record<string, unknown>)[key] : undefined;
 
 /** Text of a cell for sorting and search: numbers stay numbers. */
 function cellValue<T extends DataTableRow>(column: DataTableColumn<T>, row: T) {
@@ -269,7 +269,7 @@ export function DataTable<T extends DataTableRow = DataTableRow>({
   defaultExpandedRows = [],
   onExpandedRowsChange,
   renderRowActions,
-  rowActionsWidth = 96,
+  rowActionsWidth = 120,
   rowNumbers = false,
   dense: controlledDense,
   densityToggle = false,
@@ -344,6 +344,8 @@ export function DataTable<T extends DataTableRow = DataTableRow>({
   const [expandedRows, setExpandedRows] = useControllable(controlledExpandedRows, defaultExpandedRows, onExpandedRowsChange);
   const [dense, setDense] = useControllable(controlledDense, false, onDenseChange);
   const [columnWidths, setColumnWidths] = useState<Record<string, number>>({});
+  const customWidth = (key: string) => Object.hasOwn(columnWidths, key) ? columnWidths[key] : undefined;
+  const [containerWidth, setContainerWidth] = useState(0);
   const resizing = useRef<{ key: string; x: number; width: number } | null>(null);
   const [columnsOpen, setColumnsOpen] = useState(false);
   const columnsAnchor = useRef<HTMLButtonElement>(null);
@@ -374,9 +376,8 @@ export function DataTable<T extends DataTableRow = DataTableRow>({
   const [groupBy, setGroupBy] = useControllable<string | null>(controlledGroupBy, defaultGroupBy, onGroupByChange);
   const [collapsed, setCollapsed] = useState<ReadonlySet<string>>(new Set());
   const setFilter = (key: string, filter: DataTableFilter | undefined) => {
-    const next = { ...filters };
-    if (filter) next[key] = filter;
-    else delete next[key];
+    const next = filter ? { ...filters, [key]: filter } : { ...filters };
+    if (!filter) delete next[key];
     setFilters(next);
     setPage(0);
   };
@@ -444,7 +445,7 @@ export function DataTable<T extends DataTableRow = DataTableRow>({
     : ordered, [ordered, current, perPage, manualPagination]);
   const sizes = [...new Set([pageSize, perPage, ...(pageSizeOptions ?? [10, 25, 50])]
     .filter((size): size is number => typeof size === "number" && Number.isInteger(size) && size > 0))].sort((a, b) => a - b);
-  const viewChanged = !!(query || sorting.length || groupBy || activeFilters.length || hiddenColumns.length || Object.keys(columnWidths).length || collapsed.size || perPage !== validSize(pageSize) || columnOrder.length || pinning.left.length || pinning.right.length);
+  const viewChanged = !!(query || sorting.length || groupBy || activeFilters.length || hiddenColumns.length || Object.keys(columnWidths).length || collapsed.size || perPage !== validSize(pageSize) || columnOrder.length || pinning.left.length || pinning.right.length || dense || expandedRows.length);
   const resetView = () => {
     setQuery("");
     setSorting([]);
@@ -455,9 +456,9 @@ export function DataTable<T extends DataTableRow = DataTableRow>({
     setColumnOrder([]);
     setColumnPinning({ left: [], right: [] });
     setExpandedRows([]);
+    setDense(false);
     setCollapsed(new Set());
     setPerPage(validSize(pageSize) ?? validSize(defaultPagination?.pageSize) ?? perPage);
-    setPage(0);
     setColumnsOpen(false);
   };
   const toggleGroup = (name: string) =>
@@ -468,18 +469,23 @@ export function DataTable<T extends DataTableRow = DataTableRow>({
       return next;
     });
   const leading = Number(selectable) + Number(rowNumbers) + Number(!!renderRowDetails);
-  const actionWidth = Number.isFinite(rowActionsWidth) && rowActionsWidth >= 40 ? Math.round(rowActionsWidth) : 96;
+  const actionWidth = Number.isFinite(rowActionsWidth) && rowActionsWidth >= 40 ? Math.round(rowActionsWidth) : 120;
   const span = visibleCols.length + leading + Number(!!renderRowActions);
-  const widthOf = (key: string) => columnWidths[key] ?? (cols.find((column) => column.key === key)?.width?.endsWith("px")
+  const baseWidthOf = (key: string) => customWidth(key) ?? (cols.find((column) => column.key === key)?.width?.endsWith("px")
     ? Number.parseFloat(cols.find((column) => column.key === key)!.width!) : 160);
   const pinned = !!(pinning.left.length || pinning.right.length);
+  const minimumWidth = visibleCols.reduce((sum, column) => sum + baseWidthOf(column.key), leading * 40 + (renderRowActions ? actionWidth : 0));
+  const flexibleColumns = visibleCols.filter((column) => customWidth(column.key) === undefined && !column.width);
+  const growingColumns = flexibleColumns.length ? flexibleColumns : visibleCols;
+  const extraWidth = Math.max(0, containerWidth - minimumWidth) / (growingColumns.length || 1);
+  const widthOf = (key: string) => baseWidthOf(key) + (pinned && growingColumns.some((column) => column.key === key) ? extraWidth : 0);
+  const columnWidth = (column: DataTableColumn<T>) => pinned ? widthOf(column.key) : customWidth(column.key) ?? column.width;
   const columnStyle = (column: DataTableColumn<T>): CSSProperties => {
     const side = pinning.left.includes(column.key) ? "left" : pinning.right.includes(column.key) ? "right" : undefined;
     const keys = side ? pinning[side] : [];
     const index = keys.indexOf(column.key);
     const preceding = side === "left" ? keys.slice(0, index) : keys.slice(index + 1);
-    return { width: pinned ? widthOf(column.key) : columnWidths[column.key] ?? column.width,
-      ...(side && { [side]: preceding.reduce((sum, key) => sum + widthOf(key), side === "left" ? leading * 40 : renderRowActions ? actionWidth : 0) }) };
+    return side ? { [side]: `var(--ad-table-pin-${side}, ${preceding.reduce((sum, key) => sum + widthOf(key), side === "left" ? leading * 40 : renderRowActions ? actionWidth : 0)}px)` } : {};
   };
   const pinnedSide = (key: string) => pinning.left.includes(key) ? "left" : pinning.right.includes(key) ? "right" : undefined;
   /** The group header row: chevron, the group's value, its count and the columns' summaries. */
@@ -568,6 +574,16 @@ export function DataTable<T extends DataTableRow = DataTableRow>({
   }, [visible, groupColumn, groupNames, groups, collapsed, current, perPage, expanded, !!renderRowDetails]);
   const viewIndexes = useMemo(() => new Map(viewItems.map((item, index) => [item.key, index])), [viewItems]);
   const scrollRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const element = scrollRef.current;
+    if (!pinned || !element) return;
+    const measure = () => setContainerWidth(element.clientWidth);
+    measure();
+    if (typeof ResizeObserver === "undefined") return;
+    const observer = new ResizeObserver(measure);
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, [pinned]);
   const bodyRef = useRef<HTMLTableSectionElement>(null);
   const headerRef = useRef<HTMLTableSectionElement>(null);
   const heights = useRef(new Map<string, number>());
@@ -680,7 +696,7 @@ export function DataTable<T extends DataTableRow = DataTableRow>({
   }, [virtualize, start, end, viewItems, offsets, measurementIdentity]);
   useEffect(() => () => { if (frameRef.current) cancelAnimationFrame(frameRef.current); frameRef.current = 0; }, [virtualize]);
   const toggleDetails = (key: string) => setExpandedRows(expanded.has(key) ? expandedRows.filter((item) => item !== key) : [...expandedRows, key]);
-  const specialStyle = (index: number): CSSProperties => ({ width: 40, ...(pinning.left.length ? { position: "sticky", left: index * 40, zIndex: 2 } : {}) });
+  const specialStyle = (index: number): CSSProperties => pinning.left.length ? { position: "sticky", left: `var(--ad-table-pin-left, ${index * 40}px)`, zIndex: 2 } : {};
 
   const body: ReactNode = loading ? (
     Array.from({ length: Math.min(perPage ?? 4, 6) }, (_, i) => (
@@ -721,7 +737,7 @@ export function DataTable<T extends DataTableRow = DataTableRow>({
         tabIndex={onRowClick ? 0 : undefined}
         onKeyDown={onRowClick ? (event) => { if (event.target === event.currentTarget && (event.key === "Enter" || event.key === " ")) { event.preventDefault(); onRowClick(row, index); } } : undefined}
       >
-        {renderRowDetails && <td className="ad-data-table-expand" style={specialStyle(0)} onClick={(event) => event.stopPropagation()}>
+        {renderRowDetails && <td className="ad-data-table-expand" data-label={tr("Подробности")} style={specialStyle(0)} onClick={(event) => event.stopPropagation()}>
           <IconButton size="xs" variant="ghost" icon="chevron" label={tr("Подробности строки {number}", { number: entry.position + 1 })}
             aria-expanded={expanded.has(key)} data-expanded={expanded.has(key) || undefined} onClick={() => toggleDetails(key)} />
         </td>}
@@ -750,7 +766,7 @@ export function DataTable<T extends DataTableRow = DataTableRow>({
               : column.value ? column.value(row) : (field(row, column.key) as ReactNode)}
           </td>
         ))}
-        {renderRowActions && <td className="ad-data-table-actions" style={{ width: actionWidth, ...(pinning.right.length ? { position: "sticky", right: 0, zIndex: 2 } : {}) }} onClick={(event) => event.stopPropagation()}>{renderRowActions(row, index)}</td>}
+        {renderRowActions && <td className="ad-data-table-actions" data-label={tr("Действия")} style={pinning.right.length ? { position: "sticky", right: "var(--ad-table-pin-right, 0px)", zIndex: 2 } : undefined} onClick={(event) => event.stopPropagation()}>{renderRowActions(row, index)}</td>}
       </tr>
       );
     })
@@ -866,10 +882,10 @@ export function DataTable<T extends DataTableRow = DataTableRow>({
       )}
       <div ref={scrollRef} className="ad-data-table-scroll" onScroll={virtualize ? scheduleViewport : undefined}
         style={{ maxHeight: maxHeight ?? (virtualize ? 480 : undefined), height: virtualize ? maxHeight ?? 480 : undefined }}>
-        <table aria-rowcount={knownTotal ? (virtualize ? viewItems.length : total) + 1 : -1} style={pinned ? { width: visibleCols.reduce((sum, column) => sum + widthOf(column.key), leading * 40 + (renderRowActions ? actionWidth : 0)) } : undefined}>
+        <table aria-rowcount={knownTotal ? (virtualize ? viewItems.length : total + viewItems.length - visible.length) + 1 : -1} style={pinned ? { width: visibleCols.reduce((sum, column) => sum + widthOf(column.key), leading * 40 + (renderRowActions ? actionWidth : 0)) } : undefined}>
           <colgroup>
             {Array.from({ length: leading }, (_, index) => <col key={`leading:${index}`} style={{ width: 40 }} />)}
-            {visibleCols.map((column) => <col key={column.key} style={{ width: columnStyle(column).width }} />)}
+            {visibleCols.map((column) => <col key={column.key} style={{ width: columnWidth(column) }} />)}
             {renderRowActions && <col style={{ width: actionWidth }} />}
           </colgroup>
           <thead ref={headerRef}>
@@ -883,7 +899,8 @@ export function DataTable<T extends DataTableRow = DataTableRow>({
                     checked={allChosen}
                     indeterminate={someChosen}
                     onValueChange={toggleAll}
-                    label={<span className="ad-sr-only">{tr("Выбрать все")}</span>}
+                    aria-label={tr("Выбрать все")}
+                    label={<span className="ad-data-table-select-all-label">{tr("Выбрать все")}</span>}
                   />
                 </th>
               )}
@@ -892,7 +909,7 @@ export function DataTable<T extends DataTableRow = DataTableRow>({
                 const sortIndex = sorting.findIndex((sort) => sort.key === column.key);
                 const direction = sorting[sortIndex]?.direction;
                 const filter = columnFilters.get(column.key);
-                const width = columnWidths[column.key];
+                const width = customWidth(column.key);
                 const resize = (delta: number, base: number) =>
                   setColumnWidths((current) => ({ ...current, [column.key]: Math.max(96, Math.min(800, Math.round(base + delta))) }));
                 return (
@@ -936,7 +953,7 @@ export function DataTable<T extends DataTableRow = DataTableRow>({
                         aria-orientation="vertical"
                         aria-label={tr("Изменить ширину: {title}", { title: typeof column.title === "string" ? column.title : column.key })}
                         aria-valuemin={96} aria-valuemax={800}
-                        aria-valuenow={width}
+                        aria-valuenow={widthOf(column.key)}
                         aria-valuetext={width ? `${width}px` : column.width ?? tr("Авто")}
                         onPointerDown={(event) => {
                           if (event.button !== 0) return;
@@ -969,7 +986,7 @@ export function DataTable<T extends DataTableRow = DataTableRow>({
                   </th>
                 );
               })}
-              {renderRowActions && <th className="ad-data-table-actions" style={{ width: actionWidth, ...(pinning.right.length ? { right: 0, zIndex: 3 } : {}) }}><span className="ad-sr-only">{tr("Действия")}</span></th>}
+              {renderRowActions && <th className="ad-data-table-actions" scope="col" style={pinning.right.length ? { right: "var(--ad-table-pin-right, 0px)", zIndex: 3 } : undefined}>{tr("Действия")}</th>}
             </tr>
           </thead>
           <tbody ref={bodyRef}>
@@ -997,7 +1014,7 @@ export function DataTable<T extends DataTableRow = DataTableRow>({
             <Select<number> size="sm" label={tr("Строк на странице")}
               value={perPage}
               options={sizes.map((size) => ({ value: size, label: String(size) }))}
-              onValueChange={(size) => { if (size) { setPerPage(size); setPage(0); } }} />
+              onValueChange={(size) => { if (size) setPerPage(size); }} />
           {pages > 1 && (
             <span className="ad-data-table-pages">
               <IconButton

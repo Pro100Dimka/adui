@@ -1,0 +1,58 @@
+{
+  "completedAt": "2026-10-12T12:36:48.712Z",
+  "status": "published and installed from the public npm registry",
+  "name": "@neo-ui-kit/react",
+  "version": "1.0.0",
+  "license": "MIT",
+  "url": "https://www.npmjs.com/package/@neo-ui-kit/react/v/1.0.0",
+  "owner": "pro100dimka",
+  "scope": "neo-ui-kit",
+  "latest": "1.0.0",
+  "artifact": {
+    "path": "D:\\Git\\adui\\release\\neo-ui-kit-react-1.0.0.tgz",
+    "sha256": "907f70b1e9160ee48ada9b0ee43e737b297ef8581a7297ab593e8e809d0b7cc9",
+    "integrity": "sha512-IjzcP89VEugiV4O+NBSS9+twQKuu8D/GwAEKJg/an6HUA2Vlg+0zmQ46s2q56fiVPLoChfgqK4Wd3hR29pR1YA==",
+    "size": 1667492,
+    "files": 270
+  },
+  "registryIntegrityMatches": true,
+  "fullCheck": {
+    "tests": 568,
+    "files": 38,
+    "result": "passed",
+    "log": "evidence/npm-publish-full-check.log"
+  },
+  "registryConsumer": {
+    "directory": "release/consumer-npm",
+    "dependency": "1.0.0",
+    "resolved": "https://registry.npmjs.org/@neo-ui-kit/react/-/react-1.0.0.tgz",
+    "types": "strict; no skipLibCheck; passed",
+    "browserChecks": 22,
+    "result": "passed",
+    "evidence": "evidence/consumer-consumer-npm-npm-registry-chrome.json"
+  },
+  "docsBrowser": {
+    "checks": 15,
+    "result": "passed",
+    "evidence": "evidence/rename-browser-production.json"
+  },
+  "staticDocs": {
+    "path": "D:\\Git\\adui\\docs",
+    "files": 357,
+    "allFilesByteIdentical": true,
+    "backup": "D:/Git/adui-backups/npm-publication-20261012/docs-before-npm",
+    "published": false
+  },
+  "sourceFingerprint": {
+    "scope": "All files recursively under packages/ui/src; sorted absolute paths; SHA256 of JSON [relative path, file SHA256] pairs.",
+    "files": 457,
+    "sha256": "05653c468eca91c7ecf9e74135de4777ac13050fb8e0a9fc2f8ae3d751484ae4"
+  },
+  "notes": [
+    "The originally requested neo-ui scope was unavailable. User approved creating the free neo-ui-kit organization and publishing this replacement name.",
+    "MIT licensing for the full current component set was explicitly approved.",
+    "npm accepted the archive before 1.0.0 became publicly readable; it temporarily exposed its generated 0.0.0-stage placeholder. Verification waited for latest=1.0.0 and matching integrity. The service-generated placeholder remains in version history.",
+    "No source commit, branch push, GitHub release or public website deployment was performed in this publication step.",
+    "Earlier physical-device/browser and legal naming limitations remain in release-report.json."
+  ]
+}

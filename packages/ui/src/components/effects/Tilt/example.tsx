@@ -4,14 +4,14 @@ export default function TiltExample() {
   return (
     <Playground
       knobs={{
-        max: { options: ["8", "14", "24"], value: "14" },
+        max: { value: 14, min: 8, max: 24 },
         glare: { value: true },
       }}
       code={(v) =>
         jsx(
           "Tilt",
           {
-            max: v.max === "14" ? undefined : Number(v.max),
+            max: v.max === 14 ? undefined : v.max,
             glare: v.glare ? undefined : expr("false"),
           },
           '<Card material="ruby" title="Сейчас поёт" icon="mic" />',
@@ -19,7 +19,7 @@ export default function TiltExample() {
       }
     >
       {(v) => (
-        <U.Tilt max={Number(v.max)} glare={v.glare}>
+        <U.Tilt max={v.max} glare={v.glare}>
           <U.Card
             material="ruby"
             title="Сейчас поёт"

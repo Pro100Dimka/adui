@@ -1,0 +1,62 @@
+{
+  "visibleText": "PP\nPro100Yojik\nPro100Yojik",
+  "accessibleName": "Изменить фото: Pro100Yojik",
+  "textNodes": [
+    {
+      "text": "P",
+      "box": {
+        "x": 484.5234375,
+        "y": 387.109375,
+        "width": 21.515625,
+        "height": 36,
+        "top": 387.109375,
+        "right": 506.0390625,
+        "bottom": 423.109375,
+        "left": 484.5234375
+      },
+      "filter": "url(#svg-_r_1g_-hostv2-gold-bloom)"
+    },
+    {
+      "text": "P",
+      "box": {
+        "x": 484.5234375,
+        "y": 387.109375,
+        "width": 21.515625,
+        "height": 36,
+        "top": 387.109375,
+        "right": 506.0390625,
+        "bottom": 423.109375,
+        "left": 484.5234375
+      },
+      "filter": null
+    },
+    {
+      "text": "Pro100Yojik",
+      "box": {
+        "x": 482.5859375,
+        "y": 427.49530029296875,
+        "width": 25.992919921875,
+        "height": 5,
+        "top": 427.49530029296875,
+        "right": 508.578857421875,
+        "bottom": 432.49530029296875,
+        "left": 482.5859375
+      },
+      "filter": "url(#svg-_r_1g_-hostv2-label-glow)"
+    },
+    {
+      "text": "Pro100Yojik",
+      "box": {
+        "x": 482.5859375,
+        "y": 427.49530029296875,
+        "width": 25.992919921875,
+        "height": 5,
+        "top": 427.49530029296875,
+        "right": 508.578857421875,
+        "bottom": 432.49530029296875,
+        "left": 482.5859375
+      },
+      "filter": null
+    }
+  ]
+}

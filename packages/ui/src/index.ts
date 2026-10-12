@@ -186,6 +186,7 @@ export { Form, useForm, useFormContext } from "./components/forms/Form/Form";
 export type {
   FormApi,
   FormErrors,
+  FormProps,
   UseFormOptions,
 } from "./components/forms/Form/Form";
 export {
@@ -194,10 +195,11 @@ export {
 } from "./components/forms/FormFields/FormFields";
 export type {
   FormFieldDefinition,
+  FormFieldsProps,
   FieldKind,
   FieldRegistry,
 } from "./components/forms/FormFields/FormFields";
 
 export { LocaleProvider, addMessages, getLocale, plural, setLocale, tr, translate, useLocale, useTr } from "./core/i18n";
-export type { Locale, Messages } from "./core/i18n";
+export type { Locale, LocaleProviderProps, Messages } from "./core/i18n";
 export { messages as builtInMessages } from "./core/messages";

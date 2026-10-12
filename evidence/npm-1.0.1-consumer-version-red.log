@@ -1,0 +1,17 @@
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Installed package must have the requested release version
+
+'1.0.0' !== '1.0.1'
+
+    at file:///D:/Git/adui/evidence/check-package.mjs:28:29 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: '1.0.0',
+  expected: '1.0.1',
+  operator: 'strictEqual'
+}
+
+Node.js v22.18.0

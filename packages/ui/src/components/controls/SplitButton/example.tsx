@@ -20,7 +20,7 @@ export default function SplitButtonExample() {
         variant: { options: buttonVariants, value: "primary" },
         size: { options: sizes, value: "md" },
       }}
-      code={(v, c) =>
+      code={(_v, c) =>
         `const items = ${JSON.stringify(items)};\n\n` +
         jsx(
           "SplitButton",

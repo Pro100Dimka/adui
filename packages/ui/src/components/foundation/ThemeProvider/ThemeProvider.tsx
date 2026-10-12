@@ -1,4 +1,4 @@
-import { classes, type CommonProps, type TokenStyle } from "../../../core/base";
+import { classes, mark, type CommonProps, type TokenStyle } from "../../../core/base";
 import { createContext, useContext, useMemo } from "react";
 
 /** Ready colour pairs: [primary, secondary]. Everything else is derived from the pair. */
@@ -60,6 +60,7 @@ export const ThemeProvider = ({
   children,
   id,
   className,
+  ...attributes
 }: ThemeProviderProps) => {
   const inheritedScheme = useContext(ThemeColorSchemeContext);
   const inheritedPalette = useThemePalette();
@@ -86,6 +87,7 @@ export const ThemeProvider = ({
     <ThemeColorSchemeContext.Provider value={scheme}>
       <ThemePaletteContext.Provider value={palette}>
         <div
+          {...mark("ThemeProvider", attributes)}
           id={id}
           className={classes("ad-theme", className)}
           style={vars}

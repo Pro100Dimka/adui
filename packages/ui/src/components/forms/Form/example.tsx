@@ -1,5 +1,5 @@
-import { Button, Stack, TextField } from "@ad-voice/ui";
-import { Form, useForm } from "@ad-voice/ui/forms";
+import { Button, Stack, TextField } from "@neo-ui-kit/react";
+import { Form, useForm } from "@neo-ui-kit/react/forms";
 
 export default function FormExample() {
   const form = useForm({

@@ -1,0 +1,451 @@
+{
+  "baseUrl": "http://127.0.0.1:4173",
+  "browser": "154.0.8037.98",
+  "axe": "4.14.0",
+  "viewport": [
+    1440,
+    1000
+  ],
+  "results": [
+    {
+      "name": "Avatar",
+      "violations": []
+    },
+    {
+      "name": "BrandMark",
+      "violations": []
+    },
+    {
+      "name": "Icon",
+      "violations": []
+    },
+    {
+      "name": "Loader",
+      "violations": []
+    },
+    {
+      "name": "LoaderGenerator",
+      "violations": []
+    },
+    {
+      "name": "LocaleProvider",
+      "violations": []
+    },
+    {
+      "name": "SvgAsset",
+      "violations": []
+    },
+    {
+      "name": "Text",
+      "violations": []
+    },
+    {
+      "name": "ThemeEditor",
+      "violations": []
+    },
+    {
+      "name": "ThemePicker",
+      "violations": []
+    },
+    {
+      "name": "ThemeProvider",
+      "violations": []
+    },
+    {
+      "name": "Typography",
+      "violations": []
+    },
+    {
+      "name": "Card",
+      "violations": []
+    },
+    {
+      "name": "Dialog",
+      "violations": []
+    },
+    {
+      "name": "DialogActions",
+      "violations": []
+    },
+    {
+      "name": "DialogBody",
+      "violations": []
+    },
+    {
+      "name": "Divider",
+      "violations": []
+    },
+    {
+      "name": "FloatingPanel",
+      "violations": []
+    },
+    {
+      "name": "Grid",
+      "violations": []
+    },
+    {
+      "name": "Header",
+      "violations": []
+    },
+    {
+      "name": "Illustration",
+      "violations": []
+    },
+    {
+      "name": "ScrollArea",
+      "violations": []
+    },
+    {
+      "name": "Stack",
+      "violations": []
+    },
+    {
+      "name": "StatTile",
+      "violations": []
+    },
+    {
+      "name": "Toolbar",
+      "violations": []
+    },
+    {
+      "name": "Button",
+      "violations": []
+    },
+    {
+      "name": "ButtonGroup",
+      "violations": []
+    },
+    {
+      "name": "Chip",
+      "violations": []
+    },
+    {
+      "name": "IconButton",
+      "violations": []
+    },
+    {
+      "name": "SplitButton",
+      "violations": []
+    },
+    {
+      "name": "ToggleButton",
+      "violations": []
+    },
+    {
+      "name": "Autocomplete",
+      "violations": []
+    },
+    {
+      "name": "BooleanControl",
+      "violations": []
+    },
+    {
+      "name": "Checkbox",
+      "violations": []
+    },
+    {
+      "name": "ColorPicker",
+      "violations": []
+    },
+    {
+      "name": "DatePicker",
+      "violations": []
+    },
+    {
+      "name": "FilePicker",
+      "violations": [
+        {
+          "id": "label-content-name-mismatch",
+          "impact": "serious",
+          "description": "Ensure that elements labelled through their content must have their visible text as part of their accessible name",
+          "nodes": [
+            {
+              "target": [
+                ".ad-file-picker-avatar-button"
+              ],
+              "html": "<button type=\"button\" class=\"ad-file-picker-avatar-button\" aria-label=\"Изменить фото: Pro100Yojik\">",
+              "failureSummary": "Fix any of the following:\n  Text inside the element is not included in the accessible name",
+              "manualReview": {
+                "result": "false positive: coincident SVG glow and foreground text counted twice; visible owner is included in the accessible name",
+                "evidence": "file-picker-label-analysis.json",
+                "screenshot": "file-picker-label-analysis.png"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Form",
+      "violations": []
+    },
+    {
+      "name": "FormFields",
+      "violations": [
+        {
+          "id": "label-content-name-mismatch",
+          "impact": "serious",
+          "description": "Ensure that elements labelled through their content must have their visible text as part of their accessible name",
+          "nodes": [
+            {
+              "target": [
+                ".ad-file-picker-avatar-button"
+              ],
+              "html": "<button type=\"button\" class=\"ad-file-picker-avatar-button\" aria-label=\"Изменить фото: Дмитрий\">",
+              "failureSummary": "Fix any of the following:\n  Text inside the element is not included in the accessible name",
+              "manualReview": {
+                "result": "false positive: coincident SVG glow and foreground text counted twice; visible owner is included in the accessible name",
+                "evidence": "file-picker-label-analysis.json",
+                "screenshot": "file-picker-label-analysis.png"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "InputBase",
+      "violations": []
+    },
+    {
+      "name": "NumberField",
+      "violations": []
+    },
+    {
+      "name": "PeoplePicker",
+      "violations": []
+    },
+    {
+      "name": "Select",
+      "violations": []
+    },
+    {
+      "name": "Slider",
+      "violations": []
+    },
+    {
+      "name": "Switch",
+      "violations": []
+    },
+    {
+      "name": "TagInput",
+      "violations": []
+    },
+    {
+      "name": "TextArea",
+      "violations": []
+    },
+    {
+      "name": "TextField",
+      "violations": []
+    },
+    {
+      "name": "Link",
+      "violations": []
+    },
+    {
+      "name": "Menu",
+      "violations": []
+    },
+    {
+      "name": "MenuItem",
+      "violations": []
+    },
+    {
+      "name": "Popover",
+      "violations": []
+    },
+    {
+      "name": "Router",
+      "violations": []
+    },
+    {
+      "name": "SegmentedControl",
+      "violations": []
+    },
+    {
+      "name": "Tab",
+      "violations": []
+    },
+    {
+      "name": "TabPanel",
+      "violations": []
+    },
+    {
+      "name": "Tabs",
+      "violations": []
+    },
+    {
+      "name": "Badge",
+      "violations": []
+    },
+    {
+      "name": "CollapsibleSection",
+      "violations": []
+    },
+    {
+      "name": "DataTable",
+      "violations": []
+    },
+    {
+      "name": "EmptyState",
+      "violations": []
+    },
+    {
+      "name": "KeyValueList",
+      "violations": []
+    },
+    {
+      "name": "MessageBar",
+      "violations": []
+    },
+    {
+      "name": "ProgressBar",
+      "violations": []
+    },
+    {
+      "name": "SignalBars",
+      "violations": []
+    },
+    {
+      "name": "StatusIndicator",
+      "violations": []
+    },
+    {
+      "name": "Steps",
+      "violations": []
+    },
+    {
+      "name": "Toast",
+      "violations": []
+    },
+    {
+      "name": "Tooltip",
+      "violations": []
+    },
+    {
+      "name": "AudioPlayer",
+      "violations": []
+    },
+    {
+      "name": "KaraokeLyrics",
+      "violations": []
+    },
+    {
+      "name": "LevelMeter",
+      "violations": []
+    },
+    {
+      "name": "MediaCard",
+      "violations": []
+    },
+    {
+      "name": "MelodyRoll",
+      "violations": []
+    },
+    {
+      "name": "PianoKeyboard",
+      "violations": []
+    },
+    {
+      "name": "RotaryKnob",
+      "violations": []
+    },
+    {
+      "name": "Sparkline",
+      "violations": []
+    },
+    {
+      "name": "Waveform",
+      "violations": []
+    },
+    {
+      "name": "PianoRoll",
+      "violations": []
+    },
+    {
+      "name": "AnimatedBorder",
+      "violations": []
+    },
+    {
+      "name": "Beacon",
+      "violations": []
+    },
+    {
+      "name": "DatabaseArt",
+      "violations": []
+    },
+    {
+      "name": "Equalizer",
+      "violations": []
+    },
+    {
+      "name": "GlowText",
+      "violations": []
+    },
+    {
+      "name": "ImageShine",
+      "violations": []
+    },
+    {
+      "name": "Landscape",
+      "violations": []
+    },
+    {
+      "name": "Marquee",
+      "violations": []
+    },
+    {
+      "name": "MelodixText",
+      "violations": []
+    },
+    {
+      "name": "NeonWaves",
+      "violations": []
+    },
+    {
+      "name": "Planet",
+      "violations": []
+    },
+    {
+      "name": "QuantumField",
+      "violations": []
+    },
+    {
+      "name": "QuantumFieldExperience",
+      "violations": []
+    },
+    {
+      "name": "Reveal",
+      "violations": []
+    },
+    {
+      "name": "ServerArt",
+      "violations": []
+    },
+    {
+      "name": "Shimmer",
+      "violations": []
+    },
+    {
+      "name": "Sparkles",
+      "violations": []
+    },
+    {
+      "name": "Spectrum",
+      "violations": []
+    },
+    {
+      "name": "Spotlight",
+      "violations": []
+    },
+    {
+      "name": "Tilt",
+      "violations": []
+    },
+    {
+      "name": "WaveDecoration",
+      "violations": []
+    }
+  ]
+}

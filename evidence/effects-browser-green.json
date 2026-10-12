@@ -1,0 +1,874 @@
+{
+  "environment": {
+    "browser": "Installed Chrome headless",
+    "physicalLowEndDevice": false,
+    "viewportHeight": 1000
+  },
+  "stage": "green",
+  "passed": 37,
+  "failed": 0,
+  "results": [
+    {
+      "name": "knob fits a narrow container at viewport 320",
+      "passed": true,
+      "actual": {
+        "hostWidth": 200,
+        "controlWidth": 200,
+        "controlHeight": 200,
+        "right": 216,
+        "hostRight": 216,
+        "volumeWidth": 0,
+        "volumeRight": 0,
+        "trackWidth": 0
+      }
+    },
+    {
+      "name": "audio keeps volume available at viewport 320",
+      "passed": true,
+      "actual": {
+        "hostWidth": 200,
+        "controlWidth": 200,
+        "controlHeight": 162.03125,
+        "right": 216,
+        "hostRight": 216,
+        "volumeWidth": 102,
+        "volumeRight": 173,
+        "trackWidth": 114
+      }
+    },
+    {
+      "name": "component gallery never adds horizontal page scroll at viewport 320",
+      "passed": true,
+      "actual": {
+        "width": 320,
+        "scrollWidth": 320,
+        "overflow": [
+          {
+            "className": "ad-sparkle",
+            "width": 7,
+            "right": 354.3125
+          },
+          {
+            "className": null,
+            "width": 0,
+            "right": 354.3125
+          },
+          {
+            "className": "ad-sparkle",
+            "width": 9,
+            "right": 395.4375
+          },
+          {
+            "className": null,
+            "width": 0,
+            "right": 395.4375
+          },
+          {
+            "className": "ad-waveform-follow",
+            "width": 288,
+            "right": 376
+          },
+          {
+            "className": "ad-waveform-follow",
+            "width": 288,
+            "right": 376
+          },
+          {
+            "className": "ad-melody-roll-seconds",
+            "width": 271,
+            "right": 333.125
+          },
+          {
+            "className": "ad-piano-roll-ruler",
+            "width": 512,
+            "right": 577
+          },
+          {
+            "className": null,
+            "width": 9,
+            "right": 330.578125
+          },
+          {
+            "className": null,
+            "width": 9,
+            "right": 394.578125
+          },
+          {
+            "className": null,
+            "width": 9,
+            "right": 458.578125
+          },
+          {
+            "className": null,
+            "width": 9,
+            "right": 522.578125
+          },
+          {
+            "className": null,
+            "width": 9,
+            "right": 586.578125
+          },
+          {
+            "className": "ad-piano-roll-world",
+            "width": 512,
+            "right": 577
+          },
+          {
+            "className": "ad-piano-roll-row",
+            "width": 512,
+            "right": 577
+          },
+          {
+            "className": "ad-piano-roll-row",
+            "width": 512,
+            "right": 577
+          },
+          {
+            "className": "ad-piano-roll-row",
+            "width": 512,
+            "right": 577
+          },
+          {
+            "className": "ad-piano-roll-row",
+            "width": 512,
+            "right": 577
+          },
+          {
+            "className": "ad-piano-roll-row",
+            "width": 512,
+            "right": 577
+          },
+          {
+            "className": "ad-piano-roll-row",
+            "width": 512,
+            "right": 577
+          },
+          {
+            "className": "ad-piano-roll-row",
+            "width": 512,
+            "right": 577
+          },
+          {
+            "className": "ad-piano-roll-row",
+            "width": 512,
+            "right": 577
+          },
+          {
+            "className": "ad-piano-roll-row",
+            "width": 512,
+            "right": 577
+          },
+          {
+            "className": "ad-piano-roll-row",
+            "width": 512,
+            "right": 577
+          },
+          {
+            "className": "ad-piano-roll-note",
+            "width": 58,
+            "right": 346.59375
+          },
+          {
+            "className": "ad-piano-roll-note-body",
+            "width": 58,
+            "right": 346.59375
+          },
+          {
+            "className": "ad-piano-roll-edge",
+            "width": 10,
+            "right": 346.59375
+          },
+          {
+            "className": "ad-piano-roll-note",
+            "width": 90,
+            "right": 448.984375
+          },
+          {
+            "className": "ad-piano-roll-note-body",
+            "width": 90,
+            "right": 448.984375
+          },
+          {
+            "className": "ad-piano-roll-edge",
+            "width": 10,
+            "right": 368.984375
+          }
+        ]
+      }
+    },
+    {
+      "name": "knob fits a narrow container at viewport 375",
+      "passed": true,
+      "actual": {
+        "hostWidth": 200,
+        "controlWidth": 200,
+        "controlHeight": 200,
+        "right": 216,
+        "hostRight": 216,
+        "volumeWidth": 0,
+        "volumeRight": 0,
+        "trackWidth": 0
+      }
+    },
+    {
+      "name": "audio keeps volume available at viewport 375",
+      "passed": true,
+      "actual": {
+        "hostWidth": 200,
+        "controlWidth": 200,
+        "controlHeight": 162.03125,
+        "right": 216,
+        "hostRight": 216,
+        "volumeWidth": 102,
+        "volumeRight": 173,
+        "trackWidth": 114
+      }
+    },
+    {
+      "name": "component gallery never adds horizontal page scroll at viewport 375",
+      "passed": true,
+      "actual": {
+        "width": 375,
+        "scrollWidth": 375,
+        "overflow": [
+          {
+            "className": "ad-border-light",
+            "width": 243,
+            "right": 479.76373291015625
+          },
+          {
+            "className": "ad-border-light",
+            "width": 243,
+            "right": 479.76373291015625
+          },
+          {
+            "className": "ad-sparkle",
+            "width": 7,
+            "right": 376.140625
+          },
+          {
+            "className": null,
+            "width": 0,
+            "right": 376.140625
+          },
+          {
+            "className": "ad-sparkle",
+            "width": 7,
+            "right": 418.921875
+          },
+          {
+            "className": null,
+            "width": 0,
+            "right": 418.921875
+          },
+          {
+            "className": "ad-sparkle",
+            "width": 9,
+            "right": 467.90625
+          },
+          {
+            "className": null,
+            "width": 0,
+            "right": 467.90625
+          },
+          {
+            "className": "ad-waveform-follow",
+            "width": 343,
+            "right": 444.75
+          },
+          {
+            "className": "ad-waveform-follow",
+            "width": 343,
+            "right": 444.75
+          },
+          {
+            "className": "ad-melody-roll-seconds",
+            "width": 333,
+            "right": 395
+          },
+          {
+            "className": "ad-piano-roll-ruler",
+            "width": 512,
+            "right": 577
+          },
+          {
+            "className": null,
+            "width": 9,
+            "right": 394.578125
+          },
+          {
+            "className": null,
+            "width": 9,
+            "right": 458.578125
+          },
+          {
+            "className": null,
+            "width": 9,
+            "right": 522.578125
+          },
+          {
+            "className": null,
+            "width": 9,
+            "right": 586.578125
+          },
+          {
+            "className": "ad-piano-roll-world",
+            "width": 512,
+            "right": 577
+          },
+          {
+            "className": "ad-piano-roll-row",
+            "width": 512,
+            "right": 577
+          },
+          {
+            "className": "ad-piano-roll-row",
+            "width": 512,
+            "right": 577
+          },
+          {
+            "className": "ad-piano-roll-row",
+            "width": 512,
+            "right": 577
+          },
+          {
+            "className": "ad-piano-roll-row",
+            "width": 512,
+            "right": 577
+          },
+          {
+            "className": "ad-piano-roll-row",
+            "width": 512,
+            "right": 577
+          },
+          {
+            "className": "ad-piano-roll-row",
+            "width": 512,
+            "right": 577
+          },
+          {
+            "className": "ad-piano-roll-row",
+            "width": 512,
+            "right": 577
+          },
+          {
+            "className": "ad-piano-roll-row",
+            "width": 512,
+            "right": 577
+          },
+          {
+            "className": "ad-piano-roll-row",
+            "width": 512,
+            "right": 577
+          },
+          {
+            "className": "ad-piano-roll-row",
+            "width": 512,
+            "right": 577
+          },
+          {
+            "className": "ad-piano-roll-note",
+            "width": 90,
+            "right": 448.984375
+          },
+          {
+            "className": "ad-piano-roll-note-body",
+            "width": 90,
+            "right": 448.984375
+          },
+          {
+            "className": "ad-piano-roll-edge",
+            "width": 10,
+            "right": 448.984375
+          }
+        ]
+      }
+    },
+    {
+      "name": "knob fits a narrow container at viewport 768",
+      "passed": true,
+      "actual": {
+        "hostWidth": 200,
+        "controlWidth": 200,
+        "controlHeight": 200,
+        "right": 216,
+        "hostRight": 216,
+        "volumeWidth": 0,
+        "volumeRight": 0,
+        "trackWidth": 0
+      }
+    },
+    {
+      "name": "audio keeps volume available at viewport 768",
+      "passed": true,
+      "actual": {
+        "hostWidth": 200,
+        "controlWidth": 200,
+        "controlHeight": 169.03125,
+        "right": 216,
+        "hostRight": 216,
+        "volumeWidth": 101,
+        "volumeRight": 176.359375,
+        "trackWidth": 103.921875
+      }
+    },
+    {
+      "name": "component gallery never adds horizontal page scroll at viewport 768",
+      "passed": true,
+      "actual": {
+        "width": 768,
+        "scrollWidth": 768,
+        "overflow": []
+      }
+    },
+    {
+      "name": "knob fits a narrow container at viewport 1024",
+      "passed": true,
+      "actual": {
+        "hostWidth": 200,
+        "controlWidth": 200,
+        "controlHeight": 200,
+        "right": 216,
+        "hostRight": 216,
+        "volumeWidth": 0,
+        "volumeRight": 0,
+        "trackWidth": 0
+      }
+    },
+    {
+      "name": "audio keeps volume available at viewport 1024",
+      "passed": true,
+      "actual": {
+        "hostWidth": 200,
+        "controlWidth": 200,
+        "controlHeight": 178.65625,
+        "right": 216,
+        "hostRight": 216,
+        "volumeWidth": 99.46875,
+        "volumeRight": 178.59375,
+        "trackWidth": 94.8125
+      }
+    },
+    {
+      "name": "component gallery never adds horizontal page scroll at viewport 1024",
+      "passed": true,
+      "actual": {
+        "width": 1024,
+        "scrollWidth": 1024,
+        "overflow": []
+      }
+    },
+    {
+      "name": "knob fits a narrow container at viewport 1440",
+      "passed": true,
+      "actual": {
+        "hostWidth": 200,
+        "controlWidth": 200,
+        "controlHeight": 200,
+        "right": 216,
+        "hostRight": 216,
+        "volumeWidth": 0,
+        "volumeRight": 0,
+        "trackWidth": 0
+      }
+    },
+    {
+      "name": "audio keeps volume available at viewport 1440",
+      "passed": true,
+      "actual": {
+        "hostWidth": 200,
+        "controlWidth": 200,
+        "controlHeight": 187.765625,
+        "right": 216,
+        "hostRight": 216,
+        "volumeWidth": 96.96875,
+        "volumeRight": 178.59375,
+        "trackWidth": 94.8125
+      }
+    },
+    {
+      "name": "component gallery never adds horizontal page scroll at viewport 1440",
+      "passed": true,
+      "actual": {
+        "width": 1440,
+        "scrollWidth": 1440,
+        "overflow": []
+      }
+    },
+    {
+      "name": "knob fits a narrow container at viewport 1920",
+      "passed": true,
+      "actual": {
+        "hostWidth": 200,
+        "controlWidth": 200,
+        "controlHeight": 200,
+        "right": 216,
+        "hostRight": 216,
+        "volumeWidth": 0,
+        "volumeRight": 0,
+        "trackWidth": 0
+      }
+    },
+    {
+      "name": "audio keeps volume available at viewport 1920",
+      "passed": true,
+      "actual": {
+        "hostWidth": 200,
+        "controlWidth": 200,
+        "controlHeight": 196.53125,
+        "right": 216,
+        "hostRight": 216,
+        "volumeWidth": 94.09375,
+        "volumeRight": 178.59375,
+        "trackWidth": 94.8125
+      }
+    },
+    {
+      "name": "component gallery never adds horizontal page scroll at viewport 1920",
+      "passed": true,
+      "actual": {
+        "width": 1920,
+        "scrollWidth": 1920,
+        "overflow": []
+      }
+    },
+    {
+      "name": "hidden-readout knob responds to real keyboard",
+      "passed": true,
+      "actual": "68"
+    },
+    {
+      "name": "piano key keyboard activates once",
+      "passed": true,
+      "actual": "1"
+    },
+    {
+      "name": "decorative marquee copy is inert",
+      "passed": true,
+      "actual": [
+        {
+          "inert": false,
+          "width": 200,
+          "visible": true
+        },
+        {
+          "inert": true,
+          "width": 0,
+          "visible": false
+        }
+      ]
+    },
+    {
+      "name": "reduced-motion marquee content remains available without scrolling animation",
+      "passed": true,
+      "actual": {
+        "left": 16,
+        "right": 216,
+        "groupLeft": 16,
+        "groupRight": 216
+      }
+    },
+    {
+      "name": "Waveform decorative motion never adds scrollbars to its container",
+      "passed": true,
+      "actual": {
+        "name": "Waveform",
+        "extraWidth": 0,
+        "extraHeight": 0
+      }
+    },
+    {
+      "name": "Sparkles decorative motion never adds scrollbars to its container",
+      "passed": true,
+      "actual": {
+        "name": "Sparkles",
+        "extraWidth": 0,
+        "extraHeight": 0
+      }
+    },
+    {
+      "name": "Beacon decorative motion never adds scrollbars to its container",
+      "passed": true,
+      "actual": {
+        "name": "Beacon",
+        "extraWidth": 0,
+        "extraHeight": 0
+      }
+    },
+    {
+      "name": "marquee really pauses on hover under the shared animation clock",
+      "passed": true,
+      "actual": {
+        "before": "matrix(1, 0, 0, 1, -1.1394, 0)",
+        "after": "matrix(1, 0, 0, 1, -1.1394, 0)"
+      }
+    },
+    {
+      "name": "border lights travel continuously without native SVG point queries",
+      "passed": true,
+      "actual": {
+        "samples": 40,
+        "moves": 21
+      }
+    },
+    {
+      "name": "masked border lights never expand scroll overflow beyond their 16px halo",
+      "passed": true,
+      "actual": [
+        {
+          "width": 200,
+          "height": 80,
+          "extraWidth": 0,
+          "extraHeight": 0
+        },
+        {
+          "width": 200,
+          "height": 80,
+          "extraWidth": 0,
+          "extraHeight": 0
+        },
+        {
+          "width": 60,
+          "height": 60,
+          "extraWidth": 0,
+          "extraHeight": 0
+        },
+        {
+          "width": 220,
+          "height": 40,
+          "extraWidth": 0,
+          "extraHeight": 0
+        }
+      ]
+    },
+    {
+      "name": "border overlay never adds scrollable area to its host",
+      "passed": true,
+      "actual": [
+        {
+          "width": 200,
+          "height": 80,
+          "extraWidth": 0,
+          "extraHeight": 0
+        },
+        {
+          "width": 200,
+          "height": 80,
+          "extraWidth": 0,
+          "extraHeight": 0
+        },
+        {
+          "width": 60,
+          "height": 60,
+          "extraWidth": 0,
+          "extraHeight": 0
+        },
+        {
+          "width": 220,
+          "height": 40,
+          "extraWidth": 0,
+          "extraHeight": 0
+        }
+      ]
+    },
+    {
+      "name": "border follows live resize",
+      "passed": true,
+      "actual": "0 0 120 80"
+    },
+    {
+      "name": "border holds its orbit after reduced-motion changes",
+      "passed": true,
+      "actual": true
+    },
+    {
+      "name": "all effect/media/editor families render together in ruby",
+      "passed": true,
+      "actual": [
+        "ThemeProvider",
+        "AudioPlayer",
+        "IconButton",
+        "Icon",
+        "IconAsset",
+        "Waveform",
+        "Slider",
+        "RotaryKnob",
+        "Marquee",
+        "PianoKeyboard",
+        "AnimatedBorder",
+        "Tilt",
+        "MediaCard",
+        "Card",
+        "Equalizer",
+        "Typography",
+        "Sparkles",
+        "GlowText",
+        "Shimmer",
+        "Reveal",
+        "Sparkline",
+        "KaraokeLyrics",
+        "MelodyRoll",
+        "WaveDecoration",
+        "Beacon",
+        "ImageShine",
+        "Spotlight",
+        "MelodixText",
+        "LevelMeter",
+        "PianoRoll"
+      ]
+    },
+    {
+      "name": "all effect/media/editor families render together in light",
+      "passed": true,
+      "actual": [
+        "ThemeProvider",
+        "AudioPlayer",
+        "IconButton",
+        "Icon",
+        "IconAsset",
+        "Waveform",
+        "Slider",
+        "RotaryKnob",
+        "Marquee",
+        "PianoKeyboard",
+        "AnimatedBorder",
+        "Tilt",
+        "MediaCard",
+        "Card",
+        "Equalizer",
+        "Typography",
+        "Sparkles",
+        "GlowText",
+        "Shimmer",
+        "Reveal",
+        "Sparkline",
+        "KaraokeLyrics",
+        "MelodyRoll",
+        "WaveDecoration",
+        "Beacon",
+        "ImageShine",
+        "Spotlight",
+        "MelodixText",
+        "LevelMeter",
+        "PianoRoll"
+      ]
+    },
+    {
+      "name": "all effect/media/editor families render together in green",
+      "passed": true,
+      "actual": [
+        "ThemeProvider",
+        "AudioPlayer",
+        "IconButton",
+        "Icon",
+        "IconAsset",
+        "Waveform",
+        "Slider",
+        "RotaryKnob",
+        "Marquee",
+        "PianoKeyboard",
+        "AnimatedBorder",
+        "Tilt",
+        "MediaCard",
+        "Card",
+        "Equalizer",
+        "Typography",
+        "Sparkles",
+        "GlowText",
+        "Shimmer",
+        "Reveal",
+        "Sparkline",
+        "KaraokeLyrics",
+        "MelodyRoll",
+        "WaveDecoration",
+        "Beacon",
+        "ImageShine",
+        "Spotlight",
+        "MelodixText",
+        "LevelMeter",
+        "PianoRoll"
+      ]
+    },
+    {
+      "name": "all effect/media/editor families render together in violet",
+      "passed": true,
+      "actual": [
+        "ThemeProvider",
+        "AudioPlayer",
+        "IconButton",
+        "Icon",
+        "IconAsset",
+        "Waveform",
+        "Slider",
+        "RotaryKnob",
+        "Marquee",
+        "PianoKeyboard",
+        "AnimatedBorder",
+        "Tilt",
+        "MediaCard",
+        "Card",
+        "Equalizer",
+        "Typography",
+        "Sparkles",
+        "GlowText",
+        "Shimmer",
+        "Reveal",
+        "Sparkline",
+        "KaraokeLyrics",
+        "MelodyRoll",
+        "WaveDecoration",
+        "Beacon",
+        "ImageShine",
+        "Spotlight",
+        "MelodixText",
+        "LevelMeter",
+        "PianoRoll"
+      ]
+    },
+    {
+      "name": "NeonWaves never leaks stale comet geometry after resize between slow motion ticks",
+      "passed": true,
+      "actual": {
+        "extraWidth": 0,
+        "extraHeight": 0
+      }
+    },
+    {
+      "name": "browser has no uncaught errors",
+      "passed": true,
+      "actual": []
+    }
+  ],
+  "measurements": [
+    {
+      "instances": 95,
+      "cpuThrottle": 1,
+      "emulated": false,
+      "elapsed": 1516.6000000000001,
+      "samples": 91,
+      "moves": 47,
+      "p95FrameMs": 16.799999999999955,
+      "maxFrameMs": 16.800000000000182,
+      "hardwareConcurrency": 20,
+      "LayoutDuration": 0,
+      "RecalcStyleDuration": 132.19,
+      "ScriptDuration": 19.18,
+      "TaskDuration": 266.94
+    },
+    {
+      "instances": 95,
+      "cpuThrottle": 6,
+      "emulated": true,
+      "elapsed": 1533.3,
+      "samples": 59,
+      "moves": 30,
+      "p95FrameMs": 33.40000000000009,
+      "maxFrameMs": 49.90000000000009,
+      "hardwareConcurrency": 20,
+      "LayoutDuration": 0,
+      "RecalcStyleDuration": 775.04,
+      "ScriptDuration": 99.6,
+      "TaskDuration": 1371.76
+    }
+  ]
+}

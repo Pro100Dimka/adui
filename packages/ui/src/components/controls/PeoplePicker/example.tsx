@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Playground, U, jsx } from "../../../dev/exampleHelpers";
-import type { PickerPerson } from "@ad-voice/ui";
+import type { PickerPerson } from "@neo-ui-kit/react";
 
 const team: PickerPerson[] = [
   { id: "1", name: "Анна Ковальчук", description: "Солистка", presence: "online" },

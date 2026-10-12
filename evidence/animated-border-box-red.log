@@ -1,0 +1,48 @@
+
+ RUN  v3.2.7 D:/Git/adui
+
+ ❯ packages/ui/tests/AnimatedBorderGeometry.test.ts (6 tests | 2 failed) 54ms
+   ✓ follows all four corner radii instead of copying the top-left corner 38ms
+   ✓ resolves percentage radii against each axis so the lights follow an ellipse 2ms
+   ✓ keeps cached contour and masks for unchanged resize notifications, then updates on resize 2ms
+   × uses fractional border-box dimensions and compensates the host border on every side 6ms
+     → expected 'M12 0.65L225 0.65A11.35 11.35 0 0 1 2…' to contain 'L225.375 0.65'
+   × converts content-box dimensions to the same border box used by CSS corner radii 2ms
+     → expected 'M12 0.65L148 0.65A11.35 11.35 0 0 1 1…' to contain 'L224.5 0.65'
+   ✓ updates visible idle border lights on every shared clock frame for a smooth orbit 3ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/ui/tests/AnimatedBorderGeometry.test.ts > uses fractional border-box dimensions and compensates the host border on every side
+AssertionError: expected 'M12 0.65L225 0.65A11.35 11.35 0 0 1 2…' to contain 'L225.375 0.65'
+
+Expected: "L225.375 0.65"
+Received: "M12 0.65L225 0.65A11.35 11.35 0 0 1 236.35 12L236.35 102A11.35 11.35 0 0 1 225 113.35L12 113.35A11.35 11.35 0 0 1 0.65 102L0.65 12A11.35 11.35 0 0 1 12 0.65Z"
+
+ ❯ packages/ui/tests/AnimatedBorderGeometry.test.ts:66:40
+     64|   width = 237; height = 114;
+     65|   const frame = border();
+     66|   expect(frame.path.getAttribute("d")).toContain("L225.375 0.65");
+       |                                        ^
+     67|   expect(frame.overlay.style.inset).toBe("-1px -2px -3px -4px");
+     68|   expect(frame.overlay.style.width).toBe("calc(100% + 6px)");
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  packages/ui/tests/AnimatedBorderGeometry.test.ts > converts content-box dimensions to the same border box used by CSS corner radii
+AssertionError: expected 'M12 0.65L148 0.65A11.35 11.35 0 0 1 1…' to contain 'L224.5 0.65'
+
+Expected: "L224.5 0.65"
+Received: "M12 0.65L148 0.65A11.35 11.35 0 0 1 159.35 12L159.35 228A11.35 11.35 0 0 1 148 239.35L12 239.35A11.35 11.35 0 0 1 0.65 228L0.65 12A11.35 11.35 0 0 1 12 0.65Z"
+
+ ❯ packages/ui/tests/AnimatedBorderGeometry.test.ts:76:40
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 4 passed (6)
+   Start at  14:29:35
+   Duration  285ms (transform 46ms, setup 0ms, collect 36ms, tests 54ms, environment 0ms, prepare 69ms)
+

@@ -4,12 +4,12 @@ export default function EqualizerExample() {
   return (
     <Playground
       knobs={{
-        bars: { options: ["3", "5", "8"], value: "5" },
+        bars: { value: 5, min: 3, max: 8 },
         playing: { value: true },
       }}
       code={(v) =>
         jsx("Equalizer", {
-          bars: v.bars === "5" ? undefined : Number(v.bars),
+          bars: v.bars === 5 ? undefined : v.bars,
           playing: v.playing ? undefined : expr("false"),
         })
       }
@@ -17,7 +17,7 @@ export default function EqualizerExample() {
       {(v) => (
         <U.Stack direction="row" gap={3} align="center">
           <U.Equalizer
-            bars={Number(v.bars)}
+            bars={v.bars}
             playing={v.playing}
             style={{ fontSize: "2rem" }}
           />

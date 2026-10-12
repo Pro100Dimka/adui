@@ -1,4 +1,4 @@
-import { Button, DialogActions } from "@ad-voice/ui";
+import { Button, DialogActions } from "@neo-ui-kit/react";
 
 /** Footer row of a dialog; Dialog renders one for you, use it in custom dialogs. */
 export default function DialogActionsExample() {

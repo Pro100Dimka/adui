@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
-import { Grid, Stack } from "@ad-voice/ui";
-import { useSmoothWheel } from "@ad-voice/ui/core";
+import { Grid, Stack } from "@neo-ui-kit/react";
+import { useSmoothWheel } from "@neo-ui-kit/react/core";
 import { getCatalogItemBySlug } from "./componentRegistry";
 import { CatalogSidebar } from "./CatalogSidebar";
 import { CatalogOverview } from "./CatalogOverview";
@@ -12,7 +12,7 @@ export function CatalogPage({ routeId }: { routeId?: string }) {
   useSmoothWheel(main);
 
   useEffect(() => {
-    document.title = item ? `${item.name} · Neo UI` : "Neo UI · React";
+    document.title = item ? `${item.name} · NEO UI` : "NEO UI · React";
     main.current?.scrollTo({ top: 0 });
     window.scrollTo({ top: 0 });
   }, [item]);

@@ -87,6 +87,7 @@ export function useTick(callback: (now: number) => void, active = true) {
  * the stylesheet pauses every animation inside them, so effects nobody can see cost nothing.
  */
 let offscreenObserver: IntersectionObserver | null = null;
+let offscreenCount = 0;
 const watchOffscreen = (node: Element) => {
   if (typeof IntersectionObserver === "undefined") return () => undefined;
   offscreenObserver ??= new IntersectionObserver(
@@ -97,8 +98,13 @@ const watchOffscreen = (node: Element) => {
     { rootMargin: "12% 0px" },
   );
   offscreenObserver.observe(node);
+  offscreenCount++;
   return () => {
     offscreenObserver?.unobserve(node);
+    if (--offscreenCount === 0) {
+      offscreenObserver?.disconnect();
+      offscreenObserver = null;
+    }
     node.removeAttribute("data-ad-offscreen");
     refreshMotion();
   };

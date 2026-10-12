@@ -16,6 +16,7 @@ export const illustrations = artworkData as unknown as Record<
 
 export interface IconProps extends Omit<CommonProps, "size"> {
   name?: IconName | string;
+  /** xs/sm/md/lg, a CSS length, or pixels converted to rem at the 16px design baseline. */
   size?: number | string;
   label?: string;
   surface?: "none" | "tile";

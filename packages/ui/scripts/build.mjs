@@ -1,5 +1,5 @@
 import { execSync } from "node:child_process";
-import { cpSync, rmSync, statSync } from "node:fs";
+import { cpSync, mkdirSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { build } from "esbuild";
 
@@ -12,6 +12,13 @@ execSync("tsc -p tsconfig.build.json --emitDeclarationOnly", {
   cwd: root,
   stdio: "inherit",
 });
+// Preserve the public asset-name unions without requiring JSON module support in consumers.
+// Runtime asset data is already included in the JavaScript chunks.
+mkdirSync(at("dist/artwork"), { recursive: true });
+for (const file of readdirSync(at("src/artwork")).filter((name) => name.endsWith(".json"))) {
+  const names = Object.keys(JSON.parse(readFileSync(at(`src/artwork/${file}`), "utf8"))).map((name) => JSON.stringify(name)).join(" | ");
+  writeFileSync(at(`dist/artwork/${file}.d.ts`), `declare const assets: Record<${names}, import("../core/base").VectorNode>;\nexport default assets;\n`);
+}
 // JavaScript is bundled per entry point: plain Node and test runners need complete ESM
 // (file extensions, inlined JSON), and shared code goes to common chunks so every entry
 // sees the same modules — and the same React contexts.
@@ -38,5 +45,5 @@ cpSync(at("src"), at("dist"), {
   recursive: true,
   filter: (path) =>
     !/[\\/]src[\\/]dev$/.test(path) &&
-    (statSync(path).isDirectory() || /\.(css|woff2)$/.test(path) || /[\\/]fonts[\\/].*\.txt$/.test(path) || /UPSTREAM-LICENSE\.txt$/.test(path)),
+    (statSync(path).isDirectory() || /\.(css|woff2)$/.test(path) || /[\\/]OFL-[^\\/]+\.txt$/.test(path) || /[\\/]UPSTREAM-LICENSE\.txt$/.test(path)),
 });

@@ -1,4 +1,4 @@
-import { tr, useTr } from "../../../core/i18n";
+import { useTr } from "../../../core/i18n";
 import { mark } from "../../../core/base";
 import { Icon } from "../../layout/Icon/Icon";
 import { type StepsProps } from "../shared";

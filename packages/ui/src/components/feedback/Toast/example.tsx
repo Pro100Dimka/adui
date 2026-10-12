@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button, Toast } from "@ad-voice/ui";
+import { Button, Toast } from "@neo-ui-kit/react";
 
 export default function ToastExample() {
   const [open, setOpen] = useState(false);

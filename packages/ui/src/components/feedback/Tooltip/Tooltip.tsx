@@ -9,6 +9,7 @@ import {
   type ReactNode,
 } from "react";
 import { cssRem, mark, type CommonProps } from "../../../core/base";
+import { createResizeObserver } from "../../../core/environment";
 
 export interface TooltipProps extends CommonProps {
   /** What the tooltip says. */
@@ -32,32 +33,52 @@ export function Tooltip({
   const id = useId();
   const trigger = useRef<HTMLSpanElement>(null);
   const tip = useRef<HTMLSpanElement>(null);
+  const hovered = useRef(false);
   const [open, setOpen] = useState(false);
 
   useLayoutEffect(() => {
     const node = tip.current;
-    const anchor = trigger.current?.getBoundingClientRect();
-    if (!open || !node || !anchor) return;
+    const target = trigger.current;
+    if (!open || !node || !target) return;
     if (typeof node.showPopover === "function") node.showPopover();
-    const box = node.getBoundingClientRect();
-    const gap = 8;
-    const above =
-      placement === "top"
-        ? anchor.top > box.height + gap * 2
-        : innerHeight - anchor.bottom < box.height + gap * 2;
-    const left = Math.max(
-      gap,
-      Math.min(
-        innerWidth - box.width - gap,
-        anchor.left + anchor.width / 2 - box.width / 2,
-      ),
-    );
-    node.style.left = cssRem(left);
-    node.style.top = cssRem(
-      above ? anchor.top - box.height - gap : anchor.bottom + gap,
-    );
-    node.dataset.adSide = above ? "above" : "below";
+    const position = () => {
+      const anchor = target.getBoundingClientRect();
+      const box = node.getBoundingClientRect();
+      const gap = 8;
+      const above =
+        placement === "top"
+          ? anchor.top > box.height + gap * 2
+          : innerHeight - anchor.bottom < box.height + gap * 2;
+      const left = Math.max(
+        gap,
+        Math.min(
+          innerWidth - box.width - gap,
+          anchor.left + anchor.width / 2 - box.width / 2,
+        ),
+      );
+      node.style.left = cssRem(left);
+      node.style.top = cssRem(
+        above ? anchor.top - box.height - gap : anchor.bottom + gap,
+      );
+      node.dataset.adSide = above ? "above" : "below";
+    };
+    position();
+    let frame = 0;
+    const schedule = () => {
+      if (!frame) frame = requestAnimationFrame(() => { frame = 0; position(); });
+    };
+    const observer = createResizeObserver(schedule);
+    observer.observe(target);
+    observer.observe(node);
+    window.addEventListener("scroll", schedule, true);
+    window.addEventListener("resize", schedule);
+    window.visualViewport?.addEventListener("resize", schedule);
     return () => {
+      observer.disconnect();
+      if (frame) cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", schedule, true);
+      window.removeEventListener("resize", schedule);
+      window.visualViewport?.removeEventListener("resize", schedule);
       if (
         typeof node.hidePopover === "function" &&
         node.matches(":popover-open")
@@ -72,17 +93,22 @@ export function Tooltip({
     <span
       ref={trigger}
       className="ad-tooltip-trigger"
-      onMouseEnter={show}
-      onMouseLeave={hide}
+      onMouseEnter={() => { hovered.current = true; show(); }}
+      onMouseLeave={() => {
+        hovered.current = false;
+        if (!trigger.current?.contains(document.activeElement)) hide();
+      }}
       onFocus={show}
-      onBlur={hide}
-      onKeyDown={(event) => event.key === "Escape" && hide()}
+      onBlur={() => { if (!hovered.current) hide(); }}
+      onKeyDown={(event) => {
+        if (open && event.key === "Escape") { event.preventDefault(); hide(); }
+      }}
     >
-      {isValidElement(children)
+      {isValidElement<{ "aria-describedby"?: string }>(children)
         ? cloneElement(
-            children as ReactElement<{ "aria-describedby"?: string }>,
+            children,
             {
-              "aria-describedby": id,
+              "aria-describedby": [children.props["aria-describedby"], open ? id : undefined].filter(Boolean).join(" ") || undefined,
             },
           )
         : children}

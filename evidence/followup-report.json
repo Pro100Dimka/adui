@@ -1,0 +1,170 @@
+{
+  "completedAt": "2026-10-12T11:52:46.512Z",
+  "status": "Requested follow-up fixes implemented and verified locally; no publication or package rename.",
+  "artifact": {
+    "path": "D:\\Git\\adui\\release\\ad-voice-ui-2.9.3.tgz",
+    "name": "@ad-voice/ui",
+    "version": "2.9.3",
+    "format": "ESM",
+    "sizeBytes": 1666485,
+    "unpackedBytes": 2840348,
+    "files": 269,
+    "sha256": "e55d604655406a7176d952768d642b7d48cd74fc90debc540dbedb6cb1a4ae4c",
+    "sha1": "cc41e678736c1b61a6a267e6554b300831393a42",
+    "integrity": "sha512-jckBsiQv2GzZg/rYguGhz+top3jyBgylqQSbcKHLsZuR8+vg1Ic8FXkET5d1XUlBaxivCSuA8hfNvwEtuQbJyQ==",
+    "metadata": "evidence/package-final.json",
+    "installedConsumerIntegrityMatches": true
+  },
+  "changes": {
+    "DataTable": [
+      "Table expands to its actual container; sticky column offsets track distributed widths.",
+      "Mobile sort, filter and select-all remain visible; utility headers stack correctly.",
+      "Aligned headers, numeric values, groups and complete row actions; default action column is now 120px.",
+      "Reset restores density and details; prototype-sensitive filter and column keys handled safely."
+    ],
+    "AnimatedBorder": [
+      "Host, overlay, mask and light trajectory now use the same precise border-box coordinates.",
+      "Fractional dimensions, asymmetric borders, elliptical/percentage radii, resize, scrolling and transforms covered.",
+      "External neon halo retained; host is not clipped to conceal the defect."
+    ],
+    "documentation": [
+      "NEO UI spelling across site title and branding.",
+      "Stable IconButton controls and locale menu replace jumping text segments.",
+      "Named xs/sm/md/lg size selectors; genuine numeric parameters use NumberField.",
+      "Icon and Loader accept named sizes while existing numeric/CSS values remain valid."
+    ],
+    "related": [
+      "RotaryKnob fits a 200px container and stays aligned during rotation without clipping focus or glow.",
+      "Badge text contrast corrected across four palettes and two schemes; offline StatusIndicator CSS scoped to its own component."
+    ]
+  },
+  "verification": {
+    "testFirst": "Dedicated red evidence retained for fixes; green and related suites passed.",
+    "fullCheck": {
+      "tests": 556,
+      "files": 38,
+      "typecheck": "UI and playground passed",
+      "build": "UI and playground passed",
+      "log": "evidence/followup-full-check.log"
+    },
+    "dataTable": {
+      "passed": 89,
+      "failed": 0,
+      "evidence": "evidence/data-table-browser-packed-green.json",
+      "audit": "evidence/data-table-audit.json",
+      "virtualRows": 10000,
+      "visibleDOMRows": 15
+    },
+    "animatedBorder": {
+      "passed": 24,
+      "failed": 0,
+      "maxContourErrorCssPx": 0.032293237408134404,
+      "evidence": "evidence/animated-border-packed-green.json"
+    },
+    "header": {
+      "passed": 85,
+      "failed": 0,
+      "evidence": "evidence/header-independent.json",
+      "localeGeometry": "evidence/docs-header-locale-green.json",
+      "localeViewportSamples": 18
+    },
+    "sizing": {
+      "pages": 100,
+      "failed": 0,
+      "interactiveSizeStates": 104,
+      "numberFields": 9,
+      "evidence": "evidence/docs-sizing-browser-green.json",
+      "rotaryMotion": "evidence/docs-sizing-browser-rotary-motion-green.json"
+    },
+    "badgeContrast": {
+      "cases": 64,
+      "minimum": 7.356426436281135,
+      "evidence": "evidence/controls-browser-badge-green.json"
+    },
+    "productionCatalog": {
+      "cases": 600,
+      "pages": 100,
+      "widths": [
+        320,
+        375,
+        768,
+        1024,
+        1440,
+        1920
+      ],
+      "evidence": "evidence/docs-sweep.json"
+    },
+    "consumers": [
+      {
+        "evidence": "evidence/consumer-consumer-react18-followup-chrome.json",
+        "react": "18.2.0",
+        "browser": "154.0.8037.98",
+        "channel": "chrome",
+        "checks": 22,
+        "result": "passed"
+      },
+      {
+        "evidence": "evidence/consumer-consumer-react19-followup-chrome.json",
+        "react": "19.3.0",
+        "browser": "154.0.8037.98",
+        "channel": "chrome",
+        "checks": 22,
+        "result": "passed"
+      },
+      {
+        "evidence": "evidence/consumer-consumer-react19-followup-edge.json",
+        "react": "19.3.0",
+        "browser": "155.0.4283.45",
+        "channel": "msedge",
+        "checks": 22,
+        "result": "passed"
+      }
+    ],
+    "packageChecks": [
+      {
+        "evidence": "evidence/package-consumer-react18-22.json",
+        "node": "v22.18.0",
+        "react": "18.2.0",
+        "result": "passed"
+      },
+      {
+        "evidence": "evidence/package-consumer-react19-22.json",
+        "node": "v22.18.0",
+        "react": "19.3.0",
+        "result": "passed"
+      },
+      {
+        "evidence": "evidence/package-consumer-react19-20.json",
+        "node": "v20.20.2",
+        "react": "19.3.0",
+        "result": "passed"
+      }
+    ],
+    "staticDocs": {
+      "files": 357,
+      "allFilesByteIdentical": true,
+      "evidence": "evidence/docs-artifact.json"
+    }
+  },
+  "lazyImports": {
+    "decision": "Keep public component exports synchronous and tree-shakeable. Defer pages and heavy optional editors; existing documentation already loads examples and editor tooling lazily.",
+    "source": "https://react.dev/reference/react/lazy"
+  },
+  "backups": {
+    "package": "release/before-table-border-followup/ad-voice-ui-2.9.3.tgz",
+    "report": "release/before-table-border-followup/release-report.json",
+    "documentation": "release/docs-before-table-border-followup"
+  },
+  "limitations": [
+    "No claim of universal visual perfection or legal naming clearance.",
+    "This follow-up used installed Chrome/Edge on the available desktop; physical low-end/mobile devices, Safari/Firefox and screen readers remain unverified.",
+    "Full 100-page axe audit and animation CPU comparison belong to the previous pass; follow-up rechecked changed pages and geometry independently.",
+    "Package remains @ad-voice/ui@2.9.3, UNLICENSED, and unpublished."
+  ],
+  "screenshots": [
+    "evidence/data-table-docs-final-1920.png",
+    "evidence/data-table-docs-final-375.png",
+    "evidence/animated-border-packed-green.png",
+    "evidence/header-independent-768-dark-100.png"
+  ]
+}

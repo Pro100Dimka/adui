@@ -16,7 +16,7 @@ export async function buildSandboxRuntime() {
     target: "es2022",
     jsx: "automatic",
     alias: Object.fromEntries(["index", "core", "editor", "forms", "router"].map((part) => [
-      part === "index" ? "@ad-voice/ui" : `@ad-voice/ui/${part}`,
+      part === "index" ? "@neo-ui-kit/react" : `@neo-ui-kit/react/${part}`,
       ui(`${part}.ts`),
     ])),
     loader: { ".html": "text" },
@@ -43,10 +43,10 @@ export default defineConfig({
   }],
   resolve: {
     alias: [
-      { find: /^@ad-voice\/ui$/, replacement: ui("index.ts") },
-      { find: /^@ad-voice\/ui\/styles\.css$/, replacement: ui("styles.css") },
+      { find: /^@neo-ui-kit\/react$/, replacement: ui("index.ts") },
+      { find: /^@neo-ui-kit\/react\/styles\.css$/, replacement: ui("styles.css") },
       {
-        find: /^@ad-voice\/ui\/(editor|core|router|forms)$/,
+        find: /^@neo-ui-kit\/react\/(editor|core|router|forms)$/,
         replacement: ui("$1.ts"),
       },
     ],

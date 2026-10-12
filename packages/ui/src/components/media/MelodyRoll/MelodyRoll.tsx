@@ -1,4 +1,4 @@
-import { tr, useTr } from "../../../core/i18n";
+import { useTr } from "../../../core/i18n";
 import { useRef, type CSSProperties, type WheelEvent } from "react";
 import { clamp, mark, useControllable, type CommonProps } from "../../../core/base";
 import { PianoKeyboard } from "../PianoKeyboard/PianoKeyboard";

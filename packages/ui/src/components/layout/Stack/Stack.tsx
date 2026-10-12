@@ -1,4 +1,4 @@
-import { Children, Fragment } from "react";
+import { Children, Fragment, isValidElement } from "react";
 import type { ElementType, HTMLAttributes, ReactNode, Ref } from "react";
 import { classes } from "../../../core/base";
 import {
@@ -58,7 +58,7 @@ export function Stack({
     divider == null
       ? children
       : Children.toArray(children).map((child, index) => (
-          <Fragment key={index}>
+          <Fragment key={isValidElement(child) ? child.key : index}>
             {index > 0 && (
               <span className="ad-stack__divider" aria-hidden="true">
                 {divider}

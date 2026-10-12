@@ -1,0 +1,25 @@
+{
+  "directory": "D:\\Git\\adui\\release\\consumer-npm",
+  "node": "v22.18.0",
+  "react": "19.3.0",
+  "package": "@neo-ui-kit/react@1.0.0",
+  "entries": {
+    "/index": 169,
+    "/core": 23,
+    "/forms": 5,
+    "/editor": 1,
+    "/router": 3
+  },
+  "sharedProviderIdentity": true,
+  "serverRendering": "passed for the representative component set; this is not a hydration certification",
+  "allExportsExist": true,
+  "buttonBundle": {
+    "bytes": 76036,
+    "gzipBytes": 16803,
+    "editorRetained": false,
+    "quantumRendererRetained": false,
+    "unrelatedArtworkRetained": false,
+    "audioPlayerRetained": false
+  },
+  "result": "passed"
+}

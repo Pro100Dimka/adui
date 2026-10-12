@@ -1,9 +1,11 @@
+import { forwardRef } from "react";
 import { buttonView, type IconButtonProps } from "../shared";
 
-export const IconButton = (p: IconButtonProps) =>
-  buttonView(
+export const IconButton = /* @__PURE__ */ forwardRef<HTMLButtonElement, IconButtonProps>(function IconButton(p, ref) {
+  return buttonView(
     {
       ...p,
+      ref,
       icon: p.icon ?? "more",
       children: p.children ?? null,
       label: undefined,
@@ -12,3 +14,4 @@ export const IconButton = (p: IconButtonProps) =>
     },
     "IconButton",
   );
+});

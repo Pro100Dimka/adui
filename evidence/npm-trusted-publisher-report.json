@@ -1,0 +1,98 @@
+{
+  "preparedAt": "2026-10-12T12:52:03.977Z",
+  "status": "Trusted publisher saved; local 1.0.1 verified; first GitHub OIDC publication and website deployment pending approval.",
+  "package": "@neo-ui-kit/react",
+  "version": "1.0.1",
+  "publishedVersion": "1.0.0",
+  "trustedPublisher": {
+    "provider": "GitHub Actions",
+    "repository": "Pro100Dimka/adui",
+    "workflow": "release.yml",
+    "environment": "npm-publication",
+    "configurationId": "8ce1a8ac-2a00-45f7-9b00-5baae071a697",
+    "status": "pending validation",
+    "activationDeadline": "2026-10-14T12:43:00Z",
+    "githubEnvironmentAllowedRefs": [
+      {
+        "type": "tag",
+        "name": "v*"
+      }
+    ],
+    "longLivedTokenAdded": false
+  },
+  "artifact": {
+    "path": "release/neo-ui-kit-react-1.0.1.tgz",
+    "size": 1667886,
+    "files": 270,
+    "integrity": "sha512-UAnhFNlTbV/o6r1nbNWYptM/y2ChTxZllnc7ElamX2MadeiLGygvhovsaTwbnXnXM0VR77PBD7KXjEvSvSlaBg==",
+    "sha256": "bb84a4d3c3ace526e183fe7469026b259634b76dd9c3f357110eab66a788249d",
+    "comparison": "evidence/npm-1.0.1-artifact-comparison.json",
+    "runtimeChanged": false
+  },
+  "verification": {
+    "fullCheck": {
+      "tests": 575,
+      "files": 38,
+      "result": "passed",
+      "log": "evidence/npm-1.0.1-full-check.log"
+    },
+    "workflow": {
+      "actionlint": "1.7.12",
+      "result": "passed",
+      "evidence": "evidence/npm-trusted-actionlint-tool.json",
+      "log": "evidence/npm-trusted-actionlint.log",
+      "regressions": [
+        "evidence/npm-trusted-workflow-red.log",
+        "evidence/npm-trusted-workflow-green.log"
+      ]
+    },
+    "documentation": {
+      "red": "evidence/npm-trusted-publisher-docs-red.log",
+      "green": "evidence/npm-trusted-publisher-docs-suite.log",
+      "browserChecks": 15,
+      "browserResult": "passed",
+      "browserEvidence": "evidence/rename-browser-production.json"
+    },
+    "version": {
+      "red": [
+        "evidence/npm-1.0.1-consumer-version-red.log",
+        "evidence/npm-1.0.1-readme-version-red.log"
+      ],
+      "green": [
+        "evidence/npm-1.0.1-consumer-version-green.log",
+        "evidence/npm-1.0.1-version-suite-green.log"
+      ],
+      "source": "evidence/npm-1.0.1-version-after.json"
+    },
+    "consumer": {
+      "directory": "release/consumer-oidc",
+      "installedFrom": "local tarball, independent node_modules",
+      "react": "19.3.0",
+      "strictTypes": "passed, no skipLibCheck",
+      "typeLog": "evidence/npm-1.0.1-consumer-types.log",
+      "browser": "154.0.8037.98",
+      "browserChecks": 22,
+      "browserResult": "passed",
+      "browserEvidence": "evidence/consumer-consumer-oidc-oidc-preparation-chrome.json",
+      "publicEntries": "evidence/package-consumer-oidc-22.json"
+    }
+  },
+  "staticDocs": {
+    "buildFiles": 357,
+    "docsFiles": 358,
+    "byteIdentical": true,
+    "backup": "D:\\Git\\adui-backups\\npm-publication-20261012\\docs-before-oidc",
+    "published": false
+  },
+  "nextAction": "After approval, push the prepared source and documentation commit to main, push v1.0.1, then verify GitHub Actions, npm provenance and deployed Pages installation instructions.",
+  "limitations": [
+    "The real GitHub-hosted Linux workflow and OIDC exchange have not run yet.",
+    "A local successful build does not confirm npm trusted publisher activation.",
+    "Previous browser, physical-device, accessibility, SSR and naming limitations remain in release-report.json."
+  ],
+  "notes": [
+    "The first strict TypeScript invocation failed because PowerShell split the unquoted comma-separated --lib argument. Quoting the argument produced a successful strict check; no package or test change was needed.",
+    "Registry 1.0.0 and local 1.0.1 differ only in package.json and README.md; all remaining 268 shipped files match byte for byte.",
+    "Browser login, 2FA and npm settings screenshots remain local and are excluded from Git delivery."
+  ]
+}

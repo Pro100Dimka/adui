@@ -1,4 +1,4 @@
-import { IconButton, Stack, Tooltip } from "@ad-voice/ui";
+import { IconButton, Stack, Tooltip } from "@neo-ui-kit/react";
 
 export default function TooltipExample() {
   return (

@@ -13,7 +13,7 @@ vi.mock("../../../apps/playground/src/catalog/CopyButton", () => ({ CopyButton: 
 vi.mock("../../../apps/playground/src/catalog/DocsExampleBoundary", () => ({
   DocsExampleBoundary: ({ children }: { children: React.ReactNode }) => <>{children}</>,
 }));
-vi.mock("@ad-voice/ui", () => ({
+vi.mock("@neo-ui-kit/react", () => ({
   tr: (text: string) => text,
   useTr: () => (text: string) => text,
   useLocale: () => "en",

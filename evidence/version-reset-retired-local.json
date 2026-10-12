@@ -1,0 +1,107 @@
+[
+  {
+    "source": "D:\\Git\\adui\\release\\ad-voice-ui-1.2.0.tgz",
+    "backup": "D:\\Git\\adui-backups\\version-reset-20261012\\local-archives\\ad-voice-ui-1.2.0.tgz",
+    "sha256": "e60a5afc2df919c43729f7812bdb1459d800bcbb49c04dd4944580a362ac4b4c"
+  },
+  {
+    "source": "D:\\Git\\adui\\release\\ad-voice-ui-2.2.0.tgz",
+    "backup": "D:\\Git\\adui-backups\\version-reset-20261012\\local-archives\\ad-voice-ui-2.2.0.tgz",
+    "sha256": "06e02b0f728f5ebf6e1ff5de3bbaeb6ca0dd371055a7a2315d949f3516122b1e"
+  },
+  {
+    "source": "D:\\Git\\adui\\release\\ad-voice-ui-2.3.3.tgz",
+    "backup": "D:\\Git\\adui-backups\\version-reset-20261012\\local-archives\\ad-voice-ui-2.3.3.tgz",
+    "sha256": "741e12a291d28129eac573a9a5a28a550367a5ac193befd6bebae204fd410711"
+  },
+  {
+    "source": "D:\\Git\\adui\\release\\ad-voice-ui-2.7.1.tgz",
+    "backup": "D:\\Git\\adui-backups\\version-reset-20261012\\local-archives\\ad-voice-ui-2.7.1.tgz",
+    "sha256": "2dc5d7a32e3bbb4d9c3f355fc488d8aaf3b9446a4f511aa8625b54de62939f41"
+  },
+  {
+    "source": "D:\\Git\\adui\\release\\ad-voice-ui-2.7.11.tgz",
+    "backup": "D:\\Git\\adui-backups\\version-reset-20261012\\local-archives\\ad-voice-ui-2.7.11.tgz",
+    "sha256": "4c8f2fbbca0a947a9b8a174745aa2b540b51d3d033dea71d53db55222ff37d32"
+  },
+  {
+    "source": "D:\\Git\\adui\\release\\ad-voice-ui-2.7.12.tgz",
+    "backup": "D:\\Git\\adui-backups\\version-reset-20261012\\local-archives\\ad-voice-ui-2.7.12.tgz",
+    "sha256": "0777cda5c01f451228447290bb92dd1e1feb050869a5660f72e9c85402383748"
+  },
+  {
+    "source": "D:\\Git\\adui\\release\\ad-voice-ui-2.7.13.tgz",
+    "backup": "D:\\Git\\adui-backups\\version-reset-20261012\\local-archives\\ad-voice-ui-2.7.13.tgz",
+    "sha256": "7974a654e5db3f612d1bf8ee9992c3f3be9a33aa176023f434ee2b0b1b577589"
+  },
+  {
+    "source": "D:\\Git\\adui\\release\\ad-voice-ui-2.7.14.tgz",
+    "backup": "D:\\Git\\adui-backups\\version-reset-20261012\\local-archives\\ad-voice-ui-2.7.14.tgz",
+    "sha256": "f11e07fc397bcfe5c11386a9d78346156a9d07e23da8248a40f1c10330eb464a"
+  },
+  {
+    "source": "D:\\Git\\adui\\release\\ad-voice-ui-2.7.16.tgz",
+    "backup": "D:\\Git\\adui-backups\\version-reset-20261012\\local-archives\\ad-voice-ui-2.7.16.tgz",
+    "sha256": "dbe32b20bf0bc95b8f3bdbe627e5bf78623348675584f5a12fe05e069fa3b24d"
+  },
+  {
+    "source": "D:\\Git\\adui\\release\\ad-voice-ui-2.7.2.tgz",
+    "backup": "D:\\Git\\adui-backups\\version-reset-20261012\\local-archives\\ad-voice-ui-2.7.2.tgz",
+    "sha256": "f7076e61205fa19a52a4a1b3f44984cdb1865905809e2fd8045122415e7abc99"
+  },
+  {
+    "source": "D:\\Git\\adui\\release\\ad-voice-ui-2.8.0.tgz",
+    "backup": "D:\\Git\\adui-backups\\version-reset-20261012\\local-archives\\ad-voice-ui-2.8.0.tgz",
+    "sha256": "44cba1cef54e0108fa87b6c37cb4af8e1daefb3f63cfac1bb1f48a816333fa9e"
+  },
+  {
+    "source": "D:\\Git\\adui\\release\\ad-voice-ui-2.9.0.tgz",
+    "backup": "D:\\Git\\adui-backups\\version-reset-20261012\\local-archives\\ad-voice-ui-2.9.0.tgz",
+    "sha256": "30d7fe571dc60460e0d8cc6aa117222f22062f10ce050204e0523725858cd9ef"
+  },
+  {
+    "source": "D:\\Git\\adui\\release\\ad-voice-ui-2.9.2.tgz",
+    "backup": "D:\\Git\\adui-backups\\version-reset-20261012\\local-archives\\ad-voice-ui-2.9.2.tgz",
+    "sha256": "99a87a65fb15b17fef167b0dc50f113f0fd99adaaa55cb0d5140f57ad11d5263"
+  },
+  {
+    "source": "D:\\Git\\adui\\release\\ad-voice-ui-2.9.3.tgz",
+    "backup": "D:\\Git\\adui-backups\\version-reset-20261012\\local-archives\\ad-voice-ui-2.9.3.tgz",
+    "sha256": "e55d604655406a7176d952768d642b7d48cd74fc90debc540dbedb6cb1a4ae4c"
+  },
+  {
+    "source": "D:\\Git\\adui\\release\\neo-ui-react-2.9.3.tgz",
+    "backup": "D:\\Git\\adui-backups\\version-reset-20261012\\local-archives\\neo-ui-react-2.9.3.tgz",
+    "sha256": "305e78724d81ecb79b2dabe04f4fe07cce9dcf87073da0d16b3b7b9dca02a848"
+  },
+  {
+    "source": "D:\\Git\\adui\\release\\before-table-border-followup",
+    "backup": "D:\\Git\\adui-backups\\version-reset-20261012\\previous-local-backups\\before-table-border-followup",
+    "kind": "prior backup directory"
+  },
+  {
+    "source": "D:\\Git\\adui\\release\\docs-before-20261012",
+    "backup": "D:\\Git\\adui-backups\\version-reset-20261012\\previous-local-backups\\docs-before-20261012",
+    "kind": "prior backup directory"
+  },
+  {
+    "source": "D:\\Git\\adui\\release\\docs-before-locale-20261012",
+    "backup": "D:\\Git\\adui-backups\\version-reset-20261012\\previous-local-backups\\docs-before-locale-20261012",
+    "kind": "prior backup directory"
+  },
+  {
+    "source": "D:\\Git\\adui\\release\\docs-before-package-rename",
+    "backup": "D:\\Git\\adui-backups\\version-reset-20261012\\previous-local-backups\\docs-before-package-rename",
+    "kind": "prior backup directory"
+  },
+  {
+    "source": "D:\\Git\\adui\\release\\docs-before-table-border-followup",
+    "backup": "D:\\Git\\adui-backups\\version-reset-20261012\\previous-local-backups\\docs-before-table-border-followup",
+    "kind": "prior backup directory"
+  },
+  {
+    "source": "D:\\Git\\adui\\release\\docs-intermediate-20261012",
+    "backup": "D:\\Git\\adui-backups\\version-reset-20261012\\previous-local-backups\\docs-intermediate-20261012",
+    "kind": "prior backup directory"
+  }
+]

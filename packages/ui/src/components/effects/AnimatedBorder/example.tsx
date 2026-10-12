@@ -1,4 +1,4 @@
-import { AnimatedBorder, Card, Typography } from "@ad-voice/ui";
+import { AnimatedBorder, Card, Typography } from "@neo-ui-kit/react";
 
 /** Wraps any block in the animated neon outline; Card has the same effect as `border`. */
 export default function AnimatedBorderExample() {

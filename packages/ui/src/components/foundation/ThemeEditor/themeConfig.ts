@@ -141,9 +141,9 @@ export function parseTheme(text: string, locale?: Locale): ThemeConfig {
   }
   if (!data || typeof data !== "object") throw new Error(tr("В файле нет настроек темы."));
   const raw = data as Record<string, unknown>;
-  if (raw.$type !== undefined && raw.$type !== "neo-ui-theme") throw new Error(tr("Это файл не темы Neo UI."));
+  if (raw.$type !== undefined && raw.$type !== "neo-ui-theme") throw new Error(tr("Это файл не темы NEO UI."));
   if (raw.version !== undefined && raw.version !== 1) throw new Error(tr("Версия темы {version} не поддерживается.", { version: String(raw.version) }));
-  const theme = typeof raw.theme === "string" && raw.theme in themes ? (raw.theme as ThemeName) : "ruby";
+  const theme = typeof raw.theme === "string" && Object.hasOwn(themes, raw.theme) ? (raw.theme as ThemeName) : "ruby";
   const pick = (value: unknown) => (typeof value === "string" && hex.test(value) ? value.toLowerCase() : undefined);
   const tokens: Record<string, string> = {};
   if (raw.tokens && typeof raw.tokens === "object")

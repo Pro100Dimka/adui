@@ -11,7 +11,9 @@ export const AudioPlayer = (p: AudioPlayerProps) => {
   const audio = useRef<HTMLAudioElement | null>(null);
   const [playing, setPlaying] = useState(false),
     [muted, setMuted] = useState(false);
-  const [volume, setVolume] = useControllable(p.volume, p.defaultVolume ?? 0.7);
+  const [volume, setVolume] = useControllable(p.volume, p.defaultVolume ?? 0.7, p.onVolumeChange);
+  const onPlayingChange = useRef(p.onPlayingChange);
+  onPlayingChange.current = p.onPlayingChange;
   const [fileDuration, setFileDuration] = useState<number>();
   const duration = p.duration ?? fileDuration ?? 51;
   const controlled = p.playing !== undefined;
@@ -20,7 +22,7 @@ export const AudioPlayer = (p: AudioPlayerProps) => {
     void media.play().catch(() => {
       if (audio.current === media) {
         setPlaying(false);
-        p.onPlayingChange?.(false);
+        onPlayingChange.current?.(false);
       }
     });
   };
@@ -35,7 +37,7 @@ export const AudioPlayer = (p: AudioPlayerProps) => {
       Number.isFinite(media.duration) && setFileDuration(media.duration);
     const ended = () => {
       setPlaying(false);
-      p.onPlayingChange?.(false);
+      onPlayingChange.current?.(false);
     };
     media.addEventListener("loadedmetadata", meta);
     media.addEventListener("ended", ended);
@@ -92,11 +94,13 @@ export const AudioPlayer = (p: AudioPlayerProps) => {
           icon="volume"
           label={muted ? tr("Включить звук") : tr("Выключить звук")}
           aria-pressed={muted}
+          disabled={p.disabled}
           data-muted={muted || undefined}
           onClick={() => setMuted((v) => !v)}
         />
         <Slider
           size="sm"
+          disabled={p.disabled}
           min={0}
           max={1}
           step={0.01}

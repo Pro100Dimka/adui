@@ -29,6 +29,7 @@
     "dist",
     "node_modules",
     "src/**/example.tsx",
+    "src/**/*Example.tsx",
     "src/**/meta.ts",
     "src/dev"
   ]

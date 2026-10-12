@@ -1,4 +1,4 @@
-import { tr, useTr } from "@ad-voice/ui";
+import { useTr } from "@neo-ui-kit/react";
 import { Suspense, lazy, useEffect, useState } from "react";
 import { CopyButton } from "./CopyButton";
 import { DocsExampleBoundary } from "./DocsExampleBoundary";
@@ -17,7 +17,7 @@ import {
   Link,
   Stack,
   Typography,
-} from "@ad-voice/ui";
+} from "@neo-ui-kit/react";
 import {
   catalog,
   componentHref,
@@ -79,12 +79,12 @@ function withImports(code: string, name: string, path: string) {
   ];
   const others = tags.filter((tag) => tag !== name);
   const lines =
-    path === "@ad-voice/ui"
-      ? [`import { ${[name, ...others].join(", ")} } from "@ad-voice/ui";`]
+    path === "@neo-ui-kit/react"
+      ? [`import { ${[name, ...others].join(", ")} } from "@neo-ui-kit/react";`]
       : [
           `import { ${name} } from "${path}";`,
           ...(others.length
-            ? [`import { ${others.join(", ")} } from "@ad-voice/ui";`]
+            ? [`import { ${others.join(", ")} } from "@neo-ui-kit/react";`]
             : []),
         ];
   return [...lines, "", code].join("\n");
@@ -195,7 +195,7 @@ export function ComponentDocsPage({ item }: { item: CatalogMeta }) {
             >
               <Badge tone="success">Stable</Badge>
               <Badge>React</Badge>
-              <Badge>Neo UI</Badge>
+              <Badge>NEO UI</Badge>
             </Stack>
           </Stack>
 

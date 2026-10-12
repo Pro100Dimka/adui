@@ -5,6 +5,7 @@ import { act, create } from "react-test-renderer";
 import { existsSync, readFileSync } from "node:fs";
 import { transformSync } from "esbuild";
 import QuantumFieldExample from "../src/components/artwork/QuantumField/example";
+import QuantumFieldExperienceExample from "../src/components/artwork/QuantumField/experienceExample";
 import { ExamplePreviewContext } from "../src/dev/exampleHelpers";
 import { QuantumFieldExperience, quantumFieldExperienceControls } from "../src/components/artwork/QuantumField/QuantumFieldExperience";
 import { createQuantumFieldAudio } from "../src/components/artwork/QuantumField/audio";
@@ -668,8 +669,8 @@ it("does not force an opaque rectangle over a consumer's themed surface", () => 
   expect(css).not.toMatch(/var\(--ad-neutral-950\)/);
 });
 
-it("shows the restored visualizer in the documentation stage", () => {
-  const html = renderToStaticMarkup(createElement(QuantumFieldExample));
+it("shows the restored visualizer on its own documentation page", () => {
+  const html = renderToStaticMarkup(createElement(QuantumFieldExperienceExample));
   expect(html).toContain('class="example-stage"');
   expect(html).not.toContain('data-stretch="true"');
   expect(html).toContain('data-ad-component="QuantumFieldExperience"');

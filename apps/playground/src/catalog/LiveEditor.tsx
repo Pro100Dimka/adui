@@ -1,6 +1,6 @@
-import { tr, useLocale, useTr } from "@ad-voice/ui";
+import { useLocale, useTr } from "@neo-ui-kit/react";
 import { useEffect, useRef, useState } from "react";
-import { Badge, Button, Grid, MessageBar, Stack, Typography } from "@ad-voice/ui";
+import { Badge, Button, Grid, MessageBar, Stack, Typography } from "@neo-ui-kit/react";
 import { CopyButton } from "./CopyButton";
 import { CodeEditor } from "./CodeEditor";
 import { compile } from "./liveCode";

@@ -1,0 +1,26 @@
+
+> @ad-voice/ui@2.9.3 test
+> vitest run DocumentationBorders.test.tsx
+
+
+ RUN  v3.2.7 D:/Git/adui/packages/ui
+
+stderr | tests/DocumentationBorders.test.tsx > demonstrates table details, actions, pinning, multi-sort and opt-in large-data virtualization with complete rows
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/DocumentationBorders.test.tsx > uses the kit's animated border on every overview tile and panel
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/DocumentationBorders.test.tsx > animates the Example and Related section borders on component pages
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/DocumentationBorders.test.tsx > resets both the desktop content and mobile document scroll on navigation
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+ ✓ tests/DocumentationBorders.test.tsx (9 tests) 80ms
+
+ Test Files  1 passed (1)
+      Tests  9 passed (9)
+   Start at  14:51:29
+   Duration  2.49s (transform 800ms, setup 0ms, collect 2.21s, tests 80ms, environment 0ms, prepare 69ms)
+

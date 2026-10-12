@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { Button, Menu } from "@ad-voice/ui";
+import { Button, Menu } from "@neo-ui-kit/react";
 
 export default function MenuExample() {
   const [open, setOpen] = useState(false);

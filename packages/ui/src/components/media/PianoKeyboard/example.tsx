@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { PianoKeyboard, Stack, Switch, Typography, noteName } from "@ad-voice/ui";
+import { PianoKeyboard, Stack, Switch, Typography, noteName } from "@neo-ui-kit/react";
 
 export default function PianoKeyboardExample() {
   const [active, setActive] = useState(67);

@@ -2,7 +2,7 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import { act, create, type ReactTestRenderer } from "react-test-renderer";
 import { Router, useRouter, type RouterValue } from "../src/components/navigation/Router/Router";
 import RouterExample from "../src/components/navigation/Router/example";
-import { LocaleProvider } from "@ad-voice/ui";
+import { LocaleProvider } from "@neo-ui-kit/react";
 import { useMotion, useReducedMotion } from "../src/core/providers/context";
 
 afterEach(() => vi.unstubAllGlobals());

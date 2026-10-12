@@ -1,4 +1,4 @@
-import { BrandMark } from "@ad-voice/ui";
+import { BrandMark } from "@neo-ui-kit/react";
 
 export default function BrandMarkExample() {
   return <BrandMark />;

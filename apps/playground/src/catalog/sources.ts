@@ -1,5 +1,6 @@
 // Raw text of every example and library source, for the "Код", "API" and "Исходник" dialogs.
 // Loaded lazily (see loadSources) so the docs start without ~400 KB of embedded text.
+import { additionalDocumentation } from "./componentRegistry";
 
 const sources = Object.entries(
   import.meta.glob<string>("../../../../packages/ui/src/**/*.{ts,tsx}", {
@@ -10,7 +11,7 @@ const sources = Object.entries(
 );
 
 const sourceEntry = (name: string, file = `${name}.tsx`) =>
-  sources.find(([path]) => path.endsWith(`/${name}/${file}`));
+  sources.find(([path]) => path.endsWith(additionalDocumentation[name]?.[file === "example.tsx" ? "example" : "source"] ?? `/${name}/${file}`));
 export const getExampleSource = (name: string) =>
   sourceEntry(name, "example.tsx")?.[1] ?? `// Нет example.tsx для ${name}`;
 export const getComponentSource = (name: string) =>

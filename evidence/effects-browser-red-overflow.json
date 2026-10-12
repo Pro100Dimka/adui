@@ -1,0 +1,453 @@
+{
+  "environment": {
+    "browser": "Installed Chrome headless",
+    "physicalLowEndDevice": false,
+    "viewportHeight": 1000
+  },
+  "stage": "red-overflow",
+  "passed": 25,
+  "failed": 1,
+  "results": [
+    {
+      "name": "knob fits a narrow container at viewport 320",
+      "passed": true,
+      "actual": {
+        "hostWidth": 200,
+        "controlWidth": 200,
+        "controlHeight": 200,
+        "right": 216,
+        "hostRight": 216,
+        "volumeWidth": 0,
+        "volumeRight": 0,
+        "trackWidth": 0
+      }
+    },
+    {
+      "name": "audio keeps volume available at viewport 320",
+      "passed": true,
+      "actual": {
+        "hostWidth": 200,
+        "controlWidth": 200,
+        "controlHeight": 162.03125,
+        "right": 216,
+        "hostRight": 216,
+        "volumeWidth": 102,
+        "volumeRight": 173,
+        "trackWidth": 114
+      }
+    },
+    {
+      "name": "knob fits a narrow container at viewport 375",
+      "passed": true,
+      "actual": {
+        "hostWidth": 200,
+        "controlWidth": 200,
+        "controlHeight": 200,
+        "right": 216,
+        "hostRight": 216,
+        "volumeWidth": 0,
+        "volumeRight": 0,
+        "trackWidth": 0
+      }
+    },
+    {
+      "name": "audio keeps volume available at viewport 375",
+      "passed": true,
+      "actual": {
+        "hostWidth": 200,
+        "controlWidth": 200,
+        "controlHeight": 162.03125,
+        "right": 216,
+        "hostRight": 216,
+        "volumeWidth": 102,
+        "volumeRight": 173,
+        "trackWidth": 114
+      }
+    },
+    {
+      "name": "knob fits a narrow container at viewport 768",
+      "passed": true,
+      "actual": {
+        "hostWidth": 200,
+        "controlWidth": 200,
+        "controlHeight": 200,
+        "right": 216,
+        "hostRight": 216,
+        "volumeWidth": 0,
+        "volumeRight": 0,
+        "trackWidth": 0
+      }
+    },
+    {
+      "name": "audio keeps volume available at viewport 768",
+      "passed": true,
+      "actual": {
+        "hostWidth": 200,
+        "controlWidth": 200,
+        "controlHeight": 169.03125,
+        "right": 216,
+        "hostRight": 216,
+        "volumeWidth": 101,
+        "volumeRight": 176.359375,
+        "trackWidth": 103.921875
+      }
+    },
+    {
+      "name": "knob fits a narrow container at viewport 1024",
+      "passed": true,
+      "actual": {
+        "hostWidth": 200,
+        "controlWidth": 200,
+        "controlHeight": 200,
+        "right": 216,
+        "hostRight": 216,
+        "volumeWidth": 0,
+        "volumeRight": 0,
+        "trackWidth": 0
+      }
+    },
+    {
+      "name": "audio keeps volume available at viewport 1024",
+      "passed": true,
+      "actual": {
+        "hostWidth": 200,
+        "controlWidth": 200,
+        "controlHeight": 178.65625,
+        "right": 216,
+        "hostRight": 216,
+        "volumeWidth": 99.46875,
+        "volumeRight": 178.59375,
+        "trackWidth": 94.8125
+      }
+    },
+    {
+      "name": "knob fits a narrow container at viewport 1440",
+      "passed": true,
+      "actual": {
+        "hostWidth": 200,
+        "controlWidth": 200,
+        "controlHeight": 200,
+        "right": 216,
+        "hostRight": 216,
+        "volumeWidth": 0,
+        "volumeRight": 0,
+        "trackWidth": 0
+      }
+    },
+    {
+      "name": "audio keeps volume available at viewport 1440",
+      "passed": true,
+      "actual": {
+        "hostWidth": 200,
+        "controlWidth": 200,
+        "controlHeight": 187.765625,
+        "right": 216,
+        "hostRight": 216,
+        "volumeWidth": 96.96875,
+        "volumeRight": 178.59375,
+        "trackWidth": 94.8125
+      }
+    },
+    {
+      "name": "knob fits a narrow container at viewport 1920",
+      "passed": true,
+      "actual": {
+        "hostWidth": 200,
+        "controlWidth": 200,
+        "controlHeight": 200,
+        "right": 216,
+        "hostRight": 216,
+        "volumeWidth": 0,
+        "volumeRight": 0,
+        "trackWidth": 0
+      }
+    },
+    {
+      "name": "audio keeps volume available at viewport 1920",
+      "passed": true,
+      "actual": {
+        "hostWidth": 200,
+        "controlWidth": 200,
+        "controlHeight": 196.53125,
+        "right": 216,
+        "hostRight": 216,
+        "volumeWidth": 94.09375,
+        "volumeRight": 178.59375,
+        "trackWidth": 94.8125
+      }
+    },
+    {
+      "name": "hidden-readout knob responds to real keyboard",
+      "passed": true,
+      "actual": "68"
+    },
+    {
+      "name": "piano key keyboard activates once",
+      "passed": true,
+      "actual": "1"
+    },
+    {
+      "name": "decorative marquee copy is inert",
+      "passed": true,
+      "actual": [
+        {
+          "inert": false,
+          "width": 200,
+          "visible": true
+        },
+        {
+          "inert": true,
+          "width": 0,
+          "visible": false
+        }
+      ]
+    },
+    {
+      "name": "reduced-motion marquee content remains available without scrolling animation",
+      "passed": true,
+      "actual": {
+        "left": 16,
+        "right": 216,
+        "groupLeft": 16,
+        "groupRight": 216
+      }
+    },
+    {
+      "name": "marquee really pauses on hover under the shared animation clock",
+      "passed": true,
+      "actual": {
+        "before": "matrix(1, 0, 0, 1, -1.14043, 0)",
+        "after": "matrix(1, 0, 0, 1, -1.14043, 0)"
+      }
+    },
+    {
+      "name": "border lights travel continuously without native SVG point queries",
+      "passed": true,
+      "actual": {
+        "samples": 40,
+        "moves": 21
+      }
+    },
+    {
+      "name": "masked border lights never expand scroll overflow beyond their 16px halo",
+      "passed": false,
+      "actual": [
+        {
+          "width": 200,
+          "height": 80,
+          "extraWidth": 16,
+          "extraHeight": 68
+        },
+        {
+          "width": 200,
+          "height": 80,
+          "extraWidth": 77,
+          "extraHeight": 80
+        },
+        {
+          "width": 60,
+          "height": 60,
+          "extraWidth": 41,
+          "extraHeight": 18
+        },
+        {
+          "width": 220,
+          "height": 40,
+          "extraWidth": 16,
+          "extraHeight": 73
+        }
+      ]
+    },
+    {
+      "name": "border follows live resize",
+      "passed": true,
+      "actual": "0 0 120 80"
+    },
+    {
+      "name": "border holds its orbit after reduced-motion changes",
+      "passed": true,
+      "actual": true
+    },
+    {
+      "name": "all effect/media/editor families render together in ruby",
+      "passed": true,
+      "actual": [
+        "ThemeProvider",
+        "AudioPlayer",
+        "IconButton",
+        "Icon",
+        "IconAsset",
+        "Waveform",
+        "Slider",
+        "RotaryKnob",
+        "Marquee",
+        "PianoKeyboard",
+        "AnimatedBorder",
+        "Tilt",
+        "MediaCard",
+        "Card",
+        "Equalizer",
+        "Typography",
+        "Sparkles",
+        "GlowText",
+        "Shimmer",
+        "Reveal",
+        "Sparkline",
+        "KaraokeLyrics",
+        "MelodyRoll",
+        "WaveDecoration",
+        "Beacon",
+        "ImageShine",
+        "Spotlight",
+        "MelodixText",
+        "LevelMeter",
+        "PianoRoll"
+      ]
+    },
+    {
+      "name": "all effect/media/editor families render together in light",
+      "passed": true,
+      "actual": [
+        "ThemeProvider",
+        "AudioPlayer",
+        "IconButton",
+        "Icon",
+        "IconAsset",
+        "Waveform",
+        "Slider",
+        "RotaryKnob",
+        "Marquee",
+        "PianoKeyboard",
+        "AnimatedBorder",
+        "Tilt",
+        "MediaCard",
+        "Card",
+        "Equalizer",
+        "Typography",
+        "Sparkles",
+        "GlowText",
+        "Shimmer",
+        "Reveal",
+        "Sparkline",
+        "KaraokeLyrics",
+        "MelodyRoll",
+        "WaveDecoration",
+        "Beacon",
+        "ImageShine",
+        "Spotlight",
+        "MelodixText",
+        "LevelMeter",
+        "PianoRoll"
+      ]
+    },
+    {
+      "name": "all effect/media/editor families render together in green",
+      "passed": true,
+      "actual": [
+        "ThemeProvider",
+        "AudioPlayer",
+        "IconButton",
+        "Icon",
+        "IconAsset",
+        "Waveform",
+        "Slider",
+        "RotaryKnob",
+        "Marquee",
+        "PianoKeyboard",
+        "AnimatedBorder",
+        "Tilt",
+        "MediaCard",
+        "Card",
+        "Equalizer",
+        "Typography",
+        "Sparkles",
+        "GlowText",
+        "Shimmer",
+        "Reveal",
+        "Sparkline",
+        "KaraokeLyrics",
+        "MelodyRoll",
+        "WaveDecoration",
+        "Beacon",
+        "ImageShine",
+        "Spotlight",
+        "MelodixText",
+        "LevelMeter",
+        "PianoRoll"
+      ]
+    },
+    {
+      "name": "all effect/media/editor families render together in violet",
+      "passed": true,
+      "actual": [
+        "ThemeProvider",
+        "AudioPlayer",
+        "IconButton",
+        "Icon",
+        "IconAsset",
+        "Waveform",
+        "Slider",
+        "RotaryKnob",
+        "Marquee",
+        "PianoKeyboard",
+        "AnimatedBorder",
+        "Tilt",
+        "MediaCard",
+        "Card",
+        "Equalizer",
+        "Typography",
+        "Sparkles",
+        "GlowText",
+        "Shimmer",
+        "Reveal",
+        "Sparkline",
+        "KaraokeLyrics",
+        "MelodyRoll",
+        "WaveDecoration",
+        "Beacon",
+        "ImageShine",
+        "Spotlight",
+        "MelodixText",
+        "LevelMeter",
+        "PianoRoll"
+      ]
+    },
+    {
+      "name": "browser has no uncaught errors",
+      "passed": true,
+      "actual": []
+    }
+  ],
+  "measurements": [
+    {
+      "instances": 95,
+      "cpuThrottle": 1,
+      "emulated": false,
+      "elapsed": 1500,
+      "samples": 89,
+      "moves": 46,
+      "p95FrameMs": 16.80000000000001,
+      "maxFrameMs": 33.399999999999864,
+      "hardwareConcurrency": 20,
+      "LayoutDuration": 0,
+      "RecalcStyleDuration": 129.65,
+      "ScriptDuration": 18.98,
+      "TaskDuration": 254.57
+    },
+    {
+      "instances": 95,
+      "cpuThrottle": 6,
+      "emulated": true,
+      "elapsed": 1500,
+      "samples": 54,
+      "moves": 28,
+      "p95FrameMs": 50.09999999999991,
+      "maxFrameMs": 50.19999999999982,
+      "hardwareConcurrency": 20,
+      "LayoutDuration": 0,
+      "RecalcStyleDuration": 790.71,
+      "ScriptDuration": 105.94,
+      "TaskDuration": 1320.08
+    }
+  ]
+}

@@ -1,0 +1,172 @@
+{
+  "date": "2026-10-12",
+  "scope": "Independent final review of root changes, remaining feedback component contracts and package declaration graph",
+  "rootReview": {
+    "paths": [
+      "packages/ui/scripts/build.mjs",
+      "packages/ui/src/core/base.tsx",
+      "packages/ui/src/index.ts",
+      "packages/ui/src/components/feedback/ProgressBar/ProgressBar.tsx",
+      "packages/ui/src/theme/base.css",
+      "package.json",
+      "packages/ui/package.json",
+      "README.md",
+      "packages/ui/README.md"
+    ],
+    "verified": [
+      "build shares runtime chunks and externalizes React",
+      "generated artwork JSON declarations preserve public asset-name keys",
+      "font and upstream licenses remain copied",
+      "root FormProps/FormFieldsProps exports",
+      "controlled rejected requests use actual props and uncontrolled updates accumulate",
+      "ripple skips disabled motion and cleans animation cancellation",
+      "finite ProgressBar max and accessible name",
+      "check and publish gates run tests after build",
+      "README ESM/local artifact imports and state contracts",
+      "root reduced-motion media rule covers component roots and pseudo-elements"
+    ],
+    "result": "No additional confirmed defect in the reviewed root changes",
+    "evidence": [
+      "root-review-green.json",
+      "layers-browser-green.json"
+    ],
+    "limitations": "Final built tarball and cross-version consumers belong to parent release verification; this review did not publish or rebuild while parent coordinates final artifacts."
+  },
+  "verification": {
+    "browserRunner": "layers-browser.mjs",
+    "browserRed": [
+      "layers-browser-feedback-red.json",
+      "layers-browser-feedback-actions-red.json"
+    ],
+    "browserGreen": "layers-browser-green.json:62 passed,0 failed",
+    "unitRed": "feedback-contracts-red.json",
+    "unitGreen": "layers-unit-green.json: 78 passed, 0 failed",
+    "packageGraphRed": "foundation-package-red.json",
+    "packageGraphGreen": "foundation-green.json: 125 passed, 0 failed",
+    "types": "UI and playground TypeScript passed after all changes",
+    "visualReview": [
+      "layers-green-Badge-240.png",
+      "layers-green-EmptyState-240.png",
+      "layers-green-KeyValueList-240.png",
+      "layers-green-MessageBar-240.png",
+      "layers-green-Toast-240.png"
+    ]
+  },
+  "matrix": [
+    {
+      "component": "Badge",
+      "contract": "Seven tones, four normalized sizes, children/label/default text; tone dot is decorative",
+      "scenarios": [
+        "All seven tones times xs/sm/md/lg with a long unbroken localized label inside 240px",
+        "Source checks: empty string and numeric children preserved by nullish fallback"
+      ],
+      "expected": "Label fits and wraps without page overflow; dot remains visible",
+      "before": "nowrap made the first small badge extend from16px to819px in a240px container",
+      "fix": "Bound max-width, allow wrapping and break unbroken labels",
+      "result": "28 real-browser variants passed; screenshot reviewed"
+    },
+    {
+      "component": "EmptyState",
+      "contract": "Icon, title, description and arbitrary action; default text is localized",
+      "scenarios": [
+        "Long unbroken title and description",
+        "Long action button label",
+        "Source checks: explicit empty title/description retained and optional action omitted"
+      ],
+      "expected": "Text and action remain accessible within a narrow container",
+      "before": "240px root had876px content width; long action label was also truncated",
+      "fix": "Bound children, allow word wrapping, preserve button size while allowing multiline action labels",
+      "result": "Real-browser geometry and label overflow passed; screenshot reviewed"
+    },
+    {
+      "component": "KeyValueList",
+      "contract": "Semantic dl with ReactNode key/value pairs; empty array renders no rows; zero/null values remain faithful",
+      "scenarios": [
+        "Long key with short value",
+        "Short key with long value",
+        "Empty value",
+        "Source checks: empty items array and rich node support"
+      ],
+      "expected": "Both columns remain bounded and readable",
+      "before": "Long key forced1048px scroll width in a240px container",
+      "fix": "Remove row/item intrinsic minimums and wrap unbroken keys using the existing value-column approach",
+      "result": "Real-browser geometry passed; screenshot reviewed"
+    },
+    {
+      "component": "MessageBar",
+      "contract": "Seven tones; alert for error, status otherwise; text and optional action; default warning",
+      "scenarios": [
+        "All seven tones with long content and long action label in240px",
+        "Default tone/icon agreement",
+        "Source checks: explicit empty content and omitted action"
+      ],
+      "expected": "Message remains readable, action remains fully named and visible, default icon matches warning state",
+      "before": "995px scroll content and clipped action; after initial layout fix shared button-label nowrap still ellipsized the action; default warning color used info icon",
+      "fix": "Wrap the flex row, bound action, permit multiline action text; one tone default drives color, role and icon; removed icon-key cast",
+      "result": "Dedicated default-icon red to green plus seven real-browser variants passed; screenshot reviewed",
+      "measurementNote": "Clipped animated pseudo-element intentionally extends scrollWidth. Assertions check actual semantic descendants and page overflow; this avoids treating the hidden decorative sweep as inaccessible text. The original implementation still fails those checks."
+    },
+    {
+      "component": "ProgressBar",
+      "contract": "Bar/wave; determinate or indeterminate; finite bounded value/max; accessible name; unique SVG clip IDs",
+      "scenarios": [
+        "Both variants times both indeterminate states with value Infinity/max NaN",
+        "Root unit tests for max NaN/Infinity/-Infinity and explicit aria-label",
+        "Source checks: zero, negative and over-max value clamp; no aria-valuenow for unknown progress"
+      ],
+      "expected": "No invalid geometry or ARIA numbers; all variants fit240px",
+      "fix": "No additional change after root's finite-max/accessibility fix",
+      "result": "Four real-browser variants and root contract tests passed"
+    },
+    {
+      "component": "StatusIndicator",
+      "contract": "Seven status meanings with localized fallback text and decorative status dot; custom ReactNode label",
+      "scenarios": [
+        "All seven statuses with long unbroken label in240px",
+        "Source checks: empty/custom rich label and localized fallback mappings"
+      ],
+      "expected": "Label wraps and status is communicated by text in addition to dot color",
+      "fix": "No additional change",
+      "result": "Seven real-browser variants passed"
+    },
+    {
+      "component": "Declaration build / documentation examples",
+      "contract": "Only library source belongs in published declaration graph; all public runtime components stay included",
+      "scenarios": [
+        "TypeScript program graph from actual tsconfig.build.json",
+        "Named documentation examples importing dev/exampleHelpers"
+      ],
+      "expected": "No src/dev modules enter declaration emit through documentation examples",
+      "before": "The two newly added named examples matched the source include but not the existing example.tsx exclusion, importing dev helpers transitively",
+      "fix": "Exclude src/**/*Example.tsx in addition to the existing canonical example.tsx pattern. Current matching files are only booleanExample.tsx and experienceExample.tsx; QuantumFieldExperience.tsx does not match.",
+      "result": "Dedicated program-graph test red to green; relevant125-test suite and both typechecks passed"
+    },
+    {
+      "component": "Toast",
+      "contract": "Inline or viewport-floating localized status/alert with optional duration/onClose; long message remains fully readable",
+      "scenarios": [
+        "Six viewport widths320/375/768/1024/1440/1920",
+        "16px and32px root font",
+        "Short and long unbroken messages inside240px Card",
+        "Floating message keeps5percent viewport margins",
+        "Latest timer callback and unmount cleanup in FeedbackContracts"
+      ],
+      "expected": "Inline width follows its container; floating width follows viewport; message wraps without clipping or ellipsis",
+      "before": "Inline min-width min(18rem,90vw) extended to319px against241px parent edge; long text extended beyond1054px; first fix also exposed floating min/max precedence at200percent font",
+      "fix": "Inline min-width min(18rem,100percent), max-width100percent; message min-width0 and overflow-wrap:anywhere; bounded2rem radius protects multiline text; floating-specific min-width restores90vw cap",
+      "verification": [
+        "layers-browser-toast-red.json",
+        "layers-browser-toast-floating-red.json",
+        "layers-browser-green.json:62pass0fail",
+        "toast-related-green.json:167pass0fail"
+      ],
+      "screenshot": "layers-green-Toast-240.png",
+      "result": "passed; screenshot reviewed"
+    }
+  ],
+  "limitations": [
+    "This feedback stress pass uses installed Chrome on Windows at320px viewport with240px containers; physical touch and assistive technology remain unavailable.",
+    "Empty/null/default content contracts marked source checks were inspected directly; the browser stress cases exercise actual long content, tones, sizes and invalid progress numbers.",
+    "No physical low-end performance or complete color-contrast measurement was added by this review."
+  ]
+}

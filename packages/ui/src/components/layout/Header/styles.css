@@ -26,6 +26,9 @@
 }
 .ad-header-actions {
   display: flex;
+  flex-wrap: wrap;
+  min-width: 0;
+  max-width: 100%;
   align-items: center;
   gap: var(--ad-space-2);
   margin-inline-start: auto;

@@ -1,0 +1,125 @@
+{
+  "baseUrl": "http://127.0.0.1:5173",
+  "browser": "154.0.8037.98",
+  "viewport": [
+    320,
+    1000
+  ],
+  "rootTextScale": 1,
+  "results": [
+    {
+      "name": "RotaryKnob",
+      "sizeContract": "Size | undefined",
+      "choices": [
+        "xs",
+        "sm",
+        "md",
+        "lg"
+      ],
+      "numericInputs": 0,
+      "numericSegments": [],
+      "sizes": [
+        {
+          "choice": "xs",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        },
+        {
+          "choice": "sm",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        },
+        {
+          "choice": "md",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        },
+        {
+          "choice": "lg",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        }
+      ],
+      "initial": {
+        "pageOverflow": false,
+        "stageOverflow": 0,
+        "clipped": [],
+        "error": null
+      },
+      "motion": [
+        {
+          "width": null,
+          "key": "Home",
+          "markerError": 0.03178009958927061,
+          "scrollOverflow": 0,
+          "focus": true
+        },
+        {
+          "width": null,
+          "key": "PageUp",
+          "markerError": 0.02830366163286357,
+          "scrollOverflow": 35,
+          "focus": true
+        },
+        {
+          "width": null,
+          "key": "End",
+          "markerError": 0.03465989267962345,
+          "scrollOverflow": 0,
+          "focus": true
+        },
+        {
+          "width": null,
+          "key": "ArrowDown",
+          "markerError": 0.03450802470076505,
+          "scrollOverflow": 0,
+          "focus": true
+        },
+        {
+          "width": 200,
+          "key": "Home",
+          "markerError": 0.08123607990921049,
+          "scrollOverflow": 0,
+          "focus": true
+        },
+        {
+          "width": 200,
+          "key": "PageUp",
+          "markerError": 0.06874799067750245,
+          "scrollOverflow": 20,
+          "focus": true
+        },
+        {
+          "width": 200,
+          "key": "End",
+          "markerError": 0.09063946343671656,
+          "scrollOverflow": 0,
+          "focus": true
+        },
+        {
+          "width": 200,
+          "key": "ArrowDown",
+          "markerError": 0.09008578664113655,
+          "scrollOverflow": 0,
+          "focus": true
+        }
+      ],
+      "passed": false
+    }
+  ],
+  "errors": [],
+  "passed": 0,
+  "failed": 1
+}

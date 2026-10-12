@@ -6,7 +6,7 @@ import {
   Select,
   ToggleButton,
   Toolbar,
-} from "@ad-voice/ui";
+} from "@neo-ui-kit/react";
 
 export default function ToolbarExample() {
   return (

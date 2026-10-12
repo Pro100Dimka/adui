@@ -1,0 +1,136 @@
+{
+  "completedAt": "2026-10-12T12:13:44.989Z",
+  "status": "New local baseline @neo-ui/react@1.0.0 verified; old GitHub releases and local/remote tags deleted as explicitly authorized; new release not published.",
+  "artifact": {
+    "path": "D:\\Git\\adui\\release\\neo-ui-react-1.0.0.tgz",
+    "name": "@neo-ui/react",
+    "version": "1.0.0",
+    "format": "ESM",
+    "sizeBytes": 1666577,
+    "unpackedBytes": 2840683,
+    "files": 269,
+    "sha256": "754ae03a9ee7507fb68274fc3464c6ff0bbb1809b66d4039c2d8da53eb01c5b5",
+    "sha1": "289ad0e85e6a79fe3d18ad3aa466bd8d9314cd3d",
+    "integrity": "sha512-rAaDyxhY5HdI0wphVQelPTU8dI5dg/SQjSqH1/D2qD89edTTu0Ykf3hVHvRvBZ1pfO78zBXLnU3E58+YFUoDmA==",
+    "metadata": "evidence/package-final.json",
+    "installedConsumerIntegrityMatches": true
+  },
+  "versions": {
+    "package.json": "1.0.0",
+    "packages/ui/package.json": "1.0.0",
+    "apps/playground/package.json": "1.0.0"
+  },
+  "lockfile": "All workspace entries are 1.0.0",
+  "cleanup": {
+    "deletedReleases": 35,
+    "deletedRemoteTags": 38,
+    "deletedLocalTags": 38,
+    "remainingReleases": 0,
+    "remainingRemoteTags": 0,
+    "remainingLocalTags": 0,
+    "backup": "D:/Git/adui-backups/version-reset-20261012",
+    "verifiedAt": "2026-10-12T12:11:38.9695892Z",
+    "oldActiveArchivesRetired": 15,
+    "priorBackupDirectoriesMoved": 6,
+    "remainingActiveArchives": [
+      "neo-ui-react-1.0.0.tgz"
+    ],
+    "localManifest": "evidence/version-reset-retired-local.json"
+  },
+  "backup": {
+    "root": "D:/Git/adui-backups/version-reset-20261012",
+    "gitBundle": "D:/Git/adui-backups/version-reset-20261012/repository.bundle",
+    "gitBundleSha256": "2d14616daf86f31552aca0be2d9d289dff3698d9fee58fad67bbc95cb69af925",
+    "gitBundleVerified": true,
+    "releaseManifest": "D:/Git/adui-backups/version-reset-20261012/github-releases/backup-manifest.json",
+    "releases": 35,
+    "drafts": 1,
+    "assets": 34,
+    "verifiedAssets": 34,
+    "description": "Tags and their reachable commits are recoverable from the verified bundle. Release metadata and every uploaded asset are preserved. Older local artifacts and documentation backups are outside the active project."
+  },
+  "verification": {
+    "dedicatedRed": "evidence/version-reset-package-red.log",
+    "dedicatedGreen": [
+      "evidence/version-reset-consumer18-package-green.log",
+      "evidence/version-reset-consumer19-package-green.log"
+    ],
+    "fullCheck": {
+      "tests": 565,
+      "files": 38,
+      "types": "UI and playground passed",
+      "build": "UI and playground passed",
+      "log": "evidence/version-reset-full-check.log"
+    },
+    "strictConsumerTypes": "React18 and React19 passed without skipLibCheck",
+    "consumers": [
+      {
+        "evidence": "evidence/consumer-consumer-react18-version100-chrome.json",
+        "react": "18.2.0",
+        "browser": "154.0.8037.98",
+        "channel": "chrome",
+        "checks": 22,
+        "result": "passed"
+      },
+      {
+        "evidence": "evidence/consumer-consumer-react19-version100-chrome.json",
+        "react": "19.3.0",
+        "browser": "154.0.8037.98",
+        "channel": "chrome",
+        "checks": 22,
+        "result": "passed"
+      },
+      {
+        "evidence": "evidence/consumer-consumer-react19-version100-edge.json",
+        "react": "19.3.0",
+        "browser": "155.0.4283.45",
+        "channel": "msedge",
+        "checks": 22,
+        "result": "passed"
+      }
+    ],
+    "packageChecks": [
+      {
+        "evidence": "evidence/package-consumer-react18-22.json",
+        "node": "v22.18.0",
+        "react": "18.2.0",
+        "result": "passed"
+      },
+      {
+        "evidence": "evidence/package-consumer-react19-22.json",
+        "node": "v22.18.0",
+        "react": "19.3.0",
+        "result": "passed"
+      },
+      {
+        "evidence": "evidence/package-consumer-react19-20.json",
+        "node": "v20.20.2",
+        "react": "19.3.0",
+        "result": "passed"
+      }
+    ],
+    "documentation": {
+      "passed": 15,
+      "evidence": "evidence/rename-browser-production.json",
+      "scope": "Version badge 1.0.0; installation archive and clipboard; stylesheet import; editor public entry points; stateful interaction."
+    },
+    "staticDocumentation": {
+      "files": 357,
+      "allFilesByteIdentical": true,
+      "evidence": "evidence/docs-artifact.json"
+    },
+    "gitDiffCheck": "passed"
+  },
+  "publicActions": {
+    "deletedReleases": 35,
+    "deletedRemoteTags": 38,
+    "newReleasePublished": false,
+    "newTagCreated": false,
+    "sourceCommitCreated": false,
+    "branchPushed": false
+  },
+  "limitations": [
+    "Version1.0.0 is a local, tested baseline; the owner has not authorized publishing the new package or site.",
+    "Prior licensing, trademark-screening and unavailable-platform limitations remain unchanged."
+  ]
+}

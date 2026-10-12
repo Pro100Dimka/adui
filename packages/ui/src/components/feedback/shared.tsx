@@ -192,7 +192,7 @@ export interface DataTableProps<
   defaultExpandedRows?: string[];
   onExpandedRowsChange?: (keys: string[]) => void;
   renderRowActions?: (row: T, index: number) => ReactNode;
-  /** Width reserved for row actions, in pixels; defaults to 96. */
+  /** Width reserved for row actions, in pixels; defaults to 120. */
   rowActionsWidth?: number;
   rowNumbers?: boolean;
   dense?: boolean;

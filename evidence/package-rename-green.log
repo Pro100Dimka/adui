@@ -1,0 +1,19 @@
+
+> @neo-ui/react@2.9.3 test
+> vitest run ReleaseContracts.test.tsx
+
+
+ RUN  v3.2.7 D:/Git/adui/packages/ui
+
+stderr | tests/ReleaseContracts.test.tsx > theme and feedback contracts > keeps rejected controlled requests based on the actual prop while accumulating uncontrolled updates
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+ ✓ tests/ReleaseContracts.test.tsx (21 tests) 1233ms
+   ✓ shipped documentation > exports form component props beside their root component exports  471ms
+   ✓ shipped documentation > ships declarations that typecheck without skipLibCheck or resolveJsonModule  736ms
+
+ Test Files  1 passed (1)
+      Tests  21 passed (21)
+   Start at  14:55:58
+   Duration  2.54s (transform 373ms, setup 0ms, collect 1.11s, tests 1.23s, environment 0ms, prepare 63ms)
+

@@ -70,7 +70,7 @@ export function Typography({
       "data-ad-weight": weight,
       "data-ad-truncate": truncate || undefined,
       title: title ?? (truncate && typeof content === "string" ? content : undefined),
-      style: { ...style, textAlign: align },
+      style: { ...style, textAlign: align ?? style?.textAlign },
     },
     content,
   );

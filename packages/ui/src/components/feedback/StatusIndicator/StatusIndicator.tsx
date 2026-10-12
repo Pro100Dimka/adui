@@ -1,4 +1,4 @@
-import { tr, useTr } from "../../../core/i18n";
+import { useTr } from "../../../core/i18n";
 import { mark, type Tone } from "../../../core/base";
 import type { StatusIndicatorProps } from "../shared";
 export const StatusIndicator = ({

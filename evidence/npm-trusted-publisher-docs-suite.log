@@ -1,0 +1,53 @@
+
+> @neo-ui-kit/react@1.0.0 test
+> vitest run tests/base.test.ts tests/ReleaseContracts.test.tsx tests/DocumentationBorders.test.tsx
+
+
+ RUN  v3.2.7 D:/Git/adui/packages/ui
+
+stderr | tests/base.test.ts > locale isolation > does not change the imperative default locale during provider rendering
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/base.test.ts > locale isolation > keeps per-provider custom messages out of other roots
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/base.test.ts > locale isolation > keeps translated components bound to their own provider after another root renders
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/base.test.ts > site settings updates > ignores a patch that does not change any setting
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/ReleaseContracts.test.tsx > theme and feedback contracts > keeps rejected controlled requests based on the actual prop while accumulating uncontrolled updates
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/base.test.ts > DataTable tools > bounds text filter suggestions after searching the entire column
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/base.test.ts > DataTable tools > bounds values filter suggestions after searching the entire column
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+ ✓ tests/base.test.ts (81 tests) 144ms
+stderr | tests/DocumentationBorders.test.tsx > demonstrates table details, actions, pinning, multi-sort and opt-in large-data virtualization with complete rows
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/DocumentationBorders.test.tsx > uses the kit's animated border on every overview tile and panel
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/DocumentationBorders.test.tsx > animates the Example and Related section borders on component pages
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/DocumentationBorders.test.tsx > resets both the desktop content and mobile document scroll on navigation
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+ ✓ tests/DocumentationBorders.test.tsx (15 tests) 91ms
+ ✓ tests/ReleaseContracts.test.tsx (28 tests) 1252ms
+   ✓ shipped documentation > exports form component props beside their root component exports  483ms
+   ✓ shipped documentation > ships declarations that typecheck without skipLibCheck or resolveJsonModule  740ms
+
+ Test Files  3 passed (3)
+      Tests  124 passed (124)
+   Start at  15:40:42
+   Duration  2.60s (transform 1.11s, setup 0ms, collect 3.71s, tests 1.49s, environment 0ms, prepare 238ms)
+

@@ -1,0 +1,12 @@
+{
+  "files": 507,
+  "leftovers": [
+    {
+      "file": "packages\\ui\\README.md",
+      "line": 3,
+      "text": "Migration: replace `@ad-voice/ui` with `@neo-ui/react` in dependencies and imports, including CSS and `/core`, `/forms`, `/editor`, `/router` subpaths. Install the new `neo-ui-react-2.9.3.tgz` archive; component APIs and CSS class names are unchanged. The old package name is not an alias.",
+      "intentional": true
+    }
+  ],
+  "passed": true
+}

@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from "react";
-import { MelodyRoll, Stack, Switch, useDecoration, type MelodyNote } from "@ad-voice/ui";
+import { useRef, useState } from "react";
+import { MelodyRoll, Stack, Switch, useDecoration, type MelodyNote } from "@neo-ui-kit/react";
 
 const melody = [64, 67, 69, 67, 64, 62, 60, 64, 65, 67, 72, 71, 69, 67];
 const syllables = ["Ночь", "го", "рит", "ог", "ня", "ми", "и", "нас", "зо", "вёт", "до", "мой", "сквозь", "тьму"];

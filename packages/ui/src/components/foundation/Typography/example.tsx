@@ -1,7 +1,7 @@
-import { Grid, Stack, Text, Typography } from "@ad-voice/ui";
+import { Grid, Stack, Text, Typography } from "@neo-ui-kit/react";
 
 const headings = [
-  ["display", "Neo UI"],
+  ["display", "NEO UI"],
   ["h1", "Главный заголовок"],
   ["h2", "Заголовок раздела"],
   ["h3", "Заголовок блока"],
@@ -12,7 +12,7 @@ const text = [
   ["body-sm", "Компактный вспомогательный текст."],
   ["label", "Подпись поля"],
   ["caption", "Обновлено в 12:48"],
-  ["eyebrow", "Neo UI"],
+  ["eyebrow", "NEO UI"],
   ["mono", "48 kHz · 24 bit"],
 ] as const;
 

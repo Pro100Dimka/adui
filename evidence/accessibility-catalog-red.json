@@ -1,0 +1,540 @@
+{
+  "browser": "154.0.8037.98",
+  "axe": "4.14.0",
+  "viewport": [
+    1440,
+    1000
+  ],
+  "results": [
+    {
+      "name": "Avatar",
+      "violations": []
+    },
+    {
+      "name": "BrandMark",
+      "violations": []
+    },
+    {
+      "name": "Icon",
+      "violations": []
+    },
+    {
+      "name": "Loader",
+      "violations": []
+    },
+    {
+      "name": "LoaderGenerator",
+      "violations": [
+        {
+          "id": "label-content-name-mismatch",
+          "impact": "serious",
+          "description": "Ensure that elements labelled through their content must have their visible text as part of their accessible name",
+          "nodes": [
+            {
+              "target": [
+                "#_r_6g_control"
+              ],
+              "html": "<button id=\"_r_6g_control\" type=\"button\" class=\"ad-input-control ad-color-control\" aria-haspopup=\"dialog\" aria-expanded=\"false\" aria-labelledby=\"_r_6g_label\">#FF244C</button>",
+              "failureSummary": "Fix any of the following:\n  Text inside the element is not included in the accessible name"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Text",
+      "violations": []
+    },
+    {
+      "name": "ThemeEditor",
+      "violations": [
+        {
+          "id": "label-content-name-mismatch",
+          "impact": "serious",
+          "description": "Ensure that elements labelled through their content must have their visible text as part of their accessible name",
+          "nodes": [
+            {
+              "target": [
+                "#_r_7i_control"
+              ],
+              "html": "<button id=\"_r_7i_control\" type=\"button\" class=\"ad-input-control ad-color-control\" aria-haspopup=\"dialog\" aria-expanded=\"false\" aria-labelledby=\"_r_7i_label\">#FF244C</button>",
+              "failureSummary": "Fix any of the following:\n  Text inside the element is not included in the accessible name"
+            },
+            {
+              "target": [
+                "#_r_7k_control"
+              ],
+              "html": "<button id=\"_r_7k_control\" type=\"button\" class=\"ad-input-control ad-color-control\" aria-haspopup=\"dialog\" aria-expanded=\"false\" aria-labelledby=\"_r_7k_label\">#FF7C97</button>",
+              "failureSummary": "Fix any of the following:\n  Text inside the element is not included in the accessible name"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ThemePicker",
+      "violations": []
+    },
+    {
+      "name": "ThemeProvider",
+      "violations": []
+    },
+    {
+      "name": "Typography",
+      "violations": []
+    },
+    {
+      "name": "Card",
+      "violations": []
+    },
+    {
+      "name": "Dialog",
+      "violations": []
+    },
+    {
+      "name": "DialogActions",
+      "violations": []
+    },
+    {
+      "name": "DialogBody",
+      "violations": []
+    },
+    {
+      "name": "Divider",
+      "violations": []
+    },
+    {
+      "name": "FloatingPanel",
+      "violations": []
+    },
+    {
+      "name": "Grid",
+      "violations": []
+    },
+    {
+      "name": "Header",
+      "violations": []
+    },
+    {
+      "name": "Illustration",
+      "violations": []
+    },
+    {
+      "name": "ScrollArea",
+      "violations": []
+    },
+    {
+      "name": "Stack",
+      "violations": []
+    },
+    {
+      "name": "StatTile",
+      "violations": []
+    },
+    {
+      "name": "Toolbar",
+      "violations": []
+    },
+    {
+      "name": "Button",
+      "violations": []
+    },
+    {
+      "name": "ButtonGroup",
+      "violations": []
+    },
+    {
+      "name": "Chip",
+      "violations": []
+    },
+    {
+      "name": "IconButton",
+      "violations": []
+    },
+    {
+      "name": "SplitButton",
+      "violations": []
+    },
+    {
+      "name": "ToggleButton",
+      "violations": []
+    },
+    {
+      "name": "Autocomplete",
+      "violations": []
+    },
+    {
+      "name": "Checkbox",
+      "violations": []
+    },
+    {
+      "name": "ColorPicker",
+      "violations": [
+        {
+          "id": "label-content-name-mismatch",
+          "impact": "serious",
+          "description": "Ensure that elements labelled through their content must have their visible text as part of their accessible name",
+          "nodes": [
+            {
+              "target": [
+                "#_r_5k_control"
+              ],
+              "html": "<button id=\"_r_5k_control\" type=\"button\" class=\"ad-input-control ad-color-control\" aria-haspopup=\"dialog\" aria-expanded=\"false\" aria-labelledby=\"_r_5k_label\">#FF244C</button>",
+              "failureSummary": "Fix any of the following:\n  Text inside the element is not included in the accessible name"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "DatePicker",
+      "violations": []
+    },
+    {
+      "name": "FilePicker",
+      "violations": [
+        {
+          "id": "label-content-name-mismatch",
+          "impact": "serious",
+          "description": "Ensure that elements labelled through their content must have their visible text as part of their accessible name",
+          "nodes": [
+            {
+              "target": [
+                ".ad-file-picker-avatar-button"
+              ],
+              "html": "<button type=\"button\" class=\"ad-file-picker-avatar-button\" aria-label=\"Изменить фото\">",
+              "failureSummary": "Fix any of the following:\n  Text inside the element is not included in the accessible name"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Form",
+      "violations": []
+    },
+    {
+      "name": "FormFields",
+      "violations": [
+        {
+          "id": "label-content-name-mismatch",
+          "impact": "serious",
+          "description": "Ensure that elements labelled through their content must have their visible text as part of their accessible name",
+          "nodes": [
+            {
+              "target": [
+                ".ad-file-picker-avatar-button"
+              ],
+              "html": "<button type=\"button\" class=\"ad-file-picker-avatar-button\" aria-label=\"Изменить фото\">",
+              "failureSummary": "Fix any of the following:\n  Text inside the element is not included in the accessible name"
+            },
+            {
+              "target": [
+                "#_r_7r_control"
+              ],
+              "html": "<button id=\"_r_7r_control\" type=\"button\" class=\"ad-input-control ad-color-control\" aria-haspopup=\"dialog\" aria-expanded=\"false\" aria-labelledby=\"_r_7r_label\">#FF244C</button>",
+              "failureSummary": "Fix any of the following:\n  Text inside the element is not included in the accessible name"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "InputBase",
+      "violations": []
+    },
+    {
+      "name": "NumberField",
+      "violations": []
+    },
+    {
+      "name": "PeoplePicker",
+      "violations": []
+    },
+    {
+      "name": "Select",
+      "violations": []
+    },
+    {
+      "name": "Slider",
+      "violations": []
+    },
+    {
+      "name": "Switch",
+      "violations": []
+    },
+    {
+      "name": "TagInput",
+      "violations": []
+    },
+    {
+      "name": "TextArea",
+      "violations": []
+    },
+    {
+      "name": "TextField",
+      "violations": []
+    },
+    {
+      "name": "Link",
+      "violations": []
+    },
+    {
+      "name": "Menu",
+      "violations": []
+    },
+    {
+      "name": "MenuItem",
+      "violations": []
+    },
+    {
+      "name": "Popover",
+      "violations": []
+    },
+    {
+      "name": "Router",
+      "violations": []
+    },
+    {
+      "name": "SegmentedControl",
+      "violations": []
+    },
+    {
+      "name": "Tab",
+      "violations": []
+    },
+    {
+      "name": "TabPanel",
+      "violations": []
+    },
+    {
+      "name": "Tabs",
+      "violations": []
+    },
+    {
+      "name": "Badge",
+      "violations": []
+    },
+    {
+      "name": "CollapsibleSection",
+      "violations": []
+    },
+    {
+      "name": "DataTable",
+      "violations": [
+        {
+          "id": "label-content-name-mismatch",
+          "impact": "serious",
+          "description": "Ensure that elements labelled through their content must have their visible text as part of their accessible name",
+          "nodes": [
+            {
+              "target": [
+                "button[aria-label=\"Переключить объём данных\"]"
+              ],
+              "html": "<button aria-label=\"Переключить объём данных\" class=\"ad ad-button\" data-ad-component=\"Button\" data-ad-material=\"glass\" data-ad-size=\"sm\" type=\"button\" data-ad-variant=\"secondary\">",
+              "failureSummary": "Fix any of the following:\n  Text inside the element is not included in the accessible name"
+            },
+            {
+              "target": [
+                "tr[data-virtual-key=\"r:t0\"] > .ad-data-table-actions > .ad-button[data-ad-variant=\"secondary\"][data-ad-material=\"glass\"]"
+              ],
+              "html": "<button aria-label=\"Скопировать название: Ночь горит огнями\" class=\"ad ad-button\" data-ad-component=\"Button\" data-ad-material=\"glass\" data-ad-size=\"sm\" type=\"button\" data-ad-variant=\"secondary\">",
+              "failureSummary": "Fix any of the following:\n  Text inside the element is not included in the accessible name"
+            },
+            {
+              "target": [
+                "tr[data-virtual-key=\"r:t3\"] > .ad-data-table-actions > .ad-button[data-ad-variant=\"secondary\"][data-ad-material=\"glass\"]"
+              ],
+              "html": "<button aria-label=\"Скопировать название: Шёпот волн\" class=\"ad ad-button\" data-ad-component=\"Button\" data-ad-material=\"glass\" data-ad-size=\"sm\" type=\"button\" data-ad-variant=\"secondary\">",
+              "failureSummary": "Fix any of the following:\n  Text inside the element is not included in the accessible name"
+            },
+            {
+              "target": [
+                "button[aria-label=\"Скопировать название: Неон\"]"
+              ],
+              "html": "<button aria-label=\"Скопировать название: Неон\" class=\"ad ad-button\" data-ad-component=\"Button\" data-ad-material=\"glass\" data-ad-size=\"sm\" type=\"button\" data-ad-variant=\"secondary\">",
+              "failureSummary": "Fix any of the following:\n  Text inside the element is not included in the accessible name"
+            },
+            {
+              "target": [
+                "tr[data-virtual-key=\"r:t4\"] > .ad-data-table-actions > .ad-button[data-ad-variant=\"secondary\"][data-ad-material=\"glass\"]"
+              ],
+              "html": "<button aria-label=\"Скопировать название: Город без сна\" class=\"ad ad-button\" data-ad-component=\"Button\" data-ad-material=\"glass\" data-ad-size=\"sm\" type=\"button\" data-ad-variant=\"secondary\">",
+              "failureSummary": "Fix any of the following:\n  Text inside the element is not included in the accessible name"
+            },
+            {
+              "target": [
+                "tr[data-virtual-key=\"r:t2\"] > .ad-data-table-actions > .ad-button[data-ad-variant=\"secondary\"][data-ad-material=\"glass\"]"
+              ],
+              "html": "<button aria-label=\"Скопировать название: Рубиновый рассвет\" class=\"ad ad-button\" data-ad-component=\"Button\" data-ad-material=\"glass\" data-ad-size=\"sm\" type=\"button\" data-ad-variant=\"secondary\">",
+              "failureSummary": "Fix any of the following:\n  Text inside the element is not included in the accessible name"
+            },
+            {
+              "target": [
+                "tr[data-virtual-key=\"r:t5\"] > .ad-data-table-actions > .ad-button[data-ad-variant=\"secondary\"][data-ad-material=\"glass\"]"
+              ],
+              "html": "<button aria-label=\"Скопировать название: Лёд и пламя\" class=\"ad ad-button\" data-ad-component=\"Button\" data-ad-material=\"glass\" data-ad-size=\"sm\" type=\"button\" data-ad-variant=\"secondary\">",
+              "failureSummary": "Fix any of the following:\n  Text inside the element is not included in the accessible name"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "EmptyState",
+      "violations": []
+    },
+    {
+      "name": "KeyValueList",
+      "violations": []
+    },
+    {
+      "name": "MessageBar",
+      "violations": []
+    },
+    {
+      "name": "ProgressBar",
+      "violations": []
+    },
+    {
+      "name": "SignalBars",
+      "violations": []
+    },
+    {
+      "name": "StatusIndicator",
+      "violations": []
+    },
+    {
+      "name": "Steps",
+      "violations": []
+    },
+    {
+      "name": "Toast",
+      "violations": []
+    },
+    {
+      "name": "Tooltip",
+      "violations": []
+    },
+    {
+      "name": "AudioPlayer",
+      "violations": []
+    },
+    {
+      "name": "KaraokeLyrics",
+      "violations": []
+    },
+    {
+      "name": "LevelMeter",
+      "violations": []
+    },
+    {
+      "name": "MediaCard",
+      "violations": []
+    },
+    {
+      "name": "MelodyRoll",
+      "violations": []
+    },
+    {
+      "name": "PianoKeyboard",
+      "violations": []
+    },
+    {
+      "name": "RotaryKnob",
+      "violations": []
+    },
+    {
+      "name": "Sparkline",
+      "violations": []
+    },
+    {
+      "name": "Waveform",
+      "violations": []
+    },
+    {
+      "name": "PianoRoll",
+      "violations": []
+    },
+    {
+      "name": "AnimatedBorder",
+      "violations": []
+    },
+    {
+      "name": "Beacon",
+      "violations": []
+    },
+    {
+      "name": "DatabaseArt",
+      "violations": []
+    },
+    {
+      "name": "Equalizer",
+      "violations": []
+    },
+    {
+      "name": "GlowText",
+      "violations": []
+    },
+    {
+      "name": "ImageShine",
+      "violations": []
+    },
+    {
+      "name": "Landscape",
+      "violations": []
+    },
+    {
+      "name": "Marquee",
+      "violations": []
+    },
+    {
+      "name": "MelodixText",
+      "violations": []
+    },
+    {
+      "name": "NeonWaves",
+      "violations": []
+    },
+    {
+      "name": "Planet",
+      "violations": []
+    },
+    {
+      "name": "QuantumField",
+      "violations": []
+    },
+    {
+      "name": "Reveal",
+      "violations": []
+    },
+    {
+      "name": "ServerArt",
+      "violations": []
+    },
+    {
+      "name": "Shimmer",
+      "violations": []
+    },
+    {
+      "name": "Sparkles",
+      "violations": []
+    },
+    {
+      "name": "Spectrum",
+      "violations": []
+    },
+    {
+      "name": "Spotlight",
+      "violations": []
+    },
+    {
+      "name": "Tilt",
+      "violations": []
+    },
+    {
+      "name": "WaveDecoration",
+      "violations": []
+    }
+  ]
+}

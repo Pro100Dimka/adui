@@ -1,19 +1,5 @@
-import * as React from "react";
-import * as UI from "@ad-voice/ui";
-import * as Core from "@ad-voice/ui/core";
-import * as Editor from "@ad-voice/ui/editor";
-import * as Forms from "@ad-voice/ui/forms";
-import * as RouterModule from "@ad-voice/ui/router";
-
-/** What `import … from "…"` resolves to inside edited examples. */
-const modules: Record<string, unknown> = {
-  react: React,
-  "@ad-voice/ui": UI,
-  "@ad-voice/ui/core": Core,
-  "@ad-voice/ui/editor": Editor,
-  "@ad-voice/ui/forms": Forms,
-  "@ad-voice/ui/router": RouterModule,
-};
+import * as UI from "@neo-ui-kit/react";
+import * as Editor from "@neo-ui-kit/react/editor";
 
 /**
  * Turns an example into a module with a default component. Full examples pass as they are;
@@ -89,7 +75,7 @@ const lowerFirst = (s: string) => s[0].toLowerCase() + s.slice(1);
 /** Library components used in the markup but not imported are imported automatically. */
 function withMissingImports(code: string) {
   const known = (name: string) =>
-    name in UI ? "@ad-voice/ui" : name in Editor ? "@ad-voice/ui/editor" : null;
+    name in UI ? "@neo-ui-kit/react" : name in Editor ? "@neo-ui-kit/react/editor" : null;
   const imported = new Set(
     [...code.matchAll(/import\s*\{([^}]*)\}/g)].flatMap((m) =>
       m[1].split(",").map((name) => name.trim()),
@@ -105,7 +91,7 @@ function withMissingImports(code: string) {
   ].filter((name) => !imported.has(name) && !declared.has(name) && known(name));
   if (!missing.length) return code;
   const from = (path: string) => missing.filter((name) => known(name) === path);
-  const lines = ["@ad-voice/ui", "@ad-voice/ui/editor"]
+  const lines = ["@neo-ui-kit/react", "@neo-ui-kit/react/editor"]
     .filter((path) => from(path).length)
     .map((path) => `import { ${from(path).join(", ")} } from "${path}";`);
   return [...lines, code].join("\n");

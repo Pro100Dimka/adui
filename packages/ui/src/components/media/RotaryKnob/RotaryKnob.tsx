@@ -1,4 +1,4 @@
-import { tr, useTr } from "../../../core/i18n";
+import { useTr } from "../../../core/i18n";
 import {
   canPaint,
   createResizeObserver,
@@ -23,7 +23,7 @@ export const RotaryKnob = (p: RotaryKnobProps) => {
   const rotorRef = useRef<HTMLCanvasElement>(null);
   const controlRef = useRef<HTMLDivElement>(null);
   const readoutRef = useRef<HTMLDivElement>(null);
-  const controllerRef = useRef<RotaryKnobController | null>(null);
+  const controllerRef = useRef<(RotaryKnobController & { commit(): void }) | null>(null);
   const onChangeRef = useRef(p.onValueChange);
   const onCommitRef = useRef(p.onValueCommit);
   const disabledRef = useRef(!!p.disabled);
@@ -38,6 +38,8 @@ export const RotaryKnob = (p: RotaryKnobProps) => {
   const toPosition = (value: number) => clamp(((value - min) / span) * 100);
   const toValue = (position: number) =>
     Math.round((min + (position / 100) * span) * 1e6) / 1e6;
+  const controlledPosition = useRef<number | undefined>(undefined);
+  controlledPosition.current = p.value === undefined ? undefined : toPosition(p.value);
   const displayScale = p.displayScale ?? 1;
   const format = (value: number) =>
     `${numberFormat.format(value * displayScale)}${p.suffix ?? "%"}`;
@@ -52,7 +54,7 @@ export const RotaryKnob = (p: RotaryKnobProps) => {
   stepRef.current = Math.max(0.001, ((p.step ?? span / 100) / span) * 100);
   fineStepRef.current = Math.max(0.001, ((p.fineStep ?? span / 1000) / span) * 100);
 
-  const initial = toPosition(p.defaultValue ?? p.value ?? min + span * 0.67);
+  const initial = toPosition(p.value ?? p.defaultValue ?? min + span * 0.67);
   const initialRef = useRef(initial);
   const resetRef = useRef<number | undefined>(undefined);
   resetRef.current = p.resetValue === undefined ? undefined : toPosition(p.resetValue);
@@ -65,9 +67,8 @@ export const RotaryKnob = (p: RotaryKnobProps) => {
     const canvas = baseRef.current!;
     const rotor = rotorRef.current!;
     const feedback = feedbackRef.current!;
-    const readout = readoutRef.current!;
     const control = controlRef.current!;
-    if (!root || !canvas || !rotor || !feedback || !readout || !control) return;
+    if (!root || !canvas || !rotor || !feedback || !control) return;
 
     // Without a 2D canvas (tests, server rendering) only the painting is skipped; the value,
     // keys, wheel and typed input keep working.
@@ -94,6 +95,7 @@ export const RotaryKnob = (p: RotaryKnobProps) => {
     const reducedMotion = reducedMotionQuery();
     const listeners = new AbortController();
     let value = defaultValue;
+    let requestedValue = value;
     let visualValue = value;
     let drag: null | {
       id: number;
@@ -559,22 +561,23 @@ export const RotaryKnob = (p: RotaryKnobProps) => {
       const numeric = Number(next);
       if (!Number.isFinite(numeric)) return false;
       const nextValue = Math.round(localClamp(numeric, 0, 100) * 1000) / 1000;
-      const changed = nextValue !== value;
-      value = nextValue;
+      const changed = nextValue !== value || nextValue !== requestedValue;
+      requestedValue = nextValue;
+      value = notify ? controlledPosition.current ?? nextValue : nextValue;
       const shown = scale.current.toValue(value);
       const text = scale.current.format(shown);
       root.dataset.value = String(shown);
       control.setAttribute("aria-valuenow", String(shown));
       control.setAttribute("aria-valuetext", text);
       control.title = tr("{label}: {value} · ведите по кругу или тяните за центр", { label: p.label ?? tr("Громкость"), value: text });
-      readout.textContent = text;
+      if (readoutRef.current) readoutRef.current.textContent = text;
       schedulePaint();
-      if (changed && notify) onChangeRef.current?.(shown);
+      if (changed && notify) onChangeRef.current?.(scale.current.toValue(nextValue));
       return changed;
     }
 
     function commit() {
-      if (!disposed) onCommitRef.current?.(scale.current.toValue(value));
+      if (!disposed) onCommitRef.current?.(scale.current.toValue(requestedValue));
     }
 
     function geometry() {
@@ -673,7 +676,7 @@ export const RotaryKnob = (p: RotaryKnobProps) => {
     }
 
     function pointerMove(event: PointerEvent) {
-      if (!drag || event.pointerId !== drag.id) return;
+      if (!drag || event.pointerId !== drag.id || disabledRef.current || readOnlyRef.current) return;
       drag.glide = false;
       event.preventDefault();
       const precision = event.shiftKey ? 0.1 : 1;
@@ -707,8 +710,9 @@ export const RotaryKnob = (p: RotaryKnobProps) => {
       root.classList.remove("is-dragging");
       if (control.hasPointerCapture(gesture.id))
         control.releasePointerCapture(gesture.id);
+      if (disabledRef.current || readOnlyRef.current) return;
       if (cancelled) setValue(gesture.start);
-      else if (value !== gesture.start) commit();
+      else if (requestedValue !== gesture.start) commit();
     }
 
     function pointerEnd(event: PointerEvent) {
@@ -816,14 +820,15 @@ export const RotaryKnob = (p: RotaryKnobProps) => {
       reset() {
         if (setValue(resetRef.current ?? defaultValue)) commit();
       },
+      commit,
     };
     setValue(value, false);
     render();
     paint();
 
     return () => {
-      finishDrag();
       disposed = true;
+      finishDrag();
       listeners.abort();
       observer.disconnect();
       clearTimeout(renderTimer);
@@ -850,9 +855,10 @@ export const RotaryKnob = (p: RotaryKnobProps) => {
     setDraft(null);
     const controller = controllerRef.current;
     if (!draft?.trim() || !controller || !Number.isFinite(next)) return;
-    const before = controller.value;
-    controller.setValue(toPosition(next / displayScale), true);
-    if (controller.value !== before) p.onValueCommit?.(toValue(controller.value));
+    const position = Math.round(toPosition(next / displayScale) * 1000) / 1000;
+    const changed = position !== controller.value;
+    controller.setValue(position, true);
+    if (changed) controller.commit();
   };
 
   const rootProps = mark("RotaryKnob", p, undefined, "knob");
@@ -883,11 +889,9 @@ export const RotaryKnob = (p: RotaryKnobProps) => {
         aria-hidden="true"
         ref={feedbackRef}
       />
-      <canvas
-        className="knob__surface knob__rotor"
-        aria-hidden="true"
-        ref={rotorRef}
-      />
+      <span className="knob__surface knob__rotor-frame" aria-hidden="true">
+        <canvas className="knob__rotor" ref={rotorRef} />
+      </span>
       <span className="knob__sheen" aria-hidden="true" />
       <div
         ref={controlRef}

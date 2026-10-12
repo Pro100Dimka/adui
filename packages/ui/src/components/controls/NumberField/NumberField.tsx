@@ -1,4 +1,4 @@
-import { tr, useTr } from "../../../core/i18n";
+import { useTr } from "../../../core/i18n";
 import { classes, clamp, useControllable } from "../../../core/base";
 import { IconButton } from "../IconButton/IconButton";
 import { TextField } from "../TextField/TextField";
@@ -25,11 +25,12 @@ export const NumberField = ({
   const low = min === undefined ? -Infinity : Number(min);
   const high = max === undefined ? Infinity : Number(max);
   const locked = p.disabled || p.readOnly;
+  const increment = Number(step) > 0 && Number.isFinite(Number(step)) ? Number(step) : 1;
   // toFixed avoids 0.1 + 0.2 style drift when stepping by fractions.
   const nudge = (direction: 1 | -1) =>
     setCurrent(
       clamp(
-        Number(((current || 0) + direction * Number(step)).toFixed(10)),
+        Number(((current || 0) + direction * increment).toFixed(10)),
         low,
         high,
       ),

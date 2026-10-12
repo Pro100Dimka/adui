@@ -1,4 +1,4 @@
-import { Equalizer, Marquee, Stack, Typography } from "@ad-voice/ui";
+import { Equalizer, Marquee, Stack, Typography } from "@neo-ui-kit/react";
 
 const queue = [
   "Ночь горит огнями — Release Host",

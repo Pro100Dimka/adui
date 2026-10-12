@@ -4,7 +4,7 @@ export interface WaveformProps extends CommonProps {
   position?: number;
   defaultPosition?: number;
   onSeek?: (time: number) => void;
-  /** Ready peaks (any scale, any count); without them the shape is read from `src`. */
+  /** Ready peaks (any scale, any count); an empty array is silence. Without them the shape is read from `src`. */
   points?: readonly number[];
   /** An audio file (URL, File or Blob) whose peaks are decoded in the browser. */
   src?: string | Blob | null;
@@ -27,6 +27,8 @@ export interface AudioPlayerProps extends CommonProps {
   points?: number[];
   volume?: number;
   defaultVolume?: number;
+  /** Requested output volume, 0–1; pair with `volume` for controlled playback engines. */
+  onVolumeChange?: (volume: number) => void;
   showVolume?: boolean;
 }
 export interface LevelMeterProps extends CommonProps {
@@ -69,6 +71,7 @@ export type RotaryKnobController = {
   reset(): void;
 };
 export interface SparklineProps extends CommonProps {
+  /** An empty array leaves the chart empty; omit for the demo series. */
   values?: number[];
   /** Scale to the values' own range instead of from zero, so small changes fill the height. */
   fit?: boolean;

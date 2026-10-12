@@ -20,11 +20,38 @@ const metas = import.meta.glob<CatalogMeta>(
   "../../../../packages/ui/src/components/*/*/meta.ts",
   { eager: true, import: "default" },
 );
+/** Public components sharing a source folder still have independent documentation pages. */
+export const additionalDocumentation: Record<string, CatalogMeta & { source: string; example: string; load: () => Promise<{ default: ComponentType }> }> = {
+  LocaleProvider: {
+    name: "LocaleProvider", category: "typography",
+    description: "Язык встроенных текстов и собственные переводы внутри дерева React. Поддерживает ru, en, uk и вложенные провайдеры; пользовательский контент переводится отдельно.",
+    source: "/core/i18n.tsx", example: "/dev/localeExample.tsx",
+    load: () => import("../../../../packages/ui/src/dev/localeExample"),
+  },
+  SvgAsset: {
+    name: "SvgAsset", category: "typography",
+    description: "Доверенное SVG-дерево из React-ready JSON: независимые ID и ссылки для каждого экземпляра, доступное имя через label. Геометрия задаётся в node.props, размер — в style; компонент не очищает недоверенные данные.",
+    source: "/core/artwork.tsx", example: "/dev/svgExample.tsx",
+    load: () => import("../../../../packages/ui/src/dev/svgExample"),
+  },
+  BooleanControl: {
+    name: "BooleanControl", category: "fields", description: "Общий логический контрол: Checkbox или Switch с управляемым и автономным состоянием.",
+    source: "/controls/shared.tsx", example: "/controls/Checkbox/booleanExample.tsx",
+    load: () => import("../../../../packages/ui/src/components/controls/Checkbox/booleanExample"),
+  },
+  QuantumFieldExperience: {
+    name: "QuantumFieldExperience", category: "motion", wide: true,
+    description: "Полный аудиовизуализатор Quantum Fields (MIT) в изолированном iframe; интерактивная сцена с управлением звуком и режимами.",
+    source: "/artwork/QuantumField/QuantumFieldExperience.tsx", example: "/artwork/QuantumField/experienceExample.tsx",
+    load: () => import("../../../../packages/ui/src/components/artwork/QuantumField/experienceExample"),
+  },
+};
 const examples = byComponent(
   Object.fromEntries(Object.entries(import.meta.glob<{ default: ComponentType }>(
     "../../../../packages/ui/src/components/*/*/example.tsx",
   )).map(([path, load]) => [path, lazy(load)])),
 );
+for (const item of Object.values(additionalDocumentation)) examples.set(item.name, lazy(item.load));
 const documentationParent: Record<string, string> = {
   Tab: "Tabs",
   TabPanel: "Tabs",
@@ -34,18 +61,18 @@ const documentationParent: Record<string, string> = {
   DialogBody: "Dialog",
   DialogActions: "Dialog",
 };
-const allComponents = Object.values(metas).sort((a, b) =>
+const allComponents = [...Object.values(metas), ...Object.values(additionalDocumentation)].sort((a, b) =>
   a.name.localeCompare(b.name),
 );
 export const componentCount = allComponents.length;
-export const catalog = allComponents.filter((item) => !documentationParent[item.name]);
+export const catalog = allComponents;
 const componentSlug = (name: string) =>
   name.replace(/([a-z0-9])([A-Z])/g, "$1-$2").toLowerCase();
 export const componentHref = (name: string) =>
   `#/components/${componentSlug(name)}`;
 export const getCatalogItemBySlug = (slug?: string) => {
   const matched = allComponents.find((item) => componentSlug(item.name) === slug);
-  return matched && catalog.find((item) => item.name === (documentationParent[matched.name] ?? matched.name));
+  return matched;
 };
 export const getDocumentationParts = (name: string) =>
   allComponents.filter((item) => documentationParent[item.name] === name);
@@ -53,9 +80,8 @@ export const getExample = (name: string) => examples.get(name);
 /** Raw sources for the code dialogs live in their own chunk, fetched after the page shows. */
 export const loadSources = () => import("./sources");
 
-/** The package installs straight from its GitHub release, no registry account needed. */
-export const installCommand = `npm install https://github.com/Pro100Dimka/adui/releases/download/v${version}/ad-voice-ui-${version}.tgz`;
+export const installCommand = "npm install @neo-ui-kit/react";
 export const packageVersion = version;
 
 export const getImportPath = (item: CatalogMeta) =>
-  item.category === "editor" ? "@ad-voice/ui/editor" : "@ad-voice/ui";
+  item.category === "editor" ? "@neo-ui-kit/react/editor" : "@neo-ui-kit/react";

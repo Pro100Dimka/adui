@@ -1,5 +1,5 @@
 import { useLocale, useTr } from "../../../core/i18n";
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { mark, useControllable, type CommonProps } from "../../../core/base";
 import { Popover } from "../../feedback/Popover/Popover";
 import { IconButton } from "../IconButton/IconButton";
@@ -48,20 +48,23 @@ const intlLocale = (code: string) => ({ ru: "ru-RU", en: "en-GB", uk: "uk-UA" } 
 
 export function DatePicker({ value: controlled, defaultValue = "", onValueChange, min, max, locale: requestedLocale, placeholder, ...p }: DatePickerProps) {
   const tr = useTr();
-  const locale = requestedLocale ?? intlLocale(useLocale());
+  const inheritedLocale = useLocale();
+  const locale = requestedLocale ?? intlLocale(inheritedLocale);
   const [value, setValue] = useControllable(controlled, defaultValue, onValueChange);
   const selected = parse(value);
   const [open, setOpen] = useState(false);
+  useEffect(() => { if (p.disabled) setOpen(false); }, [p.disabled]);
   const [text, setText] = useState<string | null>(null);
   const [month, setMonth] = useState(() => selected ?? new Date());
   const box = useRef<HTMLDivElement>(null);
-  const ids = useFieldIds(p.label, p.description || p.error);
+  const ids = useFieldIds(p.label, p.description || p.error, undefined, p);
   const format = useMemo(() => new Intl.DateTimeFormat(locale, { day: "2-digit", month: "2-digit", year: "numeric" }), [locale]);
   const weekdays = useMemo(
     () => Array.from({ length: 7 }, (_, i) => new Intl.DateTimeFormat(locale, { weekday: "short" }).format(new Date(2024, 0, 1 + i))),
     [locale],
   );
   const today = iso(new Date());
+  const monthLabel = new Intl.DateTimeFormat(locale, { month: "long", year: "numeric" }).format(month);
   const allowed = (day: string) => (!min || day >= min) && (!max || day <= max);
 
   const first = new Date(month.getFullYear(), month.getMonth(), 1);
@@ -83,11 +86,13 @@ export function DatePicker({ value: controlled, defaultValue = "", onValueChange
           endAdornment={<IconButton size="xs" variant="ghost" icon="clock" label={tr("Открыть календарь")} disabled={p.disabled}
             onClick={() => { setMonth(selected ?? new Date()); setOpen((v) => !v); }} />}>
           <input
+            {...ids.aria}
+            id={ids.control}
             value={text ?? (selected ? format.format(selected) : "")}
             placeholder={placeholder ?? tr("дд.мм.гггг")}
             disabled={p.disabled}
-            aria-labelledby={ids.aria["aria-labelledby"]}
-            aria-describedby={ids.aria["aria-describedby"]}
+            required={p.required}
+            aria-invalid={!!p.error || undefined}
             onChange={(event) => setText(event.currentTarget.value)}
             onFocus={() => setMonth(selected ?? new Date())}
             onBlur={() => {
@@ -104,14 +109,14 @@ export function DatePicker({ value: controlled, defaultValue = "", onValueChange
           />
         </InputBase>
       </FieldFrame>
-      <Popover open={open} onOpenChange={setOpen} anchorRef={box} align="start" label={tr("Календарь")} className="ad-date-popover">
+      <Popover open={open && !p.disabled} onOpenChange={setOpen} anchorRef={box} align="start" label={tr("Календарь")} className="ad-date-popover">
         <div className="ad-calendar">
           <div className="ad-calendar-head">
             <IconButton size="xs" variant="ghost" icon="prev" label={tr("Предыдущий месяц")} onClick={() => shift(-1)} />
-            <strong>{new Intl.DateTimeFormat(locale, { month: "long", year: "numeric" }).format(month)}</strong>
+            <strong>{monthLabel}</strong>
             <IconButton size="xs" variant="ghost" icon="prev" className="ad-calendar-next" label={tr("Следующий месяц")} onClick={() => shift(1)} />
           </div>
-          <div className="ad-calendar-grid" role="grid">
+          <div className="ad-calendar-grid" role="group" aria-label={monthLabel}>
             {weekdays.map((day) => <span key={day} className="ad-calendar-weekday">{day}</span>)}
             {days.map((date) => {
               const day = iso(date);
@@ -130,7 +135,6 @@ export function DatePicker({ value: controlled, defaultValue = "", onValueChange
           </div>
         </div>
       </Popover>
-      {p.required && <input type="hidden" value={value} required aria-hidden />}
     </div>
   );
 }

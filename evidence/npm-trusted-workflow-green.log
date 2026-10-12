@@ -1,0 +1,14 @@
+
+> @neo-ui-kit/react@1.0.0 test
+> vitest run tests/ReleaseContracts.test.tsx -t trusted npm publishing
+
+
+ RUN  v3.2.7 D:/Git/adui/packages/ui
+
+ ✓ tests/ReleaseContracts.test.tsx (28 tests | 23 skipped) 6ms
+
+ Test Files  1 passed (1)
+      Tests  5 passed | 23 skipped (28)
+   Start at  15:40:20
+   Duration  1.30s (transform 357ms, setup 0ms, collect 1.08s, tests 6ms, environment 0ms, prepare 70ms)
+

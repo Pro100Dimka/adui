@@ -31,10 +31,9 @@ export interface GridProps extends Omit<HTMLAttributes<HTMLElement>, "color"> {
   rowStart?: GridResponsive<number>;
 }
 
-const justifyValue = (value: GridJustify) =>
-  value === "between" || value === "around" || value === "evenly"
-    ? `space-${value}`
-    : value;
+const distribution: Partial<Record<GridJustify, string>> = {
+  between: "space-between", around: "space-around", evenly: "space-evenly",
+};
 const columnsValue = (value: number | string) =>
   typeof value === "number" ? `repeat(${value}, minmax(0, 1fr))` : value;
 
@@ -85,7 +84,8 @@ export function Grid({
         ...responsiveVars("grid-row-gap", rowGap ?? gap, spacing, 0),
         ...responsiveVars("grid-column-gap", columnGap ?? gap, spacing, 0),
         ...responsiveVars("grid-align", align, String, "stretch"),
-        ...responsiveVars("grid-justify", justify, justifyValue, "stretch"),
+        ...responsiveVars<GridJustify>("grid-justify", justify, value => distribution[value] ? "stretch" : value, "stretch"),
+        ...responsiveVars<GridJustify>("grid-distribution", justify, value => distribution[value] ?? "normal", "stretch"),
       };
   const item = isItem
     ? {

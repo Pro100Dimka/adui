@@ -1,4 +1,4 @@
-import { tr, useTr } from "../../../core/i18n";
+import { useTr } from "../../../core/i18n";
 import { useSvgId } from "../../../core/artwork";
 import { useEffect, useMemo, useRef, useState, type PointerEvent } from "react";
 import { clamp, mark, timeText, useControllable } from "../../../core/base";
@@ -47,8 +47,8 @@ function columns(peaks: readonly number[], rms?: readonly number[]) {
     let peak = 0;
     let mean = 0;
     for (let i = from; i < to; i += 1) {
-      peak = Math.max(peak, Math.abs(peaks[i]));
-      mean += rms ? rms[i] : Math.abs(peaks[i]) * 0.58;
+      peak = Math.max(peak, Math.abs(peaks[i] ?? 0));
+      mean += rms ? (rms[i] ?? 0) : Math.abs(peaks[i] ?? 0) * 0.58;
     }
     mean /= to - from;
     const level = Math.min(peak, mean * 1.9);
@@ -98,13 +98,14 @@ export function Waveform({
   const tr = useTr();
   const id = useSvgId();
   const surface = useRef<HTMLDivElement>(null);
+  const drag = useRef<{ pointerId: number; position: number } | null>(null);
   const [hover, setHover] = useState<number | null>(null);
   const decoded = useWaveformPeaks(points ? null : src, bins);
   const loading = !points && !!src && decoded === null;
   const { peaksPath, corePath } = useMemo(() => {
-    const { top, core } = points?.length
+    const { top, core } = points
       ? columns(points)
-      : decoded?.peaks.length
+      : decoded
         ? columns(decoded.peaks, decoded.rms)
         : columns(demoSong);
     return { peaksPath: mirrored(top), corePath: mirrored(core) };
@@ -120,7 +121,8 @@ export function Waveform({
     };
   }, [peaksPath, corePath]);
   const duration = Math.max(0.001, total ?? 231);
-  const [position, seek] = useControllable(controlled, defaultPosition, onSeek);
+  const [value, seek] = useControllable(controlled, defaultPosition, onSeek);
+  const position = clamp(value, 0, duration);
   const progress = clamp(position / duration, 0, 1);
   const played = progress * W;
   const ahead = Math.max(0, (hover ?? 0) * W - played);
@@ -130,20 +132,29 @@ export function Waveform({
   useEffect(() => {
     const step = position - previous.current;
     previous.current = position;
-    if (step <= 0 || step > 1.5) return;
+    if (step <= 0 || step > 1.5) return setPlaying(false);
     setPlaying(true);
     const timer = setTimeout(() => setPlaying(false), 300);
     return () => clearTimeout(timer);
   }, [position]);
-  const shape = points?.length
+  const shape = points
     ? "points"
-    : decoded?.peaks.length
+    : decoded
       ? "file"
       : "demo";
 
   const ratio = (event: PointerEvent<HTMLDivElement>) => {
     const box = surface.current?.getBoundingClientRect();
     return box?.width ? clamp((event.clientX - box.left) / box.width, 0, 1) : 0;
+  };
+  const finish = (cancelled = false) => {
+    const current = drag.current;
+    if (!current) return;
+    drag.current = null;
+    if (surface.current?.hasPointerCapture(current.pointerId))
+      surface.current.releasePointerCapture(current.pointerId);
+    if (cancelled && !disabled) seek(clamp(current.position, 0, duration));
+    setHover(null);
   };
 
   return (
@@ -170,19 +181,30 @@ export function Waveform({
         } as React.CSSProperties
       }
       onPointerDown={(event) => {
-        if (disabled) return;
+        if (disabled || event.button !== 0 || !event.isPrimary || drag.current) return;
+        event.preventDefault();
+        event.currentTarget.focus({ preventScroll: true });
+        drag.current = { pointerId: event.pointerId, position };
         event.currentTarget.setPointerCapture(event.pointerId);
         seek(ratio(event) * duration);
       }}
       onPointerMove={(event) => {
         if (disabled) return;
         setHover(ratio(event));
-        if (event.currentTarget.hasPointerCapture(event.pointerId))
+        if (drag.current?.pointerId === event.pointerId)
           seek(ratio(event) * duration);
       }}
+      onPointerUp={(event) => { if (drag.current?.pointerId === event.pointerId) finish(); }}
+      onPointerCancel={(event) => { if (drag.current?.pointerId === event.pointerId) finish(true); }}
+      onLostPointerCapture={(event) => { if (drag.current?.pointerId === event.pointerId) finish(true); }}
       onPointerLeave={() => setHover(null)}
       onKeyDown={(event) => {
         if (disabled) return;
+        if (event.key === "Escape" && drag.current) {
+          event.preventDefault();
+          finish(true);
+          return;
+        }
         const next = {
           ArrowRight: position + KEY_STEP,
           ArrowLeft: position - KEY_STEP,

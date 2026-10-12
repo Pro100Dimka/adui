@@ -1,5 +1,5 @@
 import { useTr } from "../../../core/i18n";
-import { memo, useState, type CSSProperties } from "react";
+import { memo, useEffect, useRef, useState, type CSSProperties } from "react";
 import { mark, type CommonProps } from "../../../core/base";
 
 const BLACK = new Set([1, 3, 6, 8, 10]);
@@ -43,7 +43,7 @@ const whiteKeys = (min: number, max: number) => {
  * A vertical piano keyboard that fills its box: the sung note's key glows, a correct one turns
  * green and pulses, a pressed key dips like a real one.
  */
-export const PianoKeyboard = memo(function PianoKeyboard({
+export const PianoKeyboard = /* @__PURE__ */ memo(function PianoKeyboard({
   minMidi = 55,
   maxMidi = 79,
   activeMidi,
@@ -55,13 +55,16 @@ export const PianoKeyboard = memo(function PianoKeyboard({
 }: PianoKeyboardProps) {
   const tr = useTr();
   const [pressed, setPressed] = useState<number>();
+  const release = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+  useEffect(() => () => clearTimeout(release.current), []);
   const rows = Math.max(1, maxMidi - minMidi + 1);
   const pct = (value: number) => `${(value / rows) * 100}%`;
   const named = (midi: number) => labels === "all" || (labels === "octaves" && midi % 12 === 0);
   const press = (midi: number) => {
+    clearTimeout(release.current);
     setPressed(midi);
     onKeyPress?.(midi);
-    window.setTimeout(() => setPressed((current) => (current === midi ? undefined : current)), 220);
+    release.current = setTimeout(() => setPressed(undefined), 220);
   };
   const key = (midi: number, top: number, size: number, black: boolean) => {
     const props = {
@@ -74,7 +77,9 @@ export const PianoKeyboard = memo(function PianoKeyboard({
       children: named(midi) ? <span>{noteName(midi)}</span> : null,
     };
     return onKeyPress ? (
-      <button key={midi} type="button" aria-label={noteName(midi)} onPointerDown={() => press(midi)} {...props} />
+      <button key={midi} type="button" aria-label={noteName(midi)}
+        onPointerDown={(event) => { if (event.button === 0 && event.isPrimary) press(midi); }}
+        onClick={(event) => { if (event.detail === 0) press(midi); }} {...props} />
     ) : (
       <span key={midi} {...props} />
     );

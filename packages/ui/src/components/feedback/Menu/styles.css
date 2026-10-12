@@ -4,8 +4,8 @@
   --ad-menu-caret-size: 0.72rem;
   position: fixed;
   inset: auto;
-  min-inline-size: clamp(16rem, 24vw, 21rem);
-  max-inline-size: min(26rem, calc(100vw - 1.25rem));
+  min-inline-size: min(clamp(16rem, 24vw, 21rem), var(--ad-popover-available-width, calc(100vw - 1.25rem)));
+  max-inline-size: min(26rem, var(--ad-popover-available-width, calc(100vw - 1.25rem)));
   padding: 0.62rem;
   border: 0.0625rem solid transparent;
   border-radius: var(--ad-menu-radius);

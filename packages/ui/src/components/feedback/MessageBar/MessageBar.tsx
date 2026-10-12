@@ -1,17 +1,17 @@
-import { tr, useTr } from "../../../core/i18n";
-import { mark } from "../../../core/base";
+import { useTr } from "../../../core/i18n";
+import { mark, type Tone } from "../../../core/base";
 import type { MessageBarProps } from "../shared";
 import { Icon } from "../../layout/Icon/Icon";
 
-const icons = { success: "check", error: "warning", warning: "warning" };
+const icons: Partial<Record<Tone, string>> = { success: "check", error: "warning", warning: "warning" };
 
-export const MessageBar = ({ action, ...p }: MessageBarProps) => { const tr = useTr(); return ((
+export const MessageBar = ({ action, tone = "warning", ...p }: MessageBarProps) => { const tr = useTr(); return ((
   <div
-    {...mark("MessageBar", { ...p, tone: p.tone ?? "warning" })}
-    role={p.tone === "error" ? "alert" : "status"}
+    {...mark("MessageBar", { ...p, tone })}
+    role={tone === "error" ? "alert" : "status"}
   >
     <span className="ad-message-bar-icon" aria-hidden>
-      <Icon name={icons[p.tone as keyof typeof icons] ?? "info"} />
+      <Icon name={icons[tone] ?? "info"} />
     </span>
     <span className="ad-message-bar-text">
       {p.children ?? tr("Для операции нужно больше свободного места.")}

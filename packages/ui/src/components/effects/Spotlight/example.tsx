@@ -1,4 +1,4 @@
-import { Card, Grid, Spotlight, Typography } from "@ad-voice/ui";
+import { Card, Grid, Spotlight, Typography } from "@neo-ui-kit/react";
 
 export default function SpotlightExample() {
   return (

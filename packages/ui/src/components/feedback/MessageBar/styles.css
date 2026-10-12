@@ -2,6 +2,7 @@
 .ad-message-bar {
   position: relative;
   display: flex;
+  flex-wrap: wrap;
   gap: 0.8rem;
   align-items: center;
   min-width: 0;
@@ -77,11 +78,25 @@
   animation: ad-message-alert 2s ease-in-out infinite;
 }
 .ad-message-bar-text {
-  flex: 1;
+  flex: 1 1 12ch;
   min-width: 0;
+  overflow-wrap: anywhere;
 }
 .ad-message-bar-action {
-  flex: none;
+  flex: 0 1 auto;
+  max-width: 100%;
+  margin-inline-start: auto;
+  overflow-wrap: anywhere;
+}
+.ad-message-bar-action .ad-button {
+  max-width: 100%;
+  height: auto;
+  min-height: var(--ad-size-h);
+  padding-block: 0.5em;
+  white-space: normal;
+}
+.ad-message-bar-action .ad-button-label {
+  white-space: normal;
 }
 @keyframes ad-message-in {
   from {

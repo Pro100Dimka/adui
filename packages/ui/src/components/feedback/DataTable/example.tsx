@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { Badge, Button, DataTable, Stack, Typography, copyText } from "@ad-voice/ui";
-import type { DataTableColumn } from "@ad-voice/ui";
+import { Badge, Button, DataTable, Stack, Typography, copyText } from "@neo-ui-kit/react";
+import type { DataTableColumn } from "@neo-ui-kit/react";
 
 type Track = {
   id: string;
@@ -78,7 +78,6 @@ export default function DataTableExample() {
         <Button
           size="sm"
           icon="database"
-          aria-label="Переключить объём данных"
           onClick={() => setLargeRows((rows) => rows ? null : Array.from({ length: 10_000 }, (_, index) => ({
             ...tracks[index % tracks.length], id: `large-${index}`, title: `${tracks[index % tracks.length].title} · ${index + 1}`,
           })))}
@@ -111,7 +110,7 @@ export default function DataTableExample() {
         </Stack>
       )}
       renderRowActions={(track) => (
-        <Button size="sm" icon="copy" aria-label={`Скопировать название: ${track.title}`} onClick={() => { void copyText(track.title); }}>
+        <Button size="sm" icon="copy" aria-label={`Копия названия: ${track.title}`} onClick={() => { void copyText(track.title); }}>
           Копия
         </Button>
       )}

@@ -1,0 +1,1660 @@
+{
+  "stage": "packed-green",
+  "uiEntry": "D:\\Git\\adui\\release\\consumer-react19\\node_modules\\@ad-voice\\ui\\dist\\index.js",
+  "uiStyles": "D:\\Git\\adui\\release\\consumer-react19\\node_modules\\@ad-voice\\ui\\dist\\styles.css",
+  "environment": "Windows installed Chrome headless; public exports; reduced motion",
+  "passed": 89,
+  "failed": 0,
+  "results": [
+    {
+      "name": "ruby pinned example fills 1470px panel",
+      "actual": {
+        "table": {
+          "x": 17,
+          "y": 119.03125,
+          "width": 1468,
+          "height": 488.203125,
+          "right": 1485
+        },
+        "scroll": {
+          "x": 16,
+          "y": 118.03125,
+          "width": 1470,
+          "height": 480,
+          "right": 1486
+        },
+        "pageOverflow": false,
+        "headerClipping": false,
+        "actions": [
+          {
+            "text": "Копия",
+            "scroll": 37,
+            "client": 37
+          },
+          {
+            "text": "Копия",
+            "scroll": 37,
+            "client": 37
+          },
+          {
+            "text": "Копия",
+            "scroll": 37,
+            "client": 37
+          },
+          {
+            "text": "Копия",
+            "scroll": 37,
+            "client": 37
+          },
+          {
+            "text": "Копия",
+            "scroll": 37,
+            "client": 37
+          },
+          {
+            "text": "Копия",
+            "scroll": 37,
+            "client": 37
+          }
+        ],
+        "pins": [
+          {
+            "key": "title",
+            "side": "left",
+            "box": {
+              "x": 137,
+              "y": 210.578125,
+              "width": 245.59375,
+              "height": 52.984375,
+              "right": 382.59375
+            }
+          },
+          {
+            "key": "status",
+            "side": "right",
+            "box": {
+              "x": 1119.375,
+              "y": 210.578125,
+              "width": 245.59375,
+              "height": 52.984375,
+              "right": 1364.96875
+            }
+          }
+        ]
+      },
+      "passed": true
+    },
+    {
+      "name": "ruby row actions retain full visible text",
+      "actual": [
+        {
+          "text": "Копия",
+          "scroll": 37,
+          "client": 37
+        },
+        {
+          "text": "Копия",
+          "scroll": 37,
+          "client": 37
+        },
+        {
+          "text": "Копия",
+          "scroll": 37,
+          "client": 37
+        },
+        {
+          "text": "Копия",
+          "scroll": 37,
+          "client": 37
+        },
+        {
+          "text": "Копия",
+          "scroll": 37,
+          "client": 37
+        },
+        {
+          "text": "Копия",
+          "scroll": 37,
+          "client": 37
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "ruby header controls fit their columns",
+      "actual": {
+        "table": {
+          "x": 17,
+          "y": 119.03125,
+          "width": 1468,
+          "height": 488.203125,
+          "right": 1485
+        },
+        "scroll": {
+          "x": 16,
+          "y": 118.03125,
+          "width": 1470,
+          "height": 480,
+          "right": 1486
+        },
+        "pageOverflow": false,
+        "headerClipping": false,
+        "actions": [
+          {
+            "text": "Копия",
+            "scroll": 37,
+            "client": 37
+          },
+          {
+            "text": "Копия",
+            "scroll": 37,
+            "client": 37
+          },
+          {
+            "text": "Копия",
+            "scroll": 37,
+            "client": 37
+          },
+          {
+            "text": "Копия",
+            "scroll": 37,
+            "client": 37
+          },
+          {
+            "text": "Копия",
+            "scroll": 37,
+            "client": 37
+          },
+          {
+            "text": "Копия",
+            "scroll": 37,
+            "client": 37
+          }
+        ],
+        "pins": [
+          {
+            "key": "title",
+            "side": "left",
+            "box": {
+              "x": 137,
+              "y": 210.578125,
+              "width": 245.59375,
+              "height": 52.984375,
+              "right": 382.59375
+            }
+          },
+          {
+            "key": "status",
+            "side": "right",
+            "box": {
+              "x": 1119.375,
+              "y": 210.578125,
+              "width": 245.59375,
+              "height": 52.984375,
+              "right": 1364.96875
+            }
+          }
+        ]
+      },
+      "passed": true
+    },
+    {
+      "name": "ruby: compact rows without clipping action height",
+      "actual": 52.984375,
+      "passed": true
+    },
+    {
+      "name": "ruby: compact group bands",
+      "actual": 39.375,
+      "passed": true
+    },
+    {
+      "name": "ruby: numeric headings align with values",
+      "actual": [
+        0.006250000000022737,
+        0.0062499999999090505
+      ],
+      "passed": true
+    },
+    {
+      "name": "light pinned example fills 1470px panel",
+      "actual": {
+        "table": {
+          "x": 17,
+          "y": 119.03125,
+          "width": 1468,
+          "height": 488.203125,
+          "right": 1485
+        },
+        "scroll": {
+          "x": 16,
+          "y": 118.03125,
+          "width": 1470,
+          "height": 480,
+          "right": 1486
+        },
+        "pageOverflow": false,
+        "headerClipping": false,
+        "actions": [
+          {
+            "text": "Копия",
+            "scroll": 37,
+            "client": 37
+          },
+          {
+            "text": "Копия",
+            "scroll": 37,
+            "client": 37
+          },
+          {
+            "text": "Копия",
+            "scroll": 37,
+            "client": 37
+          },
+          {
+            "text": "Копия",
+            "scroll": 37,
+            "client": 37
+          },
+          {
+            "text": "Копия",
+            "scroll": 37,
+            "client": 37
+          },
+          {
+            "text": "Копия",
+            "scroll": 37,
+            "client": 37
+          }
+        ],
+        "pins": [
+          {
+            "key": "title",
+            "side": "left",
+            "box": {
+              "x": 137,
+              "y": 210.578125,
+              "width": 245.59375,
+              "height": 52.984375,
+              "right": 382.59375
+            }
+          },
+          {
+            "key": "status",
+            "side": "right",
+            "box": {
+              "x": 1119.375,
+              "y": 210.578125,
+              "width": 245.59375,
+              "height": 52.984375,
+              "right": 1364.96875
+            }
+          }
+        ]
+      },
+      "passed": true
+    },
+    {
+      "name": "light row actions retain full visible text",
+      "actual": [
+        {
+          "text": "Копия",
+          "scroll": 37,
+          "client": 37
+        },
+        {
+          "text": "Копия",
+          "scroll": 37,
+          "client": 37
+        },
+        {
+          "text": "Копия",
+          "scroll": 37,
+          "client": 37
+        },
+        {
+          "text": "Копия",
+          "scroll": 37,
+          "client": 37
+        },
+        {
+          "text": "Копия",
+          "scroll": 37,
+          "client": 37
+        },
+        {
+          "text": "Копия",
+          "scroll": 37,
+          "client": 37
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "light header controls fit their columns",
+      "actual": {
+        "table": {
+          "x": 17,
+          "y": 119.03125,
+          "width": 1468,
+          "height": 488.203125,
+          "right": 1485
+        },
+        "scroll": {
+          "x": 16,
+          "y": 118.03125,
+          "width": 1470,
+          "height": 480,
+          "right": 1486
+        },
+        "pageOverflow": false,
+        "headerClipping": false,
+        "actions": [
+          {
+            "text": "Копия",
+            "scroll": 37,
+            "client": 37
+          },
+          {
+            "text": "Копия",
+            "scroll": 37,
+            "client": 37
+          },
+          {
+            "text": "Копия",
+            "scroll": 37,
+            "client": 37
+          },
+          {
+            "text": "Копия",
+            "scroll": 37,
+            "client": 37
+          },
+          {
+            "text": "Копия",
+            "scroll": 37,
+            "client": 37
+          },
+          {
+            "text": "Копия",
+            "scroll": 37,
+            "client": 37
+          }
+        ],
+        "pins": [
+          {
+            "key": "title",
+            "side": "left",
+            "box": {
+              "x": 137,
+              "y": 210.578125,
+              "width": 245.59375,
+              "height": 52.984375,
+              "right": 382.59375
+            }
+          },
+          {
+            "key": "status",
+            "side": "right",
+            "box": {
+              "x": 1119.375,
+              "y": 210.578125,
+              "width": 245.59375,
+              "height": 52.984375,
+              "right": 1364.96875
+            }
+          }
+        ]
+      },
+      "passed": true
+    },
+    {
+      "name": "light: compact rows without clipping action height",
+      "actual": 52.984375,
+      "passed": true
+    },
+    {
+      "name": "light: compact group bands",
+      "actual": 39.375,
+      "passed": true
+    },
+    {
+      "name": "light: numeric headings align with values",
+      "actual": [
+        0.006250000000022737,
+        0.0062499999999090505
+      ],
+      "passed": true
+    },
+    {
+      "name": "pinned 320: no page overflow",
+      "actual": false,
+      "passed": true
+    },
+    {
+      "name": "pinned 320: headers contained",
+      "actual": false,
+      "passed": true
+    },
+    {
+      "name": "pinned 320: pinned cells do not obscure each other",
+      "actual": [
+        {
+          "key": "name",
+          "side": "left",
+          "box": {
+            "x": -265,
+            "y": 310,
+            "width": 160,
+            "height": 52.984375,
+            "right": -105
+          }
+        },
+        {
+          "key": "score",
+          "side": "right",
+          "box": {
+            "x": 55,
+            "y": 310,
+            "width": 160,
+            "height": 52.984375,
+            "right": 215
+          }
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "pinned 375: no page overflow",
+      "actual": false,
+      "passed": true
+    },
+    {
+      "name": "pinned 375: headers contained",
+      "actual": false,
+      "passed": true
+    },
+    {
+      "name": "pinned 375: pinned cells do not obscure each other",
+      "actual": [
+        {
+          "key": "name",
+          "side": "left",
+          "box": {
+            "x": -210,
+            "y": 277.765625,
+            "width": 160,
+            "height": 52.984375,
+            "right": -50
+          }
+        },
+        {
+          "key": "score",
+          "side": "right",
+          "box": {
+            "x": 110,
+            "y": 277.765625,
+            "width": 160,
+            "height": 52.984375,
+            "right": 270
+          }
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "pinned 768: no page overflow",
+      "actual": false,
+      "passed": true
+    },
+    {
+      "name": "pinned 768: headers contained",
+      "actual": false,
+      "passed": true
+    },
+    {
+      "name": "pinned 1024: no page overflow",
+      "actual": false,
+      "passed": true
+    },
+    {
+      "name": "pinned 1024: headers contained",
+      "actual": false,
+      "passed": true
+    },
+    {
+      "name": "pinned 1024: fills available panel",
+      "actual": {
+        "table": {
+          "x": 17,
+          "y": 71.40625,
+          "width": 1022,
+          "height": 588.3125,
+          "right": 1039
+        },
+        "scroll": {
+          "x": 16,
+          "y": 70.40625,
+          "width": 1024,
+          "height": 360,
+          "right": 1040
+        },
+        "pageOverflow": false,
+        "headerClipping": false,
+        "actions": [
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          }
+        ],
+        "pins": [
+          {
+            "key": "name",
+            "side": "left",
+            "box": {
+              "x": 137,
+              "y": 129.875,
+              "width": 260.65625,
+              "height": 52.984375,
+              "right": 397.65625
+            }
+          },
+          {
+            "key": "score",
+            "side": "right",
+            "box": {
+              "x": 658.3125,
+              "y": 129.875,
+              "width": 260.65625,
+              "height": 52.984375,
+              "right": 918.96875
+            }
+          }
+        ]
+      },
+      "passed": true
+    },
+    {
+      "name": "pinned 1470: no page overflow",
+      "actual": false,
+      "passed": true
+    },
+    {
+      "name": "pinned 1470: headers contained",
+      "actual": false,
+      "passed": true
+    },
+    {
+      "name": "pinned 1470: fills available panel",
+      "actual": {
+        "table": {
+          "x": 17,
+          "y": 71.40625,
+          "width": 1468,
+          "height": 582.015625,
+          "right": 1485
+        },
+        "scroll": {
+          "x": 16,
+          "y": 70.40625,
+          "width": 1470,
+          "height": 360,
+          "right": 1486
+        },
+        "pageOverflow": false,
+        "headerClipping": false,
+        "actions": [
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          }
+        ],
+        "pins": [
+          {
+            "key": "name",
+            "side": "left",
+            "box": {
+              "x": 137,
+              "y": 123.578125,
+              "width": 409.328125,
+              "height": 52.984375,
+              "right": 546.328125
+            }
+          },
+          {
+            "key": "score",
+            "side": "right",
+            "box": {
+              "x": 955.65625,
+              "y": 123.578125,
+              "width": 409.328125,
+              "height": 52.984375,
+              "right": 1364.984375
+            }
+          }
+        ]
+      },
+      "passed": true
+    },
+    {
+      "name": "all-pinned 320: no page overflow",
+      "actual": false,
+      "passed": true
+    },
+    {
+      "name": "all-pinned 320: headers contained",
+      "actual": false,
+      "passed": true
+    },
+    {
+      "name": "all-pinned 320: pinned cells do not obscure each other",
+      "actual": [
+        {
+          "key": "name",
+          "side": "left",
+          "box": {
+            "x": -265,
+            "y": 310,
+            "width": 160,
+            "height": 52.984375,
+            "right": -105
+          }
+        },
+        {
+          "key": "team",
+          "side": "left",
+          "box": {
+            "x": -105,
+            "y": 310,
+            "width": 160,
+            "height": 52.984375,
+            "right": 55
+          }
+        },
+        {
+          "key": "score",
+          "side": "right",
+          "box": {
+            "x": 55,
+            "y": 310,
+            "width": 160,
+            "height": 52.984375,
+            "right": 215
+          }
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "all-pinned 375: no page overflow",
+      "actual": false,
+      "passed": true
+    },
+    {
+      "name": "all-pinned 375: headers contained",
+      "actual": false,
+      "passed": true
+    },
+    {
+      "name": "all-pinned 375: pinned cells do not obscure each other",
+      "actual": [
+        {
+          "key": "name",
+          "side": "left",
+          "box": {
+            "x": -210,
+            "y": 277.765625,
+            "width": 160,
+            "height": 52.984375,
+            "right": -50
+          }
+        },
+        {
+          "key": "team",
+          "side": "left",
+          "box": {
+            "x": -50,
+            "y": 277.765625,
+            "width": 160,
+            "height": 52.984375,
+            "right": 110
+          }
+        },
+        {
+          "key": "score",
+          "side": "right",
+          "box": {
+            "x": 110,
+            "y": 277.765625,
+            "width": 160,
+            "height": 52.984375,
+            "right": 270
+          }
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "all-pinned 768: no page overflow",
+      "actual": false,
+      "passed": true
+    },
+    {
+      "name": "all-pinned 768: headers contained",
+      "actual": false,
+      "passed": true
+    },
+    {
+      "name": "all-pinned 1024: no page overflow",
+      "actual": false,
+      "passed": true
+    },
+    {
+      "name": "all-pinned 1024: headers contained",
+      "actual": false,
+      "passed": true
+    },
+    {
+      "name": "all-pinned 1024: fills available panel",
+      "actual": {
+        "table": {
+          "x": 17,
+          "y": 71.40625,
+          "width": 1022,
+          "height": 588.3125,
+          "right": 1039
+        },
+        "scroll": {
+          "x": 16,
+          "y": 70.40625,
+          "width": 1024,
+          "height": 360,
+          "right": 1040
+        },
+        "pageOverflow": false,
+        "headerClipping": false,
+        "actions": [
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          }
+        ],
+        "pins": [
+          {
+            "key": "name",
+            "side": "left",
+            "box": {
+              "x": 137,
+              "y": 129.875,
+              "width": 260.65625,
+              "height": 52.984375,
+              "right": 397.65625
+            }
+          },
+          {
+            "key": "team",
+            "side": "left",
+            "box": {
+              "x": 397.65625,
+              "y": 129.875,
+              "width": 260.65625,
+              "height": 52.984375,
+              "right": 658.3125
+            }
+          },
+          {
+            "key": "score",
+            "side": "right",
+            "box": {
+              "x": 658.3125,
+              "y": 129.875,
+              "width": 260.65625,
+              "height": 52.984375,
+              "right": 918.96875
+            }
+          }
+        ]
+      },
+      "passed": true
+    },
+    {
+      "name": "all-pinned 1470: no page overflow",
+      "actual": false,
+      "passed": true
+    },
+    {
+      "name": "all-pinned 1470: headers contained",
+      "actual": false,
+      "passed": true
+    },
+    {
+      "name": "all-pinned 1470: fills available panel",
+      "actual": {
+        "table": {
+          "x": 17,
+          "y": 71.40625,
+          "width": 1468,
+          "height": 582.015625,
+          "right": 1485
+        },
+        "scroll": {
+          "x": 16,
+          "y": 70.40625,
+          "width": 1470,
+          "height": 360,
+          "right": 1486
+        },
+        "pageOverflow": false,
+        "headerClipping": false,
+        "actions": [
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          }
+        ],
+        "pins": [
+          {
+            "key": "name",
+            "side": "left",
+            "box": {
+              "x": 137,
+              "y": 123.578125,
+              "width": 409.328125,
+              "height": 52.984375,
+              "right": 546.328125
+            }
+          },
+          {
+            "key": "team",
+            "side": "left",
+            "box": {
+              "x": 546.328125,
+              "y": 123.578125,
+              "width": 409.328125,
+              "height": 52.984375,
+              "right": 955.65625
+            }
+          },
+          {
+            "key": "score",
+            "side": "right",
+            "box": {
+              "x": 955.65625,
+              "y": 123.578125,
+              "width": 409.328125,
+              "height": 52.984375,
+              "right": 1364.984375
+            }
+          }
+        ]
+      },
+      "passed": true
+    },
+    {
+      "name": "all-pinned wide: sticky offsets match cell geometry",
+      "actual": [
+        {
+          "key": "name",
+          "side": "left",
+          "box": {
+            "x": 137,
+            "y": 123.578125,
+            "width": 409.328125,
+            "height": 52.984375,
+            "right": 546.328125
+          }
+        },
+        {
+          "key": "team",
+          "side": "left",
+          "box": {
+            "x": 546.328125,
+            "y": 123.578125,
+            "width": 409.328125,
+            "height": 52.984375,
+            "right": 955.65625
+          }
+        },
+        {
+          "key": "score",
+          "side": "right",
+          "box": {
+            "x": 955.65625,
+            "y": 123.578125,
+            "width": 409.328125,
+            "height": 52.984375,
+            "right": 1364.984375
+          }
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "unpinned 320: no page overflow",
+      "actual": false,
+      "passed": true
+    },
+    {
+      "name": "unpinned 320: headers contained",
+      "actual": false,
+      "passed": true
+    },
+    {
+      "name": "unpinned 320: container-responsive cards",
+      "actual": "grid",
+      "passed": true
+    },
+    {
+      "name": "unpinned 320: card utility cells use available space",
+      "actual": [
+        260.015625,
+        260.015625,
+        260.015625,
+        260.015625,
+        260.015625,
+        260.015625
+      ],
+      "passed": true
+    },
+    {
+      "name": "unpinned 320: card actions show full labels",
+      "actual": [
+        {
+          "text": "Copy",
+          "scroll": 29,
+          "client": 29
+        },
+        {
+          "text": "Copy",
+          "scroll": 29,
+          "client": 29
+        },
+        {
+          "text": "Copy",
+          "scroll": 29,
+          "client": 29
+        },
+        {
+          "text": "Copy",
+          "scroll": 29,
+          "client": 29
+        },
+        {
+          "text": "Copy",
+          "scroll": 29,
+          "client": 29
+        },
+        {
+          "text": "Copy",
+          "scroll": 29,
+          "client": 29
+        },
+        {
+          "text": "Copy",
+          "scroll": 29,
+          "client": 29
+        },
+        {
+          "text": "Copy",
+          "scroll": 29,
+          "client": 29
+        },
+        {
+          "text": "Copy",
+          "scroll": 29,
+          "client": 29
+        },
+        {
+          "text": "Copy",
+          "scroll": 29,
+          "client": 29
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "unpinned 320: sorting filtering and select-all remain visible",
+      "actual": {
+        "height": 186.625,
+        "clip": "none",
+        "controls": 7
+      },
+      "passed": true
+    },
+    {
+      "name": "unpinned 320: card utility actions have visible labels",
+      "actual": [
+        "Подробности",
+        "Действия"
+      ],
+      "passed": true
+    },
+    {
+      "name": "unpinned 320: select-all has a readable visible label",
+      "actual": 70.25,
+      "passed": true
+    },
+    {
+      "name": "unpinned 375: no page overflow",
+      "actual": false,
+      "passed": true
+    },
+    {
+      "name": "unpinned 375: headers contained",
+      "actual": false,
+      "passed": true
+    },
+    {
+      "name": "unpinned 375: container-responsive cards",
+      "actual": "grid",
+      "passed": true
+    },
+    {
+      "name": "unpinned 375: card utility cells use available space",
+      "actual": [
+        315.015625,
+        315.015625,
+        315.015625,
+        315.015625,
+        315.015625,
+        315.015625
+      ],
+      "passed": true
+    },
+    {
+      "name": "unpinned 375: card actions show full labels",
+      "actual": [
+        {
+          "text": "Copy",
+          "scroll": 29,
+          "client": 29
+        },
+        {
+          "text": "Copy",
+          "scroll": 29,
+          "client": 29
+        },
+        {
+          "text": "Copy",
+          "scroll": 29,
+          "client": 29
+        },
+        {
+          "text": "Copy",
+          "scroll": 29,
+          "client": 29
+        },
+        {
+          "text": "Copy",
+          "scroll": 29,
+          "client": 29
+        },
+        {
+          "text": "Copy",
+          "scroll": 29,
+          "client": 29
+        },
+        {
+          "text": "Copy",
+          "scroll": 29,
+          "client": 29
+        },
+        {
+          "text": "Copy",
+          "scroll": 29,
+          "client": 29
+        },
+        {
+          "text": "Copy",
+          "scroll": 29,
+          "client": 29
+        },
+        {
+          "text": "Copy",
+          "scroll": 29,
+          "client": 29
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "unpinned 375: sorting filtering and select-all remain visible",
+      "actual": {
+        "height": 180.328125,
+        "clip": "none",
+        "controls": 7
+      },
+      "passed": true
+    },
+    {
+      "name": "unpinned 375: card utility actions have visible labels",
+      "actual": [
+        "Подробности",
+        "Действия"
+      ],
+      "passed": true
+    },
+    {
+      "name": "unpinned 375: select-all has a readable visible label",
+      "actual": 70.25,
+      "passed": true
+    },
+    {
+      "name": "unpinned 768: no page overflow",
+      "actual": false,
+      "passed": true
+    },
+    {
+      "name": "unpinned 768: headers contained",
+      "actual": false,
+      "passed": true
+    },
+    {
+      "name": "unpinned 1024: no page overflow",
+      "actual": false,
+      "passed": true
+    },
+    {
+      "name": "unpinned 1024: headers contained",
+      "actual": false,
+      "passed": true
+    },
+    {
+      "name": "unpinned 1024: fills available panel",
+      "actual": {
+        "table": {
+          "x": 17,
+          "y": 71.40625,
+          "width": 1022,
+          "height": 588.3125,
+          "right": 1039
+        },
+        "scroll": {
+          "x": 16,
+          "y": 70.40625,
+          "width": 1024,
+          "height": 360,
+          "right": 1040
+        },
+        "pageOverflow": false,
+        "headerClipping": false,
+        "actions": [
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          }
+        ],
+        "pins": []
+      },
+      "passed": true
+    },
+    {
+      "name": "unpinned 1470: no page overflow",
+      "actual": false,
+      "passed": true
+    },
+    {
+      "name": "unpinned 1470: headers contained",
+      "actual": false,
+      "passed": true
+    },
+    {
+      "name": "unpinned 1470: fills available panel",
+      "actual": {
+        "table": {
+          "x": 17,
+          "y": 71.40625,
+          "width": 1468,
+          "height": 582.015625,
+          "right": 1485
+        },
+        "scroll": {
+          "x": 16,
+          "y": 70.40625,
+          "width": 1470,
+          "height": 360,
+          "right": 1486
+        },
+        "pageOverflow": false,
+        "headerClipping": false,
+        "actions": [
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          }
+        ],
+        "pins": []
+      },
+      "passed": true
+    },
+    {
+      "name": "sticky utility headers remain above body cells",
+      "actual": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "passed": true
+    },
+    {
+      "name": "selection updates one stable row",
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "numeric descending sort changes real row order",
+      "actual": "19",
+      "passed": true
+    },
+    {
+      "name": "Shift adds secondary sorting priority",
+      "actual": [
+        "2",
+        "1"
+      ],
+      "passed": true
+    },
+    {
+      "name": "pagination advances sorted rows",
+      "actual": "9",
+      "passed": true
+    },
+    {
+      "name": "selection survives sort and pagination",
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "row actions do not trigger row activation",
+      "actual": {
+        "action": "0"
+      },
+      "passed": true
+    },
+    {
+      "name": "row activation works with keyboard",
+      "actual": "0",
+      "passed": true
+    },
+    {
+      "name": "search resets pagination and returns matching row",
+      "actual": [
+        "19"
+      ],
+      "passed": true
+    },
+    {
+      "name": "range filter changes real rows",
+      "actual": [
+        "19",
+        "18"
+      ],
+      "passed": true
+    },
+    {
+      "name": "keyboard resize uses actual painted width",
+      "actual": 277,
+      "passed": true
+    },
+    {
+      "name": "group collapse removes its rows",
+      "actual": [
+        "1",
+        "3",
+        "5",
+        "7",
+        "9",
+        "11",
+        "13",
+        "15",
+        "17",
+        "19"
+      ],
+      "passed": true
+    },
+    {
+      "name": "group expands again",
+      "actual": "0",
+      "passed": true
+    },
+    {
+      "name": "row detail expands meaningful content",
+      "actual": "Details Item 0",
+      "passed": true
+    },
+    {
+      "name": "mobile select-all selects all matching rows",
+      "actual": "Выбрано: 20\nСнять выделение\nСтрок на странице\n10\n1 / 2",
+      "passed": true
+    },
+    {
+      "name": "mobile header sorting stays usable",
+      "actual": "19",
+      "passed": true
+    },
+    {
+      "name": "mobile filtering stays usable",
+      "actual": 1,
+      "passed": true
+    },
+    {
+      "name": "mobile keyboard focus is visible",
+      "actual": {
+        "style": "solid",
+        "width": 2,
+        "visible": true
+      },
+      "passed": true
+    },
+    {
+      "name": "10k virtual rows mount bounded initial window",
+      "actual": 15,
+      "passed": true
+    },
+    {
+      "name": "10k virtual scroll remains bounded",
+      "actual": 15,
+      "passed": true
+    },
+    {
+      "name": "virtual scroll reaches final sorted row",
+      "actual": "10000",
+      "passed": true
+    },
+    {
+      "name": "density switches without losing virtualization",
+      "actual": 21,
+      "passed": true
+    },
+    {
+      "name": "virtual unmount returns to paginated example",
+      "actual": 6,
+      "passed": true
+    },
+    {
+      "name": "no runtime errors",
+      "actual": [],
+      "passed": true
+    }
+  ]
+}

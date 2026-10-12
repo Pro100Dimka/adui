@@ -1,0 +1,271 @@
+{
+  "environment": {
+    "browser": "Installed Chrome headless",
+    "physicalLowEndDevice": false,
+    "viewportHeight": 1000
+  },
+  "stage": "after-motion",
+  "passed": 20,
+  "failed": 0,
+  "results": [
+    {
+      "name": "knob fits a narrow container at viewport 320",
+      "passed": true,
+      "actual": {
+        "hostWidth": 200,
+        "controlWidth": 200,
+        "controlHeight": 200,
+        "right": 216,
+        "hostRight": 216,
+        "volumeWidth": 0,
+        "volumeRight": 0,
+        "trackWidth": 0
+      }
+    },
+    {
+      "name": "audio keeps volume available at viewport 320",
+      "passed": true,
+      "actual": {
+        "hostWidth": 200,
+        "controlWidth": 200,
+        "controlHeight": 162.03125,
+        "right": 216,
+        "hostRight": 216,
+        "volumeWidth": 132,
+        "volumeRight": 203,
+        "trackWidth": 114
+      }
+    },
+    {
+      "name": "knob fits a narrow container at viewport 375",
+      "passed": true,
+      "actual": {
+        "hostWidth": 200,
+        "controlWidth": 200,
+        "controlHeight": 200,
+        "right": 216,
+        "hostRight": 216,
+        "volumeWidth": 0,
+        "volumeRight": 0,
+        "trackWidth": 0
+      }
+    },
+    {
+      "name": "audio keeps volume available at viewport 375",
+      "passed": true,
+      "actual": {
+        "hostWidth": 200,
+        "controlWidth": 200,
+        "controlHeight": 162.03125,
+        "right": 216,
+        "hostRight": 216,
+        "volumeWidth": 132,
+        "volumeRight": 203,
+        "trackWidth": 114
+      }
+    },
+    {
+      "name": "knob fits a narrow container at viewport 768",
+      "passed": true,
+      "actual": {
+        "hostWidth": 200,
+        "controlWidth": 200,
+        "controlHeight": 200,
+        "right": 216,
+        "hostRight": 216,
+        "volumeWidth": 0,
+        "volumeRight": 0,
+        "trackWidth": 0
+      }
+    },
+    {
+      "name": "audio keeps volume available at viewport 768",
+      "passed": true,
+      "actual": {
+        "hostWidth": 200,
+        "controlWidth": 200,
+        "controlHeight": 169.03125,
+        "right": 216,
+        "hostRight": 216,
+        "volumeWidth": 124.28125,
+        "volumeRight": 199.640625,
+        "trackWidth": 103.921875
+      }
+    },
+    {
+      "name": "knob fits a narrow container at viewport 1024",
+      "passed": true,
+      "actual": {
+        "hostWidth": 200,
+        "controlWidth": 200,
+        "controlHeight": 200,
+        "right": 216,
+        "hostRight": 216,
+        "volumeWidth": 0,
+        "volumeRight": 0,
+        "trackWidth": 0
+      }
+    },
+    {
+      "name": "audio keeps volume available at viewport 1024",
+      "passed": true,
+      "actual": {
+        "hostWidth": 200,
+        "controlWidth": 200,
+        "controlHeight": 178.65625,
+        "right": 216,
+        "hostRight": 216,
+        "volumeWidth": 118.28125,
+        "volumeRight": 197.40625,
+        "trackWidth": 94.8125
+      }
+    },
+    {
+      "name": "knob fits a narrow container at viewport 1440",
+      "passed": true,
+      "actual": {
+        "hostWidth": 200,
+        "controlWidth": 200,
+        "controlHeight": 200,
+        "right": 216,
+        "hostRight": 216,
+        "volumeWidth": 0,
+        "volumeRight": 0,
+        "trackWidth": 0
+      }
+    },
+    {
+      "name": "audio keeps volume available at viewport 1440",
+      "passed": true,
+      "actual": {
+        "hostWidth": 200,
+        "controlWidth": 200,
+        "controlHeight": 187.765625,
+        "right": 216,
+        "hostRight": 216,
+        "volumeWidth": 115.78125,
+        "volumeRight": 197.40625,
+        "trackWidth": 94.8125
+      }
+    },
+    {
+      "name": "knob fits a narrow container at viewport 1920",
+      "passed": true,
+      "actual": {
+        "hostWidth": 200,
+        "controlWidth": 200,
+        "controlHeight": 200,
+        "right": 216,
+        "hostRight": 216,
+        "volumeWidth": 0,
+        "volumeRight": 0,
+        "trackWidth": 0
+      }
+    },
+    {
+      "name": "audio keeps volume available at viewport 1920",
+      "passed": true,
+      "actual": {
+        "hostWidth": 200,
+        "controlWidth": 200,
+        "controlHeight": 196.53125,
+        "right": 216,
+        "hostRight": 216,
+        "volumeWidth": 112.90625,
+        "volumeRight": 197.40625,
+        "trackWidth": 94.8125
+      }
+    },
+    {
+      "name": "hidden-readout knob responds to real keyboard",
+      "passed": true,
+      "actual": "68"
+    },
+    {
+      "name": "piano key keyboard activates once",
+      "passed": true,
+      "actual": "1"
+    },
+    {
+      "name": "decorative marquee copy is inert",
+      "passed": true,
+      "actual": [
+        {
+          "inert": false,
+          "width": 200,
+          "visible": true
+        },
+        {
+          "inert": true,
+          "width": 0,
+          "visible": false
+        }
+      ]
+    },
+    {
+      "name": "reduced-motion marquee content remains available without scrolling animation",
+      "passed": true,
+      "actual": {
+        "left": 16,
+        "right": 216,
+        "groupLeft": 16,
+        "groupRight": 216
+      }
+    },
+    {
+      "name": "border lights travel continuously without native SVG point queries",
+      "passed": true,
+      "actual": {
+        "samples": 39,
+        "moves": 19
+      }
+    },
+    {
+      "name": "border follows live resize",
+      "passed": true,
+      "actual": "0 0 120 80"
+    },
+    {
+      "name": "border holds its orbit after reduced-motion changes",
+      "passed": true,
+      "actual": true
+    },
+    {
+      "name": "browser has no uncaught errors",
+      "passed": true,
+      "actual": []
+    }
+  ],
+  "measurements": [
+    {
+      "instances": 95,
+      "cpuThrottle": 1,
+      "emulated": false,
+      "elapsed": 1516.6000000000001,
+      "samples": 91,
+      "moves": 46,
+      "p95FrameMs": 16.799999999999955,
+      "maxFrameMs": 16.90000000000009,
+      "hardwareConcurrency": 20,
+      "LayoutDuration": 0,
+      "RecalcStyleDuration": 128.3,
+      "ScriptDuration": 17.44,
+      "TaskDuration": 243.96
+    },
+    {
+      "instances": 95,
+      "cpuThrottle": 6,
+      "emulated": true,
+      "elapsed": 1516.6,
+      "samples": 60,
+      "moves": 31,
+      "p95FrameMs": 33.40000000000009,
+      "maxFrameMs": 49.90000000000009,
+      "hardwareConcurrency": 20,
+      "LayoutDuration": 0,
+      "RecalcStyleDuration": 764.24,
+      "ScriptDuration": 107.48,
+      "TaskDuration": 1338.93
+    }
+  ]
+}

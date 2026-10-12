@@ -5,13 +5,13 @@ export default function ProgressBarExample() {
     <Playground
       stretch
       knobs={{
-        value: { options: ["0", "35", "70", "100"], value: "35" },
+        value: { value: 35, min: 0, max: 100 },
         indeterminate: { value: false },
       }}
       code={(v) =>
         jsx("ProgressBar", {
           label: "Обработка записи",
-          value: v.indeterminate ? undefined : Number(v.value),
+          value: v.indeterminate ? undefined : v.value,
           indeterminate: v.indeterminate,
         })
       }
@@ -26,7 +26,7 @@ export default function ProgressBarExample() {
           </U.Stack>
           <U.ProgressBar
             label="Обработка записи"
-            value={Number(v.value)}
+            value={v.value}
             indeterminate={v.indeterminate}
           />
         </U.Stack>

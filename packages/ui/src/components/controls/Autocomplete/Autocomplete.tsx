@@ -1,8 +1,8 @@
 import { useTr } from "../../../core/i18n";
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { assignRef, useControllable } from "../../../core/base";
 import { Popover } from "../../feedback/Popover/Popover";
-import { FieldFrame, fieldLabel, useFieldIds, OptionList, toOption } from "../internal";
+import { FieldFrame, fieldLabel, useFieldIds, useActiveOption, OptionList, toOption } from "../internal";
 import { IconButton } from "../IconButton/IconButton";
 import { InputBase } from "../InputBase/InputBase";
 import type { AutocompleteProps } from "../shared";
@@ -28,7 +28,7 @@ export const Autocomplete = ({
   labelPlacement = "top",
   tone: _tone,
   material: _material,
-  style: _style,
+  style,
   children: _children,
   ...input
 }: AutocompleteProps) => {
@@ -42,24 +42,31 @@ export const Autocomplete = ({
   const [active, setActive] = useState(0);
   const inputNode = useRef<HTMLInputElement>(null);
   const box = useRef<HTMLDivElement>(null);
+  const ids = useFieldIds(label, description || error, input.id, input);
+  const locked = !!(input.disabled || input.readOnly);
+  useEffect(() => { if (locked) setOpen(false); }, [locked]);
   const all = useMemo(() => options.map(toOption), [options]);
   const filtered = useMemo(() => {
     // A value that already names an option shows the whole list, like a reopened select.
-    const query = all.some((o) => o.label === current) ? "" : current.trim().toLocaleLowerCase();
+    const query = all.some((o) => o.value === current || o.label === current) ? "" : current.trim().toLocaleLowerCase();
     return all.filter((o) => !query || String(o.label).toLocaleLowerCase().includes(query) || o.value.toLocaleLowerCase().includes(query));
   }, [all, current]);
-  const listId = `${input.id ?? "ad-autocomplete"}-listbox`;
+  const listId = `${input.id ?? ids.label}-listbox`;
+  const visible = open && !locked && filtered.length > 0;
+  const activeIndex = Math.max(0, Math.min(active, filtered.length - 1));
+  useActiveOption(listId, activeIndex, visible);
   const choose = (next: string) => {
+    if (locked) return;
     setCurrent(next);
     onOptionSelect?.(next);
     setOpen(false);
     inputNode.current?.focus();
   };
-  const ids = useFieldIds(label, description || error);
   const floating = labelPlacement === "floating" && !!label;
   return (
     <FieldFrame
       ids={ids}
+      style={style}
       className={`ad-autocomplete-shell ${className ?? ""}`}
       label={floating ? undefined : label}
       required={input.required}
@@ -99,10 +106,10 @@ export const Autocomplete = ({
               icon="chevron"
               label={tr("Показать варианты")}
               disabled={input.disabled || input.readOnly}
-              aria-expanded={open}
+              aria-expanded={visible}
               onClick={() => {
-                setOpen((v) => !v);
                 inputNode.current?.focus();
+                setOpen(!visible);
               }}
             />
           </>
@@ -111,6 +118,7 @@ export const Autocomplete = ({
         <input
           {...ids.aria}
           {...input}
+          id={ids.control}
           className="ad-autocomplete-input"
           ref={(n) => {
             inputNode.current = n;
@@ -119,31 +127,43 @@ export const Autocomplete = ({
           value={current}
           role="combobox"
           aria-autocomplete="list"
-          aria-expanded={open}
-          aria-controls={open ? listId : undefined}
-          onFocus={() => setOpen(true)}
+          aria-expanded={visible}
+          aria-controls={visible ? listId : undefined}
+          aria-activedescendant={visible ? `${listId}-option-${activeIndex}` : undefined}
+          aria-invalid={!!error || input["aria-invalid"]}
+          onFocus={(event) => {
+            input.onFocus?.(event);
+            if (!locked && !event?.defaultPrevented) setOpen(true);
+          }}
           onChange={(e) => {
             setCurrent(e.currentTarget.value);
             setOpen(true);
             setActive(0);
           }}
           onKeyDown={(e) => {
+            input.onKeyDown?.(e);
+            if (locked || e.defaultPrevented || e.nativeEvent?.isComposing) return;
             if (e.key === "ArrowDown") {
               e.preventDefault();
               setOpen(true);
-              setActive((i) => Math.min(filtered.length - 1, i + 1));
+              setActive(visible ? Math.min(filtered.length - 1, activeIndex + 1) : 0);
             } else if (e.key === "ArrowUp") {
               e.preventDefault();
-              setActive((i) => Math.max(0, i - 1));
-            } else if (e.key === "Enter" && open && filtered[active]) {
+              setOpen(true);
+              setActive(visible ? Math.max(0, activeIndex - 1) : Math.max(0, filtered.length - 1));
+            } else if (e.key === "Enter" && visible && filtered[activeIndex]) {
               e.preventDefault();
-              choose(filtered[active].value);
-            } else if (e.key === "Escape") setOpen(false);
+              choose(filtered[activeIndex].value);
+            } else if (e.key === "Escape" || e.key === "Tab") {
+              if (e.key === "Escape" && visible) e.preventDefault();
+              setOpen(false);
+            }
           }}
         />
       </InputBase>
       <Popover
-        open={open && filtered.length > 0}
+        id={listId}
+        open={visible}
         onOpenChange={setOpen}
         anchorRef={box}
         autoFocus={false}
@@ -157,7 +177,7 @@ export const Autocomplete = ({
           id={listId}
           options={filtered}
           selected={current}
-          active={active}
+          active={activeIndex}
           onChoose={choose}
           onHover={setActive}
         />

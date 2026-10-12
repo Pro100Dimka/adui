@@ -1,0 +1,243 @@
+
+> @ad-voice/ui@2.9.3 test
+> vitest run --reporter=dot tests/base.test.ts tests/MediaContracts.test.tsx tests/RotaryKnobContracts.test.tsx tests/PianoRollContracts.test.tsx tests/AnimatedBorderGeometry.test.ts tests/motion-idle.test.ts tests/AudioPlayerRerenders.test.tsx tests/SparklineLargeSeries.test.tsx tests/LevelMeterIdle.test.tsx tests/WaveDecorationFrames.test.tsx tests/RotaryKnobHover.test.tsx tests/RotaryKnobRaster.test.tsx tests/EdgeCases.test.tsx tests/NeonWavesResize.test.tsx
+
+
+ RUN  v3.2.7 D:/Git/adui/packages/ui
+
+stderr | tests/NeonWavesResize.test.tsx > resizes comet coordinates immediately without waiting for another motion tick
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/WaveDecorationFrames.test.tsx > reuses the strand nodes instead of querying the SVG on each animation frame
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/SparklineLargeSeries.test.tsx > keeps a large series bounded to screen resolution without losing its spike or last point
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/LevelMeterIdle.test.tsx > keeps a silent meter off the shared frame clock until it receives a level
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/PianoRollContracts.test.tsx > selects a piano-roll note through native keyboard activation without starting a drag
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/RotaryKnobHover.test.tsx > coalesces rapid pointer hover updates into one visual frame
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/PianoRollContracts.test.tsx > does not seek or select an area when the browser cancels a pointer gesture
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/LevelMeterIdle.test.tsx > lets a fading meter settle and releases the frame clock after silence
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/PianoRollContracts.test.tsx > ignores secondary pointers while a note drag is in progress
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/RotaryKnobContracts.test.tsx > keeps the knob operable by keyboard when its optional readout is hidden
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/RotaryKnobRaster.test.tsx > defers the knob's expensive static raster to the shared sliced artwork painter
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/PianoRollContracts.test.tsx > restores the original note gesture before completing a cancelled drag
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/RotaryKnobContracts.test.tsx > keeps controlled display at the supplied value while reporting keyboard proposals
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/RotaryKnobRaster.test.tsx > turns decisively with a wheel notch and a short vertical drag
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/RotaryKnobContracts.test.tsx > reports typed controlled proposals without replacing the externally supplied value
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/RotaryKnobContracts.test.tsx > uses controlled value before defaultValue in the initial accessible markup
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/RotaryKnobContracts.test.tsx > does not emit a user commit when a drag is disposed by unmount
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/RotaryKnobContracts.test.tsx > stops a drag when disabled changes during the interaction
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/RotaryKnobContracts.test.tsx > stops a drag when readOnly changes during the interaction
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/motion-idle.test.ts > wakes CSS-only loops when the shared offscreen hook reveals their block
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/motion-idle.test.ts > disconnects the shared CSS visibility observer after its last boundary unmounts
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/MediaContracts.test.tsx > activates piano keys through the native click used by keyboard and assistive input, once
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/MediaContracts.test.tsx > cleans up the piano pressed feedback timer on unmount
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/motion-idle.test.ts > lets native page scrolling handle wheel notches over 'a fitted container'
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/MediaContracts.test.tsx > stops the waveform playback decoration when a seek interrupts a small playback step
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/MediaContracts.test.tsx > clamps the waveform's spoken value to the same track position that is rendered
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/MediaContracts.test.tsx > keeps decorative marquee copies out of keyboard and pointer interaction
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/motion-idle.test.ts > lets native page scrolling handle wheel notches over 'visible overflow'
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/MediaContracts.test.tsx > renders explicit empty waveform peaks as silence rather than fabricated demo audio
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/MediaContracts.test.tsx > does not invent a sparkline when a supplied series is empty
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/MediaContracts.test.tsx > keeps pointer-driven tilt still for a reduced-motion preference
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/MediaContracts.test.tsx > tracks visibility and releases the observer for offscreen 'Shimmer' animations
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/MediaContracts.test.tsx > tracks visibility and releases the observer for offscreen 'Sparkline' animations
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/MediaContracts.test.tsx > ignores a context-menu press on the waveform instead of seeking
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/motion-idle.test.ts > lets native page scrolling handle wheel notches over 'hidden overflow'
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/MediaContracts.test.tsx > restores a cancelled waveform seek and returns keyboard focus to the track
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/motion-idle.test.ts > lets native page scrolling handle wheel notches over 'clipped overflow'
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/motion-idle.test.ts > smooths a scrollable container without taking wheel input from inner areas, gestures or trackpads
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/motion-idle.test.ts > leaves wheel input with an inner interactive canvas that already consumed it
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/AudioPlayerRerenders.test.tsx > moves the live cursor without rebuilding the play and volume controls every frame
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/AudioPlayerRerenders.test.tsx > controls an external transport without starting a second audio source or clock
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/AudioPlayerRerenders.test.tsx > uses elapsed clock time for the demo timeline and announces completion once
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/AudioPlayerRerenders.test.tsx > resets a paused timeline when its audio source is replaced without emitting a seek
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/AudioPlayerRerenders.test.tsx > disables every audio player control including mute and volume
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/AudioPlayerRerenders.test.tsx > announces native playback completion to the latest callback after a props update
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/AudioPlayerRerenders.test.tsx > lets a controlled audio volume report the requested value without changing its readout
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/EdgeCases.test.tsx > forms under overlapping work > does not rerender merely to reinitialize unchanged mount values
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/EdgeCases.test.tsx > forms under overlapping work > ignores setting a field to its existing value
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/EdgeCases.test.tsx > forms under overlapping work > does not rerender when an already touched field is blurred again
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/EdgeCases.test.tsx > forms under overlapping work > does not serialize stable initial values again for an unrelated form-state change
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/EdgeCases.test.tsx > forms under overlapping work > updates one nested field without cloning unrelated values
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/EdgeCases.test.tsx > forms under overlapping work > does not rerender an unchanged sibling field
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/EdgeCases.test.tsx > forms under overlapping work > ignores a stale asynchronous validation result
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/EdgeCases.test.tsx > forms under overlapping work > does not run concurrent submissions twice
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/EdgeCases.test.tsx > input edge cases > rejects an impossible month typed into the calendar field
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/EdgeCases.test.tsx > input edge cases > does not let a disabled autocomplete change its value through an adornment
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/EdgeCases.test.tsx > input edge cases > rejects a dropped file outside the accepted types and ignores a disabled drop
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/EdgeCases.test.tsx > input edge cases > never accepts non-image files for an avatar even with a broad accept prop
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/EdgeCases.test.tsx > input edge cases > deduplicates case-insensitive tags within one pasted batch
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/EdgeCases.test.tsx > input edge cases > shows a failed remote people search without an unhandled rejection
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/EdgeCases.test.tsx > audio playback follows the real media > moves playing state and volume to a replacement source
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/EdgeCases.test.tsx > audio playback follows the real media > does not claim to be playing when the browser refuses playback
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/EdgeCases.test.tsx > waveform decoding remains cooperative > yields while measuring a long recording instead of blocking every input task
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/EdgeCases.test.tsx > waveform decoding remains cooperative > aborts the previous waveform request when its source changes or unmounts
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/EdgeCases.test.tsx > waveform decoding remains cooperative > includes the end of a recording when its sample count is not divisible by bins
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/EdgeCases.test.tsx > waveform decoding remains cooperative > normalizes an invalid bin count before measuring the recording
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/EdgeCases.test.tsx > routing, persistence and row identity > recovers from a saved theme with an unknown name
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/EdgeCases.test.tsx > routing, persistence and row identity > keeps selection attached to a row when the parent reorders rows
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/EdgeCases.test.tsx > routing, persistence and row identity > keeps id-less row identity and does not collide with an explicit id
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/base.test.ts > locale isolation > does not change the imperative default locale during provider rendering
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/base.test.ts > locale isolation > keeps per-provider custom messages out of other roots
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/base.test.ts > locale isolation > keeps translated components bound to their own provider after another root renders
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/base.test.ts > site settings updates > ignores a patch that does not change any setting
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/base.test.ts > DataTable tools > bounds text filter suggestions after searching the entire column
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/base.test.ts > DataTable tools > bounds values filter suggestions after searching the entire column
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+···············································································································································································
+
+ Test Files  14 passed (14)
+      Tests  175 passed (175)
+   Start at  14:36:34
+   Duration  1.78s (transform 1.41s, setup 0ms, collect 5.07s, tests 975ms, environment 2ms, prepare 1.23s)
+

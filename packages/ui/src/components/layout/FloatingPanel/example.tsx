@@ -1,12 +1,12 @@
 import { useState } from "react";
-import { FloatingPanel, MelodyRoll, Stack, Typography, type PanelLayout } from "@ad-voice/ui";
+import { FloatingPanel, MelodyRoll, Stack, Typography, type PanelLayout } from "@neo-ui-kit/react";
 
 export default function FloatingPanelExample() {
   const [layout, setLayout] = useState<PanelLayout | null>(null);
   return (
     <Stack gap={2}>
       <Typography variant="caption" tone="muted">
-        Тяните панель за поверхность; щёлкните, чтобы выделить и менять размер за края и углы.
+        Тяните панель за поверхность; щёлкните, чтобы менять размер за края и углы. С клавиатуры: стрелки перемещают панель, Shift + стрелки меняют размер.
       </Typography>
       <FloatingPanel resizable layout={layout} onLayoutChange={setLayout} limits={{ minWidth: 260, minHeight: 120 }}
         label="Мелодия" style={{ right: "2rem", bottom: "2rem", width: "26rem", height: "11rem" }}>

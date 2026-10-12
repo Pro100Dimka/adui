@@ -5,7 +5,8 @@
   --angle: 45.9deg;
   --rotation: 0deg;
   position: relative;
-  width: var(--size);
+  width: min(var(--size), 100%);
+  max-width: 100%;
   aspect-ratio: 1;
   flex: none;
   isolation: isolate;
@@ -97,11 +98,15 @@
     drop-shadow(0 0 0.4375rem rgb(from var(--ad-primary) r g b / 0.18))
     drop-shadow(0 0 1.25rem rgb(from var(--ad-primary) r g b / 0.1));
 }
-.ad-rotary-knob .knob__rotor {
+.ad-rotary-knob .knob__rotor-frame {
+  overflow: clip;
   filter: hue-rotate(var(--ad-hue-shift, 0deg))
     drop-shadow(0 0.35rem 0.45rem #000b);
 }
 .ad-rotary-knob .knob__rotor {
+  display: block;
+  width: 100%;
+  height: 100%;
   transform: rotate(var(--rotation));
   transform-origin: center;
   will-change: transform;
@@ -205,9 +210,7 @@
   position: absolute;
   inset: 0;
   border-radius: 50%;
-  transform: rotate(var(--angle));
   pointer-events: none;
-  will-change: transform;
 }
 .ad-rotary-knob .knob__slot {
   position: absolute;
@@ -215,6 +218,11 @@
   top: 16.65%;
   width: 3.2%;
   height: 11.25%;
+  /* Orbit the small marker around the control's centre; rotating its full-size
+     invisible wrapper would enlarge the container's scrollable bounds. */
+  transform: rotate(var(--angle));
+  transform-origin: 50% calc(100% * (50 - 16.65) / 11.25);
+  will-change: transform;
   border-radius: 62.4375rem;
   background: linear-gradient(
     90deg,

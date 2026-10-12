@@ -35,19 +35,20 @@ export interface UseFormOptions<T extends Record<string, unknown>> {
   validateOnChange?: boolean;
   validateOnBlur?: boolean;
 }
-const getPath = (value: any, path: string) =>
-    path.split(".").reduce((current, key) => current?.[key], value),
-  setPath = (value: any, path: string, next: unknown) => {
+const getPath = (value: unknown, path: string): unknown =>
+    path.split(".").reduce<unknown>((current, key) => current == null ? undefined : Reflect.get(Object(current), key), value),
+  setPath = <T extends Record<string, unknown>>(value: T, path: string, next: unknown): T => {
     const keys = path.split(".");
-    const copy = (item: any) => Array.isArray(item) ? [...item] : { ...item };
-    const root = copy(value);
-    let cursor = root;
-    let source = value;
+    const root = { ...value };
+    let cursor: object = root;
+    let source: unknown = value;
     for (const key of keys.slice(0, -1)) {
-      source = source?.[key] ?? {};
-      cursor = cursor[key] = copy(source);
+      source = getPath(source, key);
+      const branch: object = Array.isArray(source) ? [...source] : Object.assign({}, source);
+      Reflect.set(cursor, key, branch);
+      cursor = branch;
     }
-    cursor[keys.at(-1)!] = next;
+    Reflect.set(cursor, keys[keys.length - 1], next);
     return root;
   };
 export function useForm<T extends Record<string, unknown>>(
@@ -81,7 +82,7 @@ export function useForm<T extends Record<string, unknown>>(
   const methods = useMemo(() => {
     const validate = async (next: T) => {
       const id = ++validationId.current;
-      const result = (await settings.current.validate?.(next)) ?? {};
+      const result: FormErrors<T> = (await settings.current.validate?.(next)) ?? {};
       if (id === validationId.current && next === latest.current) setErrors(result);
       return result;
     };
@@ -93,7 +94,7 @@ export function useForm<T extends Record<string, unknown>>(
       if (settings.current.validateOnChange) void validate(next);
     };
     const setTouched = (path: string, state = true) => {
-      if (Boolean(touchedRef.current[path]) !== state) {
+      if ((Object.hasOwn(touchedRef.current, path) && Boolean(touchedRef.current[path])) !== state) {
         touchedRef.current = { ...touchedRef.current, [path]: state };
         setTouchedState(touchedRef.current);
       }
@@ -125,7 +126,13 @@ export function useForm<T extends Record<string, unknown>>(
         try {
           const next = latest.current;
           const result = await methods.validate(next);
-          if (next !== latest.current || Object.values(result).some(Boolean)) return false;
+          if (next !== latest.current) return false;
+          const invalid = Object.keys(result).filter((path) => result[path]);
+          if (invalid.length) {
+            touchedRef.current = { ...touchedRef.current, ...Object.fromEntries(invalid.map((path) => [path, true])) };
+            setTouchedState(touchedRef.current);
+            return false;
+          }
           await settings.current.onSubmit?.(latest.current, api);
           return true;
         } finally {
@@ -133,13 +140,16 @@ export function useForm<T extends Record<string, unknown>>(
           setSubmitting(false);
         }
       },
-      field: (path: string) => ({
-        value: getPath(values, path),
-        error: getPath(errors, path),
-        touched: !!touched[path],
-        onValueChange: (value: unknown) => methods.setValue(path, value),
-        onBlur: () => methods.setTouched(path),
-      }),
+      field: (path: string) => {
+        const error = errors[path] ?? getPath(errors, path);
+        return {
+          value: getPath(values, path),
+          error: typeof error === "string" ? error : undefined,
+          touched: Object.hasOwn(touched, path) && !!touched[path],
+          onValueChange: (value: unknown) => methods.setValue(path, value),
+          onBlur: () => methods.setTouched(path),
+        };
+      },
     }),
     [values, errors, touched, submitting, methods],
   );
@@ -150,6 +160,8 @@ export interface FormProps<T extends Record<string, unknown>> {
   children: ReactNode;
   className?: string;
 }
+// One context carries different form schemas. The provider/consumer generic restores the
+// schema at this boundary; a single Record<string, unknown> would reject typed reset callbacks.
 const Context = createContext<FormApi<any> | null>(null);
 export function Form<T extends Record<string, unknown>>({
   form,

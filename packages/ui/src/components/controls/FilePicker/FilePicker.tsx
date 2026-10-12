@@ -1,4 +1,4 @@
-import { tr, useTr } from "../../../core/i18n";
+import { useTr } from "../../../core/i18n";
 import { useEffect, useRef, useState } from "react";
 import { mark } from "../../../core/base";
 import { Button } from "../Button/Button";
@@ -25,7 +25,7 @@ export const FilePicker = (p: FilePickerProps) => {
           type.endsWith("/*") ? file.type.toLowerCase().startsWith(type.slice(0, -1)) :
             file.type.toLowerCase() === type,
       )),
-    ).slice(0, p.variant === "avatar" ? 1 : undefined);
+    ).slice(0, p.variant === "avatar" || !p.multiple ? 1 : undefined);
     if (!pickedFiles.length) return;
     setNames(pickedFiles.map((file) => file.name).join(", "));
     if (p.variant === "avatar") setPreview(URL.createObjectURL(pickedFiles[0]));
@@ -44,7 +44,7 @@ export const FilePicker = (p: FilePickerProps) => {
     return (
       <div {...mark("FilePicker", p)} data-variant="avatar" data-over={over || undefined}>
         <button type="button" className="ad-file-picker-avatar-button" disabled={p.disabled}
-          aria-label={p.label ?? tr("Изменить фото")}
+          aria-label={[p.label ?? tr("Изменить фото"), p.name].filter(Boolean).join(": ")}
           onClick={choose}
           onDragOver={(e) => { e.preventDefault(); if (!p.disabled) setOver(true); }}
           onDragLeave={() => setOver(false)}

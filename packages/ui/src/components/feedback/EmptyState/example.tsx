@@ -1,4 +1,4 @@
-import { Button, EmptyState } from "@ad-voice/ui";
+import { Button, EmptyState } from "@neo-ui-kit/react";
 
 export default function EmptyStateExample() {
   return (

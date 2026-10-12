@@ -1,0 +1,1152 @@
+{
+  "scope": "Foundation (7 public components including LocaleProvider and SvgAsset), artwork (8 public components), shared artwork paint lifecycle and public documentation",
+  "date": "2026-10-12",
+  "verification": {
+    "baseline": "foundation-baseline.json: 113 passed, 0 failed",
+    "red": [
+      "foundation-contracts-red.json",
+      "foundation-contracts-extra-red.json",
+      "layers-browser-property-red.json",
+      "foundation-package-red.json"
+    ],
+    "final": "foundation-green.json: 125 passed, 0 failed",
+    "dedicatedTests": [
+      "../packages/ui/tests/FoundationContracts.test.tsx",
+      "../packages/ui/tests/artwork-visibility.test.tsx"
+    ],
+    "browser": "layers-browser-green.json:62 passed,0 failed",
+    "types": "UI and playground TypeScript checks passed",
+    "sourceStatus": "Frozen for parent release build, final full suite and packed React 18/19 consumer verification",
+    "coreComponentDocumentation": {
+      "red": "core-component-docs-red.json: 4 failed, 0 passed",
+      "green": "core-component-docs-green.json: 116 passed, 0 failed",
+      "types": "UI and playground TypeScript checks passed",
+      "classification": "100 public React components, 69 non-component root runtime exports; uppercase runtime exports outside /components/ are exactly LocaleProvider and SvgAsset"
+    },
+    "catalogDescriptions": {
+      "catalogComponents": 100,
+      "locales": [
+        "en",
+        "uk"
+      ],
+      "red": "docs-description-locale-red.json: 2 failed; six untranslated descriptions in both locales plus three English-native strings without explicit en dictionary entries",
+      "green": "docs-description-locale-green.json: 109 passed, 0 failed",
+      "fixed": [
+        "LocaleProvider",
+        "SvgAsset",
+        "BooleanControl",
+        "QuantumField",
+        "QuantumFieldExperience",
+        "Icon"
+      ],
+      "method": "Own non-empty dictionary entries for every catalog description in EN/UK; the three English-native descriptions use explicit identity entries in en",
+      "types": "Playground typecheck passed",
+      "scope": "Only docsMessages.ts and tests/audit; no UI runtime or tarball changes"
+    },
+    "sizing": {
+      "dedicatedRed": "docs-sizing-contracts-red.json:11 failed",
+      "dedicatedGreen": "docs-sizing-contracts-green.json:11 passed",
+      "relatedGreen": "docs-sizing-related-green.json:155 passed",
+      "rotaryRelatedGreen": "docs-sizing-rotary-related-green.json:64 passed",
+      "browserRed": [
+        "docs-sizing-browser-rotary-red.json",
+        "docs-sizing-browser-rotary-motion-red.json"
+      ],
+      "browserGreen": {
+        "file": "docs-sizing-browser-green.json",
+        "pages": 100,
+        "passed": 100,
+        "failed": 0,
+        "sizeSelectors": 26,
+        "namedSizeStates": 104,
+        "numberFields": 9,
+        "rotaryMotionCases": 8,
+        "pageErrors": 0
+      },
+      "types": "UI and playground typechecks passed",
+      "sourceStatus": "Frozen for root full check/build/package"
+    }
+  },
+  "matrix": [
+    {
+      "component": "ThemeProvider",
+      "contract": "Four named theme palettes; primary/secondary/accent/token overrides; inherited nested color scheme and palette context",
+      "scenarios": [
+        "nested effective palette",
+        "unrelated style rerenders",
+        "four themes in dark/light dialog",
+        "CSS property registration"
+      ],
+      "expected": "Consumers follow effective values without irrelevant rerenders; declared theme color transitions have typed CSS registrations",
+      "before": "Chrome rejected all five @property declarations whose initial-value used var(...)",
+      "fix": "Computationally independent color initial values; actual palette aliases remain dynamic in tokens.css",
+      "verification": "theme-following.test.tsx; browser CSSOM red showed only the two existing fade properties; green includes all five theme properties",
+      "result": "passed; frame-by-frame perceptual transition quality not quantitatively measured"
+    },
+    {
+      "component": "Typography",
+      "contract": "Thirteen semantic variants; polymorphic element; tone, weight, align, truncate; children or text",
+      "scenarios": [
+        "caller textAlign with align omitted",
+        "explicit align precedence",
+        "semantic default element mapping source review"
+      ],
+      "expected": "Explicit align overrides inline textAlign; absent align preserves caller styling",
+      "before": "textAlign: undefined replaced the consumer's style.textAlign",
+      "fix": "Nullish fallback to the caller's style",
+      "verification": "FoundationContracts dedicated static-render test red to green",
+      "result": "passed"
+    },
+    {
+      "component": "ThemeEditor / themeConfig",
+      "contract": "Controlled/default theme config; simple and advanced modes; JSON file/paste import, export, clipboard, reset, token filtering",
+      "scenarios": [
+        "out-of-order file reads",
+        "read rejection",
+        "search previously closed token group",
+        "inherited JavaScript names as imported theme names",
+        "theme following",
+        "simple mode avoids resolving all tokens"
+      ],
+      "expected": "Latest import wins; errors render in MessageBar; search exposes results; only own palette keys are accepted",
+      "before": "Older file overwrote newer config; file-read rejection escaped; defaultOpen could not reveal a mounted closed group; constructor/toString/__proto__ passed palette membership test",
+      "fix": "Import generation invalidated on newer file, paste, reset and unmount; catch read failures; force matched groups open during search; Object.hasOwn palette membership; reuse existing downloadFile instead of duplicate blob/link code",
+      "verification": "Six dedicated failing cases in FoundationContracts plus theme-following and LoaderGenerator related tests",
+      "result": "passed; clipboard OS failure paths and physical file chooser UI not executed"
+    },
+    {
+      "component": "Loader",
+      "contract": "Thirteen supplied image animations; size, speed, palette, custom source, accessible loading status; offscreen pause",
+      "scenarios": [
+        "theme palette",
+        "default-image CSS mask",
+        "only moving images reserve compositor layers",
+        "source stylesheet insertion and role/name review"
+      ],
+      "expected": "Status has a usable name; theme drives default artwork; no unnecessary compositor layer for static parts",
+      "fix": "Corrected stale animation-count doc comment; no behavioral change",
+      "verification": "theme-following.test.tsx and LoaderMotionPerformance.test.ts",
+      "result": "passed within listed scope; all thirteen animations were not visually assessed frame by frame"
+    },
+    {
+      "component": "LoaderGenerator",
+      "contract": "Controlled/default image-animation settings; image read, background removal/palette extraction; standalone HTML and SVG export",
+      "scenarios": [
+        "cooperative pixel work",
+        "superseded read and abort",
+        "object URL lifecycle",
+        "image bounds",
+        "latest settings",
+        "export escaping",
+        "theme following"
+      ],
+      "expected": "Slow image processing remains cancellable and cannot overwrite newer settings; exports escape supplied content",
+      "fix": "No additional defect confirmed in inspected paths",
+      "verification": "LoaderGenerator.test.ts and theme-following.test.tsx",
+      "result": "passed; processing timing tests are synthetic counters, not measurements from physical weak hardware"
+    },
+    {
+      "component": "Planet / Landscape / useArtwork",
+      "contract": "Procedural theme-aware decorative artwork; cached resolution steps; high-density pixel budget; pause unseen work",
+      "scenarios": [
+        "observers unavailable",
+        "offscreen then visible",
+        "large high-DPI geometry",
+        "cache reuse and bounded cache",
+        "unmount async guard source inspection"
+      ],
+      "expected": "At least one initial paint without optional observer APIs; no paint offscreen; bounded backing store",
+      "before": "No initial paint when both ResizeObserver and IntersectionObserver were unavailable",
+      "fix": "Call existing guarded paint once after observer setup; unchanged visible/shown guard prevents duplicate work",
+      "verification": "artwork-visibility dedicated red to green and existing artwork-cache tests; high-DPI backing-store assertion at most 512000 pixels",
+      "result": "passed; these components already used Canvas before this task, and AnimatedBorder remains SVG/CSS"
+    },
+    {
+      "component": "NeonWaves",
+      "contract": "Decorative SVG twist/ridge strands, stars, comets and per-instance phase; shared motion/offscreen lifecycle",
+      "scenarios": [
+        "per-tick DOM-query reuse",
+        "wrapper compositor cost",
+        "resize observer and motion subscription ownership source review"
+      ],
+      "expected": "Motion reuses discovered DOM targets and cleanup is owned by hooks",
+      "fix": "No additional change",
+      "verification": "ArtworkAnimationPerformance.test.tsx and ArtworkLayerPerformance.test.ts",
+      "result": "passed within listed scope"
+    },
+    {
+      "component": "Spectrum",
+      "contract": "Decorative segmented or smooth-bar spectrum; cached animation targets; offscreen pause",
+      "scenarios": [
+        "segmented column DOM lookups",
+        "bars and halo target reuse",
+        "variant render and aria-hidden source review"
+      ],
+      "expected": "Both variants animate without repeating DOM discovery every tick",
+      "fix": "No additional change",
+      "verification": "Two ArtworkAnimationPerformance.test.tsx cases",
+      "result": "passed within listed scope"
+    },
+    {
+      "component": "DatabaseArt / ServerArt",
+      "contract": "Layered neon SVG illustrations; optional label; per-instance filter/gradient IDs; static and moving layers",
+      "scenarios": [
+        "label versus decorative semantics",
+        "useSvgId references",
+        "unchanged server ventilation detail node budget"
+      ],
+      "expected": "Instance IDs remain distinct; labels are exposed only when provided; repeated detail avoids extra nodes",
+      "fix": "No additional change",
+      "verification": "Source review and ArtworkAnimationPerformance server-rack test; global SVG-ID verification belongs to parent/effects suite",
+      "result": "passed within listed scope; no dedicated screen-reader session"
+    },
+    {
+      "component": "QuantumField",
+      "contract": "Seven native particle-field modes; auto/low/high quality, density/speed, frame/analyser/stream audio, palette, interaction and pause",
+      "scenarios": [
+        "renderer lifecycle",
+        "pixel/point budget",
+        "audio frame scratch reuse",
+        "deterministic seed reuse",
+        "pointer geometry",
+        "theme/reduced-motion/offscreen behavior",
+        "native documentation example"
+      ],
+      "expected": "Reusable resources and bounded work; the QuantumField page demonstrates the exported native component itself",
+      "before": "Its main example instead rendered QuantumFieldExperience iframe",
+      "fix": "Native field example with mode/pause controls and lightweight paused overview",
+      "verification": "FoundationContracts own-example red to green; QuantumField.test.tsx; QuantumFieldRendererPerformance, QuantumFieldFallbackPerformance and QuantumFieldPointer tests",
+      "result": "passed; GPU throughput on other devices is unverified"
+    },
+    {
+      "component": "QuantumFieldExperience",
+      "contract": "MIT Quantum Fields embedded experience in isolated iframe with audio and scene controls",
+      "scenarios": [
+        "bridge lifecycle and instance isolation in existing tests",
+        "separate catalog route, executable example, source and Props API"
+      ],
+      "expected": "Public export can be independently discovered and documented",
+      "before": "No independent catalog page despite public export",
+      "fix": "Added quantum-field-experience via compact registry mapping; moved its original example to experienceExample.tsx in the existing component folder",
+      "verification": "FoundationContracts route/source/API red to green; existing restored-documentation-stage test retained against the correct example",
+      "result": "passed; third-party remote assets/network availability and real microphone input are external limitations"
+    },
+    {
+      "component": "BooleanControl public documentation",
+      "contract": "Shared exported native checkbox/switch with required kind and BooleanProps",
+      "scenarios": [
+        "own catalog route, executable example, source and Props API"
+      ],
+      "expected": "Public export has a discoverable standalone documentation page",
+      "before": "No page or named public Props interface",
+      "fix": "Added boolean-control registry entry and example in existing Checkbox folder; named BooleanControlProps without changing accepted values",
+      "verification": "FoundationContracts route/source/API red to green; behavior remains owned by controls agent",
+      "result": "passed"
+    },
+    {
+      "component": "LocaleProvider",
+      "contract": "Provider-local locale and message dictionary, optional React children, ru/en/uk built-ins and custom locale strings; nested providers override only their descendants",
+      "scenarios": [
+        "direct documentation route",
+        "named LocaleProviderProps and core source mapping",
+        "live en→uk language change",
+        "custom messages override built-in text",
+        "independent provider consumer coverage in base.test.ts"
+      ],
+      "expected": "A dedicated discoverable page describes the actual public component with executable examples and public props",
+      "before": "Source-folder-only component discovery classified LocaleProvider as a utility; no separate page, example or named Props API",
+      "fix": "Foundation additionalDocumentation entry, dev/localeExample.tsx and named LocaleProviderProps exported from root/core; runtime unchanged",
+      "verification": "Four new docs tests red before changes; core-component-docs-green.json 116 passed; both TypeScript projects green",
+      "result": "passed in renderer; production browser route check owned by parent"
+    },
+    {
+      "component": "SvgAsset",
+      "contract": "Render a trusted React-ready VectorNode SVG tree with unique ID/reference prefixes per instance; optional style/className, accessible label and component marker",
+      "scenarios": [
+        "direct documentation route",
+        "named SvgAssetProps and core source mapping",
+        "two labelled SVGs from the same gradient data",
+        "IDs remain unique and each fill references its own gradient"
+      ],
+      "expected": "A dedicated discoverable page supplies working SVG data, sizing and accessible names and states that input is trusted",
+      "before": "Source-folder-only component discovery classified SvgAsset as a utility; no separate page, example or named Props API",
+      "fix": "Foundation additionalDocumentation entry, dev/svgExample.tsx and named SvgAssetProps; existing export* exposes the type, runtime unchanged",
+      "verification": "Four new docs tests red before changes; core-component-docs-green.json 116 passed; both TypeScript projects green",
+      "result": "passed in server renderer; production browser route check owned by parent"
+    },
+    {
+      "component": "Icon / Loader / SvgAsset / documentation size controls",
+      "contract": "xs/sm/md/lg for named UI sizes; explicit CSS or numeric dimensions remain available where they are the public geometry contract; true numeric demo parameters use NumberField",
+      "scenarios": [
+        "all100 documentation pages",
+        "all26 size selectors at every one of four sizes",
+        "nine numeric parameters on eight pages",
+        "numeric draft clearing, bounds and step normalization",
+        "generated Loader and MelodixText code matches current example state"
+      ],
+      "before": "SvgAsset used 32/64/96 and Icon used CSS strings as size tabs; Loader code used an absent logo and differed from its rendered size; numeric controls used segmented presets; MelodixText omitted selected fontWeight from code",
+      "fix": "Shared numeric Playground knob uses existing NumberField and clamp; named demo choices; compatible Icon/Loader named size maps with existing CSS lengths retained; Loader accepts numeric pixels at16px design baseline; updated generated examples",
+      "verification": "11 dedicated tests red→green; related155 passed; full source browser sizing matrix in docs-sizing-browser-green.json",
+      "result": "passed:100 pages,26 size selectors×4 sizes,9 NumberFields; screenshot examples inspected at320px"
+    },
+    {
+      "component": "RotaryKnob",
+      "contract": "Large rotary control fits its allocated container and its pointer/canvas rotation does not create horizontal scrolling",
+      "scenarios": [
+        "lg at320px viewport",
+        "Home/PageUp/End/ArrowDown at default and200px containers",
+        "marker orbit matches previous geometry",
+        "keyboard focus remains visible and active"
+      ],
+      "before": "54px overflow from intrinsic grid width and rotating invisible indicator square; extra35px after PageUp from rotating full-size canvas",
+      "fix": "width:min(var(--size),100%); rotate the small marker around the same centre; stationary rotor frame clips empty rotated raster bounds, with drop-shadow on the frame and outer halo/focus preserved",
+      "verification": "browser rotary red then motion red; eight motion/geometry/focus checks green with marker error<0.1px; RotaryKnob/Media/Foundation suite64 passed",
+      "result": "passed in installed Chrome at actual viewport320px and container200px; no new rendering engine"
+    }
+  ],
+  "performance": {
+    "baselineAndFinal": "Existing 113-case baseline remained green; final suite adds twelve behavior/build checks (125 total). No wall-clock throughput claim is made.",
+    "confirmedMechanisms": [
+      "unseen artwork skips paint",
+      "backing-store pixel cap",
+      "DOM animation target reuse",
+      "audio frame and deterministic seed reuse",
+      "superseded asynchronous import cannot commit"
+    ],
+    "hardware": "Windows installed Chrome headless and Node test renderer; physical low-end hardware unavailable"
+  },
+  "limitations": [
+    "Firefox, Safari, physical touch and assistive technology were not available for independent verification.",
+    "Artwork motion checks verify resource/work counters and source lifecycle; they are not a complete perceptual assessment of every animation frame.",
+    "Browser theme checks cover geometry and registered CSS properties, not all contrast ratios of every neon gradient.",
+    "Full catalog, final packed artifact and React 18/19 consumer checks are performed by the parent after this source freeze."
+  ],
+  "publicUtilities": {
+    "basis": "Case-sensitive comparison of root runtime exports against all public React components regardless of source directory, including core LocaleProvider and SvgAsset. Subpath entry points are recorded for each symbol. Public type declarations are inventoried separately by the TypeScript compiler.",
+    "outcome": "The final utility pass confirmed and repaired four inherited-key defects. Other entries below distinguish direct/consumer tests from source-only review. The final release build is owned by the parent.",
+    "verification": {
+      "red": [
+        "i18n-prototype-red.json",
+        "icon-fallback-red.json",
+        "form-prototype-red.json",
+        "router-prototype-red.json"
+      ],
+      "green": "utilities-related-green.json: 262 passed, 0 failed",
+      "addedCases": 15,
+      "types": "UI and playground typechecks passed"
+    },
+    "groups": [
+      {
+        "exports": [
+          "classes",
+          "normalizeSize",
+          "mark",
+          "part",
+          "buttonView"
+        ],
+        "contract": "Compose component classes and root attributes, normalize legacy sizes, create structural parts and the shared native button view.",
+        "coverage": "Source review; indirect coverage through component suites, ReleaseContracts root attribute checks and packed consumer button/ref checks.",
+        "limits": "Not every factory argument has a dedicated direct utility test."
+      },
+      {
+        "exports": [
+          "assignRef"
+        ],
+        "contract": "Write a DOM node or null to a callback ref or mutable object ref.",
+        "coverage": "Source review and indirect element-ref consumer tests.",
+        "limits": "No independent callback-ref lifecycle test for arbitrary consumer callbacks."
+      },
+      {
+        "exports": [
+          "useControllable"
+        ],
+        "contract": "Use the controlled prop when present, otherwise internal initial state; stable setter accepts value/updater and emits only changed requests against the current state.",
+        "coverage": "ReleaseContracts rejected controlled requests and same-event uncontrolled updates; control, tabs and dialog suites.",
+        "limits": "Changing between controlled and uncontrolled modes after mount is not promised as a reset mechanism."
+      },
+      {
+        "exports": [
+          "clamp",
+          "cssRem",
+          "timeText"
+        ],
+        "contract": "Clamp a numeric value (non-finite value falls back to min); convert CSS pixels using document root font size; format finite seconds as nonnegative m:ss.",
+        "coverage": "Source-only direct utility review; clamp/time formatting have broad indirect control/media coverage.",
+        "limits": "cssRem needs a DOM; finite time values and ordered min/max bounds are caller preconditions. No SSR promise or general date/time formatter."
+      },
+      {
+        "exports": [
+          "copyText",
+          "downloadFile"
+        ],
+        "contract": "Copy text with clipboard API and DOM fallback; download text via a Blob/object URL and revoke the URL after the click.",
+        "coverage": "base.test.ts copy fallback geometry; source review of focus restoration, fallback removal and delayed URL release; ThemeEditor now reuses downloadFile.",
+        "limits": "OS clipboard permissions and download UI were not independently exercised in every browser."
+      },
+      {
+        "exports": [
+          "ripple"
+        ],
+        "contract": "Create a pointer-centered CSS ripple only while motion is enabled; remove its node on completion or cancellation.",
+        "coverage": "ReleaseContracts disabled-motion node budget and animationcancel cleanup; browser button use.",
+        "limits": "Relies on the shipped component CSS animation."
+      },
+      {
+        "exports": [
+          "vectorElement",
+          "useSvgId",
+          "icons",
+          "illustrations"
+        ],
+        "contract": "Render trusted VectorNode artwork recursively, scope IDs and url/href references, expose built-in asset maps and labelled/decorative SVG wrappers.",
+        "coverage": "Source review of recursive ID/reference scoping; SVG use across component/browser suites. Icon fallback now has three dedicated SSR regressions for constructor/toString/__proto__.",
+        "limits": "vectorElement is a rendering utility for trusted node data, with no HTML sanitization contract; full arbitrary SVG grammar is not tested."
+      },
+      {
+        "exports": [
+          "themes",
+          "typography",
+          "defaultThemeConfig",
+          "themeTokenGroups"
+        ],
+        "contract": "Four primary/secondary pairs, CSS typography references, default editable config and the supported editor token groups.",
+        "coverage": "Source-to-token cross-reference, theme-following suite, four themes times dark/light browser cases; static data reviewed.",
+        "limits": "Token values are exported data, not immutable runtime guards. Full color-contrast matrix is not measured."
+      },
+      {
+        "exports": [
+          "deriveSecondary",
+          "exportTheme",
+          "parseTheme",
+          "themeProps",
+          "resolveToken"
+        ],
+        "contract": "Derive a companion for six-digit hex; serialize/stamp theme JSON; parse supported version/name/known token values; produce ThemeProvider props; resolve a token in a real DOM scope.",
+        "coverage": "FoundationContracts import ordering, malformed/inherited theme names and error reporting; theme-following consumers; source review of token filtering and DOM probe cleanup.",
+        "limits": "resolveToken needs DOM and Canvas2D for color conversion and returns #000000 without a context; not an SSR utility. Editor exposes its documented subset of tokens."
+      },
+      {
+        "exports": [
+          "loaderAnimations",
+          "loaderAnimationLabel",
+          "loaderCss",
+          "loaderDefaultImage",
+          "loaderHtml"
+        ],
+        "contract": "Thirteen known animation names and localized labels, shared animation CSS, embedded default SVG and escaped standalone HTML export from loader settings.",
+        "coverage": "LoaderGenerator.test.ts export escaping/processing contracts; LoaderMotionPerformance; theme-following; source consistency.",
+        "limits": "Standalone exports use their own page CSS. Per-frame perceptual quality of all thirteen animations was not individually scored."
+      },
+      {
+        "exports": [
+          "hexToHsv",
+          "hsvToHex",
+          "normalizeHex"
+        ],
+        "contract": "Normalize three/six-digit hex strings; convert RGB hex to hue/saturation/value and normalized HSV back to hex. Invalid hex falls back to ruby when converting to HSV.",
+        "coverage": "Source-only arithmetic review plus ColorPicker interaction/keyboard contracts.",
+        "limits": "hsvToHex expects finite hue and normalized saturation/value supplied by the picker; arbitrary malformed numeric tuples are not a normalization API."
+      },
+      {
+        "exports": [
+          "useReducedMotion",
+          "useMotion"
+        ],
+        "contract": "Subscribe to system reduced motion and to the document's explicit data-ad-motion override; release the shared listeners after the last subscriber.",
+        "coverage": "motion-idle and MediaContracts reduced-motion/offscreen cases; source subscription lifecycle; browser reduced-motion dialog/popover checks.",
+        "limits": "The explicit motion override is document-scoped, not an independent React provider per subtree."
+      },
+      {
+        "exports": [
+          "useBorder",
+          "usePauseOffscreen",
+          "useTick",
+          "useDecoration",
+          "useTabShape",
+          "useSmoothWheel"
+        ],
+        "contract": "React resource owners for shared border/shape/decorative clocks, visibility boundaries, live callbacks and optional mouse-wheel smoothing.",
+        "coverage": "motion-idle ownership, hidden/offscreen sleep/resume, 95-scope batching and wheel interception cases; AnimatedBorderGeometry and consumer effects tests.",
+        "limits": "useSmoothWheel retains the existing contained-scroll behavior at bounds; physical trackpads and nested touchscreen scrolling were not independently verified."
+      },
+      {
+        "exports": [
+          "getMotionStats",
+          "setMotionFrameRate",
+          "subscribeTick"
+        ],
+        "contract": "Read diagnostic scheduler counts; configure the shared frame rate in the supported 1–120 range; subscribe to clock ticks and receive an unsubscribe function.",
+        "coverage": "motion-idle subscriber/cleanup/sleep tests and performance counters; frame-rate assignment source review.",
+        "limits": "Shared global settings affect all consumers of the package. No independent direct test of malformed non-finite frame-rate input."
+      },
+      {
+        "exports": [
+          "quantumFieldModes",
+          "quantumFieldResolution",
+          "quantumFieldAudio",
+          "createQuantumFieldAudio"
+        ],
+        "contract": "Seven field presets, bounded canvas resolution, seven normalized audio bands and an explicit audio transport/analyser owner with load/play/pause/seek/stream/dispose.",
+        "coverage": "QuantumField.test.ts, QuantumFieldFallbackPerformance, QuantumFieldRendererPerformance; audio transport cleanup and no-autoplay tests.",
+        "limits": "Real microphone permissions and all physical GPU/audio devices unavailable; valid finite geometry/analyser input is expected."
+      },
+      {
+        "exports": [
+          "isBlackKey",
+          "noteName"
+        ],
+        "contract": "Classify integer MIDI pitches by pitch class and format scientific pitch names; 60 becomes C4.",
+        "coverage": "Source-only direct helpers; PianoKeyboard/PianoRoll/MediaContracts exercise their consumers.",
+        "limits": "Fractional or non-finite MIDI numbers are outside the documented note domain."
+      },
+      {
+        "exports": [
+          "useFloatingPanel",
+          "resizeEdges",
+          "panelControls"
+        ],
+        "contract": "Eight resize-edge names, interactive-descendant selector and a hook managing saved/live placement, limits, pointer cancellation, window resize and keyboard moves/resizes.",
+        "coverage": "LayoutNavigationContracts and real-browser panel keyboard assertions; drag lifecycle/source review.",
+        "limits": "Physical drag outside native windows unverified; caller persists onLayoutChange results."
+      },
+      {
+        "exports": [
+          "useWaveformPeaks"
+        ],
+        "contract": "Decode URL/Blob audio into normalized peak/RMS bins; null while loading, empty data on errors; abort superseded fetch/work and yield between CPU slices.",
+        "coverage": "EdgeCases decode errors, channel/bin handling, invalid bins, cancellation and responsiveness; media consumer tests.",
+        "limits": "Real decoding support remains browser/audio-format dependent; caller-supplied audio is not uploaded."
+      },
+      {
+        "exports": [
+          "matchRoute",
+          "useRouter"
+        ],
+        "contract": "First matching static/parameter/wildcard route; decoded string params; current router context with navigation, access and optional view transitions.",
+        "coverage": "RouterRerenders, EdgeCases malformed percent-encoding, LayoutNavigation mode change; new prototype-like parameter-name regression.",
+        "limits": "Browser router requires location/history. Parameter dictionaries now have a null prototype so __proto__ is retained as data."
+      },
+      {
+        "exports": [
+          "useForm",
+          "useFormContext",
+          "defaultFieldRegistry"
+        ],
+        "contract": "Form state, dotted field paths, touched/errors/reset/async validation and submit locking; context boundary; fourteen predefined field bindings with overridable components.",
+        "coverage": "EdgeCases, ControlsContracts, base FormFields cases; three new untouched/touch/reset regressions for prototype-like field names.",
+        "limits": "Form values and initialValues should be immutable; custom field renderers/validators retain their own cost and failure behavior."
+      },
+      {
+        "exports": [
+          "addMessages",
+          "getLocale",
+          "plural",
+          "setLocale",
+          "tr",
+          "translate",
+          "useLocale",
+          "useTr",
+          "builtInMessages"
+        ],
+        "contract": "Imperative default locale and isolated provider-local translations, custom dictionaries, own-key placeholder substitution, built-in English/Ukrainian translations of Russian originals; Slavic one/few/many and explicit English one/many.",
+        "coverage": "base locale isolation; eight new dedicated inherited message/locale/placeholder cases; Controls/Feedback/Foundation consumer suites.",
+        "limits": "setLocale applies to subsequent renders rather than forcing all mounted roots to render. Custom locale pluralization uses the existing Slavic rules unless the code is exactly en; no general Intl plural-rules promise.",
+        "fixed": "Unknown constructor/toString/__proto__ text or locale could resolve inherited object members and throw; own-key lookup and a null-prototype custom-locale registry retain unknown text and support explicit own keys."
+      }
+    ],
+    "tokens": {
+      "contract": "theme/tokens.css declares scoped CSS custom properties; exported tokens.css and styles.css provide the same token graph; component states consume shared size, tone, motion, typography, surface and palette variables.",
+      "coverage": "All declarations enumerated in library-inventory.json; typography references checked against declaration names; ThemeProvider CSSOM five color registrations and eight theme/scheme browser cases; package CSS and font consumer verification owned by parent.",
+      "limits": "Not all token combinations were evaluated or contrast-scored. ThemeEditor deliberately lists the token groups it supports instead of promising an arbitrary custom-token editor."
+    },
+    "symbols": [
+      {
+        "name": "copyText",
+        "kind": "runtime",
+        "source": "packages/ui/src/core/base.tsx",
+        "entryPoints": [
+          "index"
+        ]
+      },
+      {
+        "name": "useReducedMotion",
+        "kind": "runtime",
+        "source": "packages/ui/src/core/providers/context.ts",
+        "entryPoints": [
+          "index",
+          "core"
+        ]
+      },
+      {
+        "name": "useMotion",
+        "kind": "runtime",
+        "source": "packages/ui/src/core/providers/context.ts",
+        "entryPoints": [
+          "index",
+          "core"
+        ]
+      },
+      {
+        "name": "useBorder",
+        "kind": "runtime",
+        "source": "packages/ui/src/core/motion/hooks.ts",
+        "entryPoints": [
+          "index",
+          "core"
+        ]
+      },
+      {
+        "name": "usePauseOffscreen",
+        "kind": "runtime",
+        "source": "packages/ui/src/core/motion/hooks.ts",
+        "entryPoints": [
+          "index",
+          "core"
+        ]
+      },
+      {
+        "name": "useTick",
+        "kind": "runtime",
+        "source": "packages/ui/src/core/motion/hooks.ts",
+        "entryPoints": [
+          "index",
+          "core"
+        ]
+      },
+      {
+        "name": "useDecoration",
+        "kind": "runtime",
+        "source": "packages/ui/src/core/motion/hooks.ts",
+        "entryPoints": [
+          "index",
+          "core"
+        ]
+      },
+      {
+        "name": "useSmoothWheel",
+        "kind": "runtime",
+        "source": "packages/ui/src/core/motion/hooks.ts",
+        "entryPoints": [
+          "index",
+          "core"
+        ]
+      },
+      {
+        "name": "useTabShape",
+        "kind": "runtime",
+        "source": "packages/ui/src/core/motion/hooks.ts",
+        "entryPoints": [
+          "index",
+          "core"
+        ]
+      },
+      {
+        "name": "themes",
+        "kind": "runtime",
+        "source": "packages/ui/src/components/foundation/ThemeProvider/ThemeProvider.tsx",
+        "entryPoints": [
+          "index",
+          "core"
+        ]
+      },
+      {
+        "name": "typography",
+        "kind": "runtime",
+        "source": "packages/ui/src/theme/typography.ts",
+        "entryPoints": [
+          "index"
+        ]
+      },
+      {
+        "name": "loaderAnimations",
+        "kind": "runtime",
+        "source": "packages/ui/src/components/foundation/Loader/Loader.tsx",
+        "entryPoints": [
+          "index"
+        ]
+      },
+      {
+        "name": "loaderAnimationLabel",
+        "kind": "runtime",
+        "source": "packages/ui/src/components/foundation/Loader/Loader.tsx",
+        "entryPoints": [
+          "index"
+        ]
+      },
+      {
+        "name": "loaderCss",
+        "kind": "runtime",
+        "source": "packages/ui/src/components/foundation/Loader/Loader.tsx",
+        "entryPoints": [
+          "index"
+        ]
+      },
+      {
+        "name": "loaderDefaultImage",
+        "kind": "runtime",
+        "source": "packages/ui/src/components/foundation/Loader/Loader.tsx",
+        "entryPoints": [
+          "index"
+        ]
+      },
+      {
+        "name": "loaderHtml",
+        "kind": "runtime",
+        "source": "packages/ui/src/components/foundation/LoaderGenerator/LoaderGenerator.tsx",
+        "entryPoints": [
+          "index"
+        ]
+      },
+      {
+        "name": "defaultThemeConfig",
+        "kind": "runtime",
+        "source": "packages/ui/src/components/foundation/ThemeEditor/themeConfig.ts",
+        "entryPoints": [
+          "index"
+        ]
+      },
+      {
+        "name": "deriveSecondary",
+        "kind": "runtime",
+        "source": "packages/ui/src/components/foundation/ThemeEditor/themeConfig.ts",
+        "entryPoints": [
+          "index"
+        ]
+      },
+      {
+        "name": "exportTheme",
+        "kind": "runtime",
+        "source": "packages/ui/src/components/foundation/ThemeEditor/themeConfig.ts",
+        "entryPoints": [
+          "index"
+        ]
+      },
+      {
+        "name": "parseTheme",
+        "kind": "runtime",
+        "source": "packages/ui/src/components/foundation/ThemeEditor/themeConfig.ts",
+        "entryPoints": [
+          "index"
+        ]
+      },
+      {
+        "name": "resolveToken",
+        "kind": "runtime",
+        "source": "packages/ui/src/components/foundation/ThemeEditor/themeConfig.ts",
+        "entryPoints": [
+          "index"
+        ]
+      },
+      {
+        "name": "themeProps",
+        "kind": "runtime",
+        "source": "packages/ui/src/components/foundation/ThemeEditor/themeConfig.ts",
+        "entryPoints": [
+          "index"
+        ]
+      },
+      {
+        "name": "themeTokenGroups",
+        "kind": "runtime",
+        "source": "packages/ui/src/components/foundation/ThemeEditor/themeConfig.ts",
+        "entryPoints": [
+          "index"
+        ]
+      },
+      {
+        "name": "hexToHsv",
+        "kind": "runtime",
+        "source": "packages/ui/src/components/controls/ColorPicker/color.ts",
+        "entryPoints": [
+          "index"
+        ]
+      },
+      {
+        "name": "hsvToHex",
+        "kind": "runtime",
+        "source": "packages/ui/src/components/controls/ColorPicker/color.ts",
+        "entryPoints": [
+          "index"
+        ]
+      },
+      {
+        "name": "normalizeHex",
+        "kind": "runtime",
+        "source": "packages/ui/src/components/controls/ColorPicker/color.ts",
+        "entryPoints": [
+          "index"
+        ]
+      },
+      {
+        "name": "quantumFieldModes",
+        "kind": "runtime",
+        "source": "packages/ui/src/components/artwork/QuantumField/QuantumField.tsx",
+        "entryPoints": [
+          "index"
+        ]
+      },
+      {
+        "name": "quantumFieldResolution",
+        "kind": "runtime",
+        "source": "packages/ui/src/components/artwork/QuantumField/QuantumField.tsx",
+        "entryPoints": [
+          "index"
+        ]
+      },
+      {
+        "name": "quantumFieldAudio",
+        "kind": "runtime",
+        "source": "packages/ui/src/components/artwork/QuantumField/QuantumField.tsx",
+        "entryPoints": [
+          "index"
+        ]
+      },
+      {
+        "name": "createQuantumFieldAudio",
+        "kind": "runtime",
+        "source": "packages/ui/src/components/artwork/QuantumField/audio.ts",
+        "entryPoints": [
+          "index"
+        ]
+      },
+      {
+        "name": "isBlackKey",
+        "kind": "runtime",
+        "source": "packages/ui/src/components/media/PianoKeyboard/PianoKeyboard.tsx",
+        "entryPoints": [
+          "index"
+        ]
+      },
+      {
+        "name": "noteName",
+        "kind": "runtime",
+        "source": "packages/ui/src/components/media/PianoKeyboard/PianoKeyboard.tsx",
+        "entryPoints": [
+          "index"
+        ]
+      },
+      {
+        "name": "useFloatingPanel",
+        "kind": "runtime",
+        "source": "packages/ui/src/components/layout/FloatingPanel/useFloatingPanel.ts",
+        "entryPoints": [
+          "index"
+        ]
+      },
+      {
+        "name": "resizeEdges",
+        "kind": "runtime",
+        "source": "packages/ui/src/components/layout/FloatingPanel/useFloatingPanel.ts",
+        "entryPoints": [
+          "index"
+        ]
+      },
+      {
+        "name": "panelControls",
+        "kind": "runtime",
+        "source": "packages/ui/src/components/layout/FloatingPanel/useFloatingPanel.ts",
+        "entryPoints": [
+          "index"
+        ]
+      },
+      {
+        "name": "useWaveformPeaks",
+        "kind": "runtime",
+        "source": "packages/ui/src/components/media/Waveform/useWaveformPeaks.ts",
+        "entryPoints": [
+          "index"
+        ]
+      },
+      {
+        "name": "getMotionStats",
+        "kind": "runtime",
+        "source": "packages/ui/src/core/motion-engine.d.ts",
+        "entryPoints": [
+          "index",
+          "core"
+        ]
+      },
+      {
+        "name": "setMotionFrameRate",
+        "kind": "runtime",
+        "source": "packages/ui/src/core/motion-engine.d.ts",
+        "entryPoints": [
+          "index",
+          "core"
+        ]
+      },
+      {
+        "name": "subscribeTick",
+        "kind": "runtime",
+        "source": "packages/ui/src/core/motion-engine.d.ts",
+        "entryPoints": [
+          "index",
+          "core"
+        ]
+      },
+      {
+        "name": "useRouter",
+        "kind": "runtime",
+        "source": "packages/ui/src/components/navigation/Router/Router.tsx",
+        "entryPoints": [
+          "index",
+          "router"
+        ]
+      },
+      {
+        "name": "matchRoute",
+        "kind": "runtime",
+        "source": "packages/ui/src/components/navigation/Router/Router.tsx",
+        "entryPoints": [
+          "index",
+          "router"
+        ]
+      },
+      {
+        "name": "useForm",
+        "kind": "runtime",
+        "source": "packages/ui/src/components/forms/Form/Form.tsx",
+        "entryPoints": [
+          "index",
+          "forms"
+        ]
+      },
+      {
+        "name": "useFormContext",
+        "kind": "runtime",
+        "source": "packages/ui/src/components/forms/Form/Form.tsx",
+        "entryPoints": [
+          "index",
+          "forms"
+        ]
+      },
+      {
+        "name": "defaultFieldRegistry",
+        "kind": "runtime",
+        "source": "packages/ui/src/components/forms/FormFields/FormFields.tsx",
+        "entryPoints": [
+          "index",
+          "forms"
+        ]
+      },
+      {
+        "name": "addMessages",
+        "kind": "runtime",
+        "source": "packages/ui/src/core/i18n.tsx",
+        "entryPoints": [
+          "index",
+          "core"
+        ]
+      },
+      {
+        "name": "getLocale",
+        "kind": "runtime",
+        "source": "packages/ui/src/core/i18n.tsx",
+        "entryPoints": [
+          "index",
+          "core"
+        ]
+      },
+      {
+        "name": "plural",
+        "kind": "runtime",
+        "source": "packages/ui/src/core/i18n.tsx",
+        "entryPoints": [
+          "index",
+          "core"
+        ]
+      },
+      {
+        "name": "setLocale",
+        "kind": "runtime",
+        "source": "packages/ui/src/core/i18n.tsx",
+        "entryPoints": [
+          "index",
+          "core"
+        ]
+      },
+      {
+        "name": "tr",
+        "kind": "runtime",
+        "source": "packages/ui/src/core/i18n.tsx",
+        "entryPoints": [
+          "index",
+          "core"
+        ]
+      },
+      {
+        "name": "translate",
+        "kind": "runtime",
+        "source": "packages/ui/src/core/i18n.tsx",
+        "entryPoints": [
+          "index",
+          "core"
+        ]
+      },
+      {
+        "name": "useLocale",
+        "kind": "runtime",
+        "source": "packages/ui/src/core/i18n.tsx",
+        "entryPoints": [
+          "index",
+          "core"
+        ]
+      },
+      {
+        "name": "useTr",
+        "kind": "runtime",
+        "source": "packages/ui/src/core/i18n.tsx",
+        "entryPoints": [
+          "index",
+          "core"
+        ]
+      },
+      {
+        "name": "builtInMessages",
+        "kind": "runtime",
+        "source": "packages/ui/src/core/messages.ts",
+        "entryPoints": [
+          "index",
+          "core"
+        ]
+      },
+      {
+        "name": "classes",
+        "kind": "runtime",
+        "source": "packages/ui/src/core/base.tsx",
+        "entryPoints": [
+          "index"
+        ]
+      },
+      {
+        "name": "normalizeSize",
+        "kind": "runtime",
+        "source": "packages/ui/src/core/base.tsx",
+        "entryPoints": [
+          "index"
+        ]
+      },
+      {
+        "name": "mark",
+        "kind": "runtime",
+        "source": "packages/ui/src/core/base.tsx",
+        "entryPoints": [
+          "index"
+        ]
+      },
+      {
+        "name": "part",
+        "kind": "runtime",
+        "source": "packages/ui/src/core/base.tsx",
+        "entryPoints": [
+          "index"
+        ]
+      },
+      {
+        "name": "useControllable",
+        "kind": "runtime",
+        "source": "packages/ui/src/core/base.tsx",
+        "entryPoints": [
+          "index"
+        ]
+      },
+      {
+        "name": "assignRef",
+        "kind": "runtime",
+        "source": "packages/ui/src/core/base.tsx",
+        "entryPoints": [
+          "index"
+        ]
+      },
+      {
+        "name": "downloadFile",
+        "kind": "runtime",
+        "source": "packages/ui/src/core/base.tsx",
+        "entryPoints": [
+          "index"
+        ]
+      },
+      {
+        "name": "ripple",
+        "kind": "runtime",
+        "source": "packages/ui/src/core/base.tsx",
+        "entryPoints": [
+          "index"
+        ]
+      },
+      {
+        "name": "clamp",
+        "kind": "runtime",
+        "source": "packages/ui/src/core/base.tsx",
+        "entryPoints": [
+          "index"
+        ]
+      },
+      {
+        "name": "cssRem",
+        "kind": "runtime",
+        "source": "packages/ui/src/core/base.tsx",
+        "entryPoints": [
+          "index"
+        ]
+      },
+      {
+        "name": "timeText",
+        "kind": "runtime",
+        "source": "packages/ui/src/core/base.tsx",
+        "entryPoints": [
+          "index"
+        ]
+      },
+      {
+        "name": "vectorElement",
+        "kind": "runtime",
+        "source": "packages/ui/src/core/artwork.tsx",
+        "entryPoints": [
+          "index"
+        ]
+      },
+      {
+        "name": "useSvgId",
+        "kind": "runtime",
+        "source": "packages/ui/src/core/artwork.tsx",
+        "entryPoints": [
+          "index"
+        ]
+      },
+      {
+        "name": "icons",
+        "kind": "runtime",
+        "source": "packages/ui/src/components/layout/shared.tsx",
+        "entryPoints": [
+          "index"
+        ]
+      },
+      {
+        "name": "illustrations",
+        "kind": "runtime",
+        "source": "packages/ui/src/components/layout/shared.tsx",
+        "entryPoints": [
+          "index"
+        ]
+      },
+      {
+        "name": "buttonView",
+        "kind": "runtime",
+        "source": "packages/ui/src/components/controls/shared.tsx",
+        "entryPoints": [
+          "index"
+        ]
+      }
+    ],
+    "coverageSummary": {
+      "runtimeExports": 69,
+      "reviewedRuntimeExports": 69,
+      "missing": [],
+      "extra": [],
+      "typographyTokenReferences": 12,
+      "missingTypographyTokens": []
+    },
+    "classificationCorrection": "LocaleProvider and SvgAsset moved to the component matrix with standalone foundation documentation; they are not counted among the 69 utilities."
+  }
+}

@@ -1,4 +1,4 @@
-import { Link, Stack } from "@ad-voice/ui";
+import { Link, Stack } from "@neo-ui-kit/react";
 
 export default function LinkExample() {
   return (

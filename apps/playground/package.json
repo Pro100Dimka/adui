@@ -1,6 +1,6 @@
 {
-  "name": "@ad-voice/playground",
-  "version": "2.2.0",
+  "name": "@neo-ui-kit/playground",
+  "version": "1.0.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -11,7 +11,7 @@
     "preview": "vite preview --host 127.0.0.1 --open"
   },
   "dependencies": {
-    "@ad-voice/ui": "file:../../packages/ui",
+    "@neo-ui-kit/react": "file:../../packages/ui",
     "react": "^19.1.1",
     "react-dom": "^19.1.1"
   },

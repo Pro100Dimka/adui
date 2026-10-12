@@ -1,0 +1,1576 @@
+{
+  "environment": {
+    "browser": "Installed Chrome headless",
+    "platform": "win32",
+    "physicalLowEndDevice": false,
+    "motion": "prefers-reduced-motion: reduce",
+    "viewportHeights": 900
+  },
+  "stage": "toast-red",
+  "passed": 50,
+  "failed": 12,
+  "results": [
+    {
+      "name": "Toast fits narrow containers and floating viewport at 320px / 16px font",
+      "passed": false,
+      "actual": [
+        {
+          "left": 31,
+          "right": 319,
+          "parentRight": 241,
+          "parentLeft": 31,
+          "textLeft": 87.984375,
+          "textRight": 120.390625,
+          "messageWidth": 32,
+          "messageScrollWidth": 32
+        },
+        {
+          "left": 31,
+          "right": 319,
+          "parentRight": 241,
+          "parentLeft": 31,
+          "textLeft": 87.984375,
+          "textRight": 1054.4375,
+          "messageWidth": 966,
+          "messageScrollWidth": 966
+        },
+        {
+          "left": 16,
+          "right": 304,
+          "parentRight": 320,
+          "parentLeft": 0,
+          "textLeft": 72.984375,
+          "textRight": 1039.4375,
+          "messageWidth": 966,
+          "messageScrollWidth": 966
+        }
+      ]
+    },
+    {
+      "name": "Toast fits narrow containers and floating viewport at 320px / 32px font",
+      "passed": false,
+      "actual": [
+        {
+          "left": 67.5999984741211,
+          "right": 312.39998626708984,
+          "parentRight": 226,
+          "parentLeft": 46,
+          "textLeft": 164.48672485351562,
+          "textRight": 219.56405639648438,
+          "messageWidth": 65,
+          "messageScrollWidth": 65
+        },
+        {
+          "left": 67.5999984741211,
+          "right": 312.39998626708984,
+          "parentRight": 226,
+          "parentLeft": 46,
+          "textLeft": 164.48672485351562,
+          "textRight": 1807.4437561035156,
+          "messageWidth": 1933,
+          "messageScrollWidth": 1933
+        },
+        {
+          "left": 37.599998474121094,
+          "right": 282.39998626708984,
+          "parentRight": 320,
+          "parentLeft": 0,
+          "textLeft": 134.48672485351562,
+          "textRight": 1777.4437561035156,
+          "messageWidth": 1933,
+          "messageScrollWidth": 1933
+        }
+      ]
+    },
+    {
+      "name": "Toast fits narrow containers and floating viewport at 375px / 16px font",
+      "passed": false,
+      "actual": [
+        {
+          "left": 31,
+          "right": 319,
+          "parentRight": 241,
+          "parentLeft": 31,
+          "textLeft": 87.984375,
+          "textRight": 120.390625,
+          "messageWidth": 32,
+          "messageScrollWidth": 32
+        },
+        {
+          "left": 31,
+          "right": 319,
+          "parentRight": 241,
+          "parentLeft": 31,
+          "textLeft": 87.984375,
+          "textRight": 1054.4375,
+          "messageWidth": 966,
+          "messageScrollWidth": 966
+        },
+        {
+          "left": 18.75,
+          "right": 356.25,
+          "parentRight": 375,
+          "parentLeft": 0,
+          "textLeft": 75.734375,
+          "textRight": 1042.1875,
+          "messageWidth": 966,
+          "messageScrollWidth": 966
+        }
+      ]
+    },
+    {
+      "name": "Toast fits narrow containers and floating viewport at 375px / 32px font",
+      "passed": false,
+      "actual": [
+        {
+          "left": 71.3125,
+          "right": 358.1875,
+          "parentRight": 226,
+          "parentLeft": 46,
+          "textLeft": 168.19921875,
+          "textRight": 223.2765655517578,
+          "messageWidth": 65,
+          "messageScrollWidth": 65
+        },
+        {
+          "left": 71.3125,
+          "right": 358.1875,
+          "parentRight": 226,
+          "parentLeft": 46,
+          "textLeft": 168.19921875,
+          "textRight": 1811.15625,
+          "messageWidth": 1933,
+          "messageScrollWidth": 1933
+        },
+        {
+          "left": 44.0625,
+          "right": 330.9375,
+          "parentRight": 375,
+          "parentLeft": 0,
+          "textLeft": 140.94921875,
+          "textRight": 1783.90625,
+          "messageWidth": 1933,
+          "messageScrollWidth": 1933
+        }
+      ]
+    },
+    {
+      "name": "Toast fits narrow containers and floating viewport at 768px / 16px font",
+      "passed": false,
+      "actual": [
+        {
+          "left": 53.178123474121094,
+          "right": 297.97811126708984,
+          "parentRight": 240.421875,
+          "parentLeft": 31.578125,
+          "textLeft": 101.6148452758789,
+          "textRight": 129.7976531982422,
+          "messageWidth": 33,
+          "messageScrollWidth": 33
+        },
+        {
+          "left": 53.178123474121094,
+          "right": 297.97811126708984,
+          "parentRight": 240.421875,
+          "parentLeft": 31.578125,
+          "textLeft": 101.6148452758789,
+          "textRight": 942.2648086547852,
+          "messageWidth": 989,
+          "messageScrollWidth": 989
+        },
+        {
+          "left": 90.24530029296875,
+          "right": 677.7546997070312,
+          "parentRight": 768,
+          "parentLeft": 0,
+          "textLeft": 138.68202209472656,
+          "textRight": 979.3320465087891,
+          "messageWidth": 989,
+          "messageScrollWidth": 989
+        }
+      ]
+    },
+    {
+      "name": "Toast fits narrow containers and floating viewport at 768px / 32px font",
+      "passed": false,
+      "actual": [
+        {
+          "left": 89.19999694824219,
+          "right": 578.7999725341797,
+          "parentRight": 226,
+          "parentLeft": 46,
+          "textLeft": 186.0867156982422,
+          "textRight": 241.1640625,
+          "messageWidth": 65,
+          "messageScrollWidth": 65
+        },
+        {
+          "left": 89.19999694824219,
+          "right": 578.7999725341797,
+          "parentRight": 226,
+          "parentLeft": 46,
+          "textLeft": 186.0867156982422,
+          "textRight": 1829.0437469482422,
+          "messageWidth": 1933,
+          "messageScrollWidth": 1933
+        },
+        {
+          "left": 90.24530029296875,
+          "right": 677.7546997070312,
+          "parentRight": 768,
+          "parentLeft": 0,
+          "textLeft": 187.13201904296875,
+          "textRight": 1830.0890502929688,
+          "messageWidth": 1933,
+          "messageScrollWidth": 1933
+        }
+      ]
+    },
+    {
+      "name": "Toast fits narrow containers and floating viewport at 1024px / 16px font",
+      "passed": false,
+      "actual": [
+        {
+          "left": 54.209373474121094,
+          "right": 299.00936126708984,
+          "parentRight": 239.390625,
+          "parentLeft": 32.609375,
+          "textLeft": 102.6460952758789,
+          "textRight": 131.4265594482422,
+          "messageWidth": 34,
+          "messageScrollWidth": 34
+        },
+        {
+          "left": 54.209373474121094,
+          "right": 299.00936126708984,
+          "parentRight": 239.390625,
+          "parentLeft": 32.609375,
+          "textLeft": 102.6460952758789,
+          "textRight": 961.0929336547852,
+          "messageWidth": 1010,
+          "messageScrollWidth": 1010
+        },
+        {
+          "left": 193.25,
+          "right": 830.75,
+          "parentRight": 1024,
+          "parentLeft": 0,
+          "textLeft": 241.6867218017578,
+          "textRight": 1100.133560180664,
+          "messageWidth": 1010,
+          "messageScrollWidth": 1010
+        }
+      ]
+    },
+    {
+      "name": "Toast fits narrow containers and floating viewport at 1024px / 32px font",
+      "passed": false,
+      "actual": [
+        {
+          "left": 89.19999694824219,
+          "right": 578.7999725341797,
+          "parentRight": 226,
+          "parentLeft": 46,
+          "textLeft": 186.0867156982422,
+          "textRight": 241.31015014648438,
+          "messageWidth": 65,
+          "messageScrollWidth": 65
+        },
+        {
+          "left": 89.19999694824219,
+          "right": 578.7999725341797,
+          "parentRight": 226,
+          "parentLeft": 46,
+          "textLeft": 186.0867156982422,
+          "textRight": 1833.1609344482422,
+          "messageWidth": 1938,
+          "messageScrollWidth": 1938
+        },
+        {
+          "left": 120.3226318359375,
+          "right": 903.6773681640625,
+          "parentRight": 1024,
+          "parentLeft": 0,
+          "textLeft": 217.2093505859375,
+          "textRight": 1864.2835693359375,
+          "messageWidth": 1938,
+          "messageScrollWidth": 1938
+        }
+      ]
+    },
+    {
+      "name": "Toast fits narrow containers and floating viewport at 1440px / 16px font",
+      "passed": false,
+      "actual": [
+        {
+          "left": 55.865623474121094,
+          "right": 300.66561126708984,
+          "parentRight": 237.734375,
+          "parentLeft": 34.265625,
+          "textLeft": 104.3023452758789,
+          "textRight": 134.05233764648438,
+          "messageWidth": 35,
+          "messageScrollWidth": 35
+        },
+        {
+          "left": 55.865623474121094,
+          "right": 300.66561126708984,
+          "parentRight": 237.734375,
+          "parentLeft": 34.265625,
+          "textLeft": 104.3023452758789,
+          "textRight": 991.5030899047852,
+          "messageWidth": 1044,
+          "messageScrollWidth": 1044
+        },
+        {
+          "left": 401.25,
+          "right": 1038.75,
+          "parentRight": 1440,
+          "parentLeft": 0,
+          "textLeft": 449.68670654296875,
+          "textRight": 1336.887451171875,
+          "messageWidth": 1044,
+          "messageScrollWidth": 1044
+        }
+      ]
+    },
+    {
+      "name": "Toast fits narrow containers and floating viewport at 1440px / 32px font",
+      "passed": false,
+      "actual": [
+        {
+          "left": 89.99687194824219,
+          "right": 579.5968475341797,
+          "parentRight": 225.203125,
+          "parentLeft": 46.796875,
+          "textLeft": 186.8835906982422,
+          "textRight": 243.0632781982422,
+          "messageWidth": 66,
+          "messageScrollWidth": 66
+        },
+        {
+          "left": 89.99687194824219,
+          "right": 579.5968475341797,
+          "parentRight": 225.203125,
+          "parentLeft": 46.796875,
+          "textLeft": 186.8835906982422,
+          "textRight": 1862.7117156982422,
+          "messageWidth": 1972,
+          "messageScrollWidth": 1972
+        },
+        {
+          "left": 169.20001220703125,
+          "right": 1270.8001098632812,
+          "parentRight": 1440,
+          "parentLeft": 0,
+          "textLeft": 266.08673095703125,
+          "textRight": 1941.9148559570312,
+          "messageWidth": 1972,
+          "messageScrollWidth": 1972
+        }
+      ]
+    },
+    {
+      "name": "Toast fits narrow containers and floating viewport at 1920px / 16px font",
+      "passed": false,
+      "actual": [
+        {
+          "left": 56.599998474121094,
+          "right": 301.39998626708984,
+          "parentRight": 237,
+          "parentLeft": 35,
+          "textLeft": 105.0367202758789,
+          "textRight": 135.88906860351562,
+          "messageWidth": 36,
+          "messageScrollWidth": 36
+        },
+        {
+          "left": 56.599998474121094,
+          "right": 301.39998626708984,
+          "parentRight": 237,
+          "parentLeft": 35,
+          "textLeft": 105.0367202758789,
+          "textRight": 1025.095314025879,
+          "messageWidth": 1082,
+          "messageScrollWidth": 1082
+        },
+        {
+          "left": 641.25,
+          "right": 1278.75,
+          "parentRight": 1920,
+          "parentLeft": 0,
+          "textLeft": 689.6867065429688,
+          "textRight": 1609.745361328125,
+          "messageWidth": 1082,
+          "messageScrollWidth": 1082
+        }
+      ]
+    },
+    {
+      "name": "Toast fits narrow containers and floating viewport at 1920px / 32px font",
+      "passed": false,
+      "actual": [
+        {
+          "left": 91.91874694824219,
+          "right": 581.5187225341797,
+          "parentRight": 223.28125,
+          "parentLeft": 48.71875,
+          "textLeft": 188.8054656982422,
+          "textRight": 246.08749389648438,
+          "messageWidth": 67,
+          "messageScrollWidth": 67
+        },
+        {
+          "left": 91.91874694824219,
+          "right": 581.5187225341797,
+          "parentRight": 223.28125,
+          "parentLeft": 48.71875,
+          "textLeft": 188.8054656982422,
+          "textRight": 1897.4915008544922,
+          "messageWidth": 2010,
+          "messageScrollWidth": 2010
+        },
+        {
+          "left": 322.5,
+          "right": 1597.5,
+          "parentRight": 1920,
+          "parentLeft": 0,
+          "textLeft": 419.38671875,
+          "textRight": 2128.07275390625,
+          "messageWidth": 2010,
+          "messageScrollWidth": 2010
+        }
+      ]
+    },
+    {
+      "name": "Badge long content and variants remain within a 240px container",
+      "passed": true,
+      "actual": [
+        {
+          "left": 16,
+          "right": 256,
+          "containerRight": 256,
+          "scrollWidth": 240,
+          "clientWidth": 240,
+          "overflow": "visible",
+          "outside": []
+        },
+        {
+          "left": 16,
+          "right": 256,
+          "containerRight": 256,
+          "scrollWidth": 240,
+          "clientWidth": 240,
+          "overflow": "visible",
+          "outside": []
+        },
+        {
+          "left": 16,
+          "right": 256,
+          "containerRight": 256,
+          "scrollWidth": 240,
+          "clientWidth": 240,
+          "overflow": "visible",
+          "outside": []
+        },
+        {
+          "left": 16,
+          "right": 256,
+          "containerRight": 256,
+          "scrollWidth": 240,
+          "clientWidth": 240,
+          "overflow": "visible",
+          "outside": []
+        },
+        {
+          "left": 16,
+          "right": 256,
+          "containerRight": 256,
+          "scrollWidth": 240,
+          "clientWidth": 240,
+          "overflow": "visible",
+          "outside": []
+        },
+        {
+          "left": 16,
+          "right": 256,
+          "containerRight": 256,
+          "scrollWidth": 240,
+          "clientWidth": 240,
+          "overflow": "visible",
+          "outside": []
+        },
+        {
+          "left": 16,
+          "right": 256,
+          "containerRight": 256,
+          "scrollWidth": 240,
+          "clientWidth": 240,
+          "overflow": "visible",
+          "outside": []
+        },
+        {
+          "left": 16,
+          "right": 256,
+          "containerRight": 256,
+          "scrollWidth": 240,
+          "clientWidth": 240,
+          "overflow": "visible",
+          "outside": []
+        },
+        {
+          "left": 16,
+          "right": 256,
+          "containerRight": 256,
+          "scrollWidth": 240,
+          "clientWidth": 240,
+          "overflow": "visible",
+          "outside": []
+        },
+        {
+          "left": 16,
+          "right": 256,
+          "containerRight": 256,
+          "scrollWidth": 240,
+          "clientWidth": 240,
+          "overflow": "visible",
+          "outside": []
+        },
+        {
+          "left": 16,
+          "right": 256,
+          "containerRight": 256,
+          "scrollWidth": 240,
+          "clientWidth": 240,
+          "overflow": "visible",
+          "outside": []
+        },
+        {
+          "left": 16,
+          "right": 256,
+          "containerRight": 256,
+          "scrollWidth": 240,
+          "clientWidth": 240,
+          "overflow": "visible",
+          "outside": []
+        },
+        {
+          "left": 16,
+          "right": 256,
+          "containerRight": 256,
+          "scrollWidth": 240,
+          "clientWidth": 240,
+          "overflow": "visible",
+          "outside": []
+        },
+        {
+          "left": 16,
+          "right": 256,
+          "containerRight": 256,
+          "scrollWidth": 240,
+          "clientWidth": 240,
+          "overflow": "visible",
+          "outside": []
+        },
+        {
+          "left": 16,
+          "right": 256,
+          "containerRight": 256,
+          "scrollWidth": 240,
+          "clientWidth": 240,
+          "overflow": "visible",
+          "outside": []
+        },
+        {
+          "left": 16,
+          "right": 256,
+          "containerRight": 256,
+          "scrollWidth": 240,
+          "clientWidth": 240,
+          "overflow": "visible",
+          "outside": []
+        },
+        {
+          "left": 16,
+          "right": 256,
+          "containerRight": 256,
+          "scrollWidth": 240,
+          "clientWidth": 240,
+          "overflow": "visible",
+          "outside": []
+        },
+        {
+          "left": 16,
+          "right": 256,
+          "containerRight": 256,
+          "scrollWidth": 240,
+          "clientWidth": 240,
+          "overflow": "visible",
+          "outside": []
+        },
+        {
+          "left": 16,
+          "right": 256,
+          "containerRight": 256,
+          "scrollWidth": 240,
+          "clientWidth": 240,
+          "overflow": "visible",
+          "outside": []
+        },
+        {
+          "left": 16,
+          "right": 256,
+          "containerRight": 256,
+          "scrollWidth": 240,
+          "clientWidth": 240,
+          "overflow": "visible",
+          "outside": []
+        },
+        {
+          "left": 16,
+          "right": 256,
+          "containerRight": 256,
+          "scrollWidth": 240,
+          "clientWidth": 240,
+          "overflow": "visible",
+          "outside": []
+        },
+        {
+          "left": 16,
+          "right": 256,
+          "containerRight": 256,
+          "scrollWidth": 240,
+          "clientWidth": 240,
+          "overflow": "visible",
+          "outside": []
+        },
+        {
+          "left": 16,
+          "right": 256,
+          "containerRight": 256,
+          "scrollWidth": 240,
+          "clientWidth": 240,
+          "overflow": "visible",
+          "outside": []
+        },
+        {
+          "left": 16,
+          "right": 256,
+          "containerRight": 256,
+          "scrollWidth": 240,
+          "clientWidth": 240,
+          "overflow": "visible",
+          "outside": []
+        },
+        {
+          "left": 16,
+          "right": 256,
+          "containerRight": 256,
+          "scrollWidth": 240,
+          "clientWidth": 240,
+          "overflow": "visible",
+          "outside": []
+        },
+        {
+          "left": 16,
+          "right": 256,
+          "containerRight": 256,
+          "scrollWidth": 240,
+          "clientWidth": 240,
+          "overflow": "visible",
+          "outside": []
+        },
+        {
+          "left": 16,
+          "right": 256,
+          "containerRight": 256,
+          "scrollWidth": 240,
+          "clientWidth": 240,
+          "overflow": "visible",
+          "outside": []
+        },
+        {
+          "left": 16,
+          "right": 256,
+          "containerRight": 256,
+          "scrollWidth": 240,
+          "clientWidth": 240,
+          "overflow": "visible",
+          "outside": []
+        }
+      ]
+    },
+    {
+      "name": "EmptyState long content and variants remain within a 240px container",
+      "passed": true,
+      "actual": [
+        {
+          "left": 16,
+          "right": 256,
+          "containerRight": 256,
+          "scrollWidth": 240,
+          "clientWidth": 240,
+          "overflow": "visible",
+          "outside": []
+        }
+      ]
+    },
+    {
+      "name": "KeyValueList long content and variants remain within a 240px container",
+      "passed": true,
+      "actual": [
+        {
+          "left": 16,
+          "right": 256,
+          "containerRight": 256,
+          "scrollWidth": 240,
+          "clientWidth": 240,
+          "overflow": "visible",
+          "outside": []
+        }
+      ]
+    },
+    {
+      "name": "MessageBar long content and variants remain within a 240px container",
+      "passed": true,
+      "actual": [
+        {
+          "left": 16,
+          "right": 256,
+          "containerRight": 256,
+          "scrollWidth": 476,
+          "clientWidth": 238,
+          "overflow": "hidden",
+          "outside": []
+        },
+        {
+          "left": 16,
+          "right": 256,
+          "containerRight": 256,
+          "scrollWidth": 476,
+          "clientWidth": 238,
+          "overflow": "hidden",
+          "outside": []
+        },
+        {
+          "left": 16,
+          "right": 256,
+          "containerRight": 256,
+          "scrollWidth": 476,
+          "clientWidth": 238,
+          "overflow": "hidden",
+          "outside": []
+        },
+        {
+          "left": 16,
+          "right": 256,
+          "containerRight": 256,
+          "scrollWidth": 476,
+          "clientWidth": 238,
+          "overflow": "hidden",
+          "outside": []
+        },
+        {
+          "left": 16,
+          "right": 256,
+          "containerRight": 256,
+          "scrollWidth": 476,
+          "clientWidth": 238,
+          "overflow": "hidden",
+          "outside": []
+        },
+        {
+          "left": 16,
+          "right": 256,
+          "containerRight": 256,
+          "scrollWidth": 476,
+          "clientWidth": 238,
+          "overflow": "hidden",
+          "outside": []
+        },
+        {
+          "left": 16,
+          "right": 256,
+          "containerRight": 256,
+          "scrollWidth": 476,
+          "clientWidth": 238,
+          "overflow": "hidden",
+          "outside": []
+        }
+      ]
+    },
+    {
+      "name": "StatusIndicator long content and variants remain within a 240px container",
+      "passed": true,
+      "actual": [
+        {
+          "left": 16,
+          "right": 256,
+          "containerRight": 256,
+          "scrollWidth": 240,
+          "clientWidth": 240,
+          "overflow": "visible",
+          "outside": []
+        },
+        {
+          "left": 16,
+          "right": 256,
+          "containerRight": 256,
+          "scrollWidth": 240,
+          "clientWidth": 240,
+          "overflow": "visible",
+          "outside": []
+        },
+        {
+          "left": 16,
+          "right": 256,
+          "containerRight": 256,
+          "scrollWidth": 240,
+          "clientWidth": 240,
+          "overflow": "visible",
+          "outside": []
+        },
+        {
+          "left": 16,
+          "right": 256,
+          "containerRight": 256,
+          "scrollWidth": 240,
+          "clientWidth": 240,
+          "overflow": "visible",
+          "outside": []
+        },
+        {
+          "left": 16,
+          "right": 256,
+          "containerRight": 256,
+          "scrollWidth": 240,
+          "clientWidth": 240,
+          "overflow": "visible",
+          "outside": []
+        },
+        {
+          "left": 16,
+          "right": 256,
+          "containerRight": 256,
+          "scrollWidth": 240,
+          "clientWidth": 240,
+          "overflow": "visible",
+          "outside": []
+        },
+        {
+          "left": 16,
+          "right": 256,
+          "containerRight": 256,
+          "scrollWidth": 240,
+          "clientWidth": 240,
+          "overflow": "visible",
+          "outside": []
+        }
+      ]
+    },
+    {
+      "name": "ProgressBar long content and variants remain within a 240px container",
+      "passed": true,
+      "actual": [
+        {
+          "left": 16,
+          "right": 256,
+          "containerRight": 256,
+          "scrollWidth": 238,
+          "clientWidth": 238,
+          "overflow": "hidden",
+          "outside": []
+        },
+        {
+          "left": 16,
+          "right": 256,
+          "containerRight": 256,
+          "scrollWidth": 238,
+          "clientWidth": 238,
+          "overflow": "hidden",
+          "outside": []
+        },
+        {
+          "left": 16,
+          "right": 256,
+          "containerRight": 256,
+          "scrollWidth": 240,
+          "clientWidth": 240,
+          "overflow": "visible",
+          "outside": []
+        },
+        {
+          "left": 16,
+          "right": 256,
+          "containerRight": 256,
+          "scrollWidth": 240,
+          "clientWidth": 240,
+          "overflow": "visible",
+          "outside": []
+        }
+      ]
+    },
+    {
+      "name": "feedback content does not create page horizontal scrolling",
+      "passed": true,
+      "actual": 320
+    },
+    {
+      "name": "theme transition color properties are registered by the browser",
+      "passed": true,
+      "actual": [
+        "--ad-red",
+        "--ad-pink",
+        "--ad-focus",
+        "--ad-text",
+        "--ad-muted",
+        "--ad-fade-top",
+        "--ad-fade-bottom"
+      ]
+    },
+    {
+      "name": "popover respects reduced motion",
+      "passed": true,
+      "actual": 0.00001
+    },
+    {
+      "name": "popover stays within viewport at 320",
+      "passed": true,
+      "actual": {
+        "left": 8,
+        "right": 312,
+        "width": 304,
+        "viewport": 320,
+        "documentWidth": 320,
+        "scrollWidth": 302,
+        "clientWidth": 302,
+        "clips": []
+      }
+    },
+    {
+      "name": "dialog respects reduced motion",
+      "passed": true,
+      "actual": 0.00001
+    },
+    {
+      "name": "dialog stays within viewport at 320",
+      "passed": true,
+      "actual": {
+        "left": 19,
+        "right": 301,
+        "width": 282,
+        "viewport": 320,
+        "documentWidth": 320,
+        "scrollWidth": 280,
+        "clientWidth": 280,
+        "clips": [
+          {
+            "text": " ",
+            "left": 242,
+            "right": 280,
+            "width": 38,
+            "clipped": false
+          },
+          {
+            "text": " Вернуться к редактированию",
+            "left": 51.125,
+            "right": 280,
+            "width": 228.875,
+            "clipped": false
+          },
+          {
+            "text": " Подтвердить выбранную операцию",
+            "left": 40,
+            "right": 280,
+            "width": 240,
+            "clipped": false
+          }
+        ]
+      }
+    },
+    {
+      "name": "modal close action remains beside its heading at 320",
+      "passed": true,
+      "actual": 0
+    },
+    {
+      "name": "layouts stays within viewport at 320",
+      "passed": true,
+      "actual": {
+        "left": 16,
+        "right": 256,
+        "width": 240,
+        "viewport": 320,
+        "documentWidth": 320,
+        "scrollWidth": 238,
+        "clientWidth": 238,
+        "clips": [
+          {
+            "text": " First action",
+            "left": 31,
+            "right": 136.53125,
+            "width": 105.53125,
+            "clipped": false
+          },
+          {
+            "text": " Second action",
+            "left": 31,
+            "right": 154.59375,
+            "width": 123.59375,
+            "clipped": false
+          }
+        ]
+      }
+    },
+    {
+      "name": "popover stays within viewport at 375",
+      "passed": true,
+      "actual": {
+        "left": 8,
+        "right": 358,
+        "width": 350,
+        "viewport": 375,
+        "documentWidth": 375,
+        "scrollWidth": 348,
+        "clientWidth": 348,
+        "clips": []
+      }
+    },
+    {
+      "name": "dialog stays within viewport at 375",
+      "passed": true,
+      "actual": {
+        "left": 19,
+        "right": 356,
+        "width": 337,
+        "viewport": 375,
+        "documentWidth": 375,
+        "scrollWidth": 335,
+        "clientWidth": 335,
+        "clips": [
+          {
+            "text": " ",
+            "left": 297,
+            "right": 335,
+            "width": 38,
+            "clipped": false
+          },
+          {
+            "text": " Вернуться к редактированию",
+            "left": 106.125,
+            "right": 335,
+            "width": 228.875,
+            "clipped": false
+          },
+          {
+            "text": " Подтвердить выбранную операцию",
+            "left": 62.828125,
+            "right": 335,
+            "width": 272.171875,
+            "clipped": false
+          }
+        ]
+      }
+    },
+    {
+      "name": "layouts stays within viewport at 375",
+      "passed": true,
+      "actual": {
+        "left": 16,
+        "right": 256,
+        "width": 240,
+        "viewport": 375,
+        "documentWidth": 375,
+        "scrollWidth": 238,
+        "clientWidth": 238,
+        "clips": [
+          {
+            "text": " First action",
+            "left": 31,
+            "right": 136.53125,
+            "width": 105.53125,
+            "clipped": false
+          },
+          {
+            "text": " Second action",
+            "left": 31,
+            "right": 154.59375,
+            "width": 123.59375,
+            "clipped": false
+          }
+        ]
+      }
+    },
+    {
+      "name": "popover stays within viewport at 768",
+      "passed": true,
+      "actual": {
+        "left": 8,
+        "right": 358,
+        "width": 350,
+        "viewport": 768,
+        "documentWidth": 768,
+        "scrollWidth": 348,
+        "clientWidth": 348,
+        "clips": []
+      }
+    },
+    {
+      "name": "dialog stays within viewport at 768",
+      "passed": true,
+      "actual": {
+        "left": 124,
+        "right": 644,
+        "width": 520,
+        "viewport": 768,
+        "documentWidth": 768,
+        "scrollWidth": 518,
+        "clientWidth": 518,
+        "clips": [
+          {
+            "text": " ",
+            "left": 580.96875,
+            "right": 619.96875,
+            "width": 39,
+            "clipped": false
+          },
+          {
+            "text": " Вернуться к редактированию",
+            "left": 391.09375,
+            "right": 619.96875,
+            "width": 228.875,
+            "clipped": false
+          },
+          {
+            "text": " Подтвердить выбранную операцию",
+            "left": 347.796875,
+            "right": 619.96875,
+            "width": 272.171875,
+            "clipped": false
+          }
+        ]
+      }
+    },
+    {
+      "name": "layouts stays within viewport at 768",
+      "passed": true,
+      "actual": {
+        "left": 16,
+        "right": 256,
+        "width": 240,
+        "viewport": 768,
+        "documentWidth": 768,
+        "scrollWidth": 238,
+        "clientWidth": 238,
+        "clips": [
+          {
+            "text": " First action",
+            "left": 31.578125,
+            "right": 137.109375,
+            "width": 105.53125,
+            "clipped": false
+          },
+          {
+            "text": " Second action",
+            "left": 31.578125,
+            "right": 155.171875,
+            "width": 123.59375,
+            "clipped": false
+          }
+        ]
+      }
+    },
+    {
+      "name": "popover stays within viewport at 1024",
+      "passed": true,
+      "actual": {
+        "left": 8,
+        "right": 358,
+        "width": 350,
+        "viewport": 1024,
+        "documentWidth": 1024,
+        "scrollWidth": 348,
+        "clientWidth": 348,
+        "clips": []
+      }
+    },
+    {
+      "name": "dialog stays within viewport at 1024",
+      "passed": true,
+      "actual": {
+        "left": 252,
+        "right": 772,
+        "width": 520,
+        "viewport": 1024,
+        "documentWidth": 1024,
+        "scrollWidth": 518,
+        "clientWidth": 518,
+        "clips": [
+          {
+            "text": " ",
+            "left": 702.46875,
+            "right": 743,
+            "width": 40.53125,
+            "clipped": false
+          },
+          {
+            "text": " Вернуться к редактированию",
+            "left": 514.125,
+            "right": 743,
+            "width": 228.875,
+            "clipped": false
+          },
+          {
+            "text": " Подтвердить выбранную операцию",
+            "left": 470.828125,
+            "right": 743,
+            "width": 272.171875,
+            "clipped": false
+          }
+        ]
+      }
+    },
+    {
+      "name": "layouts stays within viewport at 1024",
+      "passed": true,
+      "actual": {
+        "left": 16,
+        "right": 256,
+        "width": 240,
+        "viewport": 1024,
+        "documentWidth": 1024,
+        "scrollWidth": 238,
+        "clientWidth": 238,
+        "clips": [
+          {
+            "text": " First action",
+            "left": 32.609375,
+            "right": 138.140625,
+            "width": 105.53125,
+            "clipped": false
+          },
+          {
+            "text": " Second action",
+            "left": 32.609375,
+            "right": 156.203125,
+            "width": 123.59375,
+            "clipped": false
+          }
+        ]
+      }
+    },
+    {
+      "name": "popover stays within viewport at 1440",
+      "passed": true,
+      "actual": {
+        "left": 8,
+        "right": 358,
+        "width": 350,
+        "viewport": 1440,
+        "documentWidth": 1440,
+        "scrollWidth": 348,
+        "clientWidth": 348,
+        "clips": []
+      }
+    },
+    {
+      "name": "dialog stays within viewport at 1440",
+      "passed": true,
+      "actual": {
+        "left": 460,
+        "right": 980,
+        "width": 520,
+        "viewport": 1440,
+        "documentWidth": 1440,
+        "scrollWidth": 518,
+        "clientWidth": 518,
+        "clips": [
+          {
+            "text": " ",
+            "left": 907.96875,
+            "right": 951,
+            "width": 43.03125,
+            "clipped": false
+          },
+          {
+            "text": " Вернуться к редактированию",
+            "left": 722.125,
+            "right": 951,
+            "width": 228.875,
+            "clipped": false
+          },
+          {
+            "text": " Подтвердить выбранную операцию",
+            "left": 678.828125,
+            "right": 951,
+            "width": 272.171875,
+            "clipped": false
+          }
+        ]
+      }
+    },
+    {
+      "name": "layouts stays within viewport at 1440",
+      "passed": true,
+      "actual": {
+        "left": 16,
+        "right": 256,
+        "width": 240,
+        "viewport": 1440,
+        "documentWidth": 1440,
+        "scrollWidth": 238,
+        "clientWidth": 238,
+        "clips": [
+          {
+            "text": " First action",
+            "left": 34.265625,
+            "right": 139.796875,
+            "width": 105.53125,
+            "clipped": false
+          },
+          {
+            "text": " Second action",
+            "left": 34.265625,
+            "right": 157.859375,
+            "width": 123.59375,
+            "clipped": false
+          }
+        ]
+      }
+    },
+    {
+      "name": "popover stays within viewport at 1920",
+      "passed": true,
+      "actual": {
+        "left": 8,
+        "right": 358,
+        "width": 350,
+        "viewport": 1920,
+        "documentWidth": 1920,
+        "scrollWidth": 348,
+        "clientWidth": 348,
+        "clips": []
+      }
+    },
+    {
+      "name": "dialog stays within viewport at 1920",
+      "passed": true,
+      "actual": {
+        "left": 700,
+        "right": 1220,
+        "width": 520,
+        "viewport": 1920,
+        "documentWidth": 1920,
+        "scrollWidth": 518,
+        "clientWidth": 518,
+        "clips": [
+          {
+            "text": " ",
+            "left": 1145.09375,
+            "right": 1191,
+            "width": 45.90625,
+            "clipped": false
+          },
+          {
+            "text": " Вернуться к редактированию",
+            "left": 962.125,
+            "right": 1191,
+            "width": 228.875,
+            "clipped": false
+          },
+          {
+            "text": " Подтвердить выбранную операцию",
+            "left": 918.828125,
+            "right": 1191,
+            "width": 272.171875,
+            "clipped": false
+          }
+        ]
+      }
+    },
+    {
+      "name": "layouts stays within viewport at 1920",
+      "passed": true,
+      "actual": {
+        "left": 16,
+        "right": 256,
+        "width": 240,
+        "viewport": 1920,
+        "documentWidth": 1920,
+        "scrollWidth": 238,
+        "clientWidth": 238,
+        "clips": [
+          {
+            "text": " First action",
+            "left": 35,
+            "right": 140.53125,
+            "width": 105.53125,
+            "clipped": false
+          },
+          {
+            "text": " Second action",
+            "left": 35,
+            "right": 158.59375,
+            "width": 123.59375,
+            "clipped": false
+          }
+        ]
+      }
+    },
+    {
+      "name": "long Menu scrolls locally to its last action",
+      "passed": true,
+      "actual": {
+        "bottom": 892,
+        "lastBottom": 880.90625,
+        "overflow": "auto"
+      }
+    },
+    {
+      "name": "Grid between distributes columns to opposite edges",
+      "passed": true,
+      "actual": {
+        "gridRight": 256,
+        "itemRight": 256
+      }
+    },
+    {
+      "name": "FloatingPanel keyboard moves the real focused panel",
+      "passed": true,
+      "actual": 50
+    },
+    {
+      "name": "FloatingPanel keyboard resizes the real focused panel",
+      "passed": true,
+      "actual": 250
+    },
+    {
+      "name": "StrictMode modal with fields restores focus after prior selection",
+      "passed": true,
+      "actual": true
+    },
+    {
+      "name": "Dialog ruby/dark remains readable and fits at 375",
+      "passed": true,
+      "actual": {
+        "left": 29.110000610351562,
+        "right": 345.89002990722656,
+        "buttons": 3,
+        "text": "rgb(247, 245, 248)"
+      }
+    },
+    {
+      "name": "Dialog ruby/light remains readable and fits at 375",
+      "passed": true,
+      "actual": {
+        "left": 29.110000610351562,
+        "right": 345.89002990722656,
+        "buttons": 3,
+        "text": "rgb(33, 27, 31)"
+      }
+    },
+    {
+      "name": "Dialog light/dark remains readable and fits at 375",
+      "passed": true,
+      "actual": {
+        "left": 29.110000610351562,
+        "right": 345.89002990722656,
+        "buttons": 3,
+        "text": "rgb(247, 245, 248)"
+      }
+    },
+    {
+      "name": "Dialog light/light remains readable and fits at 375",
+      "passed": true,
+      "actual": {
+        "left": 29.110000610351562,
+        "right": 345.89002990722656,
+        "buttons": 3,
+        "text": "rgb(33, 27, 31)"
+      }
+    },
+    {
+      "name": "Dialog green/dark remains readable and fits at 375",
+      "passed": true,
+      "actual": {
+        "left": 29.110000610351562,
+        "right": 345.89002990722656,
+        "buttons": 3,
+        "text": "rgb(247, 245, 248)"
+      }
+    },
+    {
+      "name": "Dialog green/light remains readable and fits at 375",
+      "passed": true,
+      "actual": {
+        "left": 29.110000610351562,
+        "right": 345.89002990722656,
+        "buttons": 3,
+        "text": "rgb(33, 27, 31)"
+      }
+    },
+    {
+      "name": "Dialog violet/dark remains readable and fits at 375",
+      "passed": true,
+      "actual": {
+        "left": 29.110000610351562,
+        "right": 345.89002990722656,
+        "buttons": 3,
+        "text": "rgb(247, 245, 248)"
+      }
+    },
+    {
+      "name": "Dialog violet/light remains readable and fits at 375",
+      "passed": true,
+      "actual": {
+        "left": 29.110000610351562,
+        "right": 345.89002990722656,
+        "buttons": 3,
+        "text": "rgb(33, 27, 31)"
+      }
+    },
+    {
+      "name": "nested native top layers retain inherited theme",
+      "passed": true,
+      "actual": "#10c99a"
+    },
+    {
+      "name": "first Escape closes only inner popover",
+      "passed": true,
+      "actual": [
+        "Layer host",
+        "Outer"
+      ]
+    },
+    {
+      "name": "inner Escape returns focus to its trigger",
+      "passed": true,
+      "actual": " Open inner"
+    },
+    {
+      "name": "second Escape keeps modal open",
+      "passed": true,
+      "actual": 1
+    },
+    {
+      "name": "third Escape closes modal",
+      "passed": true,
+      "actual": 0
+    },
+    {
+      "name": "modal restores root trigger focus",
+      "passed": true,
+      "actual": " Open dialog"
+    },
+    {
+      "name": "controlled CollapsibleSection rejects native divergence",
+      "passed": true,
+      "actual": false
+    },
+    {
+      "name": "browser console has no uncaught errors",
+      "passed": true,
+      "actual": []
+    }
+  ]
+}

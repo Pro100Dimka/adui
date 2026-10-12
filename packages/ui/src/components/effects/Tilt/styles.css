@@ -46,6 +46,14 @@
 .ad-tilt[data-glare]:hover::after {
   opacity: 1;
 }
+.ad-tilt[data-ad-motion="off"],
+.ad-tilt[data-ad-motion="off"] > * {
+  animation: none;
+  transform: none;
+  translate: none;
+  scale: none;
+  will-change: auto;
+}
 @keyframes ad-tilt-float {
   0%,
   100% {

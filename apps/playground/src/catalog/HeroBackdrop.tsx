@@ -1,4 +1,4 @@
-import { Landscape, NeonWaves, Planet, Spectrum } from "@ad-voice/ui";
+import { Landscape, NeonWaves, Planet, Spectrum } from "@neo-ui-kit/react";
 
 /** Living scenes for page heroes; neighbouring pages get different ones. */
 const scenes = [

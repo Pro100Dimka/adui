@@ -1,0 +1,361 @@
+{
+  "passed": 4,
+  "failed": 8,
+  "results": [
+    {
+      "name": "MediaCard",
+      "width": 320,
+      "passed": false,
+      "actual": {
+        "x": 0,
+        "y": 37,
+        "cards": [
+          {
+            "height": 110.078125,
+            "contentHeight": 108,
+            "clippedActions": 0
+          },
+          {
+            "height": 124.078125,
+            "contentHeight": 122,
+            "clippedActions": 0
+          }
+        ],
+        "texts": []
+      }
+    },
+    {
+      "name": "MediaCard",
+      "width": 375,
+      "passed": false,
+      "actual": {
+        "x": 0,
+        "y": 37,
+        "cards": [
+          {
+            "height": 110.46875,
+            "contentHeight": 108,
+            "clippedActions": 0
+          },
+          {
+            "height": 124.515625,
+            "contentHeight": 123,
+            "clippedActions": 0
+          }
+        ],
+        "texts": []
+      }
+    },
+    {
+      "name": "MediaCard",
+      "width": 768,
+      "passed": false,
+      "actual": {
+        "x": 0,
+        "y": 33,
+        "cards": [
+          {
+            "height": 119.71875,
+            "contentHeight": 118,
+            "clippedActions": 0
+          },
+          {
+            "height": 135.109375,
+            "contentHeight": 133,
+            "clippedActions": 0
+          }
+        ],
+        "texts": []
+      }
+    },
+    {
+      "name": "MediaCard",
+      "width": 1024,
+      "passed": false,
+      "actual": {
+        "x": 0,
+        "y": 34,
+        "cards": [
+          {
+            "height": 126.171875,
+            "contentHeight": 124,
+            "clippedActions": 0
+          },
+          {
+            "height": 142.671875,
+            "contentHeight": 141,
+            "clippedActions": 0
+          }
+        ],
+        "texts": []
+      }
+    },
+    {
+      "name": "MediaCard",
+      "width": 1440,
+      "passed": false,
+      "actual": {
+        "x": 0,
+        "y": 53,
+        "cards": [
+          {
+            "height": 138.796875,
+            "contentHeight": 137,
+            "clippedActions": 0
+          },
+          {
+            "height": 156.421875,
+            "contentHeight": 154,
+            "clippedActions": 0
+          }
+        ],
+        "texts": []
+      }
+    },
+    {
+      "name": "MediaCard",
+      "width": 1920,
+      "passed": false,
+      "actual": {
+        "x": 0,
+        "y": 66,
+        "cards": [
+          {
+            "height": 145.703125,
+            "contentHeight": 144,
+            "clippedActions": 0
+          },
+          {
+            "height": 163.703125,
+            "contentHeight": 162,
+            "clippedActions": 0
+          }
+        ],
+        "texts": []
+      }
+    },
+    {
+      "name": "MelodixText",
+      "width": 320,
+      "passed": false,
+      "actual": {
+        "x": 41,
+        "y": 0,
+        "cards": [],
+        "texts": [
+          {
+            "text": "MELODIX",
+            "width": 214,
+            "scrollWidth": 214
+          },
+          {
+            "text": "АБВГҐДЕЄЁЖЗИІЇЙКЛМН",
+            "width": 325,
+            "scrollWidth": 325
+          },
+          {
+            "text": "ОПРСТУФХЦЧШЩЪЫЬЭЮЯ",
+            "width": 357,
+            "scrollWidth": 357
+          },
+          {
+            "text": "0123456789 ♪♫𝄞♥#",
+            "width": 227,
+            "scrollWidth": 227
+          },
+          {
+            "text": "Караоке «Небо» — Звери",
+            "width": 249,
+            "scrollWidth": 249
+          }
+        ]
+      }
+    },
+    {
+      "name": "MelodixText",
+      "width": 375,
+      "passed": false,
+      "actual": {
+        "x": 14,
+        "y": 0,
+        "cards": [],
+        "texts": [
+          {
+            "text": "MELODIX",
+            "width": 215,
+            "scrollWidth": 215
+          },
+          {
+            "text": "АБВГҐДЕЄЁЖЗИІЇЙКЛМН",
+            "width": 327,
+            "scrollWidth": 327
+          },
+          {
+            "text": "ОПРСТУФХЦЧШЩЪЫЬЭЮЯ",
+            "width": 359,
+            "scrollWidth": 359
+          },
+          {
+            "text": "0123456789 ♪♫𝄞♥#",
+            "width": 228,
+            "scrollWidth": 228
+          },
+          {
+            "text": "Караоке «Небо» — Звери",
+            "width": 274,
+            "scrollWidth": 274
+          }
+        ]
+      }
+    },
+    {
+      "name": "MelodixText",
+      "width": 768,
+      "passed": true,
+      "actual": {
+        "x": 0,
+        "y": 0,
+        "cards": [],
+        "texts": [
+          {
+            "text": "MELODIX",
+            "width": 274,
+            "scrollWidth": 274
+          },
+          {
+            "text": "АБВГҐДЕЄЁЖЗИІЇЙКЛМН",
+            "width": 408,
+            "scrollWidth": 408
+          },
+          {
+            "text": "ОПРСТУФХЦЧШЩЪЫЬЭЮЯ",
+            "width": 448,
+            "scrollWidth": 448
+          },
+          {
+            "text": "0123456789 ♪♫𝄞♥#",
+            "width": 285,
+            "scrollWidth": 285
+          },
+          {
+            "text": "Караоке «Небо» — Звери",
+            "width": 299,
+            "scrollWidth": 299
+          }
+        ]
+      }
+    },
+    {
+      "name": "MelodixText",
+      "width": 1024,
+      "passed": true,
+      "actual": {
+        "x": 0,
+        "y": 0,
+        "cards": [],
+        "texts": [
+          {
+            "text": "MELODIX",
+            "width": 365,
+            "scrollWidth": 365
+          },
+          {
+            "text": "АБВГҐДЕЄЁЖЗИІЇЙКЛМН",
+            "width": 544,
+            "scrollWidth": 544
+          },
+          {
+            "text": "ОПРСТУФХЦЧШЩЪЫЬЭЮЯ",
+            "width": 598,
+            "scrollWidth": 598
+          },
+          {
+            "text": "0123456789 ♪♫𝄞♥#",
+            "width": 380,
+            "scrollWidth": 380
+          },
+          {
+            "text": "Караоке «Небо» — Звери",
+            "width": 399,
+            "scrollWidth": 399
+          }
+        ]
+      }
+    },
+    {
+      "name": "MelodixText",
+      "width": 1440,
+      "passed": true,
+      "actual": {
+        "x": 0,
+        "y": 0,
+        "cards": [],
+        "texts": [
+          {
+            "text": "MELODIX",
+            "width": 448,
+            "scrollWidth": 448
+          },
+          {
+            "text": "АБВГҐДЕЄЁЖЗИІЇЙКЛМН",
+            "width": 637,
+            "scrollWidth": 637
+          },
+          {
+            "text": "ОПРСТУФХЦЧШЩЪЫЬЭЮЯ",
+            "width": 700,
+            "scrollWidth": 700
+          },
+          {
+            "text": "0123456789 ♪♫𝄞♥#",
+            "width": 445,
+            "scrollWidth": 445
+          },
+          {
+            "text": "Караоке «Небо» — Звери",
+            "width": 467,
+            "scrollWidth": 467
+          }
+        ]
+      }
+    },
+    {
+      "name": "MelodixText",
+      "width": 1920,
+      "passed": true,
+      "actual": {
+        "x": 0,
+        "y": 0,
+        "cards": [],
+        "texts": [
+          {
+            "text": "MELODIX",
+            "width": 448,
+            "scrollWidth": 448
+          },
+          {
+            "text": "АБВГҐДЕЄЁЖЗИІЇЙКЛМН",
+            "width": 637,
+            "scrollWidth": 637
+          },
+          {
+            "text": "ОПРСТУФХЦЧШЩЪЫЬЭЮЯ",
+            "width": 700,
+            "scrollWidth": 700
+          },
+          {
+            "text": "0123456789 ♪♫𝄞♥#",
+            "width": 445,
+            "scrollWidth": 445
+          },
+          {
+            "text": "Караоке «Небо» — Звери",
+            "width": 467,
+            "scrollWidth": 467
+          }
+        ]
+      }
+    }
+  ],
+  "errors": []
+}

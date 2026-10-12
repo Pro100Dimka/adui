@@ -1,4 +1,4 @@
-import { tr, useTr } from "../../../core/i18n";
+import { useTr } from "../../../core/i18n";
 import type { CSSProperties } from "react";
 import { mark, useControllable, type CommonProps } from "../../../core/base";
 import { Button } from "../Button/Button";
@@ -44,27 +44,32 @@ export function ThemePicker<V extends string = ThemeName>(p: ThemePickerProps<V>
   const first = (p.options?.[0]?.value ?? "ruby") as V;
   const [value, setValue] = useControllable<V>(p.value, p.defaultValue ?? first, p.onValueChange);
 
-  if (!p.options)
-    return (
-      <div {...mark("ThemePicker", p)} role="radiogroup" aria-label={p.label ?? tr("Тема")}>
-        {(Object.keys(builtIn) as ThemeName[]).map((key) => (
-          <Button key={key} size={p.size ?? "sm"} aria-pressed={key === value} disabled={p.disabled}
-            onClick={() => setValue(key as unknown as V)}>
-            <span className="ad-theme-swatch" style={{ background: themes[key][0] }} />
-            {builtIn[key]}
-          </Button>
-        ))}
-      </div>
-    );
-
+  const options: readonly ThemePickerOption<V>[] = p.options ?? (Object.keys(builtIn) as ThemeName[]).map((key) => ({
+    value: key as V, label: builtIn[key], color: themes[key][0],
+  }));
+  const active = Math.max(0, options.findIndex((option) => option.value === value));
   return (
-    <div {...mark("ThemePicker", p)} data-gallery="" role="radiogroup" aria-label={p.label ?? tr("Тема")}>
-      {p.options.map((option) => {
+    <div {...mark("ThemePicker", p)} data-gallery={p.options ? "" : undefined} role="radiogroup" aria-label={p.label ?? tr("Тема")}
+      onKeyDown={(event) => {
+        const buttons = [...event.currentTarget.querySelectorAll<HTMLButtonElement>('[role="radio"]:not(:disabled)')];
+        const index = buttons.indexOf(document.activeElement as HTMLButtonElement);
+        const moves: Record<string, number> = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1, Home: -index, End: buttons.length - index - 1 };
+        const move = moves[event.key];
+        if (move === undefined || !buttons.length) return;
+        event.preventDefault();
+        const next = buttons[(index + move + buttons.length) % buttons.length];
+        next.focus();
+        next.click();
+      }}>
+      {options.map((option, index) => {
         const chosen = option.value === value;
+        const radio = { role: "radio", "aria-checked": chosen, tabIndex: index === active ? 0 : -1, disabled: p.disabled, onClick: () => setValue(option.value) } as const;
+        if (!p.options) return <Button key={option.value} size={p.size ?? "sm"} {...radio}>
+          <span className="ad-theme-swatch" style={{ background: option.color }} />{option.label}
+        </Button>;
         return (
-          <button key={option.value} type="button" className="ad-theme-card" aria-pressed={chosen} aria-label={option.label}
-            disabled={p.disabled} style={option.color ? ({ "--ad-theme-card": option.color } as CSSProperties) : undefined}
-            onClick={() => setValue(option.value)}>
+          <button key={option.value} type="button" className="ad-theme-card" aria-label={option.label} {...radio}
+            style={option.color ? ({ "--ad-theme-card": option.color } as CSSProperties) : undefined}>
             <span className="ad-theme-card-preview">
               {option.image && (chosen
                 ? <ImageShine src={option.image} glow={false} />

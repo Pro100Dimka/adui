@@ -1,6 +1,6 @@
-import { useTr } from "@ad-voice/ui";
+import { useTr } from "@neo-ui-kit/react";
 import { Component, type ReactNode } from "react";
-import { Card, Stack, Typography } from "@ad-voice/ui";
+import { Card, Stack, Typography } from "@neo-ui-kit/react";
 
 function ExampleError({ name, error }: { name: string; error: Error }) {
   const tr = useTr();
@@ -24,7 +24,7 @@ export class DocsExampleBoundary extends Component<
     return { error };
   }
   componentDidCatch(error: Error) {
-    console.error(`[Neo UI] Docs example ${this.props.name} crashed`, error);
+    console.error(`[NEO UI] Docs example ${this.props.name} crashed`, error);
   }
   render() {
     if (!this.state.error) return this.props.children;

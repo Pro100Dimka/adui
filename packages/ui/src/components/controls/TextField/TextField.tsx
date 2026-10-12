@@ -1,4 +1,4 @@
-import { tr, useTr } from "../../../core/i18n";
+import { useTr } from "../../../core/i18n";
 import { useControllable } from "../../../core/base";
 import { FieldFrame, fieldLabel, useFieldIds } from "../internal";
 import { IconButton } from "../IconButton/IconButton";
@@ -22,7 +22,7 @@ export const TextField = ({
   labelPlacement = "top",
   tone: _tone,
   material: _material,
-  style: _style,
+  style,
   children: _children,
   ...input
 }: TextFieldProps) => {
@@ -32,11 +32,12 @@ export const TextField = ({
     defaultValue,
     onValueChange,
   );
-  const ids = useFieldIds(label, description || error);
+  const ids = useFieldIds(label, description || error, input.id, input);
   const floating = labelPlacement === "floating" && !!label;
   return (
     <FieldFrame
       ids={ids}
+      style={style}
       className={`ad-text-field-shell ${className ?? ""}`}
       label={floating ? undefined : label}
       required={input.required}
@@ -72,6 +73,7 @@ export const TextField = ({
         <input
           {...ids.aria}
           {...input}
+          id={ids.control}
           ref={inputRef}
           value={current}
           aria-invalid={!!error || undefined}

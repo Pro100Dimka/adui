@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { defaultThemeConfig, parseTheme, themeProps, type ThemeConfig, type ThemeName } from "@ad-voice/ui";
+import { defaultThemeConfig, parseTheme, themeProps, type ThemeConfig, type ThemeName } from "@neo-ui-kit/react";
 
 export interface SiteSettings {
   /** The site's theme, edited with the library's ThemeEditor. */

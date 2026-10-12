@@ -1,0 +1,52 @@
+{
+  "checkedAt": "2026-10-12",
+  "requestedName": "Neo UI / @neo-ui",
+  "markets": ["international", "European Union", "United States"],
+  "status": "Preliminary screening found existing same-sector uses. The name is not cleared for adoption.",
+  "packageSyntax": {
+    "finding": "@neo-ui by itself is a scope, not a complete npm package name. A scoped package requires @scope/name.",
+    "source": "https://docs.npmjs.com/about-scopes/"
+  },
+  "npm": {
+    "command": "npm view neo-ui name version description repository.url --json",
+    "result": "E404, package unpublished on 2017-08-01T19:06:44.222Z",
+    "interpretation": "Does not establish that the name can be registered, that a scope is available, or that using the brand is lawful.",
+    "rawEvidence": "npm-name-check.json"
+  },
+  "existingUses": [
+    {
+      "name": "Neo UI",
+      "product": "React Native / Expo component library",
+      "package": "@joe111/neo-ui",
+      "sources": ["https://docs.neo-ui.dev/", "https://docs.neo-ui.dev/docs/installation", "https://github.com/Joe-Moussally/react-native-neo-ui"]
+    },
+    {
+      "name": "Neo UI",
+      "product": "React UI component library",
+      "package": "@bettbrian08/neo-ui-react",
+      "source": "https://github.com/bettblake08/Neo-UI"
+    },
+    {
+      "name": "neo-ui",
+      "product": "React UI framework",
+      "source": "https://github.com/liuyahuiZ/neo-ui"
+    },
+    {
+      "name": "@squirro/neo-ui",
+      "product": "UI development CLI",
+      "source": "https://www.npmjs.com/package/%40squirro/neo-ui"
+    }
+  ],
+  "trademarkScope": {
+    "officialGuidance": [
+      "https://www.uspto.gov/trademarks/search/comprehensive-clearance-search-similar-trademarks",
+      "https://www.uspto.gov/trademarks/search/federal-trademark-searching",
+      "https://www.euipo.europa.eu/search-ip",
+      "https://www.wipo.int/en/web/global-brand-database/index"
+    ],
+    "performed": "Primary-source product searches, npm lookup, official clearance guidance, and exact-name web searches restricted to USPTO/EUIPO domains.",
+    "notPerformed": "A completed professional similarity search of live USPTO, EUIPO/TMview, WIPO and national registers, review of all goods/services, priority, owners, jurisdictions and unregistered rights. JavaScript registry landing pages did not expose searchable records through the web tool; absence of indexed search results is not evidence of absence of marks.",
+    "conclusion": "Existing product uses create a concrete naming concern, but this report does not establish infringement or provide a legal clearance opinion. For EU/US release, choose a more distinctive candidate and obtain a trademark clearance review before adopting it internationally."
+  },
+  "actions": "No package rename, scope reservation, trademark filing or public publication was performed. @ad-voice/ui is unchanged."
+}

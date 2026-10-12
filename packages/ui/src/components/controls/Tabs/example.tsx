@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Stack, TabPanel, Tabs, Typography } from "@ad-voice/ui";
+import { Stack, TabPanel, Tabs, Typography } from "@neo-ui-kit/react";
 
 const items = [
   { value: "view", label: "Внешний вид", icon: "palette", id: "tab-view" },

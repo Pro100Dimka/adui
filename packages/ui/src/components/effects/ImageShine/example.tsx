@@ -1,4 +1,4 @@
-import { ImageShine, Stack } from "@ad-voice/ui";
+import { ImageShine, Stack } from "@neo-ui-kit/react";
 
 // Any picture with transparency works; this one is a neon note drawn inline.
 const note = `data:image/svg+xml,${encodeURIComponent(

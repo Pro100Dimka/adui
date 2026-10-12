@@ -1,10 +1,9 @@
-import { tr, useTr } from "@ad-voice/ui";
+import { useTr } from "@neo-ui-kit/react";
 import { ExamplePreviewContext } from "../../../../packages/ui/src/dev/exampleHelpers";
-import { Badge, Card, Grid, Header, Icon, Link, Stack, Typography, useBorder, usePauseOffscreen } from "@ad-voice/ui";
+import { Badge, Card, Grid, Header, Icon, Link, Stack, Typography, useBorder, usePauseOffscreen } from "@neo-ui-kit/react";
 import { Suspense, useEffect, useRef, useState } from "react";
 import { CopyButton } from "./CopyButton";
 import {
-  catalog,
   componentCount,
   componentHref,
   getExample,
@@ -34,7 +33,7 @@ export function CatalogOverview() {
         <Stack gap={3}>
           <Header
             level={1}
-            eyebrow="Neo UI · React component system"
+            eyebrow="NEO UI · React component system"
             title={tr("Компоненты, от которых не оторвать глаз")}
             description={tr("Здесь вся библиотека вживую. Наведите на понравившийся компонент и откройте его: там настройки, код и API.")}
           />
@@ -49,7 +48,10 @@ export function CatalogOverview() {
               <Typography variant="eyebrow" tone="muted">
                 {tr("Установка")}
               </Typography>
-              {[installCommand, 'import "@ad-voice/ui/styles.css";'].map(
+              <Typography variant="caption" tone="muted">
+                {tr("Установите пакет в приложении и подключите стили один раз в точке входа.")}
+              </Typography>
+              {[installCommand, 'import "@neo-ui-kit/react/styles.css";'].map(
                 (line) => (
                   <Stack key={line} direction="row" align="center" gap={3}>
                     <Typography

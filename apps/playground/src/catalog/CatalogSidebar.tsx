@@ -1,4 +1,4 @@
-import { tr, useTr } from "@ad-voice/ui";
+import { useTr } from "@neo-ui-kit/react";
 import { useEffect, useState } from "react";
 import {
   Badge,
@@ -12,7 +12,7 @@ import {
   Stack,
   TextField,
   Typography,
-} from "@ad-voice/ui";
+} from "@neo-ui-kit/react";
 import { componentCount, componentHref, type CatalogMeta } from "./componentRegistry";
 import { catalogCategories, getCategoryForItem } from "./catalogNavigation";
 
@@ -56,6 +56,9 @@ export function CatalogSidebar({ activeItem }: { activeItem?: CatalogMeta }) {
   const activeCategory = activeItem && getCategoryForItem(activeItem);
   const [query, setQuery] = useState("");
   const [openId, setOpenId] = useState(activeCategory?.id ?? "fields");
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  useEffect(() => { setMobileOpen(false); }, [activeItem]);
 
   useEffect(() => {
     if (activeCategory) setOpenId(activeCategory.id);
@@ -92,6 +95,8 @@ export function CatalogSidebar({ activeItem }: { activeItem?: CatalogMeta }) {
     <Stack as="aside" className="docs-sidebar" gap={3}>
       <CollapsibleSection
         className="docs-mobile-nav"
+        open={mobileOpen}
+        onOpenChange={setMobileOpen}
         title={activeItem?.name ?? tr("Компоненты")}
         icon="list"
       >

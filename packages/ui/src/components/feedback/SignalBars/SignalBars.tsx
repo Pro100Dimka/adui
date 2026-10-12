@@ -1,4 +1,4 @@
-import { tr, useTr } from "../../../core/i18n";
+import { useTr } from "../../../core/i18n";
 import { mark, type CommonProps } from "../../../core/base";
 
 export interface SignalBarsProps extends CommonProps {
@@ -13,15 +13,17 @@ export interface SignalBarsProps extends CommonProps {
 /** Signal strength as rising bars, like a phone's reception; the lit ones glow. */
 export function SignalBars({ level = 3, bars = 4, weak = false, label, ...p }: SignalBarsProps) {
   const tr = useTr();
+  const count = Math.max(1, Number.isFinite(bars) ? Math.floor(bars) : 4);
+  const strength = Math.max(0, Math.min(count, Number.isFinite(level) ? Math.round(level) : 0));
   return (
     <span
       {...mark("SignalBars", p)}
       role="img"
-      aria-label={label ?? tr("Сигнал: {level} из {bars}", { level, bars })}
+      aria-label={label ?? tr("Сигнал: {level} из {bars}", { level: strength, bars: count })}
       data-weak={weak || undefined}
     >
-      {Array.from({ length: bars }, (_, i) => (
-        <i key={i} data-lit={i < level || undefined} style={{ height: `${((i + 1) / bars) * 100}%` }} />
+      {Array.from({ length: count }, (_, i) => (
+        <i key={i} data-lit={i < strength || undefined} style={{ height: `${((i + 1) / count) * 100}%` }} />
       ))}
     </span>
   );

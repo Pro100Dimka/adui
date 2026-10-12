@@ -1,0 +1,135 @@
+{
+  "completedAt": "2026-10-12T12:02:30.251Z",
+  "status": "Local rename implemented and verified; no npm or site publication.",
+  "approvedName": "@neo-ui/react",
+  "previousName": "@ad-voice/ui",
+  "artifact": {
+    "path": "D:\\Git\\adui\\release\\neo-ui-react-2.9.3.tgz",
+    "name": "@neo-ui/react",
+    "version": "2.9.3",
+    "format": "ESM",
+    "sizeBytes": 1666561,
+    "unpackedBytes": 2840655,
+    "files": 269,
+    "sha256": "305e78724d81ecb79b2dabe04f4fe07cce9dcf87073da0d16b3b7b9dca02a848",
+    "sha1": "9e448e7385e43107ae9ac5dca5b51a86c6c15839",
+    "integrity": "sha512-N2x1lrUVxsdfBBBfRfbYi6CkcNZG2YGwDvt4xv4sks428GuYFKlzhdI1ivfOuhvc6hlM6sMwohSwppN+6hTBug==",
+    "metadata": "evidence/package-final.json",
+    "installedConsumerIntegrityMatches": true
+  },
+  "changes": [
+    "Package, private workspaces, dependency graph and lockfile renamed.",
+    "Public imports, CSS imports, generated snippets, Monaco declarations, Vite aliases and sandbox module mapping migrated.",
+    "Local install command, README migration instructions, CI archive and smoke consumer use the new name.",
+    "Visible brand spelling standardized to NEO UI in remaining examples and theme errors.",
+    "Built docs regenerated; previous artifacts retained."
+  ],
+  "verification": {
+    "red": [
+      "evidence/package-rename-red.log",
+      "evidence/package-brand-remaining-red.log"
+    ],
+    "green": [
+      "evidence/package-rename-green.log",
+      "evidence/package-brand-remaining-green.log"
+    ],
+    "fullCheck": {
+      "tests": 565,
+      "files": 38,
+      "types": "UI and playground passed",
+      "build": "UI and playground passed",
+      "log": "evidence/package-rename-full-check-final.log"
+    },
+    "browser": {
+      "passed": 14,
+      "evidence": "evidence/rename-browser-production.json",
+      "scope": "Actual clipboard copy; generated Button code; Monaco editing; root/core/editor/forms/router imports executed in sandbox; state 0 to 1 to 2."
+    },
+    "sourceScan": "evidence/package-rename-source-scan.json",
+    "consumers": [
+      {
+        "evidence": "evidence/consumer-consumer-react18-rename-chrome.json",
+        "react": "18.2.0",
+        "browser": "154.0.8037.98",
+        "channel": "chrome",
+        "checks": 22,
+        "result": "passed"
+      },
+      {
+        "evidence": "evidence/consumer-consumer-react19-rename-chrome.json",
+        "react": "19.3.0",
+        "browser": "154.0.8037.98",
+        "channel": "chrome",
+        "checks": 22,
+        "result": "passed"
+      },
+      {
+        "evidence": "evidence/consumer-consumer-react19-rename-edge.json",
+        "react": "19.3.0",
+        "browser": "155.0.4283.45",
+        "channel": "msedge",
+        "checks": 22,
+        "result": "passed"
+      }
+    ],
+    "packageChecks": [
+      {
+        "evidence": "evidence/package-consumer-react18-22.json",
+        "node": "v22.18.0",
+        "react": "18.2.0",
+        "result": "passed"
+      },
+      {
+        "evidence": "evidence/package-consumer-react19-22.json",
+        "node": "v22.18.0",
+        "react": "19.3.0",
+        "result": "passed"
+      },
+      {
+        "evidence": "evidence/package-consumer-react19-20.json",
+        "node": "v20.20.2",
+        "react": "19.3.0",
+        "result": "passed"
+      }
+    ],
+    "strictTypes": {
+      "react18": "passed",
+      "react19": "passed",
+      "skipLibCheck": false
+    },
+    "productionCatalog": {
+      "pages": 100,
+      "cases": 600,
+      "widths": [
+        320,
+        375,
+        768,
+        1024,
+        1440,
+        1920
+      ],
+      "evidence": "evidence/docs-sweep.json"
+    },
+    "staticDocs": {
+      "files": 357,
+      "allFilesByteIdentical": true,
+      "evidence": "evidence/docs-artifact.json"
+    },
+    "gitDiffCheck": "passed"
+  },
+  "migration": "Replace the old dependency and import prefix with @neo-ui/react, including subpaths and styles.css. Install the new local archive. Component APIs and CSS classes are unchanged; old package name is not aliased.",
+  "retainedArtifacts": [
+    "release/ad-voice-ui-2.9.3.tgz",
+    "release/docs-before-package-rename",
+    "evidence/release-report-before-rename.json"
+  ],
+  "limitations": [
+    "Not published to npm: installation instructions deliberately reference the verified local archive.",
+    "Registry 404 for @neo-ui/react does not establish ownership of @neo-ui scope or trademark clearance. Prior international name-screening limitations still apply.",
+    "Existing browser/platform limitations from the full release report are unchanged."
+  ],
+  "screenshots": [
+    "evidence/rename-overview-production.png",
+    "evidence/rename-live-editor-production.png"
+  ]
+}

@@ -1,6 +1,6 @@
-import { tr, useTr } from "@ad-voice/ui";
+import { useTr } from "@neo-ui-kit/react";
 import { useState } from "react";
-import { Button, copyText } from "@ad-voice/ui";
+import { Button, copyText } from "@neo-ui-kit/react";
 
 /** Copies `text` and says so for a moment. */
 export function CopyButton({ text, variant = "secondary" }: { text: string; variant?: "secondary" | "ghost" }) {

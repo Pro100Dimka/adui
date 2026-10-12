@@ -1,0 +1,658 @@
+{
+  "environment": {
+    "browser": "Installed Chrome headless",
+    "platform": "win32",
+    "physicalLowEndDevice": false,
+    "motion": "prefers-reduced-motion: reduce",
+    "viewportHeights": 900
+  },
+  "stage": "strict-red",
+  "passed": 41,
+  "failed": 1,
+  "results": [
+    {
+      "name": "popover respects reduced motion",
+      "passed": true,
+      "actual": 0.00001
+    },
+    {
+      "name": "popover stays within viewport at 320",
+      "passed": true,
+      "actual": {
+        "left": 8,
+        "right": 312,
+        "width": 304,
+        "viewport": 320,
+        "documentWidth": 320,
+        "scrollWidth": 302,
+        "clientWidth": 302,
+        "clips": []
+      }
+    },
+    {
+      "name": "dialog respects reduced motion",
+      "passed": true,
+      "actual": 0.00001
+    },
+    {
+      "name": "dialog stays within viewport at 320",
+      "passed": true,
+      "actual": {
+        "left": 19,
+        "right": 301,
+        "width": 282,
+        "viewport": 320,
+        "documentWidth": 320,
+        "scrollWidth": 280,
+        "clientWidth": 280,
+        "clips": [
+          {
+            "text": " ",
+            "left": 242,
+            "right": 280,
+            "width": 38,
+            "clipped": false
+          },
+          {
+            "text": " Вернуться к редактированию",
+            "left": 51.125,
+            "right": 280,
+            "width": 228.875,
+            "clipped": false
+          },
+          {
+            "text": " Подтвердить выбранную операцию",
+            "left": 40,
+            "right": 280,
+            "width": 240,
+            "clipped": false
+          }
+        ]
+      }
+    },
+    {
+      "name": "modal close action remains beside its heading at 320",
+      "passed": true,
+      "actual": 0
+    },
+    {
+      "name": "layouts stays within viewport at 320",
+      "passed": true,
+      "actual": {
+        "left": 16,
+        "right": 256,
+        "width": 240,
+        "viewport": 320,
+        "documentWidth": 320,
+        "scrollWidth": 238,
+        "clientWidth": 238,
+        "clips": [
+          {
+            "text": " First action",
+            "left": 31,
+            "right": 136.53125,
+            "width": 105.53125,
+            "clipped": false
+          },
+          {
+            "text": " Second action",
+            "left": 31,
+            "right": 154.59375,
+            "width": 123.59375,
+            "clipped": false
+          }
+        ]
+      }
+    },
+    {
+      "name": "popover stays within viewport at 375",
+      "passed": true,
+      "actual": {
+        "left": 8,
+        "right": 358,
+        "width": 350,
+        "viewport": 375,
+        "documentWidth": 375,
+        "scrollWidth": 348,
+        "clientWidth": 348,
+        "clips": []
+      }
+    },
+    {
+      "name": "dialog stays within viewport at 375",
+      "passed": true,
+      "actual": {
+        "left": 19,
+        "right": 356,
+        "width": 337,
+        "viewport": 375,
+        "documentWidth": 375,
+        "scrollWidth": 335,
+        "clientWidth": 335,
+        "clips": [
+          {
+            "text": " ",
+            "left": 297,
+            "right": 335,
+            "width": 38,
+            "clipped": false
+          },
+          {
+            "text": " Вернуться к редактированию",
+            "left": 106.125,
+            "right": 335,
+            "width": 228.875,
+            "clipped": false
+          },
+          {
+            "text": " Подтвердить выбранную операцию",
+            "left": 62.828125,
+            "right": 335,
+            "width": 272.171875,
+            "clipped": false
+          }
+        ]
+      }
+    },
+    {
+      "name": "layouts stays within viewport at 375",
+      "passed": true,
+      "actual": {
+        "left": 16,
+        "right": 256,
+        "width": 240,
+        "viewport": 375,
+        "documentWidth": 375,
+        "scrollWidth": 238,
+        "clientWidth": 238,
+        "clips": [
+          {
+            "text": " First action",
+            "left": 31,
+            "right": 136.53125,
+            "width": 105.53125,
+            "clipped": false
+          },
+          {
+            "text": " Second action",
+            "left": 31,
+            "right": 154.59375,
+            "width": 123.59375,
+            "clipped": false
+          }
+        ]
+      }
+    },
+    {
+      "name": "popover stays within viewport at 768",
+      "passed": true,
+      "actual": {
+        "left": 8,
+        "right": 358,
+        "width": 350,
+        "viewport": 768,
+        "documentWidth": 768,
+        "scrollWidth": 348,
+        "clientWidth": 348,
+        "clips": []
+      }
+    },
+    {
+      "name": "dialog stays within viewport at 768",
+      "passed": true,
+      "actual": {
+        "left": 124,
+        "right": 644,
+        "width": 520,
+        "viewport": 768,
+        "documentWidth": 768,
+        "scrollWidth": 518,
+        "clientWidth": 518,
+        "clips": [
+          {
+            "text": " ",
+            "left": 580.96875,
+            "right": 619.96875,
+            "width": 39,
+            "clipped": false
+          },
+          {
+            "text": " Вернуться к редактированию",
+            "left": 391.09375,
+            "right": 619.96875,
+            "width": 228.875,
+            "clipped": false
+          },
+          {
+            "text": " Подтвердить выбранную операцию",
+            "left": 347.796875,
+            "right": 619.96875,
+            "width": 272.171875,
+            "clipped": false
+          }
+        ]
+      }
+    },
+    {
+      "name": "layouts stays within viewport at 768",
+      "passed": true,
+      "actual": {
+        "left": 16,
+        "right": 256,
+        "width": 240,
+        "viewport": 768,
+        "documentWidth": 768,
+        "scrollWidth": 238,
+        "clientWidth": 238,
+        "clips": [
+          {
+            "text": " First action",
+            "left": 31.578125,
+            "right": 137.109375,
+            "width": 105.53125,
+            "clipped": false
+          },
+          {
+            "text": " Second action",
+            "left": 31.578125,
+            "right": 155.171875,
+            "width": 123.59375,
+            "clipped": false
+          }
+        ]
+      }
+    },
+    {
+      "name": "popover stays within viewport at 1024",
+      "passed": true,
+      "actual": {
+        "left": 8,
+        "right": 358,
+        "width": 350,
+        "viewport": 1024,
+        "documentWidth": 1024,
+        "scrollWidth": 348,
+        "clientWidth": 348,
+        "clips": []
+      }
+    },
+    {
+      "name": "dialog stays within viewport at 1024",
+      "passed": true,
+      "actual": {
+        "left": 252,
+        "right": 772,
+        "width": 520,
+        "viewport": 1024,
+        "documentWidth": 1024,
+        "scrollWidth": 518,
+        "clientWidth": 518,
+        "clips": [
+          {
+            "text": " ",
+            "left": 702.46875,
+            "right": 743,
+            "width": 40.53125,
+            "clipped": false
+          },
+          {
+            "text": " Вернуться к редактированию",
+            "left": 514.125,
+            "right": 743,
+            "width": 228.875,
+            "clipped": false
+          },
+          {
+            "text": " Подтвердить выбранную операцию",
+            "left": 470.828125,
+            "right": 743,
+            "width": 272.171875,
+            "clipped": false
+          }
+        ]
+      }
+    },
+    {
+      "name": "layouts stays within viewport at 1024",
+      "passed": true,
+      "actual": {
+        "left": 16,
+        "right": 256,
+        "width": 240,
+        "viewport": 1024,
+        "documentWidth": 1024,
+        "scrollWidth": 238,
+        "clientWidth": 238,
+        "clips": [
+          {
+            "text": " First action",
+            "left": 32.609375,
+            "right": 138.140625,
+            "width": 105.53125,
+            "clipped": false
+          },
+          {
+            "text": " Second action",
+            "left": 32.609375,
+            "right": 156.203125,
+            "width": 123.59375,
+            "clipped": false
+          }
+        ]
+      }
+    },
+    {
+      "name": "popover stays within viewport at 1440",
+      "passed": true,
+      "actual": {
+        "left": 8,
+        "right": 358,
+        "width": 350,
+        "viewport": 1440,
+        "documentWidth": 1440,
+        "scrollWidth": 348,
+        "clientWidth": 348,
+        "clips": []
+      }
+    },
+    {
+      "name": "dialog stays within viewport at 1440",
+      "passed": true,
+      "actual": {
+        "left": 460,
+        "right": 980,
+        "width": 520,
+        "viewport": 1440,
+        "documentWidth": 1440,
+        "scrollWidth": 518,
+        "clientWidth": 518,
+        "clips": [
+          {
+            "text": " ",
+            "left": 907.96875,
+            "right": 951,
+            "width": 43.03125,
+            "clipped": false
+          },
+          {
+            "text": " Вернуться к редактированию",
+            "left": 722.125,
+            "right": 951,
+            "width": 228.875,
+            "clipped": false
+          },
+          {
+            "text": " Подтвердить выбранную операцию",
+            "left": 678.828125,
+            "right": 951,
+            "width": 272.171875,
+            "clipped": false
+          }
+        ]
+      }
+    },
+    {
+      "name": "layouts stays within viewport at 1440",
+      "passed": true,
+      "actual": {
+        "left": 16,
+        "right": 256,
+        "width": 240,
+        "viewport": 1440,
+        "documentWidth": 1440,
+        "scrollWidth": 238,
+        "clientWidth": 238,
+        "clips": [
+          {
+            "text": " First action",
+            "left": 34.265625,
+            "right": 139.796875,
+            "width": 105.53125,
+            "clipped": false
+          },
+          {
+            "text": " Second action",
+            "left": 34.265625,
+            "right": 157.859375,
+            "width": 123.59375,
+            "clipped": false
+          }
+        ]
+      }
+    },
+    {
+      "name": "popover stays within viewport at 1920",
+      "passed": true,
+      "actual": {
+        "left": 8,
+        "right": 358,
+        "width": 350,
+        "viewport": 1920,
+        "documentWidth": 1920,
+        "scrollWidth": 348,
+        "clientWidth": 348,
+        "clips": []
+      }
+    },
+    {
+      "name": "dialog stays within viewport at 1920",
+      "passed": true,
+      "actual": {
+        "left": 700,
+        "right": 1220,
+        "width": 520,
+        "viewport": 1920,
+        "documentWidth": 1920,
+        "scrollWidth": 518,
+        "clientWidth": 518,
+        "clips": [
+          {
+            "text": " ",
+            "left": 1145.09375,
+            "right": 1191,
+            "width": 45.90625,
+            "clipped": false
+          },
+          {
+            "text": " Вернуться к редактированию",
+            "left": 962.125,
+            "right": 1191,
+            "width": 228.875,
+            "clipped": false
+          },
+          {
+            "text": " Подтвердить выбранную операцию",
+            "left": 918.828125,
+            "right": 1191,
+            "width": 272.171875,
+            "clipped": false
+          }
+        ]
+      }
+    },
+    {
+      "name": "layouts stays within viewport at 1920",
+      "passed": true,
+      "actual": {
+        "left": 16,
+        "right": 256,
+        "width": 240,
+        "viewport": 1920,
+        "documentWidth": 1920,
+        "scrollWidth": 238,
+        "clientWidth": 238,
+        "clips": [
+          {
+            "text": " First action",
+            "left": 35,
+            "right": 140.53125,
+            "width": 105.53125,
+            "clipped": false
+          },
+          {
+            "text": " Second action",
+            "left": 35,
+            "right": 158.59375,
+            "width": 123.59375,
+            "clipped": false
+          }
+        ]
+      }
+    },
+    {
+      "name": "long Menu scrolls locally to its last action",
+      "passed": true,
+      "actual": {
+        "bottom": 892,
+        "lastBottom": 880.90625,
+        "overflow": "auto"
+      }
+    },
+    {
+      "name": "Grid between distributes columns to opposite edges",
+      "passed": true,
+      "actual": {
+        "gridRight": 256,
+        "itemRight": 256
+      }
+    },
+    {
+      "name": "FloatingPanel keyboard moves the real focused panel",
+      "passed": true,
+      "actual": 50
+    },
+    {
+      "name": "FloatingPanel keyboard resizes the real focused panel",
+      "passed": true,
+      "actual": 250
+    },
+    {
+      "name": "StrictMode modal with fields restores focus after prior selection",
+      "passed": false,
+      "actual": false
+    },
+    {
+      "name": "Dialog ruby/dark remains readable and fits at 375",
+      "passed": true,
+      "actual": {
+        "left": 19,
+        "right": 356,
+        "buttons": 3,
+        "text": "rgb(247, 245, 248)"
+      }
+    },
+    {
+      "name": "Dialog ruby/light remains readable and fits at 375",
+      "passed": true,
+      "actual": {
+        "left": 29.110000610351562,
+        "right": 345.89002990722656,
+        "buttons": 3,
+        "text": "rgb(33, 27, 31)"
+      }
+    },
+    {
+      "name": "Dialog light/dark remains readable and fits at 375",
+      "passed": true,
+      "actual": {
+        "left": 29.110000610351562,
+        "right": 345.89002990722656,
+        "buttons": 3,
+        "text": "rgb(247, 245, 248)"
+      }
+    },
+    {
+      "name": "Dialog light/light remains readable and fits at 375",
+      "passed": true,
+      "actual": {
+        "left": 29.110000610351562,
+        "right": 345.89002990722656,
+        "buttons": 3,
+        "text": "rgb(33, 27, 31)"
+      }
+    },
+    {
+      "name": "Dialog green/dark remains readable and fits at 375",
+      "passed": true,
+      "actual": {
+        "left": 29.110000610351562,
+        "right": 345.89002990722656,
+        "buttons": 3,
+        "text": "rgb(247, 245, 248)"
+      }
+    },
+    {
+      "name": "Dialog green/light remains readable and fits at 375",
+      "passed": true,
+      "actual": {
+        "left": 29.110000610351562,
+        "right": 345.89002990722656,
+        "buttons": 3,
+        "text": "rgb(33, 27, 31)"
+      }
+    },
+    {
+      "name": "Dialog violet/dark remains readable and fits at 375",
+      "passed": true,
+      "actual": {
+        "left": 29.110000610351562,
+        "right": 345.89002990722656,
+        "buttons": 3,
+        "text": "rgb(247, 245, 248)"
+      }
+    },
+    {
+      "name": "Dialog violet/light remains readable and fits at 375",
+      "passed": true,
+      "actual": {
+        "left": 29.110000610351562,
+        "right": 345.89002990722656,
+        "buttons": 3,
+        "text": "rgb(33, 27, 31)"
+      }
+    },
+    {
+      "name": "nested native top layers retain inherited theme",
+      "passed": true,
+      "actual": "#10c99a"
+    },
+    {
+      "name": "first Escape closes only inner popover",
+      "passed": true,
+      "actual": [
+        "Layer host",
+        "Outer"
+      ]
+    },
+    {
+      "name": "inner Escape returns focus to its trigger",
+      "passed": true,
+      "actual": " Open inner"
+    },
+    {
+      "name": "second Escape keeps modal open",
+      "passed": true,
+      "actual": 1
+    },
+    {
+      "name": "third Escape closes modal",
+      "passed": true,
+      "actual": 0
+    },
+    {
+      "name": "modal restores root trigger focus",
+      "passed": true,
+      "actual": " Open dialog"
+    },
+    {
+      "name": "controlled CollapsibleSection rejects native divergence",
+      "passed": true,
+      "actual": false
+    },
+    {
+      "name": "browser console has no uncaught errors",
+      "passed": true,
+      "actual": []
+    }
+  ]
+}

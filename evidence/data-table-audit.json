@@ -1,0 +1,3474 @@
+{
+  "date": "2026-10-12",
+  "scope": "DataTable logic, compact neon styling, container responsiveness and final rendered documentation",
+  "sourceFiles": [
+    "packages/ui/src/components/feedback/DataTable/DataTable.tsx",
+    "packages/ui/src/components/feedback/DataTable/styles.css",
+    "packages/ui/src/components/feedback/shared.tsx (rowActionsWidth documentation only)"
+  ],
+  "baseline": {
+    "browser": "data-table-browser-red.json",
+    "passed": 20,
+    "failed": 30,
+    "primaryDefect": "Pinned table forced1016px within1468px available content area; row action visible label37px clipped to27px; header controls overflowed; container-specific responsiveness absent"
+  },
+  "changes": [
+    "Distribute unused container width among flexible data columns; recompute actual pinned offsets from those same widths. Observe only pinned container width, disconnect on unmount.",
+    "Use colgroup as the single column-width owner. Do not copy fixed table widths onto card cells, where40px/120px widths clipped utility labels and actions.",
+    "Default row action slot120px, explicit overrides retained. Visible action header and mobile detail/action captions.",
+    "Header controls stay within each column. Numeric header text aligns with right-aligned values; filter and sorting controls retain access. Subtle pinned dividers retain the neon theme.",
+    "Compact standard rows and group bands without shrinking text or action control hit area.",
+    "Header section forms a stacking context, preventing sticky body utility cells from painting over selection/row-number headings.",
+    "Container queries replace viewport-only cards. Narrow pinned tables use local horizontal scroll and suspend sticky horizontal offsets so left/right cells cannot overlap.",
+    "Mobile cards retain a visible compact header control grid with sort/filter/select-all. Header controls remain keyboard/mouse accessible rather than living inside a1px clipped region.",
+    "Reset view is offered when only density or expanded details changed and restores both.",
+    "Own-key lookups keep constructor/toString/__proto__ column widths finite and missing row data empty. Computed-property filter updates store __proto__ safely as an own field."
+  ],
+  "verification": {
+    "dedicatedRed": {
+      "browser": [
+        "data-table-browser-red.json",
+        "data-table-browser-polish-red.json",
+        "data-table-browser-cards-red.json",
+        "data-table-browser-card-header-red.json",
+        "data-table-browser-select-label-red.json"
+      ],
+      "renderer": [
+        "data-table-logic-red.json",
+        "data-table-filter-red.json"
+      ]
+    },
+    "browser": {
+      "evidence": "data-table-browser-final-green.json",
+      "passed": 89,
+      "failed": 0,
+      "environment": "Windows installed Chrome headless; public exports; reduced motion",
+      "containerWidths": [
+        320,
+        375,
+        768,
+        1024,
+        1470
+      ],
+      "fixtureViewport": [
+        1536,
+        1000
+      ],
+      "themes": [
+        "ruby/dark",
+        "light/light"
+      ],
+      "checks": "layout and clipping; sticky offsets and header hit testing; selection across pagination/sort; multi-sort; query reset; range filter; grouping; row details; action vs row activation; keyboard resize; mobile action controls; virtual10k mount/scroll/density/unmount"
+    },
+    "renderer": {
+      "evidence": "data-table-broader-green.json",
+      "command": "npm test --workspace @ad-voice/ui -- base data-responsiveness FeedbackContracts ControlsContracts EdgeCases DocumentationBorders",
+      "passed": 267,
+      "failed": 0,
+      "files": {
+        "base.test.ts": 78,
+        "ControlsContracts.test.tsx": 94,
+        "data-responsiveness.test.tsx": 43,
+        "DocumentationBorders.test.tsx": 9,
+        "EdgeCases.test.tsx": 26,
+        "FeedbackContracts.test.tsx": 17
+      }
+    },
+    "typecheck": {
+      "command": "npm run typecheck --workspace @ad-voice/ui",
+      "result": "passed"
+    },
+    "documentation": {
+      "evidence": "data-table-docs-final.json",
+      "results": [
+        {
+          "width": 1920,
+          "geometry": {
+            "container": 1476,
+            "table": 1476,
+            "pageOverflow": false
+          },
+          "violations": []
+        },
+        {
+          "width": 1440,
+          "geometry": {
+            "container": 1015,
+            "table": 1040,
+            "pageOverflow": false
+          },
+          "violations": []
+        },
+        {
+          "width": 375,
+          "geometry": {
+            "container": 314,
+            "table": 1040,
+            "pageOverflow": false
+          },
+          "violations": []
+        }
+      ],
+      "axe": "WCAG2A/AA/2.1A/AA tags; no violations for these rendered scenarios"
+    },
+    "screenshotsReviewed": [
+      "data-table-docs-final-1920.png",
+      "data-table-docs-final-1440.png",
+      "data-table-docs-final-375.png",
+      "data-table-final-green-ruby-1470.png",
+      "data-table-final-green-light-1470.png",
+      "data-table-final-green-unpinned-320.png"
+    ],
+    "packaging": {
+      "runner": "data-table-browser.mjs",
+      "entryOverride": "UI_ENTRY=absolute path to installed package dist/index.js",
+      "cssOverride": "UI_STYLES optional; defaults to styles.css beside entry",
+      "react": "Fixture aliases React and ReactDOM to dependencies resolved beside public entry; no duplicate runtime",
+      "status": "passed: all89 geometry and interaction checks through installed tarball public index and shipped styles",
+      "evidence": "data-table-browser-packed-green.json",
+      "passed": 89,
+      "failed": 0,
+      "uiEntry": "D:\\Git\\adui\\release\\consumer-react19\\node_modules\\@ad-voice\\ui\\dist\\index.js",
+      "uiStyles": "D:\\Git\\adui\\release\\consumer-react19\\node_modules\\@ad-voice\\ui\\dist\\styles.css"
+    }
+  },
+  "measurements": {
+    "panel": {
+      "before": {
+        "table": {
+          "x": 17,
+          "y": 119.03125,
+          "width": 1016,
+          "height": 540.890625,
+          "right": 1033
+        },
+        "scroll": {
+          "x": 16,
+          "y": 118.03125,
+          "width": 1470,
+          "height": 480,
+          "right": 1486
+        },
+        "pageOverflow": false,
+        "headerClipping": true,
+        "actions": [
+          {
+            "text": "Копия",
+            "scroll": 37,
+            "client": 27
+          },
+          {
+            "text": "Копия",
+            "scroll": 37,
+            "client": 27
+          },
+          {
+            "text": "Копия",
+            "scroll": 37,
+            "client": 27
+          },
+          {
+            "text": "Копия",
+            "scroll": 37,
+            "client": 27
+          },
+          {
+            "text": "Копия",
+            "scroll": 37,
+            "client": 27
+          },
+          {
+            "text": "Копия",
+            "scroll": 37,
+            "client": 27
+          }
+        ],
+        "pins": [
+          {
+            "key": "title",
+            "side": "left",
+            "box": {
+              "x": 137,
+              "y": 218.578125,
+              "width": 160,
+              "height": 57.765625,
+              "right": 297
+            }
+          },
+          {
+            "key": "status",
+            "side": "right",
+            "box": {
+              "x": 777,
+              "y": 218.578125,
+              "width": 160,
+              "height": 57.765625,
+              "right": 937
+            }
+          }
+        ]
+      },
+      "after": {
+        "table": {
+          "x": 17,
+          "y": 119.03125,
+          "width": 1468,
+          "height": 488.203125,
+          "right": 1485
+        },
+        "scroll": {
+          "x": 16,
+          "y": 118.03125,
+          "width": 1470,
+          "height": 480,
+          "right": 1486
+        },
+        "pageOverflow": false,
+        "headerClipping": false,
+        "actions": [
+          {
+            "text": "Копия",
+            "scroll": 37,
+            "client": 37
+          },
+          {
+            "text": "Копия",
+            "scroll": 37,
+            "client": 37
+          },
+          {
+            "text": "Копия",
+            "scroll": 37,
+            "client": 37
+          },
+          {
+            "text": "Копия",
+            "scroll": 37,
+            "client": 37
+          },
+          {
+            "text": "Копия",
+            "scroll": 37,
+            "client": 37
+          },
+          {
+            "text": "Копия",
+            "scroll": 37,
+            "client": 37
+          }
+        ],
+        "pins": [
+          {
+            "key": "title",
+            "side": "left",
+            "box": {
+              "x": 137,
+              "y": 210.578125,
+              "width": 245.59375,
+              "height": 52.984375,
+              "right": 382.59375
+            }
+          },
+          {
+            "key": "status",
+            "side": "right",
+            "box": {
+              "x": 1119.375,
+              "y": 210.578125,
+              "width": 245.59375,
+              "height": 52.984375,
+              "right": 1364.96875
+            }
+          }
+        ]
+      }
+    },
+    "compact": [
+      {
+        "name": "ruby: compact rows without clipping action height",
+        "actual": 52.984375,
+        "passed": true
+      },
+      {
+        "name": "ruby: compact group bands",
+        "actual": 39.375,
+        "passed": true
+      },
+      {
+        "name": "ruby: numeric headings align with values",
+        "actual": [
+          0.006250000000022737,
+          0.0062499999999090505
+        ],
+        "passed": true
+      },
+      {
+        "name": "light: compact rows without clipping action height",
+        "actual": 52.984375,
+        "passed": true
+      },
+      {
+        "name": "light: compact group bands",
+        "actual": 39.375,
+        "passed": true
+      },
+      {
+        "name": "light: numeric headings align with values",
+        "actual": [
+          0.006250000000022737,
+          0.0062499999999090505
+        ],
+        "passed": true
+      }
+    ],
+    "virtual": [
+      {
+        "name": "10k virtual rows mount bounded initial window",
+        "actual": 15,
+        "passed": true
+      },
+      {
+        "name": "10k virtual scroll remains bounded",
+        "actual": 15,
+        "passed": true
+      },
+      {
+        "name": "virtual scroll reaches final sorted row",
+        "actual": "10000",
+        "passed": true
+      },
+      {
+        "name": "density switches without losing virtualization",
+        "actual": 21,
+        "passed": true
+      },
+      {
+        "name": "virtual unmount returns to paginated example",
+        "actual": 6,
+        "passed": true
+      }
+    ],
+    "interpretation": "Geometry and bounded DOM counts, not a physical low-end device speed claim."
+  },
+  "contractNotes": [
+    "rowActionsWidth default increases96→120px to fit standard small icon+label Button; provided overrides still determine the slot.",
+    "Pinned tables fill free container width. Auto columns absorb extra space; when every column has an explicit width, free space is shared to avoid an empty table region.",
+    "Card layout threshold is48rem of component container, not viewport. Pinned/virtual tables retain local horizontal scrolling.",
+    "Styling tests updated only where old internals changed: container query, CSS-variable pin offset fallback and colgroup width ownership. No disabled checks or unconditional success paths.",
+    "Initial light-preset screenshots before cards-red used the dark scheme; final screenshots explicitly set light colorScheme. Root corrected shared Badge contrast independently, final images include that correction."
+  ],
+  "limitations": [
+    "Headless installed Chrome only in this agent pass; parent owns packed Chrome/Edge verification.",
+    "No physical touchscreen, low-end hardware, screen reader speech or Safari/Firefox run.",
+    "Pinned tables may require local horizontal scroll below their minimum useful column width; no page overflow detected.",
+    "Group collapse intentionally follows existing pagination behavior (collapsed rows excluded from current visible pages); no new contract introduced."
+  ],
+  "matrix": [
+    {
+      "scenario": "ruby pinned example fills 1470px panel",
+      "method": "real Chrome rendered public-export fixture",
+      "expected": "Automated predicate in evidence/data-table-browser.mjs",
+      "baseline": "failed before fix",
+      "baselineEvidence": "data-table-browser-red.json",
+      "baselineActual": {
+        "table": {
+          "x": 17,
+          "y": 119.03125,
+          "width": 1016,
+          "height": 540.890625,
+          "right": 1033
+        },
+        "scroll": {
+          "x": 16,
+          "y": 118.03125,
+          "width": 1470,
+          "height": 480,
+          "right": 1486
+        },
+        "pageOverflow": false,
+        "headerClipping": true,
+        "actions": [
+          {
+            "text": "Копия",
+            "scroll": 37,
+            "client": 27
+          },
+          {
+            "text": "Копия",
+            "scroll": 37,
+            "client": 27
+          },
+          {
+            "text": "Копия",
+            "scroll": 37,
+            "client": 27
+          },
+          {
+            "text": "Копия",
+            "scroll": 37,
+            "client": 27
+          },
+          {
+            "text": "Копия",
+            "scroll": 37,
+            "client": 27
+          },
+          {
+            "text": "Копия",
+            "scroll": 37,
+            "client": 27
+          }
+        ],
+        "pins": [
+          {
+            "key": "title",
+            "side": "left",
+            "box": {
+              "x": 137,
+              "y": 218.578125,
+              "width": 160,
+              "height": 57.765625,
+              "right": 297
+            }
+          },
+          {
+            "key": "status",
+            "side": "right",
+            "box": {
+              "x": 777,
+              "y": 218.578125,
+              "width": 160,
+              "height": 57.765625,
+              "right": 937
+            }
+          }
+        ]
+      },
+      "result": "passed",
+      "actual": {
+        "table": {
+          "x": 17,
+          "y": 119.03125,
+          "width": 1468,
+          "height": 488.203125,
+          "right": 1485
+        },
+        "scroll": {
+          "x": 16,
+          "y": 118.03125,
+          "width": 1470,
+          "height": 480,
+          "right": 1486
+        },
+        "pageOverflow": false,
+        "headerClipping": false,
+        "actions": [
+          {
+            "text": "Копия",
+            "scroll": 37,
+            "client": 37
+          },
+          {
+            "text": "Копия",
+            "scroll": 37,
+            "client": 37
+          },
+          {
+            "text": "Копия",
+            "scroll": 37,
+            "client": 37
+          },
+          {
+            "text": "Копия",
+            "scroll": 37,
+            "client": 37
+          },
+          {
+            "text": "Копия",
+            "scroll": 37,
+            "client": 37
+          },
+          {
+            "text": "Копия",
+            "scroll": 37,
+            "client": 37
+          }
+        ],
+        "pins": [
+          {
+            "key": "title",
+            "side": "left",
+            "box": {
+              "x": 137,
+              "y": 210.578125,
+              "width": 245.59375,
+              "height": 52.984375,
+              "right": 382.59375
+            }
+          },
+          {
+            "key": "status",
+            "side": "right",
+            "box": {
+              "x": 1119.375,
+              "y": 210.578125,
+              "width": 245.59375,
+              "height": 52.984375,
+              "right": 1364.96875
+            }
+          }
+        ]
+      },
+      "recheck": "data-table-browser-final-green.json"
+    },
+    {
+      "scenario": "ruby row actions retain full visible text",
+      "method": "real Chrome rendered public-export fixture",
+      "expected": "Automated predicate in evidence/data-table-browser.mjs",
+      "baseline": "failed before fix",
+      "baselineEvidence": "data-table-browser-red.json",
+      "baselineActual": [
+        {
+          "text": "Копия",
+          "scroll": 37,
+          "client": 27
+        },
+        {
+          "text": "Копия",
+          "scroll": 37,
+          "client": 27
+        },
+        {
+          "text": "Копия",
+          "scroll": 37,
+          "client": 27
+        },
+        {
+          "text": "Копия",
+          "scroll": 37,
+          "client": 27
+        },
+        {
+          "text": "Копия",
+          "scroll": 37,
+          "client": 27
+        },
+        {
+          "text": "Копия",
+          "scroll": 37,
+          "client": 27
+        }
+      ],
+      "result": "passed",
+      "actual": [
+        {
+          "text": "Копия",
+          "scroll": 37,
+          "client": 37
+        },
+        {
+          "text": "Копия",
+          "scroll": 37,
+          "client": 37
+        },
+        {
+          "text": "Копия",
+          "scroll": 37,
+          "client": 37
+        },
+        {
+          "text": "Копия",
+          "scroll": 37,
+          "client": 37
+        },
+        {
+          "text": "Копия",
+          "scroll": 37,
+          "client": 37
+        },
+        {
+          "text": "Копия",
+          "scroll": 37,
+          "client": 37
+        }
+      ],
+      "recheck": "data-table-browser-final-green.json"
+    },
+    {
+      "scenario": "ruby header controls fit their columns",
+      "method": "real Chrome rendered public-export fixture",
+      "expected": "Automated predicate in evidence/data-table-browser.mjs",
+      "baseline": "failed before fix",
+      "baselineEvidence": "data-table-browser-red.json",
+      "baselineActual": {
+        "table": {
+          "x": 17,
+          "y": 119.03125,
+          "width": 1016,
+          "height": 540.890625,
+          "right": 1033
+        },
+        "scroll": {
+          "x": 16,
+          "y": 118.03125,
+          "width": 1470,
+          "height": 480,
+          "right": 1486
+        },
+        "pageOverflow": false,
+        "headerClipping": true,
+        "actions": [
+          {
+            "text": "Копия",
+            "scroll": 37,
+            "client": 27
+          },
+          {
+            "text": "Копия",
+            "scroll": 37,
+            "client": 27
+          },
+          {
+            "text": "Копия",
+            "scroll": 37,
+            "client": 27
+          },
+          {
+            "text": "Копия",
+            "scroll": 37,
+            "client": 27
+          },
+          {
+            "text": "Копия",
+            "scroll": 37,
+            "client": 27
+          },
+          {
+            "text": "Копия",
+            "scroll": 37,
+            "client": 27
+          }
+        ],
+        "pins": [
+          {
+            "key": "title",
+            "side": "left",
+            "box": {
+              "x": 137,
+              "y": 218.578125,
+              "width": 160,
+              "height": 57.765625,
+              "right": 297
+            }
+          },
+          {
+            "key": "status",
+            "side": "right",
+            "box": {
+              "x": 777,
+              "y": 218.578125,
+              "width": 160,
+              "height": 57.765625,
+              "right": 937
+            }
+          }
+        ]
+      },
+      "result": "passed",
+      "actual": {
+        "table": {
+          "x": 17,
+          "y": 119.03125,
+          "width": 1468,
+          "height": 488.203125,
+          "right": 1485
+        },
+        "scroll": {
+          "x": 16,
+          "y": 118.03125,
+          "width": 1470,
+          "height": 480,
+          "right": 1486
+        },
+        "pageOverflow": false,
+        "headerClipping": false,
+        "actions": [
+          {
+            "text": "Копия",
+            "scroll": 37,
+            "client": 37
+          },
+          {
+            "text": "Копия",
+            "scroll": 37,
+            "client": 37
+          },
+          {
+            "text": "Копия",
+            "scroll": 37,
+            "client": 37
+          },
+          {
+            "text": "Копия",
+            "scroll": 37,
+            "client": 37
+          },
+          {
+            "text": "Копия",
+            "scroll": 37,
+            "client": 37
+          },
+          {
+            "text": "Копия",
+            "scroll": 37,
+            "client": 37
+          }
+        ],
+        "pins": [
+          {
+            "key": "title",
+            "side": "left",
+            "box": {
+              "x": 137,
+              "y": 210.578125,
+              "width": 245.59375,
+              "height": 52.984375,
+              "right": 382.59375
+            }
+          },
+          {
+            "key": "status",
+            "side": "right",
+            "box": {
+              "x": 1119.375,
+              "y": 210.578125,
+              "width": 245.59375,
+              "height": 52.984375,
+              "right": 1364.96875
+            }
+          }
+        ]
+      },
+      "recheck": "data-table-browser-final-green.json"
+    },
+    {
+      "scenario": "ruby: compact rows without clipping action height",
+      "method": "real Chrome rendered public-export fixture",
+      "expected": "Automated predicate in evidence/data-table-browser.mjs",
+      "baseline": "failed before fix",
+      "baselineEvidence": "data-table-browser-polish-red.json",
+      "baselineActual": 57.765625,
+      "result": "passed",
+      "actual": 52.984375,
+      "recheck": "data-table-browser-final-green.json"
+    },
+    {
+      "scenario": "ruby: compact group bands",
+      "method": "real Chrome rendered public-export fixture",
+      "expected": "Automated predicate in evidence/data-table-browser.mjs",
+      "baseline": "failed before fix",
+      "baselineEvidence": "data-table-browser-polish-red.json",
+      "baselineActual": 47.375,
+      "result": "passed",
+      "actual": 39.375,
+      "recheck": "data-table-browser-final-green.json"
+    },
+    {
+      "scenario": "ruby: numeric headings align with values",
+      "method": "real Chrome rendered public-export fixture",
+      "expected": "Automated predicate in evidence/data-table-browser.mjs",
+      "baseline": "failed before fix",
+      "baselineEvidence": "data-table-browser-polish-red.json",
+      "baselineActual": [
+        49.33749999999998,
+        69.88437500000009
+      ],
+      "result": "passed",
+      "actual": [
+        0.006250000000022737,
+        0.0062499999999090505
+      ],
+      "recheck": "data-table-browser-final-green.json"
+    },
+    {
+      "scenario": "light pinned example fills 1470px panel",
+      "method": "real Chrome rendered public-export fixture",
+      "expected": "Automated predicate in evidence/data-table-browser.mjs",
+      "baseline": "failed before fix",
+      "baselineEvidence": "data-table-browser-red.json",
+      "baselineActual": {
+        "table": {
+          "x": 17,
+          "y": 119.03125,
+          "width": 1016,
+          "height": 540.890625,
+          "right": 1033
+        },
+        "scroll": {
+          "x": 16,
+          "y": 118.03125,
+          "width": 1470,
+          "height": 480,
+          "right": 1486
+        },
+        "pageOverflow": false,
+        "headerClipping": true,
+        "actions": [
+          {
+            "text": "Копия",
+            "scroll": 37,
+            "client": 27
+          },
+          {
+            "text": "Копия",
+            "scroll": 37,
+            "client": 27
+          },
+          {
+            "text": "Копия",
+            "scroll": 37,
+            "client": 27
+          },
+          {
+            "text": "Копия",
+            "scroll": 37,
+            "client": 27
+          },
+          {
+            "text": "Копия",
+            "scroll": 37,
+            "client": 27
+          },
+          {
+            "text": "Копия",
+            "scroll": 37,
+            "client": 27
+          }
+        ],
+        "pins": [
+          {
+            "key": "title",
+            "side": "left",
+            "box": {
+              "x": 137,
+              "y": 218.578125,
+              "width": 160,
+              "height": 57.765625,
+              "right": 297
+            }
+          },
+          {
+            "key": "status",
+            "side": "right",
+            "box": {
+              "x": 777,
+              "y": 218.578125,
+              "width": 160,
+              "height": 57.765625,
+              "right": 937
+            }
+          }
+        ]
+      },
+      "result": "passed",
+      "actual": {
+        "table": {
+          "x": 17,
+          "y": 119.03125,
+          "width": 1468,
+          "height": 488.203125,
+          "right": 1485
+        },
+        "scroll": {
+          "x": 16,
+          "y": 118.03125,
+          "width": 1470,
+          "height": 480,
+          "right": 1486
+        },
+        "pageOverflow": false,
+        "headerClipping": false,
+        "actions": [
+          {
+            "text": "Копия",
+            "scroll": 37,
+            "client": 37
+          },
+          {
+            "text": "Копия",
+            "scroll": 37,
+            "client": 37
+          },
+          {
+            "text": "Копия",
+            "scroll": 37,
+            "client": 37
+          },
+          {
+            "text": "Копия",
+            "scroll": 37,
+            "client": 37
+          },
+          {
+            "text": "Копия",
+            "scroll": 37,
+            "client": 37
+          },
+          {
+            "text": "Копия",
+            "scroll": 37,
+            "client": 37
+          }
+        ],
+        "pins": [
+          {
+            "key": "title",
+            "side": "left",
+            "box": {
+              "x": 137,
+              "y": 210.578125,
+              "width": 245.59375,
+              "height": 52.984375,
+              "right": 382.59375
+            }
+          },
+          {
+            "key": "status",
+            "side": "right",
+            "box": {
+              "x": 1119.375,
+              "y": 210.578125,
+              "width": 245.59375,
+              "height": 52.984375,
+              "right": 1364.96875
+            }
+          }
+        ]
+      },
+      "recheck": "data-table-browser-final-green.json"
+    },
+    {
+      "scenario": "light row actions retain full visible text",
+      "method": "real Chrome rendered public-export fixture",
+      "expected": "Automated predicate in evidence/data-table-browser.mjs",
+      "baseline": "failed before fix",
+      "baselineEvidence": "data-table-browser-red.json",
+      "baselineActual": [
+        {
+          "text": "Копия",
+          "scroll": 37,
+          "client": 27
+        },
+        {
+          "text": "Копия",
+          "scroll": 37,
+          "client": 27
+        },
+        {
+          "text": "Копия",
+          "scroll": 37,
+          "client": 27
+        },
+        {
+          "text": "Копия",
+          "scroll": 37,
+          "client": 27
+        },
+        {
+          "text": "Копия",
+          "scroll": 37,
+          "client": 27
+        },
+        {
+          "text": "Копия",
+          "scroll": 37,
+          "client": 27
+        }
+      ],
+      "result": "passed",
+      "actual": [
+        {
+          "text": "Копия",
+          "scroll": 37,
+          "client": 37
+        },
+        {
+          "text": "Копия",
+          "scroll": 37,
+          "client": 37
+        },
+        {
+          "text": "Копия",
+          "scroll": 37,
+          "client": 37
+        },
+        {
+          "text": "Копия",
+          "scroll": 37,
+          "client": 37
+        },
+        {
+          "text": "Копия",
+          "scroll": 37,
+          "client": 37
+        },
+        {
+          "text": "Копия",
+          "scroll": 37,
+          "client": 37
+        }
+      ],
+      "recheck": "data-table-browser-final-green.json"
+    },
+    {
+      "scenario": "light header controls fit their columns",
+      "method": "real Chrome rendered public-export fixture",
+      "expected": "Automated predicate in evidence/data-table-browser.mjs",
+      "baseline": "failed before fix",
+      "baselineEvidence": "data-table-browser-red.json",
+      "baselineActual": {
+        "table": {
+          "x": 17,
+          "y": 119.03125,
+          "width": 1016,
+          "height": 540.890625,
+          "right": 1033
+        },
+        "scroll": {
+          "x": 16,
+          "y": 118.03125,
+          "width": 1470,
+          "height": 480,
+          "right": 1486
+        },
+        "pageOverflow": false,
+        "headerClipping": true,
+        "actions": [
+          {
+            "text": "Копия",
+            "scroll": 37,
+            "client": 27
+          },
+          {
+            "text": "Копия",
+            "scroll": 37,
+            "client": 27
+          },
+          {
+            "text": "Копия",
+            "scroll": 37,
+            "client": 27
+          },
+          {
+            "text": "Копия",
+            "scroll": 37,
+            "client": 27
+          },
+          {
+            "text": "Копия",
+            "scroll": 37,
+            "client": 27
+          },
+          {
+            "text": "Копия",
+            "scroll": 37,
+            "client": 27
+          }
+        ],
+        "pins": [
+          {
+            "key": "title",
+            "side": "left",
+            "box": {
+              "x": 137,
+              "y": 218.578125,
+              "width": 160,
+              "height": 57.765625,
+              "right": 297
+            }
+          },
+          {
+            "key": "status",
+            "side": "right",
+            "box": {
+              "x": 777,
+              "y": 218.578125,
+              "width": 160,
+              "height": 57.765625,
+              "right": 937
+            }
+          }
+        ]
+      },
+      "result": "passed",
+      "actual": {
+        "table": {
+          "x": 17,
+          "y": 119.03125,
+          "width": 1468,
+          "height": 488.203125,
+          "right": 1485
+        },
+        "scroll": {
+          "x": 16,
+          "y": 118.03125,
+          "width": 1470,
+          "height": 480,
+          "right": 1486
+        },
+        "pageOverflow": false,
+        "headerClipping": false,
+        "actions": [
+          {
+            "text": "Копия",
+            "scroll": 37,
+            "client": 37
+          },
+          {
+            "text": "Копия",
+            "scroll": 37,
+            "client": 37
+          },
+          {
+            "text": "Копия",
+            "scroll": 37,
+            "client": 37
+          },
+          {
+            "text": "Копия",
+            "scroll": 37,
+            "client": 37
+          },
+          {
+            "text": "Копия",
+            "scroll": 37,
+            "client": 37
+          },
+          {
+            "text": "Копия",
+            "scroll": 37,
+            "client": 37
+          }
+        ],
+        "pins": [
+          {
+            "key": "title",
+            "side": "left",
+            "box": {
+              "x": 137,
+              "y": 210.578125,
+              "width": 245.59375,
+              "height": 52.984375,
+              "right": 382.59375
+            }
+          },
+          {
+            "key": "status",
+            "side": "right",
+            "box": {
+              "x": 1119.375,
+              "y": 210.578125,
+              "width": 245.59375,
+              "height": 52.984375,
+              "right": 1364.96875
+            }
+          }
+        ]
+      },
+      "recheck": "data-table-browser-final-green.json"
+    },
+    {
+      "scenario": "light: compact rows without clipping action height",
+      "method": "real Chrome rendered public-export fixture",
+      "expected": "Automated predicate in evidence/data-table-browser.mjs",
+      "baseline": "failed before fix",
+      "baselineEvidence": "data-table-browser-polish-red.json",
+      "baselineActual": 57.765625,
+      "result": "passed",
+      "actual": 52.984375,
+      "recheck": "data-table-browser-final-green.json"
+    },
+    {
+      "scenario": "light: compact group bands",
+      "method": "real Chrome rendered public-export fixture",
+      "expected": "Automated predicate in evidence/data-table-browser.mjs",
+      "baseline": "failed before fix",
+      "baselineEvidence": "data-table-browser-polish-red.json",
+      "baselineActual": 47.375,
+      "result": "passed",
+      "actual": 39.375,
+      "recheck": "data-table-browser-final-green.json"
+    },
+    {
+      "scenario": "light: numeric headings align with values",
+      "method": "real Chrome rendered public-export fixture",
+      "expected": "Automated predicate in evidence/data-table-browser.mjs",
+      "baseline": "failed before fix",
+      "baselineEvidence": "data-table-browser-polish-red.json",
+      "baselineActual": [
+        49.33749999999998,
+        69.88437500000009
+      ],
+      "result": "passed",
+      "actual": [
+        0.006250000000022737,
+        0.0062499999999090505
+      ],
+      "recheck": "data-table-browser-final-green.json"
+    },
+    {
+      "scenario": "pinned 320: no page overflow",
+      "method": "real Chrome rendered public-export fixture",
+      "expected": "Automated predicate in evidence/data-table-browser.mjs",
+      "baseline": "verification of covered behavior",
+      "result": "passed",
+      "actual": false,
+      "recheck": "data-table-browser-final-green.json"
+    },
+    {
+      "scenario": "pinned 320: headers contained",
+      "method": "real Chrome rendered public-export fixture",
+      "expected": "Automated predicate in evidence/data-table-browser.mjs",
+      "baseline": "failed before fix",
+      "baselineEvidence": "data-table-browser-red.json",
+      "baselineActual": true,
+      "result": "passed",
+      "actual": false,
+      "recheck": "data-table-browser-final-green.json"
+    },
+    {
+      "scenario": "pinned 320: pinned cells do not obscure each other",
+      "method": "real Chrome rendered public-export fixture",
+      "expected": "Automated predicate in evidence/data-table-browser.mjs",
+      "baseline": "failed before fix",
+      "baselineEvidence": "data-table-browser-red.json",
+      "baselineActual": [
+        {
+          "key": "name",
+          "side": "left",
+          "box": {
+            "x": 137,
+            "y": 251.0625,
+            "width": 160,
+            "height": 57.765625,
+            "right": 297
+          }
+        },
+        {
+          "key": "score",
+          "side": "right",
+          "box": {
+            "x": 79,
+            "y": 251.0625,
+            "width": 160,
+            "height": 57.765625,
+            "right": 239
+          }
+        }
+      ],
+      "result": "passed",
+      "actual": [
+        {
+          "key": "name",
+          "side": "left",
+          "box": {
+            "x": -265,
+            "y": 310,
+            "width": 160,
+            "height": 52.984375,
+            "right": -105
+          }
+        },
+        {
+          "key": "score",
+          "side": "right",
+          "box": {
+            "x": 55,
+            "y": 310,
+            "width": 160,
+            "height": 52.984375,
+            "right": 215
+          }
+        }
+      ],
+      "recheck": "data-table-browser-final-green.json"
+    },
+    {
+      "scenario": "pinned 375: no page overflow",
+      "method": "real Chrome rendered public-export fixture",
+      "expected": "Automated predicate in evidence/data-table-browser.mjs",
+      "baseline": "verification of covered behavior",
+      "result": "passed",
+      "actual": false,
+      "recheck": "data-table-browser-final-green.json"
+    },
+    {
+      "scenario": "pinned 375: headers contained",
+      "method": "real Chrome rendered public-export fixture",
+      "expected": "Automated predicate in evidence/data-table-browser.mjs",
+      "baseline": "failed before fix",
+      "baselineEvidence": "data-table-browser-red.json",
+      "baselineActual": true,
+      "result": "passed",
+      "actual": false,
+      "recheck": "data-table-browser-final-green.json"
+    },
+    {
+      "scenario": "pinned 375: pinned cells do not obscure each other",
+      "method": "real Chrome rendered public-export fixture",
+      "expected": "Automated predicate in evidence/data-table-browser.mjs",
+      "baseline": "failed before fix",
+      "baselineEvidence": "data-table-browser-red.json",
+      "baselineActual": [
+        {
+          "key": "name",
+          "side": "left",
+          "box": {
+            "x": 137,
+            "y": 218.828125,
+            "width": 160,
+            "height": 57.765625,
+            "right": 297
+          }
+        },
+        {
+          "key": "score",
+          "side": "right",
+          "box": {
+            "x": 134,
+            "y": 218.828125,
+            "width": 160,
+            "height": 57.765625,
+            "right": 294
+          }
+        }
+      ],
+      "result": "passed",
+      "actual": [
+        {
+          "key": "name",
+          "side": "left",
+          "box": {
+            "x": -210,
+            "y": 277.765625,
+            "width": 160,
+            "height": 52.984375,
+            "right": -50
+          }
+        },
+        {
+          "key": "score",
+          "side": "right",
+          "box": {
+            "x": 110,
+            "y": 277.765625,
+            "width": 160,
+            "height": 52.984375,
+            "right": 270
+          }
+        }
+      ],
+      "recheck": "data-table-browser-final-green.json"
+    },
+    {
+      "scenario": "pinned 768: no page overflow",
+      "method": "real Chrome rendered public-export fixture",
+      "expected": "Automated predicate in evidence/data-table-browser.mjs",
+      "baseline": "verification of covered behavior",
+      "result": "passed",
+      "actual": false,
+      "recheck": "data-table-browser-final-green.json"
+    },
+    {
+      "scenario": "pinned 768: headers contained",
+      "method": "real Chrome rendered public-export fixture",
+      "expected": "Automated predicate in evidence/data-table-browser.mjs",
+      "baseline": "failed before fix",
+      "baselineEvidence": "data-table-browser-red.json",
+      "baselineActual": true,
+      "result": "passed",
+      "actual": false,
+      "recheck": "data-table-browser-final-green.json"
+    },
+    {
+      "scenario": "pinned 1024: no page overflow",
+      "method": "real Chrome rendered public-export fixture",
+      "expected": "Automated predicate in evidence/data-table-browser.mjs",
+      "baseline": "verification of covered behavior",
+      "result": "passed",
+      "actual": false,
+      "recheck": "data-table-browser-final-green.json"
+    },
+    {
+      "scenario": "pinned 1024: headers contained",
+      "method": "real Chrome rendered public-export fixture",
+      "expected": "Automated predicate in evidence/data-table-browser.mjs",
+      "baseline": "failed before fix",
+      "baselineEvidence": "data-table-browser-red.json",
+      "baselineActual": true,
+      "result": "passed",
+      "actual": false,
+      "recheck": "data-table-browser-final-green.json"
+    },
+    {
+      "scenario": "pinned 1024: fills available panel",
+      "method": "real Chrome rendered public-export fixture",
+      "expected": "Automated predicate in evidence/data-table-browser.mjs",
+      "baseline": "failed before fix",
+      "baselineEvidence": "data-table-browser-red.json",
+      "baselineActual": {
+        "table": {
+          "x": 17,
+          "y": 71.40625,
+          "width": 696,
+          "height": 629.828125,
+          "right": 713
+        },
+        "scroll": {
+          "x": 16,
+          "y": 70.40625,
+          "width": 1024,
+          "height": 360,
+          "right": 1040
+        },
+        "pageOverflow": false,
+        "headerClipping": true,
+        "actions": [
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 27
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 27
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 27
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 27
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 27
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 27
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 27
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 27
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 27
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 27
+          }
+        ],
+        "pins": [
+          {
+            "key": "name",
+            "side": "left",
+            "box": {
+              "x": 137,
+              "y": 123.578125,
+              "width": 160,
+              "height": 57.765625,
+              "right": 297
+            }
+          },
+          {
+            "key": "score",
+            "side": "right",
+            "box": {
+              "x": 457,
+              "y": 123.578125,
+              "width": 160,
+              "height": 57.765625,
+              "right": 617
+            }
+          }
+        ]
+      },
+      "result": "passed",
+      "actual": {
+        "table": {
+          "x": 17,
+          "y": 71.40625,
+          "width": 1022,
+          "height": 588.3125,
+          "right": 1039
+        },
+        "scroll": {
+          "x": 16,
+          "y": 70.40625,
+          "width": 1024,
+          "height": 360,
+          "right": 1040
+        },
+        "pageOverflow": false,
+        "headerClipping": false,
+        "actions": [
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          }
+        ],
+        "pins": [
+          {
+            "key": "name",
+            "side": "left",
+            "box": {
+              "x": 137,
+              "y": 129.875,
+              "width": 260.65625,
+              "height": 52.984375,
+              "right": 397.65625
+            }
+          },
+          {
+            "key": "score",
+            "side": "right",
+            "box": {
+              "x": 658.3125,
+              "y": 129.875,
+              "width": 260.65625,
+              "height": 52.984375,
+              "right": 918.96875
+            }
+          }
+        ]
+      },
+      "recheck": "data-table-browser-final-green.json"
+    },
+    {
+      "scenario": "pinned 1470: no page overflow",
+      "method": "real Chrome rendered public-export fixture",
+      "expected": "Automated predicate in evidence/data-table-browser.mjs",
+      "baseline": "verification of covered behavior",
+      "result": "passed",
+      "actual": false,
+      "recheck": "data-table-browser-final-green.json"
+    },
+    {
+      "scenario": "pinned 1470: headers contained",
+      "method": "real Chrome rendered public-export fixture",
+      "expected": "Automated predicate in evidence/data-table-browser.mjs",
+      "baseline": "failed before fix",
+      "baselineEvidence": "data-table-browser-red.json",
+      "baselineActual": true,
+      "result": "passed",
+      "actual": false,
+      "recheck": "data-table-browser-final-green.json"
+    },
+    {
+      "scenario": "pinned 1470: fills available panel",
+      "method": "real Chrome rendered public-export fixture",
+      "expected": "Automated predicate in evidence/data-table-browser.mjs",
+      "baseline": "failed before fix",
+      "baselineEvidence": "data-table-browser-red.json",
+      "baselineActual": {
+        "table": {
+          "x": 17,
+          "y": 71.40625,
+          "width": 696,
+          "height": 629.828125,
+          "right": 713
+        },
+        "scroll": {
+          "x": 16,
+          "y": 70.40625,
+          "width": 1470,
+          "height": 360,
+          "right": 1486
+        },
+        "pageOverflow": false,
+        "headerClipping": true,
+        "actions": [
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 27
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 27
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 27
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 27
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 27
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 27
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 27
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 27
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 27
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 27
+          }
+        ],
+        "pins": [
+          {
+            "key": "name",
+            "side": "left",
+            "box": {
+              "x": 137,
+              "y": 123.578125,
+              "width": 160,
+              "height": 57.765625,
+              "right": 297
+            }
+          },
+          {
+            "key": "score",
+            "side": "right",
+            "box": {
+              "x": 457,
+              "y": 123.578125,
+              "width": 160,
+              "height": 57.765625,
+              "right": 617
+            }
+          }
+        ]
+      },
+      "result": "passed",
+      "actual": {
+        "table": {
+          "x": 17,
+          "y": 71.40625,
+          "width": 1468,
+          "height": 582.015625,
+          "right": 1485
+        },
+        "scroll": {
+          "x": 16,
+          "y": 70.40625,
+          "width": 1470,
+          "height": 360,
+          "right": 1486
+        },
+        "pageOverflow": false,
+        "headerClipping": false,
+        "actions": [
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          }
+        ],
+        "pins": [
+          {
+            "key": "name",
+            "side": "left",
+            "box": {
+              "x": 137,
+              "y": 123.578125,
+              "width": 409.328125,
+              "height": 52.984375,
+              "right": 546.328125
+            }
+          },
+          {
+            "key": "score",
+            "side": "right",
+            "box": {
+              "x": 955.65625,
+              "y": 123.578125,
+              "width": 409.328125,
+              "height": 52.984375,
+              "right": 1364.984375
+            }
+          }
+        ]
+      },
+      "recheck": "data-table-browser-final-green.json"
+    },
+    {
+      "scenario": "all-pinned 320: no page overflow",
+      "method": "real Chrome rendered public-export fixture",
+      "expected": "Automated predicate in evidence/data-table-browser.mjs",
+      "baseline": "verification of covered behavior",
+      "result": "passed",
+      "actual": false,
+      "recheck": "data-table-browser-final-green.json"
+    },
+    {
+      "scenario": "all-pinned 320: headers contained",
+      "method": "real Chrome rendered public-export fixture",
+      "expected": "Automated predicate in evidence/data-table-browser.mjs",
+      "baseline": "failed before fix",
+      "baselineEvidence": "data-table-browser-red.json",
+      "baselineActual": true,
+      "result": "passed",
+      "actual": false,
+      "recheck": "data-table-browser-final-green.json"
+    },
+    {
+      "scenario": "all-pinned 320: pinned cells do not obscure each other",
+      "method": "real Chrome rendered public-export fixture",
+      "expected": "Automated predicate in evidence/data-table-browser.mjs",
+      "baseline": "failed before fix",
+      "baselineEvidence": "data-table-browser-red.json",
+      "baselineActual": [
+        {
+          "key": "name",
+          "side": "left",
+          "box": {
+            "x": 137,
+            "y": 251.0625,
+            "width": 160,
+            "height": 57.765625,
+            "right": 297
+          }
+        },
+        {
+          "key": "team",
+          "side": "left",
+          "box": {
+            "x": 175,
+            "y": 251.0625,
+            "width": 160,
+            "height": 57.765625,
+            "right": 335
+          }
+        },
+        {
+          "key": "score",
+          "side": "right",
+          "box": {
+            "x": 79,
+            "y": 251.0625,
+            "width": 160,
+            "height": 57.765625,
+            "right": 239
+          }
+        }
+      ],
+      "result": "passed",
+      "actual": [
+        {
+          "key": "name",
+          "side": "left",
+          "box": {
+            "x": -265,
+            "y": 310,
+            "width": 160,
+            "height": 52.984375,
+            "right": -105
+          }
+        },
+        {
+          "key": "team",
+          "side": "left",
+          "box": {
+            "x": -105,
+            "y": 310,
+            "width": 160,
+            "height": 52.984375,
+            "right": 55
+          }
+        },
+        {
+          "key": "score",
+          "side": "right",
+          "box": {
+            "x": 55,
+            "y": 310,
+            "width": 160,
+            "height": 52.984375,
+            "right": 215
+          }
+        }
+      ],
+      "recheck": "data-table-browser-final-green.json"
+    },
+    {
+      "scenario": "all-pinned 375: no page overflow",
+      "method": "real Chrome rendered public-export fixture",
+      "expected": "Automated predicate in evidence/data-table-browser.mjs",
+      "baseline": "verification of covered behavior",
+      "result": "passed",
+      "actual": false,
+      "recheck": "data-table-browser-final-green.json"
+    },
+    {
+      "scenario": "all-pinned 375: headers contained",
+      "method": "real Chrome rendered public-export fixture",
+      "expected": "Automated predicate in evidence/data-table-browser.mjs",
+      "baseline": "failed before fix",
+      "baselineEvidence": "data-table-browser-red.json",
+      "baselineActual": true,
+      "result": "passed",
+      "actual": false,
+      "recheck": "data-table-browser-final-green.json"
+    },
+    {
+      "scenario": "all-pinned 375: pinned cells do not obscure each other",
+      "method": "real Chrome rendered public-export fixture",
+      "expected": "Automated predicate in evidence/data-table-browser.mjs",
+      "baseline": "failed before fix",
+      "baselineEvidence": "data-table-browser-red.json",
+      "baselineActual": [
+        {
+          "key": "name",
+          "side": "left",
+          "box": {
+            "x": 137,
+            "y": 218.828125,
+            "width": 160,
+            "height": 57.765625,
+            "right": 297
+          }
+        },
+        {
+          "key": "team",
+          "side": "left",
+          "box": {
+            "x": 230,
+            "y": 218.828125,
+            "width": 160,
+            "height": 57.765625,
+            "right": 390
+          }
+        },
+        {
+          "key": "score",
+          "side": "right",
+          "box": {
+            "x": 134,
+            "y": 218.828125,
+            "width": 160,
+            "height": 57.765625,
+            "right": 294
+          }
+        }
+      ],
+      "result": "passed",
+      "actual": [
+        {
+          "key": "name",
+          "side": "left",
+          "box": {
+            "x": -210,
+            "y": 277.765625,
+            "width": 160,
+            "height": 52.984375,
+            "right": -50
+          }
+        },
+        {
+          "key": "team",
+          "side": "left",
+          "box": {
+            "x": -50,
+            "y": 277.765625,
+            "width": 160,
+            "height": 52.984375,
+            "right": 110
+          }
+        },
+        {
+          "key": "score",
+          "side": "right",
+          "box": {
+            "x": 110,
+            "y": 277.765625,
+            "width": 160,
+            "height": 52.984375,
+            "right": 270
+          }
+        }
+      ],
+      "recheck": "data-table-browser-final-green.json"
+    },
+    {
+      "scenario": "all-pinned 768: no page overflow",
+      "method": "real Chrome rendered public-export fixture",
+      "expected": "Automated predicate in evidence/data-table-browser.mjs",
+      "baseline": "verification of covered behavior",
+      "result": "passed",
+      "actual": false,
+      "recheck": "data-table-browser-final-green.json"
+    },
+    {
+      "scenario": "all-pinned 768: headers contained",
+      "method": "real Chrome rendered public-export fixture",
+      "expected": "Automated predicate in evidence/data-table-browser.mjs",
+      "baseline": "failed before fix",
+      "baselineEvidence": "data-table-browser-red.json",
+      "baselineActual": true,
+      "result": "passed",
+      "actual": false,
+      "recheck": "data-table-browser-final-green.json"
+    },
+    {
+      "scenario": "all-pinned 1024: no page overflow",
+      "method": "real Chrome rendered public-export fixture",
+      "expected": "Automated predicate in evidence/data-table-browser.mjs",
+      "baseline": "verification of covered behavior",
+      "result": "passed",
+      "actual": false,
+      "recheck": "data-table-browser-final-green.json"
+    },
+    {
+      "scenario": "all-pinned 1024: headers contained",
+      "method": "real Chrome rendered public-export fixture",
+      "expected": "Automated predicate in evidence/data-table-browser.mjs",
+      "baseline": "failed before fix",
+      "baselineEvidence": "data-table-browser-red.json",
+      "baselineActual": true,
+      "result": "passed",
+      "actual": false,
+      "recheck": "data-table-browser-final-green.json"
+    },
+    {
+      "scenario": "all-pinned 1024: fills available panel",
+      "method": "real Chrome rendered public-export fixture",
+      "expected": "Automated predicate in evidence/data-table-browser.mjs",
+      "baseline": "failed before fix",
+      "baselineEvidence": "data-table-browser-red.json",
+      "baselineActual": {
+        "table": {
+          "x": 17,
+          "y": 71.40625,
+          "width": 696,
+          "height": 629.828125,
+          "right": 713
+        },
+        "scroll": {
+          "x": 16,
+          "y": 70.40625,
+          "width": 1024,
+          "height": 360,
+          "right": 1040
+        },
+        "pageOverflow": false,
+        "headerClipping": true,
+        "actions": [
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 27
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 27
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 27
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 27
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 27
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 27
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 27
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 27
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 27
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 27
+          }
+        ],
+        "pins": [
+          {
+            "key": "name",
+            "side": "left",
+            "box": {
+              "x": 137,
+              "y": 123.578125,
+              "width": 160,
+              "height": 57.765625,
+              "right": 297
+            }
+          },
+          {
+            "key": "team",
+            "side": "left",
+            "box": {
+              "x": 297,
+              "y": 123.578125,
+              "width": 160,
+              "height": 57.765625,
+              "right": 457
+            }
+          },
+          {
+            "key": "score",
+            "side": "right",
+            "box": {
+              "x": 457,
+              "y": 123.578125,
+              "width": 160,
+              "height": 57.765625,
+              "right": 617
+            }
+          }
+        ]
+      },
+      "result": "passed",
+      "actual": {
+        "table": {
+          "x": 17,
+          "y": 71.40625,
+          "width": 1022,
+          "height": 588.3125,
+          "right": 1039
+        },
+        "scroll": {
+          "x": 16,
+          "y": 70.40625,
+          "width": 1024,
+          "height": 360,
+          "right": 1040
+        },
+        "pageOverflow": false,
+        "headerClipping": false,
+        "actions": [
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          }
+        ],
+        "pins": [
+          {
+            "key": "name",
+            "side": "left",
+            "box": {
+              "x": 137,
+              "y": 129.875,
+              "width": 260.65625,
+              "height": 52.984375,
+              "right": 397.65625
+            }
+          },
+          {
+            "key": "team",
+            "side": "left",
+            "box": {
+              "x": 397.65625,
+              "y": 129.875,
+              "width": 260.65625,
+              "height": 52.984375,
+              "right": 658.3125
+            }
+          },
+          {
+            "key": "score",
+            "side": "right",
+            "box": {
+              "x": 658.3125,
+              "y": 129.875,
+              "width": 260.65625,
+              "height": 52.984375,
+              "right": 918.96875
+            }
+          }
+        ]
+      },
+      "recheck": "data-table-browser-final-green.json"
+    },
+    {
+      "scenario": "all-pinned 1470: no page overflow",
+      "method": "real Chrome rendered public-export fixture",
+      "expected": "Automated predicate in evidence/data-table-browser.mjs",
+      "baseline": "verification of covered behavior",
+      "result": "passed",
+      "actual": false,
+      "recheck": "data-table-browser-final-green.json"
+    },
+    {
+      "scenario": "all-pinned 1470: headers contained",
+      "method": "real Chrome rendered public-export fixture",
+      "expected": "Automated predicate in evidence/data-table-browser.mjs",
+      "baseline": "failed before fix",
+      "baselineEvidence": "data-table-browser-red.json",
+      "baselineActual": true,
+      "result": "passed",
+      "actual": false,
+      "recheck": "data-table-browser-final-green.json"
+    },
+    {
+      "scenario": "all-pinned 1470: fills available panel",
+      "method": "real Chrome rendered public-export fixture",
+      "expected": "Automated predicate in evidence/data-table-browser.mjs",
+      "baseline": "failed before fix",
+      "baselineEvidence": "data-table-browser-red.json",
+      "baselineActual": {
+        "table": {
+          "x": 17,
+          "y": 71.40625,
+          "width": 696,
+          "height": 629.828125,
+          "right": 713
+        },
+        "scroll": {
+          "x": 16,
+          "y": 70.40625,
+          "width": 1470,
+          "height": 360,
+          "right": 1486
+        },
+        "pageOverflow": false,
+        "headerClipping": true,
+        "actions": [
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 27
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 27
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 27
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 27
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 27
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 27
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 27
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 27
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 27
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 27
+          }
+        ],
+        "pins": [
+          {
+            "key": "name",
+            "side": "left",
+            "box": {
+              "x": 137,
+              "y": 123.578125,
+              "width": 160,
+              "height": 57.765625,
+              "right": 297
+            }
+          },
+          {
+            "key": "team",
+            "side": "left",
+            "box": {
+              "x": 297,
+              "y": 123.578125,
+              "width": 160,
+              "height": 57.765625,
+              "right": 457
+            }
+          },
+          {
+            "key": "score",
+            "side": "right",
+            "box": {
+              "x": 457,
+              "y": 123.578125,
+              "width": 160,
+              "height": 57.765625,
+              "right": 617
+            }
+          }
+        ]
+      },
+      "result": "passed",
+      "actual": {
+        "table": {
+          "x": 17,
+          "y": 71.40625,
+          "width": 1468,
+          "height": 582.015625,
+          "right": 1485
+        },
+        "scroll": {
+          "x": 16,
+          "y": 70.40625,
+          "width": 1470,
+          "height": 360,
+          "right": 1486
+        },
+        "pageOverflow": false,
+        "headerClipping": false,
+        "actions": [
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          }
+        ],
+        "pins": [
+          {
+            "key": "name",
+            "side": "left",
+            "box": {
+              "x": 137,
+              "y": 123.578125,
+              "width": 409.328125,
+              "height": 52.984375,
+              "right": 546.328125
+            }
+          },
+          {
+            "key": "team",
+            "side": "left",
+            "box": {
+              "x": 546.328125,
+              "y": 123.578125,
+              "width": 409.328125,
+              "height": 52.984375,
+              "right": 955.65625
+            }
+          },
+          {
+            "key": "score",
+            "side": "right",
+            "box": {
+              "x": 955.65625,
+              "y": 123.578125,
+              "width": 409.328125,
+              "height": 52.984375,
+              "right": 1364.984375
+            }
+          }
+        ]
+      },
+      "recheck": "data-table-browser-final-green.json"
+    },
+    {
+      "scenario": "all-pinned wide: sticky offsets match cell geometry",
+      "method": "real Chrome rendered public-export fixture",
+      "expected": "Automated predicate in evidence/data-table-browser.mjs",
+      "baseline": "verification of covered behavior",
+      "result": "passed",
+      "actual": [
+        {
+          "key": "name",
+          "side": "left",
+          "box": {
+            "x": 137,
+            "y": 123.578125,
+            "width": 409.328125,
+            "height": 52.984375,
+            "right": 546.328125
+          }
+        },
+        {
+          "key": "team",
+          "side": "left",
+          "box": {
+            "x": 546.328125,
+            "y": 123.578125,
+            "width": 409.328125,
+            "height": 52.984375,
+            "right": 955.65625
+          }
+        },
+        {
+          "key": "score",
+          "side": "right",
+          "box": {
+            "x": 955.65625,
+            "y": 123.578125,
+            "width": 409.328125,
+            "height": 52.984375,
+            "right": 1364.984375
+          }
+        }
+      ],
+      "recheck": "data-table-browser-final-green.json"
+    },
+    {
+      "scenario": "unpinned 320: no page overflow",
+      "method": "real Chrome rendered public-export fixture",
+      "expected": "Automated predicate in evidence/data-table-browser.mjs",
+      "baseline": "verification of covered behavior",
+      "result": "passed",
+      "actual": false,
+      "recheck": "data-table-browser-final-green.json"
+    },
+    {
+      "scenario": "unpinned 320: headers contained",
+      "method": "real Chrome rendered public-export fixture",
+      "expected": "Automated predicate in evidence/data-table-browser.mjs",
+      "baseline": "failed before fix",
+      "baselineEvidence": "data-table-browser-red.json",
+      "baselineActual": true,
+      "result": "passed",
+      "actual": false,
+      "recheck": "data-table-browser-final-green.json"
+    },
+    {
+      "scenario": "unpinned 320: container-responsive cards",
+      "method": "real Chrome rendered public-export fixture",
+      "expected": "Automated predicate in evidence/data-table-browser.mjs",
+      "baseline": "failed before fix",
+      "baselineEvidence": "data-table-browser-red.json",
+      "baselineActual": "table-row",
+      "result": "passed",
+      "actual": "grid",
+      "recheck": "data-table-browser-final-green.json"
+    },
+    {
+      "scenario": "unpinned 320: card utility cells use available space",
+      "method": "real Chrome rendered public-export fixture",
+      "expected": "Automated predicate in evidence/data-table-browser.mjs",
+      "baseline": "failed before fix",
+      "baselineEvidence": "data-table-browser-cards-red.json",
+      "baselineActual": [
+        40,
+        40,
+        260.015625,
+        260.015625,
+        260.015625,
+        120
+      ],
+      "result": "passed",
+      "actual": [
+        260.015625,
+        260.015625,
+        260.015625,
+        260.015625,
+        260.015625,
+        260.015625
+      ],
+      "recheck": "data-table-browser-final-green.json"
+    },
+    {
+      "scenario": "unpinned 320: card actions show full labels",
+      "method": "real Chrome rendered public-export fixture",
+      "expected": "Automated predicate in evidence/data-table-browser.mjs",
+      "baseline": "failed before fix",
+      "baselineEvidence": "data-table-browser-cards-red.json",
+      "baselineActual": [
+        {
+          "text": "Copy",
+          "scroll": 29,
+          "client": 25
+        },
+        {
+          "text": "Copy",
+          "scroll": 29,
+          "client": 25
+        },
+        {
+          "text": "Copy",
+          "scroll": 29,
+          "client": 25
+        },
+        {
+          "text": "Copy",
+          "scroll": 29,
+          "client": 25
+        },
+        {
+          "text": "Copy",
+          "scroll": 29,
+          "client": 25
+        },
+        {
+          "text": "Copy",
+          "scroll": 29,
+          "client": 25
+        },
+        {
+          "text": "Copy",
+          "scroll": 29,
+          "client": 25
+        },
+        {
+          "text": "Copy",
+          "scroll": 29,
+          "client": 25
+        },
+        {
+          "text": "Copy",
+          "scroll": 29,
+          "client": 25
+        },
+        {
+          "text": "Copy",
+          "scroll": 29,
+          "client": 25
+        }
+      ],
+      "result": "passed",
+      "actual": [
+        {
+          "text": "Copy",
+          "scroll": 29,
+          "client": 29
+        },
+        {
+          "text": "Copy",
+          "scroll": 29,
+          "client": 29
+        },
+        {
+          "text": "Copy",
+          "scroll": 29,
+          "client": 29
+        },
+        {
+          "text": "Copy",
+          "scroll": 29,
+          "client": 29
+        },
+        {
+          "text": "Copy",
+          "scroll": 29,
+          "client": 29
+        },
+        {
+          "text": "Copy",
+          "scroll": 29,
+          "client": 29
+        },
+        {
+          "text": "Copy",
+          "scroll": 29,
+          "client": 29
+        },
+        {
+          "text": "Copy",
+          "scroll": 29,
+          "client": 29
+        },
+        {
+          "text": "Copy",
+          "scroll": 29,
+          "client": 29
+        },
+        {
+          "text": "Copy",
+          "scroll": 29,
+          "client": 29
+        }
+      ],
+      "recheck": "data-table-browser-final-green.json"
+    },
+    {
+      "scenario": "unpinned 320: sorting filtering and select-all remain visible",
+      "method": "real Chrome rendered public-export fixture",
+      "expected": "Automated predicate in evidence/data-table-browser.mjs",
+      "baseline": "failed before fix",
+      "baselineEvidence": "data-table-browser-card-header-red.json",
+      "baselineActual": {
+        "height": 1,
+        "clip": "inset(50%)",
+        "controls": 7
+      },
+      "result": "passed",
+      "actual": {
+        "height": 186.625,
+        "clip": "none",
+        "controls": 7
+      },
+      "recheck": "data-table-browser-final-green.json"
+    },
+    {
+      "scenario": "unpinned 320: card utility actions have visible labels",
+      "method": "real Chrome rendered public-export fixture",
+      "expected": "Automated predicate in evidence/data-table-browser.mjs",
+      "baseline": "failed before fix",
+      "baselineEvidence": "data-table-browser-card-header-red.json",
+      "baselineActual": [
+        null,
+        null
+      ],
+      "result": "passed",
+      "actual": [
+        "Подробности",
+        "Действия"
+      ],
+      "recheck": "data-table-browser-final-green.json"
+    },
+    {
+      "scenario": "unpinned 320: select-all has a readable visible label",
+      "method": "real Chrome rendered public-export fixture",
+      "expected": "Automated predicate in evidence/data-table-browser.mjs",
+      "baseline": "failed before fix",
+      "baselineEvidence": "data-table-browser-select-label-red.json",
+      "baselineActual": 0,
+      "result": "passed",
+      "actual": 70.25,
+      "recheck": "data-table-browser-final-green.json"
+    },
+    {
+      "scenario": "unpinned 375: no page overflow",
+      "method": "real Chrome rendered public-export fixture",
+      "expected": "Automated predicate in evidence/data-table-browser.mjs",
+      "baseline": "verification of covered behavior",
+      "result": "passed",
+      "actual": false,
+      "recheck": "data-table-browser-final-green.json"
+    },
+    {
+      "scenario": "unpinned 375: headers contained",
+      "method": "real Chrome rendered public-export fixture",
+      "expected": "Automated predicate in evidence/data-table-browser.mjs",
+      "baseline": "failed before fix",
+      "baselineEvidence": "data-table-browser-red.json",
+      "baselineActual": true,
+      "result": "passed",
+      "actual": false,
+      "recheck": "data-table-browser-final-green.json"
+    },
+    {
+      "scenario": "unpinned 375: container-responsive cards",
+      "method": "real Chrome rendered public-export fixture",
+      "expected": "Automated predicate in evidence/data-table-browser.mjs",
+      "baseline": "failed before fix",
+      "baselineEvidence": "data-table-browser-red.json",
+      "baselineActual": "table-row",
+      "result": "passed",
+      "actual": "grid",
+      "recheck": "data-table-browser-final-green.json"
+    },
+    {
+      "scenario": "unpinned 375: card utility cells use available space",
+      "method": "real Chrome rendered public-export fixture",
+      "expected": "Automated predicate in evidence/data-table-browser.mjs",
+      "baseline": "failed before fix",
+      "baselineEvidence": "data-table-browser-cards-red.json",
+      "baselineActual": [
+        40,
+        40,
+        315.015625,
+        315.015625,
+        315.015625,
+        120
+      ],
+      "result": "passed",
+      "actual": [
+        315.015625,
+        315.015625,
+        315.015625,
+        315.015625,
+        315.015625,
+        315.015625
+      ],
+      "recheck": "data-table-browser-final-green.json"
+    },
+    {
+      "scenario": "unpinned 375: card actions show full labels",
+      "method": "real Chrome rendered public-export fixture",
+      "expected": "Automated predicate in evidence/data-table-browser.mjs",
+      "baseline": "failed before fix",
+      "baselineEvidence": "data-table-browser-cards-red.json",
+      "baselineActual": [
+        {
+          "text": "Copy",
+          "scroll": 29,
+          "client": 25
+        },
+        {
+          "text": "Copy",
+          "scroll": 29,
+          "client": 25
+        },
+        {
+          "text": "Copy",
+          "scroll": 29,
+          "client": 25
+        },
+        {
+          "text": "Copy",
+          "scroll": 29,
+          "client": 25
+        },
+        {
+          "text": "Copy",
+          "scroll": 29,
+          "client": 25
+        },
+        {
+          "text": "Copy",
+          "scroll": 29,
+          "client": 25
+        },
+        {
+          "text": "Copy",
+          "scroll": 29,
+          "client": 25
+        },
+        {
+          "text": "Copy",
+          "scroll": 29,
+          "client": 25
+        },
+        {
+          "text": "Copy",
+          "scroll": 29,
+          "client": 25
+        },
+        {
+          "text": "Copy",
+          "scroll": 29,
+          "client": 25
+        }
+      ],
+      "result": "passed",
+      "actual": [
+        {
+          "text": "Copy",
+          "scroll": 29,
+          "client": 29
+        },
+        {
+          "text": "Copy",
+          "scroll": 29,
+          "client": 29
+        },
+        {
+          "text": "Copy",
+          "scroll": 29,
+          "client": 29
+        },
+        {
+          "text": "Copy",
+          "scroll": 29,
+          "client": 29
+        },
+        {
+          "text": "Copy",
+          "scroll": 29,
+          "client": 29
+        },
+        {
+          "text": "Copy",
+          "scroll": 29,
+          "client": 29
+        },
+        {
+          "text": "Copy",
+          "scroll": 29,
+          "client": 29
+        },
+        {
+          "text": "Copy",
+          "scroll": 29,
+          "client": 29
+        },
+        {
+          "text": "Copy",
+          "scroll": 29,
+          "client": 29
+        },
+        {
+          "text": "Copy",
+          "scroll": 29,
+          "client": 29
+        }
+      ],
+      "recheck": "data-table-browser-final-green.json"
+    },
+    {
+      "scenario": "unpinned 375: sorting filtering and select-all remain visible",
+      "method": "real Chrome rendered public-export fixture",
+      "expected": "Automated predicate in evidence/data-table-browser.mjs",
+      "baseline": "failed before fix",
+      "baselineEvidence": "data-table-browser-card-header-red.json",
+      "baselineActual": {
+        "height": 1,
+        "clip": "inset(50%)",
+        "controls": 7
+      },
+      "result": "passed",
+      "actual": {
+        "height": 180.328125,
+        "clip": "none",
+        "controls": 7
+      },
+      "recheck": "data-table-browser-final-green.json"
+    },
+    {
+      "scenario": "unpinned 375: card utility actions have visible labels",
+      "method": "real Chrome rendered public-export fixture",
+      "expected": "Automated predicate in evidence/data-table-browser.mjs",
+      "baseline": "failed before fix",
+      "baselineEvidence": "data-table-browser-card-header-red.json",
+      "baselineActual": [
+        null,
+        null
+      ],
+      "result": "passed",
+      "actual": [
+        "Подробности",
+        "Действия"
+      ],
+      "recheck": "data-table-browser-final-green.json"
+    },
+    {
+      "scenario": "unpinned 375: select-all has a readable visible label",
+      "method": "real Chrome rendered public-export fixture",
+      "expected": "Automated predicate in evidence/data-table-browser.mjs",
+      "baseline": "failed before fix",
+      "baselineEvidence": "data-table-browser-select-label-red.json",
+      "baselineActual": 0,
+      "result": "passed",
+      "actual": 70.25,
+      "recheck": "data-table-browser-final-green.json"
+    },
+    {
+      "scenario": "unpinned 768: no page overflow",
+      "method": "real Chrome rendered public-export fixture",
+      "expected": "Automated predicate in evidence/data-table-browser.mjs",
+      "baseline": "verification of covered behavior",
+      "result": "passed",
+      "actual": false,
+      "recheck": "data-table-browser-final-green.json"
+    },
+    {
+      "scenario": "unpinned 768: headers contained",
+      "method": "real Chrome rendered public-export fixture",
+      "expected": "Automated predicate in evidence/data-table-browser.mjs",
+      "baseline": "failed before fix",
+      "baselineEvidence": "data-table-browser-red.json",
+      "baselineActual": true,
+      "result": "passed",
+      "actual": false,
+      "recheck": "data-table-browser-final-green.json"
+    },
+    {
+      "scenario": "unpinned 1024: no page overflow",
+      "method": "real Chrome rendered public-export fixture",
+      "expected": "Automated predicate in evidence/data-table-browser.mjs",
+      "baseline": "verification of covered behavior",
+      "result": "passed",
+      "actual": false,
+      "recheck": "data-table-browser-final-green.json"
+    },
+    {
+      "scenario": "unpinned 1024: headers contained",
+      "method": "real Chrome rendered public-export fixture",
+      "expected": "Automated predicate in evidence/data-table-browser.mjs",
+      "baseline": "failed before fix",
+      "baselineEvidence": "data-table-browser-red.json",
+      "baselineActual": true,
+      "result": "passed",
+      "actual": false,
+      "recheck": "data-table-browser-final-green.json"
+    },
+    {
+      "scenario": "unpinned 1024: fills available panel",
+      "method": "real Chrome rendered public-export fixture",
+      "expected": "Automated predicate in evidence/data-table-browser.mjs",
+      "baseline": "verification of covered behavior",
+      "result": "passed",
+      "actual": {
+        "table": {
+          "x": 17,
+          "y": 71.40625,
+          "width": 1022,
+          "height": 588.3125,
+          "right": 1039
+        },
+        "scroll": {
+          "x": 16,
+          "y": 70.40625,
+          "width": 1024,
+          "height": 360,
+          "right": 1040
+        },
+        "pageOverflow": false,
+        "headerClipping": false,
+        "actions": [
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          }
+        ],
+        "pins": []
+      },
+      "recheck": "data-table-browser-final-green.json"
+    },
+    {
+      "scenario": "unpinned 1470: no page overflow",
+      "method": "real Chrome rendered public-export fixture",
+      "expected": "Automated predicate in evidence/data-table-browser.mjs",
+      "baseline": "verification of covered behavior",
+      "result": "passed",
+      "actual": false,
+      "recheck": "data-table-browser-final-green.json"
+    },
+    {
+      "scenario": "unpinned 1470: headers contained",
+      "method": "real Chrome rendered public-export fixture",
+      "expected": "Automated predicate in evidence/data-table-browser.mjs",
+      "baseline": "verification of covered behavior",
+      "result": "passed",
+      "actual": false,
+      "recheck": "data-table-browser-final-green.json"
+    },
+    {
+      "scenario": "unpinned 1470: fills available panel",
+      "method": "real Chrome rendered public-export fixture",
+      "expected": "Automated predicate in evidence/data-table-browser.mjs",
+      "baseline": "verification of covered behavior",
+      "result": "passed",
+      "actual": {
+        "table": {
+          "x": 17,
+          "y": 71.40625,
+          "width": 1468,
+          "height": 582.015625,
+          "right": 1485
+        },
+        "scroll": {
+          "x": 16,
+          "y": 70.40625,
+          "width": 1470,
+          "height": 360,
+          "right": 1486
+        },
+        "pageOverflow": false,
+        "headerClipping": false,
+        "actions": [
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          },
+          {
+            "text": "Copy",
+            "scroll": 29,
+            "client": 29
+          }
+        ],
+        "pins": []
+      },
+      "recheck": "data-table-browser-final-green.json"
+    },
+    {
+      "scenario": "sticky utility headers remain above body cells",
+      "method": "real Chrome rendered public-export fixture",
+      "expected": "Automated predicate in evidence/data-table-browser.mjs",
+      "baseline": "failed before fix",
+      "baselineEvidence": "data-table-browser-polish-red.json",
+      "baselineActual": [
+        false,
+        false,
+        false,
+        true,
+        true,
+        true,
+        true
+      ],
+      "result": "passed",
+      "actual": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "recheck": "data-table-browser-final-green.json"
+    },
+    {
+      "scenario": "selection updates one stable row",
+      "method": "real Chrome rendered public-export fixture",
+      "expected": "Automated predicate in evidence/data-table-browser.mjs",
+      "baseline": "verification of covered behavior",
+      "result": "passed",
+      "actual": true,
+      "recheck": "data-table-browser-final-green.json"
+    },
+    {
+      "scenario": "numeric descending sort changes real row order",
+      "method": "real Chrome rendered public-export fixture",
+      "expected": "Automated predicate in evidence/data-table-browser.mjs",
+      "baseline": "verification of covered behavior",
+      "result": "passed",
+      "actual": "19",
+      "recheck": "data-table-browser-final-green.json"
+    },
+    {
+      "scenario": "Shift adds secondary sorting priority",
+      "method": "real Chrome rendered public-export fixture",
+      "expected": "Automated predicate in evidence/data-table-browser.mjs",
+      "baseline": "verification of covered behavior",
+      "result": "passed",
+      "actual": [
+        "2",
+        "1"
+      ],
+      "recheck": "data-table-browser-final-green.json"
+    },
+    {
+      "scenario": "pagination advances sorted rows",
+      "method": "real Chrome rendered public-export fixture",
+      "expected": "Automated predicate in evidence/data-table-browser.mjs",
+      "baseline": "verification of covered behavior",
+      "result": "passed",
+      "actual": "9",
+      "recheck": "data-table-browser-final-green.json"
+    },
+    {
+      "scenario": "selection survives sort and pagination",
+      "method": "real Chrome rendered public-export fixture",
+      "expected": "Automated predicate in evidence/data-table-browser.mjs",
+      "baseline": "verification of covered behavior",
+      "result": "passed",
+      "actual": true,
+      "recheck": "data-table-browser-final-green.json"
+    },
+    {
+      "scenario": "row actions do not trigger row activation",
+      "method": "real Chrome rendered public-export fixture",
+      "expected": "Automated predicate in evidence/data-table-browser.mjs",
+      "baseline": "verification of covered behavior",
+      "result": "passed",
+      "actual": {
+        "action": "0"
+      },
+      "recheck": "data-table-browser-final-green.json"
+    },
+    {
+      "scenario": "row activation works with keyboard",
+      "method": "real Chrome rendered public-export fixture",
+      "expected": "Automated predicate in evidence/data-table-browser.mjs",
+      "baseline": "verification of covered behavior",
+      "result": "passed",
+      "actual": "0",
+      "recheck": "data-table-browser-final-green.json"
+    },
+    {
+      "scenario": "search resets pagination and returns matching row",
+      "method": "real Chrome rendered public-export fixture",
+      "expected": "Automated predicate in evidence/data-table-browser.mjs",
+      "baseline": "verification of covered behavior",
+      "result": "passed",
+      "actual": [
+        "19"
+      ],
+      "recheck": "data-table-browser-final-green.json"
+    },
+    {
+      "scenario": "range filter changes real rows",
+      "method": "real Chrome rendered public-export fixture",
+      "expected": "Automated predicate in evidence/data-table-browser.mjs",
+      "baseline": "verification of covered behavior",
+      "result": "passed",
+      "actual": [
+        "19",
+        "18"
+      ],
+      "recheck": "data-table-browser-final-green.json"
+    },
+    {
+      "scenario": "keyboard resize uses actual painted width",
+      "method": "real Chrome rendered public-export fixture",
+      "expected": "Automated predicate in evidence/data-table-browser.mjs",
+      "baseline": "verification of covered behavior",
+      "result": "passed",
+      "actual": 277,
+      "recheck": "data-table-browser-final-green.json"
+    },
+    {
+      "scenario": "group collapse removes its rows",
+      "method": "real Chrome rendered public-export fixture",
+      "expected": "Automated predicate in evidence/data-table-browser.mjs",
+      "baseline": "verification of covered behavior",
+      "result": "passed",
+      "actual": [
+        "1",
+        "3",
+        "5",
+        "7",
+        "9",
+        "11",
+        "13",
+        "15",
+        "17",
+        "19"
+      ],
+      "recheck": "data-table-browser-final-green.json"
+    },
+    {
+      "scenario": "group expands again",
+      "method": "real Chrome rendered public-export fixture",
+      "expected": "Automated predicate in evidence/data-table-browser.mjs",
+      "baseline": "verification of covered behavior",
+      "result": "passed",
+      "actual": "0",
+      "recheck": "data-table-browser-final-green.json"
+    },
+    {
+      "scenario": "row detail expands meaningful content",
+      "method": "real Chrome rendered public-export fixture",
+      "expected": "Automated predicate in evidence/data-table-browser.mjs",
+      "baseline": "verification of covered behavior",
+      "result": "passed",
+      "actual": "Details Item 0",
+      "recheck": "data-table-browser-final-green.json"
+    },
+    {
+      "scenario": "mobile select-all selects all matching rows",
+      "method": "real Chrome rendered public-export fixture",
+      "expected": "Automated predicate in evidence/data-table-browser.mjs",
+      "baseline": "verification of covered behavior",
+      "result": "passed",
+      "actual": "Выбрано: 20\nСнять выделение\nСтрок на странице\n10\n1 / 2",
+      "recheck": "data-table-browser-final-green.json"
+    },
+    {
+      "scenario": "mobile header sorting stays usable",
+      "method": "real Chrome rendered public-export fixture",
+      "expected": "Automated predicate in evidence/data-table-browser.mjs",
+      "baseline": "verification of covered behavior",
+      "result": "passed",
+      "actual": "19",
+      "recheck": "data-table-browser-final-green.json"
+    },
+    {
+      "scenario": "mobile filtering stays usable",
+      "method": "real Chrome rendered public-export fixture",
+      "expected": "Automated predicate in evidence/data-table-browser.mjs",
+      "baseline": "verification of covered behavior",
+      "result": "passed",
+      "actual": 1,
+      "recheck": "data-table-browser-final-green.json"
+    },
+    {
+      "scenario": "mobile keyboard focus is visible",
+      "method": "real Chrome rendered public-export fixture",
+      "expected": "Automated predicate in evidence/data-table-browser.mjs",
+      "baseline": "verification of covered behavior",
+      "result": "passed",
+      "actual": {
+        "style": "solid",
+        "width": 2,
+        "visible": true
+      },
+      "recheck": "data-table-browser-final-green.json"
+    },
+    {
+      "scenario": "10k virtual rows mount bounded initial window",
+      "method": "real Chrome rendered public-export fixture",
+      "expected": "Automated predicate in evidence/data-table-browser.mjs",
+      "baseline": "verification of covered behavior",
+      "result": "passed",
+      "actual": 15,
+      "recheck": "data-table-browser-final-green.json"
+    },
+    {
+      "scenario": "10k virtual scroll remains bounded",
+      "method": "real Chrome rendered public-export fixture",
+      "expected": "Automated predicate in evidence/data-table-browser.mjs",
+      "baseline": "verification of covered behavior",
+      "result": "passed",
+      "actual": 15,
+      "recheck": "data-table-browser-final-green.json"
+    },
+    {
+      "scenario": "virtual scroll reaches final sorted row",
+      "method": "real Chrome rendered public-export fixture",
+      "expected": "Automated predicate in evidence/data-table-browser.mjs",
+      "baseline": "verification of covered behavior",
+      "result": "passed",
+      "actual": "10000",
+      "recheck": "data-table-browser-final-green.json"
+    },
+    {
+      "scenario": "density switches without losing virtualization",
+      "method": "real Chrome rendered public-export fixture",
+      "expected": "Automated predicate in evidence/data-table-browser.mjs",
+      "baseline": "verification of covered behavior",
+      "result": "passed",
+      "actual": 21,
+      "recheck": "data-table-browser-final-green.json"
+    },
+    {
+      "scenario": "virtual unmount returns to paginated example",
+      "method": "real Chrome rendered public-export fixture",
+      "expected": "Automated predicate in evidence/data-table-browser.mjs",
+      "baseline": "verification of covered behavior",
+      "result": "passed",
+      "actual": 6,
+      "recheck": "data-table-browser-final-green.json"
+    },
+    {
+      "scenario": "no runtime errors",
+      "method": "real Chrome rendered public-export fixture",
+      "expected": "Automated predicate in evidence/data-table-browser.mjs",
+      "baseline": "verification of covered behavior",
+      "result": "passed",
+      "actual": [],
+      "recheck": "data-table-browser-final-green.json"
+    }
+  ]
+}

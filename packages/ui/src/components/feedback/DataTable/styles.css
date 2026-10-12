@@ -3,6 +3,7 @@
   display: grid;
   gap: var(--ad-space-3);
   min-width: 0;
+  container: ad-data-table / inline-size;
   font-size: 0.8125rem;
   font-variant-numeric: tabular-nums;
 }
@@ -52,6 +53,7 @@
   border-spacing: 0;
   text-align: left;
 }
+.ad-data-table thead { position: relative; z-index: 3; }
 .ad-data-table th {
   position: sticky;
   top: 0;
@@ -77,6 +79,7 @@
   text-align: end;
 }
 .ad-data-table td {
+  padding-block: 0.55rem;
   overflow: hidden;
   color: var(--ad-text);
   text-overflow: ellipsis;
@@ -107,10 +110,13 @@
 .ad-data-table-check {
   width: 40px;
 }
+.ad-data-table-select-all-label { display: none; }
 .ad-data-table-column-option { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
 .ad-data-table-column-actions { display: inline-flex; gap: 0.1rem; }
 .ad-data-table :is(th, td)[data-pinned] { position: sticky; z-index: 2; background: var(--ad-neutral-900); }
 .ad-data-table th[data-pinned] { z-index: 3; background: var(--ad-neutral-850); }
+.ad-data-table [data-pinned="left"] { box-shadow: inset -0.0625rem 0 rgb(from var(--ad-primary) r g b / 0.2); }
+.ad-data-table [data-pinned="right"] { box-shadow: inset 0.0625rem 0 rgb(from var(--ad-primary) r g b / 0.2); }
 .ad-data-table :is(td.ad-data-table-check, td.ad-data-table-expand, td.ad-data-table-row-number, td.ad-data-table-actions) { background: var(--ad-neutral-900); }
 .ad-data-table tbody tr:is(:hover, [data-selected]) td:is([data-pinned], .ad-data-table-check, .ad-data-table-expand, .ad-data-table-row-number, .ad-data-table-actions) {
   background: linear-gradient(rgb(from var(--ad-primary) r g b / 0.07), rgb(from var(--ad-primary) r g b / 0.07)), var(--ad-neutral-900);
@@ -133,8 +139,14 @@
   color: inherit;
   font: inherit;
   cursor: pointer;
+  min-width: 0;
+  line-height: 1.35;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  text-align: inherit;
 }
 .ad-data-table-sort > .ad-icon {
+  flex: none;
   --ad-icon-size: 0.75rem;
   opacity: 0;
   transition:
@@ -230,9 +242,12 @@
 }
 /* Header cell: the sort button and the filter funnel side by side. */
 .ad-data-table-head {
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  gap: 0.15rem;
+  justify-content: space-between;
+  gap: 0.25rem;
+  min-width: 0;
+  width: 100%;
 }
 .ad-data-table-resize {
   position: absolute;
@@ -262,14 +277,17 @@
   outline: 0.125rem solid var(--ad-secondary);
   outline-offset: -0.125rem;
 }
-th[data-align="end"] > .ad-data-table-head {
-  flex-direction: row-reverse;
+.ad-data-table th[data-align="end"] > .ad-data-table-head {
+  justify-content: flex-end;
 }
+.ad-data-table th[data-align="end"] .ad-data-table-filter { order: -1; }
+.ad-data-table th[data-align="end"] .ad-data-table-sort { flex-direction: row-reverse; }
+.ad-data-table th[data-align="center"] > .ad-data-table-head { justify-content: center; }
 .ad-data-table-filter.ad-icon-button {
   opacity: 0.45;
   transition: opacity var(--ad-duration-fast);
 }
-th:hover .ad-data-table-filter.ad-icon-button,
+.ad-data-table th:hover .ad-data-table-filter.ad-icon-button,
 .ad-data-table-filter.ad-icon-button[data-active],
 .ad-data-table-filter.ad-icon-button[aria-expanded="true"] {
   opacity: 1;
@@ -336,9 +354,11 @@ th:hover .ad-data-table-filter.ad-icon-button,
   flex: 0 1 13rem;
 }
 .ad-data-table tr.ad-data-table-group td {
+  padding-block: 0.45rem;
   background: linear-gradient(90deg, rgb(from var(--ad-primary) r g b / 0.12), rgb(from var(--ad-neutral-850) r g b / 0.46));
   color: var(--ad-text);
   font-weight: 600;
+  white-space: normal;
 }
 .ad-data-table-group-content {
   display: flex;
@@ -377,7 +397,11 @@ th:hover .ad-data-table-filter.ad-icon-button,
   font: inherit;
   cursor: pointer;
   --ad-icon-size: 0.85rem;
+  min-width: 0;
+  text-align: start;
+  overflow-wrap: anywhere;
 }
+.ad-data-table-group-toggle > :is(.ad-icon, .ad-data-table-group-count) { flex: none; }
 .ad-data-table-group-toggle > .ad-icon {
   transition: rotate var(--ad-duration-normal) var(--ad-ease-spring);
 }
@@ -392,19 +416,55 @@ th:hover .ad-data-table-filter.ad-icon-button,
   font-size: var(--ad-font-size-caption);
   text-align: center;
 }
-@media (max-width: 48rem) {
+@container ad-data-table (max-width: 48rem) {
+  /* Keep horizontally scrolling pinned tables usable when their fixed sides would overlap. */
+  .ad-data-table-scroll {
+    --ad-table-pin-left: auto;
+    --ad-table-pin-right: auto;
+  }
   .ad-data-table:not([data-virtual]):not([data-pinned]) table,
   .ad-data-table:not([data-virtual]):not([data-pinned]) tbody {
     display: block;
     width: 100%;
   }
   .ad-data-table:not([data-virtual]):not([data-pinned]) thead {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    clip-path: inset(50%);
-    white-space: nowrap;
+    display: block;
+    position: static;
+    padding: 0.5rem;
+    border-bottom: 0.0625rem solid rgb(from var(--ad-primary) r g b / 0.2);
+  }
+  .ad-data-table:not([data-virtual]):not([data-pinned]) thead tr {
+    display: grid;
+    gap: 0.25rem;
+  }
+  .ad-data-table:not([data-virtual]):not([data-pinned]) th {
+    position: relative;
+    display: block;
+    padding: 0.35rem 0.6rem;
+    min-width: 0;
+    border: 0;
+    border-radius: 0.25rem;
+    box-shadow: none;
+    text-align: start;
+    background: rgb(from var(--ad-primary) r g b / 0.035);
+  }
+  .ad-data-table:not([data-virtual]):not([data-pinned]) th:is(.ad-data-table-expand, .ad-data-table-row-number, .ad-data-table-actions) {
+    display: none;
+  }
+  .ad-data-table:not([data-virtual]):not([data-pinned]) th.ad-data-table-check {
+    width: auto;
+  }
+  .ad-data-table:not([data-virtual]):not([data-pinned]) .ad-data-table-select-all-label {
+    display: inline;
+  }
+  .ad-data-table:not([data-virtual]):not([data-pinned]) .ad-data-table-head {
+    justify-content: space-between;
+  }
+  .ad-data-table:not([data-virtual]):not([data-pinned]) .ad-data-table-sort {
+    flex-direction: row;
+  }
+  .ad-data-table:not([data-virtual]):not([data-pinned]) .ad-data-table-filter {
+    order: 0;
   }
   .ad-data-table:not([data-virtual]):not([data-pinned]) .ad-data-table-page-controls {
     width: 100%;

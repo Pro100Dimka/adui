@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState, type PointerEvent as ReactPointerEvent, type RefObject } from "react";
+import { useCallback, useEffect, useLayoutEffect, useRef, useState, type KeyboardEvent, type PointerEvent as ReactPointerEvent, type RefObject } from "react";
 
 /** Where a floating panel sits, in window pixels. */
 export interface PanelLayout {
@@ -37,9 +37,9 @@ const threshold = 3;
 export const panelControls =
   "button, a, input, select, textarea, [role=slider], [role=button], [role=switch], [role=listbox], [contenteditable=true], .ad-rotary-knob";
 
-type Drag =
+type Drag = { next?: PanelLayout } & (
   | { kind: "move"; x: number; y: number; origin: PanelLayout }
-  | { kind: "resize"; edge: ResizeEdge; x: number; y: number; origin: PanelLayout };
+  | { kind: "resize"; edge: ResizeEdge; x: number; y: number; origin: PanelLayout });
 
 /**
  * Click a panel to select it, drag it anywhere in the window, resize it from any edge or corner,
@@ -53,6 +53,11 @@ export const useFloatingPanel = (frameRef: RefObject<HTMLElement | null>, option
   const moved = useRef(false);
   const latest = useRef(options);
   latest.current = options;
+  const saved = options.layout;
+  useLayoutEffect(() => {
+    drag.current = null;
+    setLive(null);
+  }, [saved?.left, saved?.top, saved?.width, saved?.height]);
 
   const [, setViewport] = useState(0);
   useEffect(() => {
@@ -73,8 +78,8 @@ export const useFloatingPanel = (frameRef: RefObject<HTMLElement | null>, option
       height,
     };
   };
-  const saved = options.layout;
-  const layout = live ?? (saved ? keepInWindow(saved) : null);
+  const placement = live ?? saved;
+  const layout = placement ? keepInWindow(placement) : null;
 
   const box = (): PanelLayout => {
     if (layout) return layout;
@@ -97,7 +102,10 @@ export const useFloatingPanel = (frameRef: RefObject<HTMLElement | null>, option
       height -= dy;
       top = origin.top + origin.height - height;
     }
-    return keepInWindow({ left, top, width, height });
+    const bounded = keepInWindow({ left, top, width, height });
+    if (edge.includes("w")) bounded.left = origin.left + origin.width - bounded.width;
+    if (edge.includes("n")) bounded.top = origin.top + origin.height - bounded.height;
+    return keepInWindow(bounded);
   };
 
   const beginMove = (event: ReactPointerEvent<HTMLElement>) => {
@@ -109,6 +117,7 @@ export const useFloatingPanel = (frameRef: RefObject<HTMLElement | null>, option
     drag.current = { kind: "move", x: event.clientX, y: event.clientY, origin: box() };
   };
   const beginResize = (edge: ResizeEdge) => (event: ReactPointerEvent<HTMLElement>) => {
+    if (event.button !== 0) return;
     event.stopPropagation();
     event.currentTarget.setPointerCapture?.(event.pointerId);
     moved.current = false;
@@ -133,11 +142,11 @@ export const useFloatingPanel = (frameRef: RefObject<HTMLElement | null>, option
       );
       return;
     }
-    setLive(
+    current.next =
       current.kind === "move"
         ? keepInWindow({ ...current.origin, left: current.origin.left + dx, top: current.origin.top + dy })
-        : resized(current.origin, current.edge, dx, dy),
-    );
+        : resized(current.origin, current.edge, dx, dy);
+    setLive(current.next);
   };
   const handleUp = () => {
     const current = drag.current;
@@ -145,12 +154,33 @@ export const useFloatingPanel = (frameRef: RefObject<HTMLElement | null>, option
     drag.current = null;
     setActive(true);
     // A plain click only selects; it never changes the placement.
-    if (!moved.current || !live) return;
+    if (!moved.current || !current.next) return;
     // Moving keeps the size the panel was given, not the size a small window squeezed it to,
     // so it grows back when the window does.
     const { layout: kept, defaultSize } = latest.current;
     const size = kept ?? defaultSize;
-    latest.current.onLayoutChange?.(current.kind === "move" && size ? { ...live, width: size.width, height: size.height } : live);
+    latest.current.onLayoutChange?.(current.kind === "move" && size ? { ...current.next, width: size.width, height: size.height } : current.next);
+  };
+  const handleCancel = () => {
+    if (!drag.current) return;
+    setLive(drag.current.origin);
+    drag.current = null;
+  };
+  const handleKeyDown = (event: KeyboardEvent<HTMLElement>, resizable = false) => {
+    if (event.target !== event.currentTarget) return;
+    const direction: Record<string, [number, number]> = {
+      ArrowLeft: [-10, 0], ArrowRight: [10, 0], ArrowUp: [0, -10], ArrowDown: [0, 10],
+    };
+    const delta = direction[event.key];
+    if (!delta || (event.shiftKey && !resizable)) return;
+    event.preventDefault();
+    const origin = box();
+    const next = event.shiftKey
+      ? resized(origin, "se", ...delta)
+      : keepInWindow({ ...origin, left: origin.left + delta[0], top: origin.top + delta[1] });
+    setActive(true);
+    setLive(next);
+    latest.current.onLayoutChange?.(next);
   };
 
   const deactivate = useCallback(() => setActive(false), []);
@@ -164,5 +194,5 @@ export const useFloatingPanel = (frameRef: RefObject<HTMLElement | null>, option
     return () => document.removeEventListener("pointerdown", onPointerDown);
   }, [active, deactivate, frameRef]);
 
-  return { layout, active, beginMove, beginResize, handleMove, handleUp };
+  return { layout, active, beginMove, beginResize, handleMove, handleUp, handleCancel, handleKeyDown };
 };

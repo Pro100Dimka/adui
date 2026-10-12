@@ -1,0 +1,145 @@
+
+> @neo-ui-kit/react@1.0.0 test
+> vitest run tests/ReleaseContracts.test.tsx -t trusted npm publishing
+
+
+ RUN  v3.2.7 D:/Git/adui/packages/ui
+
+ ❯ tests/ReleaseContracts.test.tsx (28 tests | 5 failed | 23 skipped) 10ms
+   × trusted npm publishing > limits OIDC and release write permissions to the protected publishing job 7ms
+     → expected 'name: Release\n\n# Push a tag like v1…' to contain 'permissions:\n  contents: read'
+   × trusted npm publishing > builds and tests before packing and passes the exact smoke-tested artifact to publication 1ms
+     → expected -1 to be greater than 711
+   × trusted npm publishing > checks registry HTTP 404 without treating registry errors as an unpublished version 0ms
+     → The workflow must reject already published versions before packing: expected undefined to be defined
+   × trusted npm publishing > checks registry HTTP 200 without treating registry errors as an unpublished version 0ms
+     → The workflow must reject already published versions before packing: expected undefined to be defined
+   × trusted npm publishing > checks registry HTTP 500 without treating registry errors as an unpublished version 0ms
+     → The workflow must reject already published versions before packing: expected undefined to be defined
+   ↓ theme and feedback contracts > removes a ripple when its animation is cancelled
+   ↓ theme and feedback contracts > does not accumulate invisible ripple nodes when motion is disabled
+   ↓ theme and feedback contracts > keeps rejected controlled requests based on the actual prop while accumulating uncontrolled updates
+   ↓ theme and feedback contracts > forwards the ThemeProvider root accessibility and data attributes
+   ↓ theme and feedback contracts > applies the light border halo rule to the attribute emitted by ThemeProvider
+   ↓ theme and feedback contracts > renders finite progress geometry and semantics for max=NaN
+   ↓ theme and feedback contracts > renders finite progress geometry and semantics for max=Infinity
+   ↓ theme and feedback contracts > renders finite progress geometry and semantics for max=-Infinity
+   ↓ theme and feedback contracts > preserves an explicit accessible name on ProgressBar
+   ↓ shipped documentation > uses the approved package identity in the manifest and playground dependency
+   ↓ shipped documentation > generates catalog imports from the renamed public package
+   ↓ shipped documentation > adds the renamed package when a live example omits its component import
+   ↓ shipped documentation > declares a self-contained SVG favicon instead of requesting a missing favicon.ico
+   ↓ shipped documentation > copies a registry installation command without requiring the repository or a local archive
+   ↓ shipped documentation > documents registry installation first while retaining current local packaging instructions
+   ↓ shipped documentation > includes automated tests in the root verification and publish gates
+   ↓ shipped documentation > exports form component props beside their root component exports
+   ↓ shipped documentation > ships declarations that typecheck without skipLibCheck or resolveJsonModule
+   ↓ shipped documentation > gives every documented public component its own working page and example
+   ↓ shipped documentation > keeps font generation source scripts out of the shipped package
+   ↓ shipped documentation > links the approved MIT license in ../../../README.md while preserving third-party notices
+   ↓ shipped documentation > links the approved MIT license in ../README.md while preserving third-party notices
+   ↓ shipped documentation > only documents exports present in each package entry
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 5 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/ReleaseContracts.test.tsx > trusted npm publishing > limits OIDC and release write permissions to the protected publishing job
+AssertionError: expected 'name: Release\n\n# Push a tag like v1…' to contain 'permissions:\n  contents: read'
+
+- Expected
++ Received
+
++ name: Release
++
++ # Push a tag like v1.0.0: the package is built here and attached to a GitHub release,
++ # so no build output has to live in the repository.
++ on:
++   push:
++     tags: ["v*"]
++
+  permissions:
+-   contents: read
++   contents: write
++
++ jobs:
++   release:
++     runs-on: ubuntu-latest
++     steps:
++       - uses: actions/checkout@v4
++       - uses: actions/setup-node@v4
++         with:
++           node-version: 20
++           cache: npm
++       - name: Check package version matches tag
++         run: |
++           VERSION=$(node -p "require('./packages/ui/package.json').version")
++           test "v$VERSION" = "$GITHUB_REF_NAME" || { echo "Tag $GITHUB_REF_NAME != v$VERSION"; exit 1; }
++           echo "VERSION=$VERSION" >> "$GITHUB_ENV"
++       - run: npm ci
++       - run: npm run typecheck
++       - run: npm run build --workspace @neo-ui-kit/react
++       - run: npm test --workspace @neo-ui-kit/react
++       - run: mkdir -p release && npm pack ./packages/ui --pack-destination release
++       - name: Smoke-test packed consumer
++         run: |
++           mkdir consumer-smoke
++           cd consumer-smoke
++           npm init -y
++           npm install ../release/neo-ui-kit-react-${VERSION}.tgz react@19 react-dom@19 --no-audit --no-fund
++           node --input-type=module -e 'import { createElement } from "react"; import { renderToStaticMarkup } from "react-dom/server"; import { Button } from "@neo-ui-kit/react"; if (!renderToStaticMarkup(createElement(Button, null, "Smoke")).includes("Smoke")) process.exit(1)'
++           test -f node_modules/@neo-ui-kit/react/dist/styles.css
++       - uses: softprops/action-gh-release@v2
++         with:
++           name: "@neo-ui-kit/react ${{ github.ref_name }}"
++           files: release/neo-ui-kit-react-${{ env.VERSION }}.tgz
++           generate_release_notes: true
++
+
+ ❯ tests/ReleaseContracts.test.tsx:19:24
+     17|   it("limits OIDC and release write permissions to the protected publi…
+     18|     const [validation, publication] = workflow.split(/\r?\n  publish:\…
+     19|     expect(validation).toContain("permissions:\n  contents: read");
+       |                        ^
+     20|     expect(validation).not.toContain("id-token: write");
+     21|     expect(publication).toContain("needs: verify");
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/5]⎯
+
+ FAIL  tests/ReleaseContracts.test.tsx > trusted npm publishing > builds and tests before packing and passes the exact smoke-tested artifact to publication
+AssertionError: expected -1 to be greater than 711
+ ❯ tests/ReleaseContracts.test.tsx:32:47
+     30|     expect(workflow).toContain('tags: ["v*"]');
+     31|     expect(workflow).toContain('test "v$VERSION" = "$GITHUB_REF_NAME"'…
+     32|     expect(workflow.indexOf("npm run check")).toBeGreaterThan(workflow…
+       |                                               ^
+     33|     expect(workflow.indexOf("npm pack ./packages/ui")).toBeGreaterThan…
+     34|     expect(workflow.indexOf("Smoke-test packed consumer")).toBeGreater…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/5]⎯
+
+ FAIL  tests/ReleaseContracts.test.tsx > trusted npm publishing > checks registry HTTP 404 without treating registry errors as an unpublished version
+ FAIL  tests/ReleaseContracts.test.tsx > trusted npm publishing > checks registry HTTP 200 without treating registry errors as an unpublished version
+ FAIL  tests/ReleaseContracts.test.tsx > trusted npm publishing > checks registry HTTP 500 without treating registry errors as an unpublished version
+AssertionError: The workflow must reject already published versions before packing: expected undefined to be defined
+ ❯ tests/ReleaseContracts.test.tsx:49:89
+     47|   ])("checks registry HTTP %s without treating registry errors as an u…
+     48|     const guard = workflow.match(/node --input-type=module <<'NODE'\r?…
+     49|     expect(guard, "The workflow must reject already published versions…
+       |                                                                                         ^
+     50|     const fetch = vi.fn().mockResolvedValue({ status, ok: status === 2…
+     51|     const result = runInNewContext(`(async () => {${guard}})()`, {
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/5]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  5 failed | 23 skipped (28)
+   Start at  15:39:48
+   Duration  1.32s (transform 365ms, setup 0ms, collect 1.11s, tests 10ms, environment 0ms, prepare 72ms)
+
+npm error Lifecycle script `test` failed with error:
+npm error code 1
+npm error path D:\Git\adui\packages\ui
+npm error workspace @neo-ui-kit/react@1.0.0
+npm error location D:\Git\adui\packages\ui
+npm error command failed
+npm error command C:\Windows\system32\cmd.exe /d /s /c vitest run tests/ReleaseContracts.test.tsx -t ^^^"trusted^^^ npm^^^ publishing^^^"

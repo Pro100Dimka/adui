@@ -1,0 +1,1802 @@
+{
+  "baseUrl": "http://127.0.0.1:5173",
+  "browser": "Installed Chrome headless",
+  "scope": "Header only, UA locale, 320/768, dark/light, actual font-size doubling and separate root font doubling; emulation, not OS text zoom",
+  "passed": 85,
+  "failed": 0,
+  "results": [
+    {
+      "name": "320 dark 100% reachable geometry",
+      "passed": true,
+      "actual": {
+        "right": 320,
+        "bottom": 58.421875,
+        "width": 320,
+        "actions": [
+          {
+            "name": "NEO UIReact component system",
+            "x": 9.1875,
+            "y": 9.1875,
+            "width": 97.859375,
+            "height": 39.046875,
+            "right": 107.046875,
+            "bottom": 48.234375,
+            "scrollWidth": 98,
+            "clientWidth": 98
+          },
+          {
+            "name": "Світла",
+            "x": 152.4375,
+            "y": 11.203125,
+            "width": 35,
+            "height": 35,
+            "right": 187.4375,
+            "bottom": 46.203125,
+            "scrollWidth": 33,
+            "clientWidth": 33
+          },
+          {
+            "name": "Тема і налаштування",
+            "x": 193.5625,
+            "y": 11.203125,
+            "width": 35,
+            "height": 35,
+            "right": 228.5625,
+            "bottom": 46.203125,
+            "scrollWidth": 33,
+            "clientWidth": 33
+          },
+          {
+            "name": "Анімації",
+            "x": 234.6875,
+            "y": 11.203125,
+            "width": 35,
+            "height": 35,
+            "right": 269.6875,
+            "bottom": 46.203125,
+            "scrollWidth": 33,
+            "clientWidth": 33
+          },
+          {
+            "name": "Мова: UA",
+            "x": 275.8125,
+            "y": 11.203125,
+            "width": 35,
+            "height": 35,
+            "right": 310.8125,
+            "bottom": 46.203125,
+            "scrollWidth": 33,
+            "clientWidth": 33
+          }
+        ],
+        "overlap": [],
+        "fonts": [
+          {
+            "text": "NEO UI",
+            "before": 14.875,
+            "after": 14.875
+          },
+          {
+            "text": "React component system",
+            "before": 8.75,
+            "after": 8.75
+          },
+          {
+            "text": "100 компонентів",
+            "before": 9.625,
+            "after": 9.625
+          },
+          {
+            "text": "UA",
+            "before": 10.5,
+            "after": 10.5
+          }
+        ]
+      }
+    },
+    {
+      "name": "320 dark 100% header axe",
+      "passed": true,
+      "actual": []
+    },
+    {
+      "name": "320 dark 100% focus order and visible focus",
+      "passed": true,
+      "actual": [
+        {
+          "className": "ad ad-icon-button site-appearance",
+          "visible": true,
+          "name": "Світла",
+          "outline": "solid",
+          "shadow": "none"
+        },
+        {
+          "className": "ad ad-icon-button site-settings-trigger",
+          "visible": true,
+          "name": "Тема і налаштування",
+          "outline": "solid",
+          "shadow": "none"
+        },
+        {
+          "className": "ad ad-icon-button site-motion",
+          "visible": true,
+          "name": "Анімації",
+          "outline": "solid",
+          "shadow": "none"
+        },
+        {
+          "className": "ad ad-button site-locale",
+          "visible": true,
+          "name": "Мова: UA",
+          "outline": "solid",
+          "shadow": "none"
+        }
+      ]
+    },
+    {
+      "name": "320 dark 100% locale keyboard and restore",
+      "passed": true,
+      "actual": {
+        "first": "Русский",
+        "last": "Українська",
+        "home": "Русский"
+      }
+    },
+    {
+      "name": "320 dark 100% settings restores keyboard focus",
+      "passed": true
+    },
+    {
+      "name": "320 dark 100% motion keyboard toggle",
+      "passed": true
+    },
+    {
+      "name": "320 dark 100% appearance keyboard toggle",
+      "passed": true
+    },
+    {
+      "name": "320 dark 200% text only reachable geometry",
+      "passed": true,
+      "actual": {
+        "right": 320,
+        "bottom": 102.171875,
+        "width": 320,
+        "actions": [
+          {
+            "name": "NEO UIReact component system",
+            "x": 9.1875,
+            "y": 9.1875,
+            "width": 147.5,
+            "height": 39.046875,
+            "right": 156.6875,
+            "bottom": 48.234375,
+            "scrollWidth": 148,
+            "clientWidth": 148
+          },
+          {
+            "name": "Світла",
+            "x": 9.1875,
+            "y": 56.984375,
+            "width": 35,
+            "height": 35,
+            "right": 44.1875,
+            "bottom": 91.984375,
+            "scrollWidth": 33,
+            "clientWidth": 33
+          },
+          {
+            "name": "Тема і налаштування",
+            "x": 50.3125,
+            "y": 56.984375,
+            "width": 35,
+            "height": 35,
+            "right": 85.3125,
+            "bottom": 91.984375,
+            "scrollWidth": 33,
+            "clientWidth": 33
+          },
+          {
+            "name": "Анімації",
+            "x": 91.4375,
+            "y": 56.984375,
+            "width": 35,
+            "height": 35,
+            "right": 126.4375,
+            "bottom": 91.984375,
+            "scrollWidth": 33,
+            "clientWidth": 33
+          },
+          {
+            "name": "Мова: UA",
+            "x": 132.5625,
+            "y": 56.984375,
+            "width": 35,
+            "height": 35,
+            "right": 167.5625,
+            "bottom": 91.984375,
+            "scrollWidth": 33,
+            "clientWidth": 33
+          }
+        ],
+        "overlap": [],
+        "fonts": [
+          {
+            "text": "NEO UI",
+            "before": 14.875,
+            "after": 29.75
+          },
+          {
+            "text": "React component system",
+            "before": 8.75,
+            "after": 17.5
+          },
+          {
+            "text": "100 компонентів",
+            "before": 9.625,
+            "after": 19.25
+          },
+          {
+            "text": "UA",
+            "before": 10.5,
+            "after": 21
+          }
+        ]
+      }
+    },
+    {
+      "name": "320 dark 200% text only header axe",
+      "passed": true,
+      "actual": []
+    },
+    {
+      "name": "320 dark 200% text only focus order and visible focus",
+      "passed": true,
+      "actual": [
+        {
+          "className": "ad ad-icon-button site-appearance",
+          "visible": true,
+          "name": "Світла",
+          "outline": "solid",
+          "shadow": "none"
+        },
+        {
+          "className": "ad ad-icon-button site-settings-trigger",
+          "visible": true,
+          "name": "Тема і налаштування",
+          "outline": "solid",
+          "shadow": "none"
+        },
+        {
+          "className": "ad ad-icon-button site-motion",
+          "visible": true,
+          "name": "Анімації",
+          "outline": "solid",
+          "shadow": "none"
+        },
+        {
+          "className": "ad ad-button site-locale",
+          "visible": true,
+          "name": "Мова: UA",
+          "outline": "solid",
+          "shadow": "none"
+        }
+      ]
+    },
+    {
+      "name": "320 dark 200% text only locale keyboard and restore",
+      "passed": true,
+      "actual": {
+        "first": "Русский",
+        "last": "Українська",
+        "home": "Русский"
+      }
+    },
+    {
+      "name": "320 dark 200% text only settings restores keyboard focus",
+      "passed": true
+    },
+    {
+      "name": "320 dark 200% text only motion keyboard toggle",
+      "passed": true
+    },
+    {
+      "name": "320 dark 200% text only appearance keyboard toggle",
+      "passed": true
+    },
+    {
+      "name": "320 dark 200% root font reachable geometry",
+      "passed": true,
+      "actual": {
+        "right": 320,
+        "bottom": 285.609375,
+        "width": 320,
+        "actions": [
+          {
+            "name": "NEO UIReact component system",
+            "x": 18.375,
+            "y": 18.375,
+            "width": 195.75,
+            "height": 78.109375,
+            "right": 214.125,
+            "bottom": 96.484375,
+            "scrollWidth": 196,
+            "clientWidth": 196
+          },
+          {
+            "name": "Світла",
+            "x": 67.125,
+            "y": 113.984375,
+            "width": 70,
+            "height": 70,
+            "right": 137.125,
+            "bottom": 183.984375,
+            "scrollWidth": 68,
+            "clientWidth": 68
+          },
+          {
+            "name": "Тема і налаштування",
+            "x": 149.375,
+            "y": 113.984375,
+            "width": 70,
+            "height": 70,
+            "right": 219.375,
+            "bottom": 183.984375,
+            "scrollWidth": 68,
+            "clientWidth": 68
+          },
+          {
+            "name": "Анімації",
+            "x": 231.625,
+            "y": 113.984375,
+            "width": 70,
+            "height": 70,
+            "right": 301.625,
+            "bottom": 183.984375,
+            "scrollWidth": 68,
+            "clientWidth": 68
+          },
+          {
+            "name": "Мова: UA",
+            "x": 231.625,
+            "y": 196.234375,
+            "width": 70,
+            "height": 70,
+            "right": 301.625,
+            "bottom": 266.234375,
+            "scrollWidth": 68,
+            "clientWidth": 68
+          }
+        ],
+        "overlap": [],
+        "fonts": [
+          {
+            "text": "NEO UI",
+            "before": 14.875,
+            "after": 29.75
+          },
+          {
+            "text": "React component system",
+            "before": 8.75,
+            "after": 17.5
+          },
+          {
+            "text": "100 компонентів",
+            "before": 9.625,
+            "after": 19.25
+          },
+          {
+            "text": "UA",
+            "before": 10.5,
+            "after": 21
+          }
+        ]
+      }
+    },
+    {
+      "name": "320 dark 200% root font header axe",
+      "passed": true,
+      "actual": []
+    },
+    {
+      "name": "320 dark 200% root font focus order and visible focus",
+      "passed": true,
+      "actual": [
+        {
+          "className": "ad ad-icon-button site-appearance",
+          "visible": true,
+          "name": "Світла",
+          "outline": "solid",
+          "shadow": "none"
+        },
+        {
+          "className": "ad ad-icon-button site-settings-trigger",
+          "visible": true,
+          "name": "Тема і налаштування",
+          "outline": "solid",
+          "shadow": "none"
+        },
+        {
+          "className": "ad ad-icon-button site-motion",
+          "visible": true,
+          "name": "Анімації",
+          "outline": "solid",
+          "shadow": "none"
+        },
+        {
+          "className": "ad ad-button site-locale",
+          "visible": true,
+          "name": "Мова: UA",
+          "outline": "solid",
+          "shadow": "none"
+        }
+      ]
+    },
+    {
+      "name": "320 dark 200% root font locale keyboard and restore",
+      "passed": true,
+      "actual": {
+        "first": "Русский",
+        "last": "Українська",
+        "home": "Русский"
+      }
+    },
+    {
+      "name": "320 dark 200% root font settings restores keyboard focus",
+      "passed": true
+    },
+    {
+      "name": "320 dark 200% root font motion keyboard toggle",
+      "passed": true
+    },
+    {
+      "name": "320 dark 200% root font appearance keyboard toggle",
+      "passed": true
+    },
+    {
+      "name": "320 light 100% reachable geometry",
+      "passed": true,
+      "actual": {
+        "right": 320,
+        "bottom": 58.421875,
+        "width": 320,
+        "actions": [
+          {
+            "name": "NEO UIReact component system",
+            "x": 9.1875,
+            "y": 9.1875,
+            "width": 97.859375,
+            "height": 39.046875,
+            "right": 107.046875,
+            "bottom": 48.234375,
+            "scrollWidth": 98,
+            "clientWidth": 98
+          },
+          {
+            "name": "Світла",
+            "x": 152.4375,
+            "y": 11.203125,
+            "width": 35,
+            "height": 35,
+            "right": 187.4375,
+            "bottom": 46.203125,
+            "scrollWidth": 33,
+            "clientWidth": 33
+          },
+          {
+            "name": "Тема і налаштування",
+            "x": 193.5625,
+            "y": 11.203125,
+            "width": 35,
+            "height": 35,
+            "right": 228.5625,
+            "bottom": 46.203125,
+            "scrollWidth": 33,
+            "clientWidth": 33
+          },
+          {
+            "name": "Анімації",
+            "x": 234.6875,
+            "y": 11.203125,
+            "width": 35,
+            "height": 35,
+            "right": 269.6875,
+            "bottom": 46.203125,
+            "scrollWidth": 33,
+            "clientWidth": 33
+          },
+          {
+            "name": "Мова: UA",
+            "x": 275.8125,
+            "y": 11.203125,
+            "width": 35,
+            "height": 35,
+            "right": 310.8125,
+            "bottom": 46.203125,
+            "scrollWidth": 33,
+            "clientWidth": 33
+          }
+        ],
+        "overlap": [],
+        "fonts": [
+          {
+            "text": "NEO UI",
+            "before": 14.875,
+            "after": 14.875
+          },
+          {
+            "text": "React component system",
+            "before": 8.75,
+            "after": 8.75
+          },
+          {
+            "text": "100 компонентів",
+            "before": 9.625,
+            "after": 9.625
+          },
+          {
+            "text": "UA",
+            "before": 10.5,
+            "after": 10.5
+          }
+        ]
+      }
+    },
+    {
+      "name": "320 light 100% header axe",
+      "passed": true,
+      "actual": []
+    },
+    {
+      "name": "320 light 100% focus order and visible focus",
+      "passed": true,
+      "actual": [
+        {
+          "className": "ad ad-icon-button site-appearance",
+          "visible": true,
+          "name": "Світла",
+          "outline": "solid",
+          "shadow": "none"
+        },
+        {
+          "className": "ad ad-icon-button site-settings-trigger",
+          "visible": true,
+          "name": "Тема і налаштування",
+          "outline": "solid",
+          "shadow": "none"
+        },
+        {
+          "className": "ad ad-icon-button site-motion",
+          "visible": true,
+          "name": "Анімації",
+          "outline": "solid",
+          "shadow": "none"
+        },
+        {
+          "className": "ad ad-button site-locale",
+          "visible": true,
+          "name": "Мова: UA",
+          "outline": "solid",
+          "shadow": "none"
+        }
+      ]
+    },
+    {
+      "name": "320 light 100% locale keyboard and restore",
+      "passed": true,
+      "actual": {
+        "first": "Русский",
+        "last": "Українська",
+        "home": "Русский"
+      }
+    },
+    {
+      "name": "320 light 100% settings restores keyboard focus",
+      "passed": true
+    },
+    {
+      "name": "320 light 100% motion keyboard toggle",
+      "passed": true
+    },
+    {
+      "name": "320 light 100% appearance keyboard toggle",
+      "passed": true
+    },
+    {
+      "name": "320 light 200% text only reachable geometry",
+      "passed": true,
+      "actual": {
+        "right": 320,
+        "bottom": 102.171875,
+        "width": 320,
+        "actions": [
+          {
+            "name": "NEO UIReact component system",
+            "x": 9.1875,
+            "y": 9.1875,
+            "width": 147.5,
+            "height": 39.046875,
+            "right": 156.6875,
+            "bottom": 48.234375,
+            "scrollWidth": 148,
+            "clientWidth": 148
+          },
+          {
+            "name": "Світла",
+            "x": 9.1875,
+            "y": 56.984375,
+            "width": 35,
+            "height": 35,
+            "right": 44.1875,
+            "bottom": 91.984375,
+            "scrollWidth": 33,
+            "clientWidth": 33
+          },
+          {
+            "name": "Тема і налаштування",
+            "x": 50.3125,
+            "y": 56.984375,
+            "width": 35,
+            "height": 35,
+            "right": 85.3125,
+            "bottom": 91.984375,
+            "scrollWidth": 33,
+            "clientWidth": 33
+          },
+          {
+            "name": "Анімації",
+            "x": 91.4375,
+            "y": 56.984375,
+            "width": 35,
+            "height": 35,
+            "right": 126.4375,
+            "bottom": 91.984375,
+            "scrollWidth": 33,
+            "clientWidth": 33
+          },
+          {
+            "name": "Мова: UA",
+            "x": 132.5625,
+            "y": 56.984375,
+            "width": 35,
+            "height": 35,
+            "right": 167.5625,
+            "bottom": 91.984375,
+            "scrollWidth": 33,
+            "clientWidth": 33
+          }
+        ],
+        "overlap": [],
+        "fonts": [
+          {
+            "text": "NEO UI",
+            "before": 14.875,
+            "after": 29.75
+          },
+          {
+            "text": "React component system",
+            "before": 8.75,
+            "after": 17.5
+          },
+          {
+            "text": "100 компонентів",
+            "before": 9.625,
+            "after": 19.25
+          },
+          {
+            "text": "UA",
+            "before": 10.5,
+            "after": 21
+          }
+        ]
+      }
+    },
+    {
+      "name": "320 light 200% text only header axe",
+      "passed": true,
+      "actual": []
+    },
+    {
+      "name": "320 light 200% text only focus order and visible focus",
+      "passed": true,
+      "actual": [
+        {
+          "className": "ad ad-icon-button site-appearance",
+          "visible": true,
+          "name": "Світла",
+          "outline": "solid",
+          "shadow": "none"
+        },
+        {
+          "className": "ad ad-icon-button site-settings-trigger",
+          "visible": true,
+          "name": "Тема і налаштування",
+          "outline": "solid",
+          "shadow": "none"
+        },
+        {
+          "className": "ad ad-icon-button site-motion",
+          "visible": true,
+          "name": "Анімації",
+          "outline": "solid",
+          "shadow": "none"
+        },
+        {
+          "className": "ad ad-button site-locale",
+          "visible": true,
+          "name": "Мова: UA",
+          "outline": "solid",
+          "shadow": "none"
+        }
+      ]
+    },
+    {
+      "name": "320 light 200% text only locale keyboard and restore",
+      "passed": true,
+      "actual": {
+        "first": "Русский",
+        "last": "Українська",
+        "home": "Русский"
+      }
+    },
+    {
+      "name": "320 light 200% text only settings restores keyboard focus",
+      "passed": true
+    },
+    {
+      "name": "320 light 200% text only motion keyboard toggle",
+      "passed": true
+    },
+    {
+      "name": "320 light 200% text only appearance keyboard toggle",
+      "passed": true
+    },
+    {
+      "name": "320 light 200% root font reachable geometry",
+      "passed": true,
+      "actual": {
+        "right": 320,
+        "bottom": 285.609375,
+        "width": 320,
+        "actions": [
+          {
+            "name": "NEO UIReact component system",
+            "x": 18.375,
+            "y": 18.375,
+            "width": 195.75,
+            "height": 78.109375,
+            "right": 214.125,
+            "bottom": 96.484375,
+            "scrollWidth": 196,
+            "clientWidth": 196
+          },
+          {
+            "name": "Світла",
+            "x": 67.125,
+            "y": 113.984375,
+            "width": 70,
+            "height": 70,
+            "right": 137.125,
+            "bottom": 183.984375,
+            "scrollWidth": 68,
+            "clientWidth": 68
+          },
+          {
+            "name": "Тема і налаштування",
+            "x": 149.375,
+            "y": 113.984375,
+            "width": 70,
+            "height": 70,
+            "right": 219.375,
+            "bottom": 183.984375,
+            "scrollWidth": 68,
+            "clientWidth": 68
+          },
+          {
+            "name": "Анімації",
+            "x": 231.625,
+            "y": 113.984375,
+            "width": 70,
+            "height": 70,
+            "right": 301.625,
+            "bottom": 183.984375,
+            "scrollWidth": 68,
+            "clientWidth": 68
+          },
+          {
+            "name": "Мова: UA",
+            "x": 231.625,
+            "y": 196.234375,
+            "width": 70,
+            "height": 70,
+            "right": 301.625,
+            "bottom": 266.234375,
+            "scrollWidth": 68,
+            "clientWidth": 68
+          }
+        ],
+        "overlap": [],
+        "fonts": [
+          {
+            "text": "NEO UI",
+            "before": 14.875,
+            "after": 29.75
+          },
+          {
+            "text": "React component system",
+            "before": 8.75,
+            "after": 17.5
+          },
+          {
+            "text": "100 компонентів",
+            "before": 9.625,
+            "after": 19.25
+          },
+          {
+            "text": "UA",
+            "before": 10.5,
+            "after": 21
+          }
+        ]
+      }
+    },
+    {
+      "name": "320 light 200% root font header axe",
+      "passed": true,
+      "actual": []
+    },
+    {
+      "name": "320 light 200% root font focus order and visible focus",
+      "passed": true,
+      "actual": [
+        {
+          "className": "ad ad-icon-button site-appearance",
+          "visible": true,
+          "name": "Світла",
+          "outline": "solid",
+          "shadow": "none"
+        },
+        {
+          "className": "ad ad-icon-button site-settings-trigger",
+          "visible": true,
+          "name": "Тема і налаштування",
+          "outline": "solid",
+          "shadow": "none"
+        },
+        {
+          "className": "ad ad-icon-button site-motion",
+          "visible": true,
+          "name": "Анімації",
+          "outline": "solid",
+          "shadow": "none"
+        },
+        {
+          "className": "ad ad-button site-locale",
+          "visible": true,
+          "name": "Мова: UA",
+          "outline": "solid",
+          "shadow": "none"
+        }
+      ]
+    },
+    {
+      "name": "320 light 200% root font locale keyboard and restore",
+      "passed": true,
+      "actual": {
+        "first": "Русский",
+        "last": "Українська",
+        "home": "Русский"
+      }
+    },
+    {
+      "name": "320 light 200% root font settings restores keyboard focus",
+      "passed": true
+    },
+    {
+      "name": "320 light 200% root font motion keyboard toggle",
+      "passed": true
+    },
+    {
+      "name": "320 light 200% root font appearance keyboard toggle",
+      "passed": true
+    },
+    {
+      "name": "768 dark 100% reachable geometry",
+      "passed": true,
+      "actual": {
+        "right": 768,
+        "bottom": 63.796875,
+        "width": 768,
+        "actions": [
+          {
+            "name": "NEO UIReact component system",
+            "x": 15.359375,
+            "y": 10.421875,
+            "width": 206.875,
+            "height": 41.953125,
+            "right": 222.234375,
+            "bottom": 52.375,
+            "scrollWidth": 207,
+            "clientWidth": 207
+          },
+          {
+            "name": "Світла",
+            "x": 581.453125,
+            "y": 12.59375,
+            "width": 37.59375,
+            "height": 37.59375,
+            "right": 619.046875,
+            "bottom": 50.1875,
+            "scrollWidth": 36,
+            "clientWidth": 36
+          },
+          {
+            "name": "Тема і налаштування",
+            "x": 625.984375,
+            "y": 12.59375,
+            "width": 37.59375,
+            "height": 37.59375,
+            "right": 663.578125,
+            "bottom": 50.1875,
+            "scrollWidth": 36,
+            "clientWidth": 36
+          },
+          {
+            "name": "Анімації",
+            "x": 670.515625,
+            "y": 12.59375,
+            "width": 37.59375,
+            "height": 37.59375,
+            "right": 708.109375,
+            "bottom": 50.1875,
+            "scrollWidth": 36,
+            "clientWidth": 36
+          },
+          {
+            "name": "Мова: UA",
+            "x": 715.046875,
+            "y": 12.59375,
+            "width": 37.59375,
+            "height": 37.59375,
+            "right": 752.640625,
+            "bottom": 50.1875,
+            "scrollWidth": 36,
+            "clientWidth": 36
+          }
+        ],
+        "overlap": [],
+        "fonts": [
+          {
+            "text": "NEO UI",
+            "before": 16.576,
+            "after": 16.576
+          },
+          {
+            "text": "React component system",
+            "before": 9.6384,
+            "after": 9.6384
+          },
+          {
+            "text": "100 компонентів",
+            "before": 10.34,
+            "after": 10.34
+          },
+          {
+            "text": "UA",
+            "before": 11.28,
+            "after": 11.28
+          }
+        ]
+      }
+    },
+    {
+      "name": "768 dark 100% header axe",
+      "passed": true,
+      "actual": []
+    },
+    {
+      "name": "768 dark 100% focus order and visible focus",
+      "passed": true,
+      "actual": [
+        {
+          "className": "ad ad-icon-button site-appearance",
+          "visible": true,
+          "name": "Світла",
+          "outline": "solid",
+          "shadow": "none"
+        },
+        {
+          "className": "ad ad-icon-button site-settings-trigger",
+          "visible": true,
+          "name": "Тема і налаштування",
+          "outline": "solid",
+          "shadow": "none"
+        },
+        {
+          "className": "ad ad-icon-button site-motion",
+          "visible": true,
+          "name": "Анімації",
+          "outline": "solid",
+          "shadow": "none"
+        },
+        {
+          "className": "ad ad-button site-locale",
+          "visible": true,
+          "name": "Мова: UA",
+          "outline": "solid",
+          "shadow": "none"
+        }
+      ]
+    },
+    {
+      "name": "768 dark 100% locale keyboard and restore",
+      "passed": true,
+      "actual": {
+        "first": "Русский",
+        "last": "Українська",
+        "home": "Русский"
+      }
+    },
+    {
+      "name": "768 dark 100% settings restores keyboard focus",
+      "passed": true
+    },
+    {
+      "name": "768 dark 100% motion keyboard toggle",
+      "passed": true
+    },
+    {
+      "name": "768 dark 100% appearance keyboard toggle",
+      "passed": true
+    },
+    {
+      "name": "768 dark 200% text only reachable geometry",
+      "passed": true,
+      "actual": {
+        "right": 768,
+        "bottom": 88.34375,
+        "width": 768,
+        "actions": [
+          {
+            "name": "NEO UIReact component system",
+            "x": 15.359375,
+            "y": 10.421875,
+            "width": 361.5,
+            "height": 66.5,
+            "right": 376.859375,
+            "bottom": 76.921875,
+            "scrollWidth": 362,
+            "clientWidth": 362
+          },
+          {
+            "name": "Світла",
+            "x": 581.453125,
+            "y": 24.859375,
+            "width": 37.59375,
+            "height": 37.59375,
+            "right": 619.046875,
+            "bottom": 62.453125,
+            "scrollWidth": 36,
+            "clientWidth": 36
+          },
+          {
+            "name": "Тема і налаштування",
+            "x": 625.984375,
+            "y": 24.859375,
+            "width": 37.59375,
+            "height": 37.59375,
+            "right": 663.578125,
+            "bottom": 62.453125,
+            "scrollWidth": 36,
+            "clientWidth": 36
+          },
+          {
+            "name": "Анімації",
+            "x": 670.515625,
+            "y": 24.859375,
+            "width": 37.59375,
+            "height": 37.59375,
+            "right": 708.109375,
+            "bottom": 62.453125,
+            "scrollWidth": 36,
+            "clientWidth": 36
+          },
+          {
+            "name": "Мова: UA",
+            "x": 715.046875,
+            "y": 24.859375,
+            "width": 37.59375,
+            "height": 37.59375,
+            "right": 752.640625,
+            "bottom": 62.453125,
+            "scrollWidth": 36,
+            "clientWidth": 36
+          }
+        ],
+        "overlap": [],
+        "fonts": [
+          {
+            "text": "NEO UI",
+            "before": 16.576,
+            "after": 33.152
+          },
+          {
+            "text": "React component system",
+            "before": 9.6384,
+            "after": 19.2768
+          },
+          {
+            "text": "100 компонентів",
+            "before": 10.34,
+            "after": 20.68
+          },
+          {
+            "text": "UA",
+            "before": 11.28,
+            "after": 22.56
+          }
+        ]
+      }
+    },
+    {
+      "name": "768 dark 200% text only header axe",
+      "passed": true,
+      "actual": []
+    },
+    {
+      "name": "768 dark 200% text only focus order and visible focus",
+      "passed": true,
+      "actual": [
+        {
+          "className": "ad ad-icon-button site-appearance",
+          "visible": true,
+          "name": "Світла",
+          "outline": "solid",
+          "shadow": "none"
+        },
+        {
+          "className": "ad ad-icon-button site-settings-trigger",
+          "visible": true,
+          "name": "Тема і налаштування",
+          "outline": "solid",
+          "shadow": "none"
+        },
+        {
+          "className": "ad ad-icon-button site-motion",
+          "visible": true,
+          "name": "Анімації",
+          "outline": "solid",
+          "shadow": "none"
+        },
+        {
+          "className": "ad ad-button site-locale",
+          "visible": true,
+          "name": "Мова: UA",
+          "outline": "solid",
+          "shadow": "none"
+        }
+      ]
+    },
+    {
+      "name": "768 dark 200% text only locale keyboard and restore",
+      "passed": true,
+      "actual": {
+        "first": "Русский",
+        "last": "Українська",
+        "home": "Русский"
+      }
+    },
+    {
+      "name": "768 dark 200% text only settings restores keyboard focus",
+      "passed": true
+    },
+    {
+      "name": "768 dark 200% text only motion keyboard toggle",
+      "passed": true
+    },
+    {
+      "name": "768 dark 200% text only appearance keyboard toggle",
+      "passed": true
+    },
+    {
+      "name": "768 dark 200% root font reachable geometry",
+      "passed": true,
+      "actual": {
+        "right": 768,
+        "bottom": 218.375,
+        "width": 768,
+        "actions": [
+          {
+            "name": "NEO UIReact component system",
+            "x": 19.734375,
+            "y": 19.734375,
+            "width": 405.078125,
+            "height": 83.921875,
+            "right": 424.8125,
+            "bottom": 103.65625,
+            "scrollWidth": 405,
+            "clientWidth": 405
+          },
+          {
+            "name": "Світла",
+            "x": 288.5625,
+            "y": 122.453125,
+            "width": 75.1875,
+            "height": 75.1875,
+            "right": 363.75,
+            "bottom": 197.640625,
+            "scrollWidth": 73,
+            "clientWidth": 73
+          },
+          {
+            "name": "Тема і налаштування",
+            "x": 376.90625,
+            "y": 122.453125,
+            "width": 75.1875,
+            "height": 75.1875,
+            "right": 452.09375,
+            "bottom": 197.640625,
+            "scrollWidth": 73,
+            "clientWidth": 73
+          },
+          {
+            "name": "Анімації",
+            "x": 465.25,
+            "y": 122.453125,
+            "width": 75.1875,
+            "height": 75.1875,
+            "right": 540.4375,
+            "bottom": 197.640625,
+            "scrollWidth": 73,
+            "clientWidth": 73
+          },
+          {
+            "name": "Мова: UA",
+            "x": 553.59375,
+            "y": 122.453125,
+            "width": 75.1875,
+            "height": 75.1875,
+            "right": 628.78125,
+            "bottom": 197.640625,
+            "scrollWidth": 73,
+            "clientWidth": 73
+          }
+        ],
+        "overlap": [],
+        "fonts": [
+          {
+            "text": "NEO UI",
+            "before": 16.576,
+            "after": 31.96
+          },
+          {
+            "text": "React component system",
+            "before": 9.6384,
+            "after": 18.8
+          },
+          {
+            "text": "100 компонентів",
+            "before": 10.34,
+            "after": 20.68
+          },
+          {
+            "text": "UA",
+            "before": 11.28,
+            "after": 22.56
+          }
+        ]
+      }
+    },
+    {
+      "name": "768 dark 200% root font header axe",
+      "passed": true,
+      "actual": []
+    },
+    {
+      "name": "768 dark 200% root font focus order and visible focus",
+      "passed": true,
+      "actual": [
+        {
+          "className": "ad ad-icon-button site-appearance",
+          "visible": true,
+          "name": "Світла",
+          "outline": "solid",
+          "shadow": "none"
+        },
+        {
+          "className": "ad ad-icon-button site-settings-trigger",
+          "visible": true,
+          "name": "Тема і налаштування",
+          "outline": "solid",
+          "shadow": "none"
+        },
+        {
+          "className": "ad ad-icon-button site-motion",
+          "visible": true,
+          "name": "Анімації",
+          "outline": "solid",
+          "shadow": "none"
+        },
+        {
+          "className": "ad ad-button site-locale",
+          "visible": true,
+          "name": "Мова: UA",
+          "outline": "solid",
+          "shadow": "none"
+        }
+      ]
+    },
+    {
+      "name": "768 dark 200% root font locale keyboard and restore",
+      "passed": true,
+      "actual": {
+        "first": "Русский",
+        "last": "Українська",
+        "home": "Русский"
+      }
+    },
+    {
+      "name": "768 dark 200% root font settings restores keyboard focus",
+      "passed": true
+    },
+    {
+      "name": "768 dark 200% root font motion keyboard toggle",
+      "passed": true
+    },
+    {
+      "name": "768 dark 200% root font appearance keyboard toggle",
+      "passed": true
+    },
+    {
+      "name": "768 light 100% reachable geometry",
+      "passed": true,
+      "actual": {
+        "right": 768,
+        "bottom": 63.796875,
+        "width": 768,
+        "actions": [
+          {
+            "name": "NEO UIReact component system",
+            "x": 15.359375,
+            "y": 10.421875,
+            "width": 206.875,
+            "height": 41.953125,
+            "right": 222.234375,
+            "bottom": 52.375,
+            "scrollWidth": 207,
+            "clientWidth": 207
+          },
+          {
+            "name": "Світла",
+            "x": 581.453125,
+            "y": 12.59375,
+            "width": 37.59375,
+            "height": 37.59375,
+            "right": 619.046875,
+            "bottom": 50.1875,
+            "scrollWidth": 36,
+            "clientWidth": 36
+          },
+          {
+            "name": "Тема і налаштування",
+            "x": 625.984375,
+            "y": 12.59375,
+            "width": 37.59375,
+            "height": 37.59375,
+            "right": 663.578125,
+            "bottom": 50.1875,
+            "scrollWidth": 36,
+            "clientWidth": 36
+          },
+          {
+            "name": "Анімації",
+            "x": 670.515625,
+            "y": 12.59375,
+            "width": 37.59375,
+            "height": 37.59375,
+            "right": 708.109375,
+            "bottom": 50.1875,
+            "scrollWidth": 36,
+            "clientWidth": 36
+          },
+          {
+            "name": "Мова: UA",
+            "x": 715.046875,
+            "y": 12.59375,
+            "width": 37.59375,
+            "height": 37.59375,
+            "right": 752.640625,
+            "bottom": 50.1875,
+            "scrollWidth": 36,
+            "clientWidth": 36
+          }
+        ],
+        "overlap": [],
+        "fonts": [
+          {
+            "text": "NEO UI",
+            "before": 16.576,
+            "after": 16.576
+          },
+          {
+            "text": "React component system",
+            "before": 9.6384,
+            "after": 9.6384
+          },
+          {
+            "text": "100 компонентів",
+            "before": 10.34,
+            "after": 10.34
+          },
+          {
+            "text": "UA",
+            "before": 11.28,
+            "after": 11.28
+          }
+        ]
+      }
+    },
+    {
+      "name": "768 light 100% header axe",
+      "passed": true,
+      "actual": []
+    },
+    {
+      "name": "768 light 100% focus order and visible focus",
+      "passed": true,
+      "actual": [
+        {
+          "className": "ad ad-icon-button site-appearance",
+          "visible": true,
+          "name": "Світла",
+          "outline": "solid",
+          "shadow": "none"
+        },
+        {
+          "className": "ad ad-icon-button site-settings-trigger",
+          "visible": true,
+          "name": "Тема і налаштування",
+          "outline": "solid",
+          "shadow": "none"
+        },
+        {
+          "className": "ad ad-icon-button site-motion",
+          "visible": true,
+          "name": "Анімації",
+          "outline": "solid",
+          "shadow": "none"
+        },
+        {
+          "className": "ad ad-button site-locale",
+          "visible": true,
+          "name": "Мова: UA",
+          "outline": "solid",
+          "shadow": "none"
+        }
+      ]
+    },
+    {
+      "name": "768 light 100% locale keyboard and restore",
+      "passed": true,
+      "actual": {
+        "first": "Русский",
+        "last": "Українська",
+        "home": "Русский"
+      }
+    },
+    {
+      "name": "768 light 100% settings restores keyboard focus",
+      "passed": true
+    },
+    {
+      "name": "768 light 100% motion keyboard toggle",
+      "passed": true
+    },
+    {
+      "name": "768 light 100% appearance keyboard toggle",
+      "passed": true
+    },
+    {
+      "name": "768 light 200% text only reachable geometry",
+      "passed": true,
+      "actual": {
+        "right": 768,
+        "bottom": 88.34375,
+        "width": 768,
+        "actions": [
+          {
+            "name": "NEO UIReact component system",
+            "x": 15.359375,
+            "y": 10.421875,
+            "width": 361.5,
+            "height": 66.5,
+            "right": 376.859375,
+            "bottom": 76.921875,
+            "scrollWidth": 362,
+            "clientWidth": 362
+          },
+          {
+            "name": "Світла",
+            "x": 581.453125,
+            "y": 24.859375,
+            "width": 37.59375,
+            "height": 37.59375,
+            "right": 619.046875,
+            "bottom": 62.453125,
+            "scrollWidth": 36,
+            "clientWidth": 36
+          },
+          {
+            "name": "Тема і налаштування",
+            "x": 625.984375,
+            "y": 24.859375,
+            "width": 37.59375,
+            "height": 37.59375,
+            "right": 663.578125,
+            "bottom": 62.453125,
+            "scrollWidth": 36,
+            "clientWidth": 36
+          },
+          {
+            "name": "Анімації",
+            "x": 670.515625,
+            "y": 24.859375,
+            "width": 37.59375,
+            "height": 37.59375,
+            "right": 708.109375,
+            "bottom": 62.453125,
+            "scrollWidth": 36,
+            "clientWidth": 36
+          },
+          {
+            "name": "Мова: UA",
+            "x": 715.046875,
+            "y": 24.859375,
+            "width": 37.59375,
+            "height": 37.59375,
+            "right": 752.640625,
+            "bottom": 62.453125,
+            "scrollWidth": 36,
+            "clientWidth": 36
+          }
+        ],
+        "overlap": [],
+        "fonts": [
+          {
+            "text": "NEO UI",
+            "before": 16.576,
+            "after": 33.152
+          },
+          {
+            "text": "React component system",
+            "before": 9.6384,
+            "after": 19.2768
+          },
+          {
+            "text": "100 компонентів",
+            "before": 10.34,
+            "after": 20.68
+          },
+          {
+            "text": "UA",
+            "before": 11.28,
+            "after": 22.56
+          }
+        ]
+      }
+    },
+    {
+      "name": "768 light 200% text only header axe",
+      "passed": true,
+      "actual": []
+    },
+    {
+      "name": "768 light 200% text only focus order and visible focus",
+      "passed": true,
+      "actual": [
+        {
+          "className": "ad ad-icon-button site-appearance",
+          "visible": true,
+          "name": "Світла",
+          "outline": "solid",
+          "shadow": "none"
+        },
+        {
+          "className": "ad ad-icon-button site-settings-trigger",
+          "visible": true,
+          "name": "Тема і налаштування",
+          "outline": "solid",
+          "shadow": "none"
+        },
+        {
+          "className": "ad ad-icon-button site-motion",
+          "visible": true,
+          "name": "Анімації",
+          "outline": "solid",
+          "shadow": "none"
+        },
+        {
+          "className": "ad ad-button site-locale",
+          "visible": true,
+          "name": "Мова: UA",
+          "outline": "solid",
+          "shadow": "none"
+        }
+      ]
+    },
+    {
+      "name": "768 light 200% text only locale keyboard and restore",
+      "passed": true,
+      "actual": {
+        "first": "Русский",
+        "last": "Українська",
+        "home": "Русский"
+      }
+    },
+    {
+      "name": "768 light 200% text only settings restores keyboard focus",
+      "passed": true
+    },
+    {
+      "name": "768 light 200% text only motion keyboard toggle",
+      "passed": true
+    },
+    {
+      "name": "768 light 200% text only appearance keyboard toggle",
+      "passed": true
+    },
+    {
+      "name": "768 light 200% root font reachable geometry",
+      "passed": true,
+      "actual": {
+        "right": 768,
+        "bottom": 218.375,
+        "width": 768,
+        "actions": [
+          {
+            "name": "NEO UIReact component system",
+            "x": 19.734375,
+            "y": 19.734375,
+            "width": 405.078125,
+            "height": 83.921875,
+            "right": 424.8125,
+            "bottom": 103.65625,
+            "scrollWidth": 405,
+            "clientWidth": 405
+          },
+          {
+            "name": "Світла",
+            "x": 288.5625,
+            "y": 122.453125,
+            "width": 75.1875,
+            "height": 75.1875,
+            "right": 363.75,
+            "bottom": 197.640625,
+            "scrollWidth": 73,
+            "clientWidth": 73
+          },
+          {
+            "name": "Тема і налаштування",
+            "x": 376.90625,
+            "y": 122.453125,
+            "width": 75.1875,
+            "height": 75.1875,
+            "right": 452.09375,
+            "bottom": 197.640625,
+            "scrollWidth": 73,
+            "clientWidth": 73
+          },
+          {
+            "name": "Анімації",
+            "x": 465.25,
+            "y": 122.453125,
+            "width": 75.1875,
+            "height": 75.1875,
+            "right": 540.4375,
+            "bottom": 197.640625,
+            "scrollWidth": 73,
+            "clientWidth": 73
+          },
+          {
+            "name": "Мова: UA",
+            "x": 553.59375,
+            "y": 122.453125,
+            "width": 75.1875,
+            "height": 75.1875,
+            "right": 628.78125,
+            "bottom": 197.640625,
+            "scrollWidth": 73,
+            "clientWidth": 73
+          }
+        ],
+        "overlap": [],
+        "fonts": [
+          {
+            "text": "NEO UI",
+            "before": 16.576,
+            "after": 31.96
+          },
+          {
+            "text": "React component system",
+            "before": 9.6384,
+            "after": 18.8
+          },
+          {
+            "text": "100 компонентів",
+            "before": 10.34,
+            "after": 20.68
+          },
+          {
+            "text": "UA",
+            "before": 11.28,
+            "after": 22.56
+          }
+        ]
+      }
+    },
+    {
+      "name": "768 light 200% root font header axe",
+      "passed": true,
+      "actual": []
+    },
+    {
+      "name": "768 light 200% root font focus order and visible focus",
+      "passed": true,
+      "actual": [
+        {
+          "className": "ad ad-icon-button site-appearance",
+          "visible": true,
+          "name": "Світла",
+          "outline": "solid",
+          "shadow": "none"
+        },
+        {
+          "className": "ad ad-icon-button site-settings-trigger",
+          "visible": true,
+          "name": "Тема і налаштування",
+          "outline": "solid",
+          "shadow": "none"
+        },
+        {
+          "className": "ad ad-icon-button site-motion",
+          "visible": true,
+          "name": "Анімації",
+          "outline": "solid",
+          "shadow": "none"
+        },
+        {
+          "className": "ad ad-button site-locale",
+          "visible": true,
+          "name": "Мова: UA",
+          "outline": "solid",
+          "shadow": "none"
+        }
+      ]
+    },
+    {
+      "name": "768 light 200% root font locale keyboard and restore",
+      "passed": true,
+      "actual": {
+        "first": "Русский",
+        "last": "Українська",
+        "home": "Русский"
+      }
+    },
+    {
+      "name": "768 light 200% root font settings restores keyboard focus",
+      "passed": true
+    },
+    {
+      "name": "768 light 200% root font motion keyboard toggle",
+      "passed": true
+    },
+    {
+      "name": "768 light 200% root font appearance keyboard toggle",
+      "passed": true
+    },
+    {
+      "name": "no runtime errors",
+      "passed": true,
+      "actual": []
+    }
+  ]
+}

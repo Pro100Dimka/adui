@@ -1,13 +1,14 @@
+import { forwardRef } from "react";
 import { useControllable } from "../../../core/base";
 import { buttonView, type ToggleButtonProps } from "../shared";
 
-export const ToggleButton = ({
+export const ToggleButton = /* @__PURE__ */ forwardRef<HTMLButtonElement, ToggleButtonProps>(function ToggleButton({
   checked,
   defaultChecked = false,
   onValueChange,
   onClick,
   ...p
-}: ToggleButtonProps) => {
+}, ref) {
   const [value, setValue] = useControllable(
     checked,
     defaultChecked,
@@ -16,6 +17,7 @@ export const ToggleButton = ({
   return buttonView(
     {
       ...p,
+      ref,
       "aria-label": p["aria-label"] ?? (!p.children ? p.label : undefined),
       "aria-pressed": value,
       children: p.children ?? (p.icon ? null : p.label),
@@ -27,4 +29,4 @@ export const ToggleButton = ({
     },
     "ToggleButton",
   );
-};
+});

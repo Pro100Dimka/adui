@@ -1,4 +1,4 @@
-import { tr, useTr } from "../../../core/i18n";
+import { useTr } from "../../../core/i18n";
 import { mark } from "../../../core/base";
 import { type TabItem, type TabsProps } from "../shared";
 import { Tabs } from "../Tabs/Tabs";

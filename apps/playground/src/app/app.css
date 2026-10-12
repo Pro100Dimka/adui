@@ -39,7 +39,7 @@ a {
   top: 0;
   z-index: 20;
   justify-content: space-between;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   padding: var(--ad-space-3) clamp(var(--ad-space-3), 2vw, var(--ad-space-6));
   border-radius: 0;
   border-width: 0 0 0.0625rem;
@@ -50,20 +50,37 @@ a {
   align-items: center;
   gap: var(--ad-space-3);
   min-width: 0;
+  flex-shrink: 0;
 }
 .site-tools {
   min-width: 0;
-  overflow-x: auto;
-  scrollbar-width: none;
-}
-.site-tools::-webkit-scrollbar {
-  display: none;
+  flex-wrap: wrap;
+  justify-content: flex-end;
 }
 .site-tools > * {
   flex: none;
 }
-.site-tools .ad-tabs-list {
-  min-height: auto;
+.site-tools > .ad-badge {
+  width: 8.5rem;
+  justify-content: center;
+}
+.site-tools .ad-button,
+.site-tools .ad-icon-button {
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  border-radius: var(--ad-radius-sm);
+}
+.site-tools :is(.ad-button, .ad-icon-button)[aria-pressed="true"] {
+  color: var(--ad-primary);
+  background: rgb(from var(--ad-primary) r g b / 0.08);
+}
+.site-locale {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.04em;
+}
+.site-language-menu .ad-menu-item-icon {
+  display: none;
 }
 
 /* Two columns from md: sidebar and content scroll independently inside the viewport.

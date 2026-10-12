@@ -1,4 +1,4 @@
-import { tr, useTr } from "../../../core/i18n";
+import { useTr } from "../../../core/i18n";
 import { useRef, useState } from "react";
 import { mark } from "../../../core/base";
 import { Menu } from "../../feedback/Menu/Menu";

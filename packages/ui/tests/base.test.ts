@@ -56,7 +56,11 @@ it("locks the Linux Rollup binary needed by the release runner", () => {
 
 it("builds the package before CI tests import its dist entry", () => {
   const workflow = readFileSync(new URL("../../../.github/workflows/release.yml", import.meta.url), "utf8");
-  expect(workflow.indexOf("- run: npm run build --workspace @ad-voice/ui")).toBeLessThan(workflow.indexOf("- run: npm test --workspace @ad-voice/ui"));
+  const workspace = JSON.parse(readFileSync(new URL("../../../package.json", import.meta.url), "utf8"));
+  expect(workflow).toContain("npm run check");
+  expect(workspace.scripts.check).toContain("npm run build");
+  expect(workspace.scripts.check).toContain("npm test --workspace @neo-ui-kit/react");
+  expect(workspace.scripts.check.indexOf("npm run build")).toBeLessThan(workspace.scripts.check.indexOf("npm test --workspace @neo-ui-kit/react"));
 });
 
 describe("closed dialog work", () => {
@@ -137,16 +141,57 @@ describe("locale isolation", () => {
 });
 
 describe("release checks", () => {
+  it("documents the npm trusted publisher and immutable registry releases", () => {
+    const readme = readFileSync("../../README.md", "utf8");
+    for (const setting of ["Pro100Dimka/adui", "release.yml", "npm-publication", "OIDC", "NPM_TOKEN", "v<version>"])
+      expect(readme).toContain(setting);
+    expect(readme).toContain("Опубликованную версию `1.0.0` нельзя перезаписать");
+    expect(readme).toContain("npm install @neo-ui-kit/react");
+  });
+
+  it("documents the actual DataTable row actions default consistently", () => {
+    const readme = readFileSync("README.md", "utf8");
+    const source = readFileSync("src/components/feedback/DataTable/DataTable.tsx", "utf8");
+    const defaultWidth = source.match(/rowActionsWidth = (\d+)/)?.[1];
+    expect(defaultWidth).toBe("120");
+    expect(readme).toContain(`\`rowActionsWidth\` defaults to ${defaultWidth}px`);
+    expect(readme).not.toContain("`rowActionsWidth` defaults to 96px");
+  });
+
+  it("ships discoverable npm metadata and the approved MIT license", () => {
+    const manifest = JSON.parse(readFileSync("package.json", "utf8"));
+    expect(manifest).toMatchObject({
+      repository: {
+        type: "git",
+        url: "git+https://github.com/Pro100Dimka/adui.git",
+        directory: "packages/ui",
+      },
+      homepage: "https://github.com/Pro100Dimka/adui#readme",
+      bugs: { url: "https://github.com/Pro100Dimka/adui/issues" },
+      license: "MIT",
+    });
+    expect(manifest.files).toContain("LICENSE");
+    const license = readFileSync("LICENSE", "utf8");
+    expect(license).toContain("MIT License");
+    expect(license).toContain("Copyright (c) 2026 pro100dimka");
+    expect(license).toContain("use, copy, modify, merge, publish, distribute, sublicense, and/or sell");
+    expect(license).toContain("The above copyright notice and this permission notice shall be included in all");
+    expect(license).toContain('THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND');
+  });
+
   it("runs the package tests before creating a release archive", () => {
     const workflow = readFileSync("../../.github/workflows/release.yml", "utf8");
-    expect(workflow).toMatch(/npm test --workspace @ad-voice\/ui/);
-    expect(workflow.indexOf("npm test --workspace @ad-voice/ui")).toBeLessThan(workflow.indexOf("npm pack ./packages/ui"));
+    expect(workflow).toContain("npm run check");
+    expect(workflow).toContain("npm pack ./packages/ui");
+    expect(workflow.indexOf("npm run check")).toBeLessThan(workflow.indexOf("npm pack ./packages/ui"));
   });
   it("installs the packed release in a clean consumer before publishing", () => {
     const workflow = readFileSync("../../.github/workflows/release.yml", "utf8");
     expect(workflow).toContain("Smoke-test packed consumer");
-    expect(workflow).toContain("npm install ../release/ad-voice-ui-${VERSION}.tgz");
-    expect(workflow.indexOf("Smoke-test packed consumer")).toBeGreaterThan(workflow.indexOf("npm run package"));
+    expect(workflow).toContain("npm install ../release/neo-ui-kit-react-${VERSION}.tgz");
+    expect(workflow.indexOf("Smoke-test packed consumer")).toBeGreaterThan(workflow.indexOf("npm pack ./packages/ui"));
+    expect(workflow).toContain("actions/upload-artifact@");
+    expect(workflow.indexOf("Smoke-test packed consumer")).toBeLessThan(workflow.indexOf("actions/upload-artifact@"));
   });
 });
 
@@ -173,7 +218,7 @@ describe("documentation groups", () => {
     expect(page).toMatch(/modal === "example" \? \(\s*sources \?/);
   });
 
-  it("puts compositional parts on one discoverable page while keeping old links working", () => {
+  it("keeps compositional parts discoverable on their own pages and with their parent", () => {
     const groups = [
       ["tab", "Tab", "Tabs"], ["tab-panel", "TabPanel", "Tabs"],
       ["menu-item", "MenuItem", "Menu"], ["form", "Form", "FormFields"],
@@ -181,19 +226,20 @@ describe("documentation groups", () => {
       ["dialog-actions", "DialogActions", "Dialog"],
     ];
     for (const [slug, part, parent] of groups) {
-      expect(getCatalogItemBySlug(slug)?.name).toBe(parent);
-      expect(catalog.some((item) => item.name === part)).toBe(false);
+      expect(getCatalogItemBySlug(slug)?.name).toBe(part);
+      expect(catalog.some((item) => item.name === part)).toBe(true);
+      expect(getDocumentationParts(parent).some((item) => item.name === part)).toBe(true);
     }
     expect(catalog.some((item) => item.name === "Tabs")).toBe(true);
     expect(getDocumentationParts("Tabs").map((item) => item.name)).toEqual(["Tab", "TabPanel"]);
-    expect(componentCount).toBeGreaterThan(catalog.length);
+    expect(componentCount).toBe(catalog.length);
   });
 
   it("uses complete, copyable examples for the composed navigation and table pages", () => {
     for (const path of ["controls/Tabs", "feedback/DataTable"]) {
       const source = readFileSync(`src/components/${path}/example.tsx`, "utf8");
       expect(source).toContain("export default function");
-      expect(source).toContain('from "@ad-voice/ui"');
+      expect(source).toContain('from "@neo-ui-kit/react"');
       expect(source).not.toContain("dev/exampleHelpers");
     }
   });
@@ -203,7 +249,7 @@ describe("documentation groups", () => {
   });
 
   it("wraps live specimens in a self-contained component with its state import", () => {
-    const code = toModule('import { Slider } from "@ad-voice/ui";\n<Slider value={volume} onValueChange={setVolume} />');
+    const code = toModule('import { Slider } from "@neo-ui-kit/react";\n<Slider value={volume} onValueChange={setVolume} />');
 
     expect(code).toContain('import * as React from "react"');
     expect(code).toContain("export default function Example()");
@@ -211,7 +257,7 @@ describe("documentation groups", () => {
   });
   it("copies the real initial state into a generated interactive example", () => {
     const code = toModule(
-      'import { Slider } from "@ad-voice/ui";\n<Slider value={volume} onValueChange={setVolume} />',
+      'import { Slider } from "@neo-ui-kit/react";\n<Slider value={volume} onValueChange={setVolume} />',
       'const [volume, setVolume] = useState(65);',
     );
     expect(code).toContain("const [volume, setVolume] = React.useState(65)");
@@ -420,7 +466,7 @@ describe("DataTable tools", () => {
     const css = readFileSync("src/components/feedback/DataTable/styles.css", "utf8");
 
     expect(html).toContain('data-label="Исполнитель"');
-    expect(css).toMatch(/@media \(max-width: 48rem\)[\s\S]*\.ad-data-table(?::not\(\[data-(?:virtual|pinned)\]\))* tbody tr:not\(\.ad-data-table-group\)/);
+    expect(css).toMatch(/@container ad-data-table \(max-width: 48rem\)[\s\S]*\.ad-data-table(?::not\(\[data-(?:virtual|pinned)\]\))* tbody tr:not\(\.ad-data-table-group\)/);
     expect(css).toContain("content: attr(data-label)");
   });
 });
@@ -452,7 +498,7 @@ describe("FilePicker avatar", () => {
     }));
 
     expect(html).toContain('data-variant="avatar"');
-    expect(html).toContain('aria-label="Изменить фото"');
+    expect(html).toContain('aria-label="Изменить фото: Дмитрий"');
     expect(html).toContain('class="ad-host-seal"');
     expect(html).toContain('href="/portrait.png"');
     expect(html).toContain('>Дмитрий</text>');
@@ -614,7 +660,7 @@ const spotAt = (light: any) => {
 describe("AnimatedBorder", () => {
   afterEach(() => vi.unstubAllGlobals());
 
-  it("limits idle frames and restores full-rate motion on hover", () => {
+  it("keeps idle and hovered borders on the same smooth shared clock", () => {
     let hovered = false;
     stubBorderDocument();
     const host = Object.assign(borderNode("section"), { offsetWidth: 200, offsetHeight: 100, matches: () => hovered });
@@ -627,8 +673,7 @@ describe("AnimatedBorder", () => {
     const count = () => { if (moves() !== last) { frames++; last = moves(); } };
 
     for (let frame = 1; frame <= 30; frame++) { onFrame(frame / 30); count(); }
-    expect(frames).toBeLessThanOrEqual(12);
-    expect(frames).toBeGreaterThanOrEqual(8);
+    expect(frames).toBe(30);
 
     hovered = true;
     frames = 0;
@@ -639,7 +684,7 @@ describe("AnimatedBorder", () => {
 
   it("keeps the light-mode halo restrained without dimming the precise edge", () => {
     const css = readFileSync("src/theme/base.css", "utf8");
-    expect(css).toMatch(/\[data-ad-color-mode="light"\] \.ad-border \.ad-border-aura\s*\{[^}]*opacity:\s*0\.4/s);
+    expect(css).toMatch(/\[data-ad-color-scheme="light"\] \.ad-border \.ad-border-aura\s*\{[^}]*opacity:\s*0\.4/s);
   });
 
   it("releases compositor hints for border lights while their host is offscreen", () => {
@@ -652,10 +697,10 @@ describe("AnimatedBorder", () => {
     { name: "rectangle", width: 200, height: 100, radius: "0px", points: [[0, 0.65, 0.65], [0.25, 149.35, 0.65], [0.5, 199.35, 99.35], [0.75, 50.65, 99.35], [1, 0.65, 0.65]] },
     { name: "square", width: 100, height: 100, radius: "0px", points: [[0.25, 99.35, 0.65], [0.5, 99.35, 99.35], [0.75, 0.65, 99.35]] },
     { name: "rounded tangents and arc", width: 100, height: 60, radius: "10.65px", points: [[78.7 / (234.8 + 20 * Math.PI), 89.35, 0.65], [(78.7 + 2.5 * Math.PI) / (234.8 + 20 * Math.PI), 89.35 + Math.SQRT1_2 * 10, 10.65 - Math.SQRT1_2 * 10], [(78.7 + 5 * Math.PI) / (234.8 + 20 * Math.PI), 99.35, 10.65], [0.5, 89.35, 59.35]] },
-    { name: "percentage capsule", width: 200, height: 40, radius: "50%", points: [[0, 20, 0.65], [0.5, 180, 39.35]] },
+    { name: "percentage ellipse", width: 200, height: 40, radius: "50%", points: [[0, 100, 0.65], [0.25, 199.35, 20], [0.5, 100, 39.35], [0.75, 0.65, 20]] },
     { name: "circle", width: 40, height: 40, radius: "50%", points: [[0, 20, 0.65], [0.25, 39.35, 20], [0.5, 20, 39.35], [0.75, 0.65, 20]] },
     { name: "clamped oversized radius", width: 120, height: 40, radius: "999px", points: [[0, 20, 0.65], [0.5, 100, 39.35]] },
-    { name: "percentage radius", width: 120, height: 80, radius: "25%", points: [[0, 20, 0.65], [0.5, 100, 79.35]] },
+    { name: "percentage radius", width: 120, height: 80, radius: "25%", points: [[0, 30, 0.65], [0.5, 90, 79.35]] },
     { name: "one-pixel rectangle", width: 1, height: 1, radius: "0px", points: [[0, 0.65, 0.65], [0.25, 0.35, 0.65], [0.5, 0.35, 0.35], [0.75, 0.65, 0.35]] },
   ])("moves the lights along $name from cached contour geometry without native SVG queries", ({ width, height, radius, points }) => {
     stubBorderDocument();
@@ -734,6 +779,7 @@ describe("AnimatedBorder", () => {
     expect(border.lights.map((light: any) => light.speed)).toEqual([125, 86]);
     for (const light of border.lights) expect(light.radius).toBeCloseTo(61.2);
     perimeter = 1200;
+    host.offsetWidth = 600;
     border.sync();
     for (const light of border.lights) {
       expect(light.radius).toBeCloseTo(183.6);
@@ -824,9 +870,9 @@ describe("documentation motion", () => {
 
     expect(defaultSettings.locale).toBe("uk");
     expect(defaultSettings.appearance).toBe("dark");
-    expect(app).toContain('className="site-appearance"');
+    expect(app).toContain('className: "site-appearance"');
     expect(app).toContain('className="site-locale"');
-    expect(app).toContain('{ value: "uk", label: "UA" }');
+    expect(app).toContain('uk: { label: "UA", name: "Українська" }');
 
     const light = siteThemeProps({ ...defaultSettings, appearance: "light" });
     expect(light.tokens?.text).toBe("#211b1f");

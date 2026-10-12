@@ -8,6 +8,8 @@ export const Menu = (p: MenuProps) => (
     role="menu"
     className={`ad-menu ${p.className ?? ""}`}
     onKeyDown={(e) => {
+      p.onKeyDown?.(e);
+      if (e.defaultPrevented) return;
       if (!["ArrowDown", "ArrowUp", "Home", "End", "Tab"].includes(e.key))
         return;
       if (e.key === "Tab") {

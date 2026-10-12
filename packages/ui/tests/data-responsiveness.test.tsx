@@ -399,11 +399,11 @@ describe("DataTable scalable and controlled views", () => {
     const headers = () => tree!.root.findAllByType("th");
     expect(headers().map((header) => header.props["data-column-key"])).toEqual(["team", "score", "id"]);
     expect(headers().map((header) => header.props["data-pinned"])).toEqual(["left", "left", "right"]);
-    expect(headers()[1].props.style.left).toBe(160);
+    expect(headers()[1].props.style.left).toBe("var(--ad-table-pin-left, 160px)");
     const resize = headers()[0].findByProps({ role: "separator" });
     act(() => resize.props.onKeyDown({ key: "ArrowRight", preventDefault() {}, currentTarget: { closest: () => ({ getBoundingClientRect: () => ({ width: 160 }) }) } }));
-    expect(headers()[1].props.style.left).toBe(176);
-    expect(tree!.root.findAllByType("td").filter((cell) => cell.props["data-column-key"] === "score").every((cell) => cell.props.style.left === 176)).toBe(true);
+    expect(headers()[1].props.style.left).toBe("var(--ad-table-pin-left, 176px)");
+    expect(tree!.root.findAllByType("td").filter((cell) => cell.props["data-column-key"] === "score").every((cell) => cell.props.style.left === "var(--ad-table-pin-left, 176px)")).toBe(true);
   });
 
   it("offers accessible column reorder and pin actions and never hides the final current column after columns change", () => {
@@ -556,9 +556,8 @@ describe("DataTable scalable and controlled views", () => {
 
   it("reserves a usable action slot and includes it in right pin offsets", () => {
     act(() => { tree = create(<DataTable {...{ columns, rows, renderRowActions: () => <button>Copy</button>, columnPinning: { right: ["score"] } }} />); });
-    const actions = tree!.root.findAllByType("td").find((cell) => cell.props.className === "ad-data-table-actions")!;
-    expect(actions.props.style.width).toBe(96);
-    expect(tree!.root.findAllByType("th").find((cell) => cell.props["data-column-key"] === "score")!.props.style.right).toBe(96);
+    expect(tree!.root.findAllByType("col").at(-1)!.props.style.width).toBe(120);
+    expect(tree!.root.findAllByType("th").find((cell) => cell.props["data-column-key"] === "score")!.props.style.right).toBe("var(--ad-table-pin-right, 120px)");
   });
 
   it("collapses a real virtual group and unmounts its expanded detail panel", () => {

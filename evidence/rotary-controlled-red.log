@@ -1,0 +1,95 @@
+
+ RUN  v3.2.7 D:/Git/adui
+
+stderr | packages/ui/tests/RotaryKnobContracts.test.tsx > keeps the knob operable by keyboard when its optional readout is hidden
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | packages/ui/tests/RotaryKnobContracts.test.tsx > keeps controlled display at the supplied value while reporting keyboard proposals
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | packages/ui/tests/RotaryKnobContracts.test.tsx > reports typed controlled proposals without replacing the externally supplied value
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | packages/ui/tests/RotaryKnobContracts.test.tsx > uses controlled value before defaultValue in the initial accessible markup
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | packages/ui/tests/RotaryKnobContracts.test.tsx > does not emit a user commit when a drag is disposed by unmount
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | packages/ui/tests/RotaryKnobContracts.test.tsx > stops a drag when disabled changes during the interaction
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | packages/ui/tests/RotaryKnobContracts.test.tsx > stops a drag when readOnly changes during the interaction
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+ ❯ packages/ui/tests/RotaryKnobContracts.test.tsx (7 tests | 3 failed) 33ms
+   ✓ keeps the knob operable by keyboard when its optional readout is hidden 19ms
+   × keeps controlled display at the supplied value while reporting keyboard proposals 5ms
+     → expected '21' to be '20' // Object.is equality
+   × reports typed controlled proposals without replacing the externally supplied value 4ms
+     → expected '30' to be '20' // Object.is equality
+   × uses controlled value before defaultValue in the initial accessible markup 2ms
+     → expected 70 to be 20 // Object.is equality
+   ✓ does not emit a user commit when a drag is disposed by unmount 1ms
+   ✓ stops a drag when disabled changes during the interaction 1ms
+   ✓ stops a drag when readOnly changes during the interaction 1ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/ui/tests/RotaryKnobContracts.test.tsx > keeps controlled display at the supplied value while reporting keyboard proposals
+AssertionError: expected '21' to be '20' // Object.is equality
+
+Expected: "20"
+Received: "21"
+
+ ❯ packages/ui/tests/RotaryKnobContracts.test.tsx:56:51
+     54|   expect(onValueChange).toHaveBeenCalledExactlyOnceWith(21);
+     55|   expect(onValueCommit).toHaveBeenCalledExactlyOnceWith(21);
+     56|   expect(fixture.attributes.get("aria-valuenow")).toBe("20");
+       |                                                   ^
+     57|   act(() => tree.update(<RotaryKnob {...props} value={21} />));
+     58|   expect(fixture.attributes.get("aria-valuenow")).toBe("21");
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯
+
+ FAIL  packages/ui/tests/RotaryKnobContracts.test.tsx > reports typed controlled proposals without replacing the externally supplied value
+AssertionError: expected '30' to be '20' // Object.is equality
+
+Expected: "20"
+Received: "30"
+
+ ❯ packages/ui/tests/RotaryKnobContracts.test.tsx:71:51
+     69|   expect(onValueChange).toHaveBeenCalledExactlyOnceWith(30);
+     70|   expect(onValueCommit).toHaveBeenCalledExactlyOnceWith(30);
+     71|   expect(fixture.attributes.get("aria-valuenow")).toBe("20");
+       |                                                   ^
+     72|   act(() => tree.unmount());
+     73| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/3]⎯
+
+ FAIL  packages/ui/tests/RotaryKnobContracts.test.tsx > uses controlled value before defaultValue in the initial accessible markup
+AssertionError: expected 70 to be 20 // Object.is equality
+
+- Expected
++ Received
+
+- 20
++ 70
+
+ ❯ packages/ui/tests/RotaryKnobContracts.test.tsx:79:76
+     77|   let tree!: ReturnType<typeof create>;
+     78|   act(() => { tree = create(<RotaryKnob value={20} defaultValue={70} /…
+     79|   expect(tree.root.findByProps({ role: "slider" }).props["aria-valueno…
+       |                                                                            ^
+     80|   act(() => tree.unmount());
+     81| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/3]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  3 failed | 4 passed (7)
+   Start at  13:17:11
+   Duration  401ms (transform 87ms, setup 0ms, collect 180ms, tests 33ms, environment 0ms, prepare 70ms)
+

@@ -1,4 +1,4 @@
-import { CollapsibleSection, KeyValueList } from "@ad-voice/ui";
+import { CollapsibleSection, KeyValueList } from "@neo-ui-kit/react";
 
 export default function CollapsibleSectionExample() {
   return (

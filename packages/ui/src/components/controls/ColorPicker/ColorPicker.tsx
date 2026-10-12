@@ -1,4 +1,4 @@
-import { tr, useTr } from "../../../core/i18n";
+import { useTr } from "../../../core/i18n";
 import { useEffect, useRef, useState, type PointerEvent } from "react";
 import { mark, useControllable, type CommonProps } from "../../../core/base";
 import { Popover } from "../../feedback/Popover/Popover";
@@ -23,7 +23,7 @@ export interface ColorPickerProps extends CommonProps {
 const defaultSwatches = ["#ff244c", "#ff7c97", "#e0a43a", "#10c99a", "#38bdf8", "#9b5cff", "#f472b6", "#f5f5f5"];
 
 /** Picks a colour on a saturation/brightness square and a hue strip, by hex code or from swatches. */
-function ColorPanel({ value, onChange, swatches }: { value: string; onChange: (hex: string) => void; swatches: string[] }) {
+function ColorPanel({ value, onChange, swatches, disabled }: { value: string; onChange: (hex: string) => void; swatches: string[]; disabled?: boolean }) {
   const tr = useTr();
   // HSV is kept while dragging, so a grey or black point does not lose the chosen hue.
   const [hsv, setHsv] = useState<Hsv>(() => hexToHsv(value));
@@ -33,17 +33,19 @@ function ColorPanel({ value, onChange, swatches }: { value: string; onChange: (h
     setText(value);
   }, [value]);
   const update = (next: Hsv) => {
+    if (disabled) return;
     setHsv(next);
     onChange(hsvToHex(next));
   };
   const drag = (handler: (x: number, y: number) => void) => ({
     onPointerDown: (event: PointerEvent<HTMLDivElement>) => {
+      if (disabled || event.button !== 0) return;
       event.currentTarget.setPointerCapture(event.pointerId);
       const box = event.currentTarget.getBoundingClientRect();
       handler((event.clientX - box.left) / box.width, (event.clientY - box.top) / box.height);
     },
     onPointerMove: (event: PointerEvent<HTMLDivElement>) => {
-      if (!event.currentTarget.hasPointerCapture(event.pointerId)) return;
+      if (disabled || !event.currentTarget.hasPointerCapture(event.pointerId)) return;
       const box = event.currentTarget.getBoundingClientRect();
       handler((event.clientX - box.left) / box.width, (event.clientY - box.top) / box.height);
     },
@@ -56,8 +58,12 @@ function ColorPanel({ value, onChange, swatches }: { value: string; onChange: (h
         style={{ "--ad-color-hue": `hsl(${hsv.h} 100% 50%)` } as React.CSSProperties}
         role="slider"
         aria-label={tr("Насыщенность и яркость")}
-        aria-valuetext={value}
-        tabIndex={0}
+        aria-valuemin={0}
+        aria-valuemax={100}
+        aria-valuenow={Math.round(hsv.s * 100)}
+        aria-valuetext={`${value}; ${Math.round(hsv.s * 100)}% / ${Math.round(hsv.v * 100)}%`}
+        aria-disabled={disabled || undefined}
+        tabIndex={disabled ? -1 : 0}
         {...drag((x, y) => update({ ...hsv, s: clamp(x), v: 1 - clamp(y) }))}
         onKeyDown={(event) => {
           const step = event.shiftKey ? 0.1 : 0.02;
@@ -82,7 +88,8 @@ function ColorPanel({ value, onChange, swatches }: { value: string; onChange: (h
         aria-valuemin={0}
         aria-valuemax={360}
         aria-valuenow={Math.round(hsv.h)}
-        tabIndex={0}
+        aria-disabled={disabled || undefined}
+        tabIndex={disabled ? -1 : 0}
         {...drag((x) => update({ ...hsv, h: clamp(x) * 360 }))}
         onKeyDown={(event) => {
           const step = event.shiftKey ? 15 : 3;
@@ -98,6 +105,7 @@ function ColorPanel({ value, onChange, swatches }: { value: string; onChange: (h
         <span className="ad-color-sample" style={{ background: value }} />
         <input
           value={text}
+          disabled={disabled}
           spellCheck={false}
           aria-label={tr("Код цвета")}
           onChange={(event) => {
@@ -115,6 +123,7 @@ function ColorPanel({ value, onChange, swatches }: { value: string; onChange: (h
         <div className="ad-color-swatches">
           {swatches.map((swatch) => (
             <button key={swatch} type="button" aria-label={swatch} aria-pressed={swatch.toLowerCase() === value}
+              disabled={disabled}
               style={{ background: swatch }} onClick={() => onChange(swatch.toLowerCase())} />
           ))}
         </div>
@@ -128,27 +137,28 @@ export function ColorPicker({ value: controlled, defaultValue = "#ff244c", onVal
   const tr = useTr();
   const [value, setValue] = useControllable(controlled, defaultValue, onValueChange);
   const [open, setOpen] = useState(false);
+  useEffect(() => { if (p.disabled) setOpen(false); }, [p.disabled]);
   const box = useRef<HTMLDivElement>(null);
-  const ids = useFieldIds(p.label, p.description);
+  const ids = useFieldIds(p.label, p.description, undefined, p);
   const hex = normalizeHex(value) ?? "#ff244c";
   if (inline)
     return (
       <div {...mark("ColorPicker", p)} data-inline="">
-        <ColorPanel value={hex} onChange={setValue} swatches={swatches} />
+        <ColorPanel value={hex} onChange={setValue} swatches={swatches} disabled={p.disabled} />
       </div>
     );
   return (
     <div {...mark("ColorPicker", p)}>
       <FieldFrame ids={ids} className="" label={p.label} description={p.description}>
         <InputBase ref={box} size={p.size} disabled={p.disabled} startAdornment={<span className="ad-color-sample" style={{ background: hex }} />}>
-          <button type="button" className="ad-input-control ad-color-control" disabled={p.disabled} aria-haspopup="dialog"
-            aria-expanded={open} aria-labelledby={ids.aria["aria-labelledby"]} onClick={() => setOpen((v) => !v)}>
-            {hex.toUpperCase()}
+          <button {...ids.aria} id={ids.control} type="button" className="ad-input-control ad-color-control" disabled={p.disabled} aria-haspopup="dialog"
+            aria-expanded={open} aria-labelledby={ids.valueLabelledBy} onClick={() => setOpen((v) => !v)}>
+            <span id={ids.value}>{hex.toUpperCase()}</span>
           </button>
         </InputBase>
       </FieldFrame>
-      <Popover open={open} onOpenChange={setOpen} anchorRef={box} align="start" label={tr("Выбор цвета")} className="ad-color-popover">
-        <ColorPanel value={hex} onChange={setValue} swatches={swatches} />
+      <Popover open={open && !p.disabled} onOpenChange={setOpen} anchorRef={box} align="start" label={tr("Выбор цвета")} className="ad-color-popover">
+        <ColorPanel value={hex} onChange={setValue} swatches={swatches} disabled={p.disabled} />
       </Popover>
     </div>
   );

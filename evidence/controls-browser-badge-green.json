@@ -1,0 +1,3697 @@
+{
+  "environment": {
+    "browser": "Installed Google Chrome headless",
+    "platform": "win32",
+    "physicalLowEndDevice": false,
+    "motion": "reduce",
+    "themes": [
+      "ruby",
+      "light",
+      "green",
+      "violet"
+    ],
+    "widths": [
+      320,
+      375,
+      768,
+      1024,
+      1440,
+      1920
+    ],
+    "containerWidth": 240,
+    "contrastMethod": "WCAG relative luminance of computed foreground and rendered background sampled from screenshot"
+  },
+  "stage": "badge-green",
+  "passed": 180,
+  "failed": 0,
+  "results": [
+    {
+      "name": "ruby light default badge text contrast",
+      "passed": true,
+      "actual": {
+        "background": [
+          250,
+          216,
+          221
+        ],
+        "foreground": [
+          89,
+          51,
+          61
+        ],
+        "cssColor": "color(srgb 0.347059 0.20098 0.239216)",
+        "ratio": 8.104677104814884
+      }
+    },
+    {
+      "name": "ruby light success badge text contrast",
+      "passed": true,
+      "actual": {
+        "background": [
+          195,
+          234,
+          223
+        ],
+        "foreground": [
+          29,
+          74,
+          64
+        ],
+        "cssColor": "color(srgb 0.113725 0.289216 0.251961)",
+        "ratio": 7.671759092532482
+      }
+    },
+    {
+      "name": "ruby light error badge text contrast",
+      "passed": true,
+      "actual": {
+        "background": [
+          250,
+          195,
+          203
+        ],
+        "foreground": [
+          89,
+          29,
+          42
+        ],
+        "cssColor": "color(srgb 0.347059 0.114706 0.165686)",
+        "ratio": 8.404915087330304
+      }
+    },
+    {
+      "name": "ruby light warning badge text contrast",
+      "passed": true,
+      "actual": {
+        "background": [
+          247,
+          230,
+          211
+        ],
+        "foreground": [
+          85,
+          68,
+          50
+        ],
+        "cssColor": "color(srgb 0.332353 0.268627 0.195098)",
+        "ratio": 7.619709718462906
+      }
+    },
+    {
+      "name": "ruby light processing badge text contrast",
+      "passed": true,
+      "actual": {
+        "background": [
+          250,
+          215,
+          221
+        ],
+        "foreground": [
+          89,
+          51,
+          61
+        ],
+        "cssColor": "color(srgb 0.347059 0.20098 0.239216)",
+        "ratio": 8.052699673638632
+      }
+    },
+    {
+      "name": "ruby light pending badge text contrast",
+      "passed": true,
+      "actual": {
+        "background": [
+          216,
+          207,
+          206
+        ],
+        "foreground": [
+          49,
+          41,
+          44
+        ],
+        "cssColor": "color(srgb 0.193977 0.161575 0.172979)",
+        "ratio": 9.255308993816104
+      }
+    },
+    {
+      "name": "ruby light offline badge text contrast",
+      "passed": true,
+      "actual": {
+        "background": [
+          214,
+          205,
+          205
+        ],
+        "foreground": [
+          49,
+          41,
+          44
+        ],
+        "cssColor": "color(srgb 0.193977 0.161575 0.172979)",
+        "ratio": 9.078203494193344
+      }
+    },
+    {
+      "name": "ruby light info badge text contrast",
+      "passed": true,
+      "actual": {
+        "background": [
+          217,
+          232,
+          244
+        ],
+        "foreground": [
+          52,
+          70,
+          87
+        ],
+        "cssColor": "color(srgb 0.205882 0.27549 0.341176)",
+        "ratio": 7.77854120775215
+      }
+    },
+    {
+      "name": "ruby dark default badge text contrast",
+      "passed": true,
+      "actual": {
+        "background": [
+          65,
+          31,
+          37
+        ],
+        "foreground": [
+          249,
+          215,
+          224
+        ],
+        "cssColor": "color(srgb 0.976471 0.842157 0.877451)",
+        "ratio": 10.932496345560262
+      }
+    },
+    {
+      "name": "ruby dark success badge text contrast",
+      "passed": true,
+      "actual": {
+        "background": [
+          16,
+          53,
+          42
+        ],
+        "foreground": [
+          189,
+          237,
+          227
+        ],
+        "cssColor": "color(srgb 0.743137 0.930392 0.890196)",
+        "ratio": 10.472666004401011
+      }
+    },
+    {
+      "name": "ruby dark error badge text contrast",
+      "passed": true,
+      "actual": {
+        "background": [
+          70,
+          14,
+          22
+        ],
+        "foreground": [
+          249,
+          193,
+          205
+        ],
+        "cssColor": "color(srgb 0.976471 0.755882 0.803922)",
+        "ratio": 10.141816751104
+      }
+    },
+    {
+      "name": "ruby dark warning badge text contrast",
+      "passed": true,
+      "actual": {
+        "background": [
+          65,
+          48,
+          29
+        ],
+        "foreground": [
+          245,
+          232,
+          212
+        ],
+        "cssColor": "color(srgb 0.961765 0.909804 0.833333)",
+        "ratio": 10.434143170507376
+      }
+    },
+    {
+      "name": "ruby dark processing badge text contrast",
+      "passed": true,
+      "actual": {
+        "background": [
+          70,
+          33,
+          39
+        ],
+        "foreground": [
+          249,
+          215,
+          224
+        ],
+        "cssColor": "color(srgb 0.976471 0.842157 0.877451)",
+        "ratio": 10.498860732090872
+      }
+    },
+    {
+      "name": "ruby dark pending badge text contrast",
+      "passed": true,
+      "actual": {
+        "background": [
+          50,
+          40,
+          40
+        ],
+        "foreground": [
+          228,
+          222,
+          224
+        ],
+        "cssColor": "color(srgb 0.892571 0.871792 0.88019)",
+        "ratio": 10.766020719638519
+      }
+    },
+    {
+      "name": "ruby dark offline badge text contrast",
+      "passed": true,
+      "actual": {
+        "background": [
+          49,
+          40,
+          39
+        ],
+        "foreground": [
+          228,
+          222,
+          224
+        ],
+        "cssColor": "color(srgb 0.892571 0.871792 0.88019)",
+        "ratio": 10.812897900204307
+      }
+    },
+    {
+      "name": "ruby dark info badge text contrast",
+      "passed": true,
+      "actual": {
+        "background": [
+          36,
+          50,
+          62
+        ],
+        "foreground": [
+          213,
+          234,
+          250
+        ],
+        "cssColor": "color(srgb 0.835294 0.916667 0.979412)",
+        "ratio": 10.606337642736626
+      }
+    },
+    {
+      "name": "light light default badge text contrast",
+      "passed": true,
+      "actual": {
+        "background": [
+          245,
+          236,
+          217
+        ],
+        "foreground": [
+          85,
+          73,
+          59
+        ],
+        "cssColor": "color(srgb 0.335294 0.286274 0.231373)",
+        "ratio": 7.443558857983962
+      }
+    },
+    {
+      "name": "light light success badge text contrast",
+      "passed": true,
+      "actual": {
+        "background": [
+          194,
+          235,
+          221
+        ],
+        "foreground": [
+          29,
+          74,
+          64
+        ],
+        "cssColor": "color(srgb 0.113725 0.289216 0.251961)",
+        "ratio": 7.703196384296294
+      }
+    },
+    {
+      "name": "light light error badge text contrast",
+      "passed": true,
+      "actual": {
+        "background": [
+          240,
+          225,
+          196
+        ],
+        "foreground": [
+          81,
+          61,
+          38
+        ],
+        "cssColor": "color(srgb 0.316667 0.240196 0.148039)",
+        "ratio": 7.955719184883253
+      }
+    },
+    {
+      "name": "light light warning badge text contrast",
+      "passed": true,
+      "actual": {
+        "background": [
+          245,
+          231,
+          208
+        ],
+        "foreground": [
+          85,
+          68,
+          50
+        ],
+        "cssColor": "color(srgb 0.332353 0.268627 0.195098)",
+        "ratio": 7.623909272350523
+      }
+    },
+    {
+      "name": "light light processing badge text contrast",
+      "passed": true,
+      "actual": {
+        "background": [
+          246,
+          235,
+          216
+        ],
+        "foreground": [
+          85,
+          73,
+          59
+        ],
+        "cssColor": "color(srgb 0.335294 0.286274 0.231373)",
+        "ratio": 7.4064483482185155
+      }
+    },
+    {
+      "name": "light light pending badge text contrast",
+      "passed": true,
+      "actual": {
+        "background": [
+          213,
+          208,
+          202
+        ],
+        "foreground": [
+          48,
+          42,
+          42
+        ],
+        "cssColor": "color(srgb 0.189556 0.16456 0.165465)",
+        "ratio": 9.195784503598986
+      }
+    },
+    {
+      "name": "light light offline badge text contrast",
+      "passed": true,
+      "actual": {
+        "background": [
+          212,
+          207,
+          201
+        ],
+        "foreground": [
+          48,
+          42,
+          42
+        ],
+        "cssColor": "color(srgb 0.189556 0.16456 0.165465)",
+        "ratio": 9.104203918747002
+      }
+    },
+    {
+      "name": "light light info badge text contrast",
+      "passed": true,
+      "actual": {
+        "background": [
+          216,
+          233,
+          241
+        ],
+        "foreground": [
+          52,
+          70,
+          87
+        ],
+        "cssColor": "color(srgb 0.205882 0.27549 0.341176)",
+        "ratio": 7.799936536485123
+      }
+    },
+    {
+      "name": "light dark default badge text contrast",
+      "passed": true,
+      "actual": {
+        "background": [
+          61,
+          51,
+          32
+        ],
+        "foreground": [
+          246,
+          237,
+          222
+        ],
+        "cssColor": "color(srgb 0.964706 0.927451 0.869608)",
+        "ratio": 10.684632909812896
+      }
+    },
+    {
+      "name": "light dark success badge text contrast",
+      "passed": true,
+      "actual": {
+        "background": [
+          14,
+          54,
+          39
+        ],
+        "foreground": [
+          189,
+          237,
+          227
+        ],
+        "cssColor": "color(srgb 0.743137 0.930392 0.890196)",
+        "ratio": 10.400022890455977
+      }
+    },
+    {
+      "name": "light dark error badge text contrast",
+      "passed": true,
+      "actual": {
+        "background": [
+          60,
+          43,
+          16
+        ],
+        "foreground": [
+          241,
+          225,
+          201
+        ],
+        "cssColor": "color(srgb 0.946078 0.881373 0.786275)",
+        "ratio": 10.583758431732115
+      }
+    },
+    {
+      "name": "light dark warning badge text contrast",
+      "passed": true,
+      "actual": {
+        "background": [
+          64,
+          49,
+          27
+        ],
+        "foreground": [
+          245,
+          232,
+          212
+        ],
+        "cssColor": "color(srgb 0.961765 0.909804 0.833333)",
+        "ratio": 10.385107122309615
+      }
+    },
+    {
+      "name": "light dark processing badge text contrast",
+      "passed": true,
+      "actual": {
+        "background": [
+          65,
+          54,
+          35
+        ],
+        "foreground": [
+          246,
+          237,
+          222
+        ],
+        "cssColor": "color(srgb 0.964706 0.927451 0.869608)",
+        "ratio": 10.180123745582984
+      }
+    },
+    {
+      "name": "light dark pending badge text contrast",
+      "passed": true,
+      "actual": {
+        "background": [
+          47,
+          42,
+          35
+        ],
+        "foreground": [
+          226,
+          223,
+          223
+        ],
+        "cssColor": "color(srgb 0.887961 0.874763 0.872814)",
+        "ratio": 10.73908759705737
+      }
+    },
+    {
+      "name": "light dark offline badge text contrast",
+      "passed": true,
+      "actual": {
+        "background": [
+          47,
+          41,
+          35
+        ],
+        "foreground": [
+          226,
+          223,
+          223
+        ],
+        "cssColor": "color(srgb 0.887961 0.874763 0.872814)",
+        "ratio": 10.84197941608939
+      }
+    },
+    {
+      "name": "light dark info badge text contrast",
+      "passed": true,
+      "actual": {
+        "background": [
+          34,
+          51,
+          59
+        ],
+        "foreground": [
+          213,
+          234,
+          250
+        ],
+        "cssColor": "color(srgb 0.835294 0.916667 0.979412)",
+        "ratio": 10.58065532555699
+      }
+    },
+    {
+      "name": "green light default badge text contrast",
+      "passed": true,
+      "actual": {
+        "background": [
+          214,
+          244,
+          235
+        ],
+        "foreground": [
+          56,
+          81,
+          75
+        ],
+        "cssColor": "color(srgb 0.218627 0.317647 0.295098)",
+        "ratio": 7.356426436281135
+      }
+    },
+    {
+      "name": "green light success badge text contrast",
+      "passed": true,
+      "actual": {
+        "background": [
+          187,
+          237,
+          224
+        ],
+        "foreground": [
+          29,
+          74,
+          64
+        ],
+        "cssColor": "color(srgb 0.113725 0.289216 0.251961)",
+        "ratio": 7.741997443822497
+      }
+    },
+    {
+      "name": "green light error badge text contrast",
+      "passed": true,
+      "actual": {
+        "background": [
+          187,
+          235,
+          222
+        ],
+        "foreground": [
+          29,
+          71,
+          62
+        ],
+        "cssColor": "color(srgb 0.112745 0.276471 0.242157)",
+        "ratio": 7.933911382529067
+      }
+    },
+    {
+      "name": "green light warning badge text contrast",
+      "passed": true,
+      "actual": {
+        "background": [
+          239,
+          233,
+          212
+        ],
+        "foreground": [
+          85,
+          68,
+          50
+        ],
+        "cssColor": "color(srgb 0.332353 0.268627 0.195098)",
+        "ratio": 7.647249189313139
+      }
+    },
+    {
+      "name": "green light processing badge text contrast",
+      "passed": true,
+      "actual": {
+        "background": [
+          213,
+          245,
+          234
+        ],
+        "foreground": [
+          56,
+          81,
+          75
+        ],
+        "cssColor": "color(srgb 0.218627 0.317647 0.295098)",
+        "ratio": 7.388779551831699
+      }
+    },
+    {
+      "name": "green light pending badge text contrast",
+      "passed": true,
+      "actual": {
+        "background": [
+          203,
+          211,
+          208
+        ],
+        "foreground": [
+          44,
+          43,
+          45
+        ],
+        "cssColor": "color(srgb 0.173178 0.169421 0.175344)",
+        "ratio": 9.236815834517648
+      }
+    },
+    {
+      "name": "green light offline badge text contrast",
+      "passed": true,
+      "actual": {
+        "background": [
+          202,
+          210,
+          206
+        ],
+        "foreground": [
+          44,
+          43,
+          45
+        ],
+        "cssColor": "color(srgb 0.173178 0.169421 0.175344)",
+        "ratio": 9.138444223185939
+      }
+    },
+    {
+      "name": "green light info badge text contrast",
+      "passed": true,
+      "actual": {
+        "background": [
+          209,
+          235,
+          245
+        ],
+        "foreground": [
+          52,
+          70,
+          87
+        ],
+        "cssColor": "color(srgb 0.205882 0.27549 0.341176)",
+        "ratio": 7.831136521554318
+      }
+    },
+    {
+      "name": "green dark default badge text contrast",
+      "passed": true,
+      "actual": {
+        "background": [
+          29,
+          60,
+          50
+        ],
+        "foreground": [
+          216,
+          245,
+          238
+        ],
+        "cssColor": "color(srgb 0.848039 0.958824 0.933333)",
+        "ratio": 10.440733890566271
+      }
+    },
+    {
+      "name": "green dark success badge text contrast",
+      "passed": true,
+      "actual": {
+        "background": [
+          6,
+          57,
+          42
+        ],
+        "foreground": [
+          189,
+          237,
+          227
+        ],
+        "cssColor": "color(srgb 0.743137 0.930392 0.890196)",
+        "ratio": 10.075237365486283
+      }
+    },
+    {
+      "name": "green dark error badge text contrast",
+      "passed": true,
+      "actual": {
+        "background": [
+          6,
+          54,
+          41
+        ],
+        "foreground": [
+          189,
+          234,
+          224
+        ],
+        "cssColor": "color(srgb 0.742157 0.917647 0.880392)",
+        "ratio": 10.21370072975336
+      }
+    },
+    {
+      "name": "green dark warning badge text contrast",
+      "passed": true,
+      "actual": {
+        "background": [
+          57,
+          51,
+          30
+        ],
+        "foreground": [
+          245,
+          232,
+          212
+        ],
+        "cssColor": "color(srgb 0.961765 0.909804 0.833333)",
+        "ratio": 10.42811045330921
+      }
+    },
+    {
+      "name": "green dark processing badge text contrast",
+      "passed": true,
+      "actual": {
+        "background": [
+          32,
+          64,
+          53
+        ],
+        "foreground": [
+          216,
+          245,
+          238
+        ],
+        "cssColor": "color(srgb 0.848039 0.958824 0.933333)",
+        "ratio": 9.866502776040258
+      }
+    },
+    {
+      "name": "green dark pending badge text contrast",
+      "passed": true,
+      "actual": {
+        "background": [
+          36,
+          45,
+          41
+        ],
+        "foreground": [
+          222,
+          224,
+          225
+        ],
+        "cssColor": "color(srgb 0.871802 0.879611 0.88255)",
+        "ratio": 10.695876432984443
+      }
+    },
+    {
+      "name": "green dark offline badge text contrast",
+      "passed": true,
+      "actual": {
+        "background": [
+          36,
+          45,
+          41
+        ],
+        "foreground": [
+          222,
+          224,
+          225
+        ],
+        "cssColor": "color(srgb 0.871802 0.879611 0.88255)",
+        "ratio": 10.695876432984443
+      }
+    },
+    {
+      "name": "green dark info badge text contrast",
+      "passed": true,
+      "actual": {
+        "background": [
+          27,
+          53,
+          63
+        ],
+        "foreground": [
+          213,
+          234,
+          250
+        ],
+        "cssColor": "color(srgb 0.835294 0.916667 0.979412)",
+        "ratio": 10.431662020646028
+      }
+    },
+    {
+      "name": "violet light default badge text contrast",
+      "passed": true,
+      "actual": {
+        "background": [
+          236,
+          226,
+          249
+        ],
+        "foreground": [
+          78,
+          62,
+          87
+        ],
+        "cssColor": "color(srgb 0.303922 0.244118 0.341176)",
+        "ratio": 7.8177797459166
+      }
+    },
+    {
+      "name": "violet light success badge text contrast",
+      "passed": true,
+      "actual": {
+        "background": [
+          191,
+          235,
+          228
+        ],
+        "foreground": [
+          29,
+          74,
+          64
+        ],
+        "cssColor": "color(srgb 0.113725 0.289216 0.251961)",
+        "ratio": 7.702057649494826
+      }
+    },
+    {
+      "name": "violet light error badge text contrast",
+      "passed": true,
+      "actual": {
+        "background": [
+          224,
+          208,
+          250
+        ],
+        "foreground": [
+          64,
+          43,
+          87
+        ],
+        "cssColor": "color(srgb 0.24902 0.169608 0.341176)",
+        "ratio": 8.565994545637626
+      }
+    },
+    {
+      "name": "violet light warning badge text contrast",
+      "passed": true,
+      "actual": {
+        "background": [
+          243,
+          231,
+          217
+        ],
+        "foreground": [
+          85,
+          68,
+          50
+        ],
+        "cssColor": "color(srgb 0.332353 0.268627 0.195098)",
+        "ratio": 7.632575897172902
+      }
+    },
+    {
+      "name": "violet light processing badge text contrast",
+      "passed": true,
+      "actual": {
+        "background": [
+          236,
+          225,
+          250
+        ],
+        "foreground": [
+          78,
+          62,
+          87
+        ],
+        "cssColor": "color(srgb 0.303922 0.244118 0.341176)",
+        "ratio": 7.773168224198835
+      }
+    },
+    {
+      "name": "violet light pending badge text contrast",
+      "passed": true,
+      "actual": {
+        "background": [
+          209,
+          208,
+          215
+        ],
+        "foreground": [
+          47,
+          42,
+          48
+        ],
+        "cssColor": "color(srgb 0.184238 0.163609 0.187396)",
+        "ratio": 9.175329777871713
+      }
+    },
+    {
+      "name": "violet light offline badge text contrast",
+      "passed": true,
+      "actual": {
+        "background": [
+          208,
+          206,
+          214
+        ],
+        "foreground": [
+          47,
+          42,
+          48
+        ],
+        "cssColor": "color(srgb 0.184238 0.163609 0.187396)",
+        "ratio": 9.019341164125064
+      }
+    },
+    {
+      "name": "violet light info badge text contrast",
+      "passed": true,
+      "actual": {
+        "background": [
+          213,
+          233,
+          250
+        ],
+        "foreground": [
+          52,
+          70,
+          87
+        ],
+        "cssColor": "color(srgb 0.205882 0.27549 0.341176)",
+        "ratio": 7.809054294117776
+      }
+    },
+    {
+      "name": "violet dark default badge text contrast",
+      "passed": true,
+      "actual": {
+        "background": [
+          52,
+          41,
+          65
+        ],
+        "foreground": [
+          238,
+          226,
+          250
+        ],
+        "cssColor": "color(srgb 0.933333 0.885294 0.979412)",
+        "ratio": 10.973815791355218
+      }
+    },
+    {
+      "name": "violet dark success badge text contrast",
+      "passed": true,
+      "actual": {
+        "background": [
+          12,
+          54,
+          48
+        ],
+        "foreground": [
+          189,
+          237,
+          227
+        ],
+        "cssColor": "color(srgb 0.743137 0.930392 0.890196)",
+        "ratio": 10.332195746889452
+      }
+    },
+    {
+      "name": "violet dark error badge text contrast",
+      "passed": true,
+      "actual": {
+        "background": [
+          42,
+          27,
+          69
+        ],
+        "foreground": [
+          224,
+          207,
+          250
+        ],
+        "cssColor": "color(srgb 0.878431 0.810784 0.979412)",
+        "ratio": 10.792941897976233
+      }
+    },
+    {
+      "name": "violet dark warning badge text contrast",
+      "passed": true,
+      "actual": {
+        "background": [
+          61,
+          49,
+          36
+        ],
+        "foreground": [
+          245,
+          232,
+          212
+        ],
+        "cssColor": "color(srgb 0.961765 0.909804 0.833333)",
+        "ratio": 10.447104712000135
+      }
+    },
+    {
+      "name": "violet dark processing badge text contrast",
+      "passed": true,
+      "actual": {
+        "background": [
+          55,
+          44,
+          70
+        ],
+        "foreground": [
+          238,
+          226,
+          250
+        ],
+        "cssColor": "color(srgb 0.933333 0.885294 0.979412)",
+        "ratio": 10.485877688453352
+      }
+    },
+    {
+      "name": "violet dark pending badge text contrast",
+      "passed": true,
+      "actual": {
+        "background": [
+          43,
+          41,
+          49
+        ],
+        "foreground": [
+          225,
+          223,
+          228
+        ],
+        "cssColor": "color(srgb 0.882574 0.873801 0.894669)",
+        "ratio": 10.843050186385339
+      }
+    },
+    {
+      "name": "violet dark offline badge text contrast",
+      "passed": true,
+      "actual": {
+        "background": [
+          43,
+          41,
+          49
+        ],
+        "foreground": [
+          225,
+          223,
+          228
+        ],
+        "cssColor": "color(srgb 0.882574 0.873801 0.894669)",
+        "ratio": 10.843050186385339
+      }
+    },
+    {
+      "name": "violet dark info badge text contrast",
+      "passed": true,
+      "actual": {
+        "background": [
+          32,
+          51,
+          68
+        ],
+        "foreground": [
+          213,
+          234,
+          250
+        ],
+        "cssColor": "color(srgb 0.835294 0.916667 0.979412)",
+        "ratio": 10.490980612112898
+      }
+    },
+    {
+      "name": "ruby fields fit 240px container at 320",
+      "passed": true,
+      "actual": {
+        "viewport": 320,
+        "documentWidth": 320,
+        "container": 240,
+        "fields": [
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          }
+        ]
+      }
+    },
+    {
+      "name": "ruby selected option contrast at 320",
+      "passed": true,
+      "actual": {
+        "background": [
+          67,
+          9,
+          15
+        ],
+        "foreground": [
+          247,
+          245,
+          248
+        ],
+        "cssColor": "rgb(247, 245, 248)",
+        "ratio": 15.079236772391107
+      }
+    },
+    {
+      "name": "ruby hovered option contrast at 320",
+      "passed": true,
+      "actual": {
+        "background": [
+          38,
+          27,
+          27
+        ],
+        "foreground": [
+          247,
+          245,
+          248
+        ],
+        "cssColor": "rgb(247, 245, 248)",
+        "ratio": 15.435099981134298
+      }
+    },
+    {
+      "name": "ruby fields fit 240px container at 375",
+      "passed": true,
+      "actual": {
+        "viewport": 375,
+        "documentWidth": 375,
+        "container": 240,
+        "fields": [
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          }
+        ]
+      }
+    },
+    {
+      "name": "ruby selected option contrast at 375",
+      "passed": true,
+      "actual": {
+        "background": [
+          67,
+          9,
+          15
+        ],
+        "foreground": [
+          247,
+          245,
+          248
+        ],
+        "cssColor": "rgb(247, 245, 248)",
+        "ratio": 15.079236772391107
+      }
+    },
+    {
+      "name": "ruby hovered option contrast at 375",
+      "passed": true,
+      "actual": {
+        "background": [
+          38,
+          27,
+          27
+        ],
+        "foreground": [
+          247,
+          245,
+          248
+        ],
+        "cssColor": "rgb(247, 245, 248)",
+        "ratio": 15.435099981134298
+      }
+    },
+    {
+      "name": "ruby fields fit 240px container at 768",
+      "passed": true,
+      "actual": {
+        "viewport": 768,
+        "documentWidth": 768,
+        "container": 240,
+        "fields": [
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          }
+        ]
+      }
+    },
+    {
+      "name": "ruby selected option contrast at 768",
+      "passed": true,
+      "actual": {
+        "background": [
+          68,
+          9,
+          16
+        ],
+        "foreground": [
+          247,
+          245,
+          248
+        ],
+        "cssColor": "rgb(247, 245, 248)",
+        "ratio": 14.98922265206464
+      }
+    },
+    {
+      "name": "ruby hovered option contrast at 768",
+      "passed": true,
+      "actual": {
+        "background": [
+          38,
+          27,
+          27
+        ],
+        "foreground": [
+          247,
+          245,
+          248
+        ],
+        "cssColor": "rgb(247, 245, 248)",
+        "ratio": 15.435099981134298
+      }
+    },
+    {
+      "name": "ruby fields fit 240px container at 1024",
+      "passed": true,
+      "actual": {
+        "viewport": 1024,
+        "documentWidth": 1024,
+        "container": 240,
+        "fields": [
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          }
+        ]
+      }
+    },
+    {
+      "name": "ruby selected option contrast at 1024",
+      "passed": true,
+      "actual": {
+        "background": [
+          68,
+          9,
+          16
+        ],
+        "foreground": [
+          247,
+          245,
+          248
+        ],
+        "cssColor": "rgb(247, 245, 248)",
+        "ratio": 14.98922265206464
+      }
+    },
+    {
+      "name": "ruby hovered option contrast at 1024",
+      "passed": true,
+      "actual": {
+        "background": [
+          38,
+          27,
+          27
+        ],
+        "foreground": [
+          247,
+          245,
+          248
+        ],
+        "cssColor": "rgb(247, 245, 248)",
+        "ratio": 15.435099981134298
+      }
+    },
+    {
+      "name": "ruby fields fit 240px container at 1440",
+      "passed": true,
+      "actual": {
+        "viewport": 1440,
+        "documentWidth": 1440,
+        "container": 240,
+        "fields": [
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          }
+        ]
+      }
+    },
+    {
+      "name": "ruby selected option contrast at 1440",
+      "passed": true,
+      "actual": {
+        "background": [
+          68,
+          9,
+          16
+        ],
+        "foreground": [
+          247,
+          245,
+          248
+        ],
+        "cssColor": "rgb(247, 245, 248)",
+        "ratio": 14.98922265206464
+      }
+    },
+    {
+      "name": "ruby hovered option contrast at 1440",
+      "passed": true,
+      "actual": {
+        "background": [
+          38,
+          27,
+          27
+        ],
+        "foreground": [
+          247,
+          245,
+          248
+        ],
+        "cssColor": "rgb(247, 245, 248)",
+        "ratio": 15.435099981134298
+      }
+    },
+    {
+      "name": "ruby fields fit 240px container at 1920",
+      "passed": true,
+      "actual": {
+        "viewport": 1920,
+        "documentWidth": 1920,
+        "container": 240,
+        "fields": [
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          }
+        ]
+      }
+    },
+    {
+      "name": "ruby selected option contrast at 1920",
+      "passed": true,
+      "actual": {
+        "background": [
+          68,
+          9,
+          16
+        ],
+        "foreground": [
+          247,
+          245,
+          248
+        ],
+        "cssColor": "rgb(247, 245, 248)",
+        "ratio": 14.98922265206464
+      }
+    },
+    {
+      "name": "ruby hovered option contrast at 1920",
+      "passed": true,
+      "actual": {
+        "background": [
+          38,
+          27,
+          27
+        ],
+        "foreground": [
+          247,
+          245,
+          248
+        ],
+        "cssColor": "rgb(247, 245, 248)",
+        "ratio": 15.435099981134298
+      }
+    },
+    {
+      "name": "light fields fit 240px container at 320",
+      "passed": true,
+      "actual": {
+        "viewport": 320,
+        "documentWidth": 320,
+        "container": 240,
+        "fields": [
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          }
+        ]
+      }
+    },
+    {
+      "name": "light selected option contrast at 320",
+      "passed": true,
+      "actual": {
+        "background": [
+          186,
+          168,
+          144
+        ],
+        "foreground": [
+          33,
+          27,
+          31
+        ],
+        "cssColor": "rgb(33, 27, 31)",
+        "ratio": 7.3246932077976705
+      }
+    },
+    {
+      "name": "light hovered option contrast at 320",
+      "passed": true,
+      "actual": {
+        "background": [
+          226,
+          221,
+          215
+        ],
+        "foreground": [
+          33,
+          27,
+          31
+        ],
+        "cssColor": "rgb(33, 27, 31)",
+        "ratio": 12.53405515913223
+      }
+    },
+    {
+      "name": "light fields fit 240px container at 375",
+      "passed": true,
+      "actual": {
+        "viewport": 375,
+        "documentWidth": 375,
+        "container": 240,
+        "fields": [
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          }
+        ]
+      }
+    },
+    {
+      "name": "light selected option contrast at 375",
+      "passed": true,
+      "actual": {
+        "background": [
+          186,
+          168,
+          144
+        ],
+        "foreground": [
+          33,
+          27,
+          31
+        ],
+        "cssColor": "rgb(33, 27, 31)",
+        "ratio": 7.3246932077976705
+      }
+    },
+    {
+      "name": "light hovered option contrast at 375",
+      "passed": true,
+      "actual": {
+        "background": [
+          226,
+          221,
+          215
+        ],
+        "foreground": [
+          33,
+          27,
+          31
+        ],
+        "cssColor": "rgb(33, 27, 31)",
+        "ratio": 12.53405515913223
+      }
+    },
+    {
+      "name": "light fields fit 240px container at 768",
+      "passed": true,
+      "actual": {
+        "viewport": 768,
+        "documentWidth": 768,
+        "container": 240,
+        "fields": [
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          }
+        ]
+      }
+    },
+    {
+      "name": "light selected option contrast at 768",
+      "passed": true,
+      "actual": {
+        "background": [
+          187,
+          169,
+          144
+        ],
+        "foreground": [
+          33,
+          27,
+          31
+        ],
+        "cssColor": "rgb(33, 27, 31)",
+        "ratio": 7.404672657415723
+      }
+    },
+    {
+      "name": "light hovered option contrast at 768",
+      "passed": true,
+      "actual": {
+        "background": [
+          227,
+          222,
+          215
+        ],
+        "foreground": [
+          33,
+          27,
+          31
+        ],
+        "cssColor": "rgb(33, 27, 31)",
+        "ratio": 12.645524296430834
+      }
+    },
+    {
+      "name": "light fields fit 240px container at 1024",
+      "passed": true,
+      "actual": {
+        "viewport": 1024,
+        "documentWidth": 1024,
+        "container": 240,
+        "fields": [
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          }
+        ]
+      }
+    },
+    {
+      "name": "light selected option contrast at 1024",
+      "passed": true,
+      "actual": {
+        "background": [
+          187,
+          169,
+          144
+        ],
+        "foreground": [
+          33,
+          27,
+          31
+        ],
+        "cssColor": "rgb(33, 27, 31)",
+        "ratio": 7.404672657415723
+      }
+    },
+    {
+      "name": "light hovered option contrast at 1024",
+      "passed": true,
+      "actual": {
+        "background": [
+          227,
+          222,
+          215
+        ],
+        "foreground": [
+          33,
+          27,
+          31
+        ],
+        "cssColor": "rgb(33, 27, 31)",
+        "ratio": 12.645524296430834
+      }
+    },
+    {
+      "name": "light fields fit 240px container at 1440",
+      "passed": true,
+      "actual": {
+        "viewport": 1440,
+        "documentWidth": 1440,
+        "container": 240,
+        "fields": [
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          }
+        ]
+      }
+    },
+    {
+      "name": "light selected option contrast at 1440",
+      "passed": true,
+      "actual": {
+        "background": [
+          187,
+          169,
+          144
+        ],
+        "foreground": [
+          33,
+          27,
+          31
+        ],
+        "cssColor": "rgb(33, 27, 31)",
+        "ratio": 7.404672657415723
+      }
+    },
+    {
+      "name": "light hovered option contrast at 1440",
+      "passed": true,
+      "actual": {
+        "background": [
+          227,
+          222,
+          215
+        ],
+        "foreground": [
+          33,
+          27,
+          31
+        ],
+        "cssColor": "rgb(33, 27, 31)",
+        "ratio": 12.645524296430834
+      }
+    },
+    {
+      "name": "light fields fit 240px container at 1920",
+      "passed": true,
+      "actual": {
+        "viewport": 1920,
+        "documentWidth": 1920,
+        "container": 240,
+        "fields": [
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          }
+        ]
+      }
+    },
+    {
+      "name": "light selected option contrast at 1920",
+      "passed": true,
+      "actual": {
+        "background": [
+          187,
+          169,
+          144
+        ],
+        "foreground": [
+          33,
+          27,
+          31
+        ],
+        "cssColor": "rgb(33, 27, 31)",
+        "ratio": 7.404672657415723
+      }
+    },
+    {
+      "name": "light hovered option contrast at 1920",
+      "passed": true,
+      "actual": {
+        "background": [
+          227,
+          222,
+          215
+        ],
+        "foreground": [
+          33,
+          27,
+          31
+        ],
+        "cssColor": "rgb(33, 27, 31)",
+        "ratio": 12.645524296430834
+      }
+    },
+    {
+      "name": "green fields fit 240px container at 320",
+      "passed": true,
+      "actual": {
+        "viewport": 320,
+        "documentWidth": 320,
+        "container": 240,
+        "fields": [
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          }
+        ]
+      }
+    },
+    {
+      "name": "green selected option contrast at 320",
+      "passed": true,
+      "actual": {
+        "background": [
+          6,
+          44,
+          30
+        ],
+        "foreground": [
+          247,
+          245,
+          248
+        ],
+        "cssColor": "rgb(247, 245, 248)",
+        "ratio": 13.968676577558737
+      }
+    },
+    {
+      "name": "green hovered option contrast at 320",
+      "passed": true,
+      "actual": {
+        "background": [
+          21,
+          33,
+          29
+        ],
+        "foreground": [
+          247,
+          245,
+          248
+        ],
+        "cssColor": "rgb(247, 245, 248)",
+        "ratio": 15.28702082108455
+      }
+    },
+    {
+      "name": "green fields fit 240px container at 375",
+      "passed": true,
+      "actual": {
+        "viewport": 375,
+        "documentWidth": 375,
+        "container": 240,
+        "fields": [
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          }
+        ]
+      }
+    },
+    {
+      "name": "green selected option contrast at 375",
+      "passed": true,
+      "actual": {
+        "background": [
+          6,
+          44,
+          30
+        ],
+        "foreground": [
+          247,
+          245,
+          248
+        ],
+        "cssColor": "rgb(247, 245, 248)",
+        "ratio": 13.968676577558737
+      }
+    },
+    {
+      "name": "green hovered option contrast at 375",
+      "passed": true,
+      "actual": {
+        "background": [
+          21,
+          33,
+          29
+        ],
+        "foreground": [
+          247,
+          245,
+          248
+        ],
+        "cssColor": "rgb(247, 245, 248)",
+        "ratio": 15.28702082108455
+      }
+    },
+    {
+      "name": "green fields fit 240px container at 768",
+      "passed": true,
+      "actual": {
+        "viewport": 768,
+        "documentWidth": 768,
+        "container": 240,
+        "fields": [
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          }
+        ]
+      }
+    },
+    {
+      "name": "green selected option contrast at 768",
+      "passed": true,
+      "actual": {
+        "background": [
+          6,
+          44,
+          30
+        ],
+        "foreground": [
+          247,
+          245,
+          248
+        ],
+        "cssColor": "rgb(247, 245, 248)",
+        "ratio": 13.968676577558737
+      }
+    },
+    {
+      "name": "green hovered option contrast at 768",
+      "passed": true,
+      "actual": {
+        "background": [
+          21,
+          34,
+          30
+        ],
+        "foreground": [
+          247,
+          245,
+          248
+        ],
+        "cssColor": "rgb(247, 245, 248)",
+        "ratio": 15.140366578934444
+      }
+    },
+    {
+      "name": "green fields fit 240px container at 1024",
+      "passed": true,
+      "actual": {
+        "viewport": 1024,
+        "documentWidth": 1024,
+        "container": 240,
+        "fields": [
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          }
+        ]
+      }
+    },
+    {
+      "name": "green selected option contrast at 1024",
+      "passed": true,
+      "actual": {
+        "background": [
+          6,
+          44,
+          30
+        ],
+        "foreground": [
+          247,
+          245,
+          248
+        ],
+        "cssColor": "rgb(247, 245, 248)",
+        "ratio": 13.968676577558737
+      }
+    },
+    {
+      "name": "green hovered option contrast at 1024",
+      "passed": true,
+      "actual": {
+        "background": [
+          21,
+          34,
+          30
+        ],
+        "foreground": [
+          247,
+          245,
+          248
+        ],
+        "cssColor": "rgb(247, 245, 248)",
+        "ratio": 15.140366578934444
+      }
+    },
+    {
+      "name": "green fields fit 240px container at 1440",
+      "passed": true,
+      "actual": {
+        "viewport": 1440,
+        "documentWidth": 1440,
+        "container": 240,
+        "fields": [
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          }
+        ]
+      }
+    },
+    {
+      "name": "green selected option contrast at 1440",
+      "passed": true,
+      "actual": {
+        "background": [
+          6,
+          44,
+          30
+        ],
+        "foreground": [
+          247,
+          245,
+          248
+        ],
+        "cssColor": "rgb(247, 245, 248)",
+        "ratio": 13.968676577558737
+      }
+    },
+    {
+      "name": "green hovered option contrast at 1440",
+      "passed": true,
+      "actual": {
+        "background": [
+          21,
+          34,
+          30
+        ],
+        "foreground": [
+          247,
+          245,
+          248
+        ],
+        "cssColor": "rgb(247, 245, 248)",
+        "ratio": 15.140366578934444
+      }
+    },
+    {
+      "name": "green fields fit 240px container at 1920",
+      "passed": true,
+      "actual": {
+        "viewport": 1920,
+        "documentWidth": 1920,
+        "container": 240,
+        "fields": [
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          }
+        ]
+      }
+    },
+    {
+      "name": "green selected option contrast at 1920",
+      "passed": true,
+      "actual": {
+        "background": [
+          6,
+          44,
+          30
+        ],
+        "foreground": [
+          247,
+          245,
+          248
+        ],
+        "cssColor": "rgb(247, 245, 248)",
+        "ratio": 13.968676577558737
+      }
+    },
+    {
+      "name": "green hovered option contrast at 1920",
+      "passed": true,
+      "actual": {
+        "background": [
+          21,
+          34,
+          30
+        ],
+        "foreground": [
+          247,
+          245,
+          248
+        ],
+        "cssColor": "rgb(247, 245, 248)",
+        "ratio": 15.140366578934444
+      }
+    },
+    {
+      "name": "violet fields fit 240px container at 320",
+      "passed": true,
+      "actual": {
+        "viewport": 320,
+        "documentWidth": 320,
+        "container": 240,
+        "fields": [
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          }
+        ]
+      }
+    },
+    {
+      "name": "violet selected option contrast at 320",
+      "passed": true,
+      "actual": {
+        "background": [
+          40,
+          19,
+          70
+        ],
+        "foreground": [
+          247,
+          245,
+          248
+        ],
+        "cssColor": "rgb(247, 245, 248)",
+        "ratio": 15.231232745124036
+      }
+    },
+    {
+      "name": "violet hovered option contrast at 320",
+      "passed": true,
+      "actual": {
+        "background": [
+          31,
+          29,
+          38
+        ],
+        "foreground": [
+          247,
+          245,
+          248
+        ],
+        "cssColor": "rgb(247, 245, 248)",
+        "ratio": 15.349705687882754
+      }
+    },
+    {
+      "name": "violet fields fit 240px container at 375",
+      "passed": true,
+      "actual": {
+        "viewport": 375,
+        "documentWidth": 375,
+        "container": 240,
+        "fields": [
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          }
+        ]
+      }
+    },
+    {
+      "name": "violet selected option contrast at 375",
+      "passed": true,
+      "actual": {
+        "background": [
+          40,
+          19,
+          70
+        ],
+        "foreground": [
+          247,
+          245,
+          248
+        ],
+        "cssColor": "rgb(247, 245, 248)",
+        "ratio": 15.231232745124036
+      }
+    },
+    {
+      "name": "violet hovered option contrast at 375",
+      "passed": true,
+      "actual": {
+        "background": [
+          31,
+          29,
+          38
+        ],
+        "foreground": [
+          247,
+          245,
+          248
+        ],
+        "cssColor": "rgb(247, 245, 248)",
+        "ratio": 15.349705687882754
+      }
+    },
+    {
+      "name": "violet fields fit 240px container at 768",
+      "passed": true,
+      "actual": {
+        "viewport": 768,
+        "documentWidth": 768,
+        "container": 240,
+        "fields": [
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          }
+        ]
+      }
+    },
+    {
+      "name": "violet selected option contrast at 768",
+      "passed": true,
+      "actual": {
+        "background": [
+          41,
+          20,
+          70
+        ],
+        "foreground": [
+          247,
+          245,
+          248
+        ],
+        "cssColor": "rgb(247, 245, 248)",
+        "ratio": 15.100937849768641
+      }
+    },
+    {
+      "name": "violet hovered option contrast at 768",
+      "passed": true,
+      "actual": {
+        "background": [
+          32,
+          29,
+          38
+        ],
+        "foreground": [
+          247,
+          245,
+          248
+        ],
+        "cssColor": "rgb(247, 245, 248)",
+        "ratio": 15.311439494080012
+      }
+    },
+    {
+      "name": "violet fields fit 240px container at 1024",
+      "passed": true,
+      "actual": {
+        "viewport": 1024,
+        "documentWidth": 1024,
+        "container": 240,
+        "fields": [
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          }
+        ]
+      }
+    },
+    {
+      "name": "violet selected option contrast at 1024",
+      "passed": true,
+      "actual": {
+        "background": [
+          41,
+          20,
+          70
+        ],
+        "foreground": [
+          247,
+          245,
+          248
+        ],
+        "cssColor": "rgb(247, 245, 248)",
+        "ratio": 15.100937849768641
+      }
+    },
+    {
+      "name": "violet hovered option contrast at 1024",
+      "passed": true,
+      "actual": {
+        "background": [
+          32,
+          29,
+          38
+        ],
+        "foreground": [
+          247,
+          245,
+          248
+        ],
+        "cssColor": "rgb(247, 245, 248)",
+        "ratio": 15.311439494080012
+      }
+    },
+    {
+      "name": "violet fields fit 240px container at 1440",
+      "passed": true,
+      "actual": {
+        "viewport": 1440,
+        "documentWidth": 1440,
+        "container": 240,
+        "fields": [
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          }
+        ]
+      }
+    },
+    {
+      "name": "violet selected option contrast at 1440",
+      "passed": true,
+      "actual": {
+        "background": [
+          41,
+          20,
+          70
+        ],
+        "foreground": [
+          247,
+          245,
+          248
+        ],
+        "cssColor": "rgb(247, 245, 248)",
+        "ratio": 15.100937849768641
+      }
+    },
+    {
+      "name": "violet hovered option contrast at 1440",
+      "passed": true,
+      "actual": {
+        "background": [
+          32,
+          29,
+          38
+        ],
+        "foreground": [
+          247,
+          245,
+          248
+        ],
+        "cssColor": "rgb(247, 245, 248)",
+        "ratio": 15.311439494080012
+      }
+    },
+    {
+      "name": "violet fields fit 240px container at 1920",
+      "passed": true,
+      "actual": {
+        "viewport": 1920,
+        "documentWidth": 1920,
+        "container": 240,
+        "fields": [
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          },
+          {
+            "width": 240,
+            "scroll": 238,
+            "client": 238
+          }
+        ]
+      }
+    },
+    {
+      "name": "violet selected option contrast at 1920",
+      "passed": true,
+      "actual": {
+        "background": [
+          41,
+          20,
+          70
+        ],
+        "foreground": [
+          247,
+          245,
+          248
+        ],
+        "cssColor": "rgb(247, 245, 248)",
+        "ratio": 15.100937849768641
+      }
+    },
+    {
+      "name": "violet hovered option contrast at 1920",
+      "passed": true,
+      "actual": {
+        "background": [
+          32,
+          29,
+          38
+        ],
+        "foreground": [
+          247,
+          245,
+          248
+        ],
+        "cssColor": "rgb(247, 245, 248)",
+        "ratio": 15.311439494080012
+      }
+    },
+    {
+      "name": "field label focuses input with a preceding button adornment",
+      "passed": true,
+      "actual": "INPUT"
+    },
+    {
+      "name": "required Select blocks native form submission while empty",
+      "passed": true,
+      "actual": "waiting"
+    },
+    {
+      "name": "invalid Select focuses the visible trigger",
+      "passed": true,
+      "actual": "listbox"
+    },
+    {
+      "name": "required Select allows valid form submission",
+      "passed": true,
+      "actual": "submitted"
+    },
+    {
+      "name": "combobox keeps typing focus while announcing its active option",
+      "passed": true,
+      "actual": {
+        "focused": true,
+        "role": "option"
+      }
+    },
+    {
+      "name": "Tab exits combobox options",
+      "passed": true,
+      "actual": 0
+    },
+    {
+      "name": "disabling combobox removes open options",
+      "passed": true,
+      "actual": 0
+    },
+    {
+      "name": "first Escape closes combobox and preserves its Dialog",
+      "passed": true,
+      "actual": {
+        "dialogs": 1,
+        "lists": 0
+      }
+    },
+    {
+      "name": "theme radiogroup exposes four radios",
+      "passed": true,
+      "actual": 4
+    },
+    {
+      "name": "theme radio arrow chooses the next theme",
+      "passed": true,
+      "actual": "true"
+    },
+    {
+      "name": "Long search keeps the keyboard active row visible in the scroll viewport",
+      "passed": true,
+      "actual": {
+        "top": 340.046875,
+        "bottom": 376.046875,
+        "listTop": 88.046875,
+        "listBottom": 376.046875
+      }
+    },
+    {
+      "name": "Long people keeps the keyboard active row visible in the scroll viewport",
+      "passed": true,
+      "actual": {
+        "top": 394.234375,
+        "bottom": 443.015625,
+        "listTop": 154.796875,
+        "listBottom": 442.796875
+      }
+    },
+    {
+      "name": "200% text stays inside viewport and narrow fields",
+      "passed": true,
+      "actual": {
+        "width": 375,
+        "viewport": 375,
+        "fields": [
+          {
+            "width": 236,
+            "scroll": 236
+          },
+          {
+            "width": 236,
+            "scroll": 236
+          },
+          {
+            "width": 236,
+            "scroll": 236
+          },
+          {
+            "width": 236,
+            "scroll": 236
+          },
+          {
+            "width": 236,
+            "scroll": 236
+          },
+          {
+            "width": 236,
+            "scroll": 236
+          },
+          {
+            "width": 236,
+            "scroll": 236
+          },
+          {
+            "width": 236,
+            "scroll": 236
+          },
+          {
+            "width": 236,
+            "scroll": 236
+          }
+        ]
+      }
+    },
+    {
+      "name": "touch focuses a text field",
+      "passed": true,
+      "actual": true
+    },
+    {
+      "name": "touch clear action empties a field",
+      "passed": true,
+      "actual": ""
+    },
+    {
+      "name": "Select browser accessible name honors aria-label and a visible button value",
+      "passed": true,
+      "actual": 1
+    },
+    {
+      "name": "Select retains unique public id and test hook",
+      "passed": true,
+      "actual": 1
+    },
+    {
+      "name": "TextField browser accessible name honors aria-label and a visible button value",
+      "passed": true,
+      "actual": 1
+    },
+    {
+      "name": "TextField retains unique public id and test hook",
+      "passed": true,
+      "actual": 1
+    },
+    {
+      "name": "TextArea browser accessible name honors aria-label and a visible button value",
+      "passed": true,
+      "actual": 1
+    },
+    {
+      "name": "TextArea retains unique public id and test hook",
+      "passed": true,
+      "actual": 1
+    },
+    {
+      "name": "Autocomplete browser accessible name honors aria-label and a visible button value",
+      "passed": true,
+      "actual": 1
+    },
+    {
+      "name": "Autocomplete retains unique public id and test hook",
+      "passed": true,
+      "actual": 1
+    },
+    {
+      "name": "NumberField browser accessible name honors aria-label and a visible button value",
+      "passed": true,
+      "actual": 1
+    },
+    {
+      "name": "NumberField retains unique public id and test hook",
+      "passed": true,
+      "actual": 1
+    },
+    {
+      "name": "Slider browser accessible name honors aria-label and a visible button value",
+      "passed": true,
+      "actual": 1
+    },
+    {
+      "name": "Slider retains unique public id and test hook",
+      "passed": true,
+      "actual": 1
+    },
+    {
+      "name": "DatePicker browser accessible name honors aria-label and a visible button value",
+      "passed": true,
+      "actual": 1
+    },
+    {
+      "name": "DatePicker retains unique public id and test hook",
+      "passed": true,
+      "actual": 1
+    },
+    {
+      "name": "ColorPicker browser accessible name honors aria-label and a visible button value",
+      "passed": true,
+      "actual": 1
+    },
+    {
+      "name": "ColorPicker retains unique public id and test hook",
+      "passed": true,
+      "actual": 1
+    },
+    {
+      "name": "TagInput browser accessible name honors aria-label and a visible button value",
+      "passed": true,
+      "actual": 1
+    },
+    {
+      "name": "TagInput retains unique public id and test hook",
+      "passed": true,
+      "actual": 1
+    },
+    {
+      "name": "PeoplePicker browser accessible name honors aria-label and a visible button value",
+      "passed": true,
+      "actual": 1
+    },
+    {
+      "name": "PeoplePicker retains unique public id and test hook",
+      "passed": true,
+      "actual": 1
+    },
+    {
+      "name": "Select width style sizes the whole field and its input surface",
+      "passed": true,
+      "actual": {
+        "frame": 170,
+        "surface": 170
+      }
+    },
+    {
+      "name": "named-selected includes its rendered value in the accessible name",
+      "passed": true,
+      "actual": {
+        "matches": 1,
+        "actual": "- button \"Group by Artist\": Artist",
+        "expected": "Group by Artist"
+      }
+    },
+    {
+      "name": "named-placeholder includes its rendered value in the accessible name",
+      "passed": true,
+      "actual": {
+        "matches": 1,
+        "actual": "- button \"Group by Choose group\": Choose group",
+        "expected": "Group by Choose group"
+      }
+    },
+    {
+      "name": "named-empty-value includes its rendered value in the accessible name",
+      "passed": true,
+      "actual": {
+        "matches": 1,
+        "actual": "- button \"Group by None\": None",
+        "expected": "Group by None"
+      }
+    },
+    {
+      "name": "named-rich includes its rendered value in the accessible name",
+      "passed": true,
+      "actual": {
+        "matches": 1,
+        "actual": "- button \"External grouping Custom value\":\n  - strong: Custom\n  - emphasis: value",
+        "expected": "External grouping Custom value"
+      }
+    },
+    {
+      "name": "named-empty-label includes its rendered value in the accessible name",
+      "passed": true,
+      "actual": {
+        "matches": 1,
+        "actual": "- button \"Group by\"",
+        "expected": "Group by"
+      }
+    },
+    {
+      "name": "named-color includes its rendered value in the accessible name",
+      "passed": true,
+      "actual": {
+        "matches": 1,
+        "actual": "- 'button \"Color intent #FF244C\"': \"#FF244C\"",
+        "expected": "Color intent #FF244C"
+      }
+    },
+    {
+      "name": "named-color-reference includes its rendered value in the accessible name",
+      "passed": true,
+      "actual": {
+        "matches": 1,
+        "actual": "- 'button \"External color #FF244C\"': \"#FF244C\"",
+        "expected": "External color #FF244C"
+      }
+    },
+    {
+      "name": "no uncaught browser errors",
+      "passed": true,
+      "actual": []
+    }
+  ]
+}

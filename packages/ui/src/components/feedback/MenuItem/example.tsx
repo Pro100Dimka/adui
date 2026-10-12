@@ -1,4 +1,4 @@
-import { Card, Divider, MenuItem, Stack } from "@ad-voice/ui";
+import { Card, Divider, MenuItem, Stack } from "@neo-ui-kit/react";
 
 /** MenuItem is what Menu renders for each entry; use it to build a custom menu surface. */
 export default function MenuItemExample() {

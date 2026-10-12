@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { PianoRoll, Stack, type PianoRollGesture, type PianoRollNote } from "@ad-voice/ui";
+import { PianoRoll, Stack, type PianoRollGesture, type PianoRollNote } from "@neo-ui-kit/react";
 
 const start: PianoRollNote[] = [
   { id: "1", start: 0.4, end: 1.1, pitch: 64 },

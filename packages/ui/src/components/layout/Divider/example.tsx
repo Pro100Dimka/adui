@@ -1,4 +1,4 @@
-import { Divider, Stack, Typography } from "@ad-voice/ui";
+import { Divider, Stack, Typography } from "@neo-ui-kit/react";
 
 export default function DividerExample() {
   return (

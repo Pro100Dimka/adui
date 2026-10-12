@@ -1,4 +1,4 @@
-import { tr, useTr } from "../../../core/i18n";
+import { useTr } from "../../../core/i18n";
 import { useEffect, useRef, type CSSProperties, type KeyboardEvent, type PointerEvent, type WheelEvent } from "react";
 import { clamp, mark, useControllable, type CommonProps } from "../../../core/base";
 import { PianoKeyboard, isBlackKey } from "../../media/PianoKeyboard/PianoKeyboard";
@@ -46,6 +46,7 @@ export interface PianoRollProps extends CommonProps {
   onSelect?: (id: string, additive: boolean) => void;
   onSelectArea?: (ids: string[], additive: boolean) => void;
   onSeek?: (seconds: number) => void;
+  /** Offsets from the gesture start; cancellation sends zero offsets before `onNoteDragEnd`. */
   onNoteDrag?: (gesture: PianoRollGesture) => void;
   onNoteDragEnd?: () => void;
   onNudge?: (id: string, pitch: number, seconds: number) => void;
@@ -68,10 +69,11 @@ const DEMO_WORDS: PianoRollWord[] = [
   { id: "c", text: "огнями", start: 2.8, end: 6 },
 ];
 
-type Drag =
+type Drag = (
   | { kind: "move"; ids: string[]; x: number; y: number; secondPx: number; rowPx: number }
   | { kind: "resize"; id: string; edge: "start" | "end"; x: number; secondPx: number }
-  | { kind: "area"; x: number; y: number; additive: boolean; box: DOMRect };
+  | { kind: "area"; x: number; y: number; additive: boolean; box: DOMRect }
+) & { pointerId: number };
 
 /**
  * A melody editor: notes on a piano grid with the keyboard at the left, a ruler to seek, the
@@ -128,28 +130,29 @@ export const PianoRoll = ({
     return { secondPx: (area?.width ?? 1) / length, rowPx: (area?.height ?? rows) / rows, area };
   };
   const startMove = (event: PointerEvent<HTMLElement>, note: PianoRollNote) => {
-    if (event.button !== 0) return;
+    if (event.button !== 0 || drag.current) return;
     event.stopPropagation();
     const additive = event.ctrlKey || event.metaKey || event.shiftKey;
     const ids = selected?.has(note.id) && !additive ? [...selected] : [note.id];
     onSelect?.(note.id, additive);
     event.currentTarget.setPointerCapture?.(event.pointerId);
     const { secondPx, rowPx } = scale();
-    drag.current = { kind: "move", ids, x: event.clientX, y: event.clientY, secondPx, rowPx };
+    drag.current = { kind: "move", ids, x: event.clientX, y: event.clientY, secondPx, rowPx, pointerId: event.pointerId };
   };
   const startResize = (event: PointerEvent<HTMLElement>, note: PianoRollNote, edge: "start" | "end") => {
+    if (event.button !== 0 || drag.current) return;
     event.stopPropagation();
     event.currentTarget.setPointerCapture?.(event.pointerId);
-    drag.current = { kind: "resize", id: note.id, edge, x: event.clientX, secondPx: scale().secondPx };
+    drag.current = { kind: "resize", id: note.id, edge, x: event.clientX, secondPx: scale().secondPx, pointerId: event.pointerId };
   };
   const startArea = (event: PointerEvent<HTMLElement>) => {
-    if (event.button !== 0 || !world.current) return;
+    if (event.button !== 0 || !world.current || drag.current) return;
     event.currentTarget.setPointerCapture?.(event.pointerId);
-    drag.current = { kind: "area", x: event.clientX, y: event.clientY, additive: event.ctrlKey || event.shiftKey, box: world.current.getBoundingClientRect() };
+    drag.current = { kind: "area", x: event.clientX, y: event.clientY, additive: event.ctrlKey || event.metaKey || event.shiftKey, box: world.current.getBoundingClientRect(), pointerId: event.pointerId };
   };
   const move = (event: PointerEvent<HTMLElement>) => {
     const current = drag.current;
-    if (!current) return;
+    if (!current || current.pointerId !== event.pointerId) return;
     if (current.kind === "move")
       onNoteDrag?.({ kind: "move", ids: current.ids, seconds: (event.clientX - current.x) / current.secondPx, pitch: -Math.round((event.clientY - current.y) / current.rowPx) });
     else if (current.kind === "resize")
@@ -166,10 +169,22 @@ export const PianoRoll = ({
       });
     }
   };
-  const end = (event: PointerEvent<HTMLElement>) => {
+  const cancel = () => {
     const current = drag.current;
     drag.current = null;
     if (!current) return;
+    if (areaBox.current) areaBox.current.style.display = "none";
+    if (current.kind === "area") return;
+    onNoteDrag?.(current.kind === "move"
+      ? { kind: "move", ids: current.ids, pitch: 0, seconds: 0 }
+      : { kind: "resize", id: current.id, edge: current.edge, seconds: 0 });
+    onNoteDragEnd?.();
+  };
+  const end = (event: PointerEvent<HTMLElement>) => {
+    const current = drag.current;
+    if (!current || current.pointerId !== event.pointerId) return;
+    if (event.type !== "pointerup") return cancel();
+    drag.current = null;
     if (current.kind !== "area") return onNoteDragEnd?.();
     if (areaBox.current) areaBox.current.style.display = "none";
     const { secondPx, rowPx } = scale();
@@ -218,7 +233,8 @@ export const PianoRoll = ({
         </div>
         <PianoKeyboard className="ad-piano-roll-keys" minMidi={minPitch} maxMidi={maxPitch} labels="octaves" onKeyPress={onKeyPress} />
         <div className="ad-piano-roll-world" ref={world} style={{ width: at(length) }}
-          onPointerDown={startArea} onPointerMove={move} onPointerUp={end} onPointerCancel={end}>
+          onPointerDown={startArea} onPointerMove={move} onPointerUp={end} onPointerCancel={end} onLostPointerCapture={end}
+          onKeyDown={(event) => { if (event.key === "Escape" && drag.current) { event.preventDefault(); cancel(); } }}>
           {Array.from({ length: rows }, (_, i) => maxPitch - i).filter(isBlackKey).map((pitch) => (
             <i key={pitch} className="ad-piano-roll-row" style={{ top: row(pitch) }} />
           ))}
@@ -227,7 +243,8 @@ export const PianoRoll = ({
               data-now={(position >= note.start && position <= note.end) || undefined}
               style={{ left: at(note.start), width: `max(0.25rem, ${at(note.end - note.start)})`, top: row(note.pitch) }}>
               <button type="button" className="ad-piano-roll-note-body" aria-label={tr("Нота {pitch}", { pitch: note.pitch })} aria-pressed={selected?.has(note.id) ?? false}
-                onPointerDown={(event) => startMove(event, note)} onKeyDown={(event) => nudge(event, note)} />
+                onPointerDown={(event) => startMove(event, note)} onKeyDown={(event) => nudge(event, note)}
+                onClick={(event) => { if (event.detail === 0) onSelect?.(note.id, event.ctrlKey || event.metaKey || event.shiftKey); }} />
               <span className="ad-piano-roll-edge" data-edge="start" aria-hidden="true" onPointerDown={(event) => startResize(event, note, "start")} />
               <span className="ad-piano-roll-edge" data-edge="end" aria-hidden="true" onPointerDown={(event) => startResize(event, note, "end")} />
             </div>

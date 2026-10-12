@@ -50,7 +50,7 @@ const morph = (update: () => void, transition: boolean) =>
 function matchPath(pattern: string, pathname: string) {
   const p = clean(pattern).split("/").filter(Boolean),
     v = clean(pathname).split("/").filter(Boolean),
-    params: Record<string, string> = {};
+    params: Record<string, string> = Object.create(null);
   for (let i = 0, j = 0; i < p.length; i++, j++) {
     const token = p[i];
     if (token === "*") {
@@ -85,6 +85,7 @@ export function Router({
   transition = false,
 }: RouterProps) {
   const [pathname, setPathname] = useState(() => current(mode));
+  useEffect(() => { setPathname(current(mode)); }, [mode]);
   useEffect(() => {
     const event = mode === "hash" ? "hashchange" : "popstate",
       sync = () => morph(() => setPathname(current(mode)), transition);

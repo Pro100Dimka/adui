@@ -1,4 +1,4 @@
-import { tr, useTr } from "../../../core/i18n";
+import { useTr } from "../../../core/i18n";
 import { mark, useControllable } from "../../../core/base";
 import { Icon } from "../../layout/Icon/Icon";
 import { type CollapsibleSectionProps } from "../shared";
@@ -15,7 +15,10 @@ export const CollapsibleSection = (p: CollapsibleSectionProps) => {
       {...mark("CollapsibleSection", p, "card")}
       open={open}
       onToggle={(e) => {
-        if (e.currentTarget.open !== open) setOpen(e.currentTarget.open);
+        const next = e.currentTarget.open;
+        if (next === open) return;
+        if (p.open !== undefined) e.currentTarget.open = open;
+        setOpen(next);
       }}
     >
       <summary>

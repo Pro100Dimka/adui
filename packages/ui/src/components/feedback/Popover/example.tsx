@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { Button, Popover, Slider, Stack, Typography } from "@ad-voice/ui";
+import { Button, Popover, Slider, Stack, Typography } from "@neo-ui-kit/react";
 
 export default function PopoverExample() {
   const [open, setOpen] = useState(false);

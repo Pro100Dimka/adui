@@ -1,4 +1,4 @@
-import { tr, useTr } from "../../../core/i18n";
+import { useTr } from "../../../core/i18n";
 import { useSvgId } from "../../../core/artwork";
 import { useEffect, useRef } from "react";
 import { clamp, mark } from "../../../core/base";

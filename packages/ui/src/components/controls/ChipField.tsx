@@ -46,7 +46,7 @@ export function ChipField({
   onBlur?: () => void;
   inputProps?: React.InputHTMLAttributes<HTMLInputElement>;
 }) {
-  const ids = useFieldIds(label, description || error);
+  const ids = useFieldIds(label, description || error, inputProps?.id, inputProps);
   const input = useRef<HTMLInputElement>(null);
   const floating = labelPlacement === "floating" && !!label;
   const hasChips = Array.isArray(chips) ? chips.length > 0 : !!chips;
@@ -69,13 +69,13 @@ export function ChipField({
           {chips}
           <input
             {...inputProps}
+            {...ids.aria}
+            id={ids.control}
             ref={input}
             className="ad-chip-field-input"
             value={query}
             placeholder={hasChips ? undefined : placeholder}
-            disabled={disabled}
-            aria-labelledby={ids.aria["aria-labelledby"]}
-            aria-describedby={ids.aria["aria-describedby"]}
+            disabled={disabled || inputProps?.disabled}
             aria-invalid={!!error || undefined}
             onChange={(event) => onQueryChange(event.currentTarget.value)}
             onKeyDown={onKeyDown}

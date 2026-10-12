@@ -1,0 +1,15 @@
+npm error code E404
+npm error 404 Unpublished on 2017-08-01T19:06:44.222Z
+npm error 404
+npm error 404  'neo-ui' is not in this registry.
+npm error 404
+npm error 404 Note that you can also install from a
+npm error 404 tarball, folder, http url, or git url.
+{
+  "error": {
+    "code": "E404",
+    "summary": "Unpublished on 2017-08-01T19:06:44.222Z",
+    "detail": "'neo-ui' is not in this registry.\n\nNote that you can also install from a\ntarball, folder, http url, or git url."
+  }
+}
+npm error A complete log of this run can be found in: D:\Caches\npm\_logs\2026-10-12T10_08_32_290Z-debug-0.log

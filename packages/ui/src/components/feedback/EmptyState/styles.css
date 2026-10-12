@@ -5,6 +5,20 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.ad-empty-state > * {
+  min-width: 0;
+  max-width: 100%;
+}
+.ad-empty-state > .ad-button {
+  height: auto;
+  min-height: var(--ad-size-h);
+  padding-block: 0.5em;
+}
+.ad-empty-state .ad-button-label {
+  white-space: normal;
 }
 .ad-empty-state > .ad-icon {
   position: relative;

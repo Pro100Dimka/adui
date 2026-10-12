@@ -1,43 +1,98 @@
 name: Release
 
-# Push a tag like v2.0.0: the package is built here and attached to a GitHub release,
-# so no build output has to live in the repository.
+# Push a new version tag to verify the package, publish it with npm OIDC,
+# and attach that same archive to its GitHub release.
 on:
   push:
     tags: ["v*"]
 
 permissions:
-  contents: write
+  contents: read
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
 
 jobs:
-  release:
+  verify:
     runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+      archive: ${{ steps.version.outputs.archive }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v6
         with:
-          node-version: 20
-          cache: npm
+          persist-credentials: false
+      - uses: actions/setup-node@v6
+        with:
+          node-version: "24"
+          package-manager-cache: false
+      - run: npm install --global npm@11.15.0
       - name: Check package version matches tag
+        id: version
         run: |
           VERSION=$(node -p "require('./packages/ui/package.json').version")
           test "v$VERSION" = "$GITHUB_REF_NAME" || { echo "Tag $GITHUB_REF_NAME != v$VERSION"; exit 1; }
           echo "VERSION=$VERSION" >> "$GITHUB_ENV"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "archive=release/neo-ui-kit-react-$VERSION.tgz" >> "$GITHUB_OUTPUT"
+      - name: Reject an already published version
+        run: |
+          node --input-type=module <<'NODE'
+          const version = process.env.VERSION;
+          const response = await fetch(`https://registry.npmjs.org/${encodeURIComponent('@neo-ui-kit/react')}/${version}`, {
+            cache: "no-store", signal: AbortSignal.timeout(15000),
+          });
+          if (response.status !== 404) {
+            throw new Error(response.ok
+              ? `@neo-ui-kit/react@${version} is already published; use a new version and tag.`
+              : `Cannot verify the npm version: HTTP ${response.status}`);
+          }
+          NODE
       - run: npm ci
-      - run: npm run typecheck
-      - run: npm run build --workspace @ad-voice/ui
-      - run: npm test --workspace @ad-voice/ui
+      - run: npm run check
       - run: mkdir -p release && npm pack ./packages/ui --pack-destination release
       - name: Smoke-test packed consumer
         run: |
           mkdir consumer-smoke
           cd consumer-smoke
           npm init -y
-          npm install ../release/ad-voice-ui-${VERSION}.tgz react@19 react-dom@19 --no-audit --no-fund
-          node --input-type=module -e 'import { createElement } from "react"; import { renderToStaticMarkup } from "react-dom/server"; import { Button } from "@ad-voice/ui"; if (!renderToStaticMarkup(createElement(Button, null, "Smoke")).includes("Smoke")) process.exit(1)'
-          test -f node_modules/@ad-voice/ui/dist/styles.css
+          npm install ../release/neo-ui-kit-react-${VERSION}.tgz react@19 react-dom@19 --no-audit --no-fund
+          node --input-type=module -e 'import { createElement } from "react"; import { renderToStaticMarkup } from "react-dom/server"; import { Button } from "@neo-ui-kit/react"; if (!renderToStaticMarkup(createElement(Button, null, "Smoke")).includes("Smoke")) process.exit(1)'
+          test -f node_modules/@neo-ui-kit/react/dist/styles.css
+      - uses: actions/upload-artifact@v4
+        with:
+          name: npm-package
+          path: ${{ steps.version.outputs.archive }}
+          if-no-files-found: error
+
+  publish:
+    needs: verify
+    runs-on: ubuntu-latest
+    environment: npm-publication
+    permissions:
+      contents: write
+      id-token: write
+    env:
+      ARCHIVE: ${{ needs.verify.outputs.archive }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v6
+        with:
+          node-version: "24"
+          registry-url: https://registry.npmjs.org
+          package-manager-cache: false
+      - run: npm install --global npm@11.15.0
+      - uses: actions/download-artifact@v4
+        with:
+          name: npm-package
+          path: release
+      - name: Publish verified package with npm trusted publishing
+        run: npm publish "$ARCHIVE" --access public --provenance --ignore-scripts --registry https://registry.npmjs.org
       - uses: softprops/action-gh-release@v2
         with:
-          name: "@ad-voice/ui ${{ github.ref_name }}"
-          files: release/ad-voice-ui-${{ env.VERSION }}.tgz
+          name: "@neo-ui-kit/react ${{ github.ref_name }}"
+          files: ${{ env.ARCHIVE }}
           generate_release_notes: true

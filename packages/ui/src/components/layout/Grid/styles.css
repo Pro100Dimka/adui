@@ -8,6 +8,7 @@
   column-gap: var(--ad-grid-column-gap);
   align-items: var(--ad-grid-align);
   justify-items: var(--ad-grid-justify);
+  justify-content: var(--ad-grid-distribution);
 }
 .ad-grid--auto-fit {
   grid-template-columns: repeat(
@@ -32,6 +33,7 @@
     column-gap: var(--ad-grid-column-gap-sm);
     align-items: var(--ad-grid-align-sm);
     justify-items: var(--ad-grid-justify-sm);
+    justify-content: var(--ad-grid-distribution-sm);
   }
   .ad-grid-item {
     grid-column: var(--ad-grid-column-start-sm) / var(--ad-grid-column-end-sm);
@@ -47,6 +49,7 @@
     column-gap: var(--ad-grid-column-gap-md);
     align-items: var(--ad-grid-align-md);
     justify-items: var(--ad-grid-justify-md);
+    justify-content: var(--ad-grid-distribution-md);
   }
   .ad-grid-item {
     grid-column: var(--ad-grid-column-start-md) / var(--ad-grid-column-end-md);
@@ -62,6 +65,7 @@
     column-gap: var(--ad-grid-column-gap-lg);
     align-items: var(--ad-grid-align-lg);
     justify-items: var(--ad-grid-justify-lg);
+    justify-content: var(--ad-grid-distribution-lg);
   }
   .ad-grid-item {
     grid-column: var(--ad-grid-column-start-lg) / var(--ad-grid-column-end-lg);
@@ -77,6 +81,7 @@
     column-gap: var(--ad-grid-column-gap-xl);
     align-items: var(--ad-grid-align-xl);
     justify-items: var(--ad-grid-justify-xl);
+    justify-content: var(--ad-grid-distribution-xl);
   }
   .ad-grid-item {
     grid-column: var(--ad-grid-column-start-xl) / var(--ad-grid-column-end-xl);

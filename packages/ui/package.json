@@ -1,15 +1,25 @@
 {
-  "name": "@ad-voice/ui",
-  "version": "2.9.3",
-  "description": "Neo UI — React component library",
+  "name": "@neo-ui-kit/react",
+  "version": "1.0.1",
+  "description": "NEO UI — React component library",
   "type": "module",
-  "license": "UNLICENSED",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Pro100Dimka/adui.git",
+    "directory": "packages/ui"
+  },
+  "homepage": "https://github.com/Pro100Dimka/adui#readme",
+  "bugs": {
+    "url": "https://github.com/Pro100Dimka/adui/issues"
+  },
   "sideEffects": [
     "**/*.css"
   ],
   "files": [
     "dist",
-    "README.md"
+    "README.md",
+    "LICENSE"
   ],
   "main": "./dist/index.js",
   "module": "./dist/index.js",
@@ -50,7 +60,7 @@
     "test": "vitest run",
     "typecheck": "tsc -p tsconfig.json",
     "build": "node scripts/build.mjs",
-    "prepublishOnly": "npm run typecheck && npm run build"
+    "prepublishOnly": "npm run typecheck && npm run build && npm test"
   },
   "peerDependencies": {
     "react": ">=18.2.0 <20",

@@ -5,6 +5,7 @@ import { tr, useTr } from "../../../core/i18n";
 
 export const loaderAnimations = ["spin", "pulse", "breathe", "bounce", "flip", "orbit", "wave", "glow", "fill", "shine", "wobble", "radar", "palette"] as const;
 export type LoaderAnimation = (typeof loaderAnimations)[number];
+const loaderSizes: Record<string, string> = { xs: "2rem", sm: "3rem", md: "4rem", lg: "6rem" };
 
 /** Names of the animations for pickers, in the library's language. */
 export const loaderAnimationLabel = (animation: LoaderAnimation, translate = tr) =>
@@ -30,8 +31,8 @@ export interface LoaderProps extends Omit<CommonProps, "size"> {
   /** The picture that moves: a logo, an icon, any image (transparent PNG/SVG/WebP look best). */
   src?: string;
   animation?: LoaderAnimation;
-  /** Width and height, any CSS length. */
-  size?: string;
+  /** xs/sm/md/lg, a CSS length, or pixels converted to rem at the 16px design baseline. */
+  size?: number | string;
   /** Speed multiplier: 2 is twice as fast. */
   speed?: number;
   /** Colour of rings, glows and the sweep; the theme colour by default. */
@@ -111,7 +112,7 @@ export const loaderDefaultImage =
     `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ff7c97"/><stop offset="1" stop-color="#ff244c"/></linearGradient></defs><path fill="url(#g)" d="M44 6v34.5A9 9 0 1 1 38 32V16L24 19.5v25A9 9 0 1 1 18 36V12z"/></svg>`,
   );
 
-/** A loading spinner made of your own picture, with one of twelve animations. */
+/** A loading spinner made of your own picture, with one of the supplied animations. */
 export function Loader({ src = loaderDefaultImage, animation = "spin", size, speed = 1, color, palette, label, style, ...p }: LoaderProps) {
   const tr = useTr();
   useLoaderStyles();
@@ -120,7 +121,7 @@ export function Loader({ src = loaderDefaultImage, animation = "spin", size, spe
   const builtIn = src === loaderDefaultImage;
   const vars = {
     ...style,
-    ...(size ? { "--ad-loader-size": size } : {}),
+    ...(size !== undefined ? { "--ad-loader-size": typeof size === "number" ? `${size / 16}rem` : Object.hasOwn(loaderSizes, size) ? loaderSizes[size] : size } : {}),
     "--ad-loader-speed": speed,
     ...(color ? { "--ad-loader-color": color } : {}),
     ...(palette?.[1] ? { "--ad-loader-color-2": palette[1] } : {}),

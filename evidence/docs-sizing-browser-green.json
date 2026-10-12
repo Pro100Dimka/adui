@@ -1,0 +1,2560 @@
+{
+  "baseUrl": "http://127.0.0.1:5173",
+  "browser": "154.0.8037.98",
+  "viewport": [
+    320,
+    1000
+  ],
+  "rootTextScale": 1,
+  "results": [
+    {
+      "name": "AnimatedBorder",
+      "sizeContract": "Size | undefined",
+      "choices": [],
+      "numericInputs": 0,
+      "numericSegments": [],
+      "sizes": [],
+      "initial": {
+        "pageOverflow": false,
+        "stageOverflow": 0,
+        "clipped": [],
+        "error": null
+      },
+      "passed": true
+    },
+    {
+      "name": "AudioPlayer",
+      "sizeContract": "Size | undefined",
+      "choices": [],
+      "numericInputs": 0,
+      "numericSegments": [],
+      "sizes": [],
+      "initial": {
+        "pageOverflow": false,
+        "stageOverflow": 0,
+        "clipped": [],
+        "error": null
+      },
+      "passed": true
+    },
+    {
+      "name": "Autocomplete",
+      "sizeContract": "Size | undefined",
+      "choices": [
+        "xs",
+        "sm",
+        "md",
+        "lg"
+      ],
+      "numericInputs": 0,
+      "numericSegments": [],
+      "sizes": [
+        {
+          "choice": "xs",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        },
+        {
+          "choice": "sm",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        },
+        {
+          "choice": "md",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        },
+        {
+          "choice": "lg",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        }
+      ],
+      "initial": {
+        "pageOverflow": false,
+        "stageOverflow": 0,
+        "clipped": [],
+        "error": null
+      },
+      "passed": true
+    },
+    {
+      "name": "Avatar",
+      "sizeContract": "Size | undefined",
+      "choices": [
+        "xs",
+        "sm",
+        "md",
+        "lg"
+      ],
+      "numericInputs": 0,
+      "numericSegments": [],
+      "sizes": [
+        {
+          "choice": "xs",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        },
+        {
+          "choice": "sm",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        },
+        {
+          "choice": "md",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        },
+        {
+          "choice": "lg",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        }
+      ],
+      "initial": {
+        "pageOverflow": false,
+        "stageOverflow": 0,
+        "clipped": [],
+        "error": null
+      },
+      "passed": true
+    },
+    {
+      "name": "Badge",
+      "sizeContract": "Size | undefined",
+      "choices": [
+        "xs",
+        "sm",
+        "md",
+        "lg"
+      ],
+      "numericInputs": 0,
+      "numericSegments": [],
+      "sizes": [
+        {
+          "choice": "xs",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        },
+        {
+          "choice": "sm",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        },
+        {
+          "choice": "md",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        },
+        {
+          "choice": "lg",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        }
+      ],
+      "initial": {
+        "pageOverflow": false,
+        "stageOverflow": 0,
+        "clipped": [],
+        "error": null
+      },
+      "passed": true
+    },
+    {
+      "name": "Beacon",
+      "sizeContract": "Size | undefined",
+      "choices": [],
+      "numericInputs": 0,
+      "numericSegments": [],
+      "sizes": [],
+      "initial": {
+        "pageOverflow": false,
+        "stageOverflow": 0,
+        "clipped": [],
+        "error": null
+      },
+      "passed": true
+    },
+    {
+      "name": "BooleanControl",
+      "sizeContract": "Size | undefined",
+      "choices": [
+        "xs",
+        "sm",
+        "md",
+        "lg"
+      ],
+      "numericInputs": 0,
+      "numericSegments": [],
+      "sizes": [
+        {
+          "choice": "xs",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        },
+        {
+          "choice": "sm",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        },
+        {
+          "choice": "md",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        },
+        {
+          "choice": "lg",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        }
+      ],
+      "initial": {
+        "pageOverflow": false,
+        "stageOverflow": 0,
+        "clipped": [],
+        "error": null
+      },
+      "passed": true
+    },
+    {
+      "name": "BrandMark",
+      "sizeContract": "Size | undefined",
+      "choices": [],
+      "numericInputs": 0,
+      "numericSegments": [],
+      "sizes": [],
+      "initial": {
+        "pageOverflow": false,
+        "stageOverflow": 0,
+        "clipped": [],
+        "error": null
+      },
+      "passed": true
+    },
+    {
+      "name": "Button",
+      "sizeContract": "Size | undefined",
+      "choices": [
+        "xs",
+        "sm",
+        "md",
+        "lg"
+      ],
+      "numericInputs": 0,
+      "numericSegments": [],
+      "sizes": [
+        {
+          "choice": "xs",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        },
+        {
+          "choice": "sm",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        },
+        {
+          "choice": "md",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        },
+        {
+          "choice": "lg",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        }
+      ],
+      "initial": {
+        "pageOverflow": false,
+        "stageOverflow": 0,
+        "clipped": [],
+        "error": null
+      },
+      "passed": true
+    },
+    {
+      "name": "ButtonGroup",
+      "sizeContract": "Size | undefined",
+      "choices": [
+        "xs",
+        "sm",
+        "md",
+        "lg"
+      ],
+      "numericInputs": 0,
+      "numericSegments": [],
+      "sizes": [
+        {
+          "choice": "xs",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        },
+        {
+          "choice": "sm",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        },
+        {
+          "choice": "md",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        },
+        {
+          "choice": "lg",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        }
+      ],
+      "initial": {
+        "pageOverflow": false,
+        "stageOverflow": 0,
+        "clipped": [],
+        "error": null
+      },
+      "passed": true
+    },
+    {
+      "name": "Card",
+      "sizeContract": "Size | undefined",
+      "choices": [],
+      "numericInputs": 0,
+      "numericSegments": [],
+      "sizes": [],
+      "initial": {
+        "pageOverflow": false,
+        "stageOverflow": 0,
+        "clipped": [],
+        "error": null
+      },
+      "passed": true
+    },
+    {
+      "name": "Checkbox",
+      "sizeContract": "Size | undefined",
+      "choices": [
+        "xs",
+        "sm",
+        "md",
+        "lg"
+      ],
+      "numericInputs": 0,
+      "numericSegments": [],
+      "sizes": [
+        {
+          "choice": "xs",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        },
+        {
+          "choice": "sm",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        },
+        {
+          "choice": "md",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        },
+        {
+          "choice": "lg",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        }
+      ],
+      "initial": {
+        "pageOverflow": false,
+        "stageOverflow": 0,
+        "clipped": [],
+        "error": null
+      },
+      "passed": true
+    },
+    {
+      "name": "Chip",
+      "sizeContract": "Size | undefined",
+      "choices": [],
+      "numericInputs": 0,
+      "numericSegments": [],
+      "sizes": [],
+      "initial": {
+        "pageOverflow": false,
+        "stageOverflow": 0,
+        "clipped": [],
+        "error": null
+      },
+      "passed": true
+    },
+    {
+      "name": "CollapsibleSection",
+      "sizeContract": "Size | undefined",
+      "choices": [],
+      "numericInputs": 0,
+      "numericSegments": [],
+      "sizes": [],
+      "initial": {
+        "pageOverflow": false,
+        "stageOverflow": 0,
+        "clipped": [],
+        "error": null
+      },
+      "passed": true
+    },
+    {
+      "name": "ColorPicker",
+      "sizeContract": "Size | undefined",
+      "choices": [],
+      "numericInputs": 0,
+      "numericSegments": [],
+      "sizes": [],
+      "initial": {
+        "pageOverflow": false,
+        "stageOverflow": 0,
+        "clipped": [],
+        "error": null
+      },
+      "passed": true
+    },
+    {
+      "name": "DatabaseArt",
+      "sizeContract": "Size | undefined",
+      "choices": [],
+      "numericInputs": 0,
+      "numericSegments": [],
+      "sizes": [],
+      "initial": {
+        "pageOverflow": false,
+        "stageOverflow": 0,
+        "clipped": [],
+        "error": null
+      },
+      "passed": true
+    },
+    {
+      "name": "DataTable",
+      "sizeContract": "Size | undefined",
+      "choices": [],
+      "numericInputs": 0,
+      "numericSegments": [],
+      "sizes": [],
+      "initial": {
+        "pageOverflow": false,
+        "stageOverflow": 0,
+        "clipped": [],
+        "error": null
+      },
+      "passed": true
+    },
+    {
+      "name": "DatePicker",
+      "sizeContract": "Size | undefined",
+      "choices": [],
+      "numericInputs": 0,
+      "numericSegments": [],
+      "sizes": [],
+      "initial": {
+        "pageOverflow": false,
+        "stageOverflow": 0,
+        "clipped": [],
+        "error": null
+      },
+      "passed": true
+    },
+    {
+      "name": "Dialog",
+      "sizeContract": "Size | undefined",
+      "choices": [],
+      "numericInputs": 0,
+      "numericSegments": [],
+      "sizes": [],
+      "initial": {
+        "pageOverflow": false,
+        "stageOverflow": 0,
+        "clipped": [],
+        "error": null
+      },
+      "passed": true
+    },
+    {
+      "name": "DialogActions",
+      "sizeContract": "Size | undefined",
+      "choices": [],
+      "numericInputs": 0,
+      "numericSegments": [],
+      "sizes": [],
+      "initial": {
+        "pageOverflow": false,
+        "stageOverflow": 0,
+        "clipped": [],
+        "error": null
+      },
+      "passed": true
+    },
+    {
+      "name": "DialogBody",
+      "sizeContract": "Size | undefined",
+      "choices": [],
+      "numericInputs": 0,
+      "numericSegments": [],
+      "sizes": [],
+      "initial": {
+        "pageOverflow": false,
+        "stageOverflow": 0,
+        "clipped": [],
+        "error": null
+      },
+      "passed": true
+    },
+    {
+      "name": "Divider",
+      "sizeContract": "Size | undefined",
+      "choices": [],
+      "numericInputs": 0,
+      "numericSegments": [],
+      "sizes": [],
+      "initial": {
+        "pageOverflow": false,
+        "stageOverflow": 0,
+        "clipped": [],
+        "error": null
+      },
+      "passed": true
+    },
+    {
+      "name": "EmptyState",
+      "sizeContract": "Size | undefined",
+      "choices": [],
+      "numericInputs": 0,
+      "numericSegments": [],
+      "sizes": [],
+      "initial": {
+        "pageOverflow": false,
+        "stageOverflow": 0,
+        "clipped": [],
+        "error": null
+      },
+      "passed": true
+    },
+    {
+      "name": "Equalizer",
+      "sizeContract": "Size | undefined",
+      "choices": [],
+      "numericInputs": 1,
+      "numericSegments": [],
+      "sizes": [],
+      "initial": {
+        "pageOverflow": false,
+        "stageOverflow": 0,
+        "clipped": [],
+        "error": null
+      },
+      "passed": true
+    },
+    {
+      "name": "FilePicker",
+      "sizeContract": "Size | undefined",
+      "choices": [
+        "xs",
+        "sm",
+        "md",
+        "lg"
+      ],
+      "numericInputs": 0,
+      "numericSegments": [],
+      "sizes": [
+        {
+          "choice": "xs",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        },
+        {
+          "choice": "sm",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        },
+        {
+          "choice": "md",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        },
+        {
+          "choice": "lg",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        }
+      ],
+      "initial": {
+        "pageOverflow": false,
+        "stageOverflow": 0,
+        "clipped": [],
+        "error": null
+      },
+      "passed": true
+    },
+    {
+      "name": "FloatingPanel",
+      "sizeContract": "Size | undefined",
+      "choices": [],
+      "numericInputs": 0,
+      "numericSegments": [],
+      "sizes": [],
+      "initial": {
+        "pageOverflow": false,
+        "stageOverflow": 0,
+        "clipped": [],
+        "error": null
+      },
+      "passed": true
+    },
+    {
+      "name": "Form",
+      "sizeContract": null,
+      "choices": [],
+      "numericInputs": 0,
+      "numericSegments": [],
+      "sizes": [],
+      "initial": {
+        "pageOverflow": false,
+        "stageOverflow": 0,
+        "clipped": [],
+        "error": null
+      },
+      "passed": true
+    },
+    {
+      "name": "FormFields",
+      "sizeContract": null,
+      "choices": [],
+      "numericInputs": 0,
+      "numericSegments": [],
+      "sizes": [],
+      "initial": {
+        "pageOverflow": false,
+        "stageOverflow": 0,
+        "clipped": [],
+        "error": null
+      },
+      "passed": true
+    },
+    {
+      "name": "GlowText",
+      "sizeContract": "Size | undefined",
+      "choices": [],
+      "numericInputs": 0,
+      "numericSegments": [],
+      "sizes": [],
+      "initial": {
+        "pageOverflow": false,
+        "stageOverflow": 0,
+        "clipped": [],
+        "error": null
+      },
+      "passed": true
+    },
+    {
+      "name": "Grid",
+      "sizeContract": null,
+      "choices": [],
+      "numericInputs": 0,
+      "numericSegments": [],
+      "sizes": [],
+      "initial": {
+        "pageOverflow": false,
+        "stageOverflow": 0,
+        "clipped": [],
+        "error": null
+      },
+      "passed": true
+    },
+    {
+      "name": "Header",
+      "sizeContract": "Size | undefined",
+      "choices": [],
+      "numericInputs": 1,
+      "numericSegments": [],
+      "sizes": [],
+      "initial": {
+        "pageOverflow": false,
+        "stageOverflow": 0,
+        "clipped": [],
+        "error": null
+      },
+      "passed": true
+    },
+    {
+      "name": "Icon",
+      "sizeContract": "string | number | undefined",
+      "choices": [
+        "xs",
+        "sm",
+        "md",
+        "lg"
+      ],
+      "numericInputs": 0,
+      "numericSegments": [],
+      "sizes": [
+        {
+          "choice": "xs",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        },
+        {
+          "choice": "sm",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        },
+        {
+          "choice": "md",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        },
+        {
+          "choice": "lg",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        }
+      ],
+      "initial": {
+        "pageOverflow": false,
+        "stageOverflow": 0,
+        "clipped": [],
+        "error": null
+      },
+      "passed": true
+    },
+    {
+      "name": "IconButton",
+      "sizeContract": "Size | undefined",
+      "choices": [
+        "xs",
+        "sm",
+        "md",
+        "lg"
+      ],
+      "numericInputs": 0,
+      "numericSegments": [],
+      "sizes": [
+        {
+          "choice": "xs",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        },
+        {
+          "choice": "sm",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        },
+        {
+          "choice": "md",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        },
+        {
+          "choice": "lg",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        }
+      ],
+      "initial": {
+        "pageOverflow": false,
+        "stageOverflow": 0,
+        "clipped": [],
+        "error": null
+      },
+      "passed": true
+    },
+    {
+      "name": "Illustration",
+      "sizeContract": "Size | undefined",
+      "choices": [],
+      "numericInputs": 0,
+      "numericSegments": [],
+      "sizes": [],
+      "initial": {
+        "pageOverflow": false,
+        "stageOverflow": 0,
+        "clipped": [],
+        "error": null
+      },
+      "passed": true
+    },
+    {
+      "name": "ImageShine",
+      "sizeContract": "Size | undefined",
+      "choices": [],
+      "numericInputs": 0,
+      "numericSegments": [],
+      "sizes": [],
+      "initial": {
+        "pageOverflow": false,
+        "stageOverflow": 0,
+        "clipped": [],
+        "error": null
+      },
+      "passed": true
+    },
+    {
+      "name": "InputBase",
+      "sizeContract": "Size | undefined",
+      "choices": [
+        "xs",
+        "sm",
+        "md",
+        "lg"
+      ],
+      "numericInputs": 0,
+      "numericSegments": [],
+      "sizes": [
+        {
+          "choice": "xs",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        },
+        {
+          "choice": "sm",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        },
+        {
+          "choice": "md",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        },
+        {
+          "choice": "lg",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        }
+      ],
+      "initial": {
+        "pageOverflow": false,
+        "stageOverflow": 0,
+        "clipped": [],
+        "error": null
+      },
+      "passed": true
+    },
+    {
+      "name": "KaraokeLyrics",
+      "sizeContract": "Size | undefined",
+      "choices": [],
+      "numericInputs": 0,
+      "numericSegments": [],
+      "sizes": [],
+      "initial": {
+        "pageOverflow": false,
+        "stageOverflow": 0,
+        "clipped": [],
+        "error": null
+      },
+      "passed": true
+    },
+    {
+      "name": "KeyValueList",
+      "sizeContract": "Size | undefined",
+      "choices": [],
+      "numericInputs": 0,
+      "numericSegments": [],
+      "sizes": [],
+      "initial": {
+        "pageOverflow": false,
+        "stageOverflow": 0,
+        "clipped": [],
+        "error": null
+      },
+      "passed": true
+    },
+    {
+      "name": "Landscape",
+      "sizeContract": "Size | undefined",
+      "choices": [],
+      "numericInputs": 0,
+      "numericSegments": [],
+      "sizes": [],
+      "initial": {
+        "pageOverflow": false,
+        "stageOverflow": 0,
+        "clipped": [],
+        "error": null
+      },
+      "passed": true
+    },
+    {
+      "name": "LevelMeter",
+      "sizeContract": "Size | undefined",
+      "choices": [],
+      "numericInputs": 0,
+      "numericSegments": [],
+      "sizes": [],
+      "initial": {
+        "pageOverflow": false,
+        "stageOverflow": 0,
+        "clipped": [],
+        "error": null
+      },
+      "passed": true
+    },
+    {
+      "name": "Link",
+      "sizeContract": "Size | undefined",
+      "choices": [],
+      "numericInputs": 0,
+      "numericSegments": [],
+      "sizes": [],
+      "initial": {
+        "pageOverflow": false,
+        "stageOverflow": 0,
+        "clipped": [],
+        "error": null
+      },
+      "passed": true
+    },
+    {
+      "name": "Loader",
+      "sizeContract": "string | undefined",
+      "choices": [
+        "xs",
+        "sm",
+        "md",
+        "lg"
+      ],
+      "numericInputs": 0,
+      "numericSegments": [],
+      "sizes": [
+        {
+          "choice": "xs",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        },
+        {
+          "choice": "sm",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        },
+        {
+          "choice": "md",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        },
+        {
+          "choice": "lg",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        }
+      ],
+      "initial": {
+        "pageOverflow": false,
+        "stageOverflow": 0,
+        "clipped": [],
+        "error": null
+      },
+      "passed": true
+    },
+    {
+      "name": "LoaderGenerator",
+      "sizeContract": "Size | undefined",
+      "choices": [
+        "XS",
+        "SM",
+        "MD",
+        "LG"
+      ],
+      "numericInputs": 0,
+      "numericSegments": [],
+      "sizes": [
+        {
+          "choice": "XS",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        },
+        {
+          "choice": "SM",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        },
+        {
+          "choice": "MD",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        },
+        {
+          "choice": "LG",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        }
+      ],
+      "initial": {
+        "pageOverflow": false,
+        "stageOverflow": 0,
+        "clipped": [],
+        "error": null
+      },
+      "passed": true
+    },
+    {
+      "name": "LocaleProvider",
+      "sizeContract": null,
+      "choices": [],
+      "numericInputs": 0,
+      "numericSegments": [],
+      "sizes": [],
+      "initial": {
+        "pageOverflow": false,
+        "stageOverflow": 0,
+        "clipped": [],
+        "error": null
+      },
+      "passed": true
+    },
+    {
+      "name": "Marquee",
+      "sizeContract": "Size | undefined",
+      "choices": [],
+      "numericInputs": 0,
+      "numericSegments": [],
+      "sizes": [],
+      "initial": {
+        "pageOverflow": false,
+        "stageOverflow": 0,
+        "clipped": [],
+        "error": null
+      },
+      "passed": true
+    },
+    {
+      "name": "MediaCard",
+      "sizeContract": "Size | undefined",
+      "choices": [],
+      "numericInputs": 0,
+      "numericSegments": [],
+      "sizes": [],
+      "initial": {
+        "pageOverflow": false,
+        "stageOverflow": 0,
+        "clipped": [],
+        "error": null
+      },
+      "passed": true
+    },
+    {
+      "name": "MelodixText",
+      "sizeContract": "Size | undefined",
+      "choices": [],
+      "numericInputs": 1,
+      "numericSegments": [],
+      "sizes": [],
+      "initial": {
+        "pageOverflow": false,
+        "stageOverflow": 0,
+        "clipped": [],
+        "error": null
+      },
+      "passed": true
+    },
+    {
+      "name": "MelodyRoll",
+      "sizeContract": "Size | undefined",
+      "choices": [],
+      "numericInputs": 0,
+      "numericSegments": [],
+      "sizes": [],
+      "initial": {
+        "pageOverflow": false,
+        "stageOverflow": 0,
+        "clipped": [],
+        "error": null
+      },
+      "passed": true
+    },
+    {
+      "name": "Menu",
+      "sizeContract": "Size | undefined",
+      "choices": [],
+      "numericInputs": 0,
+      "numericSegments": [],
+      "sizes": [],
+      "initial": {
+        "pageOverflow": false,
+        "stageOverflow": 0,
+        "clipped": [],
+        "error": null
+      },
+      "passed": true
+    },
+    {
+      "name": "MenuItem",
+      "sizeContract": "Size | undefined",
+      "choices": [],
+      "numericInputs": 0,
+      "numericSegments": [],
+      "sizes": [],
+      "initial": {
+        "pageOverflow": false,
+        "stageOverflow": 0,
+        "clipped": [],
+        "error": null
+      },
+      "passed": true
+    },
+    {
+      "name": "MessageBar",
+      "sizeContract": "Size | undefined",
+      "choices": [],
+      "numericInputs": 0,
+      "numericSegments": [],
+      "sizes": [],
+      "initial": {
+        "pageOverflow": false,
+        "stageOverflow": 0,
+        "clipped": [],
+        "error": null
+      },
+      "passed": true
+    },
+    {
+      "name": "NeonWaves",
+      "sizeContract": "Size | undefined",
+      "choices": [],
+      "numericInputs": 2,
+      "numericSegments": [],
+      "sizes": [],
+      "initial": {
+        "pageOverflow": false,
+        "stageOverflow": 0,
+        "clipped": [],
+        "error": null
+      },
+      "passed": true
+    },
+    {
+      "name": "NumberField",
+      "sizeContract": "Size | undefined",
+      "choices": [
+        "xs",
+        "sm",
+        "md",
+        "lg"
+      ],
+      "numericInputs": 0,
+      "numericSegments": [],
+      "sizes": [
+        {
+          "choice": "xs",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        },
+        {
+          "choice": "sm",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        },
+        {
+          "choice": "md",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        },
+        {
+          "choice": "lg",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        }
+      ],
+      "initial": {
+        "pageOverflow": false,
+        "stageOverflow": 0,
+        "clipped": [],
+        "error": null
+      },
+      "passed": true
+    },
+    {
+      "name": "PeoplePicker",
+      "sizeContract": "Size | undefined",
+      "choices": [],
+      "numericInputs": 0,
+      "numericSegments": [],
+      "sizes": [],
+      "initial": {
+        "pageOverflow": false,
+        "stageOverflow": 0,
+        "clipped": [],
+        "error": null
+      },
+      "passed": true
+    },
+    {
+      "name": "PianoKeyboard",
+      "sizeContract": "Size | undefined",
+      "choices": [],
+      "numericInputs": 0,
+      "numericSegments": [],
+      "sizes": [],
+      "initial": {
+        "pageOverflow": false,
+        "stageOverflow": 0,
+        "clipped": [],
+        "error": null
+      },
+      "passed": true
+    },
+    {
+      "name": "PianoRoll",
+      "sizeContract": "Size | undefined",
+      "choices": [],
+      "numericInputs": 0,
+      "numericSegments": [],
+      "sizes": [],
+      "initial": {
+        "pageOverflow": false,
+        "stageOverflow": 0,
+        "clipped": [],
+        "error": null
+      },
+      "passed": true
+    },
+    {
+      "name": "Planet",
+      "sizeContract": "Size | undefined",
+      "choices": [],
+      "numericInputs": 0,
+      "numericSegments": [],
+      "sizes": [],
+      "initial": {
+        "pageOverflow": false,
+        "stageOverflow": 0,
+        "clipped": [],
+        "error": null
+      },
+      "passed": true
+    },
+    {
+      "name": "Popover",
+      "sizeContract": "Size | undefined",
+      "choices": [],
+      "numericInputs": 0,
+      "numericSegments": [],
+      "sizes": [],
+      "initial": {
+        "pageOverflow": false,
+        "stageOverflow": 0,
+        "clipped": [],
+        "error": null
+      },
+      "passed": true
+    },
+    {
+      "name": "ProgressBar",
+      "sizeContract": "Size | undefined",
+      "choices": [],
+      "numericInputs": 1,
+      "numericSegments": [],
+      "sizes": [],
+      "initial": {
+        "pageOverflow": false,
+        "stageOverflow": 0,
+        "clipped": [],
+        "error": null
+      },
+      "passed": true
+    },
+    {
+      "name": "QuantumField",
+      "sizeContract": "Size | undefined",
+      "choices": [],
+      "numericInputs": 0,
+      "numericSegments": [],
+      "sizes": [],
+      "initial": {
+        "pageOverflow": false,
+        "stageOverflow": 0,
+        "clipped": [],
+        "error": null
+      },
+      "passed": true
+    },
+    {
+      "name": "QuantumFieldExperience",
+      "sizeContract": null,
+      "choices": [],
+      "numericInputs": 0,
+      "numericSegments": [],
+      "sizes": [],
+      "initial": {
+        "pageOverflow": false,
+        "stageOverflow": 0,
+        "clipped": [],
+        "error": null
+      },
+      "passed": true
+    },
+    {
+      "name": "Reveal",
+      "sizeContract": "Size | undefined",
+      "choices": [],
+      "numericInputs": 0,
+      "numericSegments": [],
+      "sizes": [],
+      "initial": {
+        "pageOverflow": false,
+        "stageOverflow": 0,
+        "clipped": [],
+        "error": null
+      },
+      "passed": true
+    },
+    {
+      "name": "RotaryKnob",
+      "sizeContract": "Size | undefined",
+      "choices": [
+        "xs",
+        "sm",
+        "md",
+        "lg"
+      ],
+      "numericInputs": 0,
+      "numericSegments": [],
+      "sizes": [
+        {
+          "choice": "xs",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        },
+        {
+          "choice": "sm",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        },
+        {
+          "choice": "md",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        },
+        {
+          "choice": "lg",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        }
+      ],
+      "initial": {
+        "pageOverflow": false,
+        "stageOverflow": 0,
+        "clipped": [],
+        "error": null
+      },
+      "motion": [
+        {
+          "width": null,
+          "key": "Home",
+          "markerError": 0.03178009958927061,
+          "scrollOverflow": 0,
+          "focus": true
+        },
+        {
+          "width": null,
+          "key": "PageUp",
+          "markerError": 0.02830366163286357,
+          "scrollOverflow": 0,
+          "focus": true
+        },
+        {
+          "width": null,
+          "key": "End",
+          "markerError": 0.03465989267962345,
+          "scrollOverflow": 0,
+          "focus": true
+        },
+        {
+          "width": null,
+          "key": "ArrowDown",
+          "markerError": 0.03450802470076505,
+          "scrollOverflow": 0,
+          "focus": true
+        },
+        {
+          "width": 200,
+          "key": "Home",
+          "markerError": 0.08123607990921049,
+          "scrollOverflow": 0,
+          "focus": true
+        },
+        {
+          "width": 200,
+          "key": "PageUp",
+          "markerError": 0.06874799067750245,
+          "scrollOverflow": 0,
+          "focus": true
+        },
+        {
+          "width": 200,
+          "key": "End",
+          "markerError": 0.09063946343671656,
+          "scrollOverflow": 0,
+          "focus": true
+        },
+        {
+          "width": 200,
+          "key": "ArrowDown",
+          "markerError": 0.09008578664113655,
+          "scrollOverflow": 0,
+          "focus": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "Router",
+      "sizeContract": null,
+      "choices": [],
+      "numericInputs": 0,
+      "numericSegments": [],
+      "sizes": [],
+      "initial": {
+        "pageOverflow": false,
+        "stageOverflow": 0,
+        "clipped": [],
+        "error": null
+      },
+      "passed": true
+    },
+    {
+      "name": "ScrollArea",
+      "sizeContract": "Size | undefined",
+      "choices": [],
+      "numericInputs": 0,
+      "numericSegments": [],
+      "sizes": [],
+      "initial": {
+        "pageOverflow": false,
+        "stageOverflow": 0,
+        "clipped": [],
+        "error": null
+      },
+      "passed": true
+    },
+    {
+      "name": "SegmentedControl",
+      "sizeContract": "Size | undefined",
+      "choices": [
+        "xs",
+        "sm",
+        "md",
+        "lg"
+      ],
+      "numericInputs": 0,
+      "numericSegments": [],
+      "sizes": [
+        {
+          "choice": "xs",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        },
+        {
+          "choice": "sm",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        },
+        {
+          "choice": "md",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        },
+        {
+          "choice": "lg",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        }
+      ],
+      "initial": {
+        "pageOverflow": false,
+        "stageOverflow": 0,
+        "clipped": [],
+        "error": null
+      },
+      "passed": true
+    },
+    {
+      "name": "Select",
+      "sizeContract": "Size | undefined",
+      "choices": [
+        "xs",
+        "sm",
+        "md",
+        "lg"
+      ],
+      "numericInputs": 0,
+      "numericSegments": [],
+      "sizes": [
+        {
+          "choice": "xs",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        },
+        {
+          "choice": "sm",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        },
+        {
+          "choice": "md",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        },
+        {
+          "choice": "lg",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        }
+      ],
+      "initial": {
+        "pageOverflow": false,
+        "stageOverflow": 0,
+        "clipped": [],
+        "error": null
+      },
+      "passed": true
+    },
+    {
+      "name": "ServerArt",
+      "sizeContract": "Size | undefined",
+      "choices": [],
+      "numericInputs": 0,
+      "numericSegments": [],
+      "sizes": [],
+      "initial": {
+        "pageOverflow": false,
+        "stageOverflow": 0,
+        "clipped": [],
+        "error": null
+      },
+      "passed": true
+    },
+    {
+      "name": "Shimmer",
+      "sizeContract": "Size | undefined",
+      "choices": [],
+      "numericInputs": 1,
+      "numericSegments": [],
+      "sizes": [],
+      "initial": {
+        "pageOverflow": false,
+        "stageOverflow": 0,
+        "clipped": [],
+        "error": null
+      },
+      "passed": true
+    },
+    {
+      "name": "SignalBars",
+      "sizeContract": "Size | undefined",
+      "choices": [],
+      "numericInputs": 1,
+      "numericSegments": [],
+      "sizes": [],
+      "initial": {
+        "pageOverflow": false,
+        "stageOverflow": 0,
+        "clipped": [],
+        "error": null
+      },
+      "passed": true
+    },
+    {
+      "name": "Slider",
+      "sizeContract": "Size | undefined",
+      "choices": [
+        "xs",
+        "sm",
+        "md",
+        "lg"
+      ],
+      "numericInputs": 0,
+      "numericSegments": [],
+      "sizes": [
+        {
+          "choice": "xs",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        },
+        {
+          "choice": "sm",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        },
+        {
+          "choice": "md",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        },
+        {
+          "choice": "lg",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        }
+      ],
+      "initial": {
+        "pageOverflow": false,
+        "stageOverflow": 0,
+        "clipped": [],
+        "error": null
+      },
+      "passed": true
+    },
+    {
+      "name": "Sparkles",
+      "sizeContract": "Size | undefined",
+      "choices": [],
+      "numericInputs": 0,
+      "numericSegments": [],
+      "sizes": [],
+      "initial": {
+        "pageOverflow": false,
+        "stageOverflow": 0,
+        "clipped": [],
+        "error": null
+      },
+      "passed": true
+    },
+    {
+      "name": "Sparkline",
+      "sizeContract": "Size | undefined",
+      "choices": [],
+      "numericInputs": 0,
+      "numericSegments": [],
+      "sizes": [],
+      "initial": {
+        "pageOverflow": false,
+        "stageOverflow": 0,
+        "clipped": [],
+        "error": null
+      },
+      "passed": true
+    },
+    {
+      "name": "Spectrum",
+      "sizeContract": "Size | undefined",
+      "choices": [],
+      "numericInputs": 0,
+      "numericSegments": [],
+      "sizes": [],
+      "initial": {
+        "pageOverflow": false,
+        "stageOverflow": 0,
+        "clipped": [],
+        "error": null
+      },
+      "passed": true
+    },
+    {
+      "name": "SplitButton",
+      "sizeContract": "Size | undefined",
+      "choices": [
+        "xs",
+        "sm",
+        "md",
+        "lg"
+      ],
+      "numericInputs": 0,
+      "numericSegments": [],
+      "sizes": [
+        {
+          "choice": "xs",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        },
+        {
+          "choice": "sm",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        },
+        {
+          "choice": "md",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        },
+        {
+          "choice": "lg",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        }
+      ],
+      "initial": {
+        "pageOverflow": false,
+        "stageOverflow": 0,
+        "clipped": [],
+        "error": null
+      },
+      "passed": true
+    },
+    {
+      "name": "Spotlight",
+      "sizeContract": "Size | undefined",
+      "choices": [],
+      "numericInputs": 0,
+      "numericSegments": [],
+      "sizes": [],
+      "initial": {
+        "pageOverflow": false,
+        "stageOverflow": 0,
+        "clipped": [],
+        "error": null
+      },
+      "passed": true
+    },
+    {
+      "name": "Stack",
+      "sizeContract": null,
+      "choices": [],
+      "numericInputs": 0,
+      "numericSegments": [],
+      "sizes": [],
+      "initial": {
+        "pageOverflow": false,
+        "stageOverflow": 0,
+        "clipped": [],
+        "error": null
+      },
+      "passed": true
+    },
+    {
+      "name": "StatTile",
+      "sizeContract": "Size | undefined",
+      "choices": [],
+      "numericInputs": 0,
+      "numericSegments": [],
+      "sizes": [],
+      "initial": {
+        "pageOverflow": false,
+        "stageOverflow": 0,
+        "clipped": [],
+        "error": null
+      },
+      "passed": true
+    },
+    {
+      "name": "StatusIndicator",
+      "sizeContract": "Size | undefined",
+      "choices": [],
+      "numericInputs": 0,
+      "numericSegments": [],
+      "sizes": [],
+      "initial": {
+        "pageOverflow": false,
+        "stageOverflow": 0,
+        "clipped": [],
+        "error": null
+      },
+      "passed": true
+    },
+    {
+      "name": "Steps",
+      "sizeContract": "Size | undefined",
+      "choices": [],
+      "numericInputs": 0,
+      "numericSegments": [],
+      "sizes": [],
+      "initial": {
+        "pageOverflow": false,
+        "stageOverflow": 0,
+        "clipped": [],
+        "error": null
+      },
+      "passed": true
+    },
+    {
+      "name": "SvgAsset",
+      "sizeContract": null,
+      "choices": [
+        "xs",
+        "sm",
+        "md",
+        "lg"
+      ],
+      "numericInputs": 0,
+      "numericSegments": [],
+      "sizes": [
+        {
+          "choice": "xs",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        },
+        {
+          "choice": "sm",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        },
+        {
+          "choice": "md",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        },
+        {
+          "choice": "lg",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        }
+      ],
+      "initial": {
+        "pageOverflow": false,
+        "stageOverflow": 0,
+        "clipped": [],
+        "error": null
+      },
+      "passed": true
+    },
+    {
+      "name": "Switch",
+      "sizeContract": "Size | undefined",
+      "choices": [
+        "xs",
+        "sm",
+        "md",
+        "lg"
+      ],
+      "numericInputs": 0,
+      "numericSegments": [],
+      "sizes": [
+        {
+          "choice": "xs",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        },
+        {
+          "choice": "sm",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        },
+        {
+          "choice": "md",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        },
+        {
+          "choice": "lg",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        }
+      ],
+      "initial": {
+        "pageOverflow": false,
+        "stageOverflow": 0,
+        "clipped": [],
+        "error": null
+      },
+      "passed": true
+    },
+    {
+      "name": "Tab",
+      "sizeContract": "Size | undefined",
+      "choices": [
+        "xs",
+        "sm",
+        "md",
+        "lg"
+      ],
+      "numericInputs": 0,
+      "numericSegments": [],
+      "sizes": [
+        {
+          "choice": "xs",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        },
+        {
+          "choice": "sm",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        },
+        {
+          "choice": "md",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        },
+        {
+          "choice": "lg",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        }
+      ],
+      "initial": {
+        "pageOverflow": false,
+        "stageOverflow": 0,
+        "clipped": [],
+        "error": null
+      },
+      "passed": true
+    },
+    {
+      "name": "TabPanel",
+      "sizeContract": "Size | undefined",
+      "choices": [],
+      "numericInputs": 0,
+      "numericSegments": [],
+      "sizes": [],
+      "initial": {
+        "pageOverflow": false,
+        "stageOverflow": 0,
+        "clipped": [],
+        "error": null
+      },
+      "passed": true
+    },
+    {
+      "name": "Tabs",
+      "sizeContract": "Size | undefined",
+      "choices": [],
+      "numericInputs": 0,
+      "numericSegments": [],
+      "sizes": [],
+      "initial": {
+        "pageOverflow": false,
+        "stageOverflow": 0,
+        "clipped": [],
+        "error": null
+      },
+      "passed": true
+    },
+    {
+      "name": "TagInput",
+      "sizeContract": "Size | undefined",
+      "choices": [],
+      "numericInputs": 0,
+      "numericSegments": [],
+      "sizes": [],
+      "initial": {
+        "pageOverflow": false,
+        "stageOverflow": 0,
+        "clipped": [],
+        "error": null
+      },
+      "passed": true
+    },
+    {
+      "name": "Text",
+      "sizeContract": "Size | undefined",
+      "choices": [],
+      "numericInputs": 0,
+      "numericSegments": [],
+      "sizes": [],
+      "initial": {
+        "pageOverflow": false,
+        "stageOverflow": 0,
+        "clipped": [],
+        "error": null
+      },
+      "passed": true
+    },
+    {
+      "name": "TextArea",
+      "sizeContract": "Size | undefined",
+      "choices": [
+        "xs",
+        "sm",
+        "md",
+        "lg"
+      ],
+      "numericInputs": 0,
+      "numericSegments": [],
+      "sizes": [
+        {
+          "choice": "xs",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        },
+        {
+          "choice": "sm",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        },
+        {
+          "choice": "md",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        },
+        {
+          "choice": "lg",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        }
+      ],
+      "initial": {
+        "pageOverflow": false,
+        "stageOverflow": 0,
+        "clipped": [],
+        "error": null
+      },
+      "passed": true
+    },
+    {
+      "name": "TextField",
+      "sizeContract": "Size | undefined",
+      "choices": [
+        "xs",
+        "sm",
+        "md",
+        "lg"
+      ],
+      "numericInputs": 0,
+      "numericSegments": [],
+      "sizes": [
+        {
+          "choice": "xs",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        },
+        {
+          "choice": "sm",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        },
+        {
+          "choice": "md",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        },
+        {
+          "choice": "lg",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        }
+      ],
+      "initial": {
+        "pageOverflow": false,
+        "stageOverflow": 0,
+        "clipped": [],
+        "error": null
+      },
+      "passed": true
+    },
+    {
+      "name": "ThemeEditor",
+      "sizeContract": "Size | undefined",
+      "choices": [],
+      "numericInputs": 0,
+      "numericSegments": [],
+      "sizes": [],
+      "initial": {
+        "pageOverflow": false,
+        "stageOverflow": 0,
+        "clipped": [],
+        "error": null
+      },
+      "passed": true
+    },
+    {
+      "name": "ThemePicker",
+      "sizeContract": "Size | undefined",
+      "choices": [
+        "xs",
+        "sm",
+        "md",
+        "lg"
+      ],
+      "numericInputs": 0,
+      "numericSegments": [],
+      "sizes": [
+        {
+          "choice": "xs",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        },
+        {
+          "choice": "sm",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        },
+        {
+          "choice": "md",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        },
+        {
+          "choice": "lg",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        }
+      ],
+      "initial": {
+        "pageOverflow": false,
+        "stageOverflow": 0,
+        "clipped": [],
+        "error": null
+      },
+      "passed": true
+    },
+    {
+      "name": "ThemeProvider",
+      "sizeContract": "Size | undefined",
+      "choices": [],
+      "numericInputs": 0,
+      "numericSegments": [],
+      "sizes": [],
+      "initial": {
+        "pageOverflow": false,
+        "stageOverflow": 0,
+        "clipped": [],
+        "error": null
+      },
+      "passed": true
+    },
+    {
+      "name": "Tilt",
+      "sizeContract": "Size | undefined",
+      "choices": [],
+      "numericInputs": 1,
+      "numericSegments": [],
+      "sizes": [],
+      "initial": {
+        "pageOverflow": false,
+        "stageOverflow": 0,
+        "clipped": [],
+        "error": null
+      },
+      "passed": true
+    },
+    {
+      "name": "Toast",
+      "sizeContract": "Size | undefined",
+      "choices": [],
+      "numericInputs": 0,
+      "numericSegments": [],
+      "sizes": [],
+      "initial": {
+        "pageOverflow": false,
+        "stageOverflow": 0,
+        "clipped": [],
+        "error": null
+      },
+      "passed": true
+    },
+    {
+      "name": "ToggleButton",
+      "sizeContract": "Size | undefined",
+      "choices": [
+        "xs",
+        "sm",
+        "md",
+        "lg"
+      ],
+      "numericInputs": 0,
+      "numericSegments": [],
+      "sizes": [
+        {
+          "choice": "xs",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        },
+        {
+          "choice": "sm",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        },
+        {
+          "choice": "md",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        },
+        {
+          "choice": "lg",
+          "selected": "true",
+          "pageOverflow": false,
+          "stageOverflow": 0,
+          "clipped": [],
+          "error": null
+        }
+      ],
+      "initial": {
+        "pageOverflow": false,
+        "stageOverflow": 0,
+        "clipped": [],
+        "error": null
+      },
+      "passed": true
+    },
+    {
+      "name": "Toolbar",
+      "sizeContract": "Size | undefined",
+      "choices": [],
+      "numericInputs": 0,
+      "numericSegments": [],
+      "sizes": [],
+      "initial": {
+        "pageOverflow": false,
+        "stageOverflow": 0,
+        "clipped": [],
+        "error": null
+      },
+      "passed": true
+    },
+    {
+      "name": "Tooltip",
+      "sizeContract": "Size | undefined",
+      "choices": [],
+      "numericInputs": 0,
+      "numericSegments": [],
+      "sizes": [],
+      "initial": {
+        "pageOverflow": false,
+        "stageOverflow": 0,
+        "clipped": [],
+        "error": null
+      },
+      "passed": true
+    },
+    {
+      "name": "Typography",
+      "sizeContract": "Size | undefined",
+      "choices": [],
+      "numericInputs": 0,
+      "numericSegments": [],
+      "sizes": [],
+      "initial": {
+        "pageOverflow": false,
+        "stageOverflow": 0,
+        "clipped": [],
+        "error": null
+      },
+      "passed": true
+    },
+    {
+      "name": "WaveDecoration",
+      "sizeContract": "Size | undefined",
+      "choices": [],
+      "numericInputs": 0,
+      "numericSegments": [],
+      "sizes": [],
+      "initial": {
+        "pageOverflow": false,
+        "stageOverflow": 0,
+        "clipped": [],
+        "error": null
+      },
+      "passed": true
+    },
+    {
+      "name": "Waveform",
+      "sizeContract": "Size | undefined",
+      "choices": [],
+      "numericInputs": 0,
+      "numericSegments": [],
+      "sizes": [],
+      "initial": {
+        "pageOverflow": false,
+        "stageOverflow": 0,
+        "clipped": [],
+        "error": null
+      },
+      "passed": true
+    }
+  ],
+  "errors": [],
+  "passed": 100,
+  "failed": 0
+}

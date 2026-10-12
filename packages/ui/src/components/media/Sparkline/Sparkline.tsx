@@ -1,5 +1,6 @@
 import { useSvgId } from "../../../core/artwork";
-import { useMemo, type CSSProperties } from "react";
+import { useMemo, useRef, type CSSProperties } from "react";
+import { usePauseOffscreen } from "../../../core/motion/hooks";
 import { mark } from "../../../core/base";
 import { type SparklineProps } from "../shared";
 
@@ -7,9 +8,12 @@ import { type SparklineProps } from "../shared";
 const DEMO = [12, 23, 17, 31, 43, 24, 28, 20, 41, 29, 51, 34, 38, 22, 31, 16, 23];
 
 export const Sparkline = (p: SparklineProps) => {
-  const values = p.values?.length ? p.values : DEMO;
+  const values = p.values ?? DEMO;
   const id = useSvgId();
+  const ref = useRef<HTMLSpanElement>(null);
+  usePauseOffscreen(ref);
   const { line, lastX, lastY } = useMemo(() => {
+    if (!values.length) return { line: "", lastX: 0, lastY: 0 };
     let min = p.fit ? Infinity : 0;
     let max = p.fit ? -Infinity : 1;
     for (const value of values) {
@@ -52,6 +56,7 @@ export const Sparkline = (p: SparklineProps) => {
   return (
     <span
       {...mark("Sparkline", p)}
+      ref={ref}
       role={p.label ? "img" : undefined}
       aria-label={p.label}
       aria-hidden={!p.label}
@@ -59,7 +64,7 @@ export const Sparkline = (p: SparklineProps) => {
         { ...p.style, "--ad-spark": p.color ?? "var(--ad-primary)" } as CSSProperties
       }
     >
-      <svg {...box}>
+      {line && <><svg {...box}>
         <defs>
           <linearGradient id={`${id}-area`} x1="0" y1="0" x2="0" y2="1">
             <stop offset="0" stopColor="var(--ad-spark)" stopOpacity="0.45" />
@@ -78,7 +83,7 @@ export const Sparkline = (p: SparklineProps) => {
       </svg>
       <svg {...box}>
         <circle className="ad-sparkline-dot" cx={lastX} cy={lastY} r="3" />
-      </svg>
+      </svg></>}
     </span>
   );
 };

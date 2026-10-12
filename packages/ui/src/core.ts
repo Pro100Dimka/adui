@@ -18,5 +18,5 @@ export {
 export { getMotionStats, setMotionFrameRate, subscribeTick } from "./core/motion-engine.js";
 
 export { LocaleProvider, addMessages, getLocale, plural, setLocale, tr, translate, useLocale, useTr } from "./core/i18n";
-export type { Locale, Messages } from "./core/i18n";
+export type { Locale, LocaleProviderProps, Messages } from "./core/i18n";
 export { messages as builtInMessages } from "./core/messages";

@@ -1,0 +1,2352 @@
+{
+  "schemaVersion": 1,
+  "scope": "controls, forms, shared field mechanisms; secondary feedback review",
+  "date": "2026-10-12",
+  "baseline": {
+    "git": "Working tree initially clean in this agent's first git status",
+    "fullSuiteAttempt": "198 tests passed, five suites failed to import a dist chunk during concurrent root build; confirmed build/test race, not package defect",
+    "dedicatedRed": [
+      "controls-red.json (26 failing cases)",
+      "controls-second-red.json (13 new failing cases)",
+      "controls-third-red.json (3 new failing cases)",
+      "controls-final-sweep-red.json (3 new failing cases)",
+      "feedback-secondary-red.json (8 failing cases, 2 passing checks)",
+      "controls-accessible-names-red.json (3 failed checks: ColorPicker, FilePicker, DataTable example label in name)",
+      "controls-public-props-red.json (18 failing checks: Select public props; explicit ARIA precedence across10 fields; TagInput/PeoplePicker data hooks)",
+      "controls-type-boundaries-red.json (public TypeScript rejected regression directives as unused; getPath/setPath any parameters fail checker assertions)",
+      "controls-tree-shaking-red.json and button-packed-tree-shaking-red.txt: unused host/planet artwork and AudioPlayer retained by Button import",
+      "controls-button-names-red.json: Select and ColorPicker explicit accessible names dropped the visible value"
+    ],
+    "browserRed": [
+      "controls-browser-red.json (15 failed checks: light contrast, native required Select, radio semantics)",
+      "controls-browser-final-sweep-red.json (3 failed checks: two long-list keyboard scroll scenarios, 200% text PeoplePicker overflow)",
+      "consumer-consumer-react18-red.json (root: public refs missing in React18)",
+      "accessibility-catalog-red.json (root whole-catalog axe scan before accessible-name fixes)",
+      "controls-browser-button-names-red.json: 8 real visible-value name failures; ninth empty-label query initially matched other broken controls, then scoped to its specific target"
+    ]
+  },
+  "verification": {
+    "renderer": {
+      "command": "npm test --workspace @ad-voice/ui -- ControlsContracts FeedbackContracts EdgeCases base data-responsiveness QuantumField AudioPlayerRerenders --reporter=json --outputFile=../../evidence/controls-final-green.json",
+      "passed": 330,
+      "failed": 0,
+      "files": {
+        "AudioPlayerRerenders": 7,
+        "base": 78,
+        "ControlsContracts": 94,
+        "data-responsiveness": 43,
+        "EdgeCases": 26,
+        "FeedbackContracts": 11,
+        "QuantumField": 61,
+        "QuantumFieldFallbackPerformance": 2,
+        "QuantumFieldPointer": 7,
+        "QuantumFieldRendererPerformance": 1
+      },
+      "limitations": "react-test-renderer tests exercise props/events/state; they do not prove browser layout or screen-reader output"
+    },
+    "typecheck": {
+      "command": "npm run typecheck --workspace @ad-voice/ui",
+      "result": "passed"
+    },
+    "browser": {
+      "command": "node evidence/controls-browser.mjs final-green",
+      "evidence": "controls-browser-final-green.json",
+      "passed": 116,
+      "failed": 0,
+      "browser": "Installed Google Chrome headless, Windows",
+      "themes": [
+        "ruby",
+        "light",
+        "green",
+        "violet"
+      ],
+      "viewportWidths": [
+        320,
+        375,
+        768,
+        1024,
+        1440,
+        1920
+      ],
+      "containerWidth": 240,
+      "additional": [
+        "200% root text size",
+        "touch emulation via hasTouch",
+        "native form validation",
+        "input focus",
+        "combobox in Dialog",
+        "radio arrow navigation",
+        "50-option keyboard scroll",
+        "10 fields: actual browser accessible names + unique id/data hooks; Select170px explicit layout width",
+        "Button fields: accessible names include selected value, placeholder, empty-key option and custom ReactNode; explicit aria-labelledby retains priority over aria-label"
+      ],
+      "motion": "reduced",
+      "notCovered": [
+        "Firefox",
+        "WebKit/Safari",
+        "physical low-end PC",
+        "physical touch device",
+        "screen-reader output",
+        "forced colors"
+      ]
+    },
+    "contrast": {
+      "method": "WCAG luminance of computed foreground against a rendered screenshot background sample within row padding, avoiding text pixels",
+      "lightBefore": {
+        "selected": 2.28,
+        "hover": 1.19
+      },
+      "lightAfter": {
+        "minimum": 7.3246932077976705,
+        "maximum": 12.645524296430834
+      },
+      "limit": "Samples selected and hovered Select rows, not a WCAG certification of all library text"
+    },
+    "screenshots": {
+      "reviewed": [
+        "controls-final-green-light-320.png",
+        "controls-final-green-ruby-320.png"
+      ],
+      "additional": "controls-final-green-{ruby,light,green,violet}-{320,1440}.png"
+    },
+    "performance": {
+      "newClaims": "No whole-device speedup claimed. Existing count-based tests verify unchanged option-key reuse, normalization, form sibling renders and remote search cleanup. useActiveOption only measures on active row/visibility changes.",
+      "physicalLowEndDevice": false,
+      "treeShaking": {
+        "evidence": "button-tree-shaking-audit.json",
+        "before": {
+          "bytes": 470918,
+          "gzipBytes": 90926,
+          "editorRetained": false,
+          "quantumRendererRetained": false
+        },
+        "after": {
+          "bytes": 75942,
+          "gzipBytes": 16754,
+          "editorRetained": false,
+          "quantumRendererRetained": false,
+          "unrelatedArtworkRetained": false,
+          "audioPlayerRetained": false
+        }
+      }
+    },
+    "accessibility": {
+      "evidence": "controls-accessibility-final.json",
+      "pages": [
+        "color-picker",
+        "file-picker",
+        "data-table",
+        "form-fields",
+        "theme-editor",
+        "loader-generator"
+      ],
+      "unexpectedViolations": 0,
+      "manualReviewFlags": 2,
+      "reviewEvidence": [
+        "file-picker-label-analysis.json",
+        "file-picker-label-analysis.png"
+      ],
+      "scope": "WCAG2A/AA/2.1A/AA tags within docs live stage; root owns final whole-catalog scan; automated result is not screen-reader certification",
+      "finalButtonFieldReview": {
+        "evidence": "controls-button-names-axe-green.json",
+        "pages": [
+          "data-table",
+          "select",
+          "color-picker",
+          "form-fields",
+          "theme-editor",
+          "loader-generator"
+        ],
+        "unexpectedViolations": 0,
+        "manualReviewFlags": 1,
+        "manualReview": "FormFields avatar contains coincident decorative HostSeal SVG text layers; same pre-existing, visually reviewed FilePicker rule flag",
+        "dataTableActualNames": [
+          "Групувати за Исполнитель",
+          "Рядків на сторінці 6"
+        ]
+      }
+    },
+    "typeCleanup": {
+      "publicContract": "TypeScript compiler tests via public src/index import accept Menu items and reject invalid labels/actions",
+      "runtime": "Nested array update preserves initial values and sibling identity",
+      "remainingAny": [
+        {
+          "location": "Form Context<FormApi<any>>",
+          "reason": "One React context must carry distinct form schemas; provider/consumer restore caller generic. Replacing it with invariant Record schema rejects typed reset callbacks."
+        },
+        {
+          "location": "FieldRegistry ComponentType<any>",
+          "reason": "Heterogeneous controls have different value and callback shapes; kind-specific bindings adapt them at this lookup boundary."
+        }
+      ],
+      "packedConsumer": "Final tarball declarations recheck delegated to root after this source freeze",
+      "playgroundTypecheck": {
+        "command": "npm run typecheck --workspace @ad-voice/playground",
+        "result": "passed"
+      }
+    }
+  },
+  "fixes": [
+    "Forwarded refs for Button, IconButton, ToggleButton, Tab, InputBase, Slider and generic Select support the declared React18 baseline.",
+    "FieldFrame has explicit htmlFor/id association, so leading adornment buttons cannot steal label activation.",
+    "TextField, TextArea and Autocomplete honor public style; error aria-invalid is consistent across text area, autocomplete, select and date.",
+    "Boolean accessible names/descriptions are forwarded to the native input.",
+    "Autocomplete unique list IDs, active descendant, native event handlers, IME safety, locked state, Tab/Escape and dynamic option recovery; selected key reopens all options.",
+    "Shared active-option visibility adjusts only local option-list scroll for Autocomplete and PeoplePicker without moving typing focus.",
+    "ChipField respects consumer disabled state at max; TagInput and PeoplePicker honor IME, lock, Tab and popup state.",
+    "Chip text input may shrink inside a narrow container with 200% text instead of overflowing.",
+    "ColorPicker disabled state covers inline inputs/buttons/sliders; color plane has complete numeric ARIA value attributes.",
+    "Select chooses enabled defaults, disables form value, implements native required validation and visible invalid focus; localized built-in options retain selection.",
+    "DatePicker native required validation, stable locale hooks, valid group semantics for calendar buttons, and disabled popup handling.",
+    "NumberField step=any nudges by a finite unit instead of emitting infinity.",
+    "FilePicker drop respects multiple=false.",
+    "useForm reads dotted-path errors and reveals invalid field errors on submit.",
+    "ThemePicker radio semantics, roving tab stop and arrow/Home/End selection share props across swatches and custom cards.",
+    "Light theme option text uses semantic text tokens instead of forced white.",
+    "CollapsibleSection restores rejected controlled native toggles before emitting the request.",
+    "SignalBars normalizes finite bar count/strength and announces the value it actually paints.",
+    "DataTable page-size actions emit one state change; structural row counts and initial resize aria values are accurate in covered cases.",
+    "ColorPicker accessible name contains its visible hex value; FilePicker avatar action includes owner name; DataTable example action names retain visible wording.",
+    "Select preserves layout style on its frame and public id/data/ARIA on its trigger; useFieldIds consistently honors explicit accessible names/references across10 fields; TagInput/PeoplePicker retain public data hooks through mark.",
+    "SplitButton items reuses MenuProps items through a type-only import; private form path traversal uses unknown and preserves typed roots/arrays without any or assertions.",
+    "10 side-effect-free React factories marked PURE to preserve package tree shaking, removing unrelated illustrations and media from Button-only bundles.",
+    "Select and ColorPicker accessible names combine the field name and actual rendered value/placeholder. Explicit aria-labelledby chains retain priority, aria-label is preserved through a self reference, and rich value nodes remain readable without text coercion."
+  ],
+  "compatibilityNotes": [
+    "No package rename/publication performed.",
+    "Select's synthetic built-in option values are stable original keys when locale changes; application-specific selects should continue to supply explicit options.",
+    "DatePicker calendar retains native date buttons in a labelled group; no unsupported ARIA grid keyboard contract is claimed.",
+    "Native required Select validation is backed by a hidden select; named form serialization retains the previous hidden input value contract.",
+    "Ref public prop types preserved, including Select<V>; forwardRef generic cast is limited to the React boundary.",
+    "Existing compound picker id/data root placement retained; Select previously dropped those props and now places them on the native button, like text fields. className/style are layout concerns. Explicit ARIA names override generated field labels; Select/ColorPicker append the rendered value automatically, so exact accessible-name queries include that value.",
+    "Malformed SplitButton menu items (non-string labels, non-function onSelect) now fail type checking consistently with Menu; valid existing docs/menu consumers are unchanged."
+  ],
+  "registry": [
+    {
+      "name": "Button",
+      "purpose": "Native action button",
+      "contract": "ButtonProps; native button attributes, label/children, icon/endIcon, loading, round, ref",
+      "modes": [
+        "native action"
+      ],
+      "scenarios": [
+        "loading disables activation and exposes busy",
+        "type defaults to button",
+        "xs/sm/md/lg and primary/secondary/danger/ghost",
+        "React 18/19 imperative ref"
+      ],
+      "dependencies": [
+        "buttonView",
+        "mark",
+        "ripple",
+        "shared control tokens"
+      ],
+      "evidence": [
+        "ControlsContracts",
+        "packed React 18/19 consumer (root)"
+      ],
+      "source": "packages/ui/src/components/controls/Button/Button.tsx",
+      "result": "Listed automated scenarios passed; see test files and browser evidence, not an exhaustive combination claim",
+      "gaps": [
+        "Screen-reader audio output and physical touch devices not tested",
+        "Cross-browser layout beyond installed Chrome not tested"
+      ]
+    },
+    {
+      "name": "IconButton",
+      "purpose": "Named icon action",
+      "contract": "IconButtonProps extends ButtonProps with required label",
+      "modes": [
+        "native action"
+      ],
+      "scenarios": [
+        "accessible name and title",
+        "small field adornments",
+        "disabled clear/step actions",
+        "React 18/19 ref"
+      ],
+      "dependencies": [
+        "buttonView"
+      ],
+      "evidence": [
+        "ControlsContracts",
+        "controls browser",
+        "packed consumer"
+      ],
+      "source": "packages/ui/src/components/controls/IconButton/IconButton.tsx",
+      "result": "Listed automated scenarios passed; see test files and browser evidence, not an exhaustive combination claim",
+      "gaps": [
+        "Screen-reader audio output and physical touch devices not tested",
+        "Cross-browser layout beyond installed Chrome not tested"
+      ]
+    },
+    {
+      "name": "ToggleButton",
+      "purpose": "Pressed toggle action",
+      "contract": "checked/defaultChecked/onValueChange; inherited ButtonProps",
+      "modes": [
+        "controlled",
+        "uncontrolled"
+      ],
+      "scenarios": [
+        "preventDefault cancels toggle",
+        "one emitted change",
+        "aria-pressed",
+        "React 18/19 ref"
+      ],
+      "dependencies": [
+        "buttonView",
+        "useControllable"
+      ],
+      "evidence": [
+        "ControlsContracts",
+        "packed consumer"
+      ],
+      "source": "packages/ui/src/components/controls/ToggleButton/ToggleButton.tsx",
+      "result": "Listed automated scenarios passed; see test files and browser evidence, not an exhaustive combination claim",
+      "gaps": [
+        "Screen-reader audio output and physical touch devices not tested",
+        "Cross-browser layout beyond installed Chrome not tested"
+      ]
+    },
+    {
+      "name": "SplitButton",
+      "purpose": "Primary action with additional actions menu",
+      "contract": "SplitButtonProps; label/icon/variant/items/onClick",
+      "modes": [
+        "local menu state"
+      ],
+      "scenarios": [
+        "menu action fires once and dismisses",
+        "menu trigger has popup/expanded state"
+      ],
+      "dependencies": [
+        "Button",
+        "IconButton",
+        "Menu",
+        "variantMaterial"
+      ],
+      "evidence": [
+        "ControlsContracts",
+        "layers browser"
+      ],
+      "source": "packages/ui/src/components/controls/SplitButton/SplitButton.tsx",
+      "result": "Listed automated scenarios passed; see test files and browser evidence, not an exhaustive combination claim",
+      "gaps": [
+        "Screen-reader audio output and physical touch devices not tested",
+        "Cross-browser layout beyond installed Chrome not tested"
+      ]
+    },
+    {
+      "name": "InputBase",
+      "purpose": "Shared visual field surface",
+      "contract": "InputBaseProps; adornments, disabled/readOnly/error, multiline, floating label, filled, ref",
+      "modes": [
+        "presentational"
+      ],
+      "scenarios": [
+        "field geometry in 240px container",
+        "floating/top labels",
+        "outlined/filled/underlined source contract",
+        "React18 anchor ref"
+      ],
+      "dependencies": [
+        "mark",
+        "shared control tokens"
+      ],
+      "evidence": [
+        "controls browser",
+        "packed consumer"
+      ],
+      "source": "packages/ui/src/components/controls/InputBase/InputBase.tsx",
+      "result": "Listed automated scenarios passed; see test files and browser evidence, not an exhaustive combination claim",
+      "gaps": [
+        "Screen-reader audio output and physical touch devices not tested",
+        "Cross-browser layout beyond installed Chrome not tested"
+      ]
+    },
+    {
+      "name": "TextField",
+      "purpose": "Single line text entry",
+      "contract": "TextFieldProps; value/defaultValue/onValueChange, native input attrs, clearable, inputRef, label/message",
+      "modes": [
+        "controlled",
+        "uncontrolled"
+      ],
+      "scenarios": [
+        "external updates and typing",
+        "explicit label with leading button",
+        "clear touch action",
+        "style preservation",
+        "disabled/readOnly clear",
+        "style/id/data props retention and explicit accessible naming precedence, renderer+realChrome"
+      ],
+      "dependencies": [
+        "FieldFrame",
+        "InputBase",
+        "useFieldIds",
+        "useControllable"
+      ],
+      "evidence": [
+        "ControlsContracts",
+        "controls browser"
+      ],
+      "source": "packages/ui/src/components/controls/TextField/TextField.tsx",
+      "result": "Listed automated scenarios passed; see test files and browser evidence, not an exhaustive combination claim",
+      "gaps": [
+        "Screen-reader audio output and physical touch devices not tested",
+        "Cross-browser layout beyond installed Chrome not tested"
+      ]
+    },
+    {
+      "name": "TextArea",
+      "purpose": "Multiline text entry",
+      "contract": "TextAreaProps; native textarea attrs and resize vertical/both/none",
+      "modes": [
+        "controlled",
+        "uncontrolled"
+      ],
+      "scenarios": [
+        "external updates and typing",
+        "error semantics",
+        "label association",
+        "style preservation",
+        "narrow/zoom geometry",
+        "style/id/data props retention and explicit accessible naming precedence, renderer+realChrome"
+      ],
+      "dependencies": [
+        "FieldFrame",
+        "InputBase",
+        "useFieldIds"
+      ],
+      "evidence": [
+        "ControlsContracts",
+        "controls browser"
+      ],
+      "source": "packages/ui/src/components/controls/TextArea/TextArea.tsx",
+      "result": "Listed automated scenarios passed; see test files and browser evidence, not an exhaustive combination claim",
+      "gaps": [
+        "Screen-reader audio output and physical touch devices not tested",
+        "Cross-browser layout beyond installed Chrome not tested"
+      ]
+    },
+    {
+      "name": "NumberField",
+      "purpose": "Numeric text entry and optional step controls",
+      "contract": "NumberFieldProps; number or empty value, min/max/step; controls",
+      "modes": [
+        "controlled",
+        "uncontrolled"
+      ],
+      "scenarios": [
+        "step any produces finite increment",
+        "fraction drift handling",
+        "disabled/readOnly buttons",
+        "min/max clipping code review",
+        "style/id/data props retention and explicit accessible naming precedence, renderer+realChrome"
+      ],
+      "dependencies": [
+        "TextField",
+        "IconButton",
+        "clamp"
+      ],
+      "evidence": [
+        "ControlsContracts",
+        "controls browser"
+      ],
+      "source": "packages/ui/src/components/controls/NumberField/NumberField.tsx",
+      "result": "Listed automated scenarios passed; see test files and browser evidence, not an exhaustive combination claim",
+      "gaps": [
+        "Screen-reader audio output and physical touch devices not tested",
+        "Cross-browser layout beyond installed Chrome not tested"
+      ]
+    },
+    {
+      "name": "Select",
+      "purpose": "Single choice with optional rich/searchable grouped list",
+      "contract": "SelectProps<V>; value/defaultValue/onValueChange, getKey, renderOption/renderValue, searchable, required/name/ref",
+      "modes": [
+        "controlled",
+        "uncontrolled"
+      ],
+      "scenarios": [
+        "first enabled default",
+        "disabled hidden form value",
+        "native required submit rejection and valid acceptance",
+        "invalid focus",
+        "disabled while open",
+        "stable translated built-in options",
+        "error semantics",
+        "1000-option key reuse",
+        "4-theme selected/hover contrast",
+        "style/id/data props retention and explicit accessible naming precedence, renderer+realChrome",
+        "visible value/placeholder included in accessible name with default, explicit label and external label chains; real Chrome and axe consumer checks"
+      ],
+      "dependencies": [
+        "FieldFrame",
+        "InputBase",
+        "Popover",
+        "OptionList",
+        "useControllable"
+      ],
+      "evidence": [
+        "ControlsContracts",
+        "data-responsiveness",
+        "controls browser",
+        "packed consumer"
+      ],
+      "source": "packages/ui/src/components/controls/Select/Select.tsx",
+      "result": "Listed automated scenarios passed; see test files and browser evidence, not an exhaustive combination claim",
+      "gaps": [
+        "Screen-reader audio output and physical touch devices not tested",
+        "Cross-browser layout beyond installed Chrome not tested"
+      ]
+    },
+    {
+      "name": "Autocomplete",
+      "purpose": "Editable combobox with suggestion selection",
+      "contract": "AutocompleteProps; TextFieldProps plus string/value-label options and onOptionSelect",
+      "modes": [
+        "controlled",
+        "uncontrolled"
+      ],
+      "scenarios": [
+        "unique list/active option ids",
+        "IME Enter",
+        "native handlers/preventDefault",
+        "readOnly/disabled updates",
+        "Tab/Escape and nested Dialog",
+        "shrinking options",
+        "reopen nonmatching value-label pair",
+        "long-list keyboard scroll",
+        "1000-option normalization reuse",
+        "style/id/data props retention and explicit accessible naming precedence, renderer+realChrome"
+      ],
+      "dependencies": [
+        "InputBase",
+        "FieldFrame",
+        "Popover",
+        "OptionList",
+        "useActiveOption"
+      ],
+      "evidence": [
+        "ControlsContracts",
+        "data-responsiveness",
+        "controls browser"
+      ],
+      "source": "packages/ui/src/components/controls/Autocomplete/Autocomplete.tsx",
+      "result": "Listed automated scenarios passed; see test files and browser evidence, not an exhaustive combination claim",
+      "gaps": [
+        "Screen-reader audio output and physical touch devices not tested",
+        "Cross-browser layout beyond installed Chrome not tested"
+      ]
+    },
+    {
+      "name": "Checkbox",
+      "purpose": "Boolean/mixed checkbox",
+      "contract": "BooleanProps; checked/defaultChecked, name/required/disabled, indeterminate",
+      "modes": [
+        "controlled",
+        "uncontrolled"
+      ],
+      "scenarios": [
+        "controlled request does not override prop",
+        "explicit accessible name reaches input",
+        "native checked/required/form semantics",
+        "visual focus source review"
+      ],
+      "dependencies": [
+        "BooleanControl"
+      ],
+      "evidence": [
+        "ControlsContracts",
+        "controls browser",
+        "DataTable existing selection tests"
+      ],
+      "source": "packages/ui/src/components/controls/Checkbox/Checkbox.tsx",
+      "result": "Listed automated scenarios passed; see test files and browser evidence, not an exhaustive combination claim",
+      "gaps": [
+        "Screen-reader audio output and physical touch devices not tested",
+        "Cross-browser layout beyond installed Chrome not tested"
+      ]
+    },
+    {
+      "name": "Switch",
+      "purpose": "On/off switch",
+      "contract": "BooleanProps with switch role",
+      "modes": [
+        "controlled",
+        "uncontrolled"
+      ],
+      "scenarios": [
+        "controlled state",
+        "explicit accessible name on native input",
+        "disabled/name/required passthrough"
+      ],
+      "dependencies": [
+        "BooleanControl"
+      ],
+      "evidence": [
+        "ControlsContracts",
+        "controls browser"
+      ],
+      "source": "packages/ui/src/components/controls/Switch/Switch.tsx",
+      "result": "Listed automated scenarios passed; see test files and browser evidence, not an exhaustive combination claim",
+      "gaps": [
+        "Screen-reader audio output and physical touch devices not tested",
+        "Cross-browser layout beyond installed Chrome not tested"
+      ]
+    },
+    {
+      "name": "Slider",
+      "purpose": "Native one-axis range",
+      "contract": "SliderProps; value/defaultValue, min/max/step, label/disabled/ref",
+      "modes": [
+        "controlled",
+        "uncontrolled"
+      ],
+      "scenarios": [
+        "visual percentage equals clamped native value",
+        "equal bounds no division by zero",
+        "label links actual input",
+        "ref forwarding",
+        "style/id/data props retention and explicit accessible naming precedence, renderer+realChrome"
+      ],
+      "dependencies": [
+        "FieldFrame",
+        "useFieldIds",
+        "clamp"
+      ],
+      "evidence": [
+        "ControlsContracts",
+        "base",
+        "controls browser",
+        "packed consumer"
+      ],
+      "source": "packages/ui/src/components/controls/Slider/Slider.tsx",
+      "result": "Listed automated scenarios passed; see test files and browser evidence, not an exhaustive combination claim",
+      "gaps": [
+        "Screen-reader audio output and physical touch devices not tested",
+        "Cross-browser layout beyond installed Chrome not tested"
+      ]
+    },
+    {
+      "name": "Chip",
+      "purpose": "Compact static/removable/selectable value",
+      "contract": "ChipProps; label, avatar/icon, selected, onClick/onRemove, disabled",
+      "modes": [
+        "presentational/action"
+      ],
+      "scenarios": [
+        "remove does not also select",
+        "remove event stops propagation",
+        "disabled actions",
+        "text truncation source review"
+      ],
+      "dependencies": [
+        "Avatar",
+        "Icon",
+        "mark"
+      ],
+      "evidence": [
+        "ControlsContracts",
+        "controls browser through chip fields"
+      ],
+      "source": "packages/ui/src/components/controls/Chip/Chip.tsx",
+      "result": "Listed automated scenarios passed; see test files and browser evidence, not an exhaustive combination claim",
+      "gaps": [
+        "Screen-reader audio output and physical touch devices not tested",
+        "Cross-browser layout beyond installed Chrome not tested"
+      ]
+    },
+    {
+      "name": "TagInput",
+      "purpose": "Multi-value free text",
+      "contract": "TagInputProps; string[] value/defaultValue; max, validate, suggestions, required/disabled",
+      "modes": [
+        "controlled",
+        "uncontrolled"
+      ],
+      "scenarios": [
+        "max disables text entry but allows removal",
+        "IME Enter",
+        "disabled suggestions",
+        "batch case-insensitive dedup",
+        "narrow and 200% text shrink",
+        "style/id/data props retention and explicit accessible naming precedence, renderer+realChrome"
+      ],
+      "dependencies": [
+        "ChipField",
+        "Chip",
+        "useControllable"
+      ],
+      "evidence": [
+        "ControlsContracts",
+        "EdgeCases",
+        "controls browser"
+      ],
+      "source": "packages/ui/src/components/controls/TagInput/TagInput.tsx",
+      "result": "Listed automated scenarios passed; see test files and browser evidence, not an exhaustive combination claim",
+      "gaps": [
+        "Screen-reader audio output and physical touch devices not tested",
+        "Cross-browser layout beyond installed Chrome not tested"
+      ]
+    },
+    {
+      "name": "PeoplePicker",
+      "purpose": "Local or asynchronous person selection",
+      "contract": "PeoplePickerProps; people/onSearch(query,signal), selected people, max/single",
+      "modes": [
+        "controlled",
+        "uncontrolled",
+        "local/remote search"
+      ],
+      "scenarios": [
+        "max lock",
+        "IME",
+        "active descendant",
+        "Tab/Escape",
+        "disabled while open",
+        "long-list keyboard scroll",
+        "debounce, abort, stale result, failure",
+        "narrow/zoom",
+        "style/id/data props retention and explicit accessible naming precedence, renderer+realChrome"
+      ],
+      "dependencies": [
+        "ChipField",
+        "Popover",
+        "useActiveOption",
+        "AbortController",
+        "debounce timer"
+      ],
+      "evidence": [
+        "ControlsContracts",
+        "EdgeCases",
+        "data-responsiveness",
+        "controls browser"
+      ],
+      "source": "packages/ui/src/components/controls/PeoplePicker/PeoplePicker.tsx",
+      "result": "Listed automated scenarios passed; see test files and browser evidence, not an exhaustive combination claim",
+      "gaps": [
+        "Screen-reader audio output and physical touch devices not tested",
+        "Cross-browser layout beyond installed Chrome not tested"
+      ]
+    },
+    {
+      "name": "DatePicker",
+      "purpose": "Typed date with calendar buttons",
+      "contract": "DatePickerProps; ISO date or empty value, min/max, locale, required/disabled",
+      "modes": [
+        "controlled",
+        "uncontrolled"
+      ],
+      "scenarios": [
+        "leap and impossible dates",
+        "bounds on typed/calendar values",
+        "required on visible input",
+        "error semantics",
+        "locale hook order",
+        "disabled popup",
+        "labelled date-button group",
+        "style/id/data props retention and explicit accessible naming precedence, renderer+realChrome"
+      ],
+      "dependencies": [
+        "InputBase",
+        "FieldFrame",
+        "Popover",
+        "Intl.DateTimeFormat"
+      ],
+      "evidence": [
+        "ControlsContracts",
+        "EdgeCases",
+        "controls browser"
+      ],
+      "source": "packages/ui/src/components/controls/DatePicker/DatePicker.tsx",
+      "result": "Listed automated scenarios passed; see test files and browser evidence, not an exhaustive combination claim",
+      "gaps": [
+        "Screen-reader audio output and physical touch devices not tested",
+        "Cross-browser layout beyond installed Chrome not tested"
+      ]
+    },
+    {
+      "name": "ColorPicker",
+      "purpose": "HSV plane/hue, hex input and swatches",
+      "contract": "ColorPickerProps; hex value/defaultValue, swatches, inline/disabled",
+      "modes": [
+        "controlled",
+        "uncontrolled",
+        "inline/popup"
+      ],
+      "scenarios": [
+        "disabled all inline controls",
+        "disabled popup",
+        "color plane numeric aria value and textual brightness",
+        "pointer capture source review",
+        "hex normalization source review",
+        "visible hex value included in accessible name",
+        "style/id/data props retention and explicit accessible naming precedence, renderer+realChrome",
+        "visible value/placeholder included in accessible name with default, explicit label and external label chains; real Chrome and axe consumer checks"
+      ],
+      "dependencies": [
+        "InputBase",
+        "FieldFrame",
+        "Popover",
+        "color arithmetic"
+      ],
+      "evidence": [
+        "ControlsContracts",
+        "controls browser"
+      ],
+      "source": "packages/ui/src/components/controls/ColorPicker/ColorPicker.tsx",
+      "result": "Listed automated scenarios passed; see test files and browser evidence, not an exhaustive combination claim",
+      "gaps": [
+        "Screen-reader audio output and physical touch devices not tested",
+        "Cross-browser layout beyond installed Chrome not tested"
+      ]
+    },
+    {
+      "name": "FilePicker",
+      "purpose": "Native file chooser and drop target",
+      "contract": "FilePickerProps; button/zone/avatar, accept/multiple/onFiles/onPick/value/disabled",
+      "modes": [
+        "native picker",
+        "drop",
+        "external onPick"
+      ],
+      "scenarios": [
+        "drop respects multiple=false",
+        "accept filters",
+        "avatar requires image",
+        "disabled drop ignored",
+        "object URL replacement/unmount cleanup source review",
+        "visible owner included in chooser accessible name"
+      ],
+      "dependencies": [
+        "Button",
+        "Avatar",
+        "file input",
+        "object URLs"
+      ],
+      "evidence": [
+        "ControlsContracts",
+        "EdgeCases",
+        "base"
+      ],
+      "source": "packages/ui/src/components/controls/FilePicker/FilePicker.tsx",
+      "result": "Listed automated scenarios passed; see test files and browser evidence, not an exhaustive combination claim",
+      "gaps": [
+        "Screen-reader audio output and physical touch devices not tested",
+        "Cross-browser layout beyond installed Chrome not tested",
+        "Axe label-in-name false positive for duplicate SVG glow text manually reviewed; see file-picker-label-analysis.json and png"
+      ]
+    },
+    {
+      "name": "ThemePicker",
+      "purpose": "Single theme choice",
+      "contract": "ThemePickerProps<V>; built-in swatches or custom card options, value/defaultValue/disabled",
+      "modes": [
+        "controlled",
+        "uncontrolled"
+      ],
+      "scenarios": [
+        "real radio semantics",
+        "one keyboard tab stop",
+        "arrow/Home/End navigation",
+        "gallery shares same radio attrs",
+        "4 built-in themes preserve palette"
+      ],
+      "dependencies": [
+        "Button",
+        "ImageShine",
+        "theme palette"
+      ],
+      "evidence": [
+        "ControlsContracts",
+        "controls browser"
+      ],
+      "source": "packages/ui/src/components/controls/ThemePicker/ThemePicker.tsx",
+      "result": "Listed automated scenarios passed; see test files and browser evidence, not an exhaustive combination claim",
+      "gaps": [
+        "Screen-reader audio output and physical touch devices not tested",
+        "Cross-browser layout beyond installed Chrome not tested"
+      ]
+    },
+    {
+      "name": "Link",
+      "purpose": "Native navigation link",
+      "contract": "LinkProps; native anchor attrs, external, underline, icons",
+      "modes": [
+        "native navigation"
+      ],
+      "scenarios": [
+        "external href/target/rel",
+        "native keyboard behavior",
+        "source-reviewed prop forwarding"
+      ],
+      "dependencies": [
+        "mark",
+        "Icon"
+      ],
+      "evidence": [
+        "ControlsContracts"
+      ],
+      "source": "packages/ui/src/components/controls/Link/Link.tsx",
+      "result": "Listed automated scenarios passed; see test files and browser evidence, not an exhaustive combination claim",
+      "gaps": [
+        "Screen-reader audio output and physical touch devices not tested",
+        "Cross-browser layout beyond installed Chrome not tested"
+      ]
+    },
+    {
+      "name": "Tab",
+      "purpose": "Single tab button",
+      "contract": "TabProps; selected/panelId plus ButtonProps/ref",
+      "modes": [
+        "controlled by parent"
+      ],
+      "scenarios": [
+        "tab semantics and tabIndex",
+        "ref forwarding",
+        "dynamic selected state"
+      ],
+      "dependencies": [
+        "mark",
+        "Icon"
+      ],
+      "evidence": [
+        "layers audit",
+        "packed consumer"
+      ],
+      "source": "packages/ui/src/components/controls/Tab/Tab.tsx",
+      "result": "Source inspected; detailed runtime findings delegated to layers agent",
+      "gaps": [
+        "Screen-reader audio output and physical touch devices not tested",
+        "Cross-browser layout beyond installed Chrome not tested"
+      ]
+    },
+    {
+      "name": "Tabs",
+      "purpose": "Roving tab list with animated selected marker",
+      "contract": "TabsProps<V>; items, value/defaultValue/onValueChange, label",
+      "modes": [
+        "controlled",
+        "uncontrolled"
+      ],
+      "scenarios": [
+        "empty/disabled/dynamic item navigation",
+        "selection marker resource lifecycle",
+        "layout in narrow container"
+      ],
+      "dependencies": [
+        "Tab",
+        "ResizeObserver",
+        "useControllable"
+      ],
+      "evidence": [
+        "layers audit; ownership delegated"
+      ],
+      "source": "packages/ui/src/components/controls/Tabs/Tabs.tsx",
+      "result": "Source inspected; detailed runtime findings delegated to layers agent",
+      "gaps": [
+        "Screen-reader audio output and physical touch devices not tested",
+        "Cross-browser layout beyond installed Chrome not tested"
+      ]
+    },
+    {
+      "name": "SegmentedControl",
+      "purpose": "Compact Tabs presentation",
+      "contract": "TabsProps<V>; optional default list/grid items",
+      "modes": [
+        "controlled",
+        "uncontrolled"
+      ],
+      "scenarios": [
+        "inherits Tabs navigation and selected state",
+        "source-reviewed wrapper props"
+      ],
+      "dependencies": [
+        "Tabs"
+      ],
+      "evidence": [
+        "layers audit; ownership delegated"
+      ],
+      "source": "packages/ui/src/components/controls/SegmentedControl/SegmentedControl.tsx",
+      "result": "Source inspected; detailed runtime findings delegated to layers agent",
+      "gaps": [
+        "Screen-reader audio output and physical touch devices not tested",
+        "Cross-browser layout beyond installed Chrome not tested"
+      ]
+    },
+    {
+      "name": "BooleanControl",
+      "purpose": "Public shared boolean primitive",
+      "contract": "BooleanControlProps with kind Checkbox/Switch",
+      "modes": [
+        "controlled",
+        "uncontrolled"
+      ],
+      "scenarios": [
+        "input accessible attrs",
+        "indeterminate property synchronization",
+        "native checkbox form semantics"
+      ],
+      "dependencies": [
+        "useControllable"
+      ],
+      "evidence": [
+        "ControlsContracts via Checkbox/Switch",
+        "layers documentation registration"
+      ],
+      "source": "packages/ui/src/components/controls/shared.tsx",
+      "result": "Listed automated scenarios passed; see test files and browser evidence, not an exhaustive combination claim",
+      "gaps": [
+        "Screen-reader audio output and physical touch devices not tested",
+        "Cross-browser layout beyond installed Chrome not tested"
+      ]
+    },
+    {
+      "name": "Form",
+      "purpose": "Form context and submit event",
+      "contract": "FormProps<T>; form API, children/className",
+      "modes": [
+        "provided API"
+      ],
+      "scenarios": [
+        "prevents native navigation; invokes form submit",
+        "context and registry composition"
+      ],
+      "dependencies": [
+        "useFormContext",
+        "native form"
+      ],
+      "evidence": [
+        "EdgeCases",
+        "base"
+      ],
+      "source": "packages/ui/src/components/forms/Form/Form.tsx",
+      "result": "Listed automated scenarios passed; see test files and browser evidence, not an exhaustive combination claim",
+      "gaps": [
+        "Screen-reader audio output and physical touch devices not tested",
+        "Cross-browser layout beyond installed Chrome not tested"
+      ]
+    },
+    {
+      "name": "FormFields",
+      "purpose": "Declarative form binding and layout",
+      "contract": "FormFieldsProps<T>; definitions, registry, columns/gap",
+      "modes": [
+        "controlled through form API"
+      ],
+      "scenarios": [
+        "14 registry kinds reviewed",
+        "boolean/file/rotary/value mappings",
+        "showWhen and stable siblings",
+        "responsive subgrid labels/messages"
+      ],
+      "dependencies": [
+        "Grid",
+        "defaultFieldRegistry",
+        "Form context"
+      ],
+      "evidence": [
+        "EdgeCases",
+        "base"
+      ],
+      "source": "packages/ui/src/components/forms/FormFields/FormFields.tsx",
+      "result": "Listed automated scenarios passed; see test files and browser evidence, not an exhaustive combination claim",
+      "gaps": [
+        "Screen-reader audio output and physical touch devices not tested",
+        "Cross-browser layout beyond installed Chrome not tested"
+      ]
+    },
+    {
+      "name": "useForm",
+      "purpose": "Values, errors, touched and submission lifecycle",
+      "contract": "UseFormOptions<T>/FormApi<T>; initialValues, validate, onSubmit, reinitialize and validation settings",
+      "modes": [
+        "hook state"
+      ],
+      "scenarios": [
+        "flat dotted errors",
+        "submit marks invalid paths touched",
+        "overlapping validation ignored",
+        "concurrent submit dedup",
+        "same-value update no-op",
+        "nested structural sharing",
+        "reset invalidates validation"
+      ],
+      "dependencies": [
+        "React refs/memo/state"
+      ],
+      "evidence": [
+        "ControlsContracts",
+        "EdgeCases"
+      ],
+      "source": "packages/ui/src/components/forms/Form/Form.tsx",
+      "result": "Listed automated scenarios passed; see test files and browser evidence, not an exhaustive combination claim",
+      "gaps": [
+        "Screen-reader audio output and physical touch devices not tested",
+        "Cross-browser layout beyond installed Chrome not tested"
+      ]
+    }
+  ],
+  "sharedMechanisms": [
+    {
+      "name": "FieldFrame/useFieldIds",
+      "consumers": [
+        "TextField",
+        "TextArea",
+        "Autocomplete",
+        "Select",
+        "DatePicker",
+        "ColorPicker",
+        "Slider",
+        "ChipField"
+      ],
+      "checked": "unique IDs, explicit htmlFor target, top/floating labels, errors/descriptions"
+    },
+    {
+      "name": "OptionList/useActiveOption",
+      "consumers": [
+        "Select",
+        "Autocomplete",
+        "PeoplePicker (scroll helper)"
+      ],
+      "checked": "DOM focus for Select versus virtual focus for combobox; local scroll and unique option identities"
+    },
+    {
+      "name": "ChipField",
+      "consumers": [
+        "TagInput",
+        "PeoplePicker"
+      ],
+      "checked": "max/disabled propagation, labelled input, common narrow/zoom geometry"
+    },
+    {
+      "name": "buttonView",
+      "consumers": [
+        "Button",
+        "IconButton",
+        "ToggleButton"
+      ],
+      "checked": "native type, loading/disabled, forwarded refs, shared variants and size tokens"
+    },
+    {
+      "name": "defaultFieldRegistry",
+      "consumers": [
+        "FormFields"
+      ],
+      "checked": "14 existing input kinds; boolean/file/rotary/value mappings"
+    }
+  ],
+  "secondaryFeedback": [
+    {
+      "name": "DataTable",
+      "changes": [
+        "pagination single callback",
+        "group/detail aria-rowcount",
+        "resize aria-valuenow",
+        "example action accessible names contain visible wording"
+      ],
+      "verification": [
+        "FeedbackContracts",
+        "data-responsiveness (43)",
+        "base",
+        "EdgeCases"
+      ],
+      "limitations": "Existing virtualization measurements use unit environment; root/layers own broad browser layout."
+    },
+    {
+      "name": "CollapsibleSection",
+      "changes": [
+        "controlled native open rollback"
+      ],
+      "verification": [
+        "FeedbackContracts",
+        "layers-browser (real browser, owned by layers)"
+      ]
+    },
+    {
+      "name": "SignalBars",
+      "changes": [
+        "finite count",
+        "clamped discrete strength and matching label"
+      ],
+      "verification": [
+        "FeedbackContracts"
+      ]
+    },
+    {
+      "name": "Toast",
+      "changes": [],
+      "verification": [
+        "newest callback/timer cleanup renderer test passed"
+      ],
+      "limitations": "No new dismiss/pause contract introduced."
+    },
+    {
+      "name": "Steps",
+      "changes": [],
+      "verification": [
+        "current, completion and empty states renderer test passed"
+      ]
+    }
+  ],
+  "unresolved": "No confirmed unresolved implementation defect in the tested controls/forms/secondary-feedback scope. Two axe label-in-name flags for FilePicker/FormFields avatar SVG were manually reviewed as duplicate glow text false positives; full automated violations remain recorded. Physical touch/low-end hardware, screen-reader audio, forced colors, Firefox and WebKit remain unverified. This report does not claim exhaustive state combinations or whole-library release readiness.",
+  "regressionMatrix": [
+    {
+      "componentOrMechanism": "control and form type boundaries",
+      "scenarioAndExpectedResult": "rejects malformed SplitButton menu items and keeps path helper inputs checked",
+      "method": "TypeScript compiler public contract + private helper parameter inspection",
+      "test": "packages/ui/tests/ControlsContracts.test.tsx",
+      "baseline": "failed before correction",
+      "baselineEvidence": "controls-type-boundaries-red.json",
+      "actualResult": "passed",
+      "correction": "Implementation correction; see fixes and the component diff",
+      "recheck": "controls-final-green.json"
+    },
+    {
+      "componentOrMechanism": "control and form type boundaries",
+      "scenarioAndExpectedResult": "updates array paths without mutating initial values or replacing siblings",
+      "method": "react-test-renderer dedicated test",
+      "test": "packages/ui/tests/ControlsContracts.test.tsx",
+      "baseline": "passed verification of existing behavior",
+      "baselineEvidence": "controls-final-green.json",
+      "actualResult": "passed",
+      "correction": "No correction required for this check",
+      "recheck": "controls-final-green.json"
+    },
+    {
+      "componentOrMechanism": "field public host attributes",
+      "scenarioAndExpectedResult": "'Select' preserves layout style, a unique public id and data hooks",
+      "method": "react-test-renderer dedicated test",
+      "test": "packages/ui/tests/ControlsContracts.test.tsx",
+      "baseline": "failed before correction",
+      "baselineEvidence": "controls-public-props-red.json",
+      "actualResult": "passed",
+      "correction": "Implementation correction; see fixes and the component diff",
+      "recheck": "controls-final-green.json"
+    },
+    {
+      "componentOrMechanism": "field public host attributes",
+      "scenarioAndExpectedResult": "'TextField' preserves layout style, a unique public id and data hooks",
+      "method": "react-test-renderer dedicated test",
+      "test": "packages/ui/tests/ControlsContracts.test.tsx",
+      "baseline": "passed verification of existing behavior",
+      "baselineEvidence": "controls-final-green.json",
+      "actualResult": "passed",
+      "correction": "No correction required for this check",
+      "recheck": "controls-final-green.json"
+    },
+    {
+      "componentOrMechanism": "field public host attributes",
+      "scenarioAndExpectedResult": "'TextArea' preserves layout style, a unique public id and data hooks",
+      "method": "react-test-renderer dedicated test",
+      "test": "packages/ui/tests/ControlsContracts.test.tsx",
+      "baseline": "passed verification of existing behavior",
+      "baselineEvidence": "controls-final-green.json",
+      "actualResult": "passed",
+      "correction": "No correction required for this check",
+      "recheck": "controls-final-green.json"
+    },
+    {
+      "componentOrMechanism": "field public host attributes",
+      "scenarioAndExpectedResult": "'Autocomplete' preserves layout style, a unique public id and data hooks",
+      "method": "react-test-renderer dedicated test",
+      "test": "packages/ui/tests/ControlsContracts.test.tsx",
+      "baseline": "passed verification of existing behavior",
+      "baselineEvidence": "controls-final-green.json",
+      "actualResult": "passed",
+      "correction": "No correction required for this check",
+      "recheck": "controls-final-green.json"
+    },
+    {
+      "componentOrMechanism": "field public host attributes",
+      "scenarioAndExpectedResult": "'NumberField' preserves layout style, a unique public id and data hooks",
+      "method": "react-test-renderer dedicated test",
+      "test": "packages/ui/tests/ControlsContracts.test.tsx",
+      "baseline": "passed verification of existing behavior",
+      "baselineEvidence": "controls-final-green.json",
+      "actualResult": "passed",
+      "correction": "No correction required for this check",
+      "recheck": "controls-final-green.json"
+    },
+    {
+      "componentOrMechanism": "field public host attributes",
+      "scenarioAndExpectedResult": "'Slider' preserves layout style, a unique public id and data hooks",
+      "method": "react-test-renderer dedicated test",
+      "test": "packages/ui/tests/ControlsContracts.test.tsx",
+      "baseline": "passed verification of existing behavior",
+      "baselineEvidence": "controls-final-green.json",
+      "actualResult": "passed",
+      "correction": "No correction required for this check",
+      "recheck": "controls-final-green.json"
+    },
+    {
+      "componentOrMechanism": "field public host attributes",
+      "scenarioAndExpectedResult": "'DatePicker' preserves layout style, a unique public id and data hooks",
+      "method": "react-test-renderer dedicated test",
+      "test": "packages/ui/tests/ControlsContracts.test.tsx",
+      "baseline": "passed verification of existing behavior",
+      "baselineEvidence": "controls-final-green.json",
+      "actualResult": "passed",
+      "correction": "No correction required for this check",
+      "recheck": "controls-final-green.json"
+    },
+    {
+      "componentOrMechanism": "field public host attributes",
+      "scenarioAndExpectedResult": "'ColorPicker' preserves layout style, a unique public id and data hooks",
+      "method": "react-test-renderer dedicated test",
+      "test": "packages/ui/tests/ControlsContracts.test.tsx",
+      "baseline": "passed verification of existing behavior",
+      "baselineEvidence": "controls-final-green.json",
+      "actualResult": "passed",
+      "correction": "No correction required for this check",
+      "recheck": "controls-final-green.json"
+    },
+    {
+      "componentOrMechanism": "field public host attributes",
+      "scenarioAndExpectedResult": "'TagInput' preserves layout style, a unique public id and data hooks",
+      "method": "react-test-renderer dedicated test",
+      "test": "packages/ui/tests/ControlsContracts.test.tsx",
+      "baseline": "failed before correction",
+      "baselineEvidence": "controls-public-props-red.json",
+      "actualResult": "passed",
+      "correction": "Implementation correction; see fixes and the component diff",
+      "recheck": "controls-final-green.json"
+    },
+    {
+      "componentOrMechanism": "field public host attributes",
+      "scenarioAndExpectedResult": "'PeoplePicker' preserves layout style, a unique public id and data hooks",
+      "method": "react-test-renderer dedicated test",
+      "test": "packages/ui/tests/ControlsContracts.test.tsx",
+      "baseline": "failed before correction",
+      "baselineEvidence": "controls-public-props-red.json",
+      "actualResult": "passed",
+      "correction": "Implementation correction; see fixes and the component diff",
+      "recheck": "controls-final-green.json"
+    },
+    {
+      "componentOrMechanism": "field public host attributes",
+      "scenarioAndExpectedResult": "'Select' applies an explicit accessible label to the actual control",
+      "method": "react-test-renderer dedicated test",
+      "test": "packages/ui/tests/ControlsContracts.test.tsx",
+      "baseline": "failed before correction",
+      "baselineEvidence": "controls-public-props-red.json",
+      "actualResult": "passed",
+      "correction": "Implementation correction; see fixes and the component diff",
+      "recheck": "controls-final-green.json"
+    },
+    {
+      "componentOrMechanism": "field public host attributes",
+      "scenarioAndExpectedResult": "'TextField' applies an explicit accessible label to the actual control",
+      "method": "react-test-renderer dedicated test",
+      "test": "packages/ui/tests/ControlsContracts.test.tsx",
+      "baseline": "failed before correction",
+      "baselineEvidence": "controls-public-props-red.json",
+      "actualResult": "passed",
+      "correction": "Implementation correction; see fixes and the component diff",
+      "recheck": "controls-final-green.json"
+    },
+    {
+      "componentOrMechanism": "field public host attributes",
+      "scenarioAndExpectedResult": "'TextArea' applies an explicit accessible label to the actual control",
+      "method": "react-test-renderer dedicated test",
+      "test": "packages/ui/tests/ControlsContracts.test.tsx",
+      "baseline": "failed before correction",
+      "baselineEvidence": "controls-public-props-red.json",
+      "actualResult": "passed",
+      "correction": "Implementation correction; see fixes and the component diff",
+      "recheck": "controls-final-green.json"
+    },
+    {
+      "componentOrMechanism": "field public host attributes",
+      "scenarioAndExpectedResult": "'Autocomplete' applies an explicit accessible label to the actual control",
+      "method": "react-test-renderer dedicated test",
+      "test": "packages/ui/tests/ControlsContracts.test.tsx",
+      "baseline": "failed before correction",
+      "baselineEvidence": "controls-public-props-red.json",
+      "actualResult": "passed",
+      "correction": "Implementation correction; see fixes and the component diff",
+      "recheck": "controls-final-green.json"
+    },
+    {
+      "componentOrMechanism": "field public host attributes",
+      "scenarioAndExpectedResult": "'NumberField' applies an explicit accessible label to the actual control",
+      "method": "react-test-renderer dedicated test",
+      "test": "packages/ui/tests/ControlsContracts.test.tsx",
+      "baseline": "failed before correction",
+      "baselineEvidence": "controls-public-props-red.json",
+      "actualResult": "passed",
+      "correction": "Implementation correction; see fixes and the component diff",
+      "recheck": "controls-final-green.json"
+    },
+    {
+      "componentOrMechanism": "field public host attributes",
+      "scenarioAndExpectedResult": "'Slider' applies an explicit accessible label to the actual control",
+      "method": "react-test-renderer dedicated test",
+      "test": "packages/ui/tests/ControlsContracts.test.tsx",
+      "baseline": "failed before correction",
+      "baselineEvidence": "controls-public-props-red.json",
+      "actualResult": "passed",
+      "correction": "Implementation correction; see fixes and the component diff",
+      "recheck": "controls-final-green.json"
+    },
+    {
+      "componentOrMechanism": "field public host attributes",
+      "scenarioAndExpectedResult": "'DatePicker' applies an explicit accessible label to the actual control",
+      "method": "react-test-renderer dedicated test",
+      "test": "packages/ui/tests/ControlsContracts.test.tsx",
+      "baseline": "failed before correction",
+      "baselineEvidence": "controls-public-props-red.json",
+      "actualResult": "passed",
+      "correction": "Implementation correction; see fixes and the component diff",
+      "recheck": "controls-final-green.json"
+    },
+    {
+      "componentOrMechanism": "field public host attributes",
+      "scenarioAndExpectedResult": "'ColorPicker' applies an explicit accessible label to the actual control",
+      "method": "react-test-renderer dedicated test",
+      "test": "packages/ui/tests/ControlsContracts.test.tsx",
+      "baseline": "failed before correction",
+      "baselineEvidence": "controls-public-props-red.json",
+      "actualResult": "passed",
+      "correction": "Implementation correction; see fixes and the component diff",
+      "recheck": "controls-final-green.json"
+    },
+    {
+      "componentOrMechanism": "field public host attributes",
+      "scenarioAndExpectedResult": "'TagInput' applies an explicit accessible label to the actual control",
+      "method": "react-test-renderer dedicated test",
+      "test": "packages/ui/tests/ControlsContracts.test.tsx",
+      "baseline": "failed before correction",
+      "baselineEvidence": "controls-public-props-red.json",
+      "actualResult": "passed",
+      "correction": "Implementation correction; see fixes and the component diff",
+      "recheck": "controls-final-green.json"
+    },
+    {
+      "componentOrMechanism": "field public host attributes",
+      "scenarioAndExpectedResult": "'PeoplePicker' applies an explicit accessible label to the actual control",
+      "method": "react-test-renderer dedicated test",
+      "test": "packages/ui/tests/ControlsContracts.test.tsx",
+      "baseline": "failed before correction",
+      "baselineEvidence": "controls-public-props-red.json",
+      "actualResult": "passed",
+      "correction": "Implementation correction; see fixes and the component diff",
+      "recheck": "controls-final-green.json"
+    },
+    {
+      "componentOrMechanism": "field public host attributes",
+      "scenarioAndExpectedResult": "'Select' honors external label and description references",
+      "method": "react-test-renderer dedicated test",
+      "test": "packages/ui/tests/ControlsContracts.test.tsx",
+      "baseline": "failed before correction",
+      "baselineEvidence": "controls-public-props-red.json",
+      "actualResult": "passed",
+      "correction": "Implementation correction; see fixes and the component diff",
+      "recheck": "controls-final-green.json"
+    },
+    {
+      "componentOrMechanism": "field public host attributes",
+      "scenarioAndExpectedResult": "'TextField' honors external label and description references",
+      "method": "react-test-renderer dedicated test",
+      "test": "packages/ui/tests/ControlsContracts.test.tsx",
+      "baseline": "passed verification of existing behavior",
+      "baselineEvidence": "controls-final-green.json",
+      "actualResult": "passed",
+      "correction": "No correction required for this check",
+      "recheck": "controls-final-green.json"
+    },
+    {
+      "componentOrMechanism": "field public host attributes",
+      "scenarioAndExpectedResult": "'TextArea' honors external label and description references",
+      "method": "react-test-renderer dedicated test",
+      "test": "packages/ui/tests/ControlsContracts.test.tsx",
+      "baseline": "passed verification of existing behavior",
+      "baselineEvidence": "controls-final-green.json",
+      "actualResult": "passed",
+      "correction": "No correction required for this check",
+      "recheck": "controls-final-green.json"
+    },
+    {
+      "componentOrMechanism": "field public host attributes",
+      "scenarioAndExpectedResult": "'Autocomplete' honors external label and description references",
+      "method": "react-test-renderer dedicated test",
+      "test": "packages/ui/tests/ControlsContracts.test.tsx",
+      "baseline": "passed verification of existing behavior",
+      "baselineEvidence": "controls-final-green.json",
+      "actualResult": "passed",
+      "correction": "No correction required for this check",
+      "recheck": "controls-final-green.json"
+    },
+    {
+      "componentOrMechanism": "field public host attributes",
+      "scenarioAndExpectedResult": "'NumberField' honors external label and description references",
+      "method": "react-test-renderer dedicated test",
+      "test": "packages/ui/tests/ControlsContracts.test.tsx",
+      "baseline": "passed verification of existing behavior",
+      "baselineEvidence": "controls-final-green.json",
+      "actualResult": "passed",
+      "correction": "No correction required for this check",
+      "recheck": "controls-final-green.json"
+    },
+    {
+      "componentOrMechanism": "field public host attributes",
+      "scenarioAndExpectedResult": "'Slider' honors external label and description references",
+      "method": "react-test-renderer dedicated test",
+      "test": "packages/ui/tests/ControlsContracts.test.tsx",
+      "baseline": "passed verification of existing behavior",
+      "baselineEvidence": "controls-final-green.json",
+      "actualResult": "passed",
+      "correction": "No correction required for this check",
+      "recheck": "controls-final-green.json"
+    },
+    {
+      "componentOrMechanism": "field public host attributes",
+      "scenarioAndExpectedResult": "'DatePicker' honors external label and description references",
+      "method": "react-test-renderer dedicated test",
+      "test": "packages/ui/tests/ControlsContracts.test.tsx",
+      "baseline": "failed before correction",
+      "baselineEvidence": "controls-public-props-red.json",
+      "actualResult": "passed",
+      "correction": "Implementation correction; see fixes and the component diff",
+      "recheck": "controls-final-green.json"
+    },
+    {
+      "componentOrMechanism": "field public host attributes",
+      "scenarioAndExpectedResult": "'ColorPicker' honors external label and description references",
+      "method": "react-test-renderer dedicated test",
+      "test": "packages/ui/tests/ControlsContracts.test.tsx",
+      "baseline": "failed before correction",
+      "baselineEvidence": "controls-public-props-red.json",
+      "actualResult": "passed",
+      "correction": "Implementation correction; see fixes and the component diff",
+      "recheck": "controls-final-green.json"
+    },
+    {
+      "componentOrMechanism": "field public host attributes",
+      "scenarioAndExpectedResult": "'TagInput' honors external label and description references",
+      "method": "react-test-renderer dedicated test",
+      "test": "packages/ui/tests/ControlsContracts.test.tsx",
+      "baseline": "failed before correction",
+      "baselineEvidence": "controls-public-props-red.json",
+      "actualResult": "passed",
+      "correction": "Implementation correction; see fixes and the component diff",
+      "recheck": "controls-final-green.json"
+    },
+    {
+      "componentOrMechanism": "field public host attributes",
+      "scenarioAndExpectedResult": "'PeoplePicker' honors external label and description references",
+      "method": "react-test-renderer dedicated test",
+      "test": "packages/ui/tests/ControlsContracts.test.tsx",
+      "baseline": "failed before correction",
+      "baselineEvidence": "controls-public-props-red.json",
+      "actualResult": "passed",
+      "correction": "Implementation correction; see fixes and the component diff",
+      "recheck": "controls-final-green.json"
+    },
+    {
+      "componentOrMechanism": "autocomplete interaction contract",
+      "scenarioAndExpectedResult": "reopens all choices when the selected value differs from its label",
+      "method": "react-test-renderer dedicated test",
+      "test": "packages/ui/tests/ControlsContracts.test.tsx",
+      "baseline": "failed before correction",
+      "baselineEvidence": "controls-final-sweep-red.json",
+      "actualResult": "passed",
+      "correction": "Implementation correction; see fixes and the component diff",
+      "recheck": "controls-final-green.json"
+    },
+    {
+      "componentOrMechanism": "autocomplete interaction contract",
+      "scenarioAndExpectedResult": "gives each open list a unique id and announces the active option",
+      "method": "react-test-renderer dedicated test",
+      "test": "packages/ui/tests/ControlsContracts.test.tsx",
+      "baseline": "failed before correction",
+      "baselineEvidence": "controls-red.json",
+      "actualResult": "passed",
+      "correction": "Implementation correction; see fixes and the component diff",
+      "recheck": "controls-final-green.json"
+    },
+    {
+      "componentOrMechanism": "autocomplete interaction contract",
+      "scenarioAndExpectedResult": "preserves native focus/key handlers and respects preventDefault",
+      "method": "react-test-renderer dedicated test",
+      "test": "packages/ui/tests/ControlsContracts.test.tsx",
+      "baseline": "failed before correction",
+      "baselineEvidence": "controls-red.json",
+      "actualResult": "passed",
+      "correction": "Implementation correction; see fixes and the component diff",
+      "recheck": "controls-final-green.json"
+    },
+    {
+      "componentOrMechanism": "autocomplete interaction contract",
+      "scenarioAndExpectedResult": "closes an open list when disabled changes",
+      "method": "react-test-renderer dedicated test",
+      "test": "packages/ui/tests/ControlsContracts.test.tsx",
+      "baseline": "failed before correction",
+      "baselineEvidence": "controls-red.json",
+      "actualResult": "passed",
+      "correction": "Implementation correction; see fixes and the component diff",
+      "recheck": "controls-final-green.json"
+    },
+    {
+      "componentOrMechanism": "autocomplete interaction contract",
+      "scenarioAndExpectedResult": "closes an open list when readOnly changes",
+      "method": "react-test-renderer dedicated test",
+      "test": "packages/ui/tests/ControlsContracts.test.tsx",
+      "baseline": "failed before correction",
+      "baselineEvidence": "controls-red.json",
+      "actualResult": "passed",
+      "correction": "Implementation correction; see fixes and the component diff",
+      "recheck": "controls-final-green.json"
+    },
+    {
+      "componentOrMechanism": "autocomplete interaction contract",
+      "scenarioAndExpectedResult": "does not select a suggestion with Enter during IME composition",
+      "method": "react-test-renderer dedicated test",
+      "test": "packages/ui/tests/ControlsContracts.test.tsx",
+      "baseline": "failed before correction",
+      "baselineEvidence": "controls-red.json",
+      "actualResult": "passed",
+      "correction": "Implementation correction; see fixes and the component diff",
+      "recheck": "controls-final-green.json"
+    },
+    {
+      "componentOrMechanism": "autocomplete interaction contract",
+      "scenarioAndExpectedResult": "keeps popup options out of the tab order and closes on Tab",
+      "method": "react-test-renderer dedicated test",
+      "test": "packages/ui/tests/ControlsContracts.test.tsx",
+      "baseline": "failed before correction",
+      "baselineEvidence": "controls-red.json",
+      "actualResult": "passed",
+      "correction": "Implementation correction; see fixes and the component diff",
+      "recheck": "controls-final-green.json"
+    },
+    {
+      "componentOrMechanism": "autocomplete interaction contract",
+      "scenarioAndExpectedResult": "recovers the active option when an externally supplied list shrinks",
+      "method": "react-test-renderer dedicated test",
+      "test": "packages/ui/tests/ControlsContracts.test.tsx",
+      "baseline": "failed before correction",
+      "baselineEvidence": "controls-red.json",
+      "actualResult": "passed",
+      "correction": "Implementation correction; see fixes and the component diff",
+      "recheck": "controls-final-green.json"
+    },
+    {
+      "componentOrMechanism": "field semantics and native contracts",
+      "scenarioAndExpectedResult": "includes ColorPicker's visible color value in its accessible name",
+      "method": "react-test-renderer dedicated test",
+      "test": "packages/ui/tests/ControlsContracts.test.tsx",
+      "baseline": "failed before correction",
+      "baselineEvidence": "controls-accessible-names-red.json",
+      "actualResult": "passed",
+      "correction": "Implementation correction; see fixes and the component diff",
+      "recheck": "controls-final-green.json"
+    },
+    {
+      "componentOrMechanism": "field semantics and native contracts",
+      "scenarioAndExpectedResult": "includes the visible avatar owner in the file chooser name",
+      "method": "react-test-renderer dedicated test",
+      "test": "packages/ui/tests/ControlsContracts.test.tsx",
+      "baseline": "failed before correction",
+      "baselineEvidence": "controls-accessible-names-red.json",
+      "actualResult": "passed",
+      "correction": "Implementation correction; see fixes and the component diff",
+      "recheck": "controls-final-green.json"
+    },
+    {
+      "componentOrMechanism": "field semantics and native contracts",
+      "scenarioAndExpectedResult": "preserves the public inline style on 'TextField'",
+      "method": "react-test-renderer dedicated test",
+      "test": "packages/ui/tests/ControlsContracts.test.tsx",
+      "baseline": "failed before correction",
+      "baselineEvidence": "controls-red.json",
+      "actualResult": "passed",
+      "correction": "Implementation correction; see fixes and the component diff",
+      "recheck": "controls-final-green.json"
+    },
+    {
+      "componentOrMechanism": "field semantics and native contracts",
+      "scenarioAndExpectedResult": "preserves the public inline style on 'TextArea'",
+      "method": "react-test-renderer dedicated test",
+      "test": "packages/ui/tests/ControlsContracts.test.tsx",
+      "baseline": "failed before correction",
+      "baselineEvidence": "controls-red.json",
+      "actualResult": "passed",
+      "correction": "Implementation correction; see fixes and the component diff",
+      "recheck": "controls-final-green.json"
+    },
+    {
+      "componentOrMechanism": "field semantics and native contracts",
+      "scenarioAndExpectedResult": "preserves the public inline style on 'Autocomplete'",
+      "method": "react-test-renderer dedicated test",
+      "test": "packages/ui/tests/ControlsContracts.test.tsx",
+      "baseline": "failed before correction",
+      "baselineEvidence": "controls-red.json",
+      "actualResult": "passed",
+      "correction": "Implementation correction; see fixes and the component diff",
+      "recheck": "controls-final-green.json"
+    },
+    {
+      "componentOrMechanism": "field semantics and native contracts",
+      "scenarioAndExpectedResult": "exposes the error state to assistive technology on 'TextArea'",
+      "method": "react-test-renderer dedicated test",
+      "test": "packages/ui/tests/ControlsContracts.test.tsx",
+      "baseline": "failed before correction",
+      "baselineEvidence": "controls-red.json",
+      "actualResult": "passed",
+      "correction": "Implementation correction; see fixes and the component diff",
+      "recheck": "controls-final-green.json"
+    },
+    {
+      "componentOrMechanism": "field semantics and native contracts",
+      "scenarioAndExpectedResult": "exposes the error state to assistive technology on 'Autocomplete'",
+      "method": "react-test-renderer dedicated test",
+      "test": "packages/ui/tests/ControlsContracts.test.tsx",
+      "baseline": "failed before correction",
+      "baselineEvidence": "controls-red.json",
+      "actualResult": "passed",
+      "correction": "Implementation correction; see fixes and the component diff",
+      "recheck": "controls-final-green.json"
+    },
+    {
+      "componentOrMechanism": "field semantics and native contracts",
+      "scenarioAndExpectedResult": "exposes the error state to assistive technology on undefined",
+      "method": "react-test-renderer dedicated test",
+      "test": "packages/ui/tests/ControlsContracts.test.tsx",
+      "baseline": "passed verification of existing behavior",
+      "baselineEvidence": "controls-final-green.json",
+      "actualResult": "passed",
+      "correction": "No correction required for this check",
+      "recheck": "controls-final-green.json"
+    },
+    {
+      "componentOrMechanism": "field semantics and native contracts",
+      "scenarioAndExpectedResult": "exposes the error state to assistive technology on 'DatePicker'",
+      "method": "react-test-renderer dedicated test",
+      "test": "packages/ui/tests/ControlsContracts.test.tsx",
+      "baseline": "failed before correction",
+      "baselineEvidence": "controls-red.json",
+      "actualResult": "passed",
+      "correction": "Implementation correction; see fixes and the component diff",
+      "recheck": "controls-final-green.json"
+    },
+    {
+      "componentOrMechanism": "field semantics and native contracts",
+      "scenarioAndExpectedResult": "puts an explicitly supplied accessible name on the actual control 'Checkbox'",
+      "method": "react-test-renderer dedicated test",
+      "test": "packages/ui/tests/ControlsContracts.test.tsx",
+      "baseline": "failed before correction",
+      "baselineEvidence": "controls-red.json",
+      "actualResult": "passed",
+      "correction": "Implementation correction; see fixes and the component diff",
+      "recheck": "controls-final-green.json"
+    },
+    {
+      "componentOrMechanism": "field semantics and native contracts",
+      "scenarioAndExpectedResult": "puts an explicitly supplied accessible name on the actual control 'Switch'",
+      "method": "react-test-renderer dedicated test",
+      "test": "packages/ui/tests/ControlsContracts.test.tsx",
+      "baseline": "failed before correction",
+      "baselineEvidence": "controls-red.json",
+      "actualResult": "passed",
+      "correction": "Implementation correction; see fixes and the component diff",
+      "recheck": "controls-final-green.json"
+    },
+    {
+      "componentOrMechanism": "field semantics and native contracts",
+      "scenarioAndExpectedResult": "prevents further input at the maximum in 'TagInput'",
+      "method": "react-test-renderer dedicated test",
+      "test": "packages/ui/tests/ControlsContracts.test.tsx",
+      "baseline": "failed before correction",
+      "baselineEvidence": "controls-red.json",
+      "actualResult": "passed",
+      "correction": "Implementation correction; see fixes and the component diff",
+      "recheck": "controls-final-green.json"
+    },
+    {
+      "componentOrMechanism": "field semantics and native contracts",
+      "scenarioAndExpectedResult": "prevents further input at the maximum in 'PeoplePicker'",
+      "method": "react-test-renderer dedicated test",
+      "test": "packages/ui/tests/ControlsContracts.test.tsx",
+      "baseline": "failed before correction",
+      "baselineEvidence": "controls-red.json",
+      "actualResult": "passed",
+      "correction": "Implementation correction; see fixes and the component diff",
+      "recheck": "controls-final-green.json"
+    },
+    {
+      "componentOrMechanism": "field semantics and native contracts",
+      "scenarioAndExpectedResult": "does not commit a tag during IME composition",
+      "method": "react-test-renderer dedicated test",
+      "test": "packages/ui/tests/ControlsContracts.test.tsx",
+      "baseline": "failed before correction",
+      "baselineEvidence": "controls-red.json",
+      "actualResult": "passed",
+      "correction": "Implementation correction; see fixes and the component diff",
+      "recheck": "controls-final-green.json"
+    },
+    {
+      "componentOrMechanism": "field semantics and native contracts",
+      "scenarioAndExpectedResult": "honours multiple=false for dropped files just as for the native picker",
+      "method": "react-test-renderer dedicated test",
+      "test": "packages/ui/tests/ControlsContracts.test.tsx",
+      "baseline": "failed before correction",
+      "baselineEvidence": "controls-red.json",
+      "actualResult": "passed",
+      "correction": "Implementation correction; see fixes and the component diff",
+      "recheck": "controls-final-green.json"
+    },
+    {
+      "componentOrMechanism": "field semantics and native contracts",
+      "scenarioAndExpectedResult": "makes every inline color input inert when disabled",
+      "method": "react-test-renderer dedicated test",
+      "test": "packages/ui/tests/ControlsContracts.test.tsx",
+      "baseline": "failed before correction",
+      "baselineEvidence": "controls-red.json",
+      "actualResult": "passed",
+      "correction": "Implementation correction; see fixes and the component diff",
+      "recheck": "controls-final-green.json"
+    },
+    {
+      "componentOrMechanism": "field semantics and native contracts",
+      "scenarioAndExpectedResult": "selects the first enabled option by default",
+      "method": "react-test-renderer dedicated test",
+      "test": "packages/ui/tests/ControlsContracts.test.tsx",
+      "baseline": "failed before correction",
+      "baselineEvidence": "controls-red.json",
+      "actualResult": "passed",
+      "correction": "Implementation correction; see fixes and the component diff",
+      "recheck": "controls-final-green.json"
+    },
+    {
+      "componentOrMechanism": "field semantics and native contracts",
+      "scenarioAndExpectedResult": "does not submit a disabled select's hidden value",
+      "method": "react-test-renderer dedicated test",
+      "test": "packages/ui/tests/ControlsContracts.test.tsx",
+      "baseline": "failed before correction",
+      "baselineEvidence": "controls-red.json",
+      "actualResult": "passed",
+      "correction": "Implementation correction; see fixes and the component diff",
+      "recheck": "controls-final-green.json"
+    },
+    {
+      "componentOrMechanism": "field semantics and native contracts",
+      "scenarioAndExpectedResult": "puts required validation on the visible date input",
+      "method": "react-test-renderer dedicated test",
+      "test": "packages/ui/tests/ControlsContracts.test.tsx",
+      "baseline": "failed before correction",
+      "baselineEvidence": "controls-red.json",
+      "actualResult": "passed",
+      "correction": "Implementation correction; see fixes and the component diff",
+      "recheck": "controls-final-green.json"
+    },
+    {
+      "componentOrMechanism": "form error paths and invalid submission",
+      "scenarioAndExpectedResult": "reads flat dotted-path errors produced by the public FormErrors contract",
+      "method": "react-test-renderer dedicated test",
+      "test": "packages/ui/tests/ControlsContracts.test.tsx",
+      "baseline": "failed before correction",
+      "baselineEvidence": "controls-red.json",
+      "actualResult": "passed",
+      "correction": "Implementation correction; see fixes and the component diff",
+      "recheck": "controls-final-green.json"
+    },
+    {
+      "componentOrMechanism": "form error paths and invalid submission",
+      "scenarioAndExpectedResult": "reveals invalid fields after submit without requiring a prior blur",
+      "method": "react-test-renderer dedicated test",
+      "test": "packages/ui/tests/ControlsContracts.test.tsx",
+      "baseline": "failed before correction",
+      "baselineEvidence": "controls-red.json",
+      "actualResult": "passed",
+      "correction": "Implementation correction; see fixes and the component diff",
+      "recheck": "controls-final-green.json"
+    },
+    {
+      "componentOrMechanism": "dynamic control state and field associations",
+      "scenarioAndExpectedResult": "announces a numeric saturation and textual brightness for ColorPicker's color plane",
+      "method": "react-test-renderer dedicated test",
+      "test": "packages/ui/tests/ControlsContracts.test.tsx",
+      "baseline": "failed before correction",
+      "baselineEvidence": "controls-final-sweep-red.json",
+      "actualResult": "passed",
+      "correction": "Implementation correction; see fixes and the component diff",
+      "recheck": "controls-final-green.json"
+    },
+    {
+      "componentOrMechanism": "dynamic control state and field associations",
+      "scenarioAndExpectedResult": "exposes calendar buttons as a labelled group instead of an incomplete ARIA grid",
+      "method": "react-test-renderer dedicated test",
+      "test": "packages/ui/tests/ControlsContracts.test.tsx",
+      "baseline": "failed before correction",
+      "baselineEvidence": "controls-final-sweep-red.json",
+      "actualResult": "passed",
+      "correction": "Implementation correction; see fixes and the component diff",
+      "recheck": "controls-final-green.json"
+    },
+    {
+      "componentOrMechanism": "dynamic control state and field associations",
+      "scenarioAndExpectedResult": "gives theme choices radio semantics and one tab stop (undefined)",
+      "method": "react-test-renderer dedicated test",
+      "test": "packages/ui/tests/ControlsContracts.test.tsx",
+      "baseline": "failed before correction",
+      "baselineEvidence": "controls-third-red.json",
+      "actualResult": "passed",
+      "correction": "Implementation correction; see fixes and the component diff",
+      "recheck": "controls-final-green.json"
+    },
+    {
+      "componentOrMechanism": "dynamic control state and field associations",
+      "scenarioAndExpectedResult": "gives theme choices radio semantics and one tab stop ({ value: 'ruby', label: 'Ruby' })",
+      "method": "react-test-renderer dedicated test",
+      "test": "packages/ui/tests/ControlsContracts.test.tsx",
+      "baseline": "failed before correction",
+      "baselineEvidence": "controls-third-red.json",
+      "actualResult": "passed",
+      "correction": "Implementation correction; see fixes and the component diff",
+      "recheck": "controls-final-green.json"
+    },
+    {
+      "componentOrMechanism": "dynamic control state and field associations",
+      "scenarioAndExpectedResult": "includes a native validation control when Select is required",
+      "method": "react-test-renderer dedicated test",
+      "test": "packages/ui/tests/ControlsContracts.test.tsx",
+      "baseline": "failed before correction",
+      "baselineEvidence": "controls-third-red.json",
+      "actualResult": "passed",
+      "correction": "Implementation correction; see fixes and the component diff",
+      "recheck": "controls-final-green.json"
+    },
+    {
+      "componentOrMechanism": "dynamic control state and field associations",
+      "scenarioAndExpectedResult": "associates 'TextField''s label with its control when an adornment button precedes it",
+      "method": "react-test-renderer dedicated test",
+      "test": "packages/ui/tests/ControlsContracts.test.tsx",
+      "baseline": "failed before correction",
+      "baselineEvidence": "controls-second-red.json",
+      "actualResult": "passed",
+      "correction": "Implementation correction; see fixes and the component diff",
+      "recheck": "controls-final-green.json"
+    },
+    {
+      "componentOrMechanism": "dynamic control state and field associations",
+      "scenarioAndExpectedResult": "associates 'TextArea''s label with its control when an adornment button precedes it",
+      "method": "react-test-renderer dedicated test",
+      "test": "packages/ui/tests/ControlsContracts.test.tsx",
+      "baseline": "failed before correction",
+      "baselineEvidence": "controls-second-red.json",
+      "actualResult": "passed",
+      "correction": "Implementation correction; see fixes and the component diff",
+      "recheck": "controls-final-green.json"
+    },
+    {
+      "componentOrMechanism": "dynamic control state and field associations",
+      "scenarioAndExpectedResult": "associates 'Autocomplete''s label with its control when an adornment button precedes it",
+      "method": "react-test-renderer dedicated test",
+      "test": "packages/ui/tests/ControlsContracts.test.tsx",
+      "baseline": "failed before correction",
+      "baselineEvidence": "controls-second-red.json",
+      "actualResult": "passed",
+      "correction": "Implementation correction; see fixes and the component diff",
+      "recheck": "controls-final-green.json"
+    },
+    {
+      "componentOrMechanism": "dynamic control state and field associations",
+      "scenarioAndExpectedResult": "does not offer actionable tag suggestions after becoming disabled",
+      "method": "react-test-renderer dedicated test",
+      "test": "packages/ui/tests/ControlsContracts.test.tsx",
+      "baseline": "failed before correction",
+      "baselineEvidence": "controls-second-red.json",
+      "actualResult": "passed",
+      "correction": "Implementation correction; see fixes and the component diff",
+      "recheck": "controls-final-green.json"
+    },
+    {
+      "componentOrMechanism": "dynamic control state and field associations",
+      "scenarioAndExpectedResult": "announces PeoplePicker's active option and closes the popup on Tab",
+      "method": "react-test-renderer dedicated test",
+      "test": "packages/ui/tests/ControlsContracts.test.tsx",
+      "baseline": "failed before correction",
+      "baselineEvidence": "controls-second-red.json",
+      "actualResult": "passed",
+      "correction": "Implementation correction; see fixes and the component diff",
+      "recheck": "controls-final-green.json"
+    },
+    {
+      "componentOrMechanism": "dynamic control state and field associations",
+      "scenarioAndExpectedResult": "does not choose a person during IME composition",
+      "method": "react-test-renderer dedicated test",
+      "test": "packages/ui/tests/ControlsContracts.test.tsx",
+      "baseline": "failed before correction",
+      "baselineEvidence": "controls-second-red.json",
+      "actualResult": "passed",
+      "correction": "Implementation correction; see fixes and the component diff",
+      "recheck": "controls-final-green.json"
+    },
+    {
+      "componentOrMechanism": "dynamic control state and field associations",
+      "scenarioAndExpectedResult": "closes 'Select' when it becomes disabled",
+      "method": "react-test-renderer dedicated test",
+      "test": "packages/ui/tests/ControlsContracts.test.tsx",
+      "baseline": "failed before correction",
+      "baselineEvidence": "controls-second-red.json",
+      "actualResult": "passed",
+      "correction": "Implementation correction; see fixes and the component diff",
+      "recheck": "controls-final-green.json"
+    },
+    {
+      "componentOrMechanism": "dynamic control state and field associations",
+      "scenarioAndExpectedResult": "closes 'DatePicker' when it becomes disabled",
+      "method": "react-test-renderer dedicated test",
+      "test": "packages/ui/tests/ControlsContracts.test.tsx",
+      "baseline": "failed before correction",
+      "baselineEvidence": "controls-second-red.json",
+      "actualResult": "passed",
+      "correction": "Implementation correction; see fixes and the component diff",
+      "recheck": "controls-final-green.json"
+    },
+    {
+      "componentOrMechanism": "dynamic control state and field associations",
+      "scenarioAndExpectedResult": "closes 'ColorPicker' when it becomes disabled",
+      "method": "react-test-renderer dedicated test",
+      "test": "packages/ui/tests/ControlsContracts.test.tsx",
+      "baseline": "failed before correction",
+      "baselineEvidence": "controls-second-red.json",
+      "actualResult": "passed",
+      "correction": "Implementation correction; see fixes and the component diff",
+      "recheck": "controls-final-green.json"
+    },
+    {
+      "componentOrMechanism": "dynamic control state and field associations",
+      "scenarioAndExpectedResult": "closes 'PeoplePicker' when it becomes disabled",
+      "method": "react-test-renderer dedicated test",
+      "test": "packages/ui/tests/ControlsContracts.test.tsx",
+      "baseline": "failed before correction",
+      "baselineEvidence": "controls-second-red.json",
+      "actualResult": "passed",
+      "correction": "Implementation correction; see fixes and the component diff",
+      "recheck": "controls-final-green.json"
+    },
+    {
+      "componentOrMechanism": "dynamic control state and field associations",
+      "scenarioAndExpectedResult": "updates Select's built-in options when its provider language changes",
+      "method": "react-test-renderer dedicated test",
+      "test": "packages/ui/tests/ControlsContracts.test.tsx",
+      "baseline": "failed before correction",
+      "baselineEvidence": "controls-second-red.json",
+      "actualResult": "passed",
+      "correction": "Implementation correction; see fixes and the component diff",
+      "recheck": "controls-final-green.json"
+    },
+    {
+      "componentOrMechanism": "dynamic control state and field associations",
+      "scenarioAndExpectedResult": "allows DatePicker to switch from an explicit to an inherited locale without changing hook order",
+      "method": "react-test-renderer dedicated test",
+      "test": "packages/ui/tests/ControlsContracts.test.tsx",
+      "baseline": "failed before correction",
+      "baselineEvidence": "controls-second-red.json",
+      "actualResult": "passed",
+      "correction": "Implementation correction; see fixes and the component diff",
+      "recheck": "controls-final-green.json"
+    },
+    {
+      "componentOrMechanism": "dynamic control state and field associations",
+      "scenarioAndExpectedResult": "keeps NumberField step=any finite when using its step buttons",
+      "method": "react-test-renderer dedicated test",
+      "test": "packages/ui/tests/ControlsContracts.test.tsx",
+      "baseline": "failed before correction",
+      "baselineEvidence": "controls-second-red.json",
+      "actualResult": "passed",
+      "correction": "Implementation correction; see fixes and the component diff",
+      "recheck": "controls-final-green.json"
+    },
+    {
+      "componentOrMechanism": "controls family verification",
+      "scenarioAndExpectedResult": "keeps controlled and uncontrolled 'TextField' values in sync",
+      "method": "react-test-renderer dedicated test",
+      "test": "packages/ui/tests/ControlsContracts.test.tsx",
+      "baseline": "passed verification of existing behavior",
+      "baselineEvidence": "controls-final-green.json",
+      "actualResult": "passed",
+      "correction": "No correction required for this check",
+      "recheck": "controls-final-green.json"
+    },
+    {
+      "componentOrMechanism": "controls family verification",
+      "scenarioAndExpectedResult": "keeps controlled and uncontrolled 'TextArea' values in sync",
+      "method": "react-test-renderer dedicated test",
+      "test": "packages/ui/tests/ControlsContracts.test.tsx",
+      "baseline": "passed verification of existing behavior",
+      "baselineEvidence": "controls-final-green.json",
+      "actualResult": "passed",
+      "correction": "No correction required for this check",
+      "recheck": "controls-final-green.json"
+    },
+    {
+      "componentOrMechanism": "controls family verification",
+      "scenarioAndExpectedResult": "keeps controlled and uncontrolled 'Autocomplete' values in sync",
+      "method": "react-test-renderer dedicated test",
+      "test": "packages/ui/tests/ControlsContracts.test.tsx",
+      "baseline": "passed verification of existing behavior",
+      "baselineEvidence": "controls-final-green.json",
+      "actualResult": "passed",
+      "correction": "No correction required for this check",
+      "recheck": "controls-final-green.json"
+    },
+    {
+      "componentOrMechanism": "controls family verification",
+      "scenarioAndExpectedResult": "keeps 'Checkbox' checked state controlled and reports one request",
+      "method": "react-test-renderer dedicated test",
+      "test": "packages/ui/tests/ControlsContracts.test.tsx",
+      "baseline": "passed verification of existing behavior",
+      "baselineEvidence": "controls-final-green.json",
+      "actualResult": "passed",
+      "correction": "No correction required for this check",
+      "recheck": "controls-final-green.json"
+    },
+    {
+      "componentOrMechanism": "controls family verification",
+      "scenarioAndExpectedResult": "keeps 'Switch' checked state controlled and reports one request",
+      "method": "react-test-renderer dedicated test",
+      "test": "packages/ui/tests/ControlsContracts.test.tsx",
+      "baseline": "passed verification of existing behavior",
+      "baselineEvidence": "controls-final-green.json",
+      "actualResult": "passed",
+      "correction": "No correction required for this check",
+      "recheck": "controls-final-green.json"
+    },
+    {
+      "componentOrMechanism": "controls family verification",
+      "scenarioAndExpectedResult": "lets a prevented ToggleButton click cancel its state change",
+      "method": "react-test-renderer dedicated test",
+      "test": "packages/ui/tests/ControlsContracts.test.tsx",
+      "baseline": "passed verification of existing behavior",
+      "baselineEvidence": "controls-final-green.json",
+      "actualResult": "passed",
+      "correction": "No correction required for this check",
+      "recheck": "controls-final-green.json"
+    },
+    {
+      "componentOrMechanism": "controls family verification",
+      "scenarioAndExpectedResult": "keeps loading Button disabled and announced busy",
+      "method": "react-test-renderer dedicated test",
+      "test": "packages/ui/tests/ControlsContracts.test.tsx",
+      "baseline": "passed verification of existing behavior",
+      "baselineEvidence": "controls-final-green.json",
+      "actualResult": "passed",
+      "correction": "No correction required for this check",
+      "recheck": "controls-final-green.json"
+    },
+    {
+      "componentOrMechanism": "controls family verification",
+      "scenarioAndExpectedResult": "clamps Slider's painted and native value to the same range",
+      "method": "react-test-renderer dedicated test",
+      "test": "packages/ui/tests/ControlsContracts.test.tsx",
+      "baseline": "passed verification of existing behavior",
+      "baselineEvidence": "controls-final-green.json",
+      "actualResult": "passed",
+      "correction": "No correction required for this check",
+      "recheck": "controls-final-green.json"
+    },
+    {
+      "componentOrMechanism": "controls family verification",
+      "scenarioAndExpectedResult": "keeps chip selection and removal separate",
+      "method": "react-test-renderer dedicated test",
+      "test": "packages/ui/tests/ControlsContracts.test.tsx",
+      "baseline": "passed verification of existing behavior",
+      "baselineEvidence": "controls-final-green.json",
+      "actualResult": "passed",
+      "correction": "No correction required for this check",
+      "recheck": "controls-final-green.json"
+    },
+    {
+      "componentOrMechanism": "controls family verification",
+      "scenarioAndExpectedResult": "preserves native external link navigation attributes",
+      "method": "react-test-renderer dedicated test",
+      "test": "packages/ui/tests/ControlsContracts.test.tsx",
+      "baseline": "passed verification of existing behavior",
+      "baselineEvidence": "controls-final-green.json",
+      "actualResult": "passed",
+      "correction": "No correction required for this check",
+      "recheck": "controls-final-green.json"
+    },
+    {
+      "componentOrMechanism": "controls family verification",
+      "scenarioAndExpectedResult": "runs a SplitButton menu action exactly once and closes the menu",
+      "method": "react-test-renderer dedicated test",
+      "test": "packages/ui/tests/ControlsContracts.test.tsx",
+      "baseline": "passed verification of existing behavior",
+      "baselineEvidence": "controls-final-green.json",
+      "actualResult": "passed",
+      "correction": "No correction required for this check",
+      "recheck": "controls-final-green.json"
+    },
+    {
+      "componentOrMechanism": "controls family verification",
+      "scenarioAndExpectedResult": "accepts a valid leap date inside the range and rejects an out-of-range date",
+      "method": "react-test-renderer dedicated test",
+      "test": "packages/ui/tests/ControlsContracts.test.tsx",
+      "baseline": "passed verification of existing behavior",
+      "baselineEvidence": "controls-final-green.json",
+      "actualResult": "passed",
+      "correction": "No correction required for this check",
+      "recheck": "controls-final-green.json"
+    },
+    {
+      "componentOrMechanism": "secondary feedback contract audit",
+      "scenarioAndExpectedResult": "keeps visible DataTable example action text in explicit accessible names",
+      "method": "react-test-renderer dedicated test",
+      "test": "packages/ui/tests/FeedbackContracts.test.tsx",
+      "baseline": "failed before correction",
+      "baselineEvidence": "controls-accessible-names-red.json",
+      "actualResult": "passed",
+      "correction": "Implementation correction; see fixes and the component diff",
+      "recheck": "controls-final-green.json"
+    },
+    {
+      "componentOrMechanism": "secondary feedback contract audit",
+      "scenarioAndExpectedResult": "restores a controlled details element when the parent refuses a toggle",
+      "method": "react-test-renderer dedicated test",
+      "test": "packages/ui/tests/FeedbackContracts.test.tsx",
+      "baseline": "failed before correction",
+      "baselineEvidence": "feedback-secondary-red.json",
+      "actualResult": "passed",
+      "correction": "Implementation correction; see fixes and the component diff",
+      "recheck": "controls-final-green.json"
+    },
+    {
+      "componentOrMechanism": "secondary feedback contract audit",
+      "scenarioAndExpectedResult": "keeps SignalBars finite for bars=Infinity",
+      "method": "react-test-renderer dedicated test",
+      "test": "packages/ui/tests/FeedbackContracts.test.tsx",
+      "baseline": "failed before correction",
+      "baselineEvidence": "feedback-secondary-red.json",
+      "actualResult": "passed",
+      "correction": "Implementation correction; see fixes and the component diff",
+      "recheck": "controls-final-green.json"
+    },
+    {
+      "componentOrMechanism": "secondary feedback contract audit",
+      "scenarioAndExpectedResult": "keeps SignalBars finite for bars=NaN",
+      "method": "react-test-renderer dedicated test",
+      "test": "packages/ui/tests/FeedbackContracts.test.tsx",
+      "baseline": "failed before correction",
+      "baselineEvidence": "feedback-secondary-red.json",
+      "actualResult": "passed",
+      "correction": "Implementation correction; see fixes and the component diff",
+      "recheck": "controls-final-green.json"
+    },
+    {
+      "componentOrMechanism": "secondary feedback contract audit",
+      "scenarioAndExpectedResult": "keeps SignalBars finite for bars=-1",
+      "method": "react-test-renderer dedicated test",
+      "test": "packages/ui/tests/FeedbackContracts.test.tsx",
+      "baseline": "failed before correction",
+      "baselineEvidence": "feedback-secondary-red.json",
+      "actualResult": "passed",
+      "correction": "Implementation correction; see fixes and the component diff",
+      "recheck": "controls-final-green.json"
+    },
+    {
+      "componentOrMechanism": "secondary feedback contract audit",
+      "scenarioAndExpectedResult": "announces the same clamped signal strength that it paints",
+      "method": "react-test-renderer dedicated test",
+      "test": "packages/ui/tests/FeedbackContracts.test.tsx",
+      "baseline": "failed before correction",
+      "baselineEvidence": "feedback-secondary-red.json",
+      "actualResult": "passed",
+      "correction": "Implementation correction; see fixes and the component diff",
+      "recheck": "controls-final-green.json"
+    },
+    {
+      "componentOrMechanism": "secondary feedback contract audit",
+      "scenarioAndExpectedResult": "emits one pagination change when selecting a controlled page size",
+      "method": "react-test-renderer dedicated test",
+      "test": "packages/ui/tests/FeedbackContracts.test.tsx",
+      "baseline": "failed before correction",
+      "baselineEvidence": "feedback-secondary-red.json",
+      "actualResult": "passed",
+      "correction": "Implementation correction; see fixes and the component diff",
+      "recheck": "controls-final-green.json"
+    },
+    {
+      "componentOrMechanism": "secondary feedback contract audit",
+      "scenarioAndExpectedResult": "includes visible detail rows in the table's announced row count",
+      "method": "react-test-renderer dedicated test",
+      "test": "packages/ui/tests/FeedbackContracts.test.tsx",
+      "baseline": "failed before correction",
+      "baselineEvidence": "feedback-secondary-red.json",
+      "actualResult": "passed",
+      "correction": "Implementation correction; see fixes and the component diff",
+      "recheck": "controls-final-green.json"
+    },
+    {
+      "componentOrMechanism": "secondary feedback contract audit",
+      "scenarioAndExpectedResult": "announces a column resize separator's explicit initial width",
+      "method": "react-test-renderer dedicated test",
+      "test": "packages/ui/tests/FeedbackContracts.test.tsx",
+      "baseline": "failed before correction",
+      "baselineEvidence": "feedback-secondary-red.json",
+      "actualResult": "passed",
+      "correction": "Implementation correction; see fixes and the component diff",
+      "recheck": "controls-final-green.json"
+    },
+    {
+      "componentOrMechanism": "secondary feedback contract audit",
+      "scenarioAndExpectedResult": "Toast uses the newest close callback and cleans up its timer on unmount",
+      "method": "react-test-renderer dedicated test",
+      "test": "packages/ui/tests/FeedbackContracts.test.tsx",
+      "baseline": "passed verification of existing behavior",
+      "baselineEvidence": "controls-final-green.json",
+      "actualResult": "passed",
+      "correction": "No correction required for this check",
+      "recheck": "controls-final-green.json"
+    },
+    {
+      "componentOrMechanism": "secondary feedback contract audit",
+      "scenarioAndExpectedResult": "Steps marks one current step, permits completion, and handles an empty list",
+      "method": "react-test-renderer dedicated test",
+      "test": "packages/ui/tests/FeedbackContracts.test.tsx",
+      "baseline": "passed verification of existing behavior",
+      "baselineEvidence": "controls-final-green.json",
+      "actualResult": "passed",
+      "correction": "No correction required for this check",
+      "recheck": "controls-final-green.json"
+    },
+    {
+      "componentOrMechanism": "built package / React component factories",
+      "scenarioAndExpectedResult": "tree shakes unrelated artwork and media from the built public Button export",
+      "method": "esbuild bundles built root export; installed tarball rechecked through package resolver",
+      "baseline": "failed before correction",
+      "baselineEvidence": "controls-tree-shaking-red.json",
+      "actualResult": "passed",
+      "correction": "PURE annotations on side-effect-free component factories",
+      "recheck": "controls-final-green.json; package-consumer-react19-22.json"
+    },
+    {
+      "componentOrMechanism": "field public host attributes",
+      "scenarioAndExpectedResult": "'Select' keeps its rendered value connected to an explicit accessible name",
+      "method": "dedicated react-test-renderer label graph + real Chrome accessible-name matching + axe docs consumers",
+      "test": "packages/ui/tests/ControlsContracts.test.tsx",
+      "baseline": "failed before correction",
+      "baselineEvidence": "controls-button-names-red.json; controls-browser-button-names-red.json",
+      "actualResult": "passed",
+      "correction": "shared valueLabelledBy graph references the selected/placeholder span after effective field label",
+      "recheck": "controls-final-green.json; controls-browser-final-green.json; controls-button-names-axe-green.json"
+    },
+    {
+      "componentOrMechanism": "field public host attributes",
+      "scenarioAndExpectedResult": "'ColorPicker' keeps its rendered value connected to an explicit accessible name",
+      "method": "dedicated react-test-renderer label graph + real Chrome accessible-name matching + axe docs consumers",
+      "test": "packages/ui/tests/ControlsContracts.test.tsx",
+      "baseline": "failed before correction",
+      "baselineEvidence": "controls-button-names-red.json; controls-browser-button-names-red.json",
+      "actualResult": "passed",
+      "correction": "shared valueLabelledBy graph references the selected/placeholder span after effective field label",
+      "recheck": "controls-final-green.json; controls-browser-final-green.json; controls-button-names-axe-green.json"
+    }
+  ]
+}

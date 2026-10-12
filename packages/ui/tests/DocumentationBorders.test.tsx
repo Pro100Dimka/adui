@@ -13,7 +13,7 @@ it("includes QuantumField in the published documentation assets", () => {
 
 const border = vi.hoisted(() => vi.fn());
 const tablePreview = vi.hoisted(() => vi.fn());
-vi.mock("@ad-voice/ui", async (original) => {
+vi.mock("@neo-ui-kit/react", async (original) => {
   const kit = await original<typeof import("../src/index")>();
   const { createElement } = await import("react");
   return {
@@ -37,8 +37,9 @@ it("demonstrates table details, actions, pinning, multi-sort and opt-in large-da
   expect(initial.renderRowActions).toBeTypeOf("function");
   expect(initial.rowNumbers).toBe(true);
   expect(initial.densityToggle).toBe(true);
-  const toggle = () => tree!.root.findAll((node) => node.type === "button" &&
-    node.props["aria-label"] === "Переключить объём данных")[0];
+  const toggle = () => tree!.root.findAllByType("button").find((button) =>
+    button.findAllByProps({ className: "ad-button-label" }).some((label) =>
+      ["Вернуть 8 строк", "Проверить 10 000 строк"].includes(label.children.join(""))))!;
   act(() => toggle().props.onClick());
   const large = tablePreview.mock.calls.at(-1)![0];
   expect(large.rows).toHaveLength(10_000);
@@ -54,7 +55,7 @@ vi.mock("../../../apps/playground/src/catalog/componentRegistry", async (origina
 }));
 vi.mock("../../../apps/playground/src/catalog/HeroBackdrop", () => ({ HeroBackdrop: () => null }));
 vi.mock("../../../apps/playground/src/catalog/CatalogSidebar", () => ({ CatalogSidebar: () => null }));
-vi.mock("@ad-voice/ui/core", () => ({ useSmoothWheel: () => {} }));
+vi.mock("@neo-ui-kit/react/core", () => ({ useSmoothWheel: () => {} }));
 
 let tree: ReactTestRenderer | undefined;
 afterEach(() => {
@@ -62,6 +63,24 @@ afterEach(() => {
   tree = undefined;
   vi.clearAllMocks();
   vi.unstubAllGlobals();
+});
+
+it("uses NEO UI consistently in the documentation brand and browser title", () => {
+  for (const file of ["index.html", "src/App.tsx", "src/catalog/CatalogPage.tsx", "src/catalog/CatalogOverview.tsx", "src/catalog/ComponentDocsPage.tsx", "src/catalog/DocsExampleBoundary.tsx"]) {
+    const source = readFileSync(`../../apps/playground/${file}`, "utf8");
+    expect(source, file).not.toContain("Neo UI");
+    expect(source, file).toContain("NEO UI");
+  }
+});
+
+it.each([
+  "../package.json", "../README.md", "../src/components/layout/Text/example.tsx",
+  "../src/components/foundation/Typography/example.tsx",
+  "../src/components/foundation/ThemeEditor/themeConfig.ts", "../src/core/messages.ts",
+])("keeps the NEO UI spelling in shipped branding: %s", (file) => {
+  const source = readFileSync(new URL(file, import.meta.url), "utf8");
+  expect(source).not.toContain("Neo UI");
+  expect(source).toContain("NEO UI");
 });
 
 it("uses the kit's animated border on every overview tile and panel", () => {

@@ -152,6 +152,7 @@ export function NeonWaves({
   const paths = useRef<{ node: SVGSVGElement; elements: NodeListOf<SVGPathElement> } | null>(null);
   const cometElements = useRef<{ node: HTMLSpanElement; elements: NodeListOf<HTMLElement> } | null>(null);
   const size = useRef({ width: 0, height: 0 });
+  const lastTime = useRef(0);
   const motion = useMotion();
   const id = useSvgId();
   const dots = useMemo(() => {
@@ -173,13 +174,15 @@ export function NeonWaves({
     const observer = createResizeObserver(([entry]) => {
       if (!entry) return;
       size.current = { width: entry.contentRect.width, height: entry.contentRect.height };
+      painter.current(lastTime.current);
     });
     observer.observe(root);
     return () => observer.disconnect();
   }, []);
 
   usePauseOffscreen(ref);
-  useDecoration(ref, (time) => {
+  const paint = (time: number) => {
+    lastTime.current = time;
     // The strands drift slowly: redrawing them on every other tick (15 a second) looks the same
     // and halves their cost; the comets ride their own layers at the full clock rate.
     if (lastDraw.current < 0 || time - lastDraw.current >= 1 / 16) {
@@ -221,7 +224,10 @@ export function NeonWaves({
       // Comets fade in where the strands themselves come out of the dark.
       comet.style.opacity = Math.min(1, Math.max(0, (x + 20) / ((W + 40) * 0.35))).toFixed(3);
     });
-  });
+  };
+  const painter = useRef(paint);
+  painter.current = paint;
+  useDecoration(ref, paint);
 
   return (
     <span {...mark("NeonWaves", p)} ref={rootRef} aria-hidden="true">

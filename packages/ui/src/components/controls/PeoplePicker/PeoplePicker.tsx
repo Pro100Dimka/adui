@@ -1,11 +1,12 @@
 import { useTr } from "../../../core/i18n";
-import { useEffect, useRef, useState } from "react";
-import { useControllable, type CommonProps } from "../../../core/base";
+import { useEffect, useId, useRef, useState } from "react";
+import { mark, useControllable, type CommonProps } from "../../../core/base";
 import { Popover } from "../../feedback/Popover/Popover";
 import { Avatar } from "../../layout/Avatar/Avatar";
 import { Icon } from "../../layout/Icon/Icon";
 import { Chip } from "../Chip/Chip";
 import { ChipField } from "../ChipField";
+import { useActiveOption } from "../internal";
 import type { InputVariant } from "../shared";
 
 export interface PickerPerson {
@@ -66,12 +67,15 @@ export function PeoplePicker({
   const [loading, setLoading] = useState(false);
   const [searchError, setSearchError] = useState<string>();
   const box = useRef<HTMLDivElement>(null);
+  const listId = `${useId()}-people`;
   const search = useRef(onSearch);
   search.current = onSearch;
   const remote = !!onSearch;
   const needle = query.trim().toLowerCase();
   const limit = single ? 1 : max;
   const full = limit !== undefined && chosen.length >= limit;
+  const visible = open && !full && !p.disabled;
+  useEffect(() => { if (p.disabled) setOpen(false); }, [p.disabled]);
 
   // Asynchronous search: debounced, and a late answer to an older query is ignored.
   useEffect(() => {
@@ -112,8 +116,11 @@ export function PeoplePicker({
     .filter((person) => !chosen.some((c) => c.id === person.id))
     .filter((person) => onSearch || !needle || `${person.name} ${person.description ?? ""}`.toLowerCase().includes(needle))
     .slice(0, 50);
+  const activeIndex = Math.max(0, Math.min(active, options.length - 1));
+  useActiveOption(listId, activeIndex, visible && !loading && !searchError);
 
   const pick = (person: PickerPerson) => {
+    if (p.disabled || full || loading) return;
     setChosen(single ? [person] : [...chosen, person]);
     setQuery("");
     setActive(0);
@@ -121,7 +128,7 @@ export function PeoplePicker({
   };
 
   return (
-    <div className={`ad-people-picker ${p.className ?? ""}`} style={p.style} id={p.id}>
+    <div {...mark("PeoplePicker", p)}>
       <ChipField
         className=""
         boxRef={box}
@@ -142,16 +149,21 @@ export function PeoplePicker({
           setOpen(true);
         }}
         onFocus={() => !full && setOpen(true)}
-        inputProps={{ disabled: p.disabled || full, role: "combobox", "aria-expanded": open, "aria-autocomplete": "list" }}
+        inputProps={{ disabled: p.disabled || full, role: "combobox", "aria-expanded": visible, "aria-autocomplete": "list",
+          "aria-label": p["aria-label"], "aria-labelledby": p["aria-labelledby"], "aria-describedby": p["aria-describedby"],
+          "aria-controls": visible ? listId : undefined,
+          "aria-activedescendant": visible && !loading && !searchError && options[activeIndex] ? `${listId}-option-${activeIndex}` : undefined }}
         onKeyDown={(event) => {
+          if (p.disabled || full || event.nativeEvent?.isComposing) return;
           if (event.key === "ArrowDown" || event.key === "ArrowUp") {
             event.preventDefault();
             setOpen(true);
-            setActive((i) => (i + (event.key === "ArrowDown" ? 1 : -1) + options.length) % Math.max(1, options.length));
-          } else if (event.key === "Enter" && open && options[active]) {
+            setActive(visible ? (activeIndex + (event.key === "ArrowDown" ? 1 : -1) + options.length) % Math.max(1, options.length) : event.key === "ArrowDown" ? 0 : Math.max(0, options.length - 1));
+          } else if (event.key === "Enter" && visible && options[activeIndex] && !loading && !searchError) {
             event.preventDefault();
-            pick(options[active]!);
-          } else if (event.key === "Escape") {
+            pick(options[activeIndex]);
+          } else if (event.key === "Escape" || event.key === "Tab") {
+            if (event.key === "Escape" && visible) event.preventDefault();
             setOpen(false);
           } else if (event.key === "Backspace" && !query && chosen.length) {
             setChosen(chosen.slice(0, -1));
@@ -162,7 +174,7 @@ export function PeoplePicker({
             onRemove={() => setChosen(chosen.filter((c) => c.id !== person.id))} />
         ))}
       />
-      <Popover open={open && !full} onOpenChange={setOpen} anchorRef={box} role="listbox" align="start" matchAnchorWidth autoFocus={false}
+      <Popover id={listId} open={visible} onOpenChange={setOpen} anchorRef={box} role="listbox" align="start" matchAnchorWidth autoFocus={false}
         className="ad-option-popover" label={tr("Люди")}>
         <div className="ad-option-list">
           {loading && <div className="ad-option-empty"><span className="ad-spinner" aria-hidden /> {tr("Ищем…")}</div>}
@@ -171,8 +183,8 @@ export function PeoplePicker({
           )}
           {!loading && !searchError &&
             options.map((person, index) => (
-              <button key={person.id} type="button" role="option" className="ad-option" aria-selected={false}
-                data-active={index === active || undefined} onPointerMove={() => setActive(index)}
+              <button key={person.id} id={`${listId}-option-${index}`} type="button" role="option" tabIndex={-1} className="ad-option" aria-selected={false}
+                data-active={index === activeIndex || undefined} onPointerMove={() => setActive(index)}
                 onPointerDown={(event) => event.preventDefault()} onClick={() => pick(person)}>
                 <Avatar size="sm" name={person.name} src={person.src} presence={person.presence} />
                 <span className="ad-option-text">

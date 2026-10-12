@@ -57,7 +57,7 @@
   background: var(--ad-neutral-600);
   box-shadow: none;
 }
-[data-ad-tone="offline"] {
+.ad-status-indicator[data-ad-tone="offline"] {
   color: var(--ad-muted);
 }
 @keyframes ad-status-radar {

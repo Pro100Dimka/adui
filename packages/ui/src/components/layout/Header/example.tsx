@@ -5,13 +5,13 @@ export default function HeaderExample() {
     <Playground
       stretch
       knobs={{
-        level: { options: ["1", "2", "3", "4"], value: "2" },
+        level: { value: 2, min: 1, max: 4 },
         icon: { value: true },
         compact: { value: false },
       }}
       code={(v) =>
         jsx("Header", {
-          level: Number(v.level),
+          level: v.level,
           eyebrow: "Настройки",
           title: "Аудио",
           description: "Драйвер, задержка и мониторинг",
@@ -23,7 +23,7 @@ export default function HeaderExample() {
     >
       {(v) => (
         <U.Header
-          level={Number(v.level) as 1 | 2 | 3 | 4}
+          level={v.level as 1 | 2 | 3 | 4}
           eyebrow="Настройки"
           title="Аудио"
           description="Драйвер, задержка и мониторинг"

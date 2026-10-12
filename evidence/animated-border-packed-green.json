@@ -1,0 +1,386 @@
+{
+  "publicEntry": "D:/Git/adui/release/consumer-react19/node_modules/@ad-voice/ui/dist/core.js",
+  "resolveDir": "D:/Git/adui/release/consumer-react19",
+  "reactInputs": [
+    "release/consumer-react19/node_modules/react/cjs/react.development.js",
+    "release/consumer-react19/node_modules/react/index.js",
+    "release/consumer-react19/node_modules/react-dom/cjs/react-dom.development.js",
+    "release/consumer-react19/node_modules/react-dom/index.js",
+    "release/consumer-react19/node_modules/react-dom/cjs/react-dom-client.development.js",
+    "release/consumer-react19/node_modules/react-dom/client.js",
+    "release/consumer-react19/node_modules/react/cjs/react-jsx-runtime.development.js",
+    "release/consumer-react19/node_modules/react/jsx-runtime.js"
+  ],
+  "passed": 24,
+  "failed": 0,
+  "results": [
+    {
+      "name": "plain overlay covers the full border box",
+      "passed": true,
+      "actual": {
+        "name": "plain",
+        "host": {
+          "x": 30,
+          "y": 30,
+          "width": 240,
+          "height": 120
+        },
+        "overlay": {
+          "x": 30,
+          "y": 30,
+          "width": 240,
+          "height": 120
+        },
+        "maxOrbitError": null
+      }
+    },
+    {
+      "name": "card overlay covers the full border box",
+      "passed": true,
+      "actual": {
+        "name": "card",
+        "host": {
+          "x": 340,
+          "y": 30,
+          "width": 240,
+          "height": 120
+        },
+        "overlay": {
+          "x": 340,
+          "y": 30,
+          "width": 240,
+          "height": 120
+        },
+        "maxOrbitError": null
+      }
+    },
+    {
+      "name": "asymmetric overlay covers the full border box",
+      "passed": true,
+      "actual": {
+        "name": "asymmetric",
+        "host": {
+          "x": 650,
+          "y": 30,
+          "width": 240,
+          "height": 120
+        },
+        "overlay": {
+          "x": 650,
+          "y": 30,
+          "width": 240,
+          "height": 120
+        },
+        "maxOrbitError": null
+      }
+    },
+    {
+      "name": "ellipse overlay covers the full border box",
+      "passed": true,
+      "actual": {
+        "name": "ellipse",
+        "host": {
+          "x": 30,
+          "y": 205,
+          "width": 240,
+          "height": 90
+        },
+        "overlay": {
+          "x": 30,
+          "y": 205,
+          "width": 240,
+          "height": 90
+        },
+        "maxOrbitError": null
+      }
+    },
+    {
+      "name": "capsule overlay covers the full border box",
+      "passed": true,
+      "actual": {
+        "name": "capsule",
+        "host": {
+          "x": 340,
+          "y": 205,
+          "width": 280,
+          "height": 44
+        },
+        "overlay": {
+          "x": 340,
+          "y": 205,
+          "width": 280,
+          "height": 44
+        },
+        "maxOrbitError": null
+      }
+    },
+    {
+      "name": "fractional overlay covers the full border box",
+      "passed": true,
+      "actual": {
+        "name": "fractional",
+        "host": {
+          "x": 650,
+          "y": 205,
+          "width": 237.375,
+          "height": 113.625
+        },
+        "overlay": {
+          "x": 650,
+          "y": 205,
+          "width": 237.375,
+          "height": 113.625
+        },
+        "maxOrbitError": null
+      }
+    },
+    {
+      "name": "content-box overlay covers the full border box",
+      "passed": true,
+      "actual": {
+        "name": "content-box",
+        "host": {
+          "x": 30,
+          "y": 380,
+          "width": 236.5,
+          "height": 95.25
+        },
+        "overlay": {
+          "x": 30,
+          "y": 380,
+          "width": 236.5,
+          "height": 95.25
+        },
+        "maxOrbitError": null
+      }
+    },
+    {
+      "name": "scrolled-transform overlay covers the full border box",
+      "passed": true,
+      "actual": {
+        "name": "scrolled-transform",
+        "host": {
+          "x": 331.951171875,
+          "y": 390.2671203613281,
+          "width": 204.364013671875,
+          "height": 90.32797241210938
+        },
+        "overlay": {
+          "x": 331.951171875,
+          "y": 390.2671203613281,
+          "width": 204.364013671875,
+          "height": 90.32797241210938
+        },
+        "maxOrbitError": null
+      }
+    },
+    {
+      "name": "plain live motion follows native path after resize",
+      "passed": true,
+      "actual": {
+        "name": "plain",
+        "maxError": 0.015583252642685796,
+        "positions": 12,
+        "overlayError": 0,
+        "haloWidth": 32,
+        "haloHeight": 32,
+        "hostOverflow": "visible"
+      }
+    },
+    {
+      "name": "plain retains external glow",
+      "passed": true,
+      "actual": {
+        "name": "plain",
+        "maxError": 0.015583252642685796,
+        "positions": 12,
+        "overlayError": 0,
+        "haloWidth": 32,
+        "haloHeight": 32,
+        "hostOverflow": "visible"
+      }
+    },
+    {
+      "name": "card live motion follows native path after resize",
+      "passed": true,
+      "actual": {
+        "name": "card",
+        "maxError": 0.009333154051927138,
+        "positions": 12,
+        "overlayError": 0,
+        "haloWidth": 32,
+        "haloHeight": 32,
+        "hostOverflow": "visible"
+      }
+    },
+    {
+      "name": "card retains external glow",
+      "passed": true,
+      "actual": {
+        "name": "card",
+        "maxError": 0.009333154051927138,
+        "positions": 12,
+        "overlayError": 0,
+        "haloWidth": 32,
+        "haloHeight": 32,
+        "hostOverflow": "visible"
+      }
+    },
+    {
+      "name": "asymmetric live motion follows native path after resize",
+      "passed": true,
+      "actual": {
+        "name": "asymmetric",
+        "maxError": 0.007547796679818056,
+        "positions": 12,
+        "overlayError": 0,
+        "haloWidth": 32,
+        "haloHeight": 32,
+        "hostOverflow": "visible"
+      }
+    },
+    {
+      "name": "asymmetric retains external glow",
+      "passed": true,
+      "actual": {
+        "name": "asymmetric",
+        "maxError": 0.007547796679818056,
+        "positions": 12,
+        "overlayError": 0,
+        "haloWidth": 32,
+        "haloHeight": 32,
+        "hostOverflow": "visible"
+      }
+    },
+    {
+      "name": "ellipse live motion follows native path after resize",
+      "passed": true,
+      "actual": {
+        "name": "ellipse",
+        "maxError": 0.032293237408134404,
+        "positions": 12,
+        "overlayError": 0,
+        "haloWidth": 32,
+        "haloHeight": 32,
+        "hostOverflow": "visible"
+      }
+    },
+    {
+      "name": "ellipse retains external glow",
+      "passed": true,
+      "actual": {
+        "name": "ellipse",
+        "maxError": 0.032293237408134404,
+        "positions": 12,
+        "overlayError": 0,
+        "haloWidth": 32,
+        "haloHeight": 32,
+        "hostOverflow": "visible"
+      }
+    },
+    {
+      "name": "capsule live motion follows native path after resize",
+      "passed": true,
+      "actual": {
+        "name": "capsule",
+        "maxError": 0.006081590612080162,
+        "positions": 12,
+        "overlayError": 0,
+        "haloWidth": 32,
+        "haloHeight": 32,
+        "hostOverflow": "visible"
+      }
+    },
+    {
+      "name": "capsule retains external glow",
+      "passed": true,
+      "actual": {
+        "name": "capsule",
+        "maxError": 0.006081590612080162,
+        "positions": 12,
+        "overlayError": 0,
+        "haloWidth": 32,
+        "haloHeight": 32,
+        "hostOverflow": "visible"
+      }
+    },
+    {
+      "name": "fractional live motion follows native path after resize",
+      "passed": true,
+      "actual": {
+        "name": "fractional",
+        "maxError": 0.006376329970692698,
+        "positions": 12,
+        "overlayError": 0,
+        "haloWidth": 32,
+        "haloHeight": 32,
+        "hostOverflow": "visible"
+      }
+    },
+    {
+      "name": "fractional retains external glow",
+      "passed": true,
+      "actual": {
+        "name": "fractional",
+        "maxError": 0.006376329970692698,
+        "positions": 12,
+        "overlayError": 0,
+        "haloWidth": 32,
+        "haloHeight": 32,
+        "hostOverflow": "visible"
+      }
+    },
+    {
+      "name": "content-box live motion follows native path after resize",
+      "passed": true,
+      "actual": {
+        "name": "content-box",
+        "maxError": 0.008893547809054575,
+        "positions": 12,
+        "overlayError": 0,
+        "haloWidth": 32,
+        "haloHeight": 32,
+        "hostOverflow": "visible"
+      }
+    },
+    {
+      "name": "content-box retains external glow",
+      "passed": true,
+      "actual": {
+        "name": "content-box",
+        "maxError": 0.008893547809054575,
+        "positions": 12,
+        "overlayError": 0,
+        "haloWidth": 32,
+        "haloHeight": 32,
+        "hostOverflow": "visible"
+      }
+    },
+    {
+      "name": "scrolled-transform live motion follows native path after resize",
+      "passed": true,
+      "actual": {
+        "name": "scrolled-transform",
+        "maxError": 0.009719062846147982,
+        "positions": 12,
+        "overlayError": 0,
+        "haloWidth": 28.960174560546875,
+        "haloHeight": 28.960174560546875,
+        "hostOverflow": "visible"
+      }
+    },
+    {
+      "name": "scrolled-transform retains external glow",
+      "passed": true,
+      "actual": {
+        "name": "scrolled-transform",
+        "maxError": 0.009719062846147982,
+        "positions": 12,
+        "overlayError": 0,
+        "haloWidth": 28.960174560546875,
+        "haloHeight": 28.960174560546875,
+        "hostOverflow": "visible"
+      }
+    }
+  ]
+}

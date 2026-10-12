@@ -1,0 +1,29 @@
+[
+  {
+    "width": 1920,
+    "geometry": {
+      "container": 1476,
+      "table": 1476,
+      "pageOverflow": false
+    },
+    "violations": []
+  },
+  {
+    "width": 1440,
+    "geometry": {
+      "container": 1015,
+      "table": 1040,
+      "pageOverflow": false
+    },
+    "violations": []
+  },
+  {
+    "width": 375,
+    "geometry": {
+      "container": 314,
+      "table": 1040,
+      "pageOverflow": false
+    },
+    "violations": []
+  }
+]

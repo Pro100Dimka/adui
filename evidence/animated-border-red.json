@@ -1,0 +1,246 @@
+{
+  "passed": 2,
+  "failed": 10,
+  "results": [
+    {
+      "name": "plain orbit matches rendered contour",
+      "passed": true,
+      "actual": {
+        "name": "plain",
+        "host": {
+          "x": 30,
+          "y": 30,
+          "width": 240,
+          "height": 120
+        },
+        "overlay": {
+          "x": 30,
+          "y": 30,
+          "width": 240,
+          "height": 120
+        },
+        "maxOrbitError": 0.014124984766548242
+      }
+    },
+    {
+      "name": "plain overlay covers the full border box",
+      "passed": true,
+      "actual": {
+        "name": "plain",
+        "host": {
+          "x": 30,
+          "y": 30,
+          "width": 240,
+          "height": 120
+        },
+        "overlay": {
+          "x": 30,
+          "y": 30,
+          "width": 240,
+          "height": 120
+        },
+        "maxOrbitError": 0.014124984766548242
+      }
+    },
+    {
+      "name": "card orbit matches rendered contour",
+      "passed": false,
+      "actual": {
+        "name": "card",
+        "host": {
+          "x": 330,
+          "y": 30,
+          "width": 240,
+          "height": 120
+        },
+        "overlay": {
+          "x": 331,
+          "y": 31,
+          "width": 238,
+          "height": 118
+        },
+        "maxOrbitError": 2.7251905878135205
+      }
+    },
+    {
+      "name": "card overlay covers the full border box",
+      "passed": false,
+      "actual": {
+        "name": "card",
+        "host": {
+          "x": 330,
+          "y": 30,
+          "width": 240,
+          "height": 120
+        },
+        "overlay": {
+          "x": 331,
+          "y": 31,
+          "width": 238,
+          "height": 118
+        },
+        "maxOrbitError": 2.7251905878135205
+      }
+    },
+    {
+      "name": "asymmetric orbit matches rendered contour",
+      "passed": false,
+      "actual": {
+        "name": "asymmetric",
+        "host": {
+          "x": 630,
+          "y": 30,
+          "width": 240,
+          "height": 120
+        },
+        "overlay": {
+          "x": 634,
+          "y": 34,
+          "width": 232,
+          "height": 112
+        },
+        "maxOrbitError": 10.690445752181537
+      }
+    },
+    {
+      "name": "asymmetric overlay covers the full border box",
+      "passed": false,
+      "actual": {
+        "name": "asymmetric",
+        "host": {
+          "x": 630,
+          "y": 30,
+          "width": 240,
+          "height": 120
+        },
+        "overlay": {
+          "x": 634,
+          "y": 34,
+          "width": 232,
+          "height": 112
+        },
+        "maxOrbitError": 10.690445752181537
+      }
+    },
+    {
+      "name": "ellipse orbit matches rendered contour",
+      "passed": false,
+      "actual": {
+        "name": "ellipse",
+        "host": {
+          "x": 30,
+          "y": 210,
+          "width": 240,
+          "height": 90
+        },
+        "overlay": {
+          "x": 32,
+          "y": 212,
+          "width": 236,
+          "height": 86
+        },
+        "maxOrbitError": 4.791479358640637
+      }
+    },
+    {
+      "name": "ellipse overlay covers the full border box",
+      "passed": false,
+      "actual": {
+        "name": "ellipse",
+        "host": {
+          "x": 30,
+          "y": 210,
+          "width": 240,
+          "height": 90
+        },
+        "overlay": {
+          "x": 32,
+          "y": 212,
+          "width": 236,
+          "height": 86
+        },
+        "maxOrbitError": 4.791479358640637
+      }
+    },
+    {
+      "name": "capsule orbit matches rendered contour",
+      "passed": false,
+      "actual": {
+        "name": "capsule",
+        "host": {
+          "x": 330,
+          "y": 210,
+          "width": 280,
+          "height": 44
+        },
+        "overlay": {
+          "x": 331,
+          "y": 211,
+          "width": 278,
+          "height": 42
+        },
+        "maxOrbitError": 2.700980720056865
+      }
+    },
+    {
+      "name": "capsule overlay covers the full border box",
+      "passed": false,
+      "actual": {
+        "name": "capsule",
+        "host": {
+          "x": 330,
+          "y": 210,
+          "width": 280,
+          "height": 44
+        },
+        "overlay": {
+          "x": 331,
+          "y": 211,
+          "width": 278,
+          "height": 42
+        },
+        "maxOrbitError": 2.700980720056865
+      }
+    },
+    {
+      "name": "fractional orbit matches rendered contour",
+      "passed": false,
+      "actual": {
+        "name": "fractional",
+        "host": {
+          "x": 670,
+          "y": 210,
+          "width": 237.375,
+          "height": 113.625
+        },
+        "overlay": {
+          "x": 671,
+          "y": 211,
+          "width": 235.375,
+          "height": 111.625
+        },
+        "maxOrbitError": 2.801187120361161
+      }
+    },
+    {
+      "name": "fractional overlay covers the full border box",
+      "passed": false,
+      "actual": {
+        "name": "fractional",
+        "host": {
+          "x": 670,
+          "y": 210,
+          "width": 237.375,
+          "height": 113.625
+        },
+        "overlay": {
+          "x": 671,
+          "y": 211,
+          "width": 235.375,
+          "height": 111.625
+        },
+        "maxOrbitError": 2.801187120361161
+      }
+    }
+  ]
+}

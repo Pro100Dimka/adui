@@ -1,0 +1,18 @@
+[
+  {
+    "entry": "Button",
+    "bytes": 75942,
+    "gzip": 16754,
+    "hostArtwork": false,
+    "planetArtwork": false,
+    "audioPlayer": false
+  },
+  {
+    "entry": "Avatar, Illustration",
+    "bytes": 424260,
+    "gzip": 76922,
+    "hostArtwork": true,
+    "planetArtwork": true,
+    "audioPlayer": false
+  }
+]

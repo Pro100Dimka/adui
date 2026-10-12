@@ -1,4 +1,4 @@
-import { tr, useTr } from "@ad-voice/ui";
+import { useTr } from "@neo-ui-kit/react";
 import {
   Button,
   Dialog,
@@ -8,7 +8,7 @@ import {
   Stack,
   ThemeEditor,
   Typography,
-} from "@ad-voice/ui";
+} from "@neo-ui-kit/react";
 import { fonts, headingFonts, type SiteSettings } from "./siteSettings";
 
 /**

@@ -82,7 +82,7 @@ function scan(now, animations = pendingAnimations) {
       if (target && target.isConnected && animation.playState === "paused") animation.play();
       continue;
     }
-    const hidden = document.hidden || target.closest("[data-ad-offscreen]");
+    const hidden = document.hidden || target.closest("[data-ad-offscreen], [data-ad-paused]");
     if (hidden) {
       // Resume where it stopped once back in view.
       animation.__adHeld = true;
@@ -265,10 +265,7 @@ U.createMotion = (root = document) => {
       this.enabled = !!enabled;
       this.explicit ||= explicit;
       this.previous = null;
-      const target =
-        root instanceof HTMLElement
-          ? root
-          : root.host || document.documentElement;
+      const target = root.dataset ? root : root.host || document.documentElement;
       target.dataset.adMotion = enabled ? "on" : "off";
       if (this.enabled) running.add(this);
       else running.delete(this);
@@ -295,45 +292,68 @@ U.createMotion = (root = document) => {
   return scope;
 };
 
-U.roundedPath = (w, h, r) => {
-  const i = 0.65,
-    R = w - i,
-    B = h - i;
-  r = Math.max(0, Math.min(r - i, (w - 2 * i) / 2, (h - 2 * i) / 2));
-  const d = r
-    ? `M${i + r} ${i}H${R - r}A${r} ${r} 0 0 1 ${R} ${i + r}V${B - r}A${r} ${r} 0 0 1 ${R - r} ${B}H${i + r}A${r} ${r} 0 0 1 ${i} ${B - r}V${i + r}A${r} ${r} 0 0 1 ${i + r} ${i}Z`
-    : `M${i} ${i}H${R}V${B}H${i}Z`;
-  const horizontal = Math.abs(R - i - 2 * r),
-    vertical = Math.abs(B - i - 2 * r),
-    arc = Math.PI * r / 2,
-    dx = Math.sign(R - i),
-    dy = Math.sign(B - i);
-  const segments = [
-    { length: horizontal, x: i + r, y: i, dx, dy: 0 },
-    { length: arc, x: R - r, y: i + r, angle: -Math.PI / 2 },
-    { length: vertical, x: R, y: i + r, dx: 0, dy },
-    { length: arc, x: R - r, y: B - r, angle: 0 },
-    { length: horizontal, x: R - r, y: B, dx: -dx, dy: 0 },
-    { length: arc, x: i + r, y: B - r, angle: Math.PI / 2 },
-    { length: vertical, x: i, y: B - r, dx: 0, dy: -dy },
-    { length: arc, x: i + r, y: i + r, angle: Math.PI },
-  ];
-  const length = 2 * (horizontal + vertical) + 4 * arc;
+U.roundedPath = (w, h, corners) => {
+  const i = 0.65, R = w - i, B = h - i;
+  const factor = Math.min(1,
+    w / (corners[0][0] + corners[1][0]), w / (corners[2][0] + corners[3][0]),
+    h / (corners[0][1] + corners[3][1]), h / (corners[1][1] + corners[2][1]));
+  const [tl, tr, br, bl] = corners.map(([x, y]) => {
+    x = Math.max(0, x * factor - i);
+    y = Math.max(0, y * factor - i);
+    return x && y ? [x, y] : [0, 0];
+  });
+  const segments = [];
+  let d = `M${i + tl[0]} ${i}`, x = i + tl[0], y = i;
+  const line = (toX, toY) => {
+    const fromX = x, fromY = y, dx = toX - x, dy = toY - y;
+    const length = Math.hypot(dx, dy);
+    segments.push({ length, point: (distance) => ({ x: fromX + dx * distance / length, y: fromY + dy * distance / length }) });
+    d += `L${toX} ${toY}`;
+    x = toX; y = toY;
+  };
+  const arc = (cx, cy, [rx, ry], angle, toX, toY) => {
+    if (!rx || !ry) return line(toX, toY);
+    const point = (t) => ({ x: cx + rx * Math.cos(angle + t * Math.PI / 2), y: cy + ry * Math.sin(angle + t * Math.PI / 2) });
+    // Only ellipses need an arc-length table. Compute once per geometry; frames perform
+    // no SVG layout reads and retain constant speed through unequal corner radii.
+    const distances = [0];
+    if (rx !== ry) {
+      let previous = point(0);
+      for (let step = 1; step <= 32; step++) {
+        const next = point(step / 32);
+        distances.push(distances[step - 1] + Math.hypot(next.x - previous.x, next.y - previous.y));
+        previous = next;
+      }
+    }
+    const length = rx === ry ? rx * Math.PI / 2 : distances[32];
+    segments.push({ length, point(distance) {
+      if (rx === ry) return point(distance / length);
+      let lo = 0, hi = 32;
+      while (hi - lo > 1) {
+        const middle = (lo + hi) >> 1;
+        if (distances[middle] < distance) lo = middle;
+        else hi = middle;
+      }
+      return point((lo + (distance - distances[lo]) / (distances[hi] - distances[lo])) / 32);
+    } });
+    d += `A${rx} ${ry} 0 0 1 ${toX} ${toY}`;
+    x = toX; y = toY;
+  };
+  line(R - tr[0], i); arc(R - tr[0], i + tr[1], tr, -Math.PI / 2, R, i + tr[1]);
+  line(R, B - br[1]); arc(R - br[0], B - br[1], br, 0, R - br[0], B);
+  line(i + bl[0], B); arc(i + bl[0], B - bl[1], bl, Math.PI / 2, i, B - bl[1]);
+  line(i, i + tl[1]); arc(i + tl[0], i + tl[1], tl, Math.PI, i + tl[0], i);
+  d += "Z";
+  const length = segments.reduce((total, segment) => total + segment.length, 0);
   return {
     d,
     point(fraction) {
       let distance = fraction * length;
       for (const segment of segments) {
-        if (segment.length && distance <= segment.length) {
-          if (segment.angle !== undefined) {
-            const angle = segment.angle + distance / r;
-            return { x: segment.x + r * Math.cos(angle), y: segment.y + r * Math.sin(angle) };
-          }
-          return { x: segment.x + segment.dx * distance, y: segment.y + segment.dy * distance };
-        }
+        if (segment.length && distance <= segment.length) return segment.point(distance);
         distance -= segment.length;
       }
-      return { x: i + r, y: i };
+      return { x: i + tl[0], y: i };
     },
   };
 };
@@ -412,7 +432,7 @@ U.attachBorder = (element, { shell = false, round = false, scope, defer = false 
   element.append(overlay);
   const item = {
     element, overlay, path, lights, length: 0, elapsed: 0, previousTime: null,
-    lastFrame: -Infinity, patchedPosition: false, previousInlinePosition,
+    patchedPosition: false, previousInlinePosition,
   };
   item.paint = (time) => {
     if (!item.length) return;
@@ -427,19 +447,36 @@ U.attachBorder = (element, { shell = false, round = false, scope, defer = false 
     }
   };
   item.sync = () => {
-    const w = element.offsetWidth,
-      h = element.offsetHeight;
-    if (!w || !h) return;
     const computed = getComputedStyle(element);
-    const corner = computed.borderTopLeftRadius;
+    const sides = ["Top", "Right", "Bottom", "Left"];
+    const borderWidths = sides.map((side) => parseFloat(computed[`border${side}Width`]) || 0);
+    // offsetWidth rounds subpixels, while an absolute 100% overlay starts at the padding
+    // edge. Use one precise border box for the host contour, SVG, masks and moving lights.
+    const [w, h] = [["width", 3, 1, "offsetWidth"], ["height", 0, 2, "offsetHeight"]].map(([axis, start, end, fallback]) => {
+      const value = parseFloat(computed[axis]);
+      return Number.isFinite(value)
+        ? value + (computed.boxSizing === "border-box" ? 0 : [start, end].reduce((sum, side) => sum + borderWidths[side] + (parseFloat(computed[`padding${sides[side]}`]) || 0), 0))
+        : element[fallback];
+    });
+    if (!w || !h) return;
     if (computed.position === "static") {
       item.patchedPosition = true;
       element.style.position = "relative";
     }
-    const r = corner.includes("%")
-      ? (Math.min(w, h) * parseFloat(corner)) / 100
-      : parseFloat(corner) || 0;
-    item.contour = U.roundedPath(w, h, r);
+    const corners = ["TopLeft", "TopRight", "BottomRight", "BottomLeft"].map((corner) => {
+      const values = (computed[`border${corner}Radius`] || computed.borderTopLeftRadius).split(/\s+/);
+      return [w, h].map((size, axis) => {
+        const value = values[axis] || values[0];
+        return (parseFloat(value) || 0) * (value.includes("%") ? size / 100 : 1);
+      });
+    });
+    const geometry = `${w},${h},${corners},${borderWidths}`;
+    if (item.geometry === geometry) return;
+    item.geometry = geometry;
+    overlay.style.inset = borderWidths.map((width) => `${-width}px`).join(" ");
+    overlay.style.width = `calc(100% + ${borderWidths[1] + borderWidths[3]}px)`;
+    overlay.style.height = `calc(100% + ${borderWidths[0] + borderWidths[2]}px)`;
+    item.contour = U.roundedPath(w, h, corners);
     const { d } = item.contour;
     edge.setAttribute("viewBox", `0 0 ${w} ${h}`);
     path.setAttribute("d", d);
@@ -468,13 +505,7 @@ U.attachBorder = (element, { shell = false, round = false, scope, defer = false 
   item.observer.observe(element);
   if (defer) queueMeasurement();
   else item.sync();
-  const unsubscribe = scope?.add(element, (time) => {
-    // Keep the ambient orbit on a slower clock while idle; interaction immediately restores
-    // the full clock rate.
-    if (!element.matches?.(":hover, :focus-within") && time - item.lastFrame < 0.09) return;
-    item.lastFrame = time;
-    item.paint(time);
-  }, !defer);
+  const unsubscribe = scope?.add(element, item.paint, !defer);
   item.destroy = () => {
     item.destroyed = true;
     measurements.delete(item);

@@ -1,19 +1,19 @@
 import * as React from "react";
 import { createRoot } from "react-dom/client";
-import * as UI from "@ad-voice/ui";
-import * as Core from "@ad-voice/ui/core";
-import * as Editor from "@ad-voice/ui/editor";
-import * as Forms from "@ad-voice/ui/forms";
-import * as RouterModule from "@ad-voice/ui/router";
+import * as UI from "@neo-ui-kit/react";
+import * as Core from "@neo-ui-kit/react/core";
+import * as Editor from "@neo-ui-kit/react/editor";
+import * as Forms from "@neo-ui-kit/react/forms";
+import * as RouterModule from "@neo-ui-kit/react/router";
 
 // This file is bundled as a classic script and runs only in an opaque-origin iframe.
 const modules: Record<string, unknown> = {
   react: React,
-  "@ad-voice/ui": UI,
-  "@ad-voice/ui/core": Core,
-  "@ad-voice/ui/editor": Editor,
-  "@ad-voice/ui/forms": Forms,
-  "@ad-voice/ui/router": RouterModule,
+  "@neo-ui-kit/react": UI,
+  "@neo-ui-kit/react/core": Core,
+  "@neo-ui-kit/react/editor": Editor,
+  "@neo-ui-kit/react/forms": Forms,
+  "@neo-ui-kit/react/router": RouterModule,
 };
 const root = createRoot(document.getElementById("root")!);
 const report = (error: unknown) => parent.postMessage({ kind: "ad-preview-error", message: error instanceof Error ? error.message : String(error) }, "*");

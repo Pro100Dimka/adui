@@ -1,4 +1,4 @@
-import { Card, Grid } from "@ad-voice/ui";
+import { Card, Grid } from "@neo-ui-kit/react";
 
 export default function GridExample() {
   return (

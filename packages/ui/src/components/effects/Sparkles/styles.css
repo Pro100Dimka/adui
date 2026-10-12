@@ -2,6 +2,7 @@
 .ad-sparkles {
   --ad-sparkle: var(--ad-neutral-200);
   position: relative;
+  contain: layout;
   display: inline-block;
 }
 .ad-sparkle {

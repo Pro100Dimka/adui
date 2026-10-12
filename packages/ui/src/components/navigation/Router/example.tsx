@@ -1,5 +1,5 @@
-import { Button, LocaleProvider, Stack, Typography, useLocale, useTr } from "@ad-voice/ui";
-import { Router, useRouter, type RouteDefinition } from "@ad-voice/ui/router";
+import { Button, LocaleProvider, Stack, Typography, useLocale, useTr } from "@neo-ui-kit/react";
+import { Router, useRouter, type RouteDefinition } from "@neo-ui-kit/react/router";
 
 const messages: Record<string, Record<string, string>> = {
   en: {

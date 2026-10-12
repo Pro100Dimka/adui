@@ -1,5 +1,6 @@
 import { createElement, type ElementType, useRef } from "react";
 import { usePauseOffscreen } from "../../../core/motion/hooks";
+import { useMotion } from "../../../core/providers/context";
 import { mark, type CommonProps } from "../../../core/base";
 
 export interface TiltProps extends CommonProps {
@@ -19,6 +20,7 @@ export function Tilt({
   ...p
 }: TiltProps) {
   const pauseRef = useRef<HTMLDivElement & HTMLSpanElement>(null);
+  const motion = useMotion();
   usePauseOffscreen(pauseRef);
   const set = (el: HTMLElement, x: number, y: number) => {
     el.style.setProperty("--ad-tilt-x", `${(-y * max).toFixed(2)}deg`);
@@ -32,7 +34,9 @@ export function Tilt({
       ...mark("Tilt", p),
       ref: pauseRef,
       "data-glare": glare || undefined,
+      "data-ad-motion": motion ? undefined : "off",
       onPointerMove: (event: React.PointerEvent<HTMLElement>) => {
+        if (!motion) return;
         const box = event.currentTarget.getBoundingClientRect();
         set(
           event.currentTarget,

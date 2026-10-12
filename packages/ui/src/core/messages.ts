@@ -172,7 +172,7 @@ const rows: Row[] = [
   ["Пружина", "Spring", "Пружина"],
   ["Это не JSON: проверьте файл или вставленный текст.", "This is not JSON: check the file or the pasted text.", "Це не JSON: перевірте файл або вставлений текст."],
   ["В файле нет настроек темы.", "The file holds no theme settings.", "У файлі немає налаштувань теми."],
-  ["Это файл не темы Neo UI.", "This is not a Neo UI theme file.", "Це не файл теми Neo UI."],
+  ["Это файл не темы NEO UI.", "This is not a NEO UI theme file.", "Це не файл теми NEO UI."],
   ["Версия темы {version} не поддерживается.", "Theme version {version} is not supported.", "Версія теми {version} не підтримується."],
   ["токен", "token", "токен"],
   ["токена", "tokens", "токени"],

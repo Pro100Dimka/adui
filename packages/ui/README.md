@@ -1,29 +1,41 @@
-# @ad-voice/ui
+# @neo-ui-kit/react
 
-Neo UI — React + TypeScript UI kit: glass/ruby surfaces, animated neon borders, fields, tabs, dialogs, audio controls and a melody editor.
+Migration: replace `@ad-voice/ui` with `@neo-ui-kit/react` in dependencies and imports, including CSS and `/core`, `/forms`, `/editor`, `/router` subpaths. Install `@neo-ui-kit/react`; component APIs and CSS class names are unchanged. The old package name is not an alias.
+
+NEO UI — React + TypeScript UI kit: glass/ruby surfaces, animated neon borders, fields, tabs, dialogs, audio controls and a melody editor.
 
 ## Install
 
 Live docs: https://pro100dimka.github.io/adui/
 
-The package is installed from its GitHub release; React and ReactDOM are peer dependencies.
+Install the package in your application. React and ReactDOM are peer dependencies; the declared range is React 18.2 through 19.
 
 ```bash
-npm install https://github.com/Pro100Dimka/adui/releases/download/v2.9.0/ad-voice-ui-2.9.0.tgz react react-dom
+npm install @neo-ui-kit/react
 ```
+
+Package: [@neo-ui-kit/react on npm](https://www.npmjs.com/package/@neo-ui-kit/react).
 
 Import the stylesheet once in the app entry point:
 
 ```ts
-import "@ad-voice/ui/styles.css";
+import "@neo-ui-kit/react/styles.css";
 ```
+
+To test repository changes before publishing, run `npm run package` from the repository root and install the resulting archive in a separate application:
+
+```bash
+npm install /path/to/adui/release/neo-ui-kit-react-1.0.1.tgz
+```
+
+Maintainers publish new versions from `Pro100Dimka/adui` using the `release.yml` GitHub Actions workflow, a matching `v<version>` tag, and the `npm-publication` environment. npm trusts its OIDC identity; no `NPM_TOKEN` is required. The workflow checks the project and packed consumer before publishing the tested archive. Published `1.0.0` cannot be overwritten: code and README changes in npm require a new package version. See the [repository release instructions](https://github.com/Pro100Dimka/adui#npm-пакет).
 
 ## Theme
 
 Two colours build the whole palette (a primary scale, a secondary scale and tinted neutrals):
 
 ```tsx
-import { ThemeProvider } from "@ad-voice/ui";
+import { ThemeProvider } from "@neo-ui-kit/react";
 
 <ThemeProvider theme="violet">…</ThemeProvider>            // a ready pair
 <ThemeProvider primary="#2f7bff" secondary="#9cc4ff">…</ThemeProvider>
@@ -33,7 +45,7 @@ import { ThemeProvider } from "@ad-voice/ui";
 ## Usage
 
 ```tsx
-import { Button, Card, Switch, TextField } from "@ad-voice/ui";
+import { Button, Card, Switch, TextField } from "@neo-ui-kit/react";
 
 export function SettingsCard() {
   return (
@@ -48,14 +60,18 @@ export function SettingsCard() {
 }
 ```
 
-Every stateful component works both controlled (`value` + `onValueChange`) and uncontrolled (`defaultValue`).
+Fields that declare `value` / `defaultValue` support controlled and uncontrolled values; checkboxes and switches use `checked` / `defaultChecked`. Dialog supports `open` / `defaultOpen` and `onOpenChange`; Popover requires controlled `open`. See each component's API for its supported state and event names; a change callback reports a user action, while the owner applies the new controlled value.
+
+The package ships ESM only. Import styles once and wrap the UI in `ThemeProvider`; no playground CSS or router is required. `@neo-ui-kit/react/core`, `/forms`, `/editor`, and `/router` share the same provider contexts with the root entry.
+
+The library code is licensed under [MIT](./LICENSE). Bundled third-party materials retain their respective licenses and notices: `dist/fonts/melodix/OFL-PlayfairDisplay.txt` for the font and `dist/components/artwork/QuantumField/UPSTREAM-LICENSE.txt` for Quantum Fields.
 
 ## QuantumField
 
 `QuantumField` is an original, theme-native 3D audio visualization for backgrounds and panels. It renders immediately—there is no Enter gate—and its seven `mode` values are `orbit`, `vortex`, `lattice`, `wave`, `bloom`, `helix`, and `terrain`. Its bounded WebGL renderer uses static particle and filament buffers without post-processing; Canvas 2D is a fallback when WebGL is unavailable. `quality="auto"` limits pixels and particles, and drawing pauses outside the viewport, in hidden tabs, or when the kit's motion setting is off. `interactive` enables deep wheel zoom, local pointer influence, and drag-to-rotate; hovering alone never rotates the whole field. `density`, `speed`, `quality`, `interactive`, and `paused` are optional. Normally its colours follow the nearest `ThemeProvider`; `palette={[primary, secondary]}` overrides one instance.
 
 ```tsx
-import { QuantumField, ThemeProvider } from "@ad-voice/ui";
+import { QuantumField, ThemeProvider } from "@neo-ui-kit/react";
 
 <ThemeProvider primary="#10c99a" secondary="#7cf3d0">
   <QuantumField mode="vortex" quality="auto" aria-label="Audio field" />
@@ -66,7 +82,7 @@ To react to a microphone, request access only from a user click and pass the res
 
 ```tsx
 import { useEffect, useState } from "react";
-import { Button, QuantumField } from "@ad-voice/ui";
+import { Button, QuantumField } from "@neo-ui-kit/react";
 
 function MicrophoneField() {
   const [stream, setStream] = useState<MediaStream | null>(null);
@@ -84,7 +100,7 @@ For a file player, `createQuantumFieldAudio()` provides a small optional transpo
 
 ```tsx
 import { useEffect, useRef, useState } from "react";
-import { Button, FilePicker, QuantumField, createQuantumFieldAudio } from "@ad-voice/ui";
+import { Button, FilePicker, QuantumField, createQuantumFieldAudio } from "@neo-ui-kit/react";
 
 function FileField() {
   const controller = useRef<ReturnType<typeof createQuantumFieldAudio> | null>(null);
@@ -112,13 +128,13 @@ An existing audio engine can also pass its own `AnalyserNode` as `audio`, or a c
 
 Set `pageSize` to enable pagination. `pageSizeOptions` provides footer choices (the initial size is always included), and the footer shows the visible result range. The reset button clears sorting, filters, grouping, search, hidden columns, resized widths, and the chosen page size. See the live `DataTable` example in the documentation for complete column and row definitions.
 
-Click a header to cycle ascending/descending/unsorted; Shift-click adds another sort criterion. `sorting` / `defaultSorting` / `onSortingChange` manage the ordered array of criteria. The existing single-column `sort` API remains supported. `columnOrder` and `columnPinning` have the same controlled/default/change pattern; pinning is `{ left: ["name"], right: ["status"] }`. The Columns menu exposes keyboard-accessible reordering and pinning. `renderRowDetails(row, index)` is called only for expanded, mounted rows; `expandedRows` contains stable row keys. `renderRowActions` adds an isolated actions cell (`rowActionsWidth` defaults to 96px). Enable `rowNumbers` and `densityToggle` as needed.
+Click a header to cycle ascending/descending/unsorted; Shift-click adds another sort criterion. `sorting` / `defaultSorting` / `onSortingChange` manage the ordered array of criteria. The existing single-column `sort` API remains supported. `columnOrder` and `columnPinning` have the same controlled/default/change pattern; pinning is `{ left: ["name"], right: ["status"] }`. The Columns menu exposes keyboard-accessible reordering and pinning. `renderRowDetails(row, index)` is called only for expanded, mounted rows; `expandedRows` contains stable row keys. `renderRowActions` adds an isolated actions cell (`rowActionsWidth` defaults to 120px). Enable `rowNumbers` and `densityToggle` as needed.
 
 For a remote table, supply only the current page and control the state used by your data client:
 
 ```tsx
 import { useState } from "react";
-import { DataTable, type DataTablePagination, type DataTableSort } from "@ad-voice/ui";
+import { DataTable, type DataTablePagination, type DataTableSort } from "@neo-ui-kit/react";
 
 type Person = { id: string; name: string };
 const columns = [{ key: "name", title: "Name" }];
@@ -155,16 +171,43 @@ For large tables, use `pageSize` or opt into `virtualize` to bound mounted rows.
 ## Entry points
 
 ```ts
-import { Button, Card, Dialog, AudioPlayer } from "@ad-voice/ui";
-import { PianoRollGrid } from "@ad-voice/ui/editor";
-import { Router } from "@ad-voice/ui/router";
-import { Form, FormFields, useForm } from "@ad-voice/ui/forms";
-import { ThemeProvider, useMotion } from "@ad-voice/ui/core";
+import { Button, Card, Dialog, AudioPlayer } from "@neo-ui-kit/react";
+import { PianoRoll } from "@neo-ui-kit/react/editor";
+import { Router } from "@neo-ui-kit/react/router";
+import { Form, FormFields, useForm } from "@neo-ui-kit/react/forms";
+import { ThemeProvider, useMotion } from "@neo-ui-kit/react/core";
 ```
 
 ## RotaryKnob
 
 Canvas-rendered volume knob. Drag near the edge to rotate, drag from the center to move linearly, click the outer scale to jump. Wheel and arrow keys change the value, Shift gives a fine step, PageUp/PageDown change by 10, Home/End set 0/100, Escape cancels a drag, double-click resets. `onValueChange` fires while adjusting, `onValueCommit` after the gesture. `readOnly` turns it into a gauge.
+
+## 1.0.1 release notes
+
+- Clarifies npm installation and documents GitHub Actions trusted publishing through OIDC.
+- Corrects the documented DataTable `rowActionsWidth` default to 120px.
+- Runtime code is unchanged from 1.0.0.
+
+## 1.0.0 hardening notes
+
+Version 1.0.0 is the new NEO UI starting point. Rebuild the local archive after changing source files.
+
+- React 18 element refs now reach their public DOM targets. Controlled fields and RotaryKnob keep the supplied value until their owner accepts a change.
+- Nested layers close in order with Escape. Dialog restores focus, discards obsolete async confirmations, and keeps actions available in narrow containers.
+- Fields preserve explicit accessible names and descriptions. Select applies `style` / `className` to its layout wrapper and `id` / `data-*` to its trigger; text fields target their native input. Compound pickers retain their existing outer `id` / `data-*` location.
+- Select and ColorPicker button names include their rendered value or placeholder after the field label, including explicit `aria-label` / `aria-labelledby`. Exact accessible-name queries should include that value; external label references retain priority over `aria-label`.
+- AnimatedBorder follows independent elliptical corner radii, resizes without repeated contour work, resumes after motion preference changes, and does not enlarge scroll geometry. Visible borders follow the shared animation cadence; this improves smoothness at a higher CPU cost than the previous 10fps idle path.
+- Border overlays and moving lights share the exact border box, including fractional sizes, asymmetric borders, scrolling and transforms.
+- DataTable fills its container with pinned columns, keeps sorting/filtering/select-all visible in its narrow card layout, and resets density and details with the rest of the view. The default row-actions width is now 120px (previously 96px); set `rowActionsWidth` explicitly to retain a custom layout.
+- Icon and Loader accept `xs`, `sm`, `md`, `lg` alongside their existing numeric/CSS-length sizes. RotaryKnob fits narrow containers throughout rotation; documentation uses named size presets and NumberField for numeric parameters.
+- Badge text follows the theme foreground for readable status labels in light and dark schemes. StatusIndicator's offline text rule is scoped to that component.
+- `AudioPlayer.onVolumeChange` is additive. Pair it with `volume` when an external audio engine owns playback.
+- Explicit empty Waveform/Sparkline arrays now render empty data. Omit the data prop if you want the demonstration shape.
+- PianoRoll cancellation reports zero offsets before `onNoteDragEnd`. Apply offsets relative to the gesture start to restore a cancelled edit.
+- SplitButton `items` now uses the Menu item contract. Invalid item shapes that slipped through the previous `any[]` type must be corrected.
+- The root entry exports `FormProps` and `FormFieldsProps`. Artwork declarations work without `resolveJsonModule` or `skipLibCheck` in the consuming app.
+
+Repository evidence, browser runners, before/after measurements and coverage limits are recorded in `evidence/`. Unit and renderer checks complement actual browser geometry and interaction checks; they do not certify untested physical devices or browser engines.
 
 ## Quantum Field experience
 

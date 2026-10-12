@@ -4,6 +4,7 @@ html:has(.ad-dialog[open]) {
 }
 .ad-dialog {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   grid-template-rows: auto auto auto;
   position: fixed;
   margin: auto;
@@ -21,6 +22,16 @@ html:has(.ad-dialog[open]) {
   --ad-material-bg:
     radial-gradient(26rem circle at var(--ad-spot-x, -40rem) var(--ad-spot-y, -40rem), rgb(from var(--ad-primary) r g b / 0.11), transparent 60%),
     var(--ad-surface-dialog);
+}
+.ad-dialog > .ad-header {
+  flex-wrap: nowrap;
+  align-items: flex-start;
+}
+.ad-dialog > .ad-header .ad-header-copy {
+  flex-basis: 0;
+}
+.ad-dialog > .ad-header .ad-header-actions {
+  flex: none;
 }
 /* The art layer spans the window under its content and never takes input. */
 .ad-dialog-art {

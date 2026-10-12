@@ -1,0 +1,4 @@
+
+> @ad-voice/ui@2.9.3 typecheck
+> tsc -p tsconfig.json
+

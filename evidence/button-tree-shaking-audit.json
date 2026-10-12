@@ -1,0 +1,57 @@
+{
+  "scope": "Button-only consumer using the installed local tarball public root export",
+  "environment": {
+    "platform": "win32",
+    "node": "v22.18.0",
+    "bundler": "esbuild",
+    "format": "esm",
+    "target": "es2022",
+    "minify": true,
+    "external": [
+      "react",
+      "react-dom",
+      "react/jsx-runtime"
+    ],
+    "css": "not included in this JavaScript-only measurement"
+  },
+  "before": {
+    "bytes": 470918,
+    "gzipBytes": 90926,
+    "editorRetained": false,
+    "quantumRendererRetained": false
+  },
+  "after": {
+    "bytes": 75960,
+    "gzipBytes": 16767,
+    "editorRetained": false,
+    "quantumRendererRetained": false,
+    "unrelatedArtworkRetained": false,
+    "audioPlayerRetained": false
+  },
+  "reduction": {
+    "bytes": 394958,
+    "percent": 83.8698032353828,
+    "gzipBytes": 74159,
+    "gzipPercent": 81.55972989024042
+  },
+  "causes": [
+    "Unannotated forwardRef(Select) preserved its function closure, including Avatar -> HostSeal -> illustrations JSON.",
+    "Unannotated memo(TransportControls) retained AudioPlayer and Waveform.",
+    "Other unannotated React component factories retained their unused closures after entry points were prebundled into shared chunks."
+  ],
+  "fix": "10 PURE annotations on side-effect-free React forwardRef/memo factory calls; no data removed, no runtime lifecycle changes, no bundler/global purity override.",
+  "red": [
+    "controls-tree-shaking-red.json",
+    "button-packed-tree-shaking-red.txt"
+  ],
+  "green": [
+    "controls-final-green.json",
+    "package-consumer-react19-22.json",
+    "button-built-tree-shaking-green.json"
+  ],
+  "positiveControl": "Built Avatar+Illustration import still retains host and planet assets. See button-built-tree-shaking-green.json.",
+  "limitations": [
+    "No application runtime speed or physical-device speedup claimed.",
+    "Remaining shared-chunk initializers mean the built Button package is larger than direct source bundling; no blanket purity assumptions applied."
+  ]
+}

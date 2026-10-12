@@ -1,4 +1,4 @@
-import { Sparkline, Stack, Typography } from "@ad-voice/ui";
+import { Sparkline, Stack, Typography } from "@neo-ui-kit/react";
 
 export default function SparklineExample() {
   return (

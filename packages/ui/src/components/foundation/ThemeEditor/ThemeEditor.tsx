@@ -1,6 +1,6 @@
 import { plural, useLocale, useTr } from "../../../core/i18n";
-import { useLayoutEffect, useRef, useState } from "react";
-import { copyText, mark, useControllable, type CommonProps } from "../../../core/base";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { copyText, downloadFile, mark, useControllable, type CommonProps } from "../../../core/base";
 import { Button } from "../../controls/Button/Button";
 import { ColorPicker } from "../../controls/ColorPicker/ColorPicker";
 import { FilePicker } from "../../controls/FilePicker/FilePicker";
@@ -41,16 +41,6 @@ const neutralStrip = ["neutral-950", "neutral-900", "neutral-850", "neutral-800"
 const tokensWord = (n: number, locale: string, translate: ReturnType<typeof useTr>) =>
   `${n} ${plural(n, translate("токен"), translate("токена"), translate("токенов"), locale)}`;
 
-/** Downloads text as a file. */
-const download = (name: string, text: string) => {
-  const url = URL.createObjectURL(new Blob([text], { type: "application/json" }));
-  const link = document.createElement("a");
-  link.href = url;
-  link.download = name;
-  link.click();
-  setTimeout(() => URL.revokeObjectURL(url), 0);
-};
-
 /**
  * Editing a theme. Simple: a ready theme and two colours, everything else is calculated.
  * Advanced: every token — palette, statuses, shape, type, motion — by hand, with search and
@@ -68,6 +58,8 @@ export function ThemeEditor({ value: controlled, defaultValue = defaultThemeConf
   const [pasteOpen, setPasteOpen] = useState(false);
   const [pasted, setPasted] = useState("");
   const pasteAnchor = useRef<HTMLButtonElement>(null);
+  const importVersion = useRef(0);
+  useEffect(() => () => { importVersion.current += 1; }, []);
 
   // The values the theme gives every token right now, so untouched tokens show what they are.
   useLayoutEffect(() => {
@@ -95,6 +87,7 @@ export function ThemeEditor({ value: controlled, defaultValue = defaultThemeConf
     update({ tokens: next });
   };
   const load = (text: string) => {
+    importVersion.current += 1;
     try {
       setConfig(parseTheme(text, locale));
       setNotice({ tone: "success", text: tr("Тема загружена.") });
@@ -119,15 +112,24 @@ export function ThemeEditor({ value: controlled, defaultValue = defaultThemeConf
           ]}
         />
         <span className="ad-theme-editor-actions">
-          <Button size="sm" icon="download" onClick={() => download(fileName, exportTheme(config))}>{tr("Экспорт")}</Button>
+          <Button size="sm" icon="download" onClick={() => downloadFile(fileName, exportTheme(config))}>{tr("Экспорт")}</Button>
           <IconButton size="sm" icon="copy" label={tr("Скопировать JSON темы")} onClick={async () => {
             const done = await copyText(exportTheme(config));
             setNotice(done ? { tone: "success", text: tr("JSON темы скопирован.") } : { tone: "error", text: tr("Не удалось скопировать.") });
           }} />
           <FilePicker size="sm" icon="upload" label={tr("Импорт")} description=" " accept=".json,application/json"
-            onFiles={async ([file]) => file && load(await file.text())} />
+            onFiles={async ([file]) => {
+              if (!file) return;
+              const version = ++importVersion.current;
+              try {
+                const text = await file.text();
+                if (version === importVersion.current) load(text);
+              } catch (error) {
+                if (version === importVersion.current) setNotice({ tone: "error", text: error instanceof Error ? error.message : tr("Не удалось прочитать тему.") });
+              }
+            }} />
           <IconButton ref={pasteAnchor} size="sm" icon="document" label={tr("Вставить JSON темы")} aria-expanded={pasteOpen} onClick={() => setPasteOpen((v) => !v)} />
-          <IconButton size="sm" variant="ghost" icon="reset" label={tr("Сбросить тему")} onClick={() => { setConfig(defaultThemeConfig); setNotice(undefined); }} />
+          <IconButton size="sm" variant="ghost" icon="reset" label={tr("Сбросить тему")} onClick={() => { importVersion.current += 1; setConfig(defaultThemeConfig); setNotice(undefined); }} />
         </span>
       </div>
       <Popover open={pasteOpen} onOpenChange={setPasteOpen} anchorRef={pasteAnchor} align="end" label={tr("Вставить тему")} className="ad-theme-editor-paste">
@@ -166,7 +168,7 @@ export function ThemeEditor({ value: controlled, defaultValue = defaultThemeConf
             if (!rows.length) return null;
             const own = rows.filter((token) => tokens[token.name] !== undefined).length;
             return (
-              <CollapsibleSection key={group.title} title={tr(group.title)} defaultOpen={index < 2 || !!needle}
+              <CollapsibleSection key={group.title} title={tr(group.title)} defaultOpen={index < 2} open={needle ? true : undefined}
                 description={own ? tr("изменено: {own} из {total}", { own, total: rows.length }) : tokensWord(rows.length, locale, tr)}>
                 <div className="ad-theme-editor-tokens">
                   {rows.map((token) => {

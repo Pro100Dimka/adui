@@ -1,4 +1,4 @@
-import { tr, useTr } from "../../../core/i18n";
+import { useTr } from "../../../core/i18n";
 import { useId, useLayoutEffect, useRef, useState } from "react";
 import { mark, useControllable } from "../../../core/base";
 import { Button } from "../../controls/Button/Button";
@@ -25,13 +25,22 @@ export const Dialog = (p: DialogProps) => {
     [pending, setPending] = useState(false),
     [error, setError] = useState<string>();
   const ref = useRef<HTMLDialogElement>(null),
+    confirmation = useRef(0),
+    confirming = useRef(false),
     // Where the press began: a click closes the window only when it both starts and ends outside it.
     pressedOutside = useRef(false),
     titleId = useId(),
     descId = useId();
   useLayoutEffect(() => {
+    confirming.current = false;
+    setPending(false);
+    setError(undefined);
+    return () => { confirmation.current++; confirming.current = false; };
+  }, [open]);
+  useLayoutEffect(() => {
     const d = ref.current;
     if (!d) return;
+    const opener = document.activeElement instanceof HTMLElement ? document.activeElement : null;
     // Environments without the modal dialog API (jsdom) just toggle the open attribute.
     const modal = typeof d.showModal === "function";
     if (open && !d.open) {
@@ -44,6 +53,9 @@ export const Dialog = (p: DialogProps) => {
     return () => {
       if (d.open && modal) d.close();
       else d.removeAttribute("open");
+      // React may detach the dialog before native close() can restore its remembered focus.
+      if (opener?.isConnected && (document.activeElement === document.body || d.contains(document.activeElement)))
+        opener.focus();
     };
   }, [open]);
   if (!open) return null;
@@ -113,6 +125,9 @@ export const Dialog = (p: DialogProps) => {
               variant={p.danger ? "danger" : "primary"}
               loading={pending}
               onClick={async () => {
+                if (confirming.current) return;
+                confirming.current = true;
+                const operation = ++confirmation.current;
                 setError(undefined);
                 try {
                   const outcome = p.onConfirm?.();
@@ -122,15 +137,19 @@ export const Dialog = (p: DialogProps) => {
                     return;
                   }
                   setPending(true);
-                  if ((await outcome) !== false) setOpen(false);
+                  if ((await outcome) !== false && confirmation.current === operation) setOpen(false);
                 } catch (e) {
+                  if (confirmation.current !== operation) return;
                   setError(
                     e instanceof Error
                       ? e.message
                       : tr("Не удалось выполнить действие"),
                   );
                 } finally {
-                  setPending(false);
+                  if (confirmation.current === operation) {
+                    confirming.current = false;
+                    setPending(false);
+                  }
                 }
               }}
             >

@@ -1,4 +1,4 @@
-import { Compare, Playground, U, jsx } from "../../../dev/exampleHelpers";
+import { Compare, Playground, U, jsx, sizes } from "../../../dev/exampleHelpers";
 
 const names = ["mic", "headphones", "music", "wave", "settings", "trash"];
 
@@ -7,13 +7,13 @@ export default function IconExample() {
     <Playground
       knobs={{
         surface: { options: ["none", "tile"], value: "none" },
-        size: { options: ["1rem", "1.5rem", "2rem"], value: "1.5rem" },
+        size: { options: sizes, value: "md" },
       }}
       code={(v) =>
         jsx("Icon", {
           name: "mic",
           surface: v.surface === "none" ? undefined : v.surface,
-          size: v.size === "1.5rem" ? undefined : v.size,
+          size: v.size,
         })
       }
       extra={

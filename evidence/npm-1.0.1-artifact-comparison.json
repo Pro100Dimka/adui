@@ -1,0 +1,13 @@
+{
+  "before": "@neo-ui-kit/react@1.0.0 (registry)",
+  "after": "@neo-ui-kit/react@1.0.1 (local tarball)",
+  "totalFiles": 270,
+  "byteIdentical": 268,
+  "changedFiles": [
+    "package.json",
+    "README.md"
+  ],
+  "runtimeAssetsTypesAndLicensesByteIdentical": true,
+  "sha256": "bb84a4d3c3ace526e183fe7469026b259634b76dd9c3f357110eab66a788249d",
+  "checkedAt": "2026-10-12T12:51:12.144Z"
+}

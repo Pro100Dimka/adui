@@ -7,7 +7,7 @@
 .ad-theme-picker > .ad-button {
   flex: none;
 }
-.ad-theme-picker > .ad-button[aria-pressed="true"] {
+.ad-theme-picker > .ad-button[aria-checked="true"] {
   --ad-btn-border-a: var(--ad-pink);
   --ad-btn-glow: rgb(from var(--ad-primary) r g b / 0.42);
 }
@@ -34,10 +34,10 @@
 .ad-theme-picker > .ad-button:hover .ad-theme-swatch {
   transform: translateY(-0.15em) scale(1.25);
 }
-.ad-theme-picker > .ad-button[aria-pressed="true"] .ad-theme-swatch {
+.ad-theme-picker > .ad-button[aria-checked="true"] .ad-theme-swatch {
   position: relative;
 }
-.ad-theme-picker > .ad-button[aria-pressed="true"] .ad-theme-swatch::after {
+.ad-theme-picker > .ad-button[aria-checked="true"] .ad-theme-swatch::after {
   content: "";
   position: absolute;
   inset: 0;
@@ -81,7 +81,7 @@
   cursor: not-allowed;
   filter: grayscale(0.5);
 }
-.ad-theme-card[aria-pressed="true"] {
+.ad-theme-card[aria-checked="true"] {
   border-color: color-mix(in oklch, var(--ad-theme-card) 75%, #fff);
   box-shadow:
     0 0 0.35rem rgb(from var(--ad-theme-card) r g b / 0.58),

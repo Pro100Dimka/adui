@@ -1,0 +1,14 @@
+
+> @neo-ui-kit/react@1.0.0 test
+> vitest run tests/base.test.ts -t documents the npm trusted publisher|documents the actual DataTable
+
+
+ RUN  v3.2.7 D:/Git/adui/packages/ui
+
+ ✓ tests/base.test.ts (81 tests | 79 skipped) 3ms
+
+ Test Files  1 passed (1)
+      Tests  2 passed | 79 skipped (81)
+   Start at  15:39:54
+   Duration  1.55s (transform 540ms, setup 0ms, collect 1.35s, tests 3ms, environment 0ms, prepare 66ms)
+

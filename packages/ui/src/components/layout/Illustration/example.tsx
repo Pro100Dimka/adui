@@ -1,4 +1,4 @@
-import { Grid, Illustration } from "@ad-voice/ui";
+import { Grid, Illustration } from "@neo-ui-kit/react";
 
 const height = { height: "clamp(9rem, 26dvh, 15rem)" };
 

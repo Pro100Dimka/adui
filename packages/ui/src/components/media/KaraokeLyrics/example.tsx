@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { KaraokeLyrics, useDecoration, type LyricWord } from "@ad-voice/ui";
+import { KaraokeLyrics, useDecoration, type LyricWord } from "@neo-ui-kit/react";
 
 const lines = [["Ночь", "горит", "огнями"], ["и", "нас", "зовёт"], ["домой", "сквозь", "тьму"]];
 const wordSeconds = 0.6;

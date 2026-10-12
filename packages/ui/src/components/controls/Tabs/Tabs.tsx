@@ -1,4 +1,4 @@
-import { tr, useTr } from "../../../core/i18n";
+import { useTr } from "../../../core/i18n";
 import { createResizeObserver } from "../../../core/environment";
 import { useLayoutEffect, useRef, useState } from "react";
 import {
@@ -21,11 +21,16 @@ export function Tabs<V extends string = string>(p: TabsProps<V>) {
     ] as TabItem<V>[]);
   const [value, setValue] = useControllable<V>(
     p.value,
-    p.defaultValue ?? items[0]?.value ?? ("" as V),
+    p.defaultValue ?? items.find(item => !item.disabled)?.value ?? ("" as V),
     p.onValueChange,
   );
   const buttons = useRef<Array<HTMLButtonElement | null>>([]);
-  const selected = items.findIndex((item) => item.value === value);
+  const selected = items.findIndex((item) => item.value === value && !item.disabled);
+  const firstEnabled = items.findIndex(item => !item.disabled);
+  const fallback = items[firstEnabled]?.value;
+  useLayoutEffect(() => {
+    if (p.value === undefined && selected < 0 && fallback !== undefined) setValue(fallback);
+  }, [p.value, selected, fallback, setValue]);
 
   // The blade follows the selected tab and is told when it is travelling, to squash and flare.
   const [place, setPlace] = useState<TokenStyle>();
@@ -112,6 +117,7 @@ export function Tabs<V extends string = string>(p: TabsProps<V>) {
           disabled={item.disabled}
           size={p.size}
           selected={item.value === value}
+          tabIndex={index === (selected < 0 ? firstEnabled : selected) ? 0 : -1}
           onClick={() => setValue(item.value)}
         >
           {item.label}

@@ -8,10 +8,10 @@ export type Locale = "ru" | "en" | "uk" | (string & {});
 export type Messages = Record<string, string>;
 
 let current: Locale = "ru";
-const extra: Record<string, Messages> = {};
+const extra: Record<string, Messages> = Object.create(null);
 
 const fill = (text: string, vars?: Record<string, string | number>) =>
-  vars ? text.replace(/\{(\w+)\}/g, (all, name: string) => (name in vars ? String(vars[name]) : all)) : text;
+  vars ? text.replace(/\{(\w+)\}/g, (all, name: string) => (Object.hasOwn(vars, name) ? String(vars[name]) : all)) : text;
 
 /**
  * A text of the library in the current language: `tr("Закрыть")` is "Close" in English.
@@ -22,8 +22,8 @@ export function tr(text: string, vars?: Record<string, string | number>): string
 }
 
 export function translate(locale: Locale, text: string, vars?: Record<string, string | number>, messages?: Messages): string {
-  const own = messages?.[text] ?? extra[locale]?.[text];
-  const known = own ?? builtIn[locale]?.[text];
+  const dictionaries = [messages, extra[locale], Object.hasOwn(builtIn, locale) ? builtIn[locale] : undefined];
+  const known = dictionaries.find(dictionary => dictionary && Object.hasOwn(dictionary, text))?.[text];
   return fill(known ?? text, vars);
 }
 
@@ -52,11 +52,19 @@ export function plural(n: number, one: string, few: string, many: string, locale
 
 const LocaleContext = createContext<{ locale: Locale; messages?: Messages } | null>(null);
 
+export interface LocaleProviderProps {
+  /** Built-in ru, en or uk, or a custom locale with its own messages. */
+  locale: Locale;
+  /** Overrides apply only to this provider's descendants. Keys are Russian source texts. */
+  messages?: Messages;
+  children?: ReactNode;
+}
+
 /**
  * Sets the language of every library text inside it. Changing `locale` re-renders the tree
  * under it in the new language; `messages` overrides translations only in this tree.
  */
-export function LocaleProvider({ locale, messages, children }: { locale: Locale; messages?: Messages; children?: ReactNode }) {
+export function LocaleProvider({ locale, messages, children }: LocaleProviderProps) {
   const value = useMemo(() => ({ locale, messages }), [locale, messages]);
   return <LocaleContext.Provider value={value}>{children}</LocaleContext.Provider>;
 }

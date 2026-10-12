@@ -4,12 +4,13 @@
   display: flex;
   align-items: center;
   gap: 0.8rem;
-  min-width: min(18rem, 90vw);
+  min-width: min(18rem, 100%);
+  max-width: 100%;
   font-size: var(--ad-font-size-body-sm);
   font-weight: 600;
   padding: 0.7rem 1.2rem 0.75rem 0.7rem;
   border: 0.0625rem solid color-mix(in srgb, var(--ad-tone) 40%, transparent);
-  border-radius: 999rem;
+  border-radius: 2rem;
   background:
     radial-gradient(
       60% 140% at 0 50%,
@@ -23,6 +24,10 @@
   backdrop-filter: blur(1rem);
   overflow: hidden;
   animation: ad-toast-in 0.55s cubic-bezier(0.34, 1.5, 0.5, 1) both;
+}
+.ad-toast > :nth-child(2) {
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 .ad-toast-icon {
   display: grid;
@@ -50,6 +55,7 @@
   left: 50%;
   translate: -50% 0;
   z-index: 9999;
+  min-width: min(18rem, 90vw);
   max-width: min(90vw, 46.875rem);
 }
 .ad-toast-timer {

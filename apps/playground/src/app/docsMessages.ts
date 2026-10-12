@@ -11,6 +11,8 @@ const rows: Row[] = [
   ["Оформление", "Appearance", "Оформлення"],
   ["Светлая", "Light", "Світла"],
   ["Тёмная", "Dark", "Темна"],
+  ["Включить светлую тему", "Switch to light theme", "Увімкнути світлу тему"],
+  ["Включить тёмную тему", "Switch to dark theme", "Увімкнути темну тему"],
   ["Шрифт заголовков", "Heading font", "Шрифт заголовків"],
   ["Шрифт текста", "Text font", "Шрифт тексту"],
   ["Масштаб текста", "Text scale", "Масштаб тексту"],
@@ -28,6 +30,7 @@ const rows: Row[] = [
   ["компонентов", "components", "компонентів"],
   ["категорий", "categories", "категорій"],
   ["Установка", "Install", "Встановлення"],
+  ["Установите пакет в приложении и подключите стили один раз в точке входа.", "Install the package in your application and import the stylesheet once in the entry point.", "Установіть пакет у застосунку та підключіть стилі один раз у точці входу."],
   ["Компоненты, от которых не оторвать глаз", "Components you can’t take your eyes off", "Компоненти, від яких не відвести очей"],
   ["Здесь вся библиотека вживую. Наведите на понравившийся компонент и откройте его: там настройки, код и API.", "The whole library, live. Hover a component you like and open it: settings, code and API are inside.", "Уся бібліотека наживо. Наведіть на компонент, що сподобався, і відкрийте його: там налаштування, код і API."],
   ["Обзор", "Overview", "Огляд"],
@@ -81,6 +84,12 @@ const rows: Row[] = [
   ["Эффекты и арт", "Effects and art", "Ефекти й арт"],
   ["Анимации, свет, неон, процедурные пейзажи, планеты, спектры и иллюстрации.", "Motion, light, neon, procedural landscapes, planets, spectra and illustrations.", "Анімації, світло, неон, процедурні пейзажі, планети, спектри та ілюстрації."],
   // component descriptions
+  ["Язык встроенных текстов и собственные переводы внутри дерева React. Поддерживает ru, en, uk и вложенные провайдеры; пользовательский контент переводится отдельно.", "The language of built-in text and custom translations within a React tree. Supports ru, en, uk and nested providers; application content is translated separately.", "Мова вбудованих текстів і власні переклади всередині дерева React. Підтримує ru, en, uk та вкладені провайдери; користувацький вміст перекладається окремо."],
+  ["Доверенное SVG-дерево из React-ready JSON: независимые ID и ссылки для каждого экземпляра, доступное имя через label. Геометрия задаётся в node.props, размер — в style; компонент не очищает недоверенные данные.", "A trusted SVG tree from React-ready JSON: independent IDs and references for each instance, with an accessible name through label. Set geometry in node.props and size in style; the component does not sanitize untrusted data.", "Довірене SVG-дерево з React-ready JSON: незалежні ID та посилання для кожного екземпляра, доступне ім’я через label. Геометрія задається в node.props, розмір — у style; компонент не очищує недовірені дані."],
+  ["Общий логический контрол: Checkbox или Switch с управляемым и автономным состоянием.", "A shared boolean control: Checkbox or Switch with controlled or internal state.", "Спільний логічний контрол: Checkbox або Switch із керованим чи автономним станом."],
+  ["Нативное аудиореактивное поле частиц с режимами, ограничением качества и поддержкой уменьшенного движения.", "A native audio-reactive particle field with selectable modes, quality limits and reduced-motion support.", "Нативне аудіореактивне поле частинок із режимами, обмеженням якості та підтримкою зменшеного руху."],
+  ["Полный аудиовизуализатор Quantum Fields (MIT) в изолированном iframe; интерактивная сцена с управлением звуком и режимами.", "The complete Quantum Fields audio visualizer (MIT) in an isolated iframe: an interactive scene with audio and mode controls.", "Повний аудіовізуалізатор Quantum Fields (MIT) в ізольованому iframe; інтерактивна сцена з керуванням звуком і режимами."],
+  ['Иконка; surface="tile" добавляет контейнер вместо отдельного IconTile.', 'An icon; surface="tile" adds a container without a separate IconTile.', 'Іконка; surface="tile" додає контейнер без окремого IconTile.'],
   ["Неоновая база данных с бегущими орбитами и искрами — для хранилища и данных.", "A neon database with running orbits and sparks — for storage and data.", "Неонова база даних із біжучими орбітами та іскрами — для сховища й даних."],
   ["Процедурный ночной пейзаж: туманность, планета со светящейся кромкой цвета темы и горные хребты.", "A procedural night landscape: a nebula, a planet with a glowing rim in the theme colour and mountain ridges.", "Процедурний нічний пейзаж: туманність, планета зі світним краєм кольору теми та гірські хребти."],
   ["Пучок текущих неоновых нитей со звёздами и бегущими по ним кометами света; форма «twist» или горный хребет «ridge» — живой фон карточек и шапок.", "A bundle of flowing neon strands with stars and comets of light running along them; a “twist” or a mountain “ridge” — a living backdrop for cards and headers.", "Пучок плинних неонових ниток із зірками та кометами світла, що біжать ними; форма «twist» або гірський хребет «ridge» — живе тло карток і шапок."],
@@ -245,5 +254,6 @@ for (const [ru, en, uk] of rows) {
 }
 for (const [en, ru, uk] of english) {
   docsMessages.ru[en] = ru;
+  docsMessages.en[en] = en;
   docsMessages.uk[en] = uk;
 }

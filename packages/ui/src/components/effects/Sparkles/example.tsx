@@ -1,4 +1,4 @@
-import { Badge, Sparkles, Stack, Typography } from "@ad-voice/ui";
+import { Badge, Sparkles, Stack, Typography } from "@neo-ui-kit/react";
 
 export default function SparklesExample() {
   return (

@@ -12,8 +12,25 @@
 .ad-marquee[data-reverse] .ad-marquee-track {
   animation-direction: reverse;
 }
-.ad-marquee:hover .ad-marquee-track {
+.ad-marquee:is(:hover, :focus-within) .ad-marquee-track {
   animation-play-state: paused;
+}
+.ad-marquee[data-static] {
+  mask: none;
+}
+.ad-marquee[data-static] .ad-marquee-track {
+  animation: none;
+  width: 100%;
+}
+.ad-marquee[data-static] .ad-marquee-group {
+  flex: 1;
+  min-width: 0;
+  flex-wrap: wrap;
+  padding: 0;
+  overflow-wrap: anywhere;
+}
+.ad-marquee[data-static] .ad-marquee-group[aria-hidden] {
+  display: none;
 }
 .ad-marquee-group {
   display: flex;

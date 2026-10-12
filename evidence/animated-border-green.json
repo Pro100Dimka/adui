@@ -1,0 +1,534 @@
+{
+  "passed": 32,
+  "failed": 0,
+  "results": [
+    {
+      "name": "plain orbit matches rendered contour",
+      "passed": true,
+      "actual": {
+        "name": "plain",
+        "host": {
+          "x": 30,
+          "y": 30,
+          "width": 240,
+          "height": 120
+        },
+        "overlay": {
+          "x": 30,
+          "y": 30,
+          "width": 240,
+          "height": 120
+        },
+        "maxOrbitError": 0.014124984766548242
+      }
+    },
+    {
+      "name": "plain overlay covers the full border box",
+      "passed": true,
+      "actual": {
+        "name": "plain",
+        "host": {
+          "x": 30,
+          "y": 30,
+          "width": 240,
+          "height": 120
+        },
+        "overlay": {
+          "x": 30,
+          "y": 30,
+          "width": 240,
+          "height": 120
+        },
+        "maxOrbitError": 0.014124984766548242
+      }
+    },
+    {
+      "name": "card orbit matches rendered contour",
+      "passed": true,
+      "actual": {
+        "name": "card",
+        "host": {
+          "x": 340,
+          "y": 30,
+          "width": 240,
+          "height": 120
+        },
+        "overlay": {
+          "x": 340,
+          "y": 30,
+          "width": 240,
+          "height": 120
+        },
+        "maxOrbitError": 0.014132546655802457
+      }
+    },
+    {
+      "name": "card overlay covers the full border box",
+      "passed": true,
+      "actual": {
+        "name": "card",
+        "host": {
+          "x": 340,
+          "y": 30,
+          "width": 240,
+          "height": 120
+        },
+        "overlay": {
+          "x": 340,
+          "y": 30,
+          "width": 240,
+          "height": 120
+        },
+        "maxOrbitError": 0.014132546655802457
+      }
+    },
+    {
+      "name": "asymmetric orbit matches rendered contour",
+      "passed": true,
+      "actual": {
+        "name": "asymmetric",
+        "host": {
+          "x": 650,
+          "y": 30,
+          "width": 240,
+          "height": 120
+        },
+        "overlay": {
+          "x": 650,
+          "y": 30,
+          "width": 240,
+          "height": 120
+        },
+        "maxOrbitError": 0.015005966424994624
+      }
+    },
+    {
+      "name": "asymmetric overlay covers the full border box",
+      "passed": true,
+      "actual": {
+        "name": "asymmetric",
+        "host": {
+          "x": 650,
+          "y": 30,
+          "width": 240,
+          "height": 120
+        },
+        "overlay": {
+          "x": 650,
+          "y": 30,
+          "width": 240,
+          "height": 120
+        },
+        "maxOrbitError": 0.015005966424994624
+      }
+    },
+    {
+      "name": "ellipse orbit matches rendered contour",
+      "passed": true,
+      "actual": {
+        "name": "ellipse",
+        "host": {
+          "x": 30,
+          "y": 205,
+          "width": 240,
+          "height": 90
+        },
+        "overlay": {
+          "x": 30,
+          "y": 205,
+          "width": 240,
+          "height": 90
+        },
+        "maxOrbitError": 0.03249060340967873
+      }
+    },
+    {
+      "name": "ellipse overlay covers the full border box",
+      "passed": true,
+      "actual": {
+        "name": "ellipse",
+        "host": {
+          "x": 30,
+          "y": 205,
+          "width": 240,
+          "height": 90
+        },
+        "overlay": {
+          "x": 30,
+          "y": 205,
+          "width": 240,
+          "height": 90
+        },
+        "maxOrbitError": 0.03249060340967873
+      }
+    },
+    {
+      "name": "capsule orbit matches rendered contour",
+      "passed": true,
+      "actual": {
+        "name": "capsule",
+        "host": {
+          "x": 340,
+          "y": 205,
+          "width": 280,
+          "height": 44
+        },
+        "overlay": {
+          "x": 340,
+          "y": 205,
+          "width": 280,
+          "height": 44
+        },
+        "maxOrbitError": 0.011621992562105147
+      }
+    },
+    {
+      "name": "capsule overlay covers the full border box",
+      "passed": true,
+      "actual": {
+        "name": "capsule",
+        "host": {
+          "x": 340,
+          "y": 205,
+          "width": 280,
+          "height": 44
+        },
+        "overlay": {
+          "x": 340,
+          "y": 205,
+          "width": 280,
+          "height": 44
+        },
+        "maxOrbitError": 0.011621992562105147
+      }
+    },
+    {
+      "name": "fractional orbit matches rendered contour",
+      "passed": true,
+      "actual": {
+        "name": "fractional",
+        "host": {
+          "x": 650,
+          "y": 205,
+          "width": 237.375,
+          "height": 113.625
+        },
+        "overlay": {
+          "x": 650,
+          "y": 205,
+          "width": 237.375,
+          "height": 113.625
+        },
+        "maxOrbitError": 0.010539849004752994
+      }
+    },
+    {
+      "name": "fractional overlay covers the full border box",
+      "passed": true,
+      "actual": {
+        "name": "fractional",
+        "host": {
+          "x": 650,
+          "y": 205,
+          "width": 237.375,
+          "height": 113.625
+        },
+        "overlay": {
+          "x": 650,
+          "y": 205,
+          "width": 237.375,
+          "height": 113.625
+        },
+        "maxOrbitError": 0.010539849004752994
+      }
+    },
+    {
+      "name": "content-box orbit matches rendered contour",
+      "passed": true,
+      "actual": {
+        "name": "content-box",
+        "host": {
+          "x": 30,
+          "y": 380,
+          "width": 236.5,
+          "height": 95.25
+        },
+        "overlay": {
+          "x": 30,
+          "y": 380,
+          "width": 236.5,
+          "height": 95.25
+        },
+        "maxOrbitError": 0.014585472591841328
+      }
+    },
+    {
+      "name": "content-box overlay covers the full border box",
+      "passed": true,
+      "actual": {
+        "name": "content-box",
+        "host": {
+          "x": 30,
+          "y": 380,
+          "width": 236.5,
+          "height": 95.25
+        },
+        "overlay": {
+          "x": 30,
+          "y": 380,
+          "width": 236.5,
+          "height": 95.25
+        },
+        "maxOrbitError": 0.014585472591841328
+      }
+    },
+    {
+      "name": "scrolled-transform orbit matches rendered contour",
+      "passed": true,
+      "actual": {
+        "name": "scrolled-transform",
+        "host": {
+          "x": 331.951171875,
+          "y": 390.2671203613281,
+          "width": 204.364013671875,
+          "height": 90.32797241210938
+        },
+        "overlay": {
+          "x": 331.951171875,
+          "y": 390.2671203613281,
+          "width": 204.364013671875,
+          "height": 90.32797241210938
+        },
+        "maxOrbitError": 0.00855719110209315
+      }
+    },
+    {
+      "name": "scrolled-transform overlay covers the full border box",
+      "passed": true,
+      "actual": {
+        "name": "scrolled-transform",
+        "host": {
+          "x": 331.951171875,
+          "y": 390.2671203613281,
+          "width": 204.364013671875,
+          "height": 90.32797241210938
+        },
+        "overlay": {
+          "x": 331.951171875,
+          "y": 390.2671203613281,
+          "width": 204.364013671875,
+          "height": 90.32797241210938
+        },
+        "maxOrbitError": 0.00855719110209315
+      }
+    },
+    {
+      "name": "plain live motion follows native path after resize",
+      "passed": true,
+      "actual": {
+        "name": "plain",
+        "maxError": 0.013876568364762917,
+        "positions": 12,
+        "overlayError": 0,
+        "haloWidth": 32,
+        "haloHeight": 32,
+        "hostOverflow": "visible"
+      }
+    },
+    {
+      "name": "plain retains external glow",
+      "passed": true,
+      "actual": {
+        "name": "plain",
+        "maxError": 0.013876568364762917,
+        "positions": 12,
+        "overlayError": 0,
+        "haloWidth": 32,
+        "haloHeight": 32,
+        "hostOverflow": "visible"
+      }
+    },
+    {
+      "name": "card live motion follows native path after resize",
+      "passed": true,
+      "actual": {
+        "name": "card",
+        "maxError": 0.0075101808214931495,
+        "positions": 12,
+        "overlayError": 0,
+        "haloWidth": 32,
+        "haloHeight": 32,
+        "hostOverflow": "visible"
+      }
+    },
+    {
+      "name": "card retains external glow",
+      "passed": true,
+      "actual": {
+        "name": "card",
+        "maxError": 0.0075101808214931495,
+        "positions": 12,
+        "overlayError": 0,
+        "haloWidth": 32,
+        "haloHeight": 32,
+        "hostOverflow": "visible"
+      }
+    },
+    {
+      "name": "asymmetric live motion follows native path after resize",
+      "passed": true,
+      "actual": {
+        "name": "asymmetric",
+        "maxError": 0.007728999588551437,
+        "positions": 12,
+        "overlayError": 0,
+        "haloWidth": 32,
+        "haloHeight": 32,
+        "hostOverflow": "visible"
+      }
+    },
+    {
+      "name": "asymmetric retains external glow",
+      "passed": true,
+      "actual": {
+        "name": "asymmetric",
+        "maxError": 0.007728999588551437,
+        "positions": 12,
+        "overlayError": 0,
+        "haloWidth": 32,
+        "haloHeight": 32,
+        "hostOverflow": "visible"
+      }
+    },
+    {
+      "name": "ellipse live motion follows native path after resize",
+      "passed": true,
+      "actual": {
+        "name": "ellipse",
+        "maxError": 0.03238040447952435,
+        "positions": 12,
+        "overlayError": 0,
+        "haloWidth": 32,
+        "haloHeight": 32,
+        "hostOverflow": "visible"
+      }
+    },
+    {
+      "name": "ellipse retains external glow",
+      "passed": true,
+      "actual": {
+        "name": "ellipse",
+        "maxError": 0.03238040447952435,
+        "positions": 12,
+        "overlayError": 0,
+        "haloWidth": 32,
+        "haloHeight": 32,
+        "hostOverflow": "visible"
+      }
+    },
+    {
+      "name": "capsule live motion follows native path after resize",
+      "passed": true,
+      "actual": {
+        "name": "capsule",
+        "maxError": 0.0059737727133062956,
+        "positions": 12,
+        "overlayError": 0,
+        "haloWidth": 32,
+        "haloHeight": 32,
+        "hostOverflow": "visible"
+      }
+    },
+    {
+      "name": "capsule retains external glow",
+      "passed": true,
+      "actual": {
+        "name": "capsule",
+        "maxError": 0.0059737727133062956,
+        "positions": 12,
+        "overlayError": 0,
+        "haloWidth": 32,
+        "haloHeight": 32,
+        "hostOverflow": "visible"
+      }
+    },
+    {
+      "name": "fractional live motion follows native path after resize",
+      "passed": true,
+      "actual": {
+        "name": "fractional",
+        "maxError": 0.00569038405178331,
+        "positions": 12,
+        "overlayError": 0,
+        "haloWidth": 32,
+        "haloHeight": 32,
+        "hostOverflow": "visible"
+      }
+    },
+    {
+      "name": "fractional retains external glow",
+      "passed": true,
+      "actual": {
+        "name": "fractional",
+        "maxError": 0.00569038405178331,
+        "positions": 12,
+        "overlayError": 0,
+        "haloWidth": 32,
+        "haloHeight": 32,
+        "hostOverflow": "visible"
+      }
+    },
+    {
+      "name": "content-box live motion follows native path after resize",
+      "passed": true,
+      "actual": {
+        "name": "content-box",
+        "maxError": 0.007536687260600815,
+        "positions": 12,
+        "overlayError": 0,
+        "haloWidth": 32,
+        "haloHeight": 32,
+        "hostOverflow": "visible"
+      }
+    },
+    {
+      "name": "content-box retains external glow",
+      "passed": true,
+      "actual": {
+        "name": "content-box",
+        "maxError": 0.007536687260600815,
+        "positions": 12,
+        "overlayError": 0,
+        "haloWidth": 32,
+        "haloHeight": 32,
+        "hostOverflow": "visible"
+      }
+    },
+    {
+      "name": "scrolled-transform live motion follows native path after resize",
+      "passed": true,
+      "actual": {
+        "name": "scrolled-transform",
+        "maxError": 0.004772798049036423,
+        "positions": 12,
+        "overlayError": 0,
+        "haloWidth": 28.960174560546875,
+        "haloHeight": 28.960174560546875,
+        "hostOverflow": "visible"
+      }
+    },
+    {
+      "name": "scrolled-transform retains external glow",
+      "passed": true,
+      "actual": {
+        "name": "scrolled-transform",
+        "maxError": 0.004772798049036423,
+        "positions": 12,
+        "overlayError": 0,
+        "haloWidth": 28.960174560546875,
+        "haloHeight": 28.960174560546875,
+        "hostOverflow": "visible"
+      }
+    }
+  ]
+}

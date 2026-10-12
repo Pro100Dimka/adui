@@ -1,0 +1,945 @@
+
+> @neo-ui/react@2.9.3 test
+> vitest run DocumentationBorders.test.tsx
+
+
+ RUN  v3.2.7 D:/Git/adui/packages/ui
+
+stderr | tests/DocumentationBorders.test.tsx > demonstrates table details, actions, pinning, multi-sort and opt-in large-data virtualization with complete rows
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/DocumentationBorders.test.tsx > uses the kit's animated border on every overview tile and panel
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/DocumentationBorders.test.tsx > animates the Example and Related section borders on component pages
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/DocumentationBorders.test.tsx > resets both the desktop content and mobile document scroll on navigation
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+ ❯ tests/DocumentationBorders.test.tsx (15 tests | 6 failed) 100ms
+   ✓ includes QuantumField in the published documentation assets 1ms
+   ✓ demonstrates table details, actions, pinning, multi-sort and opt-in large-data virtualization with complete rows 14ms
+   ✓ uses NEO UI consistently in the documentation brand and browser title 1ms
+   × keeps the NEO UI spelling in shipped branding: ../package.json 6ms
+     → expected '{\n  "name": "@neo-ui/react",\n  "ver…' not to contain 'Neo UI'
+   × keeps the NEO UI spelling in shipped branding: ../README.md 3ms
+     → expected '# @neo-ui/react\n\nMigration: replace…' not to contain 'Neo UI'
+   × keeps the NEO UI spelling in shipped branding: ../src/components/layout/Text/example.tsx 1ms
+     → expected 'import { Stack, Text } from "@neo-ui/…' not to contain 'Neo UI'
+   × keeps the NEO UI spelling in shipped branding: ../src/components/foundation/Typography/example.tsx 1ms
+     → expected 'import { Grid, Stack, Text, Typograph…' not to contain 'Neo UI'
+   × keeps the NEO UI spelling in shipped branding: ../src/components/foundation/ThemeEditor/themeConfig.ts 1ms
+     → expected 'import { tr as defaultTr, translate, …' not to contain 'Neo UI'
+   × keeps the NEO UI spelling in shipped branding: ../src/core/messages.ts 1ms
+     → expected '/** Built-in translations of the libr…' not to contain 'Neo UI'
+   ✓ uses the kit's animated border on every overview tile and panel 60ms
+   ✓ animates the Example and Related section borders on component pages 4ms
+   ✓ lets .docs-showcase-tile's border aura fade before clipping 1ms
+   ✓ lets .docs-component-hero.ad-card's border aura fade before clipping 0ms
+   ✓ keeps the sticky documentation toolbar opaque instead of blurring animated content underneath 0ms
+   ✓ resets both the desktop content and mobile document scroll on navigation 6ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 6 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/DocumentationBorders.test.tsx > keeps the NEO UI spelling in shipped branding: ../package.json
+AssertionError: expected '{\n  "name": "@neo-ui/react",\n  "ver…' not to contain 'Neo UI'
+
+- Expected
++ Received
+
+- Neo UI
++ {
++   "name": "@neo-ui/react",
++   "version": "2.9.3",
++   "description": "Neo UI — React component library",
++   "type": "module",
++   "license": "UNLICENSED",
++   "sideEffects": [
++     "**/*.css"
++   ],
++   "files": [
++     "dist",
++     "README.md"
++   ],
++   "main": "./dist/index.js",
++   "module": "./dist/index.js",
++   "types": "./dist/index.d.ts",
++   "exports": {
++     ".": {
++       "types": "./dist/index.d.ts",
++       "import": "./dist/index.js",
++       "default": "./dist/index.js"
++     },
++     "./editor": {
++       "types": "./dist/editor.d.ts",
++       "import": "./dist/editor.js",
++       "default": "./dist/editor.js"
++     },
++     "./core": {
++       "types": "./dist/core.d.ts",
++       "import": "./dist/core.js",
++       "default": "./dist/core.js"
++     },
++     "./styles.css": "./dist/styles.css",
++     "./tokens.css": "./dist/tokens.css",
++     "./package.json": "./package.json",
++     "./components.css": "./dist/components.css",
++     "./fonts/melodix.css": "./dist/fonts/melodix.css",
++     "./router": {
++       "types": "./dist/router.d.ts",
++       "import": "./dist/router.js",
++       "default": "./dist/router.js"
++     },
++     "./forms": {
++       "types": "./dist/forms.d.ts",
++       "import": "./dist/forms.js",
++       "default": "./dist/forms.js"
++     }
++   },
++   "scripts": {
++     "test": "vitest run",
++     "typecheck": "tsc -p tsconfig.json",
++     "build": "node scripts/build.mjs",
++     "prepublishOnly": "npm run typecheck && npm run build && npm test"
++   },
++   "peerDependencies": {
++     "react": ">=18.2.0 <20",
++     "react-dom": ">=18.2.0 <20"
++   },
++   "devDependencies": {
++     "@types/react": "^19.1.0",
++     "@types/react-dom": "^19.1.0",
++     "@types/react-test-renderer": "^19.3.0",
++     "esbuild": "^0.25.12",
++     "react-test-renderer": "^19.3.0",
++     "typescript": "^5.8.3",
++     "vitest": "^3.2.4"
++   },
++   "engines": {
++     "node": ">=20"
++   },
++   "publishConfig": {
++     "access": "public"
++   },
++   "private": false
++ }
++
+
+ ❯ tests/DocumentationBorders.test.tsx:82:22
+     80| ])("keeps the NEO UI spelling in shipped branding: %s", (file) => {
+     81|   const source = readFileSync(new URL(file, import.meta.url), "utf8");
+     82|   expect(source).not.toContain("Neo UI");
+       |                      ^
+     83|   expect(source).toContain("NEO UI");
+     84| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/6]⎯
+
+ FAIL  tests/DocumentationBorders.test.tsx > keeps the NEO UI spelling in shipped branding: ../README.md
+AssertionError: expected '# @neo-ui/react\n\nMigration: replace…' not to contain 'Neo UI'
+
+- Expected
++ Received
+
+- Neo UI
++ # @neo-ui/react
++
++ Migration: replace `@ad-voice/ui` with `@neo-ui/react` in dependencies and imports, including CSS and `/core`, `/forms`, `/editor`, `/router` subpaths. Install the new `neo-ui-react-2.9.3.tgz` archive; component APIs and CSS class names are unchanged. The old package name is not an alias.
++
++ Neo UI — React + TypeScript UI kit: glass/ruby surfaces, animated neon borders, fields, tabs, dialogs, audio controls and a melody editor.
++
++ ## Install
++
++ Live docs: https://pro100dimka.github.io/adui/
++
++ Build the current checkout with `npm run package` from the repository root, then install the resulting archive in your application. React and ReactDOM are peer dependencies; the declared range is React 18.2 through 19.
++
++ ```bash
++ npm install /path/to/adui/release/neo-ui-react-2.9.3.tgz react react-dom
++ ```
++
++ Import the stylesheet once in the app entry point:
++
++ ```ts
++ import "@neo-ui/react/styles.css";
++ ```
++
++ ## Theme
++
++ Two colours build the whole palette (a primary scale, a secondary scale and tinted neutrals):
++
++ ```tsx
++ import { ThemeProvider } from "@neo-ui/react";
++
++ <ThemeProvider theme="violet">…</ThemeProvider>            // a ready pair
++ <ThemeProvider primary="#2f7bff" secondary="#9cc4ff">…</ThemeProvider>
++ <ThemeProvider tokens={{ "primary-900": "#0a1430" }}>…</ThemeProvider> // any token by hand
++ ```
++
++ ## Usage
++
++ ```tsx
++ import { Button, Card, Switch, TextField } from "@neo-ui/react";
++
++ export function SettingsCard() {
++   return (
++     <Card title="Настройки" border>
++       <TextField label="Имя в онлайн-комнате" defaultValue="BBB" clearable />
++       <Switch label="Радио включено" defaultChecked />
++       <Button variant="primary" icon="save">
++         Сохранить
++       </Button>
++     </Card>
++   );
++ }
++ ```
++
++ Fields that declare `value` / `defaultValue` support controlled and uncontrolled values; checkboxes and switches use `checked` / `defaultChecked`. Dialog supports `open` / `defaultOpen` and `onOpenChange`; Popover requires controlled `open`. See each component's API for its supported state and event names; a change callback reports a user action, while the owner applies the new controlled value.
++
++ The package ships ESM only. Import styles once and wrap the UI in `ThemeProvider`; no playground CSS or router is required. `@neo-ui/react/core`, `/forms`, `/editor`, and `/router` share the same provider contexts with the root entry. The current license is `UNLICENSED`; local packaging does not publish a release or grant a redistribution license.
++
++ ## QuantumField
++
++ `QuantumField` is an original, theme-native 3D audio visualization for backgrounds and panels. It renders immediately—there is no Enter gate—and its seven `mode` values are `orbit`, `vortex`, `lattice`, `wave`, `bloom`, `helix`, and `terrain`. Its bounded WebGL renderer uses static particle and filament buffers without post-processing; Canvas 2D is a fallback when WebGL is unavailable. `quality="auto"` limits pixels and particles, and drawing pauses outside the viewport, in hidden tabs, or when the kit's motion setting is off. `interactive` enables deep wheel zoom, local pointer influence, and drag-to-rotate; hovering alone never rotates the whole field. `density`, `speed`, `quality`, `interactive`, and `paused` are optional. Normally its colours follow the nearest `ThemeProvider`; `palette={[primary, secondary]}` overrides one instance.
++
++ ```tsx
++ import { QuantumField, ThemeProvider } from "@neo-ui/react";
++
++ <ThemeProvider primary="#10c99a" secondary="#7cf3d0">
++   <QuantumField mode="vortex" quality="auto" aria-label="Audio field" />
++ </ThemeProvider>
++ ```
++
++ To react to a microphone, request access only from a user click and pass the resulting stream. The component owns and releases its audio analysis graph; your app still owns the stream and stops its tracks when no longer needed.
++
++ ```tsx
++ import { useEffect, useState } from "react";
++ import { Button, QuantumField } from "@neo-ui/react";
++
++ function MicrophoneField() {
++   const [stream, setStream] = useState<MediaStream | null>(null);
++   useEffect(() => () => stream?.getTracks().forEach((track) => track.stop()), [stream]);
++   return <>
++     <Button onClick={async () => setStream(await navigator.mediaDevices.getUserMedia({ audio: true }))}>
++       Enable microphone
++     </Button>
++     <QuantumField mode="terrain" stream={stream ?? undefined} />
++   </>;
++ }
++ ```
++
++ For a file player, `createQuantumFieldAudio()` provides a small optional transport. Create it in response to a user action, call `loadFile(file)` (which does **not** autoplay), then pass `controller.analyser` as `audio`. Its `play`, `pause`, `seek`, `media`, and `dispose` members let you build the controls with the kit's `FilePicker`, `Button`, and `Slider`. `requestMicrophone()` is explicit and stops only the stream it requested; `connectStream(stream)` accepts an app-owned stream without taking ownership.
++
++ ```tsx
++ import { useEffect, useRef, useState } from "react";
++ import { Button, FilePicker, QuantumField, createQuantumFieldAudio } from "@neo-ui/react";
++
++ function FileField() {
++   const controller = useRef<ReturnType<typeof createQuantumFieldAudio> | null>(null);
++   const [analyser, setAnalyser] = useState<AnalyserNode | null>(null);
++   useEffect(() => () => { void controller.current?.dispose(); }, []);
++
++   return <>
++     <FilePicker variant="button" accept="audio/*" label="Choose audio" onFiles={([file]) => {
++       if (!file) return;
++       const audio = controller.current ??= createQuantumFieldAudio();
++       audio.loadFile(file); // does not autoplay
++       setAnalyser(audio.analyser);
++     }} />
++     <Button disabled={!analyser} onClick={() => { void controller.current?.play(); }}>Play</Button>
++     <QuantumField mode="wave" audio={analyser ?? undefined} />
++   </>;
++ }
++ ```
++
++ An existing audio engine can also pass its own `AnalyserNode` as `audio`, or a callback returning `{ bands: [bass, …, air], energy, beat }` with seven normalized band levels. Playback and permission handling stay outside the visualizer, so mounting it never captures audio unexpectedly.
++
++ ## DataTable
++
++ `DataTable` includes multi-column sorting, per-column filters with distinct-value autocomplete, grouping and aggregates, search, selection, column visibility/order/pinning, lazy row details, row actions, row numbers, density controls, CSV export, and responsive cards. Readers can resize columns by dragging the header edge or focusing it and pressing ←/→; double-clicking the edge restores its original width. `resizableColumns={false}` disables all handles, and `resizable: false` disables one column.
++
++ Set `pageSize` to enable pagination. `pageSizeOptions` provides footer choices (the initial size is always included), and the footer shows the visible result range. The reset button clears sorting, filters, grouping, search, hidden columns, resized widths, and the chosen page size. See the live `DataTable` example in the documentation for complete column and row definitions.
++
++ Click a header to cycle ascending/descending/unsorted; Shift-click adds another sort criterion. `sorting` / `defaultSorting` / `onSortingChange` manage the ordered array of criteria. The existing single-column `sort` API remains supported. `columnOrder` and `columnPinning` have the same controlled/default/change pattern; pinning is `{ left: ["name"], right: ["status"] }`. The Columns menu exposes keyboard-accessible reordering and pinning. `renderRowDetails(row, index)` is called only for expanded, mounted rows; `expandedRows` contains stable row keys. `renderRowActions` adds an isolated actions cell (`rowActionsWidth` defaults to 96px). Enable `rowNumbers` and `densityToggle` as needed.
++
++ For a remote table, supply only the current page and control the state used by your data client:
++
++ ```tsx
++ import { useState } from "react";
++ import { DataTable, type DataTablePagination, type DataTableSort } from "@neo-ui/react";
++
++ type Person = { id: string; name: string };
++ const columns = [{ key: "name", title: "Name" }];
++
++ export function PeopleTable({ rows, total, loading }: { rows: Person[]; total: number; loading: boolean }) {
++   const [query, setQuery] = useState("");
++   const [sorting, setSorting] = useState<DataTableSort[]>([]);
++   const [pagination, setPagination] = useState<DataTablePagination>({ pageIndex: 0, pageSize: 25 });
++   // Your data client loads rows for query, sorting and pagination; cancel stale requests there.
++   return <DataTable columns={columns} rows={rows} rowCount={total} loading={loading}
++     searchable query={query} onQueryChange={setQuery}
++     sorting={sorting} onSortingChange={setSorting}
++     pagination={pagination} onPaginationChange={setPagination}
++     manualFiltering manualSorting manualPagination />;
++ }
++ ```
++
++ Manual flags are independent: the table does not fetch data and does not re-filter, re-sort or re-slice the corresponding server results. Provide `rowCount` for exact remote page counts. Without it, remote pagination keeps the current page and offers Next while the received page is full. Selection keys survive changing remote pages. Column filters search the complete distinct-value set before offering up to 100 suggestions; the actual row filter is not capped.
++
++ For an unpaginated large dataset use `virtualize maxHeight={480}`. The table mounts a viewport-sized range plus `overscan`, measures variable row/detail heights, and keeps a scrollable table on narrow screens rather than converting virtual rows into cards. Pinned tables also keep their horizontal table layout on narrow screens. `estimatedRowHeight` is the initial estimate, not a fixed-height restriction. Small paginated tables do not need virtualization. Stable row keys are important for measured heights, details and selection.
++
++ ## Responsiveness
++
++ The package pauses decorative work outside the viewport and in hidden tabs. Its shared motion clock stops when no visible work remains; consumers do not need a separate animation scheduler. Playback updates are isolated from transport and volume controls. Audio analysis and loader image processing yield between short CPU work slices, and unmounting cancels stale results. Processed loader images are capped at 2048px on the longest side; turning background removal off restores the original upload.
++
++ Router updates are immediate by default. Opt into native snapshot transitions with `transition` only when their temporary interruption of pointer interaction suits your screen; normal CSS entrances do not require it.
++
++ Animated border geometry is initialized and resized in small batches on the shared clock, only while visible. Light positions use the cached contour instead of querying SVG geometry on every frame. Offscreen borders keep their light position without measuring layout or advancing the effect.
++
++ Keep `rows`, `columns`, `options`, and `initialValues` immutable: replace them when their contents change. Stable references allow expensive derived results to be reused across selection, navigation, and other local UI changes. Do not memoize every prop automatically.
++
++ For large tables, use `pageSize` or opt into `virtualize` to bound mounted rows. Virtualization bounds rendering, not the cost of client-side sorting/filtering: use the manual server contracts for datasets that are too large to process locally. Open Select/Autocomplete lists are not virtualized: filter very large datasets before supplying options. `PeoplePicker.onSearch(query, signal)` receives an optional `AbortSignal`; forward it to your data client to cancel superseded requests. Expensive custom renderers, validators, and aggregates still need their own work budget.
++
++ ## Entry points
++
++ ```ts
++ import { Button, Card, Dialog, AudioPlayer } from "@neo-ui/react";
++ import { PianoRoll } from "@neo-ui/react/editor";
++ import { Router } from "@neo-ui/react/router";
++ import { Form, FormFields, useForm } from "@neo-ui/react/forms";
++ import { ThemeProvider, useMotion } from "@neo-ui/react/core";
++ ```
++
++ ## RotaryKnob
++
++ Canvas-rendered volume knob. Drag near the edge to rotate, drag from the center to move linearly, click the outer scale to jump. Wheel and arrow keys change the value, Shift gives a fine step, PageUp/PageDown change by 10, Home/End set 0/100, Escape cancels a drag, double-click resets. `onValueChange` fires while adjusting, `onValueCommit` after the gesture. `readOnly` turns it into a gauge.
++
++ ## Unreleased hardening notes
++
++ This checkout retains the package name and version until a release is approved. Rebuild the local archive after changing source files.
++
++ - React 18 element refs now reach their public DOM targets. Controlled fields and RotaryKnob keep the supplied value until their owner accepts a change.
++ - Nested layers close in order with Escape. Dialog restores focus, discards obsolete async confirmations, and keeps actions available in narrow containers.
++ - Fields preserve explicit accessible names and descriptions. Select applies `style` / `className` to its layout wrapper and `id` / `data-*` to its trigger; text fields target their native input. Compound pickers retain their existing outer `id` / `data-*` location.
++ - Select and ColorPicker button names include their rendered value or placeholder after the field label, including explicit `aria-label` / `aria-labelledby`. Exact accessible-name queries should include that value; external label references retain priority over `aria-label`.
++ - AnimatedBorder follows independent elliptical corner radii, resizes without repeated contour work, resumes after motion preference changes, and does not enlarge scroll geometry. Visible borders follow the shared animation cadence; this improves smoothness at a higher CPU cost than the previous 10fps idle path.
++ - Border overlays and moving lights share the exact border box, including fractional sizes, asymmetric borders, scrolling and transforms.
++ - DataTable fills its container with pinned columns, keeps sorting/filtering/select-all visible in its narrow card layout, and resets density and details with the rest of the view. The default row-actions width is now 120px (previously 96px); set `rowActionsWidth` explicitly to retain a custom layout.
++ - Icon and Loader accept `xs`, `sm`, `md`, `lg` alongside their existing numeric/CSS-length sizes. RotaryKnob fits narrow containers throughout rotation; documentation uses named size presets and NumberField for numeric parameters.
++ - Badge text follows the theme foreground for readable status labels in light and dark schemes. StatusIndicator's offline text rule is scoped to that component.
++ - `AudioPlayer.onVolumeChange` is additive. Pair it with `volume` when an external audio engine owns playback.
++ - Explicit empty Waveform/Sparkline arrays now render empty data. Omit the data prop if you want the demonstration shape.
++ - PianoRoll cancellation reports zero offsets before `onNoteDragEnd`. Apply offsets relative to the gesture start to restore a cancelled edit.
++ - SplitButton `items` now uses the Menu item contract. Invalid item shapes that slipped through the previous `any[]` type must be corrected.
++ - The root entry exports `FormProps` and `FormFieldsProps`. Artwork declarations work without `resolveJsonModule` or `skipLibCheck` in the consuming app.
++
++ Repository evidence, browser runners, before/after measurements and coverage limits are recorded in `evidence/`. Unit and renderer checks complement actual browser geometry and interaction checks; they do not certify untested physical devices or browser engines.
++
++ ## Quantum Field experience
++
++ `QuantumFieldExperience` restores the full Quantum Fields visualizer inside an iframe. A compact, transparent field sits above the kit's `FilePicker`, externally controlled `AudioPlayer`, tooltip-labelled microphone/screenshot/fullscreen actions, field selector, and sensitivity control. The selected song name appears on the file button; playback and seeking use the visualizer's single audio source. Other controls live in a closed-by-default “Тонкая настройка” section below the field. It follows the nearest `ThemeProvider` palette. This experience includes MIT-licensed upstream code and CDN-loaded Three.js modules; the upstream notice is shipped as `UPSTREAM-LICENSE.txt`. It is not mounted in overview-card previews. For a smaller self-authored field without transport controls, use `QuantumField` directly.
++
+
+ ❯ tests/DocumentationBorders.test.tsx:82:22
+     80| ])("keeps the NEO UI spelling in shipped branding: %s", (file) => {
+     81|   const source = readFileSync(new URL(file, import.meta.url), "utf8");
+     82|   expect(source).not.toContain("Neo UI");
+       |                      ^
+     83|   expect(source).toContain("NEO UI");
+     84| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/6]⎯
+
+ FAIL  tests/DocumentationBorders.test.tsx > keeps the NEO UI spelling in shipped branding: ../src/components/layout/Text/example.tsx
+AssertionError: expected 'import { Stack, Text } from "@neo-ui/…' not to contain 'Neo UI'
+
+- Expected
++ Received
+
+- Neo UI
++ import { Stack, Text } from "@neo-ui/react";
++ 
++ /** Lightweight text; Typography covers the full type scale. */
++ export default function TextExample() {
++   return (
++     <Stack gap={2}>
++       <Text variant="eyebrow">Neo UI</Text>
++       <Text as="h3" variant="title">
++         Настройки комнаты
++       </Text>
++       <Text>Основной текст интерфейса</Text>
++       <Text variant="muted">Вспомогательная подпись</Text>
++     </Stack>
++   );
++ }
++
+
+ ❯ tests/DocumentationBorders.test.tsx:82:22
+     80| ])("keeps the NEO UI spelling in shipped branding: %s", (file) => {
+     81|   const source = readFileSync(new URL(file, import.meta.url), "utf8");
+     82|   expect(source).not.toContain("Neo UI");
+       |                      ^
+     83|   expect(source).toContain("NEO UI");
+     84| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/6]⎯
+
+ FAIL  tests/DocumentationBorders.test.tsx > keeps the NEO UI spelling in shipped branding: ../src/components/foundation/Typography/example.tsx
+AssertionError: expected 'import { Grid, Stack, Text, Typograph…' not to contain 'Neo UI'
+
+- Expected
++ Received
+
+- Neo UI
++ import { Grid, Stack, Text, Typography } from "@neo-ui/react";
++ 
++ const headings = [
++   ["display", "Neo UI"],
++   ["h1", "Главный заголовок"],
++   ["h2", "Заголовок раздела"],
++   ["h3", "Заголовок блока"],
++   ["title", "Название карточки"],
++ ] as const;
++ const text = [
++   ["body", "Основной текст интерфейса."],
++   ["body-sm", "Компактный вспомогательный текст."],
++   ["label", "Подпись поля"],
++   ["caption", "Обновлено в 12:48"],
++   ["eyebrow", "Neo UI"],
++   ["mono", "48 kHz · 24 bit"],
++ ] as const;
++ 
++ export default function TypographyExample() {
++   return (
++     <Stack gap={4}>
++       <Grid minChildWidth="min(100%, 18rem)" gap={5}>
++         {[headings, text].map((scale) => (
++           <Grid
++             key={scale[0][0]}
++             columns="minmax(4.5rem, auto) minmax(0, 1fr)"
++             gap={3}
++             align="baseline"
++           >
++             {scale.map(([variant, sample]) => [
++               <Typography key={`${variant}-key`} variant="mono" tone="muted">
++                 {variant}
++               </Typography>,
++               <Typography key={variant} variant={variant}>
++                 {sample}
++               </Typography>,
++             ])}
++           </Grid>
++         ))}
++       </Grid>
++       <Stack direction="row" gap={3} wrap>
++         {(["muted", "accent", "success", "warning", "danger"] as const).map(
++           (tone) => (
++             <Typography key={tone} variant="body-sm" tone={tone}>
++               {tone}
++             </Typography>
++           ),
++         )}
++       </Stack>
++       <Stack gap={2}>
++         <Typography variant="label" tone="muted">Короткая запись через Text</Typography>
++         <Text as="h3" variant="title">Настройки комнаты</Text>
++         <Text variant="muted">Вспомогательная подпись</Text>
++       </Stack>
++     </Stack>
++   );
++ }
++
+
+ ❯ tests/DocumentationBorders.test.tsx:82:22
+     80| ])("keeps the NEO UI spelling in shipped branding: %s", (file) => {
+     81|   const source = readFileSync(new URL(file, import.meta.url), "utf8");
+     82|   expect(source).not.toContain("Neo UI");
+       |                      ^
+     83|   expect(source).toContain("NEO UI");
+     84| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/6]⎯
+
+ FAIL  tests/DocumentationBorders.test.tsx > keeps the NEO UI spelling in shipped branding: ../src/components/foundation/ThemeEditor/themeConfig.ts
+AssertionError: expected 'import { tr as defaultTr, translate, …' not to contain 'Neo UI'
+
+- Expected
++ Received
+
+- Neo UI
++ import { tr as defaultTr, translate, type Locale } from "../../../core/i18n";
++ import { themes, type ThemeName } from "../ThemeProvider/ThemeProvider";
++
++ /**
++  * A whole theme as data, ready to save, share and load back. "simple": two colours, the rest is
++  * calculated. "advanced": the same plus any token set by hand.
++  */
++ export interface ThemeConfig {
++   version: 1;
++   mode: "simple" | "advanced";
++   /** The built-in theme it starts from. */
++   theme: ThemeName;
++   primary?: string;
++   /** Without it (or with `autoSecondary`) the secondary colour is calculated from the primary. */
++   secondary?: string;
++   autoSecondary?: boolean;
++   /** Token overrides by name without the `--ad-` prefix, e.g. `{ "radius": "0.5rem" }`; advanced mode only. */
++   tokens?: Record<string, string>;
++ }
++
++ export type ThemeTokenKind = "color" | "length" | "font" | "number" | "time" | "easing";
++ export interface ThemeTokenGroup {
++   title: string;
++   tokens: Array<{ name: string; label: string; kind: ThemeTokenKind }>;
++ }
++
++ const color = (name: string, label: string) => ({ name, label, kind: "color" as const });
++ const sized = (name: string, label: string, kind: ThemeTokenKind = "length") => ({ name, label, kind });
++
++ /** Every token the advanced mode can change, in groups. */
++ export const themeTokenGroups: ThemeTokenGroup[] = [
++   { title: "Основные цвета", tokens: [color("primary", "Primary"), color("secondary", "Secondary")] },
++   {
++     title: "Шкала primary",
++     tokens: [color("primary-600", "600"), color("primary-700", "700"), color("primary-800", "800"), color("primary-900", "900")],
++   },
++   { title: "Шкала secondary", tokens: [color("secondary-50", "50"), color("secondary-100", "100"), color("secondary-200", "200")] },
++   {
++     title: "Нейтральные",
++     tokens: ["200", "300", "400", "500", "600", "700", "800", "850", "900", "950"].map((step) => color(`neutral-${step}`, step)),
++   },
++   {
++     title: "Текст и статусы",
++     tokens: [
++       color("text", "Текст"),
++       color("muted", "Приглушённый"),
++       color("pink", "Акцент"),
++       color("success", "Успех"),
++       color("warning", "Внимание"),
++       color("info", "Инфо"),
++       color("focus", "Фокус"),
++     ],
++   },
++   {
++     title: "Форма и размеры",
++     tokens: [
++       sized("radius", "Скругление"),
++       sized("radius-sm", "Скругление малое"),
++       sized("radius-lg", "Скругление большое"),
++       sized("control-height", "Высота контролов"),
++       sized("space-unit", "Шаг отступов"),
++       sized("fluid-unit", "Единица геометрии"),
++     ],
++   },
++   {
++     title: "Шрифты",
++     tokens: [sized("font-family-sans", "Основной", "font"), sized("font-family-mono", "Моноширинный", "font")],
++   },
++   {
++     title: "Кегль",
++     tokens: ["display", "h1", "h2", "h3", "title", "subtitle", "body", "body-sm", "label", "caption"].map((step) =>
++       sized(`font-size-${step}`, step),
++     ),
++   },
++   {
++     title: "Начертание и интерлиньяж",
++     tokens: [
++       sized("font-weight-regular", "Обычный", "number"),
++       sized("font-weight-medium", "Средний", "number"),
++       sized("font-weight-semibold", "Полужирный", "number"),
++       sized("font-weight-bold", "Жирный", "number"),
++       sized("line-height-display", "Интерлиньяж: дисплей", "number"),
++       sized("line-height-heading", "Интерлиньяж: заголовки", "number"),
++       sized("line-height-body", "Интерлиньяж: текст", "number"),
++       sized("letter-spacing-heading", "Трекинг заголовков"),
++       sized("letter-spacing-eyebrow", "Трекинг надзаголовков"),
++     ],
++   },
++   {
++     title: "Анимация",
++     tokens: [
++       sized("duration-fast", "Быстро", "time"),
++       sized("duration-normal", "Обычно", "time"),
++       sized("duration-slow", "Медленно", "time"),
++       sized("ease-standard", "Кривая", "easing"),
++       sized("ease-spring", "Пружина", "easing"),
++     ],
++   },
++ ];
++
++ const knownTokens = new Set(themeTokenGroups.flatMap((group) => group.tokens.map((token) => token.name)));
++
++ /** A light companion for a primary colour: brighter, a little warmer — for highlights and glints. */
++ export function deriveSecondary(primary: string): string {
++   const match = /^#([0-9a-f]{6})$/i.exec(primary.trim());
++   if (!match) return themes.ruby[1];
++   const [r, g, b] = [0, 2, 4].map((i) => parseInt(match[1]!.slice(i, i + 2), 16));
++   return `#${[r!, g!, b!].map((v) => Math.round(v + (255 - v) * 0.45).toString(16).padStart(2, "0")).join("")}`;
++ }
++
++ export const defaultThemeConfig: ThemeConfig = { version: 1, mode: "simple", theme: "ruby", autoSecondary: true };
++
++ /** What to hand to ThemeProvider for a config: `<ThemeProvider {...themeProps(config)}>`. */
++ export function themeProps(config: ThemeConfig) {
++   const primary = config.primary ?? themes[config.theme][0];
++   const secondary =
++     config.autoSecondary && config.primary ? deriveSecondary(primary) : (config.secondary ?? themes[config.theme][1]);
++   return {
++     theme: config.theme,
++     primary,
++     secondary,
++     tokens: config.mode === "advanced" ? { ...config.tokens } : {},
++   };
++ }
++
++ /** The config as a JSON file's text, stamped so it can be recognised on import. */
++ export function exportTheme(config: ThemeConfig): string {
++   return JSON.stringify({ $type: "neo-ui-theme", ...config }, null, 2);
++ }
++
++ const hex = /^#[0-9a-f]{6}$/i;
++
++ /** Reads a theme back from JSON; throws an Error with a readable message when it is not one. */
++ export function parseTheme(text: string, locale?: Locale): ThemeConfig {
++   const tr = (value: string, vars?: Record<string, string | number>) => locale ? translate(locale, value, vars) : defaultTr(value, vars);
++   let data: unknown;
++   try {
++     data = JSON.parse(text);
++   } catch {
++     throw new Error(tr("Это не JSON: проверьте файл или вставленный текст."));
++   }
++   if (!data || typeof data !== "object") throw new Error(tr("В файле нет настроек темы."));
++   const raw = data as Record<string, unknown>;
++   if (raw.$type !== undefined && raw.$type !== "neo-ui-theme") throw new Error(tr("Это файл не темы Neo UI."));
++   if (raw.version !== undefined && raw.version !== 1) throw new Error(tr("Версия темы {version} не поддерживается.", { version: String(raw.version) }));
++   const theme = typeof raw.theme === "string" && Object.hasOwn(themes, raw.theme) ? (raw.theme as ThemeName) : "ruby";
++   const pick = (value: unknown) => (typeof value === "string" && hex.test(value) ? value.toLowerCase() : undefined);
++   const tokens: Record<string, string> = {};
++   if (raw.tokens && typeof raw.tokens === "object")
++     for (const [name, value] of Object.entries(raw.tokens as Record<string, unknown>)) {
++       const key = name.replace(/^--ad-/, "");
++       // Only known tokens with plain values: nothing that could break out of a CSS declaration.
++       if (knownTokens.has(key) && typeof value === "string" && value.length < 200 && !/[;{}<>]/.test(value)) tokens[key] = value;
++     }
++   return {
++     version: 1,
++     mode: raw.mode === "advanced" ? "advanced" : "simple",
++     theme,
++     primary: pick(raw.primary),
++     secondary: pick(raw.secondary),
++     autoSecondary: raw.autoSecondary === true,
++     tokens,
++   };
++ }
++
++ /** Current value of a token inside `scope`: colours as #rrggbb, everything else as written. */
++ export function resolveToken(scope: Element, name: string, kind: ThemeTokenKind = "color"): string {
++   if (kind !== "color") return getComputedStyle(scope).getPropertyValue(`--ad-${name}`).trim();
++   const probe = document.createElement("span");
++   probe.style.color = `var(--ad-${name})`;
++   scope.append(probe);
++   const value = getComputedStyle(probe).color;
++   probe.remove();
++   const canvas = document.createElement("canvas");
++   canvas.width = canvas.height = 1;
++   const context = canvas.getContext("2d", { willReadFrequently: true });
++   if (!context) return "#000000";
++   context.fillStyle = value;
++   context.fillRect(0, 0, 1, 1);
++   const [r, g, b] = context.getImageData(0, 0, 1, 1).data;
++   return `#${[r, g, b].map((v) => (v ?? 0).toString(16).padStart(2, "0")).join("")}`;
++ }
++
+
+ ❯ tests/DocumentationBorders.test.tsx:82:22
+     80| ])("keeps the NEO UI spelling in shipped branding: %s", (file) => {
+     81|   const source = readFileSync(new URL(file, import.meta.url), "utf8");
+     82|   expect(source).not.toContain("Neo UI");
+       |                      ^
+     83|   expect(source).toContain("NEO UI");
+     84| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/6]⎯
+
+ FAIL  tests/DocumentationBorders.test.tsx > keeps the NEO UI spelling in shipped branding: ../src/core/messages.ts
+AssertionError: expected '/** Built-in translations of the libr…' not to contain 'Neo UI'
+
+- Expected
++ Received
+
+- Neo UI
++ /** Built-in translations of the library's texts; the key is the Russian original. */
++ type Row = [string, string, string]; // [ru, en, uk]
++
++ const rows: Row[] = [
++   // fields and pickers
++   ["Очистить", "Clear", "Очистити"],
++   ["Показать варианты", "Show options", "Показати варіанти"],
++   ["Подсказки", "Suggestions", "Підказки"],
++   ["Убрать", "Remove", "Прибрати"],
++   ["Насыщенность и яркость", "Saturation and brightness", "Насиченість і яскравість"],
++   ["Оттенок", "Hue", "Відтінок"],
++   ["Код цвета", "Colour code", "Код кольору"],
++   ["Выбор цвета", "Pick a colour", "Вибір кольору"],
++   ["дд.мм.гггг", "dd.mm.yyyy", "дд.мм.рррр"],
++   ["Открыть календарь", "Open calendar", "Відкрити календар"],
++   ["Календарь", "Calendar", "Календар"],
++   ["Предыдущий месяц", "Previous month", "Попередній місяць"],
++   ["Следующий месяц", "Next month", "Наступний місяць"],
++   ["Сегодня", "Today", "Сьогодні"],
++   ["Выбрать файл", "Choose file", "Вибрати файл"],
++   ["или перетащите его сюда", "or drop it here", "або перетягніть його сюди"],
++   ["Файл не выбран", "No file chosen", "Файл не вибрано"],
++   ["Уменьшить", "Decrease", "Зменшити"],
++   ["Увеличить", "Increase", "Збільшити"],
++   ["Начните вводить имя", "Start typing a name", "Почніть вводити ім’я"],
++   ["Люди", "People", "Люди"],
++   ["Ищем…", "Searching…", "Шукаємо…"],
++   ["Никого не нашли", "No one found", "Нікого не знайдено"],
++   ["Список", "List", "Список"],
++   ["Плитка", "Grid", "Плитка"],
++   ["Первый вариант", "First option", "Перший варіант"],
++   ["Второй вариант", "Second option", "Другий варіант"],
++   ["Выберите значение", "Choose a value", "Виберіть значення"],
++   ["Варианты", "Options", "Варіанти"],
++   ["Поиск", "Search", "Пошук"],
++   ["Ничего не найдено", "Nothing found", "Нічого не знайдено"],
++   ["Значение", "Value", "Значення"],
++   ["Сохранить", "Save", "Зберегти"],
++   ["Другие действия", "More actions", "Інші дії"],
++   ["Экспортировать JSON", "Export JSON", "Експортувати JSON"],
++   ["Внешний вид", "Appearance", "Зовнішній вигляд"],
++   ["Аудио", "Audio", "Аудіо"],
++   ["Дополнительно", "Advanced", "Додатково"],
++   ["Разделы", "Sections", "Розділи"],
++   ["Добавьте тег и нажмите Enter", "Add a tag and press Enter", "Додайте тег і натисніть Enter"],
++   ["Тема", "Theme", "Тема"],
++   // media
++   ["Редактор мелодии", "Melody editor", "Редактор мелодії"],
++   ["Нота {pitch}", "Note {pitch}", "Нота {pitch}"],
++   ["Играет", "Playing", "Грає"],
++   ["Пауза", "Pause", "Пауза"],
++   ["Воспроизвести", "Play", "Відтворити"],
++   ["Включить звук", "Unmute", "Увімкнути звук"],
++   ["Выключить звук", "Mute", "Вимкнути звук"],
++   ["Громкость", "Volume", "Гучність"],
++   ["Уровень сигнала", "Signal level", "Рівень сигналу"],
++   ["Мелодия", "Melody", "Мелодія"],
++   ["Клавиатура {from}–{to}", "Keyboard {from}–{to}", "Клавіатура {from}–{to}"],
++   ["{label}: {value} · ведите по кругу или тяните за центр", "{label}: {value} · drag around or pull from the centre", "{label}: {value} · ведіть по колу або тягніть за центр"],
++   ["Нажмите, чтобы ввести значение", "Click to type a value", "Натисніть, щоб ввести значення"],
++   ["{label}, значение", "{label}, value", "{label}, значення"],
++   ["Позиция воспроизведения", "Playback position", "Позиція відтворення"],
++   // feedback
++   ["Загрузка", "Loading", "Завантаження"],
++   ["Технический JSON", "Technical JSON", "Технічний JSON"],
++   ["Содержимое раскрывающегося раздела.", "Content of the collapsible section.", "Вміст розгортуваного розділу."],
++   ["{count} знач.", "{count} values", "{count} знач."],
++   ["Содержит…", "Contains…", "Містить…"],
++   ["От", "From", "Від"],
++   ["До", "To", "До"],
++   ["Найти значение…", "Find a value…", "Знайти значення…"],
++   ["Все", "All", "Усі"],
++   ["Фильтр: {title}", "Filter: {title}", "Фільтр: {title}"],
++   ["Дата", "Date", "Дата"],
++   ["Событие", "Event", "Подія"],
++   ["Статус", "Status", "Статус"],
++   ["Нет данных", "No data", "Немає даних"],
++   ["Выбрать строку", "Select row", "Вибрати рядок"],
++   ["Подробности строки {number}", "Row {number} details", "Подробиці рядка {number}"],
++   ["Номер строки", "Row number", "Номер рядка"],
++   ["Подробности", "Details", "Подробиці"],
++   ["Действия", "Actions", "Дії"],
++   ["Компактные строки", "Compact rows", "Компактні рядки"],
++   ["Переместить влево: {title}", "Move left: {title}", "Перемістити ліворуч: {title}"],
++   ["Переместить вправо: {title}", "Move right: {title}", "Перемістити праворуч: {title}"],
++   ["Закрепить слева: {title}", "Pin left: {title}", "Закріпити ліворуч: {title}"],
++   ["Закрепить справа: {title}", "Pin right: {title}", "Закріпити праворуч: {title}"],
++   ["{from}–{to}", "{from}–{to}", "{from}–{to}"],
++   ["Группировать по", "Group by", "Групувати за"],
++   ["Без группировки", "No grouping", "Без групування"],
++   ["Поиск…", "Search…", "Пошук…"],
++   ["Поиск по таблице", "Search the table", "Пошук у таблиці"],
++   ["Убрать фильтр", "Remove filter", "Прибрати фільтр"],
++   ["Сбросить фильтры", "Reset filters", "Скинути фільтри"],
++   ["Сбросить вид", "Reset view", "Скинути вигляд"],
++   ["Изменить ширину: {title}", "Resize: {title}", "Змінити ширину: {title}"],
++   ["Строк на странице", "Rows per page", "Рядків на сторінці"],
++   ["{from}–{to} из {count}", "{from}–{to} of {count}", "{from}–{to} з {count}"],
++   ["Авто", "Auto", "Авто"],
++   ["Снять выделение", "Clear selection", "Зняти вибір"],
++   ["Убрать {value}", "Remove {value}", "Прибрати {value}"],
++   ["Выбрать все", "Select all", "Вибрати все"],
++   ["Выбрано: {count}", "Selected: {count}", "Вибрано: {count}"],
++   ["{count} найдено", "{count} found", "{count} знайдено"],
++   ["{count} всего", "{count} total", "{count} усього"],
++   ["Предыдущая страница", "Previous page", "Попередня сторінка"],
++   ["Следующая страница", "Next page", "Наступна сторінка"],
++   ["Подтверждение", "Confirmation", "Підтвердження"],
++   ["Закрыть", "Close", "Закрити"],
++   ["Отмена", "Cancel", "Скасувати"],
++   ["Не удалось выполнить действие", "The action failed", "Не вдалося виконати дію"],
++   ["Готово", "Done", "Готово"],
++   ["Пока нет записей", "Nothing here yet", "Поки немає записів"],
++   ["Добавьте запись, чтобы начать.", "Add an item to get started.", "Додайте запис, щоб почати."],
++   ["База данных", "Database", "База даних"],
++   ["Исправно", "Healthy", "Справно"],
++   ["Действие", "Action", "Дія"],
++   ["Для операции нужно больше свободного места.", "The operation needs more free space.", "Для операції потрібно більше вільного місця."],
++   ["Прогресс", "Progress", "Прогрес"],
++   ["Сигнал: {level} из {bars}", "Signal: {level} of {bars}", "Сигнал: {level} з {bars}"],
++   ["Ошибка", "Error", "Помилка"],
++   ["Внимание", "Warning", "Увага"],
++   ["Обработка", "Processing", "Обробка"],
++   ["В очереди", "Queued", "У черзі"],
++   ["Не подключено", "Offline", "Не під’єднано"],
++   ["Информация", "Information", "Інформація"],
++   ["Подготовка", "Preparing", "Підготовка"],
++   ["Анализ", "Analysis", "Аналіз"],
++   ["Модель", "Model", "Модель"],
++   ["Проверка", "Checking", "Перевірка"],
++   ["Настройки сохранены", "Settings saved", "Налаштування збережено"],
++   ["Пользователь", "User", "Користувач"],
++   ["Название раздела", "Section title", "Назва розділу"],
++   // theme editor
++   ["Основные цвета", "Main colours", "Основні кольори"],
++   ["Шкала primary", "Primary scale", "Шкала primary"],
++   ["Шкала secondary", "Secondary scale", "Шкала secondary"],
++   ["Нейтральные", "Neutrals", "Нейтральні"],
++   ["Текст и статусы", "Text and statuses", "Текст і статуси"],
++   ["Текст", "Text", "Текст"],
++   ["Приглушённый", "Muted", "Приглушений"],
++   ["Акцент", "Accent", "Акцент"],
++   ["Успех", "Success", "Успіх"],
++   ["Инфо", "Info", "Інфо"],
++   ["Фокус", "Focus", "Фокус"],
++   ["Форма и размеры", "Shape and sizes", "Форма і розміри"],
++   ["Скругление", "Radius", "Заокруглення"],
++   ["Скругление малое", "Small radius", "Мале заокруглення"],
++   ["Скругление большое", "Large radius", "Велике заокруглення"],
++   ["Высота контролов", "Control height", "Висота контролів"],
++   ["Шаг отступов", "Spacing step", "Крок відступів"],
++   ["Единица геометрии", "Geometry unit", "Одиниця геометрії"],
++   ["Шрифты", "Fonts", "Шрифти"],
++   ["Основной", "Main", "Основний"],
++   ["Моноширинный", "Monospace", "Моноширинний"],
++   ["Кегль", "Font size", "Кегль"],
++   ["Начертание и интерлиньяж", "Weight and line height", "Накреслення та інтерліньяж"],
++   ["Обычный", "Regular", "Звичайний"],
++   ["Средний", "Medium", "Середній"],
++   ["Полужирный", "Semibold", "Напівжирний"],
++   ["Жирный", "Bold", "Жирний"],
++   ["Интерлиньяж: дисплей", "Line height: display", "Інтерліньяж: дисплей"],
++   ["Интерлиньяж: заголовки", "Line height: headings", "Інтерліньяж: заголовки"],
++   ["Интерлиньяж: текст", "Line height: text", "Інтерліньяж: текст"],
++   ["Трекинг заголовков", "Heading tracking", "Трекінг заголовків"],
++   ["Трекинг надзаголовков", "Eyebrow tracking", "Трекінг надзаголовків"],
++   ["Анимация", "Motion", "Анімація"],
++   ["Быстро", "Fast", "Швидко"],
++   ["Обычно", "Normal", "Звичайно"],
++   ["Медленно", "Slow", "Повільно"],
++   ["Кривая", "Curve", "Крива"],
++   ["Пружина", "Spring", "Пружина"],
++   ["Это не JSON: проверьте файл или вставленный текст.", "This is not JSON: check the file or the pasted text.", "Це не JSON: перевірте файл або вставлений текст."],
++   ["В файле нет настроек темы.", "The file holds no theme settings.", "У файлі немає налаштувань теми."],
++   ["Это файл не темы Neo UI.", "This is not a Neo UI theme file.", "Це не файл теми Neo UI."],
++   ["Версия темы {version} не поддерживается.", "Theme version {version} is not supported.", "Версія теми {version} не підтримується."],
++   ["токен", "token", "токен"],
++   ["токена", "tokens", "токени"],
++   ["токенов", "tokens", "токенів"],
++   ["Тема загружена.", "Theme loaded.", "Тему завантажено."],
++   ["Не удалось прочитать тему.", "Could not read the theme.", "Не вдалося прочитати тему."],
++   ["Простой", "Simple", "Простий"],
++   ["Продвинутый", "Advanced", "Розширений"],
++   ["Экспорт", "Export", "Експорт"],
++   ["Скопировать JSON темы", "Copy theme JSON", "Скопіювати JSON теми"],
++   ["JSON темы скопирован.", "Theme JSON copied.", "JSON теми скопійовано."],
++   ["Не удалось скопировать.", "Could not copy.", "Не вдалося скопіювати."],
++   ["Импорт", "Import", "Імпорт"],
++   ["Вставить JSON темы", "Paste theme JSON", "Вставити JSON теми"],
++   ["Сбросить тему", "Reset theme", "Скинути тему"],
++   ["Вставить тему", "Paste a theme", "Вставити тему"],
++   ["JSON темы", "Theme JSON", "JSON теми"],
++   ["Применить", "Apply", "Застосувати"],
++   ["Готовая тема", "Ready-made theme", "Готова тема"],
++   ["Основной цвет", "Main colour", "Основний колір"],
++   ["Поменять цвета местами", "Swap colours", "Поміняти кольори місцями"],
++   ["Второй цвет", "Second colour", "Другий колір"],
++   ["Рассчитывается из основного", "Calculated from the main one", "Розраховується з основного"],
++   ["Второй цвет рассчитывать автоматически", "Calculate the second colour", "Розраховувати другий колір автоматично"],
++   ["Палитра, построенная из этих цветов:", "The palette built from these colours:", "Палітра, побудована з цих кольорів:"],
++   ["Найти токен…", "Find a token…", "Знайти токен…"],
++   ["Найти токен", "Find a token", "Знайти токен"],
++   ["Изменено: {count}", "Changed: {count}", "Змінено: {count}"],
++   ["Всё из темы", "All from the theme", "Усе з теми"],
++   ["изменено: {own} из {total}", "changed: {own} of {total}", "змінено: {own} з {total}"],
++   ["Вернуть {name}", "Reset {name}", "Повернути {name}"],
++   ["Пример темы", "Theme sample", "Приклад теми"],
++   ["Пример", "Sample", "Приклад"],
++   ["Так выглядит тема", "This is how the theme looks", "Так виглядає тема"],
++   ["Играть", "Play", "Грати"],
++   ["Настройки", "Settings", "Налаштування"],
++   // loader generator
++   ["Загрузите картинку", "Upload a picture", "Завантажте зображення"],
++   ["PNG, SVG или WebP с прозрачностью — лучше всего", "PNG, SVG or WebP with transparency work best", "PNG, SVG або WebP з прозорістю — найкраще"],
++   ["Поддерживаются PNG, JPEG, SVG и WebP", "PNG, JPEG, SVG and WebP are supported", "Підтримуються PNG, JPEG, SVG і WebP"],
++   ["Убрать фон", "Remove background", "Прибрати фон"],
++   ["Убираем фон…", "Removing background…", "Прибираємо фон…"],
++   ["Не удалось прочитать изображение.", "The image could not be read.", "Не вдалося прочитати зображення."],
++   ["Обработка изображений недоступна в этом браузере.", "Image processing is unavailable in this browser.", "Обробка зображень недоступна в цьому браузері."],
++   ["Не удалось обработать изображение.", "The image could not be processed.", "Не вдалося обробити зображення."],
++   ["Анимация", "Motion", "Анімація"],
++   ["Размер", "Size", "Розмір"],
++   ["Скорость", "Speed", "Швидкість"],
++   ["Цвет", "Colour", "Колір"],
++   ["Цвет эффектов", "Effect colour", "Колір ефектів"],
++   ["Код лоадера", "Loader code", "Код лоадера"],
++   ["Скачать HTML", "Download HTML", "Завантажити HTML"],
++   ["Вращение", "Spin", "Обертання"],
++   ["Пульс", "Pulse", "Пульс"],
++   ["Дыхание", "Breathe", "Дихання"],
++   ["Отскок", "Bounce", "Відскок"],
++   ["Переворот", "Flip", "Переворот"],
++   ["Орбита", "Orbit", "Орбіта"],
++   ["Волна", "Wave", "Хвиля"],
++   ["Свечение", "Glow", "Світіння"],
++   ["Заливка", "Fill", "Заповнення"],
++   ["Блик", "Shine", "Відблиск"],
++   ["Покачивание", "Wobble", "Погойдування"],
++   ["Радар", "Radar", "Радар"],
++   ["Перелив", "Colour flow", "Перелив"],
++   ["Скопировано", "Copied", "Скопійовано"],
++   ["Копировать", "Copy", "Копіювати"],
++ ];
++
++ export const messages: Record<string, Record<string, string>> = { en: {}, uk: {} };
++ for (const [ru, en, uk] of rows) {
++   messages.en![ru] = en;
++   messages.uk![ru] = uk;
++ }
++
+
+ ❯ tests/DocumentationBorders.test.tsx:82:22
+     80| ])("keeps the NEO UI spelling in shipped branding: %s", (file) => {
+     81|   const source = readFileSync(new URL(file, import.meta.url), "utf8");
+     82|   expect(source).not.toContain("Neo UI");
+       |                      ^
+     83|   expect(source).toContain("NEO UI");
+     84| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/6]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  6 failed | 9 passed (15)
+   Start at  14:57:42
+   Duration  2.62s (transform 829ms, setup 0ms, collect 2.30s, tests 100ms, environment 0ms, prepare 78ms)
+
+npm error Lifecycle script `test` failed with error:
+npm error code 1
+npm error path D:\Git\adui\packages\ui
+npm error workspace @neo-ui/react@2.9.3
+npm error location D:\Git\adui\packages\ui
+npm error command failed
+npm error command C:\Windows\system32\cmd.exe /d /s /c vitest run DocumentationBorders.test.tsx

@@ -40,6 +40,8 @@ export interface FormFieldDefinition<
   showWhen?: (values: T) => boolean;
   props?: Record<string, unknown>;
 }
+// Registry entries accept different value/callback shapes; bindings below adapt each kind.
+// Erasure is confined to this component lookup, rather than weakening FormApi values.
 export type FieldRegistry = Record<string, ComponentType<any>>;
 export const defaultFieldRegistry: FieldRegistry = {
   text: TextField,
@@ -125,7 +127,7 @@ function Slot<T extends Record<string, unknown>>({
     </Grid>
   );
 }
-const StableSlot = memo(Slot, (previous, next) => {
+const StableSlot = /* @__PURE__ */ memo(Slot, (previous, next) => {
   if (previous.field !== next.field || previous.registry !== next.registry) return false;
   const before = previous.form.field(previous.field.name);
   const after = next.form.field(next.field.name);

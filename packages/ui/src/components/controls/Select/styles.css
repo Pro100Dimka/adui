@@ -127,13 +127,13 @@
 .ad-option:hover:not(:disabled),
 .ad-option[data-active],
 .ad-option:focus-visible {
-  background: #ffffff0f;
-  color: #fff;
+  background: rgb(from var(--ad-neutral-200) r g b / 0.06);
+  color: var(--ad-text);
   outline: 0;
 }
 .ad-option[aria-selected="true"] {
   background: linear-gradient(90deg, rgb(from var(--ad-primary-700) r g b / 0.37), rgb(from var(--ad-primary-900) r g b / 0.27) 80%);
-  color: #fff;
+  color: var(--ad-text);
   font-weight: 600;
 }
 .ad-option:disabled {

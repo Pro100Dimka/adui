@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Grid, resolveToken } from "@ad-voice/ui";
+import { Grid, resolveToken } from "@neo-ui-kit/react";
 import type * as Monaco from "monaco-editor";
 
 /**
@@ -55,8 +55,8 @@ function loadMonaco(): Promise<typeof Monaco> {
       strict: true,
       baseUrl: "file:///",
       paths: {
-        "@ad-voice/ui": ["file:///ad-ui/src/index.ts"],
-        "@ad-voice/ui/*": ["file:///ad-ui/src/*"],
+        "@neo-ui-kit/react": ["file:///ad-ui/src/index.ts"],
+        "@neo-ui-kit/react/*": ["file:///ad-ui/src/*"],
       },
     });
     ts.typescriptDefaults.setDiagnosticsOptions({ diagnosticCodesToIgnore: snippetNoise });

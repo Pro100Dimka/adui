@@ -7,6 +7,7 @@
 }
 .ad-key-value-list > div {
   display: grid;
+  min-width: 0;
   /* Neither column may push the list wider than its container. */
   grid-template-columns: minmax(min(7.5rem, 40%), 1fr) minmax(0, 1.2fr);
   align-items: center;
@@ -29,6 +30,8 @@
   background: #ffffff08;
 }
 .ad-key-value-list dt {
+  min-width: 0;
+  overflow-wrap: anywhere;
   color: var(--ad-muted);
   transition: color 0.25s;
 }

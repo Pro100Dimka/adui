@@ -1,4 +1,4 @@
-import { DialogBody, TextField } from "@ad-voice/ui";
+import { DialogBody, TextField } from "@neo-ui-kit/react";
 
 /** Content area of a dialog with the standard spacing. */
 export default function DialogBodyExample() {

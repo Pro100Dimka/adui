@@ -1,0 +1,392 @@
+{
+  "scope": "Overlays, layout, tabs, navigation and shared positioning",
+  "date": "2026-10-12",
+  "baseline": {
+    "command": "npm run test --workspace @ad-voice/ui -- tests/data-responsiveness.test.tsx tests/RouterRerenders.test.tsx",
+    "passed": 53,
+    "failed": 0
+  },
+  "verification": {
+    "componentTests": "layers-unit-green.json",
+    "componentTestsPassed": 78,
+    "dedicatedTests": [
+      "../packages/ui/tests/LayersContracts.test.tsx",
+      "../packages/ui/tests/LayoutNavigationContracts.test.tsx"
+    ],
+    "browserRunner": "layers-browser.mjs",
+    "browserReports": [
+      "layers-browser-red.json",
+      "layers-browser-extra-red.json",
+      "layers-browser-strict-red.json",
+      "layers-browser-property-red.json",
+      "layers-browser-green.json",
+      "layers-browser-feedback-red.json",
+      "layers-browser-feedback-actions-red.json",
+      "layers-browser-toast-red.json",
+      "layers-browser-toast-floating-red.json"
+    ],
+    "browserAssertionsPassed": 62,
+    "browserAssertionsFailed": 0,
+    "typecheck": "npm run typecheck --workspace @ad-voice/ui: passed",
+    "screenshotsReviewed": [
+      "layers-red-dialog-320.png",
+      "layers-red-layouts-1440.png",
+      "layers-green-dialog-320.png",
+      "layers-green-layouts-1440.png",
+      "layers-green-green-light.png",
+      "layers-green-violet-dark.png",
+      "layers-green-Badge-240.png",
+      "layers-green-EmptyState-240.png",
+      "layers-green-KeyValueList-240.png",
+      "layers-green-MessageBar-240.png",
+      "layers-green-Toast-240.png"
+    ],
+    "viewports": [
+      320,
+      375,
+      768,
+      1024,
+      1440,
+      1920
+    ],
+    "containerWidths": [
+      240
+    ],
+    "themes": [
+      "ruby",
+      "light",
+      "green",
+      "violet"
+    ],
+    "colorSchemes": [
+      "dark",
+      "light"
+    ]
+  },
+  "matrix": [
+    {
+      "component": "Popover",
+      "contract": "Controlled nonmodal native top-layer surface; anchor, align, autofocus and width matching",
+      "scenarios": [
+        "two concurrent layers",
+        "nested layer mounted with parent",
+        "Escape already handled by child",
+        "outside pointer",
+        "live alignment and width props",
+        "anchor/content resize",
+        "unmount during scheduled frame",
+        "keyboard viewport",
+        "scaled entrance",
+        "320px long content"
+      ],
+      "expected": "Only the top layer dismisses; geometry tracks live inputs and available viewport; cleanup restores focus and cancels observers/frames",
+      "before": "Both layers closed; alignment stale; no observer; virtual keyboard overlap 468px vs 392px boundary; scaled geometry right edge 800px vs 792px; long popup 336px at 320 viewport",
+      "fix": "Local ordered layer stack, latest props, ResizeObserver and visualViewport subscriptions, untransformed box dimensions, bounded local scrolling",
+      "verification": "13-case LayersContracts plus real native nested-layer browser tests",
+      "result": "passed"
+    },
+    {
+      "component": "Dialog",
+      "contract": "Native modal, controlled/defaultOpen, native focus trap/return, cancellable sync/async confirmation, dismissible controls backdrop only",
+      "scenarios": [
+        "confirm twice before rerender",
+        "close/reopen before old confirmation resolves",
+        "localized footer labels at 320",
+        "close button beside long heading",
+        "nested popovers",
+        "four themes in both schemes",
+        "StrictMode modal containing fields after a prior Select interaction"
+      ],
+      "before": "Two confirmations ran; old completion closed new dialog; grid min-content expanded children beyond modal; footer actions clipped; native close lost opener focus to BODY after the field/StrictMode sequence",
+      "fix": "Confirmation generation and synchronous busy guard; minmax(0,1fr) grid column; wrapped footer labels; compact header close action; retain the connected opener and restore focus when native close leaves BODY or a dialog descendant active",
+      "verification": "dedicated red then green renderer tests; browser geometry and three-stage Escape/focus assertions",
+      "result": "passed"
+    },
+    {
+      "component": "Menu",
+      "contract": "Popover role=menu, arrow/Home/End navigation, Tab closes, selection closes/restores focus",
+      "scenarios": [
+        "consumer onKeyDown preventDefault",
+        "60 actions",
+        "nested theme"
+      ],
+      "before": "Consumer handler replaced; final action at 2418px despite viewport ending at 900px",
+      "fix": "Compose consumer handler before internal navigation; scroll only overflowing menus while retaining caret on short menus",
+      "verification": "dedicated renderer test and real browser final-action scroll geometry",
+      "result": "passed"
+    },
+    {
+      "component": "MenuItem",
+      "contract": "Native button role=menuitem with disabled/danger/icon",
+      "scenarios": [
+        "source semantics and native disabled",
+        "60-item menu consumer"
+      ],
+      "fix": "No component-local change needed",
+      "verification": "source inspection and browser Menu integration",
+      "result": "passed within listed scenarios"
+    },
+    {
+      "component": "Tooltip",
+      "contract": "Hover/focus descriptive top-layer note",
+      "scenarios": [
+        "existing aria-describedby",
+        "scroll while visible",
+        "pointer leaves focused trigger",
+        "Escape inside popup",
+        "cleanup"
+      ],
+      "before": "Existing accessible description overwritten; position stale; mouseleave hid focused description",
+      "fix": "Merge description IDs only while tip mounted; resize/scroll observers; preserve keyboard-focused and hovered state; prevent handled Escape",
+      "verification": "dedicated renderer tests, original cases confirmed red",
+      "result": "passed; assistive technology speech and touch hardware not tested"
+    },
+    {
+      "component": "Tabs",
+      "contract": "Controlled/uncontrolled automatic keyboard activation and roving tab stop; dynamic items",
+      "scenarios": [
+        "first item disabled",
+        "selected item removed",
+        "controlled value missing",
+        "long labels in 240px container"
+      ],
+      "before": "Disabled default selection; no selected tab or keyboard entry after removal",
+      "fix": "First enabled default; notify uncontrolled fallback; preserve controlled state while supplying reachable tab stop",
+      "verification": "dedicated renderer tests and browser narrow-container local scrolling",
+      "result": "passed"
+    },
+    {
+      "component": "Tab",
+      "contract": "Native role=tab, selected, panelId, disabled",
+      "scenarios": [
+        "parent-provided roving tabIndex"
+      ],
+      "before": "Explicit tabIndex ignored",
+      "fix": "Honor explicit tabIndex; retain selected default",
+      "verification": "Tabs dedicated tests",
+      "result": "passed"
+    },
+    {
+      "component": "TabPanel",
+      "contract": "role=tabpanel, labelledBy, hidden, focusable content",
+      "scenarios": [
+        "source semantic relationships and hidden state"
+      ],
+      "fix": "No change",
+      "verification": "source inspection; existing static component tests",
+      "result": "inspected; no independent screen-reader session"
+    },
+    {
+      "component": "FloatingPanel/useFloatingPanel",
+      "contract": "Drag, eight resize edges, saved layout, limits, defaultSize, drag outside; now keyboard arrows move and Shift+arrows resize",
+      "scenarios": [
+        "saved props after drag",
+        "west min-width",
+        "secondary pointer",
+        "pointer cancellation",
+        "defaultSize without measurement",
+        "keyboard operation"
+      ],
+      "before": "live layout masked new props; west minimum moved opposite edge; right click resized; pointercancel committed; defaultSize not forwarded; no keyboard input",
+      "fix": "Reconcile changed saved dimensions, clamp opposite edge, primary-button guard, cancellation rollback, forward defaultSize, focusable keyboard path reusing limits",
+      "verification": "seven dedicated gesture/keyboard tests plus two real browser keyboard assertions",
+      "result": "passed; touch hardware and drag outside native window untested"
+    },
+    {
+      "component": "Stack",
+      "contract": "Responsive flex layout with optional dividers and keyed children",
+      "scenarios": [
+        "edit child state then reorder with divider",
+        "narrow layout"
+      ],
+      "before": "Index-keyed fragments remounted keyed children and lost edits",
+      "fix": "Use existing child's key for divider fragments",
+      "verification": "dedicated red/green interaction test",
+      "result": "passed"
+    },
+    {
+      "component": "Grid",
+      "contract": "Responsive columns, placement, auto-fit, spacing, alignment and distribution",
+      "scenarios": [
+        "justify=between fixed columns",
+        "240px auto-fit container"
+      ],
+      "before": "space-between incorrectly assigned to justify-items; last column ended at96 vs256",
+      "fix": "Separate track distribution from item alignment using local declarative map",
+      "verification": "real browser red/green geometry and responsive smoke",
+      "result": "passed"
+    },
+    {
+      "component": "Header",
+      "contract": "Semantic heading level and responsive actions",
+      "scenarios": [
+        "two actions and long heading in 240px Card"
+      ],
+      "before": "Second action extended outside Card at every screen width",
+      "fix": "Bound action group width and allow wrapping",
+      "verification": "real browser red/green at six widths",
+      "result": "passed"
+    },
+    {
+      "component": "DialogActions",
+      "contract": "Reusable dialog footer layout",
+      "scenarios": [
+        "long localized confirm/cancel labels"
+      ],
+      "fix": "Wrap actions and permit multiline button labels",
+      "verification": "real browser red/green at six widths",
+      "result": "passed"
+    },
+    {
+      "component": "DialogBody",
+      "contract": "Bounded scrollable dialog content",
+      "scenarios": [
+        "narrow modal content",
+        "source min-height and local overflow inspection"
+      ],
+      "fix": "No direct change; benefits from bounded Dialog grid track",
+      "verification": "browser Dialog consumer",
+      "result": "passed within listed scenarios"
+    },
+    {
+      "component": "Card",
+      "contract": "Surface/header/composition/border/padding",
+      "scenarios": [
+        "nested Header/Grid/Tabs/ScrollArea inside 240px container"
+      ],
+      "fix": "No local change; Header fix removes action overflow",
+      "verification": "browser layout screenshots at six widths",
+      "result": "passed within listed scenarios"
+    },
+    {
+      "component": "ScrollArea",
+      "contract": "Focusable bounded scroll region; height and smooth wheel",
+      "scenarios": [
+        "20 rows inside narrow Card",
+        "source local overflow and cleanup owner"
+      ],
+      "fix": "No local change",
+      "verification": "browser narrow layout plus existing motion tests",
+      "result": "inspected; physical touch scroll untested"
+    },
+    {
+      "component": "ButtonGroup",
+      "contract": "Shared action tray with wrapping",
+      "scenarios": [
+        "source shared and component CSS ordering"
+      ],
+      "fix": "No change: shared layout CSS already enables wrap independent of media query",
+      "verification": "source inspection",
+      "result": "inspected"
+    },
+    {
+      "component": "Toolbar",
+      "contract": "Wrapping action surface",
+      "scenarios": [
+        "shared flex/wrap, component style inspection"
+      ],
+      "fix": "No change",
+      "verification": "source inspection",
+      "result": "inspected"
+    },
+    {
+      "component": "Text",
+      "contract": "Polymorphic text with fallback text prop",
+      "scenarios": [
+        "as and children/nullish fallback source"
+      ],
+      "fix": "No change",
+      "verification": "source inspection",
+      "result": "inspected"
+    },
+    {
+      "component": "Divider",
+      "contract": "role=separator and orientation",
+      "scenarios": [
+        "vertical/horizontal CSS and semantics",
+        "Menu integration"
+      ],
+      "fix": "No change",
+      "verification": "source inspection",
+      "result": "inspected"
+    },
+    {
+      "component": "StatTile",
+      "contract": "Value/label card with optional native button and tilt",
+      "scenarios": [
+        "native action semantics, optional badge, decorative icon"
+      ],
+      "fix": "No change",
+      "verification": "source inspection; tilt/artwork ownership delegated",
+      "result": "inspected"
+    },
+    {
+      "component": "Avatar",
+      "contract": "Initials/photo/host presentation; name, badge and presence",
+      "scenarios": [
+        "accessible image name and native image alt, source variant paths"
+      ],
+      "fix": "No change",
+      "verification": "source inspection; HostSeal performance existing tests",
+      "result": "inspected; image failure and grapheme names not covered"
+    },
+    {
+      "component": "Icon/Illustration/BrandMark",
+      "contract": "SVG artwork, decorative/labelled assets, fit/framing",
+      "scenarios": [
+        "icon fallback, labelled SVG, reusable prefixed SVG IDs"
+      ],
+      "fix": "No layer-local change",
+      "verification": "source inspection; SVG/performance tests owned by effects/core audit",
+      "result": "inspected"
+    },
+    {
+      "component": "Router/useRouter/matchRoute",
+      "contract": "Hash/history, params, access, redirects and optional transitions",
+      "scenarios": [
+        "change mode prop while mounted",
+        "route updates and stale transitions",
+        "invalid encoded params"
+      ],
+      "before": "Switching hash to history preserved old hash view",
+      "fix": "Synchronize current location when mode changes",
+      "verification": "dedicated red/green mode test plus existing 10-case RouterRerenders suite",
+      "result": "passed"
+    },
+    {
+      "component": "Toast",
+      "contract": "Inline or viewport-floating localized status/alert with optional duration/onClose; long message remains fully readable",
+      "scenarios": [
+        "Six viewport widths320/375/768/1024/1440/1920",
+        "16px and32px root font",
+        "Short and long unbroken messages inside240px Card",
+        "Floating message keeps5percent viewport margins",
+        "Latest timer callback and unmount cleanup in FeedbackContracts"
+      ],
+      "expected": "Inline width follows its container; floating width follows viewport; message wraps without clipping or ellipsis",
+      "before": "Inline min-width min(18rem,90vw) extended to319px against241px parent edge; long text extended beyond1054px; first fix also exposed floating min/max precedence at200percent font",
+      "fix": "Inline min-width min(18rem,100percent), max-width100percent; message min-width0 and overflow-wrap:anywhere; bounded2rem radius protects multiline text; floating-specific min-width restores90vw cap",
+      "verification": [
+        "layers-browser-toast-red.json",
+        "layers-browser-toast-floating-red.json",
+        "layers-browser-green.json:62pass0fail",
+        "toast-related-green.json:167pass0fail"
+      ],
+      "screenshot": "layers-green-Toast-240.png",
+      "result": "passed; screenshot reviewed"
+    }
+  ],
+  "performance": {
+    "scenario": "Three nested scroll notifications before next frame",
+    "measurement": "Existing dedicated test confirms one initial measurement, no repeated immediate layout, one additional measurement on shared frame and frame cancellation on unmount",
+    "scope": "Synthetic event/measurement counters, not physical device latency",
+    "lowEndHardware": "not available"
+  },
+  "limitations": [
+    "Browser verification used installed Windows Chrome headless; Firefox, Safari, mobile hardware and assistive technology are not verified.",
+    "Software keyboard viewport geometry was reproduced with a mocked VisualViewport in a component test; a physical on-screen keyboard is not verified.",
+    "Theme matrix verifies geometry and resolved text color, not a complete contrast-ratio audit of every gradient and animation frame.",
+    "Not every layout component has every size/theme Cartesian combination executed; source-only coverage is explicitly marked in the matrix.",
+    "Source harness is separate from the packed-consumer check owned by the parent agent; it does not substitute for package verification."
+  ]
+}

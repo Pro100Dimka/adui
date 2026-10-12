@@ -1,0 +1,29 @@
+
+> @ad-voice/ui@2.9.3 test
+> vitest run --reporter=dot tests/NeonWavesResize.test.tsx tests/ArtworkAnimationPerformance.test.tsx tests/ArtworkLayerPerformance.test.ts
+
+
+ RUN  v3.2.7 D:/Git/adui/packages/ui
+
+stderr | tests/NeonWavesResize.test.tsx > resizes comet coordinates immediately without waiting for another motion tick
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/ArtworkAnimationPerformance.test.tsx > keeps spectrum columns moving without querying them on every animation tick
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/ArtworkAnimationPerformance.test.tsx > keeps spectrum bars moving without repeatedly searching every SVG bar and layer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/ArtworkAnimationPerformance.test.tsx > keeps neon strands and comets moving without repeating DOM searches each frame
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/ArtworkAnimationPerformance.test.tsx > draws the server rack's unchanged ventilation detail without a DOM node per hatch
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+········
+
+ Test Files  3 passed (3)
+      Tests  8 passed (8)
+   Start at  13:51:57
+   Duration  378ms (transform 142ms, setup 0ms, collect 326ms, tests 36ms, environment 0ms, prepare 214ms)
+

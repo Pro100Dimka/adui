@@ -1,0 +1,66 @@
+{
+  "environment": "Installed Chrome headless, axe-core4.14, real Vite docs, ruby theme, reduced motion",
+  "pages": [
+    {
+      "slug": "color-picker",
+      "violations": []
+    },
+    {
+      "slug": "file-picker",
+      "violations": [
+        {
+          "id": "label-content-name-mismatch",
+          "nodes": [
+            {
+              "target": [
+                ".ad-file-picker-avatar-button"
+              ],
+              "html": "<button type=\"button\" class=\"ad-file-picker-avatar-button\" aria-label=\"Изменить фото: Pro100Yojik\">"
+            }
+          ],
+          "review": "Duplicate SVG glow/foreground text is read twice by axe, while pixels show one initial and one owner label. Accessible name now includes owner. Manual review accepted; rule remains enabled.",
+          "evidence": [
+            "file-picker-label-analysis.json",
+            "file-picker-label-analysis.png"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "data-table",
+      "violations": []
+    },
+    {
+      "slug": "form-fields",
+      "violations": [
+        {
+          "id": "label-content-name-mismatch",
+          "nodes": [
+            {
+              "target": [
+                ".ad-file-picker-avatar-button"
+              ],
+              "html": "<button type=\"button\" class=\"ad-file-picker-avatar-button\" aria-label=\"Изменить фото: Дмитрий\">"
+            }
+          ],
+          "review": "Duplicate SVG glow/foreground text is read twice by axe, while pixels show one initial and one owner label. Accessible name now includes owner. Manual review accepted; rule remains enabled.",
+          "evidence": [
+            "file-picker-label-analysis.json",
+            "file-picker-label-analysis.png"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "theme-editor",
+      "violations": []
+    },
+    {
+      "slug": "loader-generator",
+      "violations": []
+    }
+  ],
+  "automatedViolations": 2,
+  "unexpectedViolations": 0,
+  "manualReviewCount": 2
+}

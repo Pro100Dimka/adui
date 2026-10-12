@@ -1,0 +1,32 @@
+{
+  "passed": 2,
+  "failed": 2,
+  "results": [
+    {
+      "name": "Icon exact purpose",
+      "actual": "Иконка; surface=",
+      "expected": "Иконка; surface=\"tile\" добавляет контейнер вместо отдельного IconTile.",
+      "passed": false,
+      "error": "Expected values to be strictly deep-equal:\n+ actual - expected\n\n+ 'Иконка; surface='\n- 'Иконка; surface=\"tile\" добавляет контейнер вместо отдельного IconTile.'\n"
+    },
+    {
+      "name": "QuantumFieldExperience exact purpose",
+      "actual": "Нативное аудиореактивное поле частиц с режимами, ограничением качества и поддержкой уменьшенного движения.",
+      "expected": "Полный аудиовизуализатор Quantum Fields (MIT) в изолированном iframe; интерактивная сцена с управлением звуком и режимами.",
+      "passed": false,
+      "error": "Expected values to be strictly deep-equal:\n+ actual - expected\n\n+ 'Нативное аудиореактивное поле частиц с режимами, ограничением качества и поддержкой уменьшенного движения.'\n- 'Полный аудиовизуализатор Quantum Fields (MIT) в изолированном iframe; интерактивная сцена с управлением звуком и режимами.'\n"
+    },
+    {
+      "name": "public component count",
+      "actual": 100,
+      "expected": 100,
+      "passed": true
+    },
+    {
+      "name": "non-component runtime export count",
+      "actual": 69,
+      "expected": 69,
+      "passed": true
+    }
+  ]
+}

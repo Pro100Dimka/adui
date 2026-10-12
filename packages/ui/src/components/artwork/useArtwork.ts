@@ -52,6 +52,7 @@ export function useArtwork(
         }, { rootMargin: "25% 0px" })
       : null;
     intersection?.observe(canvas);
+    paint();
     return () => {
       alive = false;
       observer.disconnect();

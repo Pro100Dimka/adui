@@ -2,6 +2,7 @@
    ruby, glows and catches a passing sheen, a light beam marks the position. */
 .ad-waveform {
   position: relative;
+  contain: layout;
   flex: 1;
   min-width: 3rem;
   height: clamp(3.25rem, 2.6rem + 1.8vw, 4.75rem);

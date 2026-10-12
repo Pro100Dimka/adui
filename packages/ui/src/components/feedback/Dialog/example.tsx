@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button, Dialog } from "@ad-voice/ui";
+import { Button, Dialog } from "@neo-ui-kit/react";
 
 export default function DialogExample() {
   const [open, setOpen] = useState(false);

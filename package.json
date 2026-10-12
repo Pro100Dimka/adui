@@ -1,6 +1,6 @@
 {
-  "name": "ad-voice-ui-workspace",
-  "version": "2.2.0",
+  "name": "neo-ui-workspace",
+  "version": "1.0.0",
   "private": true,
   "type": "module",
   "workspaces": [
@@ -8,17 +8,18 @@
     "apps/*"
   ],
   "scripts": {
-    "dev": "npm run dev --workspace @ad-voice/playground",
-    "dev:host": "npm run dev:host --workspace @ad-voice/playground",
-    "typecheck": "npm run typecheck --workspace @ad-voice/ui && npm run typecheck --workspace @ad-voice/playground",
-    "build": "npm run build --workspace @ad-voice/ui && npm run build --workspace @ad-voice/playground",
-    "preview": "npm run preview --workspace @ad-voice/playground",
-    "check": "npm run typecheck && npm run build",
+    "dev": "npm run dev --workspace @neo-ui-kit/playground",
+    "dev:host": "npm run dev:host --workspace @neo-ui-kit/playground",
+    "typecheck": "npm run typecheck --workspace @neo-ui-kit/react && npm run typecheck --workspace @neo-ui-kit/playground",
+    "build": "npm run build --workspace @neo-ui-kit/react && npm run build --workspace @neo-ui-kit/playground",
+    "preview": "npm run preview --workspace @neo-ui-kit/playground",
+    "test": "npm run build --workspace @neo-ui-kit/react && npm test --workspace @neo-ui-kit/react",
+    "check": "npm run typecheck && npm run build && npm test --workspace @neo-ui-kit/react",
     "docs": "npm run build && node -e \"const fs=require('fs');fs.rmSync('docs',{recursive:true,force:true});fs.cpSync('apps/playground/dist','docs',{recursive:true});fs.writeFileSync('docs/.nojekyll','')\"",
-    "package": "npm run build --workspace @ad-voice/ui && node -e \"require('fs').mkdirSync('release',{recursive:true})\" && npm pack ./packages/ui --pack-destination release",
-    "release:patch": "npm version patch --workspace @ad-voice/ui --no-git-tag-version",
-    "release:minor": "npm version minor --workspace @ad-voice/ui --no-git-tag-version",
-    "release:major": "npm version major --workspace @ad-voice/ui --no-git-tag-version"
+    "package": "npm run build --workspace @neo-ui-kit/react && node -e \"require('fs').mkdirSync('release',{recursive:true})\" && npm pack ./packages/ui --pack-destination release",
+    "release:patch": "npm version patch --workspace @neo-ui-kit/react --no-git-tag-version",
+    "release:minor": "npm version minor --workspace @neo-ui-kit/react --no-git-tag-version",
+    "release:major": "npm version major --workspace @neo-ui-kit/react --no-git-tag-version"
   },
   "engines": {
     "node": ">=20"

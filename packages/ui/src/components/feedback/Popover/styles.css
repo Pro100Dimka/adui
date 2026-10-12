@@ -1,5 +1,10 @@
 /* Styles owned by Popover: unfolds from its anchor side, rows arrive in a quick cascade. */
 .ad-popover {
+  min-width: min(14.6875rem, var(--ad-popover-available-width, calc(100vw - 1rem)));
+  max-width: min(21.875rem, var(--ad-popover-available-width, calc(100vw - 1rem)));
+  max-height: var(--ad-popover-available-height, calc(100dvh - 1rem));
+  overflow: auto;
+  overflow-wrap: anywhere;
   transform-origin: var(--ad-popover-anchor-x, 50%) top;
   animation: ad-popover-in 0.22s cubic-bezier(0.2, 0.9, 0.3, 1.2) both;
 }

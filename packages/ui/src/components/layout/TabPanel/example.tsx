@@ -1,4 +1,4 @@
-import { TabPanel, Typography } from "@ad-voice/ui";
+import { TabPanel, Typography } from "@neo-ui-kit/react";
 
 /** Content of one tab; pair it with Tabs (see the Tabs page for the full pattern). */
 export default function TabPanelExample() {

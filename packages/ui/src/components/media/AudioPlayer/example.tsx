@@ -1,4 +1,4 @@
-import { AudioPlayer } from "@ad-voice/ui";
+import { AudioPlayer } from "@neo-ui-kit/react";
 
 /** Pass `src` to play a file; without it the player shows its timeline only. */
 export default function AudioPlayerExample() {

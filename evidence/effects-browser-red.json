@@ -1,0 +1,203 @@
+{
+  "environment": {
+    "browser": "Installed Chrome headless",
+    "physicalLowEndDevice": false,
+    "viewportHeight": 1000
+  },
+  "stage": "red",
+  "passed": 12,
+  "failed": 8,
+  "results": [
+    {
+      "name": "knob fits a narrow container at viewport 320",
+      "passed": false,
+      "actual": {
+        "hostWidth": 200,
+        "controlWidth": 320,
+        "right": 336,
+        "hostRight": 216,
+        "volumeWidth": 0
+      }
+    },
+    {
+      "name": "audio keeps volume available at viewport 320",
+      "passed": true,
+      "actual": {
+        "hostWidth": 200,
+        "controlWidth": 200,
+        "right": 216,
+        "hostRight": 216,
+        "volumeWidth": 129
+      }
+    },
+    {
+      "name": "knob fits a narrow container at viewport 375",
+      "passed": false,
+      "actual": {
+        "hostWidth": 200,
+        "controlWidth": 320,
+        "right": 336,
+        "hostRight": 216,
+        "volumeWidth": 0
+      }
+    },
+    {
+      "name": "audio keeps volume available at viewport 375",
+      "passed": true,
+      "actual": {
+        "hostWidth": 200,
+        "controlWidth": 200,
+        "right": 216,
+        "hostRight": 216,
+        "volumeWidth": 129
+      }
+    },
+    {
+      "name": "knob fits a narrow container at viewport 768",
+      "passed": false,
+      "actual": {
+        "hostWidth": 200,
+        "controlWidth": 320,
+        "right": 336,
+        "hostRight": 216,
+        "volumeWidth": 0
+      }
+    },
+    {
+      "name": "audio keeps volume available at viewport 768",
+      "passed": true,
+      "actual": {
+        "hostWidth": 200,
+        "controlWidth": 200,
+        "right": 216,
+        "hostRight": 216,
+        "volumeWidth": 55.515625
+      }
+    },
+    {
+      "name": "knob fits a narrow container at viewport 1024",
+      "passed": false,
+      "actual": {
+        "hostWidth": 200,
+        "controlWidth": 320,
+        "right": 336,
+        "hostRight": 216,
+        "volumeWidth": 0
+      }
+    },
+    {
+      "name": "audio keeps volume available at viewport 1024",
+      "passed": true,
+      "actual": {
+        "hostWidth": 200,
+        "controlWidth": 200,
+        "right": 216,
+        "hostRight": 216,
+        "volumeWidth": 56.515625
+      }
+    },
+    {
+      "name": "knob fits a narrow container at viewport 1440",
+      "passed": false,
+      "actual": {
+        "hostWidth": 200,
+        "controlWidth": 320,
+        "right": 336,
+        "hostRight": 216,
+        "volumeWidth": 0
+      }
+    },
+    {
+      "name": "audio keeps volume available at viewport 1440",
+      "passed": true,
+      "actual": {
+        "hostWidth": 200,
+        "controlWidth": 200,
+        "right": 216,
+        "hostRight": 216,
+        "volumeWidth": 58.203125
+      }
+    },
+    {
+      "name": "knob fits a narrow container at viewport 1920",
+      "passed": false,
+      "actual": {
+        "hostWidth": 200,
+        "controlWidth": 320,
+        "right": 336,
+        "hostRight": 216,
+        "volumeWidth": 0
+      }
+    },
+    {
+      "name": "audio keeps volume available at viewport 1920",
+      "passed": true,
+      "actual": {
+        "hostWidth": 200,
+        "controlWidth": 200,
+        "right": 216,
+        "hostRight": 216,
+        "volumeWidth": 60.09375
+      }
+    },
+    {
+      "name": "hidden-readout knob responds to real keyboard",
+      "passed": true,
+      "actual": "68"
+    },
+    {
+      "name": "piano key keyboard activates once",
+      "passed": true,
+      "actual": "1"
+    },
+    {
+      "name": "decorative marquee copy is inert",
+      "passed": true,
+      "actual": [
+        {
+          "inert": false,
+          "width": 455.40625,
+          "visible": true
+        },
+        {
+          "inert": true,
+          "width": 455.40625,
+          "visible": true
+        }
+      ]
+    },
+    {
+      "name": "reduced-motion marquee content remains available without scrolling animation",
+      "passed": false,
+      "actual": {
+        "left": 16,
+        "right": 216,
+        "groupLeft": 16,
+        "groupRight": 471.40625
+      }
+    },
+    {
+      "name": "border lights travel continuously without native SVG point queries",
+      "passed": false,
+      "actual": {
+        "samples": 39,
+        "moves": 1
+      }
+    },
+    {
+      "name": "border follows live resize",
+      "passed": true,
+      "actual": "0 0 120 80"
+    },
+    {
+      "name": "border holds its orbit after reduced-motion changes",
+      "passed": true,
+      "actual": true
+    },
+    {
+      "name": "browser has no uncaught errors",
+      "passed": true,
+      "actual": []
+    }
+  ]
+}

@@ -89,7 +89,7 @@ const enabledBy: Record<string, string> = {
 type Transport = { mode: string | null; playing: boolean; current: number; duration: number; track: string };
 const emptyTransport: Transport = { mode: null, playing: false, current: 0, duration: 0, track: "" };
 type FrameMessage = { type?: string; value?: unknown };
-const TransportControls = memo(function TransportControls({ send, viewport, receive }: {
+const TransportControls = /* @__PURE__ */ memo(function TransportControls({ send, viewport, receive }: {
   send: (key: string, value?: unknown) => void;
   viewport: RefObject<HTMLDivElement | null>;
   receive: RefObject<((message: FrameMessage) => void) | null>;

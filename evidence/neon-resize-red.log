@@ -1,0 +1,31 @@
+
+ RUN  v3.2.7 D:/Git/adui
+
+stderr | packages/ui/tests/NeonWavesResize.test.tsx > resizes comet coordinates immediately without waiting for another motion tick
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+ ❯ packages/ui/tests/NeonWavesResize.test.tsx (1 test | 1 failed) 12ms
+   × resizes comet coordinates immediately without waiting for another motion tick 12ms
+     → expected 393.76 to be close to 131.25333333333333, received difference is 262.50666666666666, but expected 0.05
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/ui/tests/NeonWavesResize.test.tsx > resizes comet coordinates immediately without waiting for another motion tick
+AssertionError: expected 393.76 to be close to 131.25333333333333, received difference is 262.50666666666666, but expected 0.05
+ ❯ packages/ui/tests/NeonWavesResize.test.tsx:33:49
+     31|   const before = x();
+     32|   resize(200);
+     33|   x().forEach((position, i) => expect(position).toBeCloseTo(before[i]!…
+       |                                                 ^
+     34|   act(() => tree.unmount());
+     35| });
+ ❯ packages/ui/tests/NeonWavesResize.test.tsx:33:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed (1)
+   Start at  13:50:01
+   Duration  337ms (transform 63ms, setup 0ms, collect 144ms, tests 12ms, environment 0ms, prepare 70ms)
+

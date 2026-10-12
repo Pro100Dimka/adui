@@ -1,9 +1,19 @@
 /* Styles owned by DialogActions. */
 .ad-dialog-actions {
   display: flex;
+  flex-wrap: wrap;
   justify-content: flex-end;
   gap: 0.625rem;
   align-items: center;
+}
+.ad-dialog-actions > .ad-button {
+  height: auto;
+  min-height: var(--ad-size-h);
+  padding-block: 0.6rem;
+}
+.ad-dialog-actions .ad-button-label {
+  white-space: normal;
+  overflow-wrap: anywhere;
 }
 /* Actions arrive last, one after another. */
 .ad-dialog[open] .ad-dialog-actions > * {

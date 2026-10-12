@@ -1,4 +1,4 @@
-import { Steps } from "@ad-voice/ui";
+import { Steps } from "@neo-ui-kit/react";
 
 export default function StepsExample() {
   return (
