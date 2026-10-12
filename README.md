@@ -2,7 +2,7 @@
 
 Библиотека React-компонентов `@neo-ui-kit/react` и документация к ней (playground).
 
-Документация: https://pro100dimka.github.io/adui/
+Документация: https://pro100dimka.github.io/adui/#/components/overview
 
 ```text
 packages/ui/       — библиотека (публикуется как npm-пакет)
@@ -65,7 +65,7 @@ npm run package
 Установить полученный архив в отдельное приложение (путь задаётся относительно приложения):
 
 ```bash
-npm install /path/to/adui/release/neo-ui-kit-react-1.0.2.tgz react react-dom
+npm install /path/to/adui/release/neo-ui-kit-react-1.0.3.tgz react react-dom
 ```
 
 Подготовка новой версии:

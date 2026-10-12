@@ -1,0 +1,24 @@
+{
+  "checkedAt": "2026-10-12T13:46:29.594Z",
+  "status": "Prepared and verified; public release approval pending",
+  "package": "@neo-ui-kit/react@1.0.3",
+  "homepage": "https://pro100dimka.github.io/adui/#/components/overview",
+  "artifact": "release/neo-ui-kit-react-1.0.3.tgz",
+  "sha256": "8314650b21403794c7d6ee4e0194f29524d31067281c382f1ac1c6b2dd0b65cf",
+  "files": 270,
+  "unchangedFiles": 268,
+  "changedFiles": [
+    "README.md",
+    "package.json"
+  ],
+  "allRuntimeAssetsTypesLicensesByteIdentical": true,
+  "comparisonBase": "Local 1.0.2 artifact installed in release/consumer-quantum-background",
+  "checks": {
+    "typecheckAndBuild": "passed in evidence/homepage-full-check.log",
+    "red": "evidence/homepage-red.log",
+    "existingMetadataExpectation": "evidence/homepage-prior-metadata-expectation.log",
+    "tests": "evidence/homepage-tests-green.log",
+    "passed": 585,
+    "files": 38
+  }
+}

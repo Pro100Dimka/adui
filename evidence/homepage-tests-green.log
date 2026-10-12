@@ -1,0 +1,1010 @@
+
+> @neo-ui-kit/react@1.0.3 test
+> vitest run
+
+
+ RUN  v3.2.7 D:/Git/adui/packages/ui
+
+ ✓ tests/AnimatedBorderGeometry.test.ts (6 tests) 137ms
+stderr | tests/RotaryKnobContracts.test.tsx > keeps the knob operable by keyboard when its optional readout is hidden
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/RotaryKnobContracts.test.tsx > keeps controlled display at the supplied value while reporting keyboard proposals
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/RotaryKnobContracts.test.tsx > reports typed controlled proposals without replacing the externally supplied value
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/RotaryKnobContracts.test.tsx > uses controlled value before defaultValue in the initial accessible markup
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/RotaryKnobContracts.test.tsx > does not emit a user commit when a drag is disposed by unmount
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/RotaryKnobContracts.test.tsx > stops a drag when disabled changes during the interaction
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/RotaryKnobContracts.test.tsx > stops a drag when readOnly changes during the interaction
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+ ✓ tests/RotaryKnobContracts.test.tsx (7 tests) 32ms
+stderr | tests/motion-idle.test.ts > wakes CSS-only loops when the shared offscreen hook reveals their block
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/motion-idle.test.ts > disconnects the shared CSS visibility observer after its last boundary unmounts
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/LiveEditor.test.tsx > removes an old preview when the edited source fails to compile
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/MediaContracts.test.tsx > activates piano keys through the native click used by keyboard and assistive input, once
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/MediaContracts.test.tsx > cleans up the piano pressed feedback timer on unmount
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/MediaContracts.test.tsx > stops the waveform playback decoration when a seek interrupts a small playback step
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/MediaContracts.test.tsx > clamps the waveform's spoken value to the same track position that is rendered
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/MediaContracts.test.tsx > keeps decorative marquee copies out of keyboard and pointer interaction
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/MediaContracts.test.tsx > renders explicit empty waveform peaks as silence rather than fabricated demo audio
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/MediaContracts.test.tsx > does not invent a sparkline when a supplied series is empty
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/MediaContracts.test.tsx > keeps pointer-driven tilt still for a reduced-motion preference
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/MediaContracts.test.tsx > tracks visibility and releases the observer for offscreen 'Shimmer' animations
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/MediaContracts.test.tsx > tracks visibility and releases the observer for offscreen 'Sparkline' animations
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/MediaContracts.test.tsx > ignores a context-menu press on the waveform instead of seeking
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/MediaContracts.test.tsx > restores a cancelled waveform seek and returns keyboard focus to the track
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/motion-idle.test.ts > lets native page scrolling handle wheel notches over 'a fitted container'
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+ ✓ tests/MediaContracts.test.tsx (12 tests) 40ms
+stderr | tests/motion-idle.test.ts > lets native page scrolling handle wheel notches over 'visible overflow'
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/AudioPlayerRerenders.test.tsx > moves the live cursor without rebuilding the play and volume controls every frame
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/AudioPlayerRerenders.test.tsx > controls an external transport without starting a second audio source or clock
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/motion-idle.test.ts > lets native page scrolling handle wheel notches over 'hidden overflow'
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/LayoutNavigationContracts.test.tsx > dynamic tab accessibility > starts from the first enabled tab instead of an unfocusable disabled item
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/AudioPlayerRerenders.test.tsx > uses elapsed clock time for the demo timeline and announces completion once
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/AudioPlayerRerenders.test.tsx > resets a paused timeline when its audio source is replaced without emitting a seek
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/motion-idle.test.ts > lets native page scrolling handle wheel notches over 'clipped overflow'
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/LayoutNavigationContracts.test.tsx > dynamic tab accessibility > recovers uncontrolled selection and informs its panel after removal
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/LayoutNavigationContracts.test.tsx > dynamic tab accessibility > keeps a tab stop when a controlled value is absent without inventing selection
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/LayoutNavigationContracts.test.tsx > floating panel gesture lifecycle > accepts a saved layout update after a completed move
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/LayoutNavigationContracts.test.tsx > floating panel gesture lifecycle > preserves the opposite edge when a west resize reaches its minimum
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/AudioPlayerRerenders.test.tsx > disables every audio player control including mute and volume
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/LayoutNavigationContracts.test.tsx > floating panel gesture lifecycle > ignores a secondary-button resize gesture
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/LayoutNavigationContracts.test.tsx > floating panel gesture lifecycle > canceling a pointer restores placement and does not commit
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/LayoutNavigationContracts.test.tsx > floating panel gesture lifecycle > lets keyboard users move and resize a focused panel
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/LayoutNavigationContracts.test.tsx > floating panel gesture lifecycle > passes defaultSize to its drag fallback before a layout can be measured
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/LayoutNavigationContracts.test.tsx > layout and navigation identity > keeps child state by key when a divided Stack is reordered
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/AudioPlayerRerenders.test.tsx > announces native playback completion to the latest callback after a props update
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/LayoutNavigationContracts.test.tsx > layout and navigation identity > resynchronizes location when router mode changes
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/AudioPlayerRerenders.test.tsx > lets a controlled audio volume report the requested value without changing its readout
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+ ✓ tests/LayoutNavigationContracts.test.tsx (12 tests) 27ms
+ ✓ tests/AudioPlayerRerenders.test.tsx (7 tests) 72ms
+stderr | tests/motion-idle.test.ts > smooths a scrollable container without taking wheel input from inner areas, gestures or trackpads
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/motion-idle.test.ts > leaves wheel input with an inner interactive canvas that already consumed it
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+ ✓ tests/motion-idle.test.ts (31 tests) 712ms
+stderr | tests/LayersContracts.test.tsx > keeps the default MessageBar warning tone and its icon consistent
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/LayersContracts.test.tsx > layer ownership > Escape dismisses only the most recently opened popover
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/LayersContracts.test.tsx > layer ownership > outside presses dismiss only the top layer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/LayersContracts.test.tsx > layer ownership > respects an Escape already handled by a child
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/LayersContracts.test.tsx > layer ownership > updates positioning props without reopening or refocusing
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/ArtworkAnimationPerformance.test.tsx > keeps spectrum columns moving without querying them on every animation tick
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/LayersContracts.test.tsx > layer ownership > repositions when the anchor or content resizes and removes pending work on unmount
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/LayersContracts.test.tsx > layer ownership > keeps the popup above a software keyboard's visual viewport boundary
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/LayersContracts.test.tsx > layer ownership > positions by untransformed dimensions while the entry animation scales the panel
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/LayersContracts.test.tsx > layer ownership > Menu preserves the consumer key handler and its prevented navigation
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/ArtworkAnimationPerformance.test.tsx > keeps spectrum bars moving without repeatedly searching every SVG bar and layer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/LayersContracts.test.tsx > Tooltip descriptions and motion > keeps the trigger's existing accessible description
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/ArtworkAnimationPerformance.test.tsx > keeps neon strands and comets moving without repeating DOM searches each frame
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/LoaderGenerator.test.ts > LoaderGenerator > encodes processed images asynchronously and bounds the loader image working size
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/LayersContracts.test.tsx > Tooltip descriptions and motion > follows scrolling while visible
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/ArtworkAnimationPerformance.test.tsx > draws the server rack's unchanged ventilation detail without a DOM node per hatch
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/LayersContracts.test.tsx > Tooltip descriptions and motion > does not hide a keyboard-focused description merely when the pointer leaves
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+ ✓ tests/ArtworkAnimationPerformance.test.tsx (4 tests) 29ms
+stderr | tests/LayersContracts.test.tsx > Dialog asynchronous confirmation > ignores a pending confirmation after the dialog closes and reopens
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+ ✓ tests/LayersContracts.test.tsx (14 tests) 37ms
+
+stderr | tests/LayersContracts.test.tsx > Dialog asynchronous confirmation > does not submit twice before the pending render commits
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/data-responsiveness.test.tsx > popover positioning > coalesces nested scroll events into one layout measurement per frame
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/LoaderGenerator.test.ts > LoaderGenerator > ignores encoded images when the generator closed during encoding
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/data-responsiveness.test.tsx > data controls keep unrelated interactions cheap > does not re-key, re-sort or rescan filters on selection, resize and pagination
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/data-responsiveness.test.tsx > data controls keep unrelated interactions cheap > invalidates cached sort and filter options when data or columns change
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/data-responsiveness.test.tsx > data controls keep unrelated interactions cheap > keeps sort cycling, search and group collapse coherent after caching the data pipeline
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/data-responsiveness.test.tsx > data controls keep unrelated interactions cheap > does not recompute all group aggregates when selecting a row
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/data-responsiveness.test.tsx > data controls keep unrelated interactions cheap > clears a large matching selection in linear work and preserves selections outside the result
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/data-responsiveness.test.tsx > data controls keep unrelated interactions cheap > does not rescan every selected row when an unrelated table prop changes
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/data-responsiveness.test.tsx > data controls keep unrelated interactions cheap > does not scan the dataset for an empty selection
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/data-responsiveness.test.tsx > data controls keep unrelated interactions cheap > stops selection checks once partial selection is known
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/LoaderGenerator.test.ts > LoaderGenerator > does not process a pending upload after the generator unmounts
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/data-responsiveness.test.tsx > data controls keep unrelated interactions cheap > collects automatic text filter values once instead of sorting the same column twice
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/RotaryKnobRaster.test.tsx > defers the knob's expensive static raster to the shared sliced artwork painter
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/RotaryKnobRaster.test.tsx > turns decisively with a wheel notch and a short vertical drag
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/data-responsiveness.test.tsx > data controls keep unrelated interactions cheap > collects high-cardinality filter suggestions only when the editor opens
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+ ✓ tests/RotaryKnobRaster.test.tsx (2 tests) 35ms
+stderr | tests/RouterRerenders.test.tsx > translates the Router example with the selected documentation locale
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/RouterRerenders.test.tsx > documents a usable Router with interactive home and dynamic room routes
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/RouterRerenders.test.tsx > Router render stability > updates hash routes immediately without native snapshots by default
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/RouterRerenders.test.tsx > Router render stability > updates history routes immediately without native snapshots by default
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/RouterRerenders.test.tsx > Router render stability > applies a changed transition preference to the location subscription
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/RouterRerenders.test.tsx > Router render stability > does not restore an older history route after a deferred transition completes
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/RouterRerenders.test.tsx > Router render stability > uses the latest hash when several transition callbacks are deferred
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/RouterRerenders.test.tsx > Router render stability > does not rerender the current page when only the motion preference changes
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/RouterRerenders.test.tsx > motion preference > shares one media listener and one DOM observer across all motion consumers
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/RouterRerenders.test.tsx > motion preference > updates subscribers only when the effective setting changes
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+ ✓ tests/RouterRerenders.test.tsx (10 tests) 27ms
+stderr | tests/data-responsiveness.test.tsx > data controls keep unrelated interactions cheap > does not construct custom Select option content while its list is closed
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/WaveDecorationFrames.test.tsx > reuses the strand nodes instead of querying the SVG on each animation frame
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+ ✓ tests/LiveEditor.test.tsx (3 tests) 512ms
+   ✓ serves a self-contained classic dev runtime without opening CORS to opaque origins  496ms
+ ✓ tests/WaveDecorationFrames.test.tsx (1 test) 25ms
+stderr | tests/FeedbackContracts.test.tsx > secondary feedback contract audit > keeps visible DataTable example action text in explicit accessible names
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/RotaryKnobHover.test.tsx > coalesces rapid pointer hover updates into one visual frame
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/FeedbackContracts.test.tsx > secondary feedback contract audit > restores a controlled details element when the parent refuses a toggle
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+ ✓ tests/RotaryKnobHover.test.tsx (1 test) 20ms
+stderr | tests/FeedbackContracts.test.tsx > secondary feedback contract audit > keeps SignalBars finite for bars=Infinity
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/FeedbackContracts.test.tsx > secondary feedback contract audit > keeps SignalBars finite for bars=NaN
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/FeedbackContracts.test.tsx > secondary feedback contract audit > keeps SignalBars finite for bars=-1
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/FeedbackContracts.test.tsx > secondary feedback contract audit > announces the same clamped signal strength that it paints
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/FeedbackContracts.test.tsx > secondary feedback contract audit > emits one pagination change when selecting a controlled page size
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/QuantumFieldPointer.test.tsx > unsubscribes the native field from the shared animation clock while offscreen
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/FeedbackContracts.test.tsx > secondary feedback contract audit > includes visible detail rows in the table's announced row count
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/QuantumFieldPointer.test.tsx > disturbs only particles near the pointer without rotating the entire scene on hover
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/FeedbackContracts.test.tsx > secondary feedback contract audit > announces a column resize separator's explicit initial width
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/QuantumFieldPointer.test.tsx > keeps the GPU renderer and geometry when only live audio, speed, or palette changes
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/FeedbackContracts.test.tsx > secondary feedback contract audit > fills a changing pinned container and disconnects its width observer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/QuantumFieldPointer.test.tsx > keeps automatic quality conservative on an eight-thread machine while allowing explicit high quality
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/FeedbackContracts.test.tsx > secondary feedback contract audit > keeps the public column key constructor finite and renders only own row data
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/QuantumFieldPointer.test.tsx > does not redraw or reset the viewport for unchanged ResizeObserver notifications
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/FeedbackContracts.test.tsx > secondary feedback contract audit > keeps the public column key toString finite and renders only own row data
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/FeedbackContracts.test.tsx > secondary feedback contract audit > keeps the public column key __proto__ finite and renders only own row data
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/QuantumFieldPointer.test.tsx > observes ancestor theme tokens only when the instance has no explicit palette
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/QuantumFieldPointer.test.tsx > repaints a paused field on visibility return when its palette changed offscreen
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+ ✓ tests/QuantumFieldPointer.test.tsx (7 tests) 18ms
+stderr | tests/FeedbackContracts.test.tsx > secondary feedback contract audit > offers reset when only row density or details changed and restores both
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/EdgeCases.test.tsx > forms under overlapping work > does not rerender merely to reinitialize unchanged mount values
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/EdgeCases.test.tsx > forms under overlapping work > ignores setting a field to its existing value
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/FeedbackContracts.test.tsx > secondary feedback contract audit > stores a __proto__ column filter as an own field without changing the object prototype
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/EdgeCases.test.tsx > forms under overlapping work > does not rerender when an already touched field is blurred again
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/data-responsiveness.test.tsx > data controls keep unrelated interactions cheap > reuses keys of unchanged Select options while searching a large list
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/EdgeCases.test.tsx > forms under overlapping work > does not serialize stable initial values again for an unrelated form-state change
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/FeedbackContracts.test.tsx > secondary feedback contract audit > Toast uses the newest close callback and cleans up its timer on unmount
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/EdgeCases.test.tsx > forms under overlapping work > updates one nested field without cloning unrelated values
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/FeedbackContracts.test.tsx > secondary feedback contract audit > Steps marks one current step, permits completion, and handles an empty list
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/EdgeCases.test.tsx > forms under overlapping work > does not rerender an unchanged sibling field
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/EdgeCases.test.tsx > forms under overlapping work > ignores a stale asynchronous validation result
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/PianoRollContracts.test.tsx > selects a piano-roll note through native keyboard activation without starting a drag
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/EdgeCases.test.tsx > forms under overlapping work > does not run concurrent submissions twice
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+ ✓ tests/FeedbackContracts.test.tsx (17 tests) 91ms
+stderr | tests/PianoRollContracts.test.tsx > does not seek or select an area when the browser cancels a pointer gesture
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/PianoRollContracts.test.tsx > ignores secondary pointers while a note drag is in progress
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/LevelMeterIdle.test.tsx > keeps a silent meter off the shared frame clock until it receives a level
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/data-responsiveness.test.tsx > data controls keep unrelated interactions cheap > does not scan every Autocomplete label again when only the active option changes
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/PianoRollContracts.test.tsx > restores the original note gesture before completing a cancelled drag
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+ ✓ tests/PianoRollContracts.test.tsx (4 tests) 24ms
+stderr | tests/LevelMeterIdle.test.tsx > lets a fading meter settle and releases the frame clock after silence
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+ ✓ tests/LevelMeterIdle.test.tsx (2 tests) 20ms
+stderr | tests/EdgeCases.test.tsx > input edge cases > rejects an impossible month typed into the calendar field
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/EdgeCases.test.tsx > input edge cases > does not let a disabled autocomplete change its value through an adornment
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/EdgeCases.test.tsx > input edge cases > rejects a dropped file outside the accepted types and ignores a disabled drop
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/data-responsiveness.test.tsx > data controls keep unrelated interactions cheap > reuses normalized Autocomplete options while the query changes
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/EdgeCases.test.tsx > input edge cases > never accepts non-image files for an avatar even with a broad accept prop
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/data-responsiveness.test.tsx > remote people search stays responsive > stops loading when a pending query is cleared and ignores its late answer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/EdgeCases.test.tsx > input edge cases > deduplicates case-insensitive tags within one pasted batch
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/EdgeCases.test.tsx > input edge cases > shows a failed remote people search without an unhandled rejection
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/data-responsiveness.test.tsx > remote people search stays responsive > does not restart an unchanged query merely because the search callback was recreated
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/EdgeCases.test.tsx > audio playback follows the real media > moves playing state and volume to a replacement source
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/data-responsiveness.test.tsx > remote people search stays responsive > cancels superseded searches and never shows their stale results
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/data-responsiveness.test.tsx > DataTable scalable and controlled views > keeps 10,000 virtual rows bounded, coalesces scroll and cancels pending work on unmount
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/EdgeCases.test.tsx > audio playback follows the real media > does not claim to be playing when the browser refuses playback
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/data-responsiveness.test.tsx > DataTable scalable and controlled views > uses server rows unchanged and emits controlled query, multi-sort and pagination without fetching
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/EdgeCases.test.tsx > waveform decoding remains cooperative > yields while measuring a long recording instead of blocking every input task
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/data-responsiveness.test.tsx > DataTable scalable and controlled views > sorts by priority, Shift appends/cycles one key and normal clicks replace the sorting
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/data-responsiveness.test.tsx > DataTable scalable and controlled views > normalizes duplicate/stale column order and pin ids and keeps sticky offsets aligned after resize
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/data-responsiveness.test.tsx > DataTable scalable and controlled views > offers accessible column reorder and pin actions and never hides the final current column after columns change
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/data-responsiveness.test.tsx > DataTable scalable and controlled views > mounts details only when expanded, preserves identity across sorting and isolates actions from row clicks
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/data-responsiveness.test.tsx > DataTable scalable and controlled views > ignores invalid legacy pageSize 0 instead of losing all rows
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/data-responsiveness.test.tsx > DataTable scalable and controlled views > ignores invalid legacy pageSize -5 instead of losing all rows
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/data-responsiveness.test.tsx > DataTable scalable and controlled views > ignores invalid legacy pageSize NaN instead of losing all rows
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/data-responsiveness.test.tsx > DataTable scalable and controlled views > ignores invalid legacy pageSize Infinity instead of losing all rows
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/data-responsiveness.test.tsx > DataTable scalable and controlled views > ignores invalid legacy pageSize 0.5 instead of losing all rows
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/data-responsiveness.test.tsx > DataTable scalable and controlled views > renders a column value getter when no custom renderer is supplied
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+ ✓ tests/LoaderGenerator.test.ts (23 tests) 463ms
+stderr | tests/data-responsiveness.test.tsx > DataTable scalable and controlled views > retains an unknown-total server page and selection while loading or replacing its rows
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/data-responsiveness.test.tsx > DataTable scalable and controlled views > measures tall virtual rows without losing first measurements and anchors the visible row
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/data-responsiveness.test.tsx > DataTable scalable and controlled views > virtualizes group headers and expanded details, then clamps a distant scroll after collapse
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/data-responsiveness.test.tsx > DataTable scalable and controlled views > supports Shift multi-sort by default but respects a legacy controlled single sort
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/data-responsiveness.test.tsx > DataTable scalable and controlled views > does not activate a clickable row from interactive custom cell content
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/data-responsiveness.test.tsx > DataTable scalable and controlled views > keeps the controlled page-size choice and resets query without sending a zero server limit
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/data-responsiveness.test.tsx > DataTable scalable and controlled views > reserves a usable action slot and includes it in right pin offsets
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/data-responsiveness.test.tsx > DataTable scalable and controlled views > collapses a real virtual group and unmounts its expanded detail panel
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/SparklineLargeSeries.test.tsx > keeps a large series bounded to screen resolution without losing its spike or last point
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+ ✓ tests/SparklineLargeSeries.test.tsx (1 test) 19ms
+stderr | tests/data-responsiveness.test.tsx > DataTable scalable and controlled views > does not fabricate a server page total or an empty-page range
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/data-responsiveness.test.tsx > DataTable scalable and controlled views > reuses numeric collation instead of constructing locale comparison options per row pair
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/data-responsiveness.test.tsx > DataTable scalable and controlled views > keeps a pinned mobile table scrollable and gives virtual group/detail rows consecutive indices
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/data-responsiveness.test.tsx > DataTable scalable and controlled views > keeps equal NaN values stable in both sort directions
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+ ✓ tests/data-responsiveness.test.tsx (43 tests) 470ms
+stderr | tests/EdgeCases.test.tsx > waveform decoding remains cooperative > aborts the previous waveform request when its source changes or unmounts
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/EdgeCases.test.tsx > waveform decoding remains cooperative > includes the end of a recording when its sample count is not divisible by bins
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/EdgeCases.test.tsx > waveform decoding remains cooperative > normalizes an invalid bin count before measuring the recording
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/EdgeCases.test.tsx > routing, persistence and row identity > recovers from a saved theme with an unknown name
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/EdgeCases.test.tsx > routing, persistence and row identity > keeps selection attached to a row when the parent reorders rows
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/EdgeCases.test.tsx > routing, persistence and row identity > keeps id-less row identity and does not collide with an explicit id
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+ ✓ tests/EdgeCases.test.tsx (26 tests) 211ms
+ ✓ tests/HostSealMotionPerformance.test.tsx (1 test) 14ms
+stderr | tests/QuantumFieldFallbackPerformance.test.tsx > reuses deterministic particle seeds instead of recalculating their trigonometric hashes on every 2D frame
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+ ✓ tests/QuantumFieldRendererPerformance.test.ts (1 test) 11ms
+ ✓ tests/QuantumFieldFallbackPerformance.test.tsx (2 tests) 18ms
+ ✓ tests/artwork-cache.test.ts (3 tests) 5ms
+stderr | tests/NeonWavesResize.test.tsx > resizes comet coordinates immediately without waiting for another motion tick
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+ ✓ tests/NeonWavesResize.test.tsx (1 test) 15ms
+stderr | tests/artwork-visibility.test.tsx > paints its initial artwork when optional observer APIs are unavailable
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/artwork-visibility.test.tsx > does not paint a library artwork until its canvas approaches the viewport
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/artwork-visibility.test.tsx > caps procedural artwork pixels on large high-density surfaces
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+ ✓ tests/artwork-visibility.test.tsx (3 tests) 11ms
+ ✓ tests/ArtworkLayerPerformance.test.ts (3 tests) 2ms
+ ✓ tests/LoaderMotionPerformance.test.ts (1 test) 2ms
+stderr | tests/theme-following.test.tsx > defers advanced token resolution while ThemeEditor is in simple mode
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/theme-following.test.tsx > uses the effective token palette without rerendering consumers for unrelated styles
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/theme-following.test.tsx > lets a nested provider inherit changing colours unless it explicitly selects a theme
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/QuantumField.test.tsx > reveals detailed effect sliders only when their effect is enabled
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/theme-following.test.tsx > follows theme changes in LoaderGenerator until its colour is edited
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/OverviewPreviewPerformance.test.tsx > does not run the LevelMeter demo state interval inside overview previews
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+Detected multiple renderers concurrently rendering the same context provider. This is currently unsupported.
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/QuantumField.test.tsx > routes the kit player and labelled icon actions to the iframe
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+ ✓ tests/OverviewPreviewPerformance.test.tsx (2 tests) 19ms
+stderr | tests/theme-following.test.tsx > keeps theme examples in sync with the site until the editor is changed locally
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/QuantumField.test.tsx > updates playback without rerendering the field settings
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+ ✓ tests/theme-following.test.tsx (6 tests) 80ms
+stderr | tests/AppRerenders.test.tsx > documentation theme rendering > does not rerender the catalogue when only the settings dialog opens, but does for a theme change
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/AppRerenders.test.tsx > ThemeProvider render stability > reuses its token style when a parent rerenders without changing the theme
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+ ✓ tests/AppRerenders.test.tsx (2 tests) 17ms
+stderr | tests/QuantumField.test.tsx > updates and removes the particle cap without recreating the visualizer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/QuantumField.test.tsx > sends field and audio controls to the restored visualizer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/QuantumField.test.tsx > connects the canvas to the renderer and sizes it before the first visible frame
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/QuantumField.test.tsx > connects an explicitly supplied microphone stream and releases its audio graph
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/QuantumField.test.tsx > repaints when an ancestor changes CSS theme tokens without React rerender
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/QuantumField.test.tsx > does not paint an offscreen field until it enters the viewport
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/QuantumField.test.tsx > wires wheel zoom to the interactive component without scrolling the page
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+ ✓ tests/QuantumField.test.tsx (62 tests) 219ms
+stderr | tests/base.test.ts > locale isolation > does not change the imperative default locale during provider rendering
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/base.test.ts > locale isolation > keeps per-provider custom messages out of other roots
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/base.test.ts > locale isolation > keeps translated components bound to their own provider after another root renders
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/DocumentationBorders.test.tsx > demonstrates table details, actions, pinning, multi-sort and opt-in large-data virtualization with complete rows
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/base.test.ts > site settings updates > ignores a patch that does not change any setting
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/base.test.ts > DataTable tools > bounds text filter suggestions after searching the entire column
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/base.test.ts > DataTable tools > bounds values filter suggestions after searching the entire column
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/DocumentationBorders.test.tsx > uses the kit's animated border on every overview tile and panel
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/DocumentationBorders.test.tsx > animates the Example and Related section borders on component pages
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/DocumentationBorders.test.tsx > resets both the desktop content and mobile document scroll on navigation
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+ ✓ tests/DocumentationBorders.test.tsx (15 tests) 91ms
+stderr | tests/ReleaseContracts.test.tsx > theme and feedback contracts > keeps rejected controlled requests based on the actual prop while accumulating uncontrolled updates
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+ ✓ tests/base.test.ts (81 tests) 148ms
+stderr | tests/ControlsContracts.test.tsx > control and form type boundaries > updates array paths without mutating initial values or replacing siblings
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/ControlsContracts.test.tsx > field public host attributes > 'Select' keeps its rendered value connected to an explicit accessible name
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/ControlsContracts.test.tsx > field public host attributes > 'ColorPicker' keeps its rendered value connected to an explicit accessible name
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/ControlsContracts.test.tsx > field public host attributes > 'Select' preserves layout style, a unique public id and data hooks
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/ControlsContracts.test.tsx > field public host attributes > 'TextField' preserves layout style, a unique public id and data hooks
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/ControlsContracts.test.tsx > field public host attributes > 'TextArea' preserves layout style, a unique public id and data hooks
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/ControlsContracts.test.tsx > field public host attributes > 'Autocomplete' preserves layout style, a unique public id and data hooks
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/ControlsContracts.test.tsx > field public host attributes > 'NumberField' preserves layout style, a unique public id and data hooks
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/ControlsContracts.test.tsx > field public host attributes > 'Slider' preserves layout style, a unique public id and data hooks
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/ControlsContracts.test.tsx > field public host attributes > 'DatePicker' preserves layout style, a unique public id and data hooks
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/ControlsContracts.test.tsx > field public host attributes > 'ColorPicker' preserves layout style, a unique public id and data hooks
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/ControlsContracts.test.tsx > field public host attributes > 'TagInput' preserves layout style, a unique public id and data hooks
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/ControlsContracts.test.tsx > field public host attributes > 'PeoplePicker' preserves layout style, a unique public id and data hooks
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/ControlsContracts.test.tsx > field public host attributes > 'Select' applies an explicit accessible label to the actual control
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/ControlsContracts.test.tsx > field public host attributes > 'TextField' applies an explicit accessible label to the actual control
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/ControlsContracts.test.tsx > field public host attributes > 'TextArea' applies an explicit accessible label to the actual control
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/ControlsContracts.test.tsx > field public host attributes > 'Autocomplete' applies an explicit accessible label to the actual control
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/ControlsContracts.test.tsx > field public host attributes > 'NumberField' applies an explicit accessible label to the actual control
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/ControlsContracts.test.tsx > field public host attributes > 'Slider' applies an explicit accessible label to the actual control
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/ControlsContracts.test.tsx > field public host attributes > 'DatePicker' applies an explicit accessible label to the actual control
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/ControlsContracts.test.tsx > field public host attributes > 'ColorPicker' applies an explicit accessible label to the actual control
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/ControlsContracts.test.tsx > field public host attributes > 'TagInput' applies an explicit accessible label to the actual control
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/ControlsContracts.test.tsx > field public host attributes > 'PeoplePicker' applies an explicit accessible label to the actual control
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/ControlsContracts.test.tsx > field public host attributes > 'Select' honors external label and description references
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/ControlsContracts.test.tsx > field public host attributes > 'TextField' honors external label and description references
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/ControlsContracts.test.tsx > field public host attributes > 'TextArea' honors external label and description references
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/ControlsContracts.test.tsx > field public host attributes > 'Autocomplete' honors external label and description references
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/ControlsContracts.test.tsx > field public host attributes > 'NumberField' honors external label and description references
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/ControlsContracts.test.tsx > field public host attributes > 'Slider' honors external label and description references
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/ControlsContracts.test.tsx > field public host attributes > 'DatePicker' honors external label and description references
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/ControlsContracts.test.tsx > field public host attributes > 'ColorPicker' honors external label and description references
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/ControlsContracts.test.tsx > field public host attributes > 'TagInput' honors external label and description references
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/ControlsContracts.test.tsx > field public host attributes > 'PeoplePicker' honors external label and description references
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/ControlsContracts.test.tsx > autocomplete interaction contract > reopens all choices when the selected value differs from its label
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/ControlsContracts.test.tsx > autocomplete interaction contract > gives each open list a unique id and announces the active option
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/ControlsContracts.test.tsx > autocomplete interaction contract > preserves native focus/key handlers and respects preventDefault
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/ControlsContracts.test.tsx > autocomplete interaction contract > closes an open list when disabled changes
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/ControlsContracts.test.tsx > autocomplete interaction contract > closes an open list when readOnly changes
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/ControlsContracts.test.tsx > autocomplete interaction contract > does not select a suggestion with Enter during IME composition
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/ControlsContracts.test.tsx > autocomplete interaction contract > keeps popup options out of the tab order and closes on Tab
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/ControlsContracts.test.tsx > autocomplete interaction contract > recovers the active option when an externally supplied list shrinks
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/ControlsContracts.test.tsx > field semantics and native contracts > includes ColorPicker's visible color value in its accessible name
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/ControlsContracts.test.tsx > field semantics and native contracts > includes the visible avatar owner in the file chooser name
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/ControlsContracts.test.tsx > field semantics and native contracts > preserves the public inline style on 'TextField'
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/ControlsContracts.test.tsx > field semantics and native contracts > preserves the public inline style on 'TextArea'
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/ControlsContracts.test.tsx > field semantics and native contracts > preserves the public inline style on 'Autocomplete'
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/ControlsContracts.test.tsx > field semantics and native contracts > exposes the error state to assistive technology on 'TextArea'
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/ControlsContracts.test.tsx > field semantics and native contracts > exposes the error state to assistive technology on 'Autocomplete'
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/ControlsContracts.test.tsx > field semantics and native contracts > exposes the error state to assistive technology on undefined
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/ControlsContracts.test.tsx > field semantics and native contracts > exposes the error state to assistive technology on 'DatePicker'
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/ControlsContracts.test.tsx > field semantics and native contracts > puts an explicitly supplied accessible name on the actual control 'Checkbox'
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/ControlsContracts.test.tsx > field semantics and native contracts > puts an explicitly supplied accessible name on the actual control 'Switch'
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/ControlsContracts.test.tsx > field semantics and native contracts > prevents further input at the maximum in 'TagInput'
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/ControlsContracts.test.tsx > field semantics and native contracts > prevents further input at the maximum in 'PeoplePicker'
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/ControlsContracts.test.tsx > field semantics and native contracts > does not commit a tag during IME composition
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/ControlsContracts.test.tsx > field semantics and native contracts > honours multiple=false for dropped files just as for the native picker
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/ControlsContracts.test.tsx > field semantics and native contracts > makes every inline color input inert when disabled
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/ControlsContracts.test.tsx > field semantics and native contracts > selects the first enabled option by default
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/ControlsContracts.test.tsx > field semantics and native contracts > does not submit a disabled select's hidden value
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/ControlsContracts.test.tsx > field semantics and native contracts > puts required validation on the visible date input
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/ControlsContracts.test.tsx > form error paths and invalid submission > reads flat dotted-path errors produced by the public FormErrors contract
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/ControlsContracts.test.tsx > form error paths and invalid submission > reveals invalid fields after submit without requiring a prior blur
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/ControlsContracts.test.tsx > dynamic control state and field associations > announces a numeric saturation and textual brightness for ColorPicker's color plane
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/ControlsContracts.test.tsx > dynamic control state and field associations > exposes calendar buttons as a labelled group instead of an incomplete ARIA grid
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/ControlsContracts.test.tsx > dynamic control state and field associations > gives theme choices radio semantics and one tab stop (undefined)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/ControlsContracts.test.tsx > dynamic control state and field associations > gives theme choices radio semantics and one tab stop ({ value: 'ruby', label: 'Ruby' })
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/ControlsContracts.test.tsx > dynamic control state and field associations > includes a native validation control when Select is required
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/ControlsContracts.test.tsx > dynamic control state and field associations > associates 'TextField''s label with its control when an adornment button precedes it
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/ControlsContracts.test.tsx > dynamic control state and field associations > associates 'TextArea''s label with its control when an adornment button precedes it
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/ControlsContracts.test.tsx > dynamic control state and field associations > associates 'Autocomplete''s label with its control when an adornment button precedes it
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/ControlsContracts.test.tsx > dynamic control state and field associations > does not offer actionable tag suggestions after becoming disabled
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/ControlsContracts.test.tsx > dynamic control state and field associations > announces PeoplePicker's active option and closes the popup on Tab
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/ControlsContracts.test.tsx > dynamic control state and field associations > does not choose a person during IME composition
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/ControlsContracts.test.tsx > dynamic control state and field associations > closes 'Select' when it becomes disabled
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/ControlsContracts.test.tsx > dynamic control state and field associations > closes 'DatePicker' when it becomes disabled
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/ControlsContracts.test.tsx > dynamic control state and field associations > closes 'ColorPicker' when it becomes disabled
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/ControlsContracts.test.tsx > dynamic control state and field associations > closes 'PeoplePicker' when it becomes disabled
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/ControlsContracts.test.tsx > dynamic control state and field associations > updates Select's built-in options when its provider language changes
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/ControlsContracts.test.tsx > dynamic control state and field associations > allows DatePicker to switch from an explicit to an inherited locale without changing hook order
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/ControlsContracts.test.tsx > dynamic control state and field associations > keeps NumberField step=any finite when using its step buttons
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/ControlsContracts.test.tsx > controls family verification > keeps controlled and uncontrolled 'TextField' values in sync
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/ControlsContracts.test.tsx > controls family verification > keeps controlled and uncontrolled 'TextArea' values in sync
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/ControlsContracts.test.tsx > controls family verification > keeps controlled and uncontrolled 'Autocomplete' values in sync
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/ControlsContracts.test.tsx > controls family verification > keeps 'Checkbox' checked state controlled and reports one request
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/ControlsContracts.test.tsx > controls family verification > keeps 'Switch' checked state controlled and reports one request
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/ControlsContracts.test.tsx > controls family verification > lets a prevented ToggleButton click cancel its state change
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/ControlsContracts.test.tsx > controls family verification > keeps loading Button disabled and announced busy
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/ControlsContracts.test.tsx > controls family verification > clamps Slider's painted and native value to the same range
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/ControlsContracts.test.tsx > controls family verification > keeps chip selection and removal separate
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/ControlsContracts.test.tsx > controls family verification > preserves native external link navigation attributes
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/ControlsContracts.test.tsx > controls family verification > runs a SplitButton menu action exactly once and closes the menu
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/ControlsContracts.test.tsx > controls family verification > accepts a valid leap date inside the range and rejects an out-of-range date
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+ ✓ tests/ControlsContracts.test.tsx (94 tests) 908ms
+   ✓ control and form type boundaries > rejects malformed SplitButton menu items and keeps path helper inputs checked  676ms
+ ✓ tests/ReleaseContracts.test.tsx (31 tests) 1348ms
+   ✓ shipped documentation > exports form component props beside their root component exports  513ms
+   ✓ shipped documentation > ships declarations that typecheck without skipLibCheck or resolveJsonModule  780ms
+stderr | tests/FoundationContracts.test.tsx > documentation sizing controls > uses the four named size choices on Icon
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/FoundationContracts.test.tsx > documentation sizing controls > uses the four named size choices on Loader
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/FoundationContracts.test.tsx > documentation sizing controls > uses the four named size choices on SvgAsset
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/FoundationContracts.test.tsx > documentation sizing controls > uses a bounded NumberField for genuine numeric parameters while allowing an empty input draft
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/FoundationContracts.test.tsx > documentation sizing controls > keeps Loader generated code consistent with its selected size and built-in picture
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/FoundationContracts.test.tsx > documentation sizing controls > includes the selected numeric font weight in the MelodixText example code
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/FoundationContracts.test.tsx > keeps field constructor untouched until an explicit user action
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/FoundationContracts.test.tsx > keeps field toString untouched until an explicit user action
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/FoundationContracts.test.tsx > keeps field __proto__ untouched until an explicit user action
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/FoundationContracts.test.tsx > theme editing > keeps the most recently selected theme import when file reads resolve out of order
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/FoundationContracts.test.tsx > theme editing > reports unreadable imported files inside the editor
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/FoundationContracts.test.tsx > theme editing > opens a previously collapsed group when token search matches it
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/FoundationContracts.test.tsx > public component documentation > demonstrates provider-local language changes and custom messages on the LocaleProvider page
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+ ✓ tests/FoundationContracts.test.tsx (44 tests) 512ms
+   ✓ public component documentation > keeps documentation examples and their playground helpers out of package declarations  421ms
+
+ Test Files  38 passed (38)
+      Tests  585 passed (585)
+   Start at  16:45:42
+   Duration  4.87s (transform 5.39s, setup 0ms, collect 25.57s, tests 6.44s, environment 5ms, prepare 3.16s)
+

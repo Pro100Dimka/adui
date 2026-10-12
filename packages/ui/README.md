@@ -6,7 +6,7 @@ NEO UI — React + TypeScript UI kit: glass/ruby surfaces, animated neon borders
 
 ## Install
 
-Live docs: https://pro100dimka.github.io/adui/
+Live docs: https://pro100dimka.github.io/adui/#/components/overview
 
 Install the package in your application. React and ReactDOM are peer dependencies; the declared range is React 18.2 through 19.
 
@@ -25,7 +25,7 @@ import "@neo-ui-kit/react/styles.css";
 To test repository changes before publishing, run `npm run package` from the repository root and install the resulting archive in a separate application:
 
 ```bash
-npm install /path/to/adui/release/neo-ui-kit-react-1.0.2.tgz
+npm install /path/to/adui/release/neo-ui-kit-react-1.0.3.tgz
 ```
 
 Maintainers publish new versions from `Pro100Dimka/adui` using the `release.yml` GitHub Actions workflow, a matching `v<version>` tag, and the `npm-publication` environment. npm trusts its OIDC identity; no `NPM_TOKEN` is required. The workflow checks the project and packed consumer before publishing the tested archive. Published `1.0.0` cannot be overwritten: code and README changes in npm require a new package version. See the [repository release instructions](https://github.com/Pro100Dimka/adui#npm-пакет).
@@ -181,6 +181,11 @@ import { ThemeProvider, useMotion } from "@neo-ui-kit/react/core";
 ## RotaryKnob
 
 Canvas-rendered volume knob. Drag near the edge to rotate, drag from the center to move linearly, click the outer scale to jump. Wheel and arrow keys change the value, Shift gives a fine step, PageUp/PageDown change by 10, Home/End set 0/100, Escape cancels a drag, double-click resets. `onValueChange` fires while adjusting, `onValueCommit` after the gesture. `readOnly` turns it into a gauge.
+
+## 1.0.3 release notes
+
+- Point the npm Homepage link directly to the documentation overview.
+- Runtime code is unchanged from 1.0.2.
 
 ## 1.0.2 release notes
 

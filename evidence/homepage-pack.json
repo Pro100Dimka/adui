@@ -1,0 +1,1366 @@
+[
+  {
+    "id": "@neo-ui-kit/react@1.0.3",
+    "name": "@neo-ui-kit/react",
+    "version": "1.0.3",
+    "size": 1668388,
+    "unpackedSize": 2844689,
+    "shasum": "de4f3f8cb72eb3aa8d2ea6c5c72332e8a583bfdb",
+    "integrity": "sha512-fubwRNwhOP2zi8ubVWS8StvtY6jcQgWGM3opsN9yYFB7w+3ARkl9UQfLhewLyVb7VQ41d95xA91v641Cd1/+vA==",
+    "filename": "neo-ui-kit-react-1.0.3.tgz",
+    "files": [
+      {
+        "path": "LICENSE",
+        "size": 1068,
+        "mode": 420
+      },
+      {
+        "path": "README.md",
+        "size": 18581,
+        "mode": 420
+      },
+      {
+        "path": "dist/artwork/icons.json.d.ts",
+        "size": 966,
+        "mode": 420
+      },
+      {
+        "path": "dist/artwork/illustrations.json.d.ts",
+        "size": 214,
+        "mode": 420
+      },
+      {
+        "path": "dist/chunks/chunk-347P6ZE4.js",
+        "size": 3484,
+        "mode": 420
+      },
+      {
+        "path": "dist/chunks/chunk-BJSFN52W.js",
+        "size": 45454,
+        "mode": 420
+      },
+      {
+        "path": "dist/chunks/chunk-FCOU3ODR.js",
+        "size": 2054,
+        "mode": 420
+      },
+      {
+        "path": "dist/chunks/chunk-JZ4GDTH5.js",
+        "size": 3103,
+        "mode": 420
+      },
+      {
+        "path": "dist/chunks/chunk-UGDRXR7P.js",
+        "size": 551084,
+        "mode": 420
+      },
+      {
+        "path": "dist/chunks/chunk-VK6GHRLV.js",
+        "size": 14431,
+        "mode": 420
+      },
+      {
+        "path": "dist/chunks/chunk-YKCUOZ7V.js",
+        "size": 27439,
+        "mode": 420
+      },
+      {
+        "path": "dist/components.css",
+        "size": 5323,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/artwork/DatabaseArt/DatabaseArt.d.ts",
+        "size": 325,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/artwork/DatabaseArt/styles.css",
+        "size": 1487,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/artwork/Landscape/Landscape.d.ts",
+        "size": 386,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/artwork/Landscape/styles.css",
+        "size": 1984,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/artwork/layers.d.ts",
+        "size": 749,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/artwork/NeonWaves/NeonWaves.d.ts",
+        "size": 805,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/artwork/NeonWaves/styles.css",
+        "size": 1316,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/artwork/Planet/Planet.d.ts",
+        "size": 256,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/artwork/Planet/styles.css",
+        "size": 1580,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/artwork/QuantumField/audio.d.ts",
+        "size": 756,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/artwork/QuantumField/QuantumField.d.ts",
+        "size": 2307,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/artwork/QuantumField/QuantumFieldExperience.d.ts",
+        "size": 1084,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/artwork/QuantumField/renderer.d.ts",
+        "size": 1454,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/artwork/QuantumField/styles.css",
+        "size": 2606,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/artwork/QuantumField/UPSTREAM-LICENSE.txt",
+        "size": 1105,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/artwork/ServerArt/ServerArt.d.ts",
+        "size": 416,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/artwork/ServerArt/styles.css",
+        "size": 1109,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/artwork/Spectrum/Spectrum.d.ts",
+        "size": 405,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/artwork/Spectrum/styles.css",
+        "size": 797,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/artwork/useArtwork.d.ts",
+        "size": 514,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/controls/Autocomplete/Autocomplete.d.ts",
+        "size": 396,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/controls/Autocomplete/styles.css",
+        "size": 81,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/controls/Button/Button.d.ts",
+        "size": 195,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/controls/Button/styles.css",
+        "size": 30,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/controls/Checkbox/Checkbox.d.ts",
+        "size": 128,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/controls/Checkbox/styles.css",
+        "size": 2007,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/controls/Chip/Chip.d.ts",
+        "size": 810,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/controls/Chip/styles.css",
+        "size": 1892,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/controls/ChipField.d.ts",
+        "size": 1100,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/controls/ColorPicker/color.d.ts",
+        "size": 305,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/controls/ColorPicker/ColorPicker.d.ts",
+        "size": 771,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/controls/ColorPicker/styles.css",
+        "size": 2468,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/controls/DatePicker/DatePicker.d.ts",
+        "size": 823,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/controls/DatePicker/styles.css",
+        "size": 1633,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/controls/FilePicker/FilePicker.d.ts",
+        "size": 136,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/controls/FilePicker/styles.css",
+        "size": 4153,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/controls/IconButton/IconButton.d.ts",
+        "size": 207,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/controls/IconButton/styles.css",
+        "size": 93,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/controls/InputBase/InputBase.d.ts",
+        "size": 938,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/controls/InputBase/styles.css",
+        "size": 10842,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/controls/internal.d.ts",
+        "size": 2671,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/controls/Link/Link.d.ts",
+        "size": 535,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/controls/Link/styles.css",
+        "size": 1279,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/controls/NumberField/NumberField.d.ts",
+        "size": 233,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/controls/NumberField/styles.css",
+        "size": 35,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/controls/PeoplePicker/PeoplePicker.d.ts",
+        "size": 1564,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/controls/PeoplePicker/styles.css",
+        "size": 197,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/controls/SegmentedControl/SegmentedControl.d.ts",
+        "size": 160,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/controls/SegmentedControl/styles.css",
+        "size": 235,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/controls/Select/Select.d.ts",
+        "size": 398,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/controls/Select/styles.css",
+        "size": 3365,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/controls/shared.css",
+        "size": 20294,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/controls/shared.d.ts",
+        "size": 7674,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/controls/Slider/Slider.d.ts",
+        "size": 201,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/controls/Slider/styles.css",
+        "size": 4170,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/controls/SplitButton/SplitButton.d.ts",
+        "size": 139,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/controls/SplitButton/styles.css",
+        "size": 4901,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/controls/Switch/styles.css",
+        "size": 1835,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/controls/Switch/Switch.d.ts",
+        "size": 126,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/controls/Tab/styles.css",
+        "size": 3123,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/controls/Tab/Tab.d.ts",
+        "size": 186,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/controls/Tabs/styles.css",
+        "size": 7332,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/controls/Tabs/Tabs.d.ts",
+        "size": 147,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/controls/TagInput/styles.css",
+        "size": 495,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/controls/TagInput/TagInput.d.ts",
+        "size": 1081,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/controls/TextArea/styles.css",
+        "size": 420,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/controls/TextArea/TextArea.d.ts",
+        "size": 328,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/controls/TextField/TextField.d.ts",
+        "size": 362,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/controls/ThemePicker/styles.css",
+        "size": 3461,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/controls/ThemePicker/ThemePicker.d.ts",
+        "size": 1138,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/controls/ToggleButton/styles.css",
+        "size": 1505,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/controls/ToggleButton/ToggleButton.d.ts",
+        "size": 213,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/editor/PianoRoll/PianoRoll.d.ts",
+        "size": 2533,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/editor/PianoRoll/styles.css",
+        "size": 5029,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/editor/shared.css",
+        "size": 42,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/effects/AnimatedBorder/AnimatedBorder.d.ts",
+        "size": 450,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/effects/AnimatedBorder/styles.css",
+        "size": 189,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/effects/Beacon/Beacon.d.ts",
+        "size": 439,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/effects/Beacon/styles.css",
+        "size": 802,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/effects/Equalizer/Equalizer.d.ts",
+        "size": 654,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/effects/Equalizer/styles.css",
+        "size": 888,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/effects/GlowText/GlowText.d.ts",
+        "size": 491,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/effects/GlowText/styles.css",
+        "size": 1209,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/effects/ImageShine/ImageShine.d.ts",
+        "size": 646,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/effects/ImageShine/styles.css",
+        "size": 1642,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/effects/Marquee/Marquee.d.ts",
+        "size": 447,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/effects/Marquee/styles.css",
+        "size": 1046,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/effects/MelodixText/MelodixText.d.ts",
+        "size": 791,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/effects/MelodixText/styles.css",
+        "size": 1079,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/effects/Reveal/Reveal.d.ts",
+        "size": 681,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/effects/Reveal/styles.css",
+        "size": 661,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/effects/Shimmer/Shimmer.d.ts",
+        "size": 459,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/effects/Shimmer/styles.css",
+        "size": 1114,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/effects/Sparkles/Sparkles.d.ts",
+        "size": 413,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/effects/Sparkles/styles.css",
+        "size": 568,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/effects/Spotlight/Spotlight.d.ts",
+        "size": 605,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/effects/Spotlight/styles.css",
+        "size": 1160,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/effects/Tilt/styles.css",
+        "size": 1731,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/effects/Tilt/Tilt.d.ts",
+        "size": 548,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/feedback/Badge/Badge.d.ts",
+        "size": 181,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/feedback/Badge/styles.css",
+        "size": 2361,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/feedback/CollapsibleSection/CollapsibleSection.d.ts",
+        "size": 160,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/feedback/CollapsibleSection/styles.css",
+        "size": 2072,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/feedback/DataTable/DataTable.d.ts",
+        "size": 2046,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/feedback/DataTable/styles.css",
+        "size": 16652,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/feedback/Dialog/Dialog.d.ts",
+        "size": 131,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/feedback/Dialog/styles.css",
+        "size": 2400,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/feedback/EmptyState/EmptyState.d.ts",
+        "size": 136,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/feedback/EmptyState/styles.css",
+        "size": 1776,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/feedback/KeyValueList/KeyValueList.d.ts",
+        "size": 142,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/feedback/KeyValueList/styles.css",
+        "size": 1246,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/feedback/Menu/Menu.d.ts",
+        "size": 118,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/feedback/Menu/styles.css",
+        "size": 3968,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/feedback/MenuItem/MenuItem.d.ts",
+        "size": 130,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/feedback/MenuItem/styles.css",
+        "size": 1820,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/feedback/MessageBar/MessageBar.d.ts",
+        "size": 157,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/feedback/MessageBar/styles.css",
+        "size": 2923,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/feedback/Popover/Popover.d.ts",
+        "size": 134,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/feedback/Popover/styles.css",
+        "size": 1412,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/feedback/ProgressBar/ProgressBar.d.ts",
+        "size": 139,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/feedback/ProgressBar/styles.css",
+        "size": 2121,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/feedback/shared.css",
+        "size": 481,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/feedback/shared.d.ts",
+        "size": 9164,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/feedback/SignalBars/SignalBars.d.ts",
+        "size": 514,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/feedback/SignalBars/styles.css",
+        "size": 884,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/feedback/StatusIndicator/StatusIndicator.d.ts",
+        "size": 166,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/feedback/StatusIndicator/styles.css",
+        "size": 2233,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/feedback/Steps/Steps.d.ts",
+        "size": 121,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/feedback/Steps/styles.css",
+        "size": 4569,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/feedback/Toast/styles.css",
+        "size": 2302,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/feedback/Toast/Toast.d.ts",
+        "size": 160,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/feedback/Tooltip/styles.css",
+        "size": 1059,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/feedback/Tooltip/Tooltip.d.ts",
+        "size": 719,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/forms/Form/Form.d.ts",
+        "size": 1476,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/forms/Form/styles.css",
+        "size": 61,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/forms/FormFields/FormFields.d.ts",
+        "size": 1053,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/forms/FormFields/styles.css",
+        "size": 1908,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/foundation/Loader/Loader.d.ts",
+        "size": 8582,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/foundation/LoaderGenerator/LoaderGenerator.d.ts",
+        "size": 2179,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/foundation/LoaderGenerator/styles.css",
+        "size": 2760,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/foundation/ThemeEditor/styles.css",
+        "size": 2463,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/foundation/ThemeEditor/themeConfig.d.ts",
+        "size": 2173,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/foundation/ThemeEditor/ThemeEditor.d.ts",
+        "size": 761,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/foundation/ThemeProvider/styles.css",
+        "size": 2009,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/foundation/ThemeProvider/ThemeProvider.d.ts",
+        "size": 1546,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/foundation/Typography/styles.css",
+        "size": 3807,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/foundation/Typography/Typography.d.ts",
+        "size": 1045,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/layout/Avatar/Avatar.d.ts",
+        "size": 162,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/layout/Avatar/HostSeal.d.ts",
+        "size": 227,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/layout/Avatar/styles.css",
+        "size": 4597,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/layout/BrandMark/BrandMark.d.ts",
+        "size": 136,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/layout/BrandMark/styles.css",
+        "size": 913,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/layout/ButtonGroup/ButtonGroup.d.ts",
+        "size": 521,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/layout/ButtonGroup/styles.css",
+        "size": 1116,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/layout/Card/Card.d.ts",
+        "size": 753,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/layout/Card/styles.css",
+        "size": 844,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/layout/DialogActions/DialogActions.d.ts",
+        "size": 523,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/layout/DialogActions/styles.css",
+        "size": 774,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/layout/DialogBody/DialogBody.d.ts",
+        "size": 520,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/layout/DialogBody/styles.css",
+        "size": 732,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/layout/Divider/Divider.d.ts",
+        "size": 127,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/layout/Divider/styles.css",
+        "size": 1349,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/layout/FloatingPanel/FloatingPanel.d.ts",
+        "size": 864,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/layout/FloatingPanel/styles.css",
+        "size": 1713,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/layout/FloatingPanel/useFloatingPanel.d.ts",
+        "size": 2477,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/layout/Grid/Grid.d.ts",
+        "size": 1337,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/layout/Grid/styles.css",
+        "size": 2992,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/layout/Header/Header.d.ts",
+        "size": 195,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/layout/Header/styles.css",
+        "size": 1030,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/layout/Icon/Icon.d.ts",
+        "size": 285,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/layout/Icon/styles.css",
+        "size": 1786,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/layout/Illustration/Illustration.d.ts",
+        "size": 178,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/layout/Illustration/styles.css",
+        "size": 2528,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/layout/ScrollArea/ScrollArea.d.ts",
+        "size": 135,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/layout/ScrollArea/styles.css",
+        "size": 1557,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/layout/shared.css",
+        "size": 2107,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/layout/shared.d.ts",
+        "size": 2290,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/layout/Stack/Stack.d.ts",
+        "size": 1189,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/layout/Stack/styles.css",
+        "size": 1560,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/layout/StatTile/StatTile.d.ts",
+        "size": 916,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/layout/StatTile/styles.css",
+        "size": 2197,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/layout/TabPanel/styles.css",
+        "size": 398,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/layout/TabPanel/TabPanel.d.ts",
+        "size": 130,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/layout/Text/styles.css",
+        "size": 962,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/layout/Text/Text.d.ts",
+        "size": 188,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/layout/Toolbar/styles.css",
+        "size": 208,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/layout/Toolbar/Toolbar.d.ts",
+        "size": 517,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/media/AudioPlayer/AudioPlayer.d.ts",
+        "size": 139,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/media/AudioPlayer/styles.css",
+        "size": 2040,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/media/KaraokeLyrics/KaraokeLyrics.d.ts",
+        "size": 1168,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/media/KaraokeLyrics/styles.css",
+        "size": 1924,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/media/LevelMeter/LevelMeter.d.ts",
+        "size": 461,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/media/LevelMeter/styles.css",
+        "size": 763,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/media/MediaCard/MediaCard.d.ts",
+        "size": 1236,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/media/MediaCard/styles.css",
+        "size": 2904,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/media/MelodyRoll/MelodyRoll.d.ts",
+        "size": 2198,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/media/MelodyRoll/styles.css",
+        "size": 6262,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/media/PianoKeyboard/PianoKeyboard.d.ts",
+        "size": 1111,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/media/PianoKeyboard/styles.css",
+        "size": 2328,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/media/RotaryKnob/RotaryKnob.d.ts",
+        "size": 153,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/media/RotaryKnob/styles.css",
+        "size": 10049,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/media/shared.css",
+        "size": 149,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/media/shared.d.ts",
+        "size": 3033,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/media/Sparkline/Sparkline.d.ts",
+        "size": 133,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/media/Sparkline/styles.css",
+        "size": 1489,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/media/WaveDecoration/styles.css",
+        "size": 101,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/media/WaveDecoration/WaveDecoration.d.ts",
+        "size": 141,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/media/Waveform/styles.css",
+        "size": 9396,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/media/Waveform/useWaveformPeaks.d.ts",
+        "size": 545,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/media/Waveform/Waveform.d.ts",
+        "size": 653,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/navigation/Router/Router.d.ts",
+        "size": 1230,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/navigation/Router/styles.css",
+        "size": 31,
+        "mode": 420
+      },
+      {
+        "path": "dist/core.d.ts",
+        "size": 747,
+        "mode": 420
+      },
+      {
+        "path": "dist/core.js",
+        "size": 878,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/artwork.d.ts",
+        "size": 993,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/base.d.ts",
+        "size": 3168,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/environment.d.ts",
+        "size": 360,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/i18n.d.ts",
+        "size": 2174,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/messages.d.ts",
+        "size": 71,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/motion-engine.d.ts",
+        "size": 407,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/motion/hooks.d.ts",
+        "size": 1206,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/noise.d.ts",
+        "size": 1340,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/providers/context.d.ts",
+        "size": 223,
+        "mode": 420
+      },
+      {
+        "path": "dist/core/responsive.d.ts",
+        "size": 801,
+        "mode": 420
+      },
+      {
+        "path": "dist/editor.d.ts",
+        "size": 196,
+        "mode": 420
+      },
+      {
+        "path": "dist/editor.js",
+        "size": 156,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/melodix.css",
+        "size": 3888,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/melodix/Melodix-100.woff2",
+        "size": 107024,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/melodix/Melodix-200.woff2",
+        "size": 98020,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/melodix/Melodix-300.woff2",
+        "size": 89172,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/melodix/Melodix-400.woff2",
+        "size": 80668,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/melodix/Melodix-500.woff2",
+        "size": 98036,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/melodix/Melodix-600.woff2",
+        "size": 96400,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/melodix/Melodix-700.woff2",
+        "size": 96736,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/melodix/Melodix-800.woff2",
+        "size": 96084,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/melodix/Melodix-900.woff2",
+        "size": 95280,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/melodix/MelodixText-100.woff2",
+        "size": 62044,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/melodix/MelodixText-200.woff2",
+        "size": 60884,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/melodix/MelodixText-300.woff2",
+        "size": 57280,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/melodix/MelodixText-400.woff2",
+        "size": 53424,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/melodix/MelodixText-500.woff2",
+        "size": 50776,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/melodix/MelodixText-600.woff2",
+        "size": 49260,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/melodix/MelodixText-700.woff2",
+        "size": 50080,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/melodix/MelodixText-800.woff2",
+        "size": 51472,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/melodix/MelodixText-900.woff2",
+        "size": 51908,
+        "mode": 420
+      },
+      {
+        "path": "dist/fonts/melodix/OFL-PlayfairDisplay.txt",
+        "size": 4449,
+        "mode": 420
+      },
+      {
+        "path": "dist/forms.d.ts",
+        "size": 402,
+        "mode": 420
+      },
+      {
+        "path": "dist/forms.js",
+        "size": 317,
+        "mode": 420
+      },
+      {
+        "path": "dist/index.d.ts",
+        "size": 12795,
+        "mode": 420
+      },
+      {
+        "path": "dist/index.js",
+        "size": 436614,
+        "mode": 420
+      },
+      {
+        "path": "dist/router.d.ts",
+        "size": 225,
+        "mode": 420
+      },
+      {
+        "path": "dist/router.js",
+        "size": 167,
+        "mode": 420
+      },
+      {
+        "path": "dist/styles.css",
+        "size": 58,
+        "mode": 420
+      },
+      {
+        "path": "dist/theme/base.css",
+        "size": 6564,
+        "mode": 420
+      },
+      {
+        "path": "dist/theme/tokens.css",
+        "size": 10001,
+        "mode": 420
+      },
+      {
+        "path": "dist/theme/typography.d.ts",
+        "size": 887,
+        "mode": 420
+      },
+      {
+        "path": "dist/tokens.css",
+        "size": 30,
+        "mode": 420
+      },
+      {
+        "path": "package.json",
+        "size": 2164,
+        "mode": 420
+      }
+    ],
+    "entryCount": 270,
+    "bundled": []
+  }
+]

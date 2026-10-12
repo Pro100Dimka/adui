@@ -1,0 +1,72 @@
+
+> @neo-ui-kit/react@1.0.2 test
+> vitest run --run tests/ReleaseContracts.test.tsx -t links the package homepage
+
+
+ RUN  v3.2.7 D:/Git/adui/packages/ui
+
+ ❯ tests/ReleaseContracts.test.tsx (31 tests | 1 failed | 30 skipped) 6ms
+   ↓ trusted npm publishing > limits OIDC and release write permissions to the protected publishing job
+   ↓ trusted npm publishing > builds and tests before packing and passes the exact smoke-tested artifact to publication
+   ↓ trusted npm publishing > passes the archive to npm as a local file instead of a GitHub repository
+   ↓ trusted npm publishing > checks registry HTTP 404 without treating registry errors as an unpublished version
+   ↓ trusted npm publishing > checks registry HTTP 200 without treating registry errors as an unpublished version
+   ↓ trusted npm publishing > checks registry HTTP 500 without treating registry errors as an unpublished version
+   ↓ theme and feedback contracts > removes a ripple when its animation is cancelled
+   ↓ theme and feedback contracts > does not accumulate invisible ripple nodes when motion is disabled
+   ↓ theme and feedback contracts > keeps rejected controlled requests based on the actual prop while accumulating uncontrolled updates
+   ↓ theme and feedback contracts > forwards the ThemeProvider root accessibility and data attributes
+   ↓ theme and feedback contracts > applies the light border halo rule to the attribute emitted by ThemeProvider
+   ↓ theme and feedback contracts > renders finite progress geometry and semantics for max=NaN
+   ↓ theme and feedback contracts > renders finite progress geometry and semantics for max=Infinity
+   ↓ theme and feedback contracts > renders finite progress geometry and semantics for max=-Infinity
+   ↓ theme and feedback contracts > preserves an explicit accessible name on ProgressBar
+   ↓ shipped documentation > uses the approved package identity in the manifest and playground dependency
+   ↓ shipped documentation > generates catalog imports from the renamed public package
+   ↓ shipped documentation > adds the renamed package when a live example omits its component import
+   ↓ shipped documentation > declares a self-contained SVG favicon instead of requesting a missing favicon.ico
+   ↓ shipped documentation > copies a registry installation command without requiring the repository or a local archive
+   × shipped documentation > links the package homepage to the public documentation overview 6ms
+     → expected 'https://github.com/Pro100Dimka/adui#r…' to be 'https://pro100dimka.github.io/adui/#/…' // Object.is equality
+   ↓ shipped documentation > documents registry installation first while retaining current local packaging instructions
+   ↓ shipped documentation > includes automated tests in the root verification and publish gates
+   ↓ shipped documentation > exports form component props beside their root component exports
+   ↓ shipped documentation > ships declarations that typecheck without skipLibCheck or resolveJsonModule
+   ↓ shipped documentation > ships the renamed QuantumBackground export and props with the compatible full-scene alias
+   ↓ shipped documentation > gives every documented public component its own working page and example
+   ↓ shipped documentation > keeps font generation source scripts out of the shipped package
+   ↓ shipped documentation > links the approved MIT license in ../../../README.md while preserving third-party notices
+   ↓ shipped documentation > links the approved MIT license in ../README.md while preserving third-party notices
+   ↓ shipped documentation > only documents exports present in each package entry
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/ReleaseContracts.test.tsx > shipped documentation > links the package homepage to the public documentation overview
+AssertionError: expected 'https://github.com/Pro100Dimka/adui#r…' to be 'https://pro100dimka.github.io/adui/#/…' // Object.is equality
+
+Expected: "https://pro100dimka.github.io/adui/#/components/overview"
+Received: "https://github.com/Pro100Dimka/adui#readme"
+
+ ❯ tests/ReleaseContracts.test.tsx:183:31
+    181|   it("links the package homepage to the public documentation overview"…
+    182|     const manifest = JSON.parse(readFileSync(new URL("../package.json"…
+    183|     expect(manifest.homepage).toBe("https://pro100dimka.github.io/adui…
+       |                               ^
+    184|   });
+    185| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 30 skipped (31)
+   Start at  16:43:28
+   Duration  1.41s (transform 386ms, setup 0ms, collect 1.19s, tests 6ms, environment 0ms, prepare 69ms)
+
+npm error Lifecycle script `test` failed with error:
+npm error code 1
+npm error path D:\Git\adui\packages\ui
+npm error workspace @neo-ui-kit/react@1.0.2
+npm error location D:\Git\adui\packages\ui
+npm error command failed
+npm error command C:\Windows\system32\cmd.exe /d /s /c vitest run --run tests/ReleaseContracts.test.tsx -t ^^^"links^^^ the^^^ package^^^ homepage^^^"

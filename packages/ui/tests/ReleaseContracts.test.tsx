@@ -178,6 +178,11 @@ describe("shipped documentation", () => {
     expect(overview).toContain('import "@neo-ui-kit/react/styles.css";');
   });
 
+  it("links the package homepage to the public documentation overview", () => {
+    const manifest = JSON.parse(readFileSync(new URL("../package.json", import.meta.url), "utf8"));
+    expect(manifest.homepage).toBe("https://pro100dimka.github.io/adui/#/components/overview");
+  });
+
   it("documents registry installation first while retaining current local packaging instructions", () => {
     const manifest = JSON.parse(readFileSync(new URL("../package.json", import.meta.url), "utf8"));
     for (const file of ["../../../README.md", "../README.md"]) {

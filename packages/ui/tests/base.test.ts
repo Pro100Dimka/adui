@@ -166,7 +166,7 @@ describe("release checks", () => {
         url: "git+https://github.com/Pro100Dimka/adui.git",
         directory: "packages/ui",
       },
-      homepage: "https://github.com/Pro100Dimka/adui#readme",
+      homepage: "https://pro100dimka.github.io/adui/#/components/overview",
       bugs: { url: "https://github.com/Pro100Dimka/adui/issues" },
       license: "MIT",
     });
