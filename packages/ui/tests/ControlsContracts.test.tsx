@@ -58,8 +58,9 @@ describe("control and form type boundaries", () => {
     const options = { ...parsed.options, noEmit: true, rootDir: undefined };
     const host = ts.createCompilerHost(options), original = host.getSourceFile;
     host.getSourceFile = (name, ...args) => resolve(name) === entry ? ts.createSourceFile(name, source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX) : original(name, ...args);
-    const program = ts.createProgram([...parsed.fileNames, entry], options, host);
-    expect.soft(ts.getPreEmitDiagnostics(program).map(diagnostic => ts.flattenDiagnosticMessageText(diagnostic.messageText, "\n"))).toEqual([]);
+    const program = ts.createProgram([entry], options, host);
+    // Check this consumer's contract; npm run typecheck covers the library implementation.
+    expect.soft(ts.getPreEmitDiagnostics(program, program.getSourceFile(entry)).map(diagnostic => ts.flattenDiagnosticMessageText(diagnostic.messageText, "\n"))).toEqual([]);
     const checker = program.getTypeChecker();
     const form = program.getSourceFile(resolve("src/components/forms/Form/Form.tsx"));
     expect(form).toBeDefined();

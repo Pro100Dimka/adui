@@ -1,0 +1,15 @@
+
+> @neo-ui-kit/react@1.0.1 test
+> vitest run --run tests/ControlsContracts.test.tsx -t rejects malformed SplitButton
+
+
+ RUN  v3.2.7 D:/Git/adui/packages/ui
+
+ ✓ tests/ControlsContracts.test.tsx (94 tests | 93 skipped) 2359ms
+   ✓ control and form type boundaries > rejects malformed SplitButton menu items and keeps path helper inputs checked  2358ms
+
+ Test Files  1 passed (1)
+      Tests  1 passed | 93 skipped (94)
+   Start at  15:59:07
+   Duration  3.36s (transform 202ms, setup 0ms, collect 798ms, tests 2.36s, environment 0ms, prepare 70ms)
+

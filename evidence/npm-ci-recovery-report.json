@@ -1,0 +1,46 @@
+{
+  "checkedAt": "2026-10-12T13:02:51.845Z",
+  "initialRun": "https://github.com/Pro100Dimka/adui/actions/runs/38252116463",
+  "initialResult": "verify failed, publication skipped; npm and GitHub release endpoints both returned404",
+  "initialRunEvidence": "evidence/npm-trusted-github-run-failed.json",
+  "initialDiagnostics": "evidence/npm-trusted-failed-job-114820804810.log",
+  "fixes": [
+    {
+      "area": "motion-idle.test.ts",
+      "cause": "Node exposes runner CPU count; original tests assumed30fps but four-or-fewer cores select20fps.",
+      "change": "Use an explicit8-core fixture and add2-core,4-core,8-core and low-memory cadence/cleanup cases.",
+      "red": [
+        "evidence/npm-trusted-motion-low-cpu-red.log",
+        "evidence/npm-trusted-motion-four-core-red.log"
+      ],
+      "green": "evidence/npm-trusted-motion-hardware-green.log"
+    },
+    {
+      "area": "ControlsContracts.test.tsx",
+      "cause": "A consumer type assertion redundantly typechecked the entire implementation inside Vitest, exceeding5seconds on GitHub.",
+      "change": "Keep real consumer diagnostics and Form symbol assertions; full implementation checking remains mandatory in npm run typecheck.",
+      "localSingleTestMs": {
+        "before": 2358,
+        "after": 561
+      },
+      "logs": [
+        "evidence/npm-ci-types-before.log",
+        "evidence/npm-ci-types-after.log"
+      ]
+    }
+  ],
+  "runtimeChanged": false,
+  "rebuildFilesByteIdentical": 267,
+  "fullCheck": {
+    "tests": 579,
+    "files": 38,
+    "result": "passed",
+    "log": "evidence/npm-ci-recovery-full-check.log"
+  },
+  "retry": {
+    "version": "1.0.1",
+    "previousCommit": "bd767e2df639aac623f3c55b413f4889b665ec46",
+    "previousTagObject": "0e7d29561c93c68365d9990cef6616a0b953fa5c",
+    "method": "Retarget only the unpublished failed-attempt tag using an exact force-with-lease; original commit retained in main history and tag object retained in a local backup ref."
+  }
+}

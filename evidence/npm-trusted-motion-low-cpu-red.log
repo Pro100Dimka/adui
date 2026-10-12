@@ -1,0 +1,156 @@
+
+> @neo-ui-kit/react@1.0.1 test
+> vitest run tests/motion-idle.test.ts
+
+
+ RUN  v3.2.7 D:/Git/adui/packages/ui
+
+stderr | tests/motion-idle.test.ts > wakes CSS-only loops when the shared offscreen hook reveals their block
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/motion-idle.test.ts > disconnects the shared CSS visibility observer after its last boundary unmounts
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/motion-idle.test.ts > lets native page scrolling handle wheel notches over 'a fitted container'
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/motion-idle.test.ts > lets native page scrolling handle wheel notches over 'visible overflow'
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/motion-idle.test.ts > lets native page scrolling handle wheel notches over 'hidden overflow'
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/motion-idle.test.ts > lets native page scrolling handle wheel notches over 'clipped overflow'
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/motion-idle.test.ts > smooths a scrollable container without taking wheel input from inner areas, gestures or trackpads
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/motion-idle.test.ts > leaves wheel input with an inner interactive canvas that already consumed it
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+ ❯ tests/motion-idle.test.ts (27 tests | 4 failed) 203ms
+   ✓ shares one visibility observer and preference listener across many motion scopes, releasing both at the end 32ms
+   ✓ keeps SVG motion preferences local instead of locking the entire document off 2ms
+   ✓ does not force layout when 95 deferred borders mount outside the viewport 7ms
+   ✓ spreads visible border geometry across the shared frame budget 6ms
+   ✓ initializes a visible deferred border even when motion is disabled 2ms
+   ✓ drops a deferred border's pending geometry when it unmounts before becoming visible 2ms
+   ✓ sleeps the shared motion clock while every component is offscreen and wakes on return 2ms
+   ✓ does not poll the consumer document or leave timers behind when no kit motion is active 2ms
+   ✓ cancels both queued frames and delayed ticks when the last subscriber detaches 2ms
+   ✓ uses observer visibility without layout reads for offscreen or already measured nodes 2ms
+   × discovers CSS-only and pseudo-element loops from animation events without recurring document scans 7ms
+     → expected true to be false // Object.is equality
+   ✓ adopts loops that were already mounted when the package loads 3ms
+   ✓ resumes CSS light from its held position after a browser tab was hidden 2ms
+   ✓ holds an offscreen scope's time even while another component keeps the clock running 2ms
+   ✓ wakes CSS-only loops when the shared offscreen hook reveals their block 59ms
+   ✓ disconnects the shared CSS visibility observer after its last boundary unmounts 5ms
+   ✓ does not add hidden elapsed time when the whole clock sleeps offscreen 2ms
+   ✓ batches a mount-time burst of CSS loops into one linear scan 9ms
+   × discovers an animation target once on the shared frame instead of flushing layout per event 4ms
+     → expected true to be false // Object.is equality
+   × coalesces 95 offscreen boundary refreshes into one scan instead of blocking route teardown 8ms
+     → expected +0 to be 100 // Object.is equality
+   × defers hidden boundary refreshes without rescanning or advancing held CSS clocks 8ms
+     → expected true to be false // Object.is equality
+   ✓ lets native page scrolling handle wheel notches over 'a fitted container' 7ms
+   ✓ lets native page scrolling handle wheel notches over 'visible overflow' 6ms
+   ✓ lets native page scrolling handle wheel notches over 'hidden overflow' 7ms
+   ✓ lets native page scrolling handle wheel notches over 'clipped overflow' 5ms
+   ✓ smooths a scrollable container without taking wheel input from inner areas, gestures or trackpads 6ms
+   ✓ leaves wheel input with an inner interactive canvas that already consumed it 5ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 4 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/motion-idle.test.ts > discovers CSS-only and pseudo-element loops from animation events without recurring document scans
+AssertionError: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ tests/motion-idle.test.ts:297:45
+    295|   await vi.advanceTimersByTimeAsync(40);
+    296|   flushFrame(1000);
+    297|   expect(engine.getMotionStats().scheduled).toBe(false);
+       |                                             ^
+    298| });
+    299| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/4]⎯
+
+ FAIL  tests/motion-idle.test.ts > discovers an animation target once on the shared frame instead of flushing layout per event
+AssertionError: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ tests/motion-idle.test.ts:442:45
+    440|   await vi.advanceTimersByTimeAsync(40);
+    441|   flushFrame();
+    442|   expect(engine.getMotionStats().scheduled).toBe(false);
+       |                                             ^
+    443| });
+    444| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/4]⎯
+
+ FAIL  tests/motion-idle.test.ts > coalesces 95 offscreen boundary refreshes into one scan instead of blocking route teardown
+AssertionError: expected +0 to be 100 // Object.is equality
+
+- Expected
++ Received
+
+- 100
++ 0
+
+ ❯ tests/motion-idle.test.ts:461:19
+    459|   await vi.advanceTimersByTimeAsync(40);
+    460|   flushFrame();
+    461|   expect(reads()).toBe(100);
+       |                   ^
+    462| 
+    463|   loops.forEach(({ node }) => { node.isConnected = false; });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/4]⎯
+
+ FAIL  tests/motion-idle.test.ts > defers hidden boundary refreshes without rescanning or advancing held CSS clocks
+AssertionError: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ tests/motion-idle.test.ts:506:45
+    504|   await vi.advanceTimersByTimeAsync(40);
+    505|   flushFrame();
+    506|   expect(engine.getMotionStats().scheduled).toBe(false);
+       |                                             ^
+    507| });
+    508| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/4]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  4 failed | 23 passed (27)
+   Start at  15:59:00
+   Duration  454ms (transform 65ms, setup 0ms, collect 56ms, tests 203ms, environment 0ms, prepare 70ms)
+
+npm error Lifecycle script `test` failed with error:
+npm error code 1
+npm error path D:\Git\adui\packages\ui
+npm error workspace @neo-ui-kit/react@1.0.1
+npm error location D:\Git\adui\packages\ui
+npm error command failed
+npm error command C:\Windows\system32\cmd.exe /d /s /c vitest run tests/motion-idle.test.ts

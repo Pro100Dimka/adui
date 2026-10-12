@@ -14,6 +14,8 @@ let document: {
 
 beforeEach(async () => {
   vi.useFakeTimers();
+  // Keep the shared fixture at 30 fps regardless of the test runner's CPU count.
+  vi.stubGlobal("navigator", { hardwareConcurrency: 8, deviceMemory: 8 });
   frames = new Map();
   observers = [];
   observerInstances = [];
@@ -74,6 +76,39 @@ afterEach(() => {
   vi.restoreAllMocks();
   vi.useRealTimers();
   vi.unstubAllGlobals();
+});
+
+it.each([
+  { hardwareConcurrency: 2, deviceMemory: 8, fps: 20 },
+  { hardwareConcurrency: 4, deviceMemory: 8, fps: 20 },
+  { hardwareConcurrency: 8, deviceMemory: 8, fps: 30 },
+  { hardwareConcurrency: 8, deviceMemory: 4, fps: 20 },
+])("steps and releases CSS loops at $fps fps with $hardwareConcurrency cores and $deviceMemory GiB", async ({ hardwareConcurrency, deviceMemory, fps }) => {
+  vi.stubGlobal("navigator", { hardwareConcurrency, deviceMemory });
+  vi.resetModules();
+  engine = await import("../src/core/motion-engine.js");
+  const { node, animation } = cssLoop();
+  await vi.advanceTimersByTimeAsync(100);
+  events.get("animationstart")!({ animationName: animation.animationName, target: node } as unknown as Event);
+  flushFrame();
+  expect(animation.pause).toHaveBeenCalledOnce();
+
+  // The timer wakes just before the next hardware-dependent frame is due.
+  const period = 1000 / fps;
+  await vi.advanceTimersByTimeAsync(Math.floor(period) - 5);
+  expect(frames.size).toBe(0);
+  await vi.advanceTimersByTimeAsync(5);
+  expect(frames.size).toBe(1);
+  flushFrame();
+  expect(animation.currentTime).toBe(Math.floor(period));
+
+  animation.playState = "idle";
+  node.getAnimations.mockReturnValue([]);
+  events.get("animationcancel")!({ animationName: animation.animationName, target: node } as unknown as Event);
+  await vi.advanceTimersByTimeAsync(Math.ceil(period));
+  flushFrame();
+  expect(engine.getMotionStats().scheduled).toBe(false);
+  expect(vi.getTimerCount()).toBe(0);
 });
 
 function borderFixture() {
