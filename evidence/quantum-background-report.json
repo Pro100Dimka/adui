@@ -2,7 +2,7 @@
   "preparedAt": "2026-10-12T13:27:06.811Z",
   "baseline": "12387d42ad37d53ea1aa5f4db2c76b4d678aec43",
   "version": "1.0.2",
-  "status": "User approved public 1.0.2 release and documentation deployment; local verification complete",
+  "status": "1.0.2 publication succeeded through GitHub OIDC; npm propagation and public documentation verification pending",
   "cause": "Original docs example replaced full visualizer with distinct native primitive during previous hardening; renderer remained unchanged.",
   "correction": "Full scene restored as QuantumBackground; legacy routes resolve to its page. Experience is a same-object compatibility alias; the distinct native QuantumField API remains unchanged.",
   "renderer": [
@@ -52,8 +52,11 @@
     "files": 38
   },
   "artifact": {
-    "path": "release/neo-ui-kit-react-1.0.2.tgz",
-    "sha256": "93f2d6c19b0ded1d48fa8b62e656281b0b52f052fd602680e19c00e8f75290a7"
+    "path": "release/ci/neo-ui-kit-react-1.0.2.tgz",
+    "bytes": 1666216,
+    "sha256": "02ec2e3efdc2d3dc34e2989d5df74af0bd4290b0b216168c077575c2352d1a06",
+    "githubDownload": "https://github.com/Pro100Dimka/adui/releases/download/v1.0.2/neo-ui-kit-react-1.0.2.tgz",
+    "provenance": "https://search.sigstore.dev/?logIndex=3228734733"
   },
   "browser": {
     "dev": "evidence/quantum-docs-green-dev.json",
@@ -85,5 +88,19 @@
     "browser": "evidence/consumer-consumer-quantum-background-quantum-background-chrome.json",
     "checks": 22,
     "strictTypes": true
+  },
+  "ci": {
+    "report": "evidence/quantum-background-ci.json",
+    "run": "https://github.com/Pro100Dimka/adui/actions/runs/38256372887",
+    "commit": "4df44959439219c7ef154275d2eafaa12d52ff3d",
+    "tests": 584,
+    "files": 38,
+    "seconds": 9.95,
+    "result": "success",
+    "githubRelease": "https://github.com/Pro100Dimka/adui/releases/tag/v1.0.2"
+  },
+  "preparationArtifact": {
+    "path": "release/neo-ui-kit-react-1.0.2.tgz",
+    "sha256": "93f2d6c19b0ded1d48fa8b62e656281b0b52f052fd602680e19c00e8f75290a7"
   }
 }

@@ -1,1 +1,0 @@
-import{r as u,E as t,j as o,P as d,U as s,a as n}from"./index-Gx8pVUf1.js";function m(){const a=u.useContext(t);return o.jsx(d,{knobs:{mode:{options:s.quantumFieldModes,value:"orbit"},paused:{value:!1}},code:e=>n("QuantumField",{mode:e.mode,paused:e.paused}),children:e=>o.jsx(s.QuantumField,{mode:e.mode,paused:a||e.paused,quality:a?"low":"auto"})})}export{m as default};

@@ -1,0 +1,554 @@
+2026-10-12T13:33:50.2093340Z Current runner version: '2.337.0'
+2026-10-12T13:33:50.2117068Z ##[group]Runner Image Provisioner
+2026-10-12T13:33:50.2117902Z Hosted Compute Agent
+2026-10-12T13:33:50.2118389Z Version: 20261002.596
+2026-10-12T13:33:50.2118932Z Commit: c3d12f3313a95f25162a1503be624f3b0617f8c0
+2026-10-12T13:33:50.2119561Z Build Date: 2026-10-02T22:28:27Z
+2026-10-12T13:33:50.2120117Z Worker ID: {f1d50b1a-6ed0-4ecb-a73a-8bf49a58a221}
+2026-10-12T13:33:50.2120735Z Region: mexicocentral
+2026-10-12T13:33:50.2121455Z Cloud: Azure
+2026-10-12T13:33:50.2121897Z ##[endgroup]
+2026-10-12T13:33:50.2123229Z ##[group]Operating System
+2026-10-12T13:33:50.2123743Z Ubuntu
+2026-10-12T13:33:50.2124269Z 24.04.5
+2026-10-12T13:33:50.2124694Z LTS
+2026-10-12T13:33:50.2125099Z ##[endgroup]
+2026-10-12T13:33:50.2125635Z ##[group]Runner Image
+2026-10-12T13:33:50.2126133Z Image: ubuntu-24.04
+2026-10-12T13:33:50.2126621Z Version: 20261004.327.1
+2026-10-12T13:33:50.2127687Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261004.327/images/ubuntu/Ubuntu2404-Readme.md
+2026-10-12T13:33:50.2129339Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261004.327
+2026-10-12T13:33:50.2130167Z ##[endgroup]
+2026-10-12T13:33:50.2131400Z ##[group]GITHUB_TOKEN Permissions
+2026-10-12T13:33:50.2133298Z Contents: write
+2026-10-12T13:33:50.2133860Z Metadata: read
+2026-10-12T13:33:50.2134323Z ##[endgroup]
+2026-10-12T13:33:50.2136079Z Secret source: Actions
+2026-10-12T13:33:50.2137092Z Cache mode: write
+2026-10-12T13:33:50.2137870Z Prepare workflow directory
+2026-10-12T13:33:50.3212925Z Prepare all required actions
+2026-10-12T13:33:50.3252379Z Getting action download info
+2026-10-12T13:33:50.6548248Z Download action repository 'actions/checkout@v6' (SHA:d23441a48e516b6c34aea4fa41551a30e30af803)
+2026-10-12T13:33:51.6162027Z Download action repository 'actions/setup-node@v6' (SHA:249970729cb0ef3589644e2896645e5dc5ba9c38)
+2026-10-12T13:33:51.9127695Z Download action repository 'actions/download-artifact@v4' (SHA:d3f86a106a0bac45b974a628896c90dbdf5c8093)
+2026-10-12T13:33:53.2357206Z Download action repository 'softprops/action-gh-release@v2' (SHA:3bb12739c298aeb8a4eeaf626c5b8d85266b0e65)
+2026-10-12T13:33:53.7928679Z Complete job name: publish
+2026-10-12T13:33:53.8499147Z ##[group]Run actions/checkout@v6
+2026-10-12T13:33:53.8499609Z with:
+2026-10-12T13:33:53.8499794Z   persist-credentials: false
+2026-10-12T13:33:53.8500012Z   repository: Pro100Dimka/adui
+2026-10-12T13:33:53.8502611Z   token: ***
+2026-10-12T13:33:53.8502793Z   ssh-strict: true
+2026-10-12T13:33:53.8502967Z   ssh-user: git
+2026-10-12T13:33:53.8503134Z   clean: true
+2026-10-12T13:33:53.8503319Z   sparse-checkout-cone-mode: true
+2026-10-12T13:33:53.8503542Z   fetch-depth: 1
+2026-10-12T13:33:53.8503711Z   fetch-tags: false
+2026-10-12T13:33:53.8503897Z   show-progress: true
+2026-10-12T13:33:53.8504076Z   lfs: false
+2026-10-12T13:33:53.8504232Z   submodules: false
+2026-10-12T13:33:53.8504400Z   set-safe-directory: true
+2026-10-12T13:33:53.8504613Z   allow-unsafe-pr-checkout: false
+2026-10-12T13:33:53.8504976Z env:
+2026-10-12T13:33:53.8505163Z   ARCHIVE: release/neo-ui-kit-react-1.0.2.tgz
+2026-10-12T13:33:53.8505395Z ##[endgroup]
+2026-10-12T13:33:53.9384952Z Syncing repository: Pro100Dimka/adui
+2026-10-12T13:33:53.9386484Z ##[group]Getting Git version info
+2026-10-12T13:33:53.9386903Z Working directory is '/home/runner/work/adui/adui'
+2026-10-12T13:33:53.9387473Z [command]/usr/bin/git version
+2026-10-12T13:33:53.9935012Z git version 2.55.0
+2026-10-12T13:33:53.9956407Z ##[endgroup]
+2026-10-12T13:33:53.9969590Z Temporarily overriding HOME='/home/runner/work/_temp/3216fa6d-e916-44e1-95ec-16793f6d0f44' before making global git config changes
+2026-10-12T13:33:53.9970557Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-12T13:33:53.9975187Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/adui/adui
+2026-10-12T13:33:54.0028588Z Deleting the contents of '/home/runner/work/adui/adui'
+2026-10-12T13:33:54.0033383Z ##[group]Determining repository object format
+2026-10-12T13:33:54.0035050Z ##[endgroup]
+2026-10-12T13:33:54.0035540Z ##[group]Initializing the repository
+2026-10-12T13:33:54.0040293Z [command]/usr/bin/git init /home/runner/work/adui/adui
+2026-10-12T13:33:54.0144245Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-10-12T13:33:54.0145388Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-10-12T13:33:54.0146627Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-10-12T13:33:54.0147402Z hint: call:
+2026-10-12T13:33:54.0147978Z hint:
+2026-10-12T13:33:54.0148438Z hint: 	git config --global init.defaultBranch <name>
+2026-10-12T13:33:54.0148837Z hint:
+2026-10-12T13:33:54.0149173Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-10-12T13:33:54.0149570Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-10-12T13:33:54.0149864Z hint:
+2026-10-12T13:33:54.0150029Z hint: 	git branch -m <name>
+2026-10-12T13:33:54.0150253Z hint:
+2026-10-12T13:33:54.0150528Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-10-12T13:33:54.0150932Z Initialized empty Git repository in /home/runner/work/adui/adui/.git/
+2026-10-12T13:33:54.0155189Z [command]/usr/bin/git remote add origin https://github.com/Pro100Dimka/adui
+2026-10-12T13:33:54.0225177Z ##[endgroup]
+2026-10-12T13:33:54.0225541Z ##[group]Disabling automatic garbage collection
+2026-10-12T13:33:54.0228658Z [command]/usr/bin/git config --local gc.auto 0
+2026-10-12T13:33:54.0259945Z ##[endgroup]
+2026-10-12T13:33:54.0260287Z ##[group]Setting up auth
+2026-10-12T13:33:54.0260828Z Removing SSH command configuration
+2026-10-12T13:33:54.0266585Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-12T13:33:54.0297649Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-12T13:33:54.1476844Z Removing HTTP extra header
+2026-10-12T13:33:54.1482691Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-12T13:33:54.1536672Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-12T13:33:54.1746833Z Removing includeIf entries pointing to credentials config files
+2026-10-12T13:33:54.1754357Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-12T13:33:54.1793769Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-12T13:33:54.2010348Z [command]/usr/bin/git config --file /home/runner/work/_temp/git-credentials-695d3fcc-4bf7-4fd5-ba23-90702215f974.config http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-10-12T13:33:54.2047226Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/adui/adui/.git.path /home/runner/work/_temp/git-credentials-695d3fcc-4bf7-4fd5-ba23-90702215f974.config
+2026-10-12T13:33:54.2077733Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/adui/adui/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-695d3fcc-4bf7-4fd5-ba23-90702215f974.config
+2026-10-12T13:33:54.2109568Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-695d3fcc-4bf7-4fd5-ba23-90702215f974.config
+2026-10-12T13:33:54.2175644Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-695d3fcc-4bf7-4fd5-ba23-90702215f974.config
+2026-10-12T13:33:54.2204081Z ##[endgroup]
+2026-10-12T13:33:54.2204556Z ##[group]Fetching the repository
+2026-10-12T13:33:54.2211282Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +refs/tags/v1.0.2:refs/tags/v1.0.2
+2026-10-12T13:33:56.5531202Z From https://github.com/Pro100Dimka/adui
+2026-10-12T13:33:56.5531608Z  * [new tag]         v1.0.2     -> v1.0.2
+2026-10-12T13:33:56.5539365Z [command]/usr/bin/git tag --list v1.0.2
+2026-10-12T13:33:56.5567774Z v1.0.2
+2026-10-12T13:33:56.5576321Z [command]/usr/bin/git rev-parse refs/tags/v1.0.2^{commit}
+2026-10-12T13:33:56.5602459Z 4df44959439219c7ef154275d2eafaa12d52ff3d
+2026-10-12T13:33:56.5606123Z ##[endgroup]
+2026-10-12T13:33:56.5606475Z ##[group]Determining the checkout info
+2026-10-12T13:33:56.5607417Z ##[endgroup]
+2026-10-12T13:33:56.5611368Z [command]/usr/bin/git sparse-checkout disable
+2026-10-12T13:33:56.5676639Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-10-12T13:33:56.5705906Z ##[group]Checking out the ref
+2026-10-12T13:33:56.5709096Z [command]/usr/bin/git checkout --progress --force refs/tags/v1.0.2
+2026-10-12T13:33:56.7161243Z Note: switching to 'refs/tags/v1.0.2'.
+2026-10-12T13:33:56.7161811Z 
+2026-10-12T13:33:56.7162193Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-10-12T13:33:56.7162841Z changes and commit them, and you can discard any commits you make in this
+2026-10-12T13:33:56.7163654Z state without impacting any branches by switching back to a branch.
+2026-10-12T13:33:56.7164144Z 
+2026-10-12T13:33:56.7164473Z If you want to create a new branch to retain commits you create, you may
+2026-10-12T13:33:56.7165040Z do so (now or later) by using -c with the switch command. Example:
+2026-10-12T13:33:56.7165405Z 
+2026-10-12T13:33:56.7165526Z   git switch -c <new-branch-name>
+2026-10-12T13:33:56.7165769Z 
+2026-10-12T13:33:56.7165887Z Or undo this operation with:
+2026-10-12T13:33:56.7166049Z 
+2026-10-12T13:33:56.7166147Z   git switch -
+2026-10-12T13:33:56.7166267Z 
+2026-10-12T13:33:56.7166521Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-10-12T13:33:56.7166966Z 
+2026-10-12T13:33:56.7167334Z HEAD is now at 4df4495 Restore the full QuantumBackground scene and retain legacy imports
+2026-10-12T13:33:56.7168783Z ##[endgroup]
+2026-10-12T13:33:56.7169493Z [command]/usr/bin/git log -1 --format=%H
+2026-10-12T13:33:56.7185484Z 4df44959439219c7ef154275d2eafaa12d52ff3d
+2026-10-12T13:33:56.7193746Z ##[group]Removing auth
+2026-10-12T13:33:56.7194123Z Removing SSH command configuration
+2026-10-12T13:33:56.7198142Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-12T13:33:56.7232900Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-12T13:33:56.7430556Z Removing HTTP extra header
+2026-10-12T13:33:56.7434743Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-12T13:33:56.7466325Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-12T13:33:56.7662455Z Removing includeIf entries pointing to credentials config files
+2026-10-12T13:33:56.7665592Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-12T13:33:56.7746243Z includeif.gitdir:/home/runner/work/adui/adui/.git.path
+2026-10-12T13:33:56.7746761Z includeif.gitdir:/home/runner/work/adui/adui/.git/worktrees/*.path
+2026-10-12T13:33:56.7747096Z includeif.gitdir:/github/workspace/.git.path
+2026-10-12T13:33:56.7747386Z includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-10-12T13:33:56.7754648Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/adui/adui/.git.path
+2026-10-12T13:33:56.7779983Z /home/runner/work/_temp/git-credentials-695d3fcc-4bf7-4fd5-ba23-90702215f974.config
+2026-10-12T13:33:56.7789898Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/adui/adui/.git.path /home/runner/work/_temp/git-credentials-695d3fcc-4bf7-4fd5-ba23-90702215f974.config
+2026-10-12T13:33:56.7826277Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/adui/adui/.git/worktrees/*.path
+2026-10-12T13:33:56.7852709Z /home/runner/work/_temp/git-credentials-695d3fcc-4bf7-4fd5-ba23-90702215f974.config
+2026-10-12T13:33:56.7859175Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/adui/adui/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-695d3fcc-4bf7-4fd5-ba23-90702215f974.config
+2026-10-12T13:33:56.7892872Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git.path
+2026-10-12T13:33:56.7915708Z /github/runner_temp/git-credentials-695d3fcc-4bf7-4fd5-ba23-90702215f974.config
+2026-10-12T13:33:56.7927239Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-695d3fcc-4bf7-4fd5-ba23-90702215f974.config
+2026-10-12T13:33:56.7958161Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-10-12T13:33:56.7979899Z /github/runner_temp/git-credentials-695d3fcc-4bf7-4fd5-ba23-90702215f974.config
+2026-10-12T13:33:56.7986059Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-695d3fcc-4bf7-4fd5-ba23-90702215f974.config
+2026-10-12T13:33:56.8017314Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-12T13:33:56.8209711Z Removing credentials config '/home/runner/work/_temp/git-credentials-695d3fcc-4bf7-4fd5-ba23-90702215f974.config'
+2026-10-12T13:33:56.8217990Z ##[endgroup]
+2026-10-12T13:33:56.8427745Z ##[group]Run actions/setup-node@v6
+2026-10-12T13:33:56.8427989Z with:
+2026-10-12T13:33:56.8428152Z   node-version: 24
+2026-10-12T13:33:56.8428364Z   registry-url: https://registry.npmjs.org
+2026-10-12T13:33:56.8428643Z   package-manager-cache: false
+2026-10-12T13:33:56.8428852Z   check-latest: false
+2026-10-12T13:33:56.8431338Z   token: ***
+2026-10-12T13:33:56.8431507Z env:
+2026-10-12T13:33:56.8431695Z   ARCHIVE: release/neo-ui-kit-react-1.0.2.tgz
+2026-10-12T13:33:56.8431935Z ##[endgroup]
+2026-10-12T13:33:56.9620221Z Found in cache @ /opt/hostedtoolcache/node/24.21.0/x64
+2026-10-12T13:33:56.9622528Z ##[group]Environment details
+2026-10-12T13:33:57.4709282Z node: v24.21.0
+2026-10-12T13:33:57.4709601Z npm: 11.19.0
+2026-10-12T13:33:57.4709802Z yarn: 1.22.22
+2026-10-12T13:33:57.4710421Z ##[endgroup]
+2026-10-12T13:33:57.4839368Z ##[group]Run npm install --global npm@11.15.0
+2026-10-12T13:33:57.4839700Z [36;1mnpm install --global npm@11.15.0[0m
+2026-10-12T13:33:57.5073914Z shell: /usr/bin/bash -e {0}
+2026-10-12T13:33:57.5074160Z env:
+2026-10-12T13:33:57.5074365Z   ARCHIVE: release/neo-ui-kit-react-1.0.2.tgz
+2026-10-12T13:33:57.5074657Z   NPM_CONFIG_USERCONFIG: /home/runner/work/_temp/.npmrc
+2026-10-12T13:33:57.5074966Z   NODE_AUTH_TOKEN: XXXXX-XXXXX-XXXXX-XXXXX
+2026-10-12T13:33:57.5075214Z ##[endgroup]
+2026-10-12T13:34:02.1348160Z 
+2026-10-12T13:34:02.1357136Z changed 28 packages in 5s
+2026-10-12T13:34:02.1357419Z 
+2026-10-12T13:34:02.1357675Z 15 packages are looking for funding
+2026-10-12T13:34:02.1358047Z   run `npm fund` for details
+2026-10-12T13:34:02.1814938Z ##[group]Run actions/download-artifact@v4
+2026-10-12T13:34:02.1815202Z with:
+2026-10-12T13:34:02.1815373Z   name: npm-package
+2026-10-12T13:34:02.1815554Z   path: release
+2026-10-12T13:34:02.1815727Z   merge-multiple: false
+2026-10-12T13:34:02.1815929Z   repository: Pro100Dimka/adui
+2026-10-12T13:34:02.1816127Z   run-id: 38256372887
+2026-10-12T13:34:02.1816292Z env:
+2026-10-12T13:34:02.1816482Z   ARCHIVE: release/neo-ui-kit-react-1.0.2.tgz
+2026-10-12T13:34:02.1816759Z   NPM_CONFIG_USERCONFIG: /home/runner/work/_temp/.npmrc
+2026-10-12T13:34:02.1817028Z   NODE_AUTH_TOKEN: XXXXX-XXXXX-XXXXX-XXXXX
+2026-10-12T13:34:02.1817244Z ##[endgroup]
+2026-10-12T13:34:02.3125188Z Downloading single artifact
+2026-10-12T13:34:02.3250871Z (node:2249) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-12T13:34:02.3251719Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-12T13:34:02.5532599Z Preparing to download the following artifacts:
+2026-10-12T13:34:02.5533361Z - npm-package (ID: 11749868348, Size: 1666828, Expected Digest: sha256:be506dde23454c30779cc9e7d36cafe629c468f0b63047fe108ca7a32f785f90)
+2026-10-12T13:34:02.7864370Z Redirecting to blob download url: https://productionresultssa19.blob.core.windows.net/actions-results/9279e2b6-ca74-848c-93af-74ae7e8865d7/workflow-job-run-a48c601b-fd93-5e4d-9c55-0b744d92ac8d/artifacts/3dfb8a7c0b08804a37fc8735e76abbab9b2f08220e5e7268c5107c9d3f5fc25b.zip
+2026-10-12T13:34:02.7865452Z Starting download of artifact to: /home/runner/work/adui/adui/release
+2026-10-12T13:34:03.0335719Z (node:2249) [DEP0005] DeprecationWarning: Buffer() is deprecated due to security and usability issues. Please use the Buffer.alloc(), Buffer.allocUnsafe(), or Buffer.from() methods instead.
+2026-10-12T13:34:03.5334489Z SHA256 digest of downloaded artifact is be506dde23454c30779cc9e7d36cafe629c468f0b63047fe108ca7a32f785f90
+2026-10-12T13:34:03.5335054Z Artifact download completed successfully.
+2026-10-12T13:34:03.5335349Z Total of 1 artifact(s) downloaded
+2026-10-12T13:34:03.5338621Z Download artifact has finished successfully
+2026-10-12T13:34:03.5444633Z ##[group]Run npm publish "./$ARCHIVE" --access public --provenance --ignore-scripts --registry https://registry.npmjs.org
+2026-10-12T13:34:03.5445361Z [36;1mnpm publish "./$ARCHIVE" --access public --provenance --ignore-scripts --registry https://registry.npmjs.org[0m
+2026-10-12T13:34:03.5502646Z shell: /usr/bin/bash -e {0}
+2026-10-12T13:34:03.5502866Z env:
+2026-10-12T13:34:03.5503066Z   ARCHIVE: release/neo-ui-kit-react-1.0.2.tgz
+2026-10-12T13:34:03.5503364Z   NPM_CONFIG_USERCONFIG: /home/runner/work/_temp/.npmrc
+2026-10-12T13:34:03.5503666Z   NODE_AUTH_TOKEN: XXXXX-XXXXX-XXXXX-XXXXX
+2026-10-12T13:34:03.5503893Z ##[endgroup]
+2026-10-12T13:34:04.1603738Z npm notice
+2026-10-12T13:34:04.1607766Z npm notice 📦  @neo-ui-kit/react@1.0.2
+2026-10-12T13:34:04.1608239Z npm notice Tarball Contents
+2026-10-12T13:34:04.1649493Z npm notice 1.1kB LICENSE
+2026-10-12T13:34:04.1649917Z npm notice 18.4kB README.md
+2026-10-12T13:34:04.1650525Z npm notice 966B dist/artwork/icons.json.d.ts
+2026-10-12T13:34:04.1651302Z npm notice 214B dist/artwork/illustrations.json.d.ts
+2026-10-12T13:34:04.1651826Z npm notice 3.5kB dist/chunks/chunk-347P6ZE4.js
+2026-10-12T13:34:04.1652318Z npm notice 45.5kB dist/chunks/chunk-BJSFN52W.js
+2026-10-12T13:34:04.1652799Z npm notice 2.1kB dist/chunks/chunk-FCOU3ODR.js
+2026-10-12T13:34:04.1653261Z npm notice 3.1kB dist/chunks/chunk-JZ4GDTH5.js
+2026-10-12T13:34:04.1653737Z npm notice 551.1kB dist/chunks/chunk-UGDRXR7P.js
+2026-10-12T13:34:04.1654201Z npm notice 14.4kB dist/chunks/chunk-VK6GHRLV.js
+2026-10-12T13:34:04.1654688Z npm notice 27.4kB dist/chunks/chunk-YKCUOZ7V.js
+2026-10-12T13:34:04.1655130Z npm notice 5.3kB dist/components.css
+2026-10-12T13:34:04.1655692Z npm notice 325B dist/components/artwork/DatabaseArt/DatabaseArt.d.ts
+2026-10-12T13:34:04.1656342Z npm notice 1.4kB dist/components/artwork/DatabaseArt/styles.css
+2026-10-12T13:34:04.1656965Z npm notice 386B dist/components/artwork/Landscape/Landscape.d.ts
+2026-10-12T13:34:04.1657595Z npm notice 1.9kB dist/components/artwork/Landscape/styles.css
+2026-10-12T13:34:04.1658145Z npm notice 749B dist/components/artwork/layers.d.ts
+2026-10-12T13:34:04.1658785Z npm notice 805B dist/components/artwork/NeonWaves/NeonWaves.d.ts
+2026-10-12T13:34:04.1659394Z npm notice 1.3kB dist/components/artwork/NeonWaves/styles.css
+2026-10-12T13:34:04.1659971Z npm notice 256B dist/components/artwork/Planet/Planet.d.ts
+2026-10-12T13:34:04.1660528Z npm notice 1.5kB dist/components/artwork/Planet/styles.css
+2026-10-12T13:34:04.1661239Z npm notice 756B dist/components/artwork/QuantumField/audio.d.ts
+2026-10-12T13:34:04.1662189Z npm notice 2.3kB dist/components/artwork/QuantumField/QuantumField.d.ts
+2026-10-12T13:34:04.1662942Z npm notice 1.1kB dist/components/artwork/QuantumField/QuantumFieldExperience.d.ts
+2026-10-12T13:34:04.1663495Z npm notice 1.5kB dist/components/artwork/QuantumField/renderer.d.ts
+2026-10-12T13:34:04.1663909Z npm notice 2.6kB dist/components/artwork/QuantumField/styles.css
+2026-10-12T13:34:04.1664367Z npm notice 1.1kB dist/components/artwork/QuantumField/UPSTREAM-LICENSE.txt
+2026-10-12T13:34:04.1664796Z npm notice 416B dist/components/artwork/ServerArt/ServerArt.d.ts
+2026-10-12T13:34:04.1665170Z npm notice 1.1kB dist/components/artwork/ServerArt/styles.css
+2026-10-12T13:34:04.1665542Z npm notice 405B dist/components/artwork/Spectrum/Spectrum.d.ts
+2026-10-12T13:34:04.1665920Z npm notice 762B dist/components/artwork/Spectrum/styles.css
+2026-10-12T13:34:04.1666270Z npm notice 514B dist/components/artwork/useArtwork.d.ts
+2026-10-12T13:34:04.1666653Z npm notice 396B dist/components/controls/Autocomplete/Autocomplete.d.ts
+2026-10-12T13:34:04.1667067Z npm notice 80B dist/components/controls/Autocomplete/styles.css
+2026-10-12T13:34:04.1667434Z npm notice 195B dist/components/controls/Button/Button.d.ts
+2026-10-12T13:34:04.1667776Z npm notice 30B dist/components/controls/Button/styles.css
+2026-10-12T13:34:04.1668145Z npm notice 128B dist/components/controls/Checkbox/Checkbox.d.ts
+2026-10-12T13:34:04.1668709Z npm notice 1.9kB dist/components/controls/Checkbox/styles.css
+2026-10-12T13:34:04.1669116Z npm notice 810B dist/components/controls/Chip/Chip.d.ts
+2026-10-12T13:34:04.1669459Z npm notice 1.9kB dist/components/controls/Chip/styles.css
+2026-10-12T13:34:04.1669809Z npm notice 1.1kB dist/components/controls/ChipField.d.ts
+2026-10-12T13:34:04.1670186Z npm notice 305B dist/components/controls/ColorPicker/color.d.ts
+2026-10-12T13:34:04.1670597Z npm notice 771B dist/components/controls/ColorPicker/ColorPicker.d.ts
+2026-10-12T13:34:04.1670995Z npm notice 2.5kB dist/components/controls/ColorPicker/styles.css
+2026-10-12T13:34:04.1671786Z npm notice 823B dist/components/controls/DatePicker/DatePicker.d.ts
+2026-10-12T13:34:04.1672185Z npm notice 1.6kB dist/components/controls/DatePicker/styles.css
+2026-10-12T13:34:04.1672571Z npm notice 136B dist/components/controls/FilePicker/FilePicker.d.ts
+2026-10-12T13:34:04.1672985Z npm notice 4.2kB dist/components/controls/FilePicker/styles.css
+2026-10-12T13:34:04.1673378Z npm notice 207B dist/components/controls/IconButton/IconButton.d.ts
+2026-10-12T13:34:04.1673764Z npm notice 93B dist/components/controls/IconButton/styles.css
+2026-10-12T13:34:04.1674147Z npm notice 938B dist/components/controls/InputBase/InputBase.d.ts
+2026-10-12T13:34:04.1674523Z npm notice 10.5kB dist/components/controls/InputBase/styles.css
+2026-10-12T13:34:04.1674869Z npm notice 2.7kB dist/components/controls/internal.d.ts
+2026-10-12T13:34:04.1675215Z npm notice 535B dist/components/controls/Link/Link.d.ts
+2026-10-12T13:34:04.1675548Z npm notice 1.2kB dist/components/controls/Link/styles.css
+2026-10-12T13:34:04.1675943Z npm notice 233B dist/components/controls/NumberField/NumberField.d.ts
+2026-10-12T13:34:04.1676336Z npm notice 35B dist/components/controls/NumberField/styles.css
+2026-10-12T13:34:04.1676754Z npm notice 1.6kB dist/components/controls/PeoplePicker/PeoplePicker.d.ts
+2026-10-12T13:34:04.1677170Z npm notice 197B dist/components/controls/PeoplePicker/styles.css
+2026-10-12T13:34:04.1677615Z npm notice 160B dist/components/controls/SegmentedControl/SegmentedControl.d.ts
+2026-10-12T13:34:04.1678060Z npm notice 226B dist/components/controls/SegmentedControl/styles.css
+2026-10-12T13:34:04.1678438Z npm notice 398B dist/components/controls/Select/Select.d.ts
+2026-10-12T13:34:04.1678851Z npm notice 3.4kB dist/components/controls/Select/styles.css
+2026-10-12T13:34:04.1679218Z npm notice 19.6kB dist/components/controls/shared.css
+2026-10-12T13:34:04.1679533Z npm notice 7.7kB dist/components/controls/shared.d.ts
+2026-10-12T13:34:04.1679874Z npm notice 201B dist/components/controls/Slider/Slider.d.ts
+2026-10-12T13:34:04.1680384Z npm notice 4.2kB dist/components/controls/Slider/styles.css
+2026-10-12T13:34:04.1680763Z npm notice 139B dist/components/controls/SplitButton/SplitButton.d.ts
+2026-10-12T13:34:04.1681574Z npm notice 4.9kB dist/components/controls/SplitButton/styles.css
+2026-10-12T13:34:04.1681967Z npm notice 1.8kB dist/components/controls/Switch/styles.css
+2026-10-12T13:34:04.1682314Z npm notice 126B dist/components/controls/Switch/Switch.d.ts
+2026-10-12T13:34:04.1682670Z npm notice 3.1kB dist/components/controls/Tab/styles.css
+2026-10-12T13:34:04.1682999Z npm notice 186B dist/components/controls/Tab/Tab.d.ts
+2026-10-12T13:34:04.1683330Z npm notice 7.1kB dist/components/controls/Tabs/styles.css
+2026-10-12T13:34:04.1683671Z npm notice 147B dist/components/controls/Tabs/Tabs.d.ts
+2026-10-12T13:34:04.1684018Z npm notice 495B dist/components/controls/TagInput/styles.css
+2026-10-12T13:34:04.1684387Z npm notice 1.1kB dist/components/controls/TagInput/TagInput.d.ts
+2026-10-12T13:34:04.1684780Z npm notice 420B dist/components/controls/TextArea/styles.css
+2026-10-12T13:34:04.1685142Z npm notice 328B dist/components/controls/TextArea/TextArea.d.ts
+2026-10-12T13:34:04.1685527Z npm notice 362B dist/components/controls/TextField/TextField.d.ts
+2026-10-12T13:34:04.1685907Z npm notice 3.5kB dist/components/controls/ThemePicker/styles.css
+2026-10-12T13:34:04.1686307Z npm notice 1.1kB dist/components/controls/ThemePicker/ThemePicker.d.ts
+2026-10-12T13:34:04.1687106Z npm notice 1.5kB dist/components/controls/ToggleButton/styles.css
+2026-10-12T13:34:04.1687641Z npm notice 213B dist/components/controls/ToggleButton/ToggleButton.d.ts
+2026-10-12T13:34:04.1688051Z npm notice 2.5kB dist/components/editor/PianoRoll/PianoRoll.d.ts
+2026-10-12T13:34:04.1688417Z npm notice 5.0kB dist/components/editor/PianoRoll/styles.css
+2026-10-12T13:34:04.1688740Z npm notice 41B dist/components/editor/shared.css
+2026-10-12T13:34:04.1689134Z npm notice 450B dist/components/effects/AnimatedBorder/AnimatedBorder.d.ts
+2026-10-12T13:34:04.1689567Z npm notice 189B dist/components/effects/AnimatedBorder/styles.css
+2026-10-12T13:34:04.1689928Z npm notice 439B dist/components/effects/Beacon/Beacon.d.ts
+2026-10-12T13:34:04.1690287Z npm notice 764B dist/components/effects/Beacon/styles.css
+2026-10-12T13:34:04.1690651Z npm notice 654B dist/components/effects/Equalizer/Equalizer.d.ts
+2026-10-12T13:34:04.1691018Z npm notice 854B dist/components/effects/Equalizer/styles.css
+2026-10-12T13:34:04.1691603Z npm notice 491B dist/components/effects/GlowText/GlowText.d.ts
+2026-10-12T13:34:04.1691970Z npm notice 1.2kB dist/components/effects/GlowText/styles.css
+2026-10-12T13:34:04.1709733Z npm notice 646B dist/components/effects/ImageShine/ImageShine.d.ts
+2026-10-12T13:34:04.1710389Z npm notice 1.6kB dist/components/effects/ImageShine/styles.css
+2026-10-12T13:34:04.1710970Z npm notice 447B dist/components/effects/Marquee/Marquee.d.ts
+2026-10-12T13:34:04.1711517Z npm notice 1.0kB dist/components/effects/Marquee/styles.css
+2026-10-12T13:34:04.1711921Z npm notice 791B dist/components/effects/MelodixText/MelodixText.d.ts
+2026-10-12T13:34:04.1712329Z npm notice 1.1kB dist/components/effects/MelodixText/styles.css
+2026-10-12T13:34:04.1712694Z npm notice 681B dist/components/effects/Reveal/Reveal.d.ts
+2026-10-12T13:34:04.1713048Z npm notice 636B dist/components/effects/Reveal/styles.css
+2026-10-12T13:34:04.1713406Z npm notice 459B dist/components/effects/Shimmer/Shimmer.d.ts
+2026-10-12T13:34:04.1713774Z npm notice 1.1kB dist/components/effects/Shimmer/styles.css
+2026-10-12T13:34:04.1714150Z npm notice 413B dist/components/effects/Sparkles/Sparkles.d.ts
+2026-10-12T13:34:04.1714525Z npm notice 540B dist/components/effects/Sparkles/styles.css
+2026-10-12T13:34:04.1714898Z npm notice 605B dist/components/effects/Spotlight/Spotlight.d.ts
+2026-10-12T13:34:04.1715281Z npm notice 1.1kB dist/components/effects/Spotlight/styles.css
+2026-10-12T13:34:04.1715642Z npm notice 1.7kB dist/components/effects/Tilt/styles.css
+2026-10-12T13:34:04.1715981Z npm notice 548B dist/components/effects/Tilt/Tilt.d.ts
+2026-10-12T13:34:04.1716494Z npm notice 181B dist/components/feedback/Badge/Badge.d.ts
+2026-10-12T13:34:04.1716842Z npm notice 2.4kB dist/components/feedback/Badge/styles.css
+2026-10-12T13:34:04.1717280Z npm notice 160B dist/components/feedback/CollapsibleSection/CollapsibleSection.d.ts
+2026-10-12T13:34:04.1717750Z npm notice 2.0kB dist/components/feedback/CollapsibleSection/styles.css
+2026-10-12T13:34:04.1718173Z npm notice 2.0kB dist/components/feedback/DataTable/DataTable.d.ts
+2026-10-12T13:34:04.1718560Z npm notice 16.1kB dist/components/feedback/DataTable/styles.css
+2026-10-12T13:34:04.1718925Z npm notice 131B dist/components/feedback/Dialog/Dialog.d.ts
+2026-10-12T13:34:04.1719291Z npm notice 2.4kB dist/components/feedback/Dialog/styles.css
+2026-10-12T13:34:04.1719678Z npm notice 136B dist/components/feedback/EmptyState/EmptyState.d.ts
+2026-10-12T13:34:04.1720069Z npm notice 1.7kB dist/components/feedback/EmptyState/styles.css
+2026-10-12T13:34:04.1720485Z npm notice 142B dist/components/feedback/KeyValueList/KeyValueList.d.ts
+2026-10-12T13:34:04.1720897Z npm notice 1.2kB dist/components/feedback/KeyValueList/styles.css
+2026-10-12T13:34:04.1721383Z npm notice 118B dist/components/feedback/Menu/Menu.d.ts
+2026-10-12T13:34:04.1721730Z npm notice 4.0kB dist/components/feedback/Menu/styles.css
+2026-10-12T13:34:04.1722104Z npm notice 130B dist/components/feedback/MenuItem/MenuItem.d.ts
+2026-10-12T13:34:04.1722615Z npm notice 1.7kB dist/components/feedback/MenuItem/styles.css
+2026-10-12T13:34:04.1723015Z npm notice 157B dist/components/feedback/MessageBar/MessageBar.d.ts
+2026-10-12T13:34:04.1723457Z npm notice 2.9kB dist/components/feedback/MessageBar/styles.css
+2026-10-12T13:34:04.1723827Z npm notice 134B dist/components/feedback/Popover/Popover.d.ts
+2026-10-12T13:34:04.1724199Z npm notice 1.4kB dist/components/feedback/Popover/styles.css
+2026-10-12T13:34:04.1724589Z npm notice 139B dist/components/feedback/ProgressBar/ProgressBar.d.ts
+2026-10-12T13:34:04.1724992Z npm notice 2.1kB dist/components/feedback/ProgressBar/styles.css
+2026-10-12T13:34:04.1725346Z npm notice 481B dist/components/feedback/shared.css
+2026-10-12T13:34:04.1725667Z npm notice 9.2kB dist/components/feedback/shared.d.ts
+2026-10-12T13:34:04.1726031Z npm notice 514B dist/components/feedback/SignalBars/SignalBars.d.ts
+2026-10-12T13:34:04.1726404Z npm notice 884B dist/components/feedback/SignalBars/styles.css
+2026-10-12T13:34:04.1726839Z npm notice 166B dist/components/feedback/StatusIndicator/StatusIndicator.d.ts
+2026-10-12T13:34:04.1727278Z npm notice 2.2kB dist/components/feedback/StatusIndicator/styles.css
+2026-10-12T13:34:04.1727652Z npm notice 121B dist/components/feedback/Steps/Steps.d.ts
+2026-10-12T13:34:04.1728003Z npm notice 4.4kB dist/components/feedback/Steps/styles.css
+2026-10-12T13:34:04.1728344Z npm notice 2.2kB dist/components/feedback/Toast/styles.css
+2026-10-12T13:34:04.1728675Z npm notice 160B dist/components/feedback/Toast/Toast.d.ts
+2026-10-12T13:34:04.1729024Z npm notice 1.1kB dist/components/feedback/Tooltip/styles.css
+2026-10-12T13:34:04.1729385Z npm notice 719B dist/components/feedback/Tooltip/Tooltip.d.ts
+2026-10-12T13:34:04.1729719Z npm notice 1.5kB dist/components/forms/Form/Form.d.ts
+2026-10-12T13:34:04.1730038Z npm notice 61B dist/components/forms/Form/styles.css
+2026-10-12T13:34:04.1730395Z npm notice 1.1kB dist/components/forms/FormFields/FormFields.d.ts
+2026-10-12T13:34:04.1730771Z npm notice 1.9kB dist/components/forms/FormFields/styles.css
+2026-10-12T13:34:04.1731318Z npm notice 8.6kB dist/components/foundation/Loader/Loader.d.ts
+2026-10-12T13:34:04.1731773Z npm notice 2.2kB dist/components/foundation/LoaderGenerator/LoaderGenerator.d.ts
+2026-10-12T13:34:04.1732225Z npm notice 2.8kB dist/components/foundation/LoaderGenerator/styles.css
+2026-10-12T13:34:04.1732626Z npm notice 2.5kB dist/components/foundation/ThemeEditor/styles.css
+2026-10-12T13:34:04.1733039Z npm notice 2.2kB dist/components/foundation/ThemeEditor/themeConfig.d.ts
+2026-10-12T13:34:04.1733462Z npm notice 761B dist/components/foundation/ThemeEditor/ThemeEditor.d.ts
+2026-10-12T13:34:04.1734007Z npm notice 2.0kB dist/components/foundation/ThemeProvider/styles.css
+2026-10-12T13:34:04.1734451Z npm notice 1.5kB dist/components/foundation/ThemeProvider/ThemeProvider.d.ts
+2026-10-12T13:34:04.1734871Z npm notice 3.8kB dist/components/foundation/Typography/styles.css
+2026-10-12T13:34:04.1735274Z npm notice 1.0kB dist/components/foundation/Typography/Typography.d.ts
+2026-10-12T13:34:04.1735666Z npm notice 162B dist/components/layout/Avatar/Avatar.d.ts
+2026-10-12T13:34:04.1736017Z npm notice 227B dist/components/layout/Avatar/HostSeal.d.ts
+2026-10-12T13:34:04.1736363Z npm notice 4.4kB dist/components/layout/Avatar/styles.css
+2026-10-12T13:34:04.1736726Z npm notice 136B dist/components/layout/BrandMark/BrandMark.d.ts
+2026-10-12T13:34:04.1737085Z npm notice 913B dist/components/layout/BrandMark/styles.css
+2026-10-12T13:34:04.1737457Z npm notice 521B dist/components/layout/ButtonGroup/ButtonGroup.d.ts
+2026-10-12T13:34:04.1737847Z npm notice 1.1kB dist/components/layout/ButtonGroup/styles.css
+2026-10-12T13:34:04.1738191Z npm notice 753B dist/components/layout/Card/Card.d.ts
+2026-10-12T13:34:04.1738508Z npm notice 807B dist/components/layout/Card/styles.css
+2026-10-12T13:34:04.1738886Z npm notice 523B dist/components/layout/DialogActions/DialogActions.d.ts
+2026-10-12T13:34:04.1739280Z npm notice 743B dist/components/layout/DialogActions/styles.css
+2026-10-12T13:34:04.1739762Z npm notice 520B dist/components/layout/DialogBody/DialogBody.d.ts
+2026-10-12T13:34:04.1740152Z npm notice 715B dist/components/layout/DialogBody/styles.css
+2026-10-12T13:34:04.1740502Z npm notice 127B dist/components/layout/Divider/Divider.d.ts
+2026-10-12T13:34:04.1740849Z npm notice 1.3kB dist/components/layout/Divider/styles.css
+2026-10-12T13:34:04.1741444Z npm notice 864B dist/components/layout/FloatingPanel/FloatingPanel.d.ts
+2026-10-12T13:34:04.1741856Z npm notice 1.7kB dist/components/layout/FloatingPanel/styles.css
+2026-10-12T13:34:04.1742278Z npm notice 2.5kB dist/components/layout/FloatingPanel/useFloatingPanel.d.ts
+2026-10-12T13:34:04.1742678Z npm notice 1.3kB dist/components/layout/Grid/Grid.d.ts
+2026-10-12T13:34:04.1743008Z npm notice 3.0kB dist/components/layout/Grid/styles.css
+2026-10-12T13:34:04.1743341Z npm notice 195B dist/components/layout/Header/Header.d.ts
+2026-10-12T13:34:04.1743685Z npm notice 1.0kB dist/components/layout/Header/styles.css
+2026-10-12T13:34:04.1744007Z npm notice 285B dist/components/layout/Icon/Icon.d.ts
+2026-10-12T13:34:04.1744333Z npm notice 1.8kB dist/components/layout/Icon/styles.css
+2026-10-12T13:34:04.1744701Z npm notice 178B dist/components/layout/Illustration/Illustration.d.ts
+2026-10-12T13:34:04.1745099Z npm notice 2.4kB dist/components/layout/Illustration/styles.css
+2026-10-12T13:34:04.1745483Z npm notice 135B dist/components/layout/ScrollArea/ScrollArea.d.ts
+2026-10-12T13:34:04.1745852Z npm notice 1.5kB dist/components/layout/ScrollArea/styles.css
+2026-10-12T13:34:04.1746189Z npm notice 2.0kB dist/components/layout/shared.css
+2026-10-12T13:34:04.1746512Z npm notice 2.3kB dist/components/layout/shared.d.ts
+2026-10-12T13:34:04.1746844Z npm notice 1.2kB dist/components/layout/Stack/Stack.d.ts
+2026-10-12T13:34:04.1747214Z npm notice 1.6kB dist/components/layout/Stack/styles.css
+2026-10-12T13:34:04.1747568Z npm notice 916B dist/components/layout/StatTile/StatTile.d.ts
+2026-10-12T13:34:04.1747943Z npm notice 2.2kB dist/components/layout/StatTile/styles.css
+2026-10-12T13:34:04.1748297Z npm notice 382B dist/components/layout/TabPanel/styles.css
+2026-10-12T13:34:04.1748659Z npm notice 130B dist/components/layout/TabPanel/TabPanel.d.ts
+2026-10-12T13:34:04.1749001Z npm notice 962B dist/components/layout/Text/styles.css
+2026-10-12T13:34:04.1749333Z npm notice 188B dist/components/layout/Text/Text.d.ts
+2026-10-12T13:34:04.1749673Z npm notice 208B dist/components/layout/Toolbar/styles.css
+2026-10-12T13:34:04.1750032Z npm notice 517B dist/components/layout/Toolbar/Toolbar.d.ts
+2026-10-12T13:34:04.1750416Z npm notice 139B dist/components/media/AudioPlayer/AudioPlayer.d.ts
+2026-10-12T13:34:04.1750920Z npm notice 2.0kB dist/components/media/AudioPlayer/styles.css
+2026-10-12T13:34:04.1751507Z npm notice 1.2kB dist/components/media/KaraokeLyrics/KaraokeLyrics.d.ts
+2026-10-12T13:34:04.1751914Z npm notice 1.9kB dist/components/media/KaraokeLyrics/styles.css
+2026-10-12T13:34:04.1752302Z npm notice 461B dist/components/media/LevelMeter/LevelMeter.d.ts
+2026-10-12T13:34:04.1752703Z npm notice 733B dist/components/media/LevelMeter/styles.css
+2026-10-12T13:34:04.1753077Z npm notice 1.2kB dist/components/media/MediaCard/MediaCard.d.ts
+2026-10-12T13:34:04.1753432Z npm notice 2.9kB dist/components/media/MediaCard/styles.css
+2026-10-12T13:34:04.1753805Z npm notice 2.2kB dist/components/media/MelodyRoll/MelodyRoll.d.ts
+2026-10-12T13:34:04.1754174Z npm notice 6.1kB dist/components/media/MelodyRoll/styles.css
+2026-10-12T13:34:04.1754561Z npm notice 1.1kB dist/components/media/PianoKeyboard/PianoKeyboard.d.ts
+2026-10-12T13:34:04.1754969Z npm notice 2.3kB dist/components/media/PianoKeyboard/styles.css
+2026-10-12T13:34:04.1755356Z npm notice 153B dist/components/media/RotaryKnob/RotaryKnob.d.ts
+2026-10-12T13:34:04.1755716Z npm notice 9.7kB dist/components/media/RotaryKnob/styles.css
+2026-10-12T13:34:04.1756050Z npm notice 142B dist/components/media/shared.css
+2026-10-12T13:34:04.1756361Z npm notice 3.0kB dist/components/media/shared.d.ts
+2026-10-12T13:34:04.1756709Z npm notice 133B dist/components/media/Sparkline/Sparkline.d.ts
+2026-10-12T13:34:04.1757235Z npm notice 1.4kB dist/components/media/Sparkline/styles.css
+2026-10-12T13:34:04.1757604Z npm notice 100B dist/components/media/WaveDecoration/styles.css
+2026-10-12T13:34:04.1758013Z npm notice 141B dist/components/media/WaveDecoration/WaveDecoration.d.ts
+2026-10-12T13:34:04.1758422Z npm notice 9.4kB dist/components/media/Waveform/styles.css
+2026-10-12T13:34:04.1758809Z npm notice 545B dist/components/media/Waveform/useWaveformPeaks.d.ts
+2026-10-12T13:34:04.1759189Z npm notice 653B dist/components/media/Waveform/Waveform.d.ts
+2026-10-12T13:34:04.1759559Z npm notice 1.2kB dist/components/navigation/Router/Router.d.ts
+2026-10-12T13:34:04.1759913Z npm notice 31B dist/components/navigation/Router/styles.css
+2026-10-12T13:34:04.1760201Z npm notice 747B dist/core.d.ts
+2026-10-12T13:34:04.1760411Z npm notice 878B dist/core.js
+2026-10-12T13:34:04.1760660Z npm notice 993B dist/core/artwork.d.ts
+2026-10-12T13:34:04.1760929Z npm notice 3.2kB dist/core/base.d.ts
+2026-10-12T13:34:04.1761355Z npm notice 360B dist/core/environment.d.ts
+2026-10-12T13:34:04.1761623Z npm notice 2.2kB dist/core/i18n.d.ts
+2026-10-12T13:34:04.1761876Z npm notice 71B dist/core/messages.d.ts
+2026-10-12T13:34:04.1762147Z npm notice 407B dist/core/motion-engine.d.ts
+2026-10-12T13:34:04.1762432Z npm notice 1.2kB dist/core/motion/hooks.d.ts
+2026-10-12T13:34:04.1762694Z npm notice 1.3kB dist/core/noise.d.ts
+2026-10-12T13:34:04.1762975Z npm notice 223B dist/core/providers/context.d.ts
+2026-10-12T13:34:04.1763271Z npm notice 801B dist/core/responsive.d.ts
+2026-10-12T13:34:04.1763531Z npm notice 196B dist/editor.d.ts
+2026-10-12T13:34:04.1763773Z npm notice 156B dist/editor.js
+2026-10-12T13:34:04.1764016Z npm notice 3.8kB dist/fonts/melodix.css
+2026-10-12T13:34:04.1764338Z npm notice 107.0kB dist/fonts/melodix/Melodix-100.woff2
+2026-10-12T13:34:04.1764673Z npm notice 98.0kB dist/fonts/melodix/Melodix-200.woff2
+2026-10-12T13:34:04.1764993Z npm notice 89.2kB dist/fonts/melodix/Melodix-300.woff2
+2026-10-12T13:34:04.1765317Z npm notice 80.7kB dist/fonts/melodix/Melodix-400.woff2
+2026-10-12T13:34:04.1765628Z npm notice 98.0kB dist/fonts/melodix/Melodix-500.woff2
+2026-10-12T13:34:04.1765936Z npm notice 96.4kB dist/fonts/melodix/Melodix-600.woff2
+2026-10-12T13:34:04.1766252Z npm notice 96.7kB dist/fonts/melodix/Melodix-700.woff2
+2026-10-12T13:34:04.1766559Z npm notice 96.1kB dist/fonts/melodix/Melodix-800.woff2
+2026-10-12T13:34:04.1766865Z npm notice 95.3kB dist/fonts/melodix/Melodix-900.woff2
+2026-10-12T13:34:04.1767200Z npm notice 62.0kB dist/fonts/melodix/MelodixText-100.woff2
+2026-10-12T13:34:04.1767540Z npm notice 60.9kB dist/fonts/melodix/MelodixText-200.woff2
+2026-10-12T13:34:04.1768134Z npm notice 57.3kB dist/fonts/melodix/MelodixText-300.woff2
+2026-10-12T13:34:04.1768477Z npm notice 53.4kB dist/fonts/melodix/MelodixText-400.woff2
+2026-10-12T13:34:04.1768807Z npm notice 50.8kB dist/fonts/melodix/MelodixText-500.woff2
+2026-10-12T13:34:04.1769139Z npm notice 49.3kB dist/fonts/melodix/MelodixText-600.woff2
+2026-10-12T13:34:04.1769482Z npm notice 50.1kB dist/fonts/melodix/MelodixText-700.woff2
+2026-10-12T13:34:04.1769811Z npm notice 51.5kB dist/fonts/melodix/MelodixText-800.woff2
+2026-10-12T13:34:04.1770143Z npm notice 51.9kB dist/fonts/melodix/MelodixText-900.woff2
+2026-10-12T13:34:04.1770514Z npm notice 4.4kB dist/fonts/melodix/OFL-PlayfairDisplay.txt
+2026-10-12T13:34:04.1770816Z npm notice 402B dist/forms.d.ts
+2026-10-12T13:34:04.1771039Z npm notice 317B dist/forms.js
+2026-10-12T13:34:04.1771471Z npm notice 12.8kB dist/index.d.ts
+2026-10-12T13:34:04.1771716Z npm notice 432.4kB dist/index.js
+2026-10-12T13:34:04.1771959Z npm notice 225B dist/router.d.ts
+2026-10-12T13:34:04.1772187Z npm notice 167B dist/router.js
+2026-10-12T13:34:04.1772420Z npm notice 58B dist/styles.css
+2026-10-12T13:34:04.1772654Z npm notice 6.4kB dist/theme/base.css
+2026-10-12T13:34:04.1772909Z npm notice 10.0kB dist/theme/tokens.css
+2026-10-12T13:34:04.1773179Z npm notice 887B dist/theme/typography.d.ts
+2026-10-12T13:34:04.1773442Z npm notice 30B dist/tokens.css
+2026-10-12T13:34:04.1773827Z npm notice 2.1kB package.json
+2026-10-12T13:34:04.1774043Z npm notice Tarball Details
+2026-10-12T13:34:04.1774303Z npm notice name: @neo-ui-kit/react
+2026-10-12T13:34:04.1774543Z npm notice version: 1.0.2
+2026-10-12T13:34:04.1774814Z npm notice filename: neo-ui-kit-react-1.0.2.tgz
+2026-10-12T13:34:04.1775104Z npm notice package size: 1.7 MB
+2026-10-12T13:34:04.1775349Z npm notice unpacked size: 2.8 MB
+2026-10-12T13:34:04.1775654Z npm notice shasum: 7668c764e3eb5f2434b1242e598eb314d358c41d
+2026-10-12T13:34:04.1776021Z npm notice integrity: sha512-QGrYejNt91HxW[...]X0Ggt3uvOFbcw==
+2026-10-12T13:34:04.1776311Z npm notice total files: 270
+2026-10-12T13:34:04.1776501Z npm notice
+2026-10-12T13:34:05.6685936Z npm notice npm tokens that bypass 2FA are being restricted for account changes and direct publishing. Learn how to prepare: https://gh.io/npm-gat-bypass2fa-deprecation
+2026-10-12T13:34:05.8882688Z npm notice Publishing to https://registry.npmjs.org/ with tag latest and public access
+2026-10-12T13:34:10.3366035Z npm notice publish Signed provenance statement with source and build information from GitHub Actions
+2026-10-12T13:34:10.3367308Z npm notice publish Provenance statement published to transparency log: https://search.sigstore.dev/?logIndex=3228734733
+2026-10-12T13:34:13.0543772Z npm notice Your package is being processed and may take a few minutes to become available.
+2026-10-12T13:34:13.0546264Z + @neo-ui-kit/react@1.0.2
+2026-10-12T13:34:13.0767765Z ##[group]Run softprops/action-gh-release@v2
+2026-10-12T13:34:13.0768023Z with:
+2026-10-12T13:34:13.0768202Z   name: @neo-ui-kit/react v1.0.2
+2026-10-12T13:34:13.0768445Z   files: release/neo-ui-kit-react-1.0.2.tgz
+2026-10-12T13:34:13.0768685Z   generate_release_notes: true
+2026-10-12T13:34:13.0768890Z   overwrite_files: true
+2026-10-12T13:34:13.0771523Z   token: ***
+2026-10-12T13:34:13.0771697Z env:
+2026-10-12T13:34:13.0771884Z   ARCHIVE: release/neo-ui-kit-react-1.0.2.tgz
+2026-10-12T13:34:13.0772165Z   NPM_CONFIG_USERCONFIG: /home/runner/work/_temp/.npmrc
+2026-10-12T13:34:13.0772436Z   NODE_AUTH_TOKEN: XXXXX-XXXXX-XXXXX-XXXXX
+2026-10-12T13:34:13.0772669Z ##[endgroup]
+2026-10-12T13:34:13.5241583Z 👩‍🏭 Creating new GitHub release for tag v1.0.2...
+2026-10-12T13:34:15.1555479Z Release 410638550 is not yet discoverable by tag v1.0.2, retrying... (2 retries remaining)
+2026-10-12T13:34:16.7707361Z ⬆️ Uploading neo-ui-kit-react-1.0.2.tgz...
+2026-10-12T13:34:17.6655948Z ✅ Uploaded neo-ui-kit-react-1.0.2.tgz
+2026-10-12T13:34:17.6656294Z Finalizing release...
+2026-10-12T13:34:18.2582986Z Getting assets list...
+2026-10-12T13:34:18.5581668Z 🎉 Release ready at https://github.com/Pro100Dimka/adui/releases/tag/v1.0.2
+2026-10-12T13:34:18.5720004Z Post job cleanup.
+2026-10-12T13:34:18.6880616Z Post job cleanup.
+2026-10-12T13:34:18.7629435Z [command]/usr/bin/git version
+2026-10-12T13:34:18.7665140Z git version 2.55.0
+2026-10-12T13:34:18.7699698Z Temporarily overriding HOME='/home/runner/work/_temp/7fd06f07-7c0c-4a2c-9705-c5bdb5bef45e' before making global git config changes
+2026-10-12T13:34:18.7701239Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-12T13:34:18.7715629Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/adui/adui
+2026-10-12T13:34:18.7734884Z Removing SSH command configuration
+2026-10-12T13:34:18.7740843Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-12T13:34:18.7773172Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-12T13:34:18.7980883Z Removing HTTP extra header
+2026-10-12T13:34:18.7985934Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-12T13:34:18.8020719Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-12T13:34:18.8228803Z Removing includeIf entries pointing to credentials config files
+2026-10-12T13:34:18.8234653Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-12T13:34:18.8266474Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-12T13:34:18.8612962Z Cleaning up orphan processes
+2026-10-12T13:34:18.8890001Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/download-artifact@v4, softprops/action-gh-release@v2. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

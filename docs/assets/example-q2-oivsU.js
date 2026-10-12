@@ -1,0 +1,1 @@
+import{r as e,E as n,j as a,P as r,U as t,a as s}from"./index-BHbnQXN6.js";function x(){const u=e.useContext(n);return a.jsx(r,{knobs:{},code:()=>s("QuantumBackground",{}),children:()=>u?a.jsx(t.QuantumField,{paused:!0,quality:"low"}):a.jsx(t.QuantumBackground,{})})}export{x as default};
