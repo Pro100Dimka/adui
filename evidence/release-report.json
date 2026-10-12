@@ -1,5 +1,5 @@
 {
-  "status": "@neo-ui-kit/react@1.0.0 is published and verified; 1.0.1 documentation and trusted publishing preparation is verified locally, with GitHub execution pending.",
+  "status": "@neo-ui-kit/react@1.0.1 published through GitHub OIDC, publicly available as latest, installed and verified from npm; public documentation verified.",
   "date": "2026-10-12",
   "baseline": {
     "commit": "12387d42ad37d53ea1aa5f4db2c76b4d678aec43",
@@ -41,7 +41,7 @@
       "Installation instructions use npm install @neo-ui-kit/react; local archive instructions remain available for testing unpublished changes.",
       "Root check and prepublish gates build and run the test suite.",
       "ESM entry points share providers/contexts and externalize React; the actual tarball is installed in isolated React 18.2 and 19.3 applications.",
-      "Static documentation refreshed locally; previous site preserved at D:/Git/adui-backups/npm-publication-20261012/docs-before-npm.",
+      "The 1.0.1 documentation snapshot is published on GitHub Pages; registry installation, clipboard and live editor were verified in the public site.",
       "The catalog supplies its existing wave mark as a self-contained SVG favicon; the browser check now rejects all console errors and rendered example-error fallbacks.",
       "All 100 catalog descriptions have explicit EN and Ukrainian translations, covered by dedicated dictionary checks."
     ]
@@ -58,39 +58,47 @@
   ],
   "releaseActions": {
     "packageRename": "@ad-voice/ui to @neo-ui/react locally, then to @neo-ui-kit/react after npm rejected the neo-ui scope; replacement explicitly approved.",
-    "publicPublication": "https://www.npmjs.com/package/@neo-ui-kit/react/v/1.0.0",
-    "versionBump": "Reset to 1.0.0 by explicit user request; root and playground manifests aligned.",
+    "publicPublication": "https://www.npmjs.com/package/@neo-ui-kit/react/v/1.0.1",
+    "versionBump": "1.0.0 baseline retained; 1.0.1 explicitly approved for the first verified GitHub OIDC publication.",
     "licenseChange": "MIT approved for the whole current library and included in the published package; third-party licenses preserved.",
-    "gitCommitOrPush": "No source commit or branch push; explicitly authorized tag deletions pushed to origin.",
+    "gitCommitOrPush": "Approved source/documentation pushed to main; successful v1.0.1 points to a3fa2c954622eb18a3ab1d50e436c43dceb1c01c.",
     "paidActions": "not performed",
     "oldVersionsDeleted": {
       "releases": 35,
       "localTags": 38,
       "remoteTags": 38,
       "backup": "D:/Git/adui-backups/version-reset-20261012"
-    }
+    },
+    "githubRelease": "https://github.com/Pro100Dimka/adui/releases/tag/v1.0.1",
+    "website": "https://pro100dimka.github.io/adui"
   },
-  "completedAt": "2026-10-12T12:36:48.712Z",
+  "completedAt": "2026-10-12T13:22:00.059Z",
   "artifact": {
-    "path": "D:\\Git\\adui\\release\\neo-ui-kit-react-1.0.0.tgz",
+    "path": "release/ci/neo-ui-kit-react-1.0.1.tgz",
     "name": "@neo-ui-kit/react",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "format": "ESM",
-    "sizeBytes": 1667492,
-    "unpackedBytes": 2842253,
+    "sizeBytes": 1665955,
+    "unpackedBytes": 2834024,
     "files": 270,
-    "sha256": "907f70b1e9160ee48ada9b0ee43e737b297ef8581a7297ab593e8e809d0b7cc9",
-    "sha1": "0e082ae86137d7ab1c71fde2ecc139d26c8f3fbe",
-    "integrity": "sha512-IjzcP89VEugiV4O+NBSS9+twQKuu8D/GwAEKJg/an6HUA2Vlg+0zmQ46s2q56fiVPLoChfgqK4Wd3hR29pR1YA==",
-    "metadata": "evidence/npm-final-pack.json",
-    "installedConsumerIntegrityMatches": true,
-    "size": 1667492,
-    "registryIntegrityMatches": true
+    "sha256": "39a1a8307214b69314260649e2ee8bfd9033fe4d4292b102060cf306440a1f4c",
+    "sha1": "b3d36f8d7f917d1a0c5708c6de3b161c1140df50",
+    "integrity": "sha512-YsocW3Vn/PHyjnIAzERjBdiQH+FClotum0C0z97OhzbjfzZQNkfhu80iB+1GlBAaPJjQJ4fNgZUbhuAqaJZbOQ==",
+    "registryTarball": "https://registry.npmjs.org/@neo-ui-kit/react/-/react-1.0.1.tgz",
+    "githubDownload": "https://github.com/Pro100Dimka/adui/releases/download/v1.0.1/neo-ui-kit-react-1.0.1.tgz",
+    "metadata": "evidence/npm-1.0.1-published-registry.json",
+    "registryIntegrityMatches": true,
+    "installedConsumerIntegrityMatches": true
   },
   "sourceFingerprint": {
-    "scope": "All files recursively under packages/ui/src; sorted absolute paths; SHA256 of JSON [relative path, file SHA256] pairs.",
-    "files": 457,
-    "sha256": "05653c468eca91c7ecf9e74135de4777ac13050fb8e0a9fc2f8ae3d751484ae4"
+    "scope": "Published 1.0.1 source pinned by verified GitHub provenance; does not describe subsequent uncommitted work.",
+    "gitCommit": "a3fa2c954622eb18a3ab1d50e436c43dceb1c01c",
+    "evidence": "evidence/npm-1.0.1-registry-provenance-statements.json",
+    "prior1_0_0Fingerprint": {
+      "scope": "All files recursively under packages/ui/src; sorted absolute paths; SHA256 of JSON [relative path, file SHA256] pairs.",
+      "files": 457,
+      "sha256": "05653c468eca91c7ecf9e74135de4777ac13050fb8e0a9fc2f8ae3d751484ae4"
+    }
   },
   "environment": {
     "os": "Windows",
@@ -101,7 +109,13 @@
     "npm": "10.9.3",
     "chrome": "154.0.8037.98",
     "edge": "155.0.4283.45",
-    "physicalLowEndDevice": false
+    "physicalLowEndDevice": false,
+    "githubPublication": {
+      "os": "GitHub-hosted ubuntu-latest",
+      "node": "24.21.0",
+      "npm": "11.15.0",
+      "run": "https://github.com/Pro100Dimka/adui/actions/runs/38253722738"
+    }
   },
   "coverage": {
     "components": 100,
@@ -146,12 +160,15 @@
   "verification": {
     "fullCheck": {
       "command": "npm run check",
-      "typecheck": "passed for UI and playground",
-      "build": "passed for UI and playground",
+      "typecheck": "UI and playground passed",
+      "build": "UI and playground passed",
       "unitFiles": 38,
-      "unitTests": 568,
+      "unitTests": 580,
       "result": "passed",
-      "log": "evidence/npm-publish-full-check.log"
+      "environment": "GitHub-hosted ubuntu-latest, Node 24.21.0, npm 11.15.0",
+      "vitestDurationSeconds": 13.83,
+      "log": "evidence/npm-trusted-completed-job-114826272457.log",
+      "localLog": "evidence/npm-publish-path-full-check.log"
     },
     "dedicatedRegressions": "Red and green evidence linked by family matrices; original behavior was reproduced before implementation changes.",
     "familyBrowser": [
@@ -228,7 +245,9 @@
         "browser": "154.0.8037.98",
         "channel": "chrome",
         "checks": 22,
-        "result": "passed"
+        "result": "passed",
+        "version": "1.0.0",
+        "scope": "Historical 1.0.0 validation"
       },
       {
         "evidence": "evidence/consumer-consumer-react19-npm-final-chrome.json",
@@ -236,7 +255,9 @@
         "browser": "154.0.8037.98",
         "channel": "chrome",
         "checks": 22,
-        "result": "passed"
+        "result": "passed",
+        "version": "1.0.0",
+        "scope": "Historical 1.0.0 validation"
       },
       {
         "evidence": "evidence/consumer-consumer-react19-npm-final-edge.json",
@@ -244,7 +265,9 @@
         "browser": "155.0.4283.45",
         "channel": "msedge",
         "checks": 22,
-        "result": "passed"
+        "result": "passed",
+        "version": "1.0.0",
+        "scope": "Historical 1.0.0 validation"
       },
       {
         "evidence": "evidence/consumer-consumer-npm-npm-registry-chrome.json",
@@ -253,40 +276,69 @@
         "channel": "chrome",
         "checks": 22,
         "result": "passed",
-        "source": "npm registry"
+        "source": "npm registry",
+        "version": "1.0.0",
+        "scope": "Historical 1.0.0 validation"
+      },
+      {
+        "evidence": "evidence/consumer-consumer-npm-1.0.1-registry-1.0.1-chrome.json",
+        "version": "1.0.1",
+        "react": "19.3.0",
+        "browser": "154.0.8037.98",
+        "channel": "chrome",
+        "checks": 22,
+        "result": "passed",
+        "source": "public npm registry"
       }
     ],
     "consumerTypes": {
       "strict": true,
       "skipLibCheck": false,
       "resolveJsonModule": false,
-      "result": "passed in both tarball consumers and the new registry consumer"
+      "result": "passed for the fresh 1.0.1 registry consumer; historical 1.0.0 React18/19 checks retained",
+      "evidence": "evidence/npm-1.0.1-registry-consumer-types.log"
     },
     "packageChecks": [
       {
         "evidence": "evidence/package-consumer-react18-22.json",
         "node": "v22.18.0",
         "react": "18.2.0",
-        "result": "passed"
+        "result": "passed",
+        "version": "1.0.0",
+        "scope": "Historical 1.0.0 validation"
       },
       {
         "evidence": "evidence/package-consumer-react19-22.json",
         "node": "v22.18.0",
         "react": "19.3.0",
-        "result": "passed"
+        "result": "passed",
+        "version": "1.0.0",
+        "scope": "Historical 1.0.0 validation"
       },
       {
         "evidence": "evidence/package-consumer-react19-20.json",
         "node": "v20.20.2",
         "react": "19.3.0",
-        "result": "passed"
+        "result": "passed",
+        "version": "1.0.0",
+        "scope": "Historical 1.0.0 validation"
       },
       {
         "evidence": "evidence/package-consumer-npm-22.json",
         "node": "v22.18.0",
         "react": "19.3.0",
         "result": "passed",
-        "source": "npm registry"
+        "source": "npm registry",
+        "version": "1.0.0",
+        "scope": "Historical 1.0.0 validation"
+      },
+      {
+        "evidence": "evidence/package-consumer-npm-1.0.1-22.json",
+        "version": "1.0.1",
+        "node": "v22.18.0",
+        "react": "19.3.0",
+        "result": "passed",
+        "source": "public npm registry"
       }
     ],
     "staticDocumentation": {
@@ -296,10 +348,13 @@
       "backup": "D:/Git/adui-backups/npm-publication-20261012/docs-before-npm",
       "evidence": "evidence/docs-artifact.json",
       "relatedTests": 15,
-      "latestBackup": "D:/Git/adui-backups/npm-publication-20261012/docs-before-npm",
+      "latestBackup": "D:\\Git\\adui-backups\\npm-publication-20261012\\docs-before-oidc",
       "testLog": "evidence/npm-publish-full-check.log",
       "previousBackupRelocations": "evidence/version-reset-retired-local.json",
-      "published": false
+      "published": true,
+      "url": "https://pro100dimka.github.io/adui",
+      "publicEvidence": "evidence/npm-1.0.1-public-docs.json",
+      "scope": "Released 1.0.1 documentation snapshot; later local QuantumBackground edits are excluded."
     },
     "dependencies": {
       "scope": "Static runtime imports/exports inside UI src; type-only imports excluded. Dynamic/resource references reviewed separately by family audits.",
@@ -331,6 +386,21 @@
       "red": "evidence/inventory-contracts-red.json",
       "green": "evidence/inventory-contracts-green.json",
       "scope": "Full Icon description and exact QuantumFieldExperience purpose, component and utility coverage counts."
+    },
+    "provenance": {
+      "result": "verified with npm audit signatures",
+      "predicateType": "https://slsa.dev/provenance/v1",
+      "gitCommit": "a3fa2c954622eb18a3ab1d50e436c43dceb1c01c",
+      "workflow": ".github/workflows/release.yml",
+      "ref": "refs/tags/v1.0.1",
+      "run": "https://github.com/Pro100Dimka/adui/actions/runs/38253722738",
+      "transparencyLog": "https://search.sigstore.dev/?logIndex=3228429516",
+      "attestations": "evidence/npm-1.0.1-registry-attestations.json",
+      "decodedStatements": "evidence/npm-1.0.1-registry-provenance-statements.json",
+      "verificationLog": "evidence/npm-1.0.1-registry-signatures.log",
+      "registrySignaturesVerified": 7,
+      "attestationsVerified": 4,
+      "countScope": "Fresh consumer dependency graph; counts include React and related installed packages."
     }
   },
   "performance": {
@@ -498,7 +568,10 @@
       "registeredOwner": "pro100dimka"
     }
   },
-  "continuation": "No confirmed defect found in the executed checks remains open. External limitations and release decisions are listed above; no automated publication has been scheduled.",
+  "continuation": {
+    "scope": "Published 1.0.1 release complete. Independent QuantumBackground renaming/routing work is not part of this released snapshot.",
+    "publicationWorkRemaining": false
+  },
   "followup": {
     "evidence": "evidence/followup-report.json",
     "completedAt": "2026-10-12T11:52:46.512Z",
@@ -630,68 +703,165 @@
     "backup": "D:/Git/adui-backups/version-reset-20261012"
   },
   "publication": {
-    "evidence": "evidence/npm-publication-report.json",
-    "completedAt": "2026-10-12T12:36:48.712Z",
-    "status": "published and installed from the public npm registry",
+    "evidence": "evidence/npm-trusted-publisher-report.json",
+    "completedAt": "2026-10-12T13:22:00.059Z",
+    "status": "published and independently installed from the public npm registry",
     "name": "@neo-ui-kit/react",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "license": "MIT",
-    "url": "https://www.npmjs.com/package/@neo-ui-kit/react/v/1.0.0",
+    "url": "https://www.npmjs.com/package/@neo-ui-kit/react/v/1.0.1",
     "owner": "pro100dimka",
     "scope": "neo-ui-kit",
-    "latest": "1.0.0",
+    "publisher": "GitHub Actions through npm OIDC",
+    "latest": "1.0.1",
     "artifact": {
-      "path": "D:\\Git\\adui\\release\\neo-ui-kit-react-1.0.0.tgz",
-      "sha256": "907f70b1e9160ee48ada9b0ee43e737b297ef8581a7297ab593e8e809d0b7cc9",
-      "integrity": "sha512-IjzcP89VEugiV4O+NBSS9+twQKuu8D/GwAEKJg/an6HUA2Vlg+0zmQ46s2q56fiVPLoChfgqK4Wd3hR29pR1YA==",
-      "size": 1667492,
-      "files": 270
+      "path": "release/ci/neo-ui-kit-react-1.0.1.tgz",
+      "name": "@neo-ui-kit/react",
+      "version": "1.0.1",
+      "format": "ESM",
+      "sizeBytes": 1665955,
+      "unpackedBytes": 2834024,
+      "files": 270,
+      "sha256": "39a1a8307214b69314260649e2ee8bfd9033fe4d4292b102060cf306440a1f4c",
+      "sha1": "b3d36f8d7f917d1a0c5708c6de3b161c1140df50",
+      "integrity": "sha512-YsocW3Vn/PHyjnIAzERjBdiQH+FClotum0C0z97OhzbjfzZQNkfhu80iB+1GlBAaPJjQJ4fNgZUbhuAqaJZbOQ==",
+      "registryTarball": "https://registry.npmjs.org/@neo-ui-kit/react/-/react-1.0.1.tgz",
+      "githubDownload": "https://github.com/Pro100Dimka/adui/releases/download/v1.0.1/neo-ui-kit-react-1.0.1.tgz",
+      "metadata": "evidence/npm-1.0.1-published-registry.json",
+      "registryIntegrityMatches": true,
+      "installedConsumerIntegrityMatches": true
     },
     "registryIntegrityMatches": true,
     "fullCheck": {
-      "tests": 568,
+      "command": "npm run check",
+      "tests": 580,
       "files": 38,
       "result": "passed",
-      "log": "evidence/npm-publish-full-check.log"
+      "types": "UI and playground passed",
+      "build": "UI and playground passed",
+      "environment": "GitHub-hosted ubuntu-latest, Node 24.21.0, npm 11.15.0",
+      "vitestDurationSeconds": 13.83,
+      "log": "evidence/npm-trusted-completed-job-114826272457.log",
+      "localLog": "evidence/npm-publish-path-full-check.log"
     },
     "registryConsumer": {
-      "directory": "release/consumer-npm",
-      "dependency": "1.0.0",
-      "resolved": "https://registry.npmjs.org/@neo-ui-kit/react/-/react-1.0.0.tgz",
-      "types": "strict; no skipLibCheck; passed",
+      "directory": "release/consumer-npm-1.0.1",
+      "installedFrom": "public npm registry, exact version 1.0.1, independent node_modules",
+      "react": "19.3.0",
+      "node": "v22.18.0",
+      "strictTypes": "passed, no skipLibCheck",
+      "typeLog": "evidence/npm-1.0.1-registry-consumer-types.log",
+      "publicEntries": "evidence/package-consumer-npm-1.0.1-22.json",
+      "publicEntriesResult": "passed",
+      "browser": "154.0.8037.98",
       "browserChecks": 22,
-      "result": "passed",
-      "evidence": "evidence/consumer-consumer-npm-npm-registry-chrome.json"
+      "browserResult": "passed",
+      "browserEvidence": "evidence/consumer-consumer-npm-1.0.1-registry-1.0.1-chrome.json",
+      "integrityEvidence": "evidence/npm-1.0.1-registry-consumer-integrity.json",
+      "matchesGitHubArtifact": true
+    },
+    "provenance": {
+      "result": "verified with npm audit signatures",
+      "predicateType": "https://slsa.dev/provenance/v1",
+      "gitCommit": "a3fa2c954622eb18a3ab1d50e436c43dceb1c01c",
+      "workflow": ".github/workflows/release.yml",
+      "ref": "refs/tags/v1.0.1",
+      "run": "https://github.com/Pro100Dimka/adui/actions/runs/38253722738",
+      "transparencyLog": "https://search.sigstore.dev/?logIndex=3228429516",
+      "attestations": "evidence/npm-1.0.1-registry-attestations.json",
+      "decodedStatements": "evidence/npm-1.0.1-registry-provenance-statements.json",
+      "verificationLog": "evidence/npm-1.0.1-registry-signatures.log",
+      "registrySignaturesVerified": 7,
+      "attestationsVerified": 4,
+      "countScope": "Fresh consumer dependency graph; counts include React and related installed packages."
+    },
+    "githubRelease": {
+      "url": "https://github.com/Pro100Dimka/adui/releases/tag/v1.0.1",
+      "tag": "v1.0.1",
+      "target": "main",
+      "publishedAt": "2026-10-12T13:11:44Z"
     },
     "docsBrowser": {
-      "checks": 15,
-      "result": "passed",
-      "evidence": "evidence/rename-browser-production.json"
-    },
-    "staticDocs": {
-      "path": "D:\\Git\\adui\\docs",
-      "files": 357,
-      "allFilesByteIdentical": true,
-      "backup": "D:/Git/adui-backups/npm-publication-20261012/docs-before-npm",
-      "published": false
-    },
-    "sourceFingerprint": {
-      "scope": "All files recursively under packages/ui/src; sorted absolute paths; SHA256 of JSON [relative path, file SHA256] pairs.",
-      "files": 457,
-      "sha256": "05653c468eca91c7ecf9e74135de4777ac13050fb8e0a9fc2f8ae3d751484ae4"
-    },
-    "notes": [
-      "The originally requested neo-ui scope was unavailable. User approved creating the free neo-ui-kit organization and publishing this replacement name.",
-      "MIT licensing for the full current component set was explicitly approved.",
-      "npm accepted the archive before 1.0.0 became publicly readable; it temporarily exposed its generated 0.0.0-stage placeholder. Verification waited for latest=1.0.0 and matching integrity. The service-generated placeholder remains in version history.",
-      "No source commit, branch push, GitHub release or public website deployment was performed in this publication step.",
-      "Earlier physical-device/browser and legal naming limitations remain in release-report.json."
-    ]
+      "red": "evidence/npm-trusted-publisher-docs-red.log",
+      "green": "evidence/npm-trusted-publisher-docs-suite.log",
+      "browserChecks": 15,
+      "browserResult": "passed",
+      "browserEvidence": "evidence/npm-1.0.1-public-docs.json",
+      "url": "https://pro100dimka.github.io/adui",
+      "completedAt": "2026-10-12T12:56:21.347Z",
+      "scope": "Public 1.0.1 site: registry install command, copied stylesheet import, uppercase brand, version, public entry points and interactive live editor."
+    }
   },
   "trustedPublishing": {
     "report": "evidence/npm-trusted-publisher-report.json",
     "version": "1.0.1",
-    "status": "prepared, not published; npm trust pending first OIDC publication",
-    "runtimeArtifactComparison": "evidence/npm-1.0.1-artifact-comparison.json"
-  }
+    "status": "published and verified; trusted publisher Valid",
+    "run": "https://github.com/Pro100Dimka/adui/actions/runs/38253722738",
+    "gitCommit": "a3fa2c954622eb18a3ab1d50e436c43dceb1c01c",
+    "validationEvidence": "evidence/npm-trusted-publisher-validated.jpg"
+  },
+  "publicationHistory": [
+    {
+      "version": "1.0.0",
+      "report": "evidence/npm-publication-report.json",
+      "record": {
+        "completedAt": "2026-10-12T12:36:48.712Z",
+        "status": "published and installed from the public npm registry",
+        "name": "@neo-ui-kit/react",
+        "version": "1.0.0",
+        "license": "MIT",
+        "url": "https://www.npmjs.com/package/@neo-ui-kit/react/v/1.0.0",
+        "owner": "pro100dimka",
+        "scope": "neo-ui-kit",
+        "latest": "1.0.0",
+        "artifact": {
+          "path": "D:\\Git\\adui\\release\\neo-ui-kit-react-1.0.0.tgz",
+          "sha256": "907f70b1e9160ee48ada9b0ee43e737b297ef8581a7297ab593e8e809d0b7cc9",
+          "integrity": "sha512-IjzcP89VEugiV4O+NBSS9+twQKuu8D/GwAEKJg/an6HUA2Vlg+0zmQ46s2q56fiVPLoChfgqK4Wd3hR29pR1YA==",
+          "size": 1667492,
+          "files": 270
+        },
+        "registryIntegrityMatches": true,
+        "fullCheck": {
+          "tests": 568,
+          "files": 38,
+          "result": "passed",
+          "log": "evidence/npm-publish-full-check.log"
+        },
+        "registryConsumer": {
+          "directory": "release/consumer-npm",
+          "dependency": "1.0.0",
+          "resolved": "https://registry.npmjs.org/@neo-ui-kit/react/-/react-1.0.0.tgz",
+          "types": "strict; no skipLibCheck; passed",
+          "browserChecks": 22,
+          "result": "passed",
+          "evidence": "evidence/consumer-consumer-npm-npm-registry-chrome.json"
+        },
+        "docsBrowser": {
+          "checks": 15,
+          "result": "passed",
+          "evidence": "evidence/rename-browser-production.json"
+        },
+        "staticDocs": {
+          "path": "D:\\Git\\adui\\docs",
+          "files": 357,
+          "allFilesByteIdentical": true,
+          "backup": "D:/Git/adui-backups/npm-publication-20261012/docs-before-npm",
+          "published": false
+        },
+        "sourceFingerprint": {
+          "scope": "All files recursively under packages/ui/src; sorted absolute paths; SHA256 of JSON [relative path, file SHA256] pairs.",
+          "files": 457,
+          "sha256": "05653c468eca91c7ecf9e74135de4777ac13050fb8e0a9fc2f8ae3d751484ae4"
+        },
+        "notes": [
+          "The originally requested neo-ui scope was unavailable. User approved creating the free neo-ui-kit organization and publishing this replacement name.",
+          "MIT licensing for the full current component set was explicitly approved.",
+          "npm accepted the archive before 1.0.0 became publicly readable; it temporarily exposed its generated 0.0.0-stage placeholder. Verification waited for latest=1.0.0 and matching integrity. The service-generated placeholder remains in version history.",
+          "No source commit, branch push, GitHub release or public website deployment was performed in this publication step.",
+          "Earlier physical-device/browser and legal naming limitations remain in release-report.json."
+        ]
+      }
+    }
+  ]
 }

@@ -1,0 +1,18 @@
+{
+  "source": "Original failed assertions retained from tool output; final proof log now contains the successful run.",
+  "failures": [
+    {
+      "assertion": "assert.match(full, /&lt;canvas/)",
+      "diagnosis": "Canvas is created by the embedded THREE.WebGLRenderer; no literal canvas tag exists in server markup.",
+      "correction": "Verify iframe srcDoc embeds new THREE.WebGLRenderer; no renderer changes."
+    },
+    {
+      "assertion": "assert(css.includes('.ad-quantum-field-experience'))",
+      "diagnostic": "AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value at verify-quantum.mjs:32:1",
+      "diagnosis": "The public stylesheet is an @import entry, not one concatenated stylesheet.",
+      "correction": "Follow styles.css -> components.css -> components/artwork/QuantumField/styles.css, and verify the shipped selector there."
+    }
+  ],
+  "finalResult": "passed",
+  "libraryChanges": false
+}

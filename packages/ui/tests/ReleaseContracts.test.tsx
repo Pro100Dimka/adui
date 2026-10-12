@@ -215,6 +215,15 @@ describe("shipped documentation", () => {
     expect(ts.getPreEmitDiagnostics(program).map((diagnostic) => ts.flattenDiagnosticMessageText(diagnostic.messageText, "\n"))).toEqual([]);
   });
 
+  it("ships the renamed QuantumBackground export and props with the compatible full-scene alias", async () => {
+    const ui = await import("../dist/index.js");
+    expect(ui).toHaveProperty("QuantumBackground", ui.QuantumFieldExperience);
+    expect(ui.QuantumField).not.toBe(ui.QuantumFieldExperience);
+    const declarations = readFileSync(new URL("../dist/components/artwork/QuantumField/QuantumFieldExperience.d.ts", import.meta.url), "utf8");
+    expect(declarations).toContain("export type QuantumBackgroundProps");
+    expect(declarations).toContain("QuantumFieldExperienceProps = QuantumBackgroundProps");
+  });
+
   it("gives every documented public component its own working page and example", () => {
     expect(catalog).toHaveLength(componentCount);
     for (const name of ["Tab", "TabPanel", "MenuItem", "Form", "Text", "DialogBody", "DialogActions"]) {

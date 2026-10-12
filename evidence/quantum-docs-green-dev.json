@@ -1,0 +1,141 @@
+{
+  "baseUrl": "http://127.0.0.1:5173",
+  "browser": "154.0.8037.98",
+  "checkedAt": "2026-10-12T13:27:15.088Z",
+  "checks": [
+    {
+      "name": "quantum-field: canonical heading",
+      "actual": "QuantumBackground",
+      "expected": "QuantumBackground",
+      "passed": true
+    },
+    {
+      "name": "quantum-field: full visualizer iframe",
+      "actual": 1,
+      "expected": 1,
+      "passed": true
+    },
+    {
+      "name": "quantum-field-experience: canonical heading",
+      "actual": "QuantumBackground",
+      "expected": "QuantumBackground",
+      "passed": true
+    },
+    {
+      "name": "quantum-field-experience: full visualizer iframe",
+      "actual": 1,
+      "expected": 1,
+      "passed": true
+    },
+    {
+      "name": "quantum-background: canonical heading",
+      "actual": "QuantumBackground",
+      "expected": "QuantumBackground",
+      "passed": true
+    },
+    {
+      "name": "quantum-background: full visualizer iframe",
+      "actual": 1,
+      "expected": 1,
+      "passed": true
+    },
+    {
+      "name": "WebGL canvas has real geometry",
+      "actual": true,
+      "expected": true,
+      "passed": true
+    },
+    {
+      "name": "visualizer changes over twelve animation frames",
+      "actual": true,
+      "expected": true,
+      "passed": true
+    },
+    {
+      "name": "field control displays the selected mode",
+      "actual": "Photon (EM)",
+      "expected": "Photon (EM)",
+      "passed": true
+    },
+    {
+      "name": "selected mode reaches the full renderer",
+      "actual": true,
+      "expected": true,
+      "passed": true
+    },
+    {
+      "name": "mode transition renders new pixels",
+      "actual": true,
+      "expected": true,
+      "passed": true
+    },
+    {
+      "name": "375px: no page overflow",
+      "actual": true,
+      "expected": true,
+      "passed": true
+    },
+    {
+      "name": "375px: visualizer fits its container",
+      "actual": true,
+      "expected": true,
+      "passed": true
+    },
+    {
+      "name": "1440px: no page overflow",
+      "actual": true,
+      "expected": true,
+      "passed": true
+    },
+    {
+      "name": "1440px: visualizer fits its container",
+      "actual": true,
+      "expected": true,
+      "passed": true
+    },
+    {
+      "name": "copyable example uses the canonical public import",
+      "actual": true,
+      "expected": true,
+      "passed": true
+    },
+    {
+      "name": "copyable example renders the canonical component",
+      "actual": true,
+      "expected": true,
+      "passed": true
+    },
+    {
+      "name": "API dialog labels the canonical props",
+      "actual": 1,
+      "expected": 1,
+      "passed": true
+    },
+    {
+      "name": "API exposes full visualizer particle budget",
+      "actual": true,
+      "expected": true,
+      "passed": true
+    },
+    {
+      "name": "overview has one canonical background tile",
+      "actual": 1,
+      "expected": 1,
+      "passed": true
+    },
+    {
+      "name": "overview does not mount full visualizer iframes",
+      "actual": 0,
+      "expected": 0,
+      "passed": true
+    },
+    {
+      "name": "browser runtime errors",
+      "actual": [],
+      "expected": [],
+      "passed": true
+    }
+  ],
+  "errors": [],
+  "passed": 22
+}

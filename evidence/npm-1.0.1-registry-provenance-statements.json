@@ -1,0 +1,76 @@
+{
+  "decodedOnly": true,
+  "signatureVerification": "pending npm audit signatures after package installation",
+  "statements": [
+    {
+      "predicateType": "https://github.com/npm/attestation/tree/main/specs/publish/v0.1",
+      "statement": {
+        "_type": "https://in-toto.io/Statement/v0.1",
+        "subject": [
+          {
+            "name": "pkg:npm/%40neo-ui-kit/react@1.0.1",
+            "digest": {
+              "sha512": "62ca1c5b7567fcf1f28e7200cc446305d8901fe142968b6e9b40b4cfdece8736e37f36503647e1bbcd2207ed4694101a3c98d02787cd81951b86e02a68965b39"
+            }
+          }
+        ],
+        "predicateType": "https://github.com/npm/attestation/tree/main/specs/publish/v0.1",
+        "predicate": {
+          "name": "@neo-ui-kit/react",
+          "version": "1.0.1",
+          "registry": "https://registry.npmjs.org"
+        }
+      }
+    },
+    {
+      "predicateType": "https://slsa.dev/provenance/v1",
+      "statement": {
+        "_type": "https://in-toto.io/Statement/v1",
+        "subject": [
+          {
+            "name": "pkg:npm/%40neo-ui-kit/react@1.0.1",
+            "digest": {
+              "sha512": "62ca1c5b7567fcf1f28e7200cc446305d8901fe142968b6e9b40b4cfdece8736e37f36503647e1bbcd2207ed4694101a3c98d02787cd81951b86e02a68965b39"
+            }
+          }
+        ],
+        "predicateType": "https://slsa.dev/provenance/v1",
+        "predicate": {
+          "buildDefinition": {
+            "buildType": "https://slsa-framework.github.io/github-actions-buildtypes/workflow/v1",
+            "externalParameters": {
+              "workflow": {
+                "ref": "refs/tags/v1.0.1",
+                "repository": "https://github.com/Pro100Dimka/adui",
+                "path": ".github/workflows/release.yml"
+              }
+            },
+            "internalParameters": {
+              "github": {
+                "event_name": "push",
+                "repository_id": "1400215908",
+                "repository_owner_id": "91731413"
+              }
+            },
+            "resolvedDependencies": [
+              {
+                "uri": "git+https://github.com/Pro100Dimka/adui@refs/tags/v1.0.1",
+                "digest": {
+                  "gitCommit": "a3fa2c954622eb18a3ab1d50e436c43dceb1c01c"
+                }
+              }
+            ]
+          },
+          "runDetails": {
+            "builder": {
+              "id": "https://github.com/actions/runner/github-hosted"
+            },
+            "metadata": {
+              "invocationId": "https://github.com/Pro100Dimka/adui/actions/runs/38253722738/attempts/1"
+            }
+          }
+        }
+      }
+    }
+  ]
+}

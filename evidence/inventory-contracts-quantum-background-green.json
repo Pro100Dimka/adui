@@ -1,0 +1,48 @@
+{
+  "passed": 7,
+  "failed": 0,
+  "results": [
+    {
+      "name": "Icon exact purpose",
+      "actual": "Иконка; surface=\"tile\" добавляет контейнер вместо отдельного IconTile.",
+      "expected": "Иконка; surface=\"tile\" добавляет контейнер вместо отдельного IconTile.",
+      "passed": true
+    },
+    {
+      "name": "QuantumBackground exact purpose",
+      "actual": "Полный аудиовизуализатор Quantum Fields (MIT) в изолированном iframe; интерактивная сцена с управлением звуком и режимами.",
+      "expected": "Полный аудиовизуализатор Quantum Fields (MIT) в изолированном iframe; интерактивная сцена с управлением звуком и режимами.",
+      "passed": true
+    },
+    {
+      "name": "QuantumFieldExperience exact purpose",
+      "actual": "Полный аудиовизуализатор Quantum Fields (MIT) в изолированном iframe; интерактивная сцена с управлением звуком и режимами.",
+      "expected": "Полный аудиовизуализатор Quantum Fields (MIT) в изолированном iframe; интерактивная сцена с управлением звуком и режимами.",
+      "passed": true
+    },
+    {
+      "name": "QuantumFieldExperience compatibility alias",
+      "actual": "QuantumBackground",
+      "expected": "QuantumBackground",
+      "passed": true
+    },
+    {
+      "name": "QuantumField remains a distinct native component",
+      "actual": "packages/ui/src/components/artwork/QuantumField/QuantumField.tsx",
+      "expected": "packages/ui/src/components/artwork/QuantumField/QuantumField.tsx",
+      "passed": true
+    },
+    {
+      "name": "public component count",
+      "actual": 101,
+      "expected": 101,
+      "passed": true
+    },
+    {
+      "name": "non-component runtime export count",
+      "actual": 69,
+      "expected": 69,
+      "passed": true
+    }
+  ]
+}

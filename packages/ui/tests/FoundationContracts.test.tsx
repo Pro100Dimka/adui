@@ -192,7 +192,7 @@ describe("public component documentation", () => {
   });
   it.each([
     ["boolean-control", "BooleanControl", "src/components/controls/shared.tsx"],
-    ["quantum-field-experience", "QuantumFieldExperience", "src/components/artwork/QuantumField/QuantumFieldExperience.tsx"],
+    ["quantum-background", "QuantumBackground", "src/components/artwork/QuantumField/QuantumFieldExperience.tsx"],
     ["locale-provider", "LocaleProvider", "src/core/i18n.tsx"],
     ["svg-asset", "SvgAsset", "src/core/artwork.tsx"],
   ])("provides %s with a page, executable example and its own public API", (slug, name, path) => {
@@ -226,10 +226,16 @@ describe("public component documentation", () => {
     expect(html).toContain('aria-label="Second signal"');
   });
 
-  it("demonstrates QuantumField itself on its own component page", () => {
+  it.each(["quantum-field", "quantum-field-experience"])("keeps the old %s link pointing to the renamed full scene", (slug) => {
+    expect(getCatalogItemBySlug(slug)).toBe(getCatalogItemBySlug("quantum-background"));
+    expect(getCatalogItemBySlug(slug)?.name).toBe("QuantumBackground");
+  });
+
+  it("restores the full scene on the original example instead of substituting the reduced field", () => {
     const html = renderToStaticMarkup(<QuantumFieldExample />);
-    expect(html).toContain('data-ad-component="QuantumField"');
-    expect(html).not.toContain('data-ad-component="QuantumFieldExperience"');
-    expect(html).not.toContain("<iframe");
+    expect(html).not.toContain('data-ad-component="QuantumField"');
+    expect(html).toContain("<iframe");
+    expect(html).toContain("ad-qf-controls");
+    expect(html).toContain("Quantum Background visualizer");
   });
 });

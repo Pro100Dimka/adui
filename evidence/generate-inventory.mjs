@@ -25,6 +25,7 @@ function descriptions(file) {
   return result;
 }
 const additionalDescriptions = descriptions(resolve(root, "apps/playground/src/catalog/componentRegistry.ts"));
+const componentAliases = { QuantumFieldExperience: "QuantumBackground" };
 const testFiles = readdirSync(resolve(root, "packages/ui/tests")).filter((file) => /\.test\./.test(file));
 const tests = testFiles.map((file) => ({ file: `packages/ui/tests/${file}`, text: readFileSync(resolve(root, "packages/ui/tests", file), "utf8") }));
 const audits = ["controls-audit", "layers-audit", "foundation-artwork-audit", "effects-media-audit", "feedback-root-review"]
@@ -56,8 +57,8 @@ for (const entry of entries) {
       const reviews = audits.filter((audit) => new RegExp(`\\b${alias.name}\\b`).test(audit.label));
       const browser = browserCases.filter((entry) => entry.name === alias.name);
       components.set(alias.name, {
-        name: alias.name, source: path(file),
-        purpose: additionalDescriptions.get(alias.name) ?? (existsSync(meta) ? descriptions(meta).get(alias.name) : null) ?? reviews[0]?.entry.contract ?? reviews[0]?.entry.purpose,
+        name: alias.name, source: path(file), aliasOf: componentAliases[alias.name],
+        purpose: additionalDescriptions.get(componentAliases[alias.name] ?? alias.name) ?? (existsSync(meta) ? descriptions(meta).get(alias.name) : null) ?? reviews[0]?.entry.contract ?? reviews[0]?.entry.purpose,
         entryPoints: [...(components.get(alias.name)?.entryPoints ?? []), entry],
         props: props ? checker.getPropertiesOfType(props).map((prop) => ({ name: prop.name, optional: !!(prop.flags & ts.SymbolFlags.Optional), type: checker.typeToString(checker.getTypeOfSymbolAtLocation(prop, declaration)), description: ts.displayPartsToString(prop.getDocumentationComment(checker)) })) : [],
         dependencies: [...readFileSync(file, "utf8").matchAll(/from\s+["']([^"']+)["']/g)].map((match) => match[1]),

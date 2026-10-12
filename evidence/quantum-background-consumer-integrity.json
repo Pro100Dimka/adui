@@ -1,0 +1,71 @@
+{
+  "package": "@neo-ui-kit/react@1.0.2",
+  "checkedAt": "2026-10-12T13:30:16.803Z",
+  "node": "v22.18.0",
+  "react": "19.3.0",
+  "archive": {
+    "path": "D:\\Git\\adui\\release\\neo-ui-kit-react-1.0.2.tgz",
+    "bytes": 1668340,
+    "sha256": "93f2d6c19b0ded1d48fa8b62e656281b0b52f052fd602680e19c00e8f75290a7",
+    "sha1": "d33ff0ae57ff58c6421cc980cf13c40e2e1cfff4",
+    "integrity": "sha512-TaGTiP9NKgkfV/btdeDkxkW4TYBfft4jRbSvZM8dJjJqzLx6hZz5qPIBcJn9W7ftQRoY5xttJ1urjb07ZKZlKA==",
+    "files": 270,
+    "unpackedBytes": 2844519
+  },
+  "install": {
+    "packagePath": "D:\\Git\\adui\\release\\consumer-quantum-background\\node_modules\\@neo-ui-kit\\react\\package.json",
+    "resolved": "file:../neo-ui-kit-react-1.0.2.tgz",
+    "version": "1.0.2",
+    "integrity": "sha512-TaGTiP9NKgkfV/btdeDkxkW4TYBfft4jRbSvZM8dJjJqzLx6hZz5qPIBcJn9W7ftQRoY5xttJ1urjb07ZKZlKA==",
+    "exactArchiveMatch": true,
+    "workspaceLink": false
+  },
+  "publicAPI": {
+    "quantumBackgroundExport": true,
+    "legacyAliasIdentical": true,
+    "nativeDistinct": true
+  },
+  "ssr": {
+    "fullIframe": true,
+    "embeddedWebGLRendererSource": true,
+    "particleBudget": 3000,
+    "fullControlTabs": 7,
+    "audioAndActions": true,
+    "nativeHasNoIframe": true,
+    "stylesheetPresent": true,
+    "limitation": "Server markup and exports verified; hydration and renderer motion are covered by separate browser evidence."
+  },
+  "result": "passed",
+  "types": {
+    "result": "passed",
+    "strict": true,
+    "skipLibCheck": false,
+    "includes": [
+      "main.tsx",
+      "quantum-types.tsx"
+    ],
+    "coverage": [
+      "QuantumBackgroundProps",
+      "QuantumFieldExperienceProps compatibility",
+      "valid public JSX",
+      "invalid particleBudget rejected",
+      "unsupported children rejected"
+    ],
+    "evidence": "evidence/quantum-background-consumer-types.log"
+  },
+  "browser": {
+    "result": "passed",
+    "checks": 22,
+    "channel": "chrome",
+    "version": "154.0.8037.98",
+    "evidence": "evidence/consumer-consumer-quantum-background-quantum-background-chrome.json"
+  },
+  "packageChecks": {
+    "result": "passed",
+    "evidence": "evidence/package-consumer-quantum-background-22.json"
+  },
+  "harnessCorrections": {
+    "evidence": "evidence/quantum-background-consumer-harness-diagnosis.json",
+    "libraryChangesNeeded": false
+  }
+}

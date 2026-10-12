@@ -129,13 +129,13 @@ const TransportControls = /* @__PURE__ */ memo(function TransportControls({ send
     </div>
   </>;
 });
-export type QuantumFieldExperienceProps = Omit<HTMLAttributes<HTMLDivElement>, "children"> & {
+export type QuantumBackgroundProps = Omit<HTMLAttributes<HTMLDivElement>, "children"> & {
   /** Maximum number of visible particles across both field layers. Adaptive quality may draw fewer. */
   particleBudget?: number;
 };
 
 /** Full MIT-licensed renderer; the host kit owns the controls and theme. */
-export function QuantumFieldExperience({ className = "", particleBudget, ...props }: QuantumFieldExperienceProps) {
+export function QuantumBackground({ className = "", particleBudget, ...props }: QuantumBackgroundProps) {
   const frame = useRef<HTMLIFrameElement>(null);
   const viewport = useRef<HTMLDivElement>(null);
   const theme = useThemePalette();
@@ -201,7 +201,7 @@ export function QuantumFieldExperience({ className = "", particleBudget, ...prop
 
   return <div data-ad-component="QuantumFieldExperience" className={`ad-quantum-field-experience ${className}`.trim()} {...props}>
     <div className="ad-qf-viewport" ref={viewport}>
-      {mounted && <iframe ref={frame} title="Quantum Field visualizer" srcDoc={reference} allow="microphone" data-particle-budget={normalizedBudget} />}
+      {mounted && <iframe ref={frame} title="Quantum Background visualizer" srcDoc={reference} allow="microphone" data-particle-budget={normalizedBudget} />}
     </div>
     <div className="ad-qf-controls">
       <div className="ad-qf-toolbar">
@@ -209,7 +209,7 @@ export function QuantumFieldExperience({ className = "", particleBudget, ...prop
         <div className="ad-qf-setting-grid ad-qf-essentials">{essentialControls.map(renderControl)}</div>
       </div>
       <CollapsibleSection title="Тонкая настройка" description="Среда, камера, эффекты и реакция на звук" icon="settings" defaultOpen={false}>
-        <Tabs label="Тонкая настройка Quantum Field" items={detailedGroups.map(({ id, label }) => ({ value: id, label }))} value={tab} onValueChange={setTab} />
+        <Tabs label="Тонкая настройка Quantum Background" items={detailedGroups.map(({ id, label }) => ({ value: id, label }))} value={tab} onValueChange={setTab} />
         <div className="ad-qf-control-panel" role="tabpanel" aria-label={group.label}>
           <div className="ad-qf-setting-grid">{group.controls.filter(({ key }) => !enabledBy[key] || settings[enabledBy[key]] === true).map(renderControl)}</div>
         </div>
@@ -217,3 +217,8 @@ export function QuantumFieldExperience({ className = "", particleBudget, ...prop
     </div>
   </div>;
 }
+
+/** @deprecated Use QuantumBackground. The original import remains compatible. */
+export const QuantumFieldExperience = QuantumBackground;
+/** @deprecated Use QuantumBackgroundProps. */
+export type QuantumFieldExperienceProps = QuantumBackgroundProps;

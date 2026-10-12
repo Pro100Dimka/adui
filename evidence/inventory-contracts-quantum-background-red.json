@@ -1,0 +1,49 @@
+{
+  "passed": 4,
+  "failed": 3,
+  "results": [
+    {
+      "name": "Icon exact purpose",
+      "actual": "Иконка; surface=\"tile\" добавляет контейнер вместо отдельного IconTile.",
+      "expected": "Иконка; surface=\"tile\" добавляет контейнер вместо отдельного IconTile.",
+      "passed": true
+    },
+    {
+      "name": "QuantumBackground exact purpose",
+      "expected": "Полный аудиовизуализатор Quantum Fields (MIT) в изолированном iframe; интерактивная сцена с управлением звуком и режимами.",
+      "passed": false,
+      "error": "Expected values to be strictly deep-equal:\n+ actual - expected\n\n+ undefined\n- 'Полный аудиовизуализатор Quantum Fields (MIT) в изолированном iframe; интерактивная сцена с управлением звуком и режимами.'\n"
+    },
+    {
+      "name": "QuantumFieldExperience exact purpose",
+      "actual": "Полный аудиовизуализатор Quantum Fields (MIT) в изолированном iframe; интерактивная сцена с управлением звуком и режимами.",
+      "expected": "Полный аудиовизуализатор Quantum Fields (MIT) в изолированном iframe; интерактивная сцена с управлением звуком и режимами.",
+      "passed": true
+    },
+    {
+      "name": "QuantumFieldExperience compatibility alias",
+      "expected": "QuantumBackground",
+      "passed": false,
+      "error": "Expected values to be strictly deep-equal:\n+ actual - expected\n\n+ undefined\n- 'QuantumBackground'\n"
+    },
+    {
+      "name": "QuantumField remains a distinct native component",
+      "actual": "packages/ui/src/components/artwork/QuantumField/QuantumField.tsx",
+      "expected": "packages/ui/src/components/artwork/QuantumField/QuantumField.tsx",
+      "passed": true
+    },
+    {
+      "name": "public component count",
+      "actual": 100,
+      "expected": 101,
+      "passed": false,
+      "error": "Expected values to be strictly deep-equal:\n\n100 !== 101\n"
+    },
+    {
+      "name": "non-component runtime export count",
+      "actual": 69,
+      "expected": 69,
+      "passed": true
+    }
+  ]
+}

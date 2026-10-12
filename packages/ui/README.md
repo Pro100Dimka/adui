@@ -25,7 +25,7 @@ import "@neo-ui-kit/react/styles.css";
 To test repository changes before publishing, run `npm run package` from the repository root and install the resulting archive in a separate application:
 
 ```bash
-npm install /path/to/adui/release/neo-ui-kit-react-1.0.1.tgz
+npm install /path/to/adui/release/neo-ui-kit-react-1.0.2.tgz
 ```
 
 Maintainers publish new versions from `Pro100Dimka/adui` using the `release.yml` GitHub Actions workflow, a matching `v<version>` tag, and the `npm-publication` environment. npm trusts its OIDC identity; no `NPM_TOKEN` is required. The workflow checks the project and packed consumer before publishing the tested archive. Published `1.0.0` cannot be overwritten: code and README changes in npm require a new package version. See the [repository release instructions](https://github.com/Pro100Dimka/adui#npm-пакет).
@@ -182,6 +182,13 @@ import { ThemeProvider, useMotion } from "@neo-ui-kit/react/core";
 
 Canvas-rendered volume knob. Drag near the edge to rotate, drag from the center to move linearly, click the outer scale to jump. Wheel and arrow keys change the value, Shift gives a fine step, PageUp/PageDown change by 10, Home/End set 0/100, Escape cancels a drag, double-click resets. `onValueChange` fires while adjusting, `onValueCommit` after the gesture. `readOnly` turns it into a gauge.
 
+## 1.0.2 release notes
+
+- Restore the complete visualizer on the original documentation route and name it `QuantumBackground`.
+- Export `QuantumBackground` and `QuantumBackgroundProps`. `QuantumFieldExperience` remains a compatible alias of the same component; existing imports keep working.
+- Preserve the original renderer, particles, post-processing, audio controls and theme integration. The separate lightweight `QuantumField` primitive retains its existing API.
+- Both legacy documentation links, `quantum-field` and `quantum-field-experience`, open the `QuantumBackground` page.
+
 ## 1.0.1 release notes
 
 - Clarifies npm installation and documents GitHub Actions trusted publishing through OIDC.
@@ -209,6 +216,17 @@ Version 1.0.0 is the new NEO UI starting point. Rebuild the local archive after 
 
 Repository evidence, browser runners, before/after measurements and coverage limits are recorded in `evidence/`. Unit and renderer checks complement actual browser geometry and interaction checks; they do not certify untested physical devices or browser engines.
 
-## Quantum Field experience
+## QuantumBackground
 
-`QuantumFieldExperience` restores the full Quantum Fields visualizer inside an iframe. A compact, transparent field sits above the kit's `FilePicker`, externally controlled `AudioPlayer`, tooltip-labelled microphone/screenshot/fullscreen actions, field selector, and sensitivity control. The selected song name appears on the file button; playback and seeking use the visualizer's single audio source. Other controls live in a closed-by-default “Тонкая настройка” section below the field. It follows the nearest `ThemeProvider` palette. This experience includes MIT-licensed upstream code and CDN-loaded Three.js modules; the upstream notice is shipped as `UPSTREAM-LICENSE.txt`. It is not mounted in overview-card previews. For a smaller self-authored field without transport controls, use `QuantumField` directly.
+`QuantumBackground` is the complete Quantum Fields visualizer inside an iframe. A compact, transparent field sits above the kit's `FilePicker`, externally controlled `AudioPlayer`, tooltip-labelled microphone/screenshot/fullscreen actions, field selector, and sensitivity control. The selected song name appears on the file button; playback and seeking use the visualizer's single audio source. Other controls live in a closed-by-default “Тонкая настройка” section below the field. It follows the nearest `ThemeProvider` palette. This experience includes MIT-licensed upstream code and CDN-loaded Three.js modules; the upstream notice is shipped as `UPSTREAM-LICENSE.txt`. It is not mounted in overview-card previews.
+
+```tsx
+import { QuantumBackground, ThemeProvider } from "@neo-ui-kit/react";
+import "@neo-ui-kit/react/styles.css";
+
+<ThemeProvider theme="violet">
+  <QuantumBackground />
+</ThemeProvider>
+```
+
+`QuantumBackgroundProps` accepts div attributes and an optional `particleBudget` cap. Leave the cap unset for the original adaptive particle count. `QuantumFieldExperience` and `QuantumFieldExperienceProps` remain compatible aliases. The separate lightweight `QuantumField` primitive documented above keeps its original props and rendering; it is not an alias of the full background.

@@ -39,11 +39,11 @@ export const additionalDocumentation: Record<string, CatalogMeta & { source: str
     source: "/controls/shared.tsx", example: "/controls/Checkbox/booleanExample.tsx",
     load: () => import("../../../../packages/ui/src/components/controls/Checkbox/booleanExample"),
   },
-  QuantumFieldExperience: {
-    name: "QuantumFieldExperience", category: "motion", wide: true,
+  QuantumBackground: {
+    name: "QuantumBackground", category: "motion", wide: true,
     description: "Полный аудиовизуализатор Quantum Fields (MIT) в изолированном iframe; интерактивная сцена с управлением звуком и режимами.",
-    source: "/artwork/QuantumField/QuantumFieldExperience.tsx", example: "/artwork/QuantumField/experienceExample.tsx",
-    load: () => import("../../../../packages/ui/src/components/artwork/QuantumField/experienceExample"),
+    source: "/artwork/QuantumField/QuantumFieldExperience.tsx", example: "/artwork/QuantumField/example.tsx",
+    load: () => import("../../../../packages/ui/src/components/artwork/QuantumField/example"),
   },
 };
 const examples = byComponent(
@@ -61,7 +61,11 @@ const documentationParent: Record<string, string> = {
   DialogBody: "Dialog",
   DialogActions: "Dialog",
 };
-const allComponents = [...Object.values(metas), ...Object.values(additionalDocumentation)].sort((a, b) =>
+const legacyQuantumSlugs: Record<string, string> = {
+  "quantum-field": "quantum-background",
+  "quantum-field-experience": "quantum-background",
+};
+const allComponents = [...Object.values(metas).filter(item => item.name !== "QuantumField"), ...Object.values(additionalDocumentation)].sort((a, b) =>
   a.name.localeCompare(b.name),
 );
 export const componentCount = allComponents.length;
@@ -71,8 +75,7 @@ const componentSlug = (name: string) =>
 export const componentHref = (name: string) =>
   `#/components/${componentSlug(name)}`;
 export const getCatalogItemBySlug = (slug?: string) => {
-  const matched = allComponents.find((item) => componentSlug(item.name) === slug);
-  return matched;
+  return allComponents.find((item) => componentSlug(item.name) === (legacyQuantumSlugs[slug ?? ""] ?? slug));
 };
 export const getDocumentationParts = (name: string) =>
   allComponents.filter((item) => documentationParent[item.name] === name);

@@ -1,0 +1,17 @@
+{
+  "checkedAt": "2026-10-12T13:14:02.386Z",
+  "release": {
+    "url": "https://github.com/Pro100Dimka/adui/releases/tag/v1.0.1",
+    "tag": "v1.0.1",
+    "target": "main",
+    "publishedAt": "2026-10-12T13:11:44Z"
+  },
+  "artifact": {
+    "path": "release/ci/neo-ui-kit-react-1.0.1.tgz",
+    "url": "https://github.com/Pro100Dimka/adui/releases/download/v1.0.1/neo-ui-kit-react-1.0.1.tgz",
+    "bytes": 1665955,
+    "sha256": "39a1a8307214b69314260649e2ee8bfd9033fe4d4292b102060cf306440a1f4c",
+    "sha1": "b3d36f8d7f917d1a0c5708c6de3b161c1140df50",
+    "integrity": "sha512-YsocW3Vn/PHyjnIAzERjBdiQH+FClotum0C0z97OhzbjfzZQNkfhu80iB+1GlBAaPJjQJ4fNgZUbhuAqaJZbOQ=="
+  }
+}

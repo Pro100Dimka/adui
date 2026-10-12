@@ -1,0 +1,89 @@
+{
+  "preparedAt": "2026-10-12T13:27:06.811Z",
+  "baseline": "12387d42ad37d53ea1aa5f4db2c76b4d678aec43",
+  "version": "1.0.2",
+  "status": "User approved public 1.0.2 release and documentation deployment; local verification complete",
+  "cause": "Original docs example replaced full visualizer with distinct native primitive during previous hardening; renderer remained unchanged.",
+  "correction": "Full scene restored as QuantumBackground; legacy routes resolve to its page. Experience is a same-object compatibility alias; the distinct native QuantumField API remains unchanged.",
+  "renderer": [
+    {
+      "path": "packages/ui/src/components/artwork/QuantumField/reference.html",
+      "before": "1a7fecb9f1c03958272d9b94b40238450a87199d",
+      "after": "1a7fecb9f1c03958272d9b94b40238450a87199d",
+      "unchanged": true
+    },
+    {
+      "path": "packages/ui/src/components/artwork/QuantumField/renderer.ts",
+      "before": "3bc5bd9ace61a9e0e42e1fd42c845612eb3078d9",
+      "after": "3bc5bd9ace61a9e0e42e1fd42c845612eb3078d9",
+      "unchanged": true
+    },
+    {
+      "path": "packages/ui/src/components/artwork/QuantumField/styles.css",
+      "before": "371079b661b77dfa64d035fe97a8cf6325b36a93",
+      "after": "371079b661b77dfa64d035fe97a8cf6325b36a93",
+      "unchanged": true
+    },
+    {
+      "path": "packages/ui/src/components/artwork/QuantumField/QuantumField.tsx",
+      "before": "2191058d32f1f2fe070481e5582b6d9ad2c65e7a",
+      "after": "2191058d32f1f2fe070481e5582b6d9ad2c65e7a",
+      "unchanged": true
+    },
+    {
+      "path": "packages/ui/src/components/artwork/QuantumField/audio.ts",
+      "before": "fb45df5e3b4db04c1bc9d6bfdff35f150c75e07b",
+      "after": "fb45df5e3b4db04c1bc9d6bfdff35f150c75e07b",
+      "unchanged": true
+    },
+    {
+      "path": "packages/ui/src/components/artwork/QuantumField/UPSTREAM-LICENSE.txt",
+      "before": "4c404e2633f28104b1c2e5f933613cb3d90d8220",
+      "after": "4c404e2633f28104b1c2e5f933613cb3d90d8220",
+      "unchanged": true
+    }
+  ],
+  "tests": {
+    "red": "evidence/quantum-background-red.log",
+    "packedRed": "evidence/quantum-background-package-red.log",
+    "focusedGreen": "evidence/quantum-background-green.log",
+    "fullGreen": "evidence/quantum-background-full-check.log",
+    "fullPassed": 584,
+    "files": 38
+  },
+  "artifact": {
+    "path": "release/neo-ui-kit-react-1.0.2.tgz",
+    "sha256": "93f2d6c19b0ded1d48fa8b62e656281b0b52f052fd602680e19c00e8f75290a7"
+  },
+  "browser": {
+    "dev": "evidence/quantum-docs-green-dev.json",
+    "production": "evidence/quantum-docs-green-production.json",
+    "originalPublicRed": "evidence/quantum-docs-red-public.json",
+    "checksEach": 22,
+    "browser": "Chrome 154 on Windows, real WebGL and external Three.js modules",
+    "viewportWidths": [
+      375,
+      1440
+    ],
+    "screenshot": "evidence/quantum-background-restored.png"
+  },
+  "documentation": {
+    "source": "apps/playground/dist",
+    "prepared": "docs",
+    "filesHashVerified": 356,
+    "backup": "D:/Git/adui-backups/npm-publication-20261012/docs-before-quantum-background",
+    "publicDeployment": "Will deploy after 1.0.2 is available in npm"
+  },
+  "inventory": {
+    "components": 101,
+    "canonicalDocumentationPages": 99,
+    "explanation": "The distinct native QuantumField stays exported and documented in the README; QuantumFieldExperience is a compatibility alias on the canonical background page.",
+    "proof": "evidence/inventory-contracts-quantum-background-green.json"
+  },
+  "consumer": {
+    "integrity": "evidence/quantum-background-consumer-integrity.json",
+    "browser": "evidence/consumer-consumer-quantum-background-quantum-background-chrome.json",
+    "checks": 22,
+    "strictTypes": true
+  }
+}

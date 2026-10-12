@@ -7,6 +7,7 @@ import { transformSync } from "esbuild";
 import QuantumFieldExample from "../src/components/artwork/QuantumField/example";
 import QuantumFieldExperienceExample from "../src/components/artwork/QuantumField/experienceExample";
 import { ExamplePreviewContext } from "../src/dev/exampleHelpers";
+import * as UI from "../src/index";
 import { QuantumFieldExperience, quantumFieldExperienceControls } from "../src/components/artwork/QuantumField/QuantumFieldExperience";
 import { createQuantumFieldAudio } from "../src/components/artwork/QuantumField/audio";
 import { quantumFieldGeometry, quantumFieldFilaments, quantumFieldNetwork, quantumFieldZoom } from "../src/components/artwork/QuantumField/renderer";
@@ -26,6 +27,16 @@ import {
 } from "../src/components/artwork/QuantumField/QuantumField";
 
 const nodeMock = () => ({ getBoundingClientRect: () => ({}) });
+
+it("exports QuantumBackground as the full scene while keeping the previous imports compatible", () => {
+  expect(UI).toHaveProperty("QuantumBackground", QuantumFieldExperience);
+  expect(UI.QuantumField).toBe(QuantumField);
+  const Background = Reflect.get(UI, "QuantumBackground");
+  const html = renderToStaticMarkup(createElement(Background, { particleBudget: 1200 }));
+  expect(html).toContain('<iframe');
+  expect(html).toContain('data-particle-budget="1200"');
+  expect(html).toContain('title="Quantum Background visualizer"');
+});
 
 it("preserves the source visualizer's MIT notice when restoring it", () => {
   const license = readFileSync(new URL("../src/components/artwork/QuantumField/UPSTREAM-LICENSE.txt", import.meta.url), "utf8");

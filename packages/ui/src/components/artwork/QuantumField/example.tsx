@@ -1,11 +1,11 @@
 import { useContext } from "react";
 import { ExamplePreviewContext, Playground, U, jsx } from "../../../dev/exampleHelpers";
 
-export default function QuantumFieldExample() {
+export default function QuantumBackgroundExample() {
   const preview = useContext(ExamplePreviewContext);
   return (
-    <Playground knobs={{ mode: { options: U.quantumFieldModes, value: "orbit" }, paused: { value: false } }} code={(v) => jsx("QuantumField", { mode: v.mode, paused: v.paused })}>
-      {(v) => <U.QuantumField mode={v.mode} paused={preview || v.paused} quality={preview ? "low" : "auto"} />}
+    <Playground knobs={{}} code={() => jsx("QuantumBackground", {})}>
+      {() => preview ? <U.QuantumField paused quality="low" /> : <U.QuantumBackground />}
     </Playground>
   );
 }

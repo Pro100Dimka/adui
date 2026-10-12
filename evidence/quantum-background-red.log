@@ -1,0 +1,310 @@
+
+> @neo-ui-kit/react@1.0.1 test
+> vitest run --run tests/FoundationContracts.test.tsx tests/QuantumField.test.tsx
+
+
+ RUN  v3.2.7 D:/Git/adui/packages/ui
+
+stderr | tests/QuantumField.test.tsx > reveals detailed effect sliders only when their effect is enabled
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/QuantumField.test.tsx > routes the kit player and labelled icon actions to the iframe
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/QuantumField.test.tsx > updates playback without rerendering the field settings
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/QuantumField.test.tsx > updates and removes the particle cap without recreating the visualizer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/QuantumField.test.tsx > sends field and audio controls to the restored visualizer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/QuantumField.test.tsx > connects the canvas to the renderer and sizes it before the first visible frame
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/QuantumField.test.tsx > connects an explicitly supplied microphone stream and releases its audio graph
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/QuantumField.test.tsx > repaints when an ancestor changes CSS theme tokens without React rerender
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/QuantumField.test.tsx > does not paint an offscreen field until it enters the viewport
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/QuantumField.test.tsx > wires wheel zoom to the interactive component without scrolling the page
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+ ❯ tests/QuantumField.test.tsx (62 tests | 1 failed) 216ms
+   × exports QuantumBackground as the full scene while keeping the previous imports compatible 6ms
+     → expected { …(169), …(1) } to have property "QuantumBackground" with value [Function QuantumFieldExperience]
+   ✓ preserves the source visualizer's MIT notice when restoring it 1ms
+   ✓ requests the discrete GPU for the real-time QuantumField renderer 0ms
+   ✓ restores the licensed full visualizer instead of the reduced native scene 17ms
+   ✓ keeps the restored visualizer's full settings and song transport in the kit 1ms
+   ✓ shows playback and essential settings first, with detailed controls closed by default 7ms
+   ✓ reveals detailed effect sliders only when their effect is enabled 18ms
+   ✓ places a compact kit player and actions below a transparent, shorter field 9ms
+   ✓ keeps the iframe transparent without passing unsupported React DOM attributes 0ms
+   ✓ routes the kit player and labelled icon actions to the iframe 11ms
+   ✓ updates playback without rerendering the field settings 7ms
+   ✓ keeps seven field presets while sharing the responsive particle geometry 1ms
+   ✓ fits every field to the viewport aspect on resize 0ms
+   ✓ keeps every field type inside the same responsive rectangle 1ms
+   ✓ spreads network lines, crawlers, and trails across the rectangular field 0ms
+   ✓ responds to bass across the rectangle without pushing its centre empty 0ms
+   ✓ adds sparse theme-coloured glints and a field-wide depth wave without extra particle layers 0ms
+   ✓ starts the restored renderer with bounded resolution and adaptive quality 0ms
+   ✓ skips FFT while audio is paused and fades its response before resuming 2ms
+   ✓ keeps full-screen postprocessing within a pixel budget and recalculates after resize 1ms
+   ✓ scales the compositor and particles together on slower GPUs 1ms
+   ✓ allocates only the primary particle range reachable by the density control 0ms
+   ✓ suspends offscreen animation callbacks and caps visual frames at the requested FPS 0ms
+   ✓ does not build an invisible 3D lens flare or rewrite the hidden GUI every frame 1ms
+   ✓ does not download or construct the hidden legacy settings GUI 1ms
+   ✓ reduces connection search work when adaptive quality drops 1ms
+   ✓ rebuilds the connection network only for active audio or changed idle settings 1ms
+   ✓ keeps the idle connection network alive with a slow two-second refresh 0ms
+   ✓ caps both particle layers with the public budget while adaptive quality can lower it further 7ms
+   ✓ never raises the pixel ratio above the full-screen pixel cap on 8K screens 0ms
+   ✓ updates and removes the particle cap without recreating the visualizer 12ms
+   ✓ idles offscreen rendering and limits network rebuilds to 20 Hz 1ms
+   ✓ uses the preload margin only for mounting, not for keeping offscreen WebGL frames alive 0ms
+   ✓ does not keep a hidden GUI FPS listener running on every animation frame 0ms
+   ✓ skips full-screen effect passes when their intensity is zero 1ms
+   ✓ defers the expensive iframe startup until its example approaches the viewport 0ms
+   ✓ keeps the embedded visualizer script syntactically valid 60ms
+   ✓ keeps a detailed volumetric field without an embedded renderer 0ms
+   ✓ keeps the restored visualizer settings in kit controls 6ms
+   ✓ fills the transparent viewport with the native field 0ms
+   ✓ sends field and audio controls to the restored visualizer 12ms
+   ✓ renders immediately without an Enter gate and inherits the theme palette 1ms
+   ✓ offers distinct field geometries with a bounded adaptive render budget 0ms
+   ✓ derives seven stable audio bands from an analyser without allocations in the draw loop 0ms
+   ✓ connects the canvas to the renderer and sizes it before the first visible frame 3ms
+   ✓ connects an explicitly supplied microphone stream and releases its audio graph 2ms
+   ✓ does not force an opaque rectangle over a consumer's themed surface 0ms
+   ✓ shows the restored visualizer on its own documentation page 6ms
+   ✓ keeps the interactive controls out of overview previews 1ms
+   ✓ loads audio files without autoplay and releases media, URLs, and context 1ms
+   ✓ repaints when an ancestor changes CSS theme tokens without React rerender 2ms
+   ✓ does not paint an offscreen field until it enters the viewport 1ms
+   ✓ builds a volumetric 3D field instead of a flat point cloud 4ms
+   ✓ adds connected volumetric filaments for detail at microscopic zoom 1ms
+   ✓ rewires a bounded force network over time without rebuilding the full particle field 2ms
+   ✓ zooms smoothly with the wheel while respecting camera limits 0ms
+   ✓ links vertex and fragment lighting uniforms at matching precision 0ms
+   ✓ composites the particle core over light themes rather than washing it out additively 0ms
+   ✓ reserves soft halos for sparse highlights so the field stays sharply detailed 0ms
+   ✓ does not rotate the whole field on hover or as time passes 0ms
+   ✓ gives particles independent three-axis motion instead of rigidly spinning the field 0ms
+   ✓ wires wheel zoom to the interactive component without scrolling the page 1ms
+stderr | tests/FoundationContracts.test.tsx > documentation sizing controls > uses the four named size choices on Icon
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/FoundationContracts.test.tsx > documentation sizing controls > uses the four named size choices on Loader
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/FoundationContracts.test.tsx > documentation sizing controls > uses the four named size choices on SvgAsset
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/FoundationContracts.test.tsx > documentation sizing controls > uses a bounded NumberField for genuine numeric parameters while allowing an empty input draft
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/FoundationContracts.test.tsx > documentation sizing controls > keeps Loader generated code consistent with its selected size and built-in picture
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/FoundationContracts.test.tsx > documentation sizing controls > includes the selected numeric font weight in the MelodixText example code
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/FoundationContracts.test.tsx > keeps field constructor untouched until an explicit user action
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/FoundationContracts.test.tsx > keeps field toString untouched until an explicit user action
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/FoundationContracts.test.tsx > keeps field __proto__ untouched until an explicit user action
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/FoundationContracts.test.tsx > theme editing > keeps the most recently selected theme import when file reads resolve out of order
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/FoundationContracts.test.tsx > theme editing > reports unreadable imported files inside the editor
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/FoundationContracts.test.tsx > theme editing > opens a previously collapsed group when token search matches it
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+stderr | tests/FoundationContracts.test.tsx > public component documentation > demonstrates provider-local language changes and custom messages on the LocaleProvider page
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+
+ ❯ tests/FoundationContracts.test.tsx (44 tests | 4 failed) 507ms
+   ✓ preserves a caller's typography alignment when the align prop is omitted 6ms
+   ✓ documentation sizing controls > uses the four named size choices on Icon 10ms
+   ✓ documentation sizing controls > uses the four named size choices on Loader 2ms
+   ✓ documentation sizing controls > uses the four named size choices on SvgAsset 1ms
+   ✓ documentation sizing controls > resolves xs to valid Icon and Loader geometry 2ms
+   ✓ documentation sizing controls > resolves sm to valid Icon and Loader geometry 1ms
+   ✓ documentation sizing controls > resolves md to valid Icon and Loader geometry 0ms
+   ✓ documentation sizing controls > resolves lg to valid Icon and Loader geometry 1ms
+   ✓ documentation sizing controls > preserves explicit CSS and numeric sizing 1ms
+   ✓ documentation sizing controls > uses a bounded NumberField for genuine numeric parameters while allowing an empty input draft 6ms
+   ✓ documentation sizing controls > keeps Loader generated code consistent with its selected size and built-in picture 3ms
+   ✓ documentation sizing controls > includes the selected numeric font weight in the MelodixText example code 3ms
+   ✓ public translation utilities > treats unknown message toString as text instead of an inherited dictionary member 0ms
+   ✓ public translation utilities > treats unknown message constructor as text instead of an inherited dictionary member 0ms
+   ✓ public translation utilities > treats unknown message __proto__ as text instead of an inherited dictionary member 0ms
+   ✓ public translation utilities > treats unknown locale toString as a missing dictionary 0ms
+   ✓ public translation utilities > treats unknown locale constructor as a missing dictionary 0ms
+   ✓ public translation utilities > treats unknown locale __proto__ as a missing dictionary 0ms
+   ✓ public translation utilities > leaves missing inherited-looking placeholders intact and supports explicit own keys 0ms
+   ✓ public translation utilities > uses only own message keys and permits custom dictionaries named like prototype members 0ms
+   ✓ uses the unknown-icon fallback for the valid string name constructor 0ms
+   ✓ uses the unknown-icon fallback for the valid string name toString 0ms
+   ✓ uses the unknown-icon fallback for the valid string name __proto__ 0ms
+   ✓ keeps field constructor untouched until an explicit user action 1ms
+   ✓ keeps field toString untouched until an explicit user action 0ms
+   ✓ keeps field __proto__ untouched until an explicit user action 1ms
+   ✓ theme editing > rejects inherited property constructor as a theme name 0ms
+   ✓ theme editing > rejects inherited property toString as a theme name 0ms
+   ✓ theme editing > rejects inherited property __proto__ as a theme name 0ms
+   ✓ theme editing > keeps the most recently selected theme import when file reads resolve out of order 8ms
+   ✓ theme editing > reports unreadable imported files inside the editor 5ms
+   ✓ theme editing > opens a previously collapsed group when token search matches it 15ms
+   ✓ public component documentation > translates every catalog description in en 0ms
+   ✓ public component documentation > translates every catalog description in uk 0ms
+   ✓ public component documentation > keeps documentation examples and their playground helpers out of package declarations  417ms
+   ✓ public component documentation > provides boolean-control with a page, executable example and its own public API 1ms
+   × public component documentation > provides quantum-background with a page, executable example and its own public API 4ms
+     → expected undefined to be 'QuantumBackground' // Object.is equality
+   ✓ public component documentation > provides locale-provider with a page, executable example and its own public API 1ms
+   ✓ public component documentation > provides svg-asset with a page, executable example and its own public API 1ms
+   ✓ public component documentation > demonstrates provider-local language changes and custom messages on the LocaleProvider page 7ms
+   ✓ public component documentation > demonstrates two labelled SVG assets with independent gradient references 2ms
+   × public component documentation > keeps the old quantum-field link pointing to the renamed full scene 1ms
+     → expected { name: 'QuantumField', …(3) } to be undefined // Object.is equality
+   × public component documentation > keeps the old quantum-field-experience link pointing to the renamed full scene 0ms
+     → expected { Object (name, category, ...) } to be undefined // Object.is equality
+   × public component documentation > restores the full scene on the original example instead of substituting the reduced field 4ms
+     → expected '<div class="example-playground"><div …' not to contain 'data-ad-component="QuantumField"'
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 5 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/FoundationContracts.test.tsx > public component documentation > provides quantum-background with a page, executable example and its own public API
+AssertionError: expected undefined to be 'QuantumBackground' // Object.is equality
+
+- Expected: 
+"QuantumBackground"
+
++ Received: 
+undefined
+
+ ❯ tests/FoundationContracts.test.tsx:199:46
+    197|     ["svg-asset", "SvgAsset", "src/core/artwork.tsx"],
+    198|   ])("provides %s with a page, executable example and its own public A…
+    199|     expect(getCatalogItemBySlug(slug)?.name).toBe(name);
+       |                                              ^
+    200|     expect(getExample(name)).toBeDefined();
+    201|     expect(getComponentSourcePath(name)).toBe(path);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/5]⎯
+
+ FAIL  tests/FoundationContracts.test.tsx > public component documentation > keeps the old quantum-field link pointing to the renamed full scene
+AssertionError: expected { name: 'QuantumField', …(3) } to be undefined // Object.is equality
+
+- Expected: 
+undefined
+
++ Received: 
+{
+  "category": "motion",
+  "description": "Нативное аудиореактивное поле частиц с режимами, ограничением качества и поддержкой уменьшенного движения.",
+  "name": "QuantumField",
+  "wide": true,
+}
+
+ ❯ tests/FoundationContracts.test.tsx:230:40
+    228| 
+    229|   it.each(["quantum-field", "quantum-field-experience"])("keeps the ol…
+    230|     expect(getCatalogItemBySlug(slug)).toBe(getCatalogItemBySlug("quan…
+       |                                        ^
+    231|     expect(getCatalogItemBySlug(slug)?.name).toBe("QuantumBackground");
+    232|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/5]⎯
+
+ FAIL  tests/FoundationContracts.test.tsx > public component documentation > keeps the old quantum-field-experience link pointing to the renamed full scene
+AssertionError: expected { Object (name, category, ...) } to be undefined // Object.is equality
+
+- Expected: 
+undefined
+
++ Received: 
+{
+  "category": "motion",
+  "description": "Полный аудиовизуализатор Quantum Fields (MIT) в изолированном iframe; интерактивная сцена с управлением звуком и режимами.",
+  "example": "/artwork/QuantumField/experienceExample.tsx",
+  "load": [Function load],
+  "name": "QuantumFieldExperience",
+  "source": "/artwork/QuantumField/QuantumFieldExperience.tsx",
+  "wide": true,
+}
+
+ ❯ tests/FoundationContracts.test.tsx:230:40
+    228| 
+    229|   it.each(["quantum-field", "quantum-field-experience"])("keeps the ol…
+    230|     expect(getCatalogItemBySlug(slug)).toBe(getCatalogItemBySlug("quan…
+       |                                        ^
+    231|     expect(getCatalogItemBySlug(slug)?.name).toBe("QuantumBackground");
+    232|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/5]⎯
+
+ FAIL  tests/FoundationContracts.test.tsx > public component documentation > restores the full scene on the original example instead of substituting the reduced field
+AssertionError: expected '<div class="example-playground"><div …' not to contain 'data-ad-component="QuantumField"'
+
+Expected: "data-ad-component="QuantumField""
+Received: "<div class="example-playground"><div class="example-stage"><div class="ad ad-quantum-field" data-ad-component="QuantumField" data-mode="orbit"><canvas aria-hidden="true"></canvas></div></div><div class="example-knobs"><div class="example-knob"><span>mode</span><div class="ad ad-segmented-control" data-ad-component="SegmentedControl" data-ad-size="xs"><nav class="ad ad-tabs" data-ad-component="Tabs" data-ad-size="xs" role="tablist" aria-label="mode"><button class="ad ad-tab" data-ad-component="Tab" data-ad-size="xs" type="button" role="tab" aria-selected="true" tabindex="0"><span class="ad-tab-label">orbit</span></button><button class="ad ad-tab" data-ad-component="Tab" data-ad-size="xs" type="button" role="tab" aria-selected="false" tabindex="-1"><span class="ad-tab-label">vortex</span></button><button class="ad ad-tab" data-ad-component="Tab" data-ad-size="xs" type="button" role="tab" aria-selected="false" tabindex="-1"><span class="ad-tab-label">lattice</span></button><button class="ad ad-tab" data-ad-component="Tab" data-ad-size="xs" type="button" role="tab" aria-selected="false" tabindex="-1"><span class="ad-tab-label">wave</span></button><button class="ad ad-tab" data-ad-component="Tab" data-ad-size="xs" type="button" role="tab" aria-selected="false" tabindex="-1"><span class="ad-tab-label">bloom</span></button><button class="ad ad-tab" data-ad-component="Tab" data-ad-size="xs" type="button" role="tab" aria-selected="false" tabindex="-1"><span class="ad-tab-label">helix</span></button><button class="ad ad-tab" data-ad-component="Tab" data-ad-size="xs" type="button" role="tab" aria-selected="false" tabindex="-1"><span class="ad-tab-label">terrain</span></button></nav></div></div><label class="ad ad-switch" data-ad-component="Switch" data-ad-size="xs"><input type="checkbox" role="switch"/><span class="ad-toggle-track" aria-hidden="true"><i></i></span><span>paused</span></label></div></div>"
+
+ ❯ tests/FoundationContracts.test.tsx:236:22
+    234|   it("restores the full scene on the original example instead of subst…
+    235|     const html = renderToStaticMarkup(<QuantumFieldExample />);
+    236|     expect(html).not.toContain('data-ad-component="QuantumField"');
+       |                      ^
+    237|     expect(html).toContain("<iframe");
+    238|     expect(html).toContain("ad-qf-controls");
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/5]⎯
+
+ FAIL  tests/QuantumField.test.tsx > exports QuantumBackground as the full scene while keeping the previous imports compatible
+AssertionError: expected { …(169), …(1) } to have property "QuantumBackground" with value [Function QuantumFieldExperience]
+
+- Expected: 
+[Function QuantumFieldExperience]
+
++ Received: 
+undefined
+
+ ❯ tests/QuantumField.test.tsx:32:14
+     30| 
+     31| it("exports QuantumBackground as the full scene while keeping the prev…
+     32|   expect(UI).toHaveProperty("QuantumBackground", QuantumFieldExperienc…
+       |              ^
+     33|   expect(UI.QuantumField).toBe(QuantumField);
+     34|   const Background = Reflect.get(UI, "QuantumBackground");
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/5]⎯
+
+
+ Test Files  2 failed (2)
+      Tests  5 failed | 101 passed (106)
+   Start at  16:23:04
+   Duration  4.31s (transform 1.41s, setup 0ms, collect 4.97s, tests 723ms, environment 0ms, prepare 145ms)
+
+npm error Lifecycle script `test` failed with error:
+npm error code 1
+npm error path D:\Git\adui\packages\ui
+npm error workspace @neo-ui-kit/react@1.0.1
+npm error location D:\Git\adui\packages\ui
+npm error command failed
+npm error command C:\Windows\system32\cmd.exe /d /s /c vitest run --run tests/FoundationContracts.test.tsx tests/QuantumField.test.tsx

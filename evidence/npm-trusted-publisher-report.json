@@ -1,57 +1,97 @@
 {
   "preparedAt": "2026-10-12T12:52:03.977Z",
-  "status": "Trusted publisher saved; local 1.0.1 verified; first GitHub OIDC publication and website deployment pending approval.",
+  "status": "@neo-ui-kit/react@1.0.1 published through GitHub OIDC, publicly available as latest, installed and verified from npm; public documentation verified.",
   "package": "@neo-ui-kit/react",
   "version": "1.0.1",
-  "publishedVersion": "1.0.0",
+  "publishedVersion": "1.0.1",
   "trustedPublisher": {
     "provider": "GitHub Actions",
     "repository": "Pro100Dimka/adui",
     "workflow": "release.yml",
     "environment": "npm-publication",
     "configurationId": "8ce1a8ac-2a00-45f7-9b00-5baae071a697",
-    "status": "pending validation",
-    "activationDeadline": "2026-10-14T12:43:00Z",
+    "status": "Valid",
+    "activationDeadline": {
+      "originalDeadline": "2026-10-14T12:43:00Z",
+      "fulfilled": true,
+      "successfulPublishAt": "2026-10-12T13:11:40Z"
+    },
     "githubEnvironmentAllowedRefs": [
       {
         "type": "tag",
         "name": "v*"
       }
     ],
-    "longLivedTokenAdded": false
+    "longLivedTokenAdded": false,
+    "validationEvidence": "evidence/npm-trusted-publisher-validated.jpg"
   },
   "artifact": {
-    "path": "release/neo-ui-kit-react-1.0.1.tgz",
-    "size": 1667886,
+    "path": "release/ci/neo-ui-kit-react-1.0.1.tgz",
+    "name": "@neo-ui-kit/react",
+    "version": "1.0.1",
+    "format": "ESM",
+    "sizeBytes": 1665955,
+    "unpackedBytes": 2834024,
     "files": 270,
-    "integrity": "sha512-UAnhFNlTbV/o6r1nbNWYptM/y2ChTxZllnc7ElamX2MadeiLGygvhovsaTwbnXnXM0VR77PBD7KXjEvSvSlaBg==",
-    "sha256": "bb84a4d3c3ace526e183fe7469026b259634b76dd9c3f357110eab66a788249d",
-    "comparison": "evidence/npm-1.0.1-artifact-comparison.json",
-    "runtimeChanged": false
+    "sha256": "39a1a8307214b69314260649e2ee8bfd9033fe4d4292b102060cf306440a1f4c",
+    "sha1": "b3d36f8d7f917d1a0c5708c6de3b161c1140df50",
+    "integrity": "sha512-YsocW3Vn/PHyjnIAzERjBdiQH+FClotum0C0z97OhzbjfzZQNkfhu80iB+1GlBAaPJjQJ4fNgZUbhuAqaJZbOQ==",
+    "registryTarball": "https://registry.npmjs.org/@neo-ui-kit/react/-/react-1.0.1.tgz",
+    "githubDownload": "https://github.com/Pro100Dimka/adui/releases/download/v1.0.1/neo-ui-kit-react-1.0.1.tgz",
+    "metadata": "evidence/npm-1.0.1-published-registry.json",
+    "registryIntegrityMatches": true,
+    "installedConsumerIntegrityMatches": true
   },
   "verification": {
     "fullCheck": {
-      "tests": 575,
+      "command": "npm run check",
+      "tests": 580,
       "files": 38,
       "result": "passed",
-      "log": "evidence/npm-1.0.1-full-check.log"
+      "types": "UI and playground passed",
+      "build": "UI and playground passed",
+      "environment": "GitHub-hosted ubuntu-latest, Node 24.21.0, npm 11.15.0",
+      "vitestDurationSeconds": 13.83,
+      "log": "evidence/npm-trusted-completed-job-114826272457.log",
+      "localLog": "evidence/npm-publish-path-full-check.log"
     },
     "workflow": {
       "actionlint": "1.7.12",
-      "result": "passed",
+      "result": "actionlint and real GitHub run passed",
       "evidence": "evidence/npm-trusted-actionlint-tool.json",
       "log": "evidence/npm-trusted-actionlint.log",
       "regressions": [
         "evidence/npm-trusted-workflow-red.log",
-        "evidence/npm-trusted-workflow-green.log"
-      ]
+        "evidence/npm-trusted-workflow-green.log",
+        "evidence/npm-trusted-publish-path-red.log",
+        "evidence/npm-trusted-publish-path-green.log"
+      ],
+      "githubRun": {
+        "id": 38253722738,
+        "name": "Release",
+        "event": "push",
+        "path": ".github/workflows/release.yml",
+        "head_sha": "a3fa2c954622eb18a3ab1d50e436c43dceb1c01c",
+        "head_branch": "v1.0.1",
+        "status": "completed",
+        "conclusion": "success",
+        "html_url": "https://github.com/Pro100Dimka/adui/actions/runs/38253722738",
+        "created_at": "2026-10-12T13:09:30Z",
+        "updated_at": "2026-10-12T13:11:48Z"
+      },
+      "runEvidence": "evidence/npm-trusted-github-run.json",
+      "recoveryEvidence": "evidence/npm-ci-recovery-report.json",
+      "publishLog": "evidence/npm-trusted-completed-job-114826979438.log"
     },
     "documentation": {
       "red": "evidence/npm-trusted-publisher-docs-red.log",
       "green": "evidence/npm-trusted-publisher-docs-suite.log",
       "browserChecks": 15,
       "browserResult": "passed",
-      "browserEvidence": "evidence/rename-browser-production.json"
+      "browserEvidence": "evidence/npm-1.0.1-public-docs.json",
+      "url": "https://pro100dimka.github.io/adui",
+      "completedAt": "2026-10-12T12:56:21.347Z",
+      "scope": "Public 1.0.1 site: registry install command, copied stylesheet import, uppercase brand, version, public entry points and interactive live editor."
     },
     "version": {
       "red": [
@@ -65,6 +105,22 @@
       "source": "evidence/npm-1.0.1-version-after.json"
     },
     "consumer": {
+      "directory": "release/consumer-npm-1.0.1",
+      "installedFrom": "public npm registry, exact version 1.0.1, independent node_modules",
+      "react": "19.3.0",
+      "node": "v22.18.0",
+      "strictTypes": "passed, no skipLibCheck",
+      "typeLog": "evidence/npm-1.0.1-registry-consumer-types.log",
+      "publicEntries": "evidence/package-consumer-npm-1.0.1-22.json",
+      "publicEntriesResult": "passed",
+      "browser": "154.0.8037.98",
+      "browserChecks": 22,
+      "browserResult": "passed",
+      "browserEvidence": "evidence/consumer-consumer-npm-1.0.1-registry-1.0.1-chrome.json",
+      "integrityEvidence": "evidence/npm-1.0.1-registry-consumer-integrity.json",
+      "matchesGitHubArtifact": true
+    },
+    "preparationConsumer": {
       "directory": "release/consumer-oidc",
       "installedFrom": "local tarball, independent node_modules",
       "react": "19.3.0",
@@ -75,6 +131,28 @@
       "browserResult": "passed",
       "browserEvidence": "evidence/consumer-consumer-oidc-oidc-preparation-chrome.json",
       "publicEntries": "evidence/package-consumer-oidc-22.json"
+    },
+    "provenance": {
+      "result": "verified with npm audit signatures",
+      "predicateType": "https://slsa.dev/provenance/v1",
+      "gitCommit": "a3fa2c954622eb18a3ab1d50e436c43dceb1c01c",
+      "workflow": ".github/workflows/release.yml",
+      "ref": "refs/tags/v1.0.1",
+      "run": "https://github.com/Pro100Dimka/adui/actions/runs/38253722738",
+      "transparencyLog": "https://search.sigstore.dev/?logIndex=3228429516",
+      "attestations": "evidence/npm-1.0.1-registry-attestations.json",
+      "decodedStatements": "evidence/npm-1.0.1-registry-provenance-statements.json",
+      "verificationLog": "evidence/npm-1.0.1-registry-signatures.log",
+      "registrySignaturesVerified": 7,
+      "attestationsVerified": 4,
+      "countScope": "Fresh consumer dependency graph; counts include React and related installed packages."
+    },
+    "registry": {
+      "result": "passed",
+      "latest": "1.0.1",
+      "firstObservedAt": "2026-10-12T13:17:50.332Z",
+      "finalVerifiedAt": "2026-10-12T13:22:00.059Z",
+      "evidence": "evidence/npm-1.0.1-published-registry.json"
     }
   },
   "staticDocs": {
@@ -82,17 +160,39 @@
     "docsFiles": 358,
     "byteIdentical": true,
     "backup": "D:\\Git\\adui-backups\\npm-publication-20261012\\docs-before-oidc",
-    "published": false
+    "published": true,
+    "url": "https://pro100dimka.github.io/adui",
+    "publicEvidence": "evidence/npm-1.0.1-public-docs.json",
+    "scope": "Published 1.0.1 snapshot; build-file comparison records its preparation, not subsequent local work."
   },
-  "nextAction": "After approval, push the prepared source and documentation commit to main, push v1.0.1, then verify GitHub Actions, npm provenance and deployed Pages installation instructions.",
+  "nextAction": "No remaining publication work for 1.0.1; later QuantumBackground documentation changes are independent unreleased work.",
   "limitations": [
-    "The real GitHub-hosted Linux workflow and OIDC exchange have not run yet.",
-    "A local successful build does not confirm npm trusted publisher activation.",
-    "Previous browser, physical-device, accessibility, SSR and naming limitations remain in release-report.json."
+    "Historical browser, physical-device, accessibility, SSR and naming limitations remain in release-report.json.",
+    "Later QuantumBackground naming/routing edits are outside the published 1.0.1 snapshot and outside these verification results."
   ],
   "notes": [
-    "The first strict TypeScript invocation failed because PowerShell split the unquoted comma-separated --lib argument. Quoting the argument produced a successful strict check; no package or test change was needed.",
-    "Registry 1.0.0 and local 1.0.1 differ only in package.json and README.md; all remaining 268 shipped files match byte for byte.",
+    "The first two workflow attempts failed before npm accepted a package. Regressions cover runner-dependent motion fixtures, targeted type diagnostics and explicit local archive resolution; evidence/npm-ci-recovery-report.json records recovery.",
+    "The successful npm command returned a registry notice that processing could take several minutes. Completion was confirmed only after latest=1.0.1, registry tarball integrity and a fresh registry consumer passed.",
+    "Published bytes come from the GitHub-built archive release/ci/neo-ui-kit-react-1.0.1.tgz; the earlier locally prepared archive is retained separately and is not the published artifact.",
+    "The 1.0.0 publication record remains unchanged at evidence/npm-publication-report.json.",
     "Browser login, 2FA and npm settings screenshots remain local and are excluded from Git delivery."
-  ]
+  ],
+  "completedAt": "2026-10-12T13:22:00.059Z",
+  "updatedAt": "2026-10-12T13:25:17.516Z",
+  "preparationArtifact": {
+    "path": "release/neo-ui-kit-react-1.0.1.tgz",
+    "size": 1667886,
+    "files": 270,
+    "integrity": "sha512-UAnhFNlTbV/o6r1nbNWYptM/y2ChTxZllnc7ElamX2MadeiLGygvhovsaTwbnXnXM0VR77PBD7KXjEvSvSlaBg==",
+    "sha256": "bb84a4d3c3ace526e183fe7469026b259634b76dd9c3f357110eab66a788249d",
+    "comparison": "evidence/npm-1.0.1-artifact-comparison.json",
+    "runtimeChanged": false
+  },
+  "githubRelease": {
+    "url": "https://github.com/Pro100Dimka/adui/releases/tag/v1.0.1",
+    "tag": "v1.0.1",
+    "target": "main",
+    "publishedAt": "2026-10-12T13:11:44Z",
+    "evidence": "evidence/npm-1.0.1-github-release.json"
+  }
 }
