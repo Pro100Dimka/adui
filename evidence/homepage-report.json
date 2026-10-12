@@ -1,24 +1,102 @@
 {
-  "checkedAt": "2026-10-12T13:46:29.594Z",
-  "status": "Prepared and verified; public release approval pending",
+  "checkedAt": "2026-10-12T14:00:47.0955652Z",
+  "status": "Published and verified from npm; Homepage and public documentation verified in real browsers",
   "package": "@neo-ui-kit/react@1.0.3",
   "homepage": "https://pro100dimka.github.io/adui/#/components/overview",
-  "artifact": "release/neo-ui-kit-react-1.0.3.tgz",
-  "sha256": "8314650b21403794c7d6ee4e0194f29524d31067281c382f1ac1c6b2dd0b65cf",
-  "files": 270,
-  "unchangedFiles": 268,
-  "changedFiles": [
-    "README.md",
-    "package.json"
-  ],
-  "allRuntimeAssetsTypesLicensesByteIdentical": true,
-  "comparisonBase": "Local 1.0.2 artifact installed in release/consumer-quantum-background",
+  "approval": "User explicitly approved public release 1.0.3",
+  "sourceCommit": "bf958fbdc62ec3cd17030e244a2baf5b8e936913",
+  "artifact": {
+    "id": 633937680,
+    "name": "neo-ui-kit-react-1.0.3.tgz",
+    "size": 1666230,
+    "digest": "sha256:1508b9578a76a01800bd8d7ce4266361ea80d264a90bf391798e85488772f887",
+    "browser_download_url": "https://github.com/Pro100Dimka/adui/releases/download/v1.0.3/neo-ui-kit-react-1.0.3.tgz",
+    "path": "release/ci/neo-ui-kit-react-1.0.3.tgz",
+    "bytes": 1666230,
+    "sha256": "1508b9578a76a01800bd8d7ce4266361ea80d264a90bf391798e85488772f887",
+    "sha1": "756839e443ced04247bd75b71faa812a548729d9",
+    "integrity": "sha512-mAJkAZcGctEzqsYva2iCpRSi+wcXKdygVVa4BeUn75nVCojDrSaaVw3OajaYklaEnf2ZExAk1aiUfwrTGaEXjw=="
+  },
+  "archiveComparison": {
+    "baseline": "release/ci/neo-ui-kit-react-1.0.2.tgz",
+    "current": "release/ci/neo-ui-kit-react-1.0.3.tgz",
+    "files": 270,
+    "byteIdenticalFiles": 268,
+    "changed": [
+      {
+        "path": "package/package.json",
+        "beforeBytes": 2150,
+        "afterBytes": 2164
+      },
+      {
+        "path": "package/README.md",
+        "beforeBytes": 18425,
+        "afterBytes": 18581
+      }
+    ],
+    "distFiles": 267,
+    "allDistBytesUnchanged": true,
+    "scope": "Exact uncompressed file payloads, including JavaScript, CSS, declarations, fonts and licenses. Tar timestamps/order are excluded."
+  },
+  "preparationArtifact": {
+    "path": "release/neo-ui-kit-react-1.0.3.tgz",
+    "sha256": "8314650b21403794c7d6ee4e0194f29524d31067281c382f1ac1c6b2dd0b65cf",
+    "note": "Local Windows pre-release artifact; publication uses the independently verified GitHub CI artifact above"
+  },
   "checks": {
-    "typecheckAndBuild": "passed in evidence/homepage-full-check.log",
-    "red": "evidence/homepage-red.log",
-    "existingMetadataExpectation": "evidence/homepage-prior-metadata-expectation.log",
-    "tests": "evidence/homepage-tests-green.log",
-    "passed": 585,
-    "files": 38
-  }
+    "regression": {
+      "typecheckAndBuild": "passed in evidence/homepage-full-check.log",
+      "red": "evidence/homepage-red.log",
+      "existingMetadataExpectation": "evidence/homepage-prior-metadata-expectation.log",
+      "tests": "evidence/homepage-tests-green.log",
+      "passed": 585,
+      "files": 38
+    },
+    "githubCI": "evidence/homepage-ci.json",
+    "fullCheck": {
+      "tests": 585,
+      "testFiles": 38,
+      "testDurationSeconds": 12.96,
+      "fullCheck": "passed",
+      "packedConsumerSmoke": "passed",
+      "provenanceSigned": true,
+      "provenanceURL": "https://search.sigstore.dev/?logIndex=3229039660",
+      "npmCliConfirmed": true,
+      "githubArchiveDigestMatchesDownloadedBytes": true,
+      "homepage": "https://pro100dimka.github.io/adui/#/components/overview",
+      "registryConsumerVerification": "Handled independently by npm_docs; CLI success alone does not prove registry availability."
+    },
+    "registry": "evidence/homepage-published-registry.json",
+    "registryConsumer": {
+      "directory": "release/consumer-registry103",
+      "installedHomepage": "https://pro100dimka.github.io/adui/#/components/overview",
+      "strictTypes": "passed (main.tsx and canonical/legacy props, no skipLibCheck)",
+      "publicEntryChecks": "passed",
+      "browser": "154.0.8037.98",
+      "checks": 22,
+      "failed": 0,
+      "signatures": "7 registry signatures verified",
+      "attestations": "4 attestations verified",
+      "runtimeVisuals": "No new Quantum visual run: runtime is byte-identical to verified 1.0.2"
+    },
+    "publicDocumentation": {
+      "version": "1.0.3",
+      "passed": 15,
+      "errors": [],
+      "evidence": "evidence/homepage-public-docs.json",
+      "deployment": "evidence/homepage-pages.json",
+      "commit": "7422ce29feaff49b567ecf17691fb7b2e21b4c5d",
+      "screenshot": "evidence/homepage-overview-public.png"
+    },
+    "npmHomepage": {
+      "url": "https://www.npmjs.com/package/@neo-ui-kit/react",
+      "href": "https://pro100dimka.github.io/adui/#/components/overview",
+      "version": "1.0.3",
+      "verifiedAt": "2026-10-12T14:00:25.961Z",
+      "screenshot": "evidence/npm-homepage-1.0.3.png"
+    }
+  },
+  "limitations": [
+    "Runtime is byte-identical to 1.0.2; prior visual coverage remains historical and was not claimed as a fresh whole-library visual audit."
+  ]
 }

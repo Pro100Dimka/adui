@@ -1,0 +1,5 @@
+npm error code ETARGET
+npm error notarget No matching version found for @neo-ui-kit/react@1.0.3.
+npm error notarget In most cases you or one of your dependencies are requesting
+npm error notarget a package version that doesn't exist.
+npm error A complete log of this run can be found in: D:\Caches\npm\_logs\2026-10-12T13_58_13_548Z-debug-0.log
