@@ -1,0 +1,1 @@
+import{j as i,G as a,n as s,C as n,h as t}from"./index-9Gko-yA8.js";function e(){return i.jsx(a,{minChildWidth:"12rem",gap:3,children:["Комната","Очередь","Записи"].map(r=>i.jsx(s,{children:i.jsx(n,{title:r,icon:"music",children:i.jsx(t,{variant:"body-sm",tone:"muted",children:"Проведите курсором над карточкой."})})},r))})}export{e as default};

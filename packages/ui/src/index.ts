@@ -140,7 +140,7 @@ export { NeonWaves } from "./components/artwork/NeonWaves/NeonWaves";
 export type { NeonWavesProps } from "./components/artwork/NeonWaves/NeonWaves";
 export { QuantumField, quantumFieldModes, quantumFieldResolution, quantumFieldAudio } from "./components/artwork/QuantumField/QuantumField";
 export type { QuantumFieldProps, QuantumFieldMode, QuantumFieldQuality, QuantumAudioFrame } from "./components/artwork/QuantumField/QuantumField";
-export { QuantumBackground, QuantumFieldExperience, quantumBackgroundControls, quantumBackgroundDefaults, quantumBackgroundFields, quantumBackgroundFullscreenFieldSize, quantumBackgroundMaxParticles, quantumFieldExperienceControls } from "./components/artwork/QuantumField/QuantumFieldExperience";
+export { QuantumBackground, QuantumFieldExperience, quantumBackgroundControls, quantumBackgroundDefaults, quantumBackgroundFields, quantumBackgroundFullscreenFieldSize, quantumBackgroundMaxParticles, quantumBackgroundThreeUrl, quantumFieldExperienceControls } from "./components/artwork/QuantumField/QuantumFieldExperience";
 export type { QuantumBackgroundProps, QuantumBackgroundSettings, QuantumBackgroundSettingKey, QuantumBackgroundField, QuantumBackgroundControl, QuantumBackgroundHandle, QuantumBackgroundTransport, QuantumFieldExperienceProps } from "./components/artwork/QuantumField/QuantumFieldExperience";
 export { createQuantumFieldAudio } from "./components/artwork/QuantumField/audio";
 export { Spectrum } from "./components/artwork/Spectrum/Spectrum";

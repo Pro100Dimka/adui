@@ -2,6 +2,15 @@ import { forwardRef, useCallback, useEffect, useImperativeHandle, useLayoutEffec
 import { useThemePalette } from "../../foundation/ThemeProvider/ThemeProvider";
 import reference from "./reference.html?raw";
 
+/** Where the scene loads three.js from unless `threeUrl` says otherwise: the version it is built and tested with. */
+export const quantumBackgroundThreeUrl = "https://unpkg.com/three@0.182.0/";
+
+/** The scene document with its import map pointed at another copy of three.js. */
+const sceneDocument = (threeUrl: string): string => {
+  const base = threeUrl.endsWith("/") ? threeUrl : `${threeUrl}/`;
+  return base === quantumBackgroundThreeUrl ? reference : reference.replaceAll(quantumBackgroundThreeUrl, base);
+};
+
 export const quantumBackgroundFields = ["Photon (EM)", "Gluon (Strong)", "Higgs (Mass)", "Gravity", "Dark Energy", "Neutrino", "Waveform Terrain"] as const;
 export type QuantumBackgroundField = typeof quantumBackgroundFields[number];
 
@@ -168,6 +177,13 @@ export type QuantumBackgroundProps = Partial<QuantumBackgroundSettings> & Omit<H
   /** Maximum number of visible particles across both field layers. Adaptive quality may draw fewer. */
   particleBudget?: number;
   /**
+   * Base address of a three.js 0.182 copy — the folder holding `build/three.module.js` and
+   * `examples/jsm/` — so the scene works offline and without a third-party CDN. A relative address
+   * resolves against the page and keeps the scene's import map (and its CSP hash) the same wherever
+   * the app is installed. Default: `quantumBackgroundThreeUrl` (unpkg).
+   */
+  threeUrl?: string;
+  /**
    * Sound the scene cannot hear itself — a native audio engine, a WebRTC call, a server stream: band
    * levels 0–1 from low to high frequencies, log-spaced across `spectrumRange`. Any band count works;
    * pass a new array whenever the levels change (10–60 times a second). While set, it drives the field
@@ -192,7 +208,7 @@ export type QuantumBackgroundProps = Partial<QuantumBackgroundSettings> & Omit<H
 /** Full MIT-licensed audio-reactive scene. Every setting is a prop; audio actions are on the ref. */
 export const QuantumBackground = /* @__PURE__ */ forwardRef<QuantumBackgroundHandle, QuantumBackgroundProps>(function QuantumBackground(props, ref) {
   const {
-    className = "", particleCount, particleBudget, fullscreen = false, spectrum, spectrumRange, children,
+    className = "", particleCount, particleBudget, fullscreen = false, spectrum, spectrumRange, threeUrl, children,
     onTransportChange, onWaveformChange, onFullscreenChange, ...rest
   } = props;
   const settings = {} as Record<QuantumBackgroundSettingKey, unknown>;
@@ -297,7 +313,7 @@ export const QuantumBackground = /* @__PURE__ */ forwardRef<QuantumBackgroundHan
 
   return <div data-ad-component="QuantumBackground" ref={root} className={`ad-quantum-background ${className}`.trim()}
     data-fullscreen={fullscreen || undefined} popover={fullscreen ? "manual" : undefined} {...attributes}>
-    {mounted && <iframe ref={frame} title="Quantum Background visualizer" srcDoc={reference} allow="microphone"
+    {mounted && <iframe ref={frame} title="Quantum Background visualizer" srcDoc={sceneDocument(threeUrl ?? quantumBackgroundThreeUrl)} allow="microphone"
       data-particle-budget={normalizedBudget} data-particle-count={normalizedCount} />}
     {children != null && <div className="ad-qb-content">{children}</div>}
   </div>;

@@ -120,7 +120,7 @@ it("places a compact kit player and actions below a transparent, shorter field",
 it("keeps the iframe transparent without passing unsupported React DOM attributes", () => {
   const host = readFileSync(new URL("../src/components/artwork/QuantumField/QuantumFieldExperience.tsx", import.meta.url), "utf8");
   expect(host).not.toContain("allowTransparency");
-  expect(host).toContain("srcDoc={reference}");
+  expect(host).toContain("srcDoc={sceneDocument(threeUrl ?? quantumBackgroundThreeUrl)}");
 });
 
 it("routes the kit player and labelled icon actions to the iframe", () => {
@@ -1164,4 +1164,33 @@ it("lets the host feed a spectrum the scene cannot hear itself", () => {
   expect(bin(11000)).toBeGreaterThan(100);
   external.set(null);
   expect(external.fresh()).toBe(false);
+});
+
+it("loads three.js from the address the host gives, keeping the import map otherwise unchanged", () => {
+  const scene = (props: Record<string, unknown> = {}) => {
+    const html = renderToStaticMarkup(createElement(UI.QuantumBackground, props));
+    const attribute = html.match(/srcDoc="([^"]*)"/i)![1]!;
+    return attribute.replace(/&quot;/g, '"').replace(/&#x27;/g, "'").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&amp;/g, "&");
+  };
+  const importMap = (doc: string) => JSON.parse(doc.match(/<script type="importmap">([\s\S]*?)<\/script>/)![1]!).imports;
+  expect(UI.quantumBackgroundThreeUrl).toBe("https://unpkg.com/three@0.182.0/");
+  expect(importMap(scene())).toEqual({
+    three: "https://unpkg.com/three@0.182.0/build/three.module.js",
+    "three/addons/": "https://unpkg.com/three@0.182.0/examples/jsm/",
+  });
+  for (const threeUrl of ["./vendor/three/", "./vendor/three"])
+    expect(importMap(scene({ threeUrl }))).toEqual({
+      three: "./vendor/three/build/three.module.js",
+      "three/addons/": "./vendor/three/examples/jsm/",
+    });
+  // Only the import map moves: the scene script itself (and its CSP hash) stays the same.
+  const module = (doc: string) => doc.match(/<script type="module">([\s\S]*?)<\/script>/)![1];
+  expect(module(scene({ threeUrl: "./vendor/three/" }))).toBe(module(scene()));
+  expect(scene({ threeUrl: "./vendor/three/" })).not.toContain("unpkg.com");
+});
+
+it("makes no requests beyond three.js: no web fonts or other third-party resources", () => {
+  const source = readFileSync(new URL("../src/components/artwork/QuantumField/reference.html", import.meta.url), "utf8");
+  const remote = [...source.matchAll(/https?:\/\/[^\s'")]+/g)].map(([url]) => url).filter((url) => !url.startsWith("https://unpkg.com/three@0.182.0/"));
+  expect(remote).toEqual([]);
 });

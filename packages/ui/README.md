@@ -25,7 +25,7 @@ import "@neo-ui-kit/react/styles.css";
 To test repository changes before publishing, run `npm run package` from the repository root and install the resulting archive in a separate application:
 
 ```bash
-npm install /path/to/adui/release/neo-ui-kit-react-1.1.0.tgz
+npm install /path/to/adui/release/neo-ui-kit-react-1.2.0.tgz
 ```
 
 Maintainers publish new versions from `Pro100Dimka/adui` using the `release.yml` GitHub Actions workflow, a matching `v<version>` tag, and the `npm-publication` environment. npm trusts its OIDC identity; no `NPM_TOKEN` is required. The workflow checks the project and packed consumer before publishing the tested archive. Published `1.0.0` cannot be overwritten: code and README changes in npm require a new package version. See the [repository release instructions](https://github.com/Pro100Dimka/adui#npm-пакет).
@@ -182,6 +182,11 @@ import { ThemeProvider, useMotion } from "@neo-ui-kit/react/core";
 
 Canvas-rendered volume knob. Drag near the edge to rotate, drag from the center to move linearly, click the outer scale to jump. Wheel and arrow keys change the value, Shift gives a fine step, PageUp/PageDown change by 10, Home/End set 0/100, Escape cancels a drag, double-click resets. `onValueChange` fires while adjusting, `onValueCommit` after the gesture. `readOnly` turns it into a gauge.
 
+## 1.2.0 release notes
+
+- `QuantumBackground` takes `threeUrl`, the base address of a three.js 0.182 copy (the folder with `build/` and `examples/jsm/`), so the scene can work offline and without a third-party CDN. A relative address keeps the scene's import map — and its CSP hash — the same wherever the app runs. The default stays `quantumBackgroundThreeUrl` (unpkg).
+- The scene no longer loads web fonts from Google Fonts: it makes no requests beyond three.js.
+
 ## 1.1.0 release notes
 
 - **`QuantumBackground` is configured through props.** Every scene setting (`field`, `sensitivity`, `density`, `bloom`, …) is an optional prop with defaults in `quantumBackgroundDefaults`; `quantumBackgroundControls` describes them for building a settings panel. **The component no longer draws its own control panel** — build one next to it (the documentation page shows how) and drive audio through the ref (`QuantumBackgroundHandle`) with `onTransportChange` / `onWaveformChange`.
@@ -246,6 +251,8 @@ import "@neo-ui-kit/react/styles.css";
 ```
 
 Settings (`QuantumBackgroundSettings`): `field` (one of `quantumBackgroundFields`), `sensitivity`, `density`, `timeScale`, `paused`, `interactive`, nebula, connection, crawler, particle-trail, lens-flare, depth-of-field, camera-shake, bloom, trails, chromatic, anamorphic, god-ray, grain, vortex, pulse, bass-gate, onset, audio-camera, terrain-height and adaptive-quality values. Unset props use `quantumBackgroundDefaults`; only props that change are sent to the scene. `quantumBackgroundControls` lists each setting's group, label, range, step and the switch it depends on, for building your own settings panel next to the component. `particleCount` sets how many particles are drawn across both layers (0 to `quantumBackgroundMaxParticles`, 85 000); leave it unset to follow `density`. Adaptive quality may draw fewer, so turn `adaptiveQualityEnabled` off when the exact count matters. `particleBudget` is an upper cap on top of either. `fieldSize` is the share of the scene the field spans (0.78 by default, 1 reaches the edges). `fullscreen` makes the scene cover the whole viewport above the page, and the field then runs edge to edge (`quantumBackgroundFullscreenFieldSize`, 1.1) unless `fieldSize` is set (in the browser's top layer, so no ancestor's `overflow`, `transform` or `z-index` clips it, and the iframe keeps running); Escape calls `onFullscreenChange(false)`, so keep it controlled. `children` are laid over the scene, e.g. a close button while full screen. This differs from `ref.toggleFullscreen()`, which uses the browser's Fullscreen API and needs a click.
+
+`threeUrl` points the scene at your own copy of three.js 0.182 instead of unpkg (for example `threeUrl="./vendor/three/"` with `build/three.module.js` and `examples/jsm/` served there); with it the scene makes no network requests at all. Only the scene's import map changes, so a strict CSP pins the same script hashes everywhere.
 
 `spectrum` feeds sound the scene cannot hear itself — a native audio engine, a WebRTC call, a server stream: band levels 0–1 from low to high frequencies, log-spaced across `spectrumRange` (default `[40, 12000]` Hz), any band count. Pass a new array whenever the levels change (10–60 times a second); bands, beats, reaction lines and flashes follow it exactly as they follow a playing song. A file or microphone started from the ref takes over while it plays; `spectrum={undefined}` returns the scene to silence.
 

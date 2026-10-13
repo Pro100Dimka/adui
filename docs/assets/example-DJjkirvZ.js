@@ -1,0 +1,1 @@
+import{j as a,g as e,h as t}from"./index-9Gko-yA8.js";function r(){return a.jsx(e,{labelledBy:"tab-audio",children:a.jsx(t,{variant:"body-sm",tone:"muted",children:"Драйвер, задержка и мониторинг голоса."})})}export{r as default};
