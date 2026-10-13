@@ -1,0 +1,1 @@
+import{r as a,j as s,p as o,O as n}from"./index-DExny1b1.js";function l(){const[t,e]=a.useState(!1);return s.jsxs(s.Fragment,{children:[s.jsx(o,{icon:"save",onClick:()=>e(!0),children:"Сохранить"}),s.jsx(n,{floating:!0,open:t,message:"Настройки сохранены",onClose:()=>e(!1)})]})}export{l as default};

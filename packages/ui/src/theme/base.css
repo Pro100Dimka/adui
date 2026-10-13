@@ -1,4 +1,15 @@
 /* Truly global component plumbing. */
+/* Pointer-light position, rewritten on every pointer move. Not inherited, so a move restyles only
+   the surface that owns it instead of everything inside it (a dialog holds ~1,500 elements).
+   "*" keeps it unset until the pointer arrives, so each var() fallback still applies. */
+@property --ad-spot-x {
+  syntax: "*";
+  inherits: false;
+}
+@property --ad-spot-y {
+  syntax: "*";
+  inherits: false;
+}
 /* Shared component rules: dimensions belong to the layout, materials to tokens. */
 .ad,
 .ad *,

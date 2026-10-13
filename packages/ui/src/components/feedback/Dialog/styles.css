@@ -18,8 +18,8 @@ html:has(.ad-dialog[open]) {
   color: var(--ad-text);
 }
 /* Pointer light: a soft glow under the cursor, painted over the window's own surface. */
-.ad-dialog[data-ad-material] {
-  --ad-material-bg:
+.ad.ad-dialog[data-ad-material] {
+  background:
     radial-gradient(26rem circle at var(--ad-spot-x, -40rem) var(--ad-spot-y, -40rem), rgb(from var(--ad-primary) r g b / 0.11), transparent 60%),
     var(--ad-surface-dialog);
 }

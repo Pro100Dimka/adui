@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { Badge, Button, Grid, MessageBar, Stack, Typography } from "@neo-ui-kit/react";
 import { CopyButton } from "./CopyButton";
 import { CodeEditor } from "./CodeEditor";
+export { preloadCodeEditor } from "./CodeEditor";
 import { compile } from "./liveCode";
 import sandboxRuntimeUrl from "./sandboxRuntime.tsx?worker&url";
 const previewRuntimeUrl = import.meta.env.DEV ? "/sandbox-runtime.js" : sandboxRuntimeUrl;
@@ -23,9 +24,12 @@ const readDraft = (name: string) => {
 export function LiveEditor({
   name,
   original,
+  wide = false,
 }: {
   name: string;
   original: string;
+  /** Let the example take the whole preview width instead of shrinking to its content. */
+  wide?: boolean;
 }) {
   const tr = useTr();
   const locale = useLocale();
@@ -134,7 +138,7 @@ export function LiveEditor({
             className="docs-live-frame"
             title={`${name} preview`}
             sandbox="allow-scripts"
-            srcDoc={`<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>html,body{margin:0;min-height:100%;background:transparent}#root{min-height:100vh;display:grid;place-items:center}</style></head><body><div id="root"></div><script>addEventListener("error",function(e){parent.postMessage({kind:"ad-preview-error",message:e.message||"Не удалось загрузить предпросмотр."},"*")},true)<\/script><script src="${previewRuntimeUrl}"><\/script></body></html>`}
+            srcDoc={`<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>html,body{margin:0;min-height:100%;background:transparent}#root{min-height:100vh;display:grid;place-items:center${wide ? " stretch" : ""}}</style></head><body><div id="root"></div><script>addEventListener("error",function(e){parent.postMessage({kind:"ad-preview-error",message:e.message||"Не удалось загрузить предпросмотр."},"*")},true)<\/script><script src="${previewRuntimeUrl}"><\/script></body></html>`}
             onLoad={sendPreview}
           />
         )}

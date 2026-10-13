@@ -377,10 +377,14 @@
         };
         let particleBudget = Number(window.frameElement?.getAttribute('data-particle-budget') ?? Infinity);
         particleBudget = Number.isFinite(particleBudget) ? Math.max(0, Math.floor(particleBudget)) : Infinity;
+        // Requested number of particles across both layers; null follows the density setting.
+        let particleCount = window.frameElement?.getAttribute('data-particle-count');
+        particleCount = particleCount != null && Number.isFinite(Number(particleCount)) ? Math.max(0, Math.floor(Number(particleCount))) : null;
 
         const STATE = {
             field: 'Gluon (Strong)',
             density: CONFIG.initialDensity,
+            fieldSize: 0.78,
             sensitivity: 1.1,
             trails: 0.66144,
             bloom: 0.3,
@@ -435,6 +439,35 @@
         };
 
         // --- AUDIO SYSTEM ---
+        // Spectrum supplied by the host app (e.g. a native audio engine the iframe cannot hear):
+        // band levels 0..1, log-spaced from `low` to `high` Hz. It is turned into the same frequency
+        // array an analyser would give, so bands, beats, flux, onsets and the terrain all follow it.
+        const EXTERNAL = {
+            target: null, low: 40, high: 12000,
+            sampleRate: 48000, data: new Uint8Array(2048), smoothed: new Float32Array(2048), prev: new Float32Array(2048),
+            fresh() { return this.target !== null; },
+            set(bands, range) {
+                this.target = Array.isArray(bands) && bands.length ? bands.map((v) => Math.max(0, Math.min(1, Number(v) || 0))) : null;
+                if (Array.isArray(range) && range[0] > 0 && range[1] > range[0]) [this.low, this.high] = range;
+            },
+            // Host frames arrive at their own pace (often 20 Hz); easing toward them every rendered
+            // frame keeps the flux continuous, like an analyser's smoothing does.
+            fill() {
+                const bands = this.target, n = bands.length, len = this.data.length, nyquist = this.sampleRate / 2;
+                const span = Math.log(this.high / this.low);
+                for (let i = 0; i < len; i++) {
+                    const freq = Math.max(1, (i + 0.5) / len * nyquist);
+                    const pos = Math.log(freq / this.low) / span * (n - 1);
+                    let level;
+                    if (pos <= 0) level = bands[0];
+                    else if (pos >= n - 1) level = bands[n - 1] * Math.max(0, 1 - Math.log(freq / this.high) / Math.log(nyquist / this.high));
+                    else { const k = Math.floor(pos), t = pos - k; level = bands[k] * (1 - t) + bands[k + 1] * t; }
+                    this.smoothed[i] += (level - this.smoothed[i]) * 0.35;
+                    this.data[i] = Math.min(255, Math.round(this.smoothed[i] * 255));
+                }
+            }
+        };
+
         const AUDIO = {
             ctx: null, analyser: null, source: null, gainNode: null, data: null,
             audioBuffer: null, isPlaying: false, isPaused: false,
@@ -624,8 +657,9 @@
             },
 
             update() {
-                if (!this.active) return;
-                if (!this.isPlaying || !this.source) {
+                const own = this.active && this.isPlaying && this.source;
+                this.externalActive = !own && EXTERNAL.fresh();
+                if (!own && !this.externalActive) {
                     if (!this.idleCleared) {
                         for (const band in this.bands) this.bands[band] = this.gatedBands[band] = 0;
                         this.spectralCentroid = this.spectralFlux = 0;
@@ -637,8 +671,15 @@
                     return;
                 }
                 this.idleCleared = false;
-                this.analyser.getByteFrequencyData(this.data);
-                const len = this.data.length, nyquist = this.ctx.sampleRate / 2;
+                let data = this.data, prevSpectrum = this.prevSpectrum, nyquist;
+                if (this.externalActive) {
+                    EXTERNAL.fill();
+                    data = EXTERNAL.data; prevSpectrum = EXTERNAL.prev; nyquist = EXTERNAL.sampleRate / 2;
+                } else {
+                    this.analyser.getByteFrequencyData(this.data);
+                    nyquist = this.ctx.sampleRate / 2;
+                }
+                const len = data.length;
                 const getFreqIndex = (freq) => Math.round(freq / nyquist * len);
                 const ranges = { subBass: [50, 120], bass: [120, 200], lowMid: [200, 450], mid: [450, 2000], highMid: [2000, 3500], high: [3500, 12000], ultraHigh: [12000, 20000] };
                 let totalEnergy = 0, weightedFreqSum = 0;
@@ -646,7 +687,7 @@
                     const lowIdx = getFreqIndex(low), highIdx = getFreqIndex(high);
                     let sum = 0;
                     for (let i = lowIdx; i < highIdx && i < len; i++) {
-                        const v = this.data[i] / 255.0;
+                        const v = data[i] / 255.0;
                         sum += v; totalEnergy += v; weightedFreqSum += v * i;
                     }
                     const rawBand = sum / (highIdx - lowIdx);
@@ -656,9 +697,9 @@
                 this.spectralCentroid = totalEnergy > 0 ? weightedFreqSum / totalEnergy / len : 0;
                 let flux = 0;
                 for (let i = 0; i < len; i++) {
-                    const current = this.data[i] / 255.0, diff = current - this.prevSpectrum[i];
+                    const current = data[i] / 255.0, diff = current - prevSpectrum[i];
                     flux += diff > 0 ? diff * diff : 0;
-                    this.prevSpectrum[i] = current;
+                    prevSpectrum[i] = current;
                 }
                 this.spectralFlux = Math.sqrt(flux / len);
                 const currentEnergy = this.gatedBands.bass * 0.6 + this.gatedBands.subBass * 0.4;
@@ -690,7 +731,7 @@
                 for (let i = 0; i < waveformBins; i++) {
                     let sum = 0;
                     for (let j = 0; j < binSize; j++) {
-                        sum += this.data[i * binSize + j] / 255.0;
+                        sum += data[i * binSize + j] / 255.0;
                     }
                     const target = sum / binSize;
                     this.waveformSmoothed[i] += (target - this.waveformSmoothed[i]) * 0.3;
@@ -760,11 +801,13 @@
         });
 
         // Every field type shares one screen-fitted footprint; switching presets never reallocates particles.
+        // uFieldFill: share of the viewport the field spans; above 1.0 it runs past the edges.
         const shapeFunction = `
+uniform float uFieldFill;
 vec3 shapedPosition(vec3 seed) {
     vec2 plane = seed.xy * 2.0 - 1.0;
-    return vec3(plane.x * uViewportAspect * uViewportHalfHeight * 0.78,
-                plane.y * uViewportHalfHeight * 0.78,
+    return vec3(plane.x * uViewportAspect * uViewportHalfHeight * uFieldFill,
+                plane.y * uViewportHalfHeight * uFieldFill,
                 (seed.z - 0.5) * 12.0);
 }`;
 
@@ -908,7 +951,7 @@ void main() {
     vEnergy = energyLevel;
     vDepth = clamp(-mvPosition.z / 120.0, 0.0, 1.0);
 
-    float alpha = 1.0 - smoothstep(0.92, 1.05, max(abs(newPos.x) / (uViewportAspect * uViewportHalfHeight * 0.82), abs(newPos.y) / (uViewportHalfHeight * 0.82)));
+    float alpha = 1.0 - smoothstep(0.92, 1.05, max(abs(newPos.x) / (uViewportAspect * uViewportHalfHeight * uFieldFill * 1.05), abs(newPos.y) / (uViewportHalfHeight * uFieldFill * 1.05)));
     float sparkle = 1.0 + (aRandom.x > 0.8 ? sin(uTime * 20.0 + aRandom.y * 150.0) * uHigh * 2.5 : 0.0);
     vAlpha = alpha * sparkle * (0.7 + uMid * 0.35) * layerMod;
 }`;
@@ -983,12 +1026,14 @@ void main() {
                 tDiffuse: { value: null },
                 uIntensity: { value: 1.0 },
                 uBeatEnergy: { value: 0.0 },
-                uTime: { value: 0.0 }
+                uTime: { value: 0.0 },
+                uTint: { value: new THREE.Color(0.6, 0.7, 1.0) }
             },
             vertexShader: `varying vec2 vUv; void main() { vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }`,
             fragmentShader: `
         uniform sampler2D tDiffuse;
         uniform float uIntensity, uBeatEnergy, uTime;
+        uniform vec3 uTint;
         varying vec2 vUv;
 
         float sdHex(vec2 p) {
@@ -1018,7 +1063,7 @@ void main() {
                 float falloff = 1.0 - abs(i) / 10.0;
                 streak += smoothstep(0.7, 1.0, streakBright) * falloff * falloff;
             }
-            flare += vec3(0.6, 0.7, 1.0) * streak * 0.08;
+            flare += uTint * streak * 0.08;
 
             // Subtle ghosts (reflections through lens elements)
             for(int i = 1; i <= 3; i++) {
@@ -1028,18 +1073,18 @@ void main() {
                     vec4 ghostSample = texture2D(tDiffuse, ghostUV);
                     float ghostBright = dot(ghostSample.rgb, vec3(0.299, 0.587, 0.114));
                     float ghostAlpha = smoothstep(0.5, 0.8, ghostBright) * (0.25 / float(i));
-                    vec3 ghostTint = vec3(0.7, 0.8, 1.0) * (1.0 - float(i) * 0.2);
+                    vec3 ghostTint = mix(vec3(1.0), uTint, 0.6) * (1.0 - float(i) * 0.2);
                     flare += ghostSample.rgb * ghostTint * ghostAlpha;
                 }
             }
 
             // Soft circular halo around bright center
             float halo = smoothstep(0.25, 0.15, abs(dist - 0.2)) * threshold * 0.25;
-            flare += vec3(0.5, 0.6, 0.9) * halo;
+            flare += uTint * 0.85 * halo;
 
             // Subtle vignette-edge glow
             float edgeGlow = smoothstep(0.5, 0.7, dist) * (1.0 - smoothstep(0.7, 0.85, dist));
-            flare += vec3(0.3, 0.4, 0.6) * edgeGlow * brightness * 0.15;
+            flare += uTint * 0.55 * edgeGlow * brightness * 0.15;
 
             gl_FragColor = vec4(color.rgb + flare * uIntensity * (1.0 + uBeatEnergy * 0.3), color.a);
         }`
@@ -1051,12 +1096,14 @@ void main() {
                 tDiffuse: { value: null },
                 uStretch: { value: 0.1 },
                 uThreshold: { value: 0.7 },
-                uIntensity: { value: 0.4 }
+                uIntensity: { value: 0.4 },
+                uTint: { value: new THREE.Color(0.6, 0.8, 1.0) }
             },
             vertexShader: `varying vec2 vUv; void main() { vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }`,
             fragmentShader: `
         uniform sampler2D tDiffuse;
         uniform float uStretch, uThreshold, uIntensity;
+        uniform vec3 uTint;
         varying vec2 vUv;
         void main() {
             vec4 color = texture2D(tDiffuse, vUv);
@@ -1069,7 +1116,7 @@ void main() {
                     streak += s.rgb * w * w;
                 }
             }
-            gl_FragColor = vec4(color.rgb + streak / 7.5 * vec3(0.6, 0.8, 1.0) * uIntensity, color.a);
+            gl_FragColor = vec4(color.rgb + streak / 7.5 * uTint * uIntensity, color.a);
         }`
         };
 
@@ -1283,9 +1330,12 @@ void main() {
                 const q = STATE.qualityLevel;
                 const pixelRatio = Math.min(STATE.pixelRatio, Math.max(0.35, STATE.pixelRatio * q));
                 const requestedMain = Math.floor(CONFIG.maxParticles * Math.min(STATE.density, CONFIG.maxDensity));
-                const requestedTotal = requestedMain + CONFIG.secondaryParticles;
+                const densityTotal = requestedMain + CONFIG.secondaryParticles;
+                const requestedTotal = particleCount === null ? densityTotal : Math.min(particleCount, mainCapacity + CONFIG.secondaryParticles);
                 const visibleParticles = Math.floor(Math.min(requestedTotal, particleBudget) * q);
-                const mainCount = Math.round(visibleParticles * requestedMain / requestedTotal);
+                // Both layers keep the density's mix; whatever one layer cannot hold goes to the other.
+                let mainCount = Math.min(mainCapacity, Math.round(visibleParticles * requestedMain / densityTotal));
+                mainCount = Math.min(mainCapacity, Math.max(mainCount, visibleParticles - CONFIG.secondaryParticles));
                 geometry.setDrawRange(0, mainCount);
                 secondaryGeometry.instanceCount = visibleParticles - mainCount;
                 if (renderer.getPixelRatio() !== pixelRatio) {
@@ -1306,7 +1356,7 @@ void main() {
             breathPhase: 0,
 
             update(deltaTime) {
-                if (!STATE.audioCameraEnabled || !AUDIO.active) return;
+                if (!STATE.audioCameraEnabled || !(AUDIO.active || AUDIO.externalActive)) return;
 
                 const bass = AUDIO.gatedBands.bass;
                 const mid = AUDIO.gatedBands.mid;
@@ -1346,6 +1396,7 @@ void main() {
                 uCurlStrength: { value: def.curl },
                 uViewportAspect: { value: window.innerWidth / window.innerHeight },
                 uViewportHalfHeight: { value: Math.tan(camera.fov * Math.PI / 360) * CONFIG.defaultZoom },
+                uFieldFill: { value: STATE.fieldSize },
                 uColor1: { value: new THREE.Color(def.c1) },
                 uColor2: { value: new THREE.Color(def.c2) },
                 uColor3: { value: new THREE.Color(def.c3) },
@@ -1488,7 +1539,7 @@ void main() {
     vColor = mix(vColor, vec3(1.0), uBeatEnergy * 0.25);
 
     // Alpha: outer shell fades at edge, mid-frequency presence sustains visibility
-    float edgeFade = 1.0 - smoothstep(0.92, 1.05, max(abs(newPos.x) / (uViewportAspect * uViewportHalfHeight * 0.82), abs(newPos.y) / (uViewportHalfHeight * 0.82)));
+    float edgeFade = 1.0 - smoothstep(0.92, 1.05, max(abs(newPos.x) / (uViewportAspect * uViewportHalfHeight * uFieldFill * 1.05), abs(newPos.y) / (uViewportHalfHeight * uFieldFill * 1.05)));
     vAlpha = edgeFade * (0.45 + uMid * 0.35 + uLowMid * 0.2) * sparkle;
 
     vEnergy = uBeatEnergy * 0.4 + uHighMid * 0.3 + uOnsetEnergy * 0.3;
@@ -1575,7 +1626,8 @@ void main() {
                 uColor1:           { value: new THREE.Color(def.sc1) },
                 uColor2:           { value: new THREE.Color(def.sc2) },
                 uViewportAspect:   { value: window.innerWidth / window.innerHeight },
-                uViewportHalfHeight: { value: Math.tan(camera.fov * Math.PI / 360) * CONFIG.defaultZoom }
+                uViewportHalfHeight: { value: Math.tan(camera.fov * Math.PI / 360) * CONFIG.defaultZoom },
+                uFieldFill:        { value: STATE.fieldSize }
             },
             transparent: true,
             depthWrite: false,
@@ -1592,7 +1644,7 @@ void main() {
         // ═══════ PARTICLE TRAIL SYSTEM ═══════
         const particleSeeds = geometry.getAttribute('aRandom');
         function fieldParticlePosition(index, target) {
-            const halfHeight = material.uniforms.uViewportHalfHeight.value * 0.78;
+            const halfHeight = material.uniforms.uViewportHalfHeight.value * STATE.fieldSize;
             const halfWidth = halfHeight * material.uniforms.uViewportAspect.value;
             return target.set(
                 (particleSeeds.getX(index) * 2 - 1) * halfWidth,
@@ -1610,8 +1662,8 @@ void main() {
                 for (let i = 0; i < count; i++) {
                     const anchor = new THREE.Vector2(Math.random() * 1.5 - 0.75, Math.random() * 1.5 - 0.75);
                     const start = new THREE.Vector3(
-                        anchor.x * material.uniforms.uViewportAspect.value * material.uniforms.uViewportHalfHeight.value * 0.78,
-                        anchor.y * material.uniforms.uViewportHalfHeight.value * 0.78,
+                        anchor.x * material.uniforms.uViewportAspect.value * material.uniforms.uViewportHalfHeight.value * STATE.fieldSize,
+                        anchor.y * material.uniforms.uViewportHalfHeight.value * STATE.fieldSize,
                         0
                     );
                     const trail = {
@@ -1619,7 +1671,7 @@ void main() {
                         anchor,
                         phase: Math.random() * Math.PI * 2,
                         speed: 0.3 + Math.random() * 0.7,
-                        color: new THREE.Color().setHSL(Math.random(), 0.7, 0.6)
+                        color: new THREE.Color(def.c1).lerp(new THREE.Color(def.c2), i / Math.max(1, count - 1))
                     };
                     this.trails.push(trail);
 
@@ -1645,7 +1697,7 @@ void main() {
             }
 
             update(time, audio, fieldColor) {
-                const halfHeight = material.uniforms.uViewportHalfHeight.value * 0.78;
+                const halfHeight = material.uniforms.uViewportHalfHeight.value * STATE.fieldSize;
                 const halfWidth = halfHeight * material.uniforms.uViewportAspect.value;
                 for (let i = 0; i < this.trails.length; i++) {
                     const trail = this.trails[i], mesh = this.meshes[i];
@@ -1672,7 +1724,6 @@ void main() {
 
                     mesh.material.uniforms.uBeat.value = audio.beat;
                     mesh.material.uniforms.uOpacity.value = STATE.particleTrailOpacity;
-                    if (fieldColor) trail.color.lerp(fieldColor, 0.01);
                 }
             }
         }
@@ -1816,6 +1867,15 @@ void main() {
         crawlerGeo.setAttribute('alpha',    new THREE.BufferAttribute(crawlerAlp, 1));
         crawlerGeo.setDrawRange(0, 0);
 
+        // Bloom only lights pixels above 0.85 luminance. Preset greens and cyans got there on their own;
+        // a theme's reds and violets carry the same energy at a fraction of the luminance, so reaction
+        // colours keep the theme's hue but are lifted (past 1.0 if needed) to the brightness of the originals.
+        function glowColor(color, luminance) {
+            const current = 0.2126 * color.r + 0.7152 * color.g + 0.0722 * color.b;
+            return color.multiplyScalar(Math.min(4, Math.max(1, luminance / Math.max(current, 0.02))));
+        }
+        const crawlerLow = new THREE.Color(def.c1), crawlerHigh = new THREE.Color(def.c3);
+        const crawlerTarget = new THREE.Color();
         const crawlerMaterial = new THREE.ShaderMaterial({
             vertexShader: `
                 attribute float alpha;
@@ -2372,17 +2432,17 @@ void main() {
             // Update particle connections
             connectionMesh.visible = STATE.connectionsEnabled;
             if (STATE.connectionsEnabled) {
-                const activeAudio = AUDIO.mode === 'mic' || AUDIO.isPlaying;
+                const activeAudio = AUDIO.mode === 'mic' || AUDIO.isPlaying || AUDIO.externalActive;
                 const connectionState = [
                     STATE.field, STATE.connectionThreshold, geometry.drawRange.count,
-                    material.uniforms.uViewportAspect.value, material.uniforms.uViewportHalfHeight.value,
+                    material.uniforms.uViewportAspect.value, material.uniforms.uViewportHalfHeight.value, STATE.fieldSize,
                     STATE.qualityLevel, activeAudio
                 ];
                 connectionElapsed = Math.min(1 / 20, connectionElapsed + dt);
                 idleConnectionElapsed = Math.min(2, idleConnectionElapsed + dt);
                 if (connectionElapsed >= 1 / 20 && shouldRebuildConnections(activeAudio, connectionState, lastConnectionState, idleConnectionElapsed)) {
                     const refreshSelection = !lastConnectionState || connectionState[2] !== lastConnectionState[2]
-                        || connectionState[5] !== lastConnectionState[5] || (!activeAudio && idleConnectionElapsed >= 2);
+                        || connectionState[6] !== lastConnectionState[6] || (!activeAudio && idleConnectionElapsed >= 2);
                     updateConnections(
                         STATE.connectionThreshold,
                         activeAudio ? material.uniforms.uBass.value : 0,
@@ -2405,7 +2465,7 @@ void main() {
             }
 
             // Update crawlers
-            crawlerMesh.visible = STATE.crawlersEnabled && STATE.connectionsEnabled && AUDIO.active && (AUDIO.isPlaying || AUDIO.mode === 'mic');
+            crawlerMesh.visible = STATE.crawlersEnabled && STATE.connectionsEnabled && (AUDIO.externalActive || AUDIO.active && (AUDIO.isPlaying || AUDIO.mode === 'mic'));
             if (crawlerMesh.visible) {
                 updateCrawlers(
                     dt,
@@ -2413,13 +2473,8 @@ void main() {
                     material.uniforms.uBeatEnergy.value,
                     material.uniforms.uSpectralCentroid.value
                 );
-                crawlerMaterial.uniforms.uColor.value.lerp(
-                    new THREE.Color().lerpColors(
-                        new THREE.Color(FIELD_TYPES[STATE.field]?.c1 || '#ffffff'),
-                        new THREE.Color(FIELD_TYPES[STATE.field]?.c3 || '#ffffff'),
-                        material.uniforms.uSpectralCentroid.value
-                    ), 0.05
-                );
+                crawlerTarget.lerpColors(crawlerLow, crawlerHigh, material.uniforms.uSpectralCentroid.value);
+                crawlerMaterial.uniforms.uColor.value.lerp(crawlerTarget, 0.05);
                 crawlerMaterial.uniforms.uBeatEnergy.value = material.uniforms.uBeatEnergy.value;
             }
 
@@ -2495,6 +2550,7 @@ void main() {
             godRaysIntensity: value => { godRaysPass.uniforms.uIntensity.value = value; godRaysPass.enabled = STATE.godRaysEnabled && value > 0; },
             vortexStrength: value => material.uniforms.uVortexStrength.value = value,
             pulseIntensity: value => material.uniforms.uPulseIntensity.value = value,
+            fieldSize: value => { material.uniforms.uFieldFill.value = value; secondaryMaterial.uniforms.uFieldFill.value = value; },
         };
         window.addEventListener('message', ({ source, data }) => {
             if (source !== parent || data?.type !== 'ad-qf-control') return;
@@ -2511,6 +2567,11 @@ void main() {
                 else stopFrames();
             }
             else if (key === 'interactive') controls.enabled = !!value;
+            else if (key === 'spectrum') EXTERNAL.set(value?.bands, value?.range);
+            else if (key === 'particleCount') {
+                particleCount = Number.isFinite(value) ? Math.max(0, Math.floor(value)) : null;
+                QUALITY_SYSTEM.applyQuality();
+            }
             else if (key === 'particleBudget') {
                 particleBudget = Number.isFinite(value) ? Math.max(0, Math.floor(value)) : Infinity;
                 QUALITY_SYSTEM.applyQuality();
@@ -2538,6 +2599,16 @@ void main() {
                 nebulaMaterial.uniforms.uColor3.value.copy(main);
                 connectionMaterial.uniforms.uColor.value.copy(light);
                 connectionMaterial.uniforms.uColor2.value.copy(main);
+                const white = new THREE.Color('#ffffff');
+                const tint = glowColor(light.clone().lerp(white, 0.35), 0.75);
+                lensFlarePass.uniforms.uTint.value.copy(tint);
+                anamorphicPass.uniforms.uTint.value.copy(tint);
+                // Reaction lines stand out from the field like the presets' contrasting colours did:
+                // a luminous tint of the theme's light colour with a near-white core on bright passages.
+                glowColor(crawlerLow.copy(light).lerp(white, 0.2), 0.75);
+                glowColor(crawlerHigh.copy(light).lerp(white, 0.5), 0.95);
+                crawlerMaterial.uniforms.uColor.value.copy(crawlerLow);
+                trailSystem.trails.forEach((trail, i) => glowColor(trail.color.copy(main).lerp(light, i / Math.max(1, trailSystem.trails.length - 1)).lerp(white, 0.15), 0.6));
             } else if (Object.prototype.hasOwnProperty.call(STATE, key)) {
                 STATE[key] = value;
                 if (key === 'density') QUALITY_SYSTEM.applyQuality();

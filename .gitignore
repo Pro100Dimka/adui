@@ -4,3 +4,11 @@ apps/playground/dist/
 *.log
 .DS_Store
 release/
+
+# Browser-check artifacts in evidence/. Reports and screenshots that belong in Git are listed in
+# evidence/git-delivery-allowlist.json and force-added (git add -f); tracked files stay tracked.
+# npm-*.jpg are account/2FA screenshots and must never be committed.
+evidence/*.png
+evidence/*.jpg
+evidence/*.txt
+evidence/*.json

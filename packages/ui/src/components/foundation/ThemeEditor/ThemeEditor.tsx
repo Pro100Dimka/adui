@@ -21,7 +21,7 @@ import {
   deriveSecondary,
   exportTheme,
   parseTheme,
-  resolveToken,
+  resolveTokens,
   themeTokenGroups,
   type ThemeConfig,
 } from "./themeConfig";
@@ -67,11 +67,7 @@ export function ThemeEditor({ value: controlled, defaultValue = defaultThemeConf
     const node = root.current;
     if (!node) return;
     const frame = requestAnimationFrame(() =>
-      setResolved(
-        Object.fromEntries(
-          themeTokenGroups.flatMap((group) => group.tokens.map((token) => [token.name, resolveToken(node, token.name, token.kind)])),
-        ),
-      ),
+      setResolved(resolveTokens(node, themeTokenGroups.flatMap((group) => group.tokens))),
     );
     return () => cancelAnimationFrame(frame);
   }, [config]);

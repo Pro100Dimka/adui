@@ -163,20 +163,60 @@ export function parseTheme(text: string, locale?: Locale): ThemeConfig {
   };
 }
 
-/** Current value of a token inside `scope`: colours as #rrggbb, everything else as written. */
-export function resolveToken(scope: Element, name: string, kind: ThemeTokenKind = "color"): string {
-  if (kind !== "color") return getComputedStyle(scope).getPropertyValue(`--ad-${name}`).trim();
-  const probe = document.createElement("span");
-  probe.style.color = `var(--ad-${name})`;
-  scope.append(probe);
-  const value = getComputedStyle(probe).color;
-  probe.remove();
-  const canvas = document.createElement("canvas");
-  canvas.width = canvas.height = 1;
-  const context = canvas.getContext("2d", { willReadFrequently: true });
-  if (!context) return "#000000";
-  context.fillStyle = value;
-  context.fillRect(0, 0, 1, 1);
-  const [r, g, b] = context.getImageData(0, 0, 1, 1).data;
+let colorContext: CanvasRenderingContext2D | null | undefined;
+
+/** Any colour the browser computed (rgb, oklch, color-mix…) as #rrggbb, through one shared 1×1 canvas. */
+function toHex(value: string): string {
+  if (colorContext === undefined) {
+    const canvas = document.createElement("canvas");
+    canvas.width = canvas.height = 1;
+    colorContext = canvas.getContext("2d", { willReadFrequently: true });
+  }
+  if (!colorContext) return "#000000";
+  colorContext.clearRect(0, 0, 1, 1);
+  colorContext.fillStyle = "#000000";
+  colorContext.fillStyle = value;
+  colorContext.fillRect(0, 0, 1, 1);
+  const [r, g, b] = colorContext.getImageData(0, 0, 1, 1).data;
   return `#${[r, g, b].map((v) => (v ?? 0).toString(16).padStart(2, "0")).join("")}`;
+}
+
+/**
+ * Current values of several tokens inside `scope`: colours as #rrggbb, everything else as written.
+ * All colour probes are inserted together, so the page's styles are recalculated once instead of
+ * once per token — on a large page that is the difference between one frame and a visible freeze.
+ */
+export function resolveTokens(
+  scope: Element,
+  tokens: readonly (string | { name: string; kind?: ThemeTokenKind })[],
+): Record<string, string> {
+  const list = tokens.map((token) => typeof token === "string" ? { name: token, kind: "color" as ThemeTokenKind } : { name: token.name, kind: token.kind ?? "color" });
+  const result: Record<string, string> = {};
+  const colors = list.filter(({ kind }) => kind === "color");
+  if (colors.length) {
+    // Hidden probes still compute their colour but cannot change the layout around them.
+    const host = document.createElement("span");
+    host.hidden = true;
+    const probes = colors.map(({ name }) => {
+      const probe = document.createElement("span");
+      probe.style.color = `var(--ad-${name})`;
+      host.append(probe);
+      return probe;
+    });
+    scope.append(host);
+    const values = probes.map((probe) => getComputedStyle(probe).color);
+    host.remove();
+    colors.forEach(({ name }, index) => { result[name] = toHex(values[index]!); });
+  }
+  const others = list.filter(({ kind }) => kind !== "color");
+  if (others.length) {
+    const style = getComputedStyle(scope);
+    for (const { name } of others) result[name] = style.getPropertyValue(`--ad-${name}`).trim();
+  }
+  return result;
+}
+
+/** Current value of a token inside `scope`: colours as #rrggbb, everything else as written. Use `resolveTokens` for several. */
+export function resolveToken(scope: Element, name: string, kind: ThemeTokenKind = "color"): string {
+  return resolveTokens(scope, [{ name, kind }])[name]!;
 }

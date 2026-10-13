@@ -543,11 +543,30 @@ html[data-ad-color-mode="light"] .docs-hero-backdrop {
     rgb(from var(--ad-neutral-900) r g b / 0.8);
   border: 0.0625rem solid #ffffff0d;
 }
-.example-stage:has(> .ad-quantum-field-experience) {
-  padding: 0;
-  border: 0;
-  background: transparent;
+.qb-example { display: grid; gap: 0.75rem; width: 100%; }
+.qb-panel { display: grid; gap: 0.75rem; }
+.qb-toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 0.625rem; }
+.qb-toolbar > .ad-file-picker { flex: none; }
+.qb-toolbar > .ad-file-picker > small { display: none; }
+.qb-toolbar > .ad-file-picker > .ad-button { max-width: 11rem; }
+.qb-toolbar > .ad-file-picker .ad-button-label { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.qb-toolbar > .ad-audio-player { flex: 1 1 13rem; min-width: min(100%, 13rem); padding: 0.35rem 0.5rem; }
+.qb-toolbar .ad-player-play > .ad-icon-button { --ad-size-h: 2.25rem; width: 2.25rem; height: 2.25rem; }
+.qb-actions { display: flex; align-items: center; gap: 0.25rem; }
+.qb-actions > .ad-tooltip-trigger { display: inline-flex; }
+.qb-panel nav { max-width: 100%; overflow-x: auto; }
+.qb-panel .ad-collapse-content { display: grid; gap: 0.75rem; }
+.qb-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
+  gap: 0.75rem 1rem;
+  align-items: center;
 }
+.qb-essentials { flex: 1 1 100%; grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr)); }
+.qb-exit { position: absolute; top: 1rem; right: 1rem; }
+.qb-setting { display: flex; align-items: end; gap: 0.5rem; min-width: 0; }
+.qb-setting > .ad-slider-field { flex: 1; min-width: 0; }
+.qb-setting > output { min-width: 3ch; padding-bottom: 0.55rem; color: var(--ad-muted); font-variant-numeric: tabular-nums; text-align: end; }
 :where(.example-stage) > * {
   max-width: 100%;
   min-width: 0;

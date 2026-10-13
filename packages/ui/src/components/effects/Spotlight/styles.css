@@ -8,6 +8,9 @@
 }
 .ad-spotlight::before,
 .ad-spotlight::after {
+  /* The pointer position is not inherited by default: the lights read it from their own surface. */
+  --ad-spot-x: inherit;
+  --ad-spot-y: inherit;
   content: "";
   position: absolute;
   inset: 0;

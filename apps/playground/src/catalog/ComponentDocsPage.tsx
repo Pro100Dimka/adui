@@ -29,6 +29,11 @@ import {
 } from "./componentRegistry";
 import { getCategoryForItem } from "./catalogNavigation";
 const LiveEditor = lazy(() => import("./LiveEditor"));
+/**
+ * Loading and first running Monaco takes ~0.1 s of main thread; done on click it lands inside the
+ * dialog's opening. Started when the pointer or focus reaches the button, it is usually done by the click.
+ */
+const warmLiveEditor = () => void import("./LiveEditor").then((module) => module.preloadCodeEditor());
 
 /** A code listing with its file name and a copy button that confirms itself. */
 function CodeBlock({
@@ -74,6 +79,8 @@ function CodeBlock({
 
 /** Adds the import line for every component tag used in a generated snippet. */
 function withImports(code: string, name: string, path: string) {
+  // A complete module brings its own imports.
+  if (/export\s+default/.test(code)) return code;
   const tags = [
     ...new Set([...code.matchAll(/<([A-Z][A-Za-z0-9]*)/g)].map((m) => m[1])),
   ];
@@ -237,6 +244,8 @@ export function ComponentDocsPage({ item }: { item: CatalogMeta }) {
                   size="sm"
                   variant="secondary"
                   icon="braces"
+                  onPointerEnter={warmLiveEditor}
+                  onFocus={warmLiveEditor}
                   onClick={() => setModal("example")}
                 >
                   {tr("Код")}
@@ -364,7 +373,7 @@ export function ComponentDocsPage({ item }: { item: CatalogMeta }) {
         confirmLabel={tr("Готово")}
       >
         {modal === "example" ? (
-          sources ? <Suspense fallback={null}><LiveEditor name={item.name} original={codeViews.example.code} /></Suspense>
+          sources ? <Suspense fallback={null}><LiveEditor name={item.name} original={codeViews.example.code} wide={item.wide} /></Suspense>
             : <Typography variant="body-sm" tone="muted">{tr("Загрузка…")}</Typography>
         ) : (
           modal && <CodeBlock {...codeViews[modal]} />

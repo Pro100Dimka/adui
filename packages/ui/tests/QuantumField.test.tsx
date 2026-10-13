@@ -6,7 +6,7 @@ import { existsSync, readFileSync } from "node:fs";
 import { transformSync } from "esbuild";
 import QuantumFieldExample from "../src/components/artwork/QuantumField/example";
 import QuantumFieldExperienceExample from "../src/components/artwork/QuantumField/experienceExample";
-import { ExamplePreviewContext } from "../src/dev/exampleHelpers";
+import { ExampleCodeContext, ExamplePreviewContext } from "../src/dev/exampleHelpers";
 import * as UI from "../src/index";
 import { QuantumFieldExperience, quantumFieldExperienceControls } from "../src/components/artwork/QuantumField/QuantumFieldExperience";
 import { createQuantumFieldAudio } from "../src/components/artwork/QuantumField/audio";
@@ -78,8 +78,8 @@ it("keeps the restored visualizer's full settings and song transport in the kit"
   expect(source).toContain("ad-qf-transport");
 });
 
-it("shows playback and essential settings first, with detailed controls closed by default", () => {
-  const html = renderToStaticMarkup(createElement(QuantumFieldExperience));
+it("builds the docs settings panel next to the scene, with detailed controls closed by default", () => {
+  const html = renderToStaticMarkup(createElement(QuantumFieldExample));
   expect(html).toContain('data-ad-component="FilePicker"');
   expect(html).toMatch(/<details[^>]*data-ad-component="CollapsibleSection"[^>]*>/);
   expect(html).toContain("Тонкая настройка");
@@ -91,7 +91,7 @@ it("reveals detailed effect sliders only when their effect is enabled", () => {
   vi.stubGlobal("IS_REACT_ACT_ENVIRONMENT", true);
   vi.stubGlobal("window", { addEventListener: vi.fn(), removeEventListener: vi.fn(), setTimeout, clearTimeout });
   let tree!: ReturnType<typeof create>;
-  act(() => { tree = create(createElement(QuantumFieldExperience), { createNodeMock: nodeMock }); });
+  act(() => { tree = create(createElement(QuantumFieldExample), { createNodeMock: nodeMock }); });
   try {
     act(() => tree.root.findByType(Tabs).props.onValueChange("environment"));
     const sliders = (label: string) => tree.root.findAllByType(Slider).filter((node) => node.props.label === label);
@@ -103,17 +103,17 @@ it("reveals detailed effect sliders only when their effect is enabled", () => {
 });
 
 it("places a compact kit player and actions below a transparent, shorter field", () => {
-  const html = renderToStaticMarkup(createElement(QuantumFieldExperience));
-  expect(html.indexOf('class="ad-qf-viewport"')).toBeLessThan(html.indexOf('class="ad-qf-controls"'));
+  const html = renderToStaticMarkup(createElement(QuantumFieldExample));
+  expect(html.indexOf('class="ad-quantum-background"')).toBeLessThan(html.indexOf('class="qb-panel"'));
   expect(html).toContain('data-ad-component="AudioPlayer"');
   const css = readFileSync(new URL("../src/components/artwork/QuantumField/styles.css", import.meta.url), "utf8");
   const reference = readFileSync(new URL("../src/components/artwork/QuantumField/reference.html", import.meta.url), "utf8");
   const docsCss = readFileSync(new URL("../../../apps/playground/src/app/app.css", import.meta.url), "utf8");
   const host = readFileSync(new URL("../src/components/artwork/QuantumField/QuantumFieldExperience.tsx", import.meta.url), "utf8");
-  expect(css).toMatch(/\.ad-qf-viewport\s*\{[^}]*height:\s*clamp\(18rem,\s*42vh,\s*27rem\)/s);
-  expect(css).toMatch(/\.ad-qf-viewport > iframe\s*\{[^}]*color-scheme:\s*dark/s);
+  expect(css).toMatch(/\.ad-quantum-background\s*\{[^}]*height:\s*clamp\(18rem,\s*42vh,\s*27rem\)/s);
+  expect(css).toMatch(/\.ad-quantum-background > iframe\s*\{[^}]*color-scheme:\s*dark/s);
   expect(reference).toMatch(/html, body\s*\{[^}]*color-scheme:\s*dark/s);
-  expect(docsCss).toContain('.example-stage:has(> .ad-quantum-field-experience)');
+  expect(docsCss).toContain('.qb-panel');
   expect(host).not.toContain('send("background"');
 });
 
@@ -131,7 +131,7 @@ it("routes the kit player and labelled icon actions to the iframe", () => {
   const postMessage = vi.fn();
   const contentWindow = { postMessage };
   let tree!: ReturnType<typeof create>;
-  act(() => { tree = create(createElement(QuantumFieldExperience), { createNodeMock: ({ type }) => type === "iframe" ? { contentWindow } : nodeMock() }); });
+  act(() => { tree = create(createElement(QuantumFieldExample), { createNodeMock: ({ type }) => type === "iframe" ? { contentWindow } : nodeMock() }); });
   try {
     act(() => receive({ source: contentWindow, data: { type: "ad-qf-ready" } } as unknown as MessageEvent));
     act(() => receive({ source: contentWindow, data: { type: "ad-qf-transport", value: { mode: "file", playing: true, current: 12, duration: 30, track: "song.mp3" } } } as unknown as MessageEvent));
@@ -159,7 +159,7 @@ it("updates playback without rerendering the field settings", () => {
   });
   const contentWindow = { postMessage: vi.fn() };
   let tree!: ReturnType<typeof create>;
-  act(() => { tree = create(createElement(QuantumFieldExperience), {
+  act(() => { tree = create(createElement(QuantumFieldExample), {
     createNodeMock: ({ type }) => type === "iframe" ? { contentWindow } : nodeMock(),
   }); });
   try {
@@ -247,7 +247,8 @@ it("skips FFT while audio is paused and fades its response before resuming", () 
   const body = source.match(/const AUDIO = \{([\s\S]*?)\r?\n        \};\r?\n\r?\n        \/\/ --- SCENE SETUP ---/)?.[1];
   expect(body).toBeTruthy();
   const state = { bassGateEnabled: false, onsetDecay: 0.92 };
-  const audio = new Function("STATE", "performance", `return {${body}};`)(state, { now: () => 1_000 });
+  const external = { fresh: () => false };
+  const audio = new Function("STATE", "performance", "EXTERNAL", `return {${body}};`)(state, { now: () => 1_000 }, external);
   const analyser = { connect: vi.fn(), getByteFrequencyData: vi.fn((data: Uint8Array) => data.fill(180)) };
   const oldSource = { stop: vi.fn(), disconnect: vi.fn() };
   const newSource = { connect: vi.fn(), start: vi.fn() };
@@ -400,36 +401,44 @@ it("caps both particle layers with the public budget while adaptive quality can 
   const source = readFileSync(new URL("../src/components/artwork/QuantumField/reference.html", import.meta.url), "utf8");
   const body = source.match(/applyQuality\(\) \{([\s\S]*?)\n            \}\n        \};/)?.[1];
   expect(body).toBeTruthy();
-  const apply = new Function("CONFIG", "STATE", "particleBudget", "geometry", "secondaryGeometry", "renderer", "composer", "material", "secondaryMaterial", body!);
+  const apply = new Function("CONFIG", "STATE", "particleBudget", "geometry", "secondaryGeometry", "renderer", "composer", "material", "secondaryMaterial", "particleCount", "mainCapacity", body!);
   const config = { maxParticles: 250_000, maxDensity: 0.14, secondaryParticles: 50_000 };
-  const run = (budget: number, qualityLevel: number, density = 0.043) => {
+  const run = (budget: number, qualityLevel: number, density = 0.043, count: number | null = null) => {
     const geometry = { setDrawRange: vi.fn() };
     const secondaryGeometry = { instanceCount: 0 };
     const renderer = { getPixelRatio: () => 1, setPixelRatio: vi.fn() };
     const composer = { setPixelRatio: vi.fn() };
     const material = { uniforms: { uPixelRatio: { value: 1 } } };
     const secondaryMaterial = { uniforms: { uPixelRatio: { value: 1 } } };
-    apply(config, { density, qualityLevel, pixelRatio: 1 }, budget, geometry, secondaryGeometry, renderer, composer, material, secondaryMaterial);
-    return geometry.setDrawRange.mock.lastCall![1] + secondaryGeometry.instanceCount;
+    apply(config, { density, qualityLevel, pixelRatio: 1 }, budget, geometry, secondaryGeometry, renderer, composer, material, secondaryMaterial, count, 35_000);
+    const main = geometry.setDrawRange.mock.lastCall![1];
+    expect(main).toBeLessThanOrEqual(35_000);
+    expect(secondaryGeometry.instanceCount).toBeLessThanOrEqual(50_000);
+    return main + secondaryGeometry.instanceCount;
   };
   expect(run(Infinity, 1)).toBe(60_750);
   expect(run(6_000, 1)).toBe(6_000);
   expect(run(6_000, 0.5)).toBe(3_000);
   expect(run(0, 1)).toBe(0);
   expect(run(Infinity, 1, 1)).toBe(85_000);
+  expect(run(Infinity, 1, 0.043, 20_000)).toBe(20_000);
+  expect(run(Infinity, 1, 0.043, 84_000)).toBe(84_000);
+  expect(run(Infinity, 1, 0.043, 1e9)).toBe(85_000);
+  expect(run(6_000, 1, 0.043, 20_000)).toBe(6_000);
+  expect(run(Infinity, 0.5, 0.043, 20_000)).toBe(10_000);
 });
 
 it("never raises the pixel ratio above the full-screen pixel cap on 8K screens", () => {
   const source = readFileSync(new URL("../src/components/artwork/QuantumField/reference.html", import.meta.url), "utf8");
   const body = source.match(/applyQuality\(\) \{([\s\S]*?)\n            \}\n        \};/)?.[1];
   expect(body).toBeTruthy();
-  const apply = new Function("CONFIG", "STATE", "particleBudget", "geometry", "secondaryGeometry", "renderer", "composer", "material", "secondaryMaterial", body!);
+  const apply = new Function("CONFIG", "STATE", "particleBudget", "geometry", "secondaryGeometry", "renderer", "composer", "material", "secondaryMaterial", "particleCount", "mainCapacity", body!);
   const setPixelRatio = vi.fn();
   const state = { density: 0.043, qualityLevel: 0.3, pixelRatio: 0.25 };
   apply({ maxParticles: 250_000, maxDensity: 0.14, secondaryParticles: 50_000 }, state, Infinity,
     { setDrawRange: vi.fn() }, { instanceCount: 0 }, { getPixelRatio: () => 1, setPixelRatio },
     { setPixelRatio: vi.fn() }, { uniforms: { uPixelRatio: { value: 1 } } },
-    { uniforms: { uPixelRatio: { value: 1 } } });
+    { uniforms: { uPixelRatio: { value: 1 } } }, null, 35_000);
   expect(setPixelRatio.mock.lastCall?.[0]).toBeLessThanOrEqual(state.pixelRatio);
 });
 
@@ -533,15 +542,15 @@ it("keeps a detailed volumetric field without an embedded renderer", () => {
 });
 
 it("keeps the restored visualizer settings in kit controls", () => {
-  const html = renderToStaticMarkup(createElement(QuantumFieldExperience));
+  const html = renderToStaticMarkup(createElement(QuantumFieldExample));
   expect(html).toContain('data-ad-component="Tabs"');
   expect(html).toContain('data-ad-component="Slider"');
   expect(html).toContain("Gluon (Strong)");
 });
 
-it("fills the transparent viewport with the native field", () => {
+it("fills the transparent scene with the iframe", () => {
   const css = readFileSync(new URL("../src/components/artwork/QuantumField/styles.css", import.meta.url), "utf8");
-  expect(css).toMatch(/\.ad-qf-viewport > \.ad-quantum-field\s*\{[^}]*height:\s*100%/s);
+  expect(css).toMatch(/\.ad-quantum-background > iframe\s*\{[^}]*height:\s*100%/s);
   expect(css).not.toContain("mix-blend-mode");
 });
 
@@ -553,7 +562,7 @@ it("sends field and audio controls to the restored visualizer", () => {
   const postMessage = vi.fn();
   const contentWindow = { postMessage };
   let tree!: ReturnType<typeof create>;
-  act(() => { tree = create(createElement(QuantumFieldExperience), {
+  act(() => { tree = create(createElement(QuantumFieldExample), {
     createNodeMock: ({ type }) => type === "iframe" ? { contentWindow } : nodeMock(),
   }); });
   try {
@@ -682,9 +691,8 @@ it("does not force an opaque rectangle over a consumer's themed surface", () => 
 
 it("shows the restored visualizer on its own documentation page", () => {
   const html = renderToStaticMarkup(createElement(QuantumFieldExperienceExample));
-  expect(html).toContain('class="example-stage"');
-  expect(html).not.toContain('data-stretch="true"');
-  expect(html).toContain('data-ad-component="QuantumFieldExperience"');
+  expect(html).toContain('class="qb-example"');
+  expect(html).toContain('data-ad-component="QuantumBackground"');
   expect(html).toContain("<iframe");
 });
 
@@ -890,4 +898,270 @@ it("wires wheel zoom to the interactive component without scrolling the page", (
   act(() => tree.unmount());
   expect(removeEventListener).toHaveBeenCalledWith("wheel", wheel, true);
   vi.unstubAllGlobals();
+});
+
+it("takes every scene setting as a prop and sends only the changed ones", () => {
+  vi.stubGlobal("IS_REACT_ACT_ENVIRONMENT", true);
+  let receive!: (event: MessageEvent) => void;
+  vi.stubGlobal("window", { setTimeout, clearTimeout, addEventListener: (_type: string, listener: typeof receive) => { receive = listener; }, removeEventListener: vi.fn() });
+  const postMessage = vi.fn();
+  const contentWindow = { postMessage };
+  let tree!: ReturnType<typeof create>;
+  act(() => { tree = create(createElement(UI.QuantumBackground, { field: "Neutrino", bloom: 1.5, id: "hero" }), {
+    createNodeMock: ({ type }) => type === "iframe" ? { contentWindow } : nodeMock(),
+  }); });
+  try {
+    const root = tree.root.findByProps({ "data-ad-component": "QuantumBackground" });
+    expect(root.props).toMatchObject({ id: "hero" });
+    expect(root.props).not.toHaveProperty("bloom");
+    act(() => receive({ source: contentWindow, data: { type: "ad-qf-ready" } } as unknown as MessageEvent));
+    expect(postMessage).toHaveBeenCalledWith({ type: "ad-qf-control", key: "field", value: "Neutrino" }, "*");
+    expect(postMessage).toHaveBeenCalledWith({ type: "ad-qf-control", key: "bloom", value: 1.5 }, "*");
+    expect(postMessage).toHaveBeenCalledWith({ type: "ad-qf-control", key: "trails", value: UI.quantumBackgroundDefaults.trails }, "*");
+    postMessage.mockClear();
+    act(() => tree.update(createElement(UI.QuantumBackground, { field: "Gravity", bloom: 1.5, id: "hero" })));
+    expect(postMessage.mock.calls.map(([message]) => message.key)).toEqual(["field"]);
+    act(() => tree.update(createElement(UI.QuantumBackground, { id: "hero" })));
+    expect(postMessage).toHaveBeenCalledWith({ type: "ad-qf-control", key: "field", value: UI.quantumBackgroundDefaults.field }, "*");
+    expect(postMessage).toHaveBeenCalledWith({ type: "ad-qf-control", key: "bloom", value: UI.quantumBackgroundDefaults.bloom }, "*");
+  } finally {
+    act(() => tree.unmount());
+    vi.unstubAllGlobals();
+  }
+});
+
+it("exposes audio actions on the ref and reports transport through callbacks", () => {
+  vi.stubGlobal("IS_REACT_ACT_ENVIRONMENT", true);
+  let receive!: (event: MessageEvent) => void;
+  vi.stubGlobal("window", { setTimeout, clearTimeout, addEventListener: (_type: string, listener: typeof receive) => { receive = listener; }, removeEventListener: vi.fn() });
+  const postMessage = vi.fn();
+  const contentWindow = { postMessage };
+  const onTransportChange = vi.fn(), onWaveformChange = vi.fn();
+  const ref = { current: null as UI.QuantumBackgroundHandle | null };
+  let tree!: ReturnType<typeof create>;
+  act(() => { tree = create(createElement(UI.QuantumBackground, { ref, onTransportChange, onWaveformChange }, createElement("h1", null, "Hero")), {
+    createNodeMock: ({ type }) => type === "iframe" ? { contentWindow } : nodeMock(),
+  }); });
+  try {
+    expect(tree.root.findByType("h1").parent?.props.className).toBe("ad-qb-content");
+    act(() => receive({ source: contentWindow, data: { type: "ad-qf-ready" } } as unknown as MessageEvent));
+    const file = { name: "song.mp3" } as File;
+    ref.current!.loadFile(file);
+    ref.current!.seek(4);
+    ref.current!.togglePlayback();
+    ref.current!.toggleMicrophone();
+    expect(postMessage).toHaveBeenCalledWith({ type: "ad-qf-control", key: "file", value: file }, "*");
+    expect(postMessage).toHaveBeenCalledWith({ type: "ad-qf-control", key: "seek", value: 4 }, "*");
+    expect(postMessage).toHaveBeenCalledWith({ type: "ad-qf-control", key: "play", value: undefined }, "*");
+    expect(postMessage).toHaveBeenCalledWith({ type: "ad-qf-control", key: "mic", value: undefined }, "*");
+    const transport = { mode: "file", playing: true, current: 1, duration: 9, track: "song.mp3" };
+    act(() => receive({ source: contentWindow, data: { type: "ad-qf-transport", value: transport } } as unknown as MessageEvent));
+    act(() => receive({ source: contentWindow, data: { type: "ad-qf-waveform", value: [0.1, 0.4] } } as unknown as MessageEvent));
+    expect(onTransportChange).toHaveBeenCalledWith(transport);
+    expect(onWaveformChange).toHaveBeenCalledWith([0.1, 0.4]);
+  } finally {
+    act(() => tree.unmount());
+    vi.unstubAllGlobals();
+  }
+});
+
+it("reports a complete runnable example that passes the panel values as props", () => {
+  vi.stubGlobal("IS_REACT_ACT_ENVIRONMENT", true);
+  vi.stubGlobal("window", { addEventListener: vi.fn(), removeEventListener: vi.fn(), setTimeout, clearTimeout });
+  let code = "";
+  let tree!: ReturnType<typeof create>;
+  act(() => { tree = create(createElement(ExampleCodeContext.Provider, { value: (next: string) => { code = next; } }, createElement(QuantumFieldExample)), { createNodeMock: nodeMock }); });
+  try {
+    expect(code).toContain("export default function Example()");
+    expect(code).toContain("field={field}");
+    expect(code).toContain("sensitivity={sensitivity}");
+    expect(code).toContain("bloom={0.3}");
+    expect(code).toContain("scene.current?.loadFile(file)");
+    act(() => tree.root.findByProps({ label: "Тип поля" }).props.onValueChange("Photon (EM)"));
+    act(() => tree.root.findAllByType(Tabs)[0]!.props.onValueChange("environment"));
+    act(() => tree.root.findAllByType(Switch).find((node) => node.props.label === "Сеть связей")!.props.onValueChange(false));
+    expect(code).toContain('useState<QuantumBackgroundField>("Photon (EM)")');
+    expect(code).toContain("connectionsEnabled={false}");
+  } finally {
+    act(() => tree.unmount());
+    vi.unstubAllGlobals();
+  }
+});
+
+it("sends a clamped particle count to the renderer and follows density when it is unset", () => {
+  vi.stubGlobal("IS_REACT_ACT_ENVIRONMENT", true);
+  let receive!: (event: MessageEvent) => void;
+  vi.stubGlobal("window", { setTimeout, clearTimeout, addEventListener: (_type: string, listener: typeof receive) => { receive = listener; }, removeEventListener: vi.fn() });
+  const postMessage = vi.fn();
+  const contentWindow = { postMessage };
+  let tree!: ReturnType<typeof create>;
+  act(() => { tree = create(createElement(UI.QuantumBackground, { particleCount: 12_345.6 }), {
+    createNodeMock: ({ type }) => type === "iframe" ? { contentWindow } : nodeMock(),
+  }); });
+  try {
+    expect(tree.root.findByType("iframe").props["data-particle-count"]).toBe(12_345);
+    act(() => receive({ source: contentWindow, data: { type: "ad-qf-ready" } } as unknown as MessageEvent));
+    expect(postMessage).toHaveBeenCalledWith({ type: "ad-qf-control", key: "particleCount", value: 12_345 }, "*");
+    act(() => tree.update(createElement(UI.QuantumBackground, { particleCount: 1e9 })));
+    expect(postMessage).toHaveBeenCalledWith({ type: "ad-qf-control", key: "particleCount", value: UI.quantumBackgroundMaxParticles }, "*");
+    act(() => tree.update(createElement(UI.QuantumBackground)));
+    expect(postMessage).toHaveBeenLastCalledWith({ type: "ad-qf-control", key: "particleCount", value: undefined }, "*");
+  } finally {
+    act(() => tree.unmount());
+    vi.unstubAllGlobals();
+  }
+  const source = readFileSync(new URL("../src/components/artwork/QuantumField/reference.html", import.meta.url), "utf8");
+  expect(source).toContain("key === 'particleCount'");
+  expect(source).toContain("particleCount === null ? densityTotal");
+});
+
+it("covers the viewport in the top layer while fullscreen and asks to leave on Escape", () => {
+  vi.stubGlobal("IS_REACT_ACT_ENVIRONMENT", true);
+  vi.stubGlobal("window", { setTimeout, clearTimeout, addEventListener: vi.fn(), removeEventListener: vi.fn() });
+  const keys = new Map<string, (event: KeyboardEvent) => void>();
+  vi.stubGlobal("document", { addEventListener: (type: string, listener: (event: KeyboardEvent) => void) => keys.set(type, listener), removeEventListener: (type: string) => keys.delete(type) });
+  const showPopover = vi.fn(), hidePopover = vi.fn();
+  const onFullscreenChange = vi.fn();
+  let tree!: ReturnType<typeof create>;
+  const node = { ...nodeMock(), showPopover, hidePopover, matches: () => true };
+  act(() => { tree = create(createElement(UI.QuantumBackground, { fullscreen: true, onFullscreenChange }), { createNodeMock: ({ type }) => type === "div" ? node : nodeMock() }); });
+  try {
+    const root = tree.root.findByProps({ "data-ad-component": "QuantumBackground" });
+    expect(root.props).toMatchObject({ "data-fullscreen": true, popover: "manual" });
+    expect(showPopover).toHaveBeenCalledOnce();
+    act(() => keys.get("keydown")!({ key: "Escape" } as KeyboardEvent));
+    expect(onFullscreenChange).toHaveBeenCalledWith(false);
+    act(() => tree.update(createElement(UI.QuantumBackground, { fullscreen: false, onFullscreenChange })));
+    expect(hidePopover).toHaveBeenCalledOnce();
+    expect(keys.has("keydown")).toBe(false);
+    expect(tree.root.findByProps({ "data-ad-component": "QuantumBackground" }).props.popover).toBeUndefined();
+  } finally {
+    act(() => tree.unmount());
+    vi.unstubAllGlobals();
+  }
+  const css = readFileSync(new URL("../src/components/artwork/QuantumField/styles.css", import.meta.url), "utf8");
+  expect(css).toMatch(/\.ad-quantum-background\[data-fullscreen\]\s*\{[^}]*position:\s*fixed[^}]*inset:\s*0[^}]*height:\s*100dvh/s);
+});
+
+it("fills the screen edge to edge while fullscreen unless fieldSize is given", () => {
+  vi.stubGlobal("IS_REACT_ACT_ENVIRONMENT", true);
+  let receive!: (event: MessageEvent) => void;
+  vi.stubGlobal("window", { setTimeout, clearTimeout, addEventListener: (_type: string, listener: typeof receive) => { receive = listener; }, removeEventListener: vi.fn() });
+  vi.stubGlobal("document", { addEventListener: vi.fn(), removeEventListener: vi.fn() });
+  const postMessage = vi.fn();
+  const contentWindow = { postMessage };
+  let tree!: ReturnType<typeof create>;
+  act(() => { tree = create(createElement(UI.QuantumBackground), { createNodeMock: ({ type }) => type === "iframe" ? { contentWindow } : nodeMock() }); });
+  try {
+    act(() => receive({ source: contentWindow, data: { type: "ad-qf-ready" } } as unknown as MessageEvent));
+    expect(postMessage).toHaveBeenCalledWith({ type: "ad-qf-control", key: "fieldSize", value: UI.quantumBackgroundDefaults.fieldSize }, "*");
+    postMessage.mockClear();
+    act(() => tree.update(createElement(UI.QuantumBackground, { fullscreen: true })));
+    expect(postMessage).toHaveBeenCalledWith({ type: "ad-qf-control", key: "fieldSize", value: UI.quantumBackgroundFullscreenFieldSize }, "*");
+    act(() => tree.update(createElement(UI.QuantumBackground, { fullscreen: true, fieldSize: 0.9 })));
+    expect(postMessage).toHaveBeenCalledWith({ type: "ad-qf-control", key: "fieldSize", value: 0.9 }, "*");
+    postMessage.mockClear();
+    act(() => tree.update(createElement(UI.QuantumBackground)));
+    expect(postMessage).toHaveBeenCalledWith({ type: "ad-qf-control", key: "fieldSize", value: UI.quantumBackgroundDefaults.fieldSize }, "*");
+  } finally {
+    act(() => tree.unmount());
+    vi.unstubAllGlobals();
+  }
+  const source = readFileSync(new URL("../src/components/artwork/QuantumField/reference.html", import.meta.url), "utf8");
+  expect(source).not.toMatch(/uViewportHalfHeight(?:\.value)? \* 0\.78/);
+  expect(source).toContain("plane.y * uViewportHalfHeight * uFieldFill");
+  expect(source).toContain("fieldSize: value => { material.uniforms.uFieldFill.value = value;");
+});
+
+it("handles every documented setting inside the renderer instead of dropping it", () => {
+  const source = readFileSync(new URL("../src/components/artwork/QuantumField/reference.html", import.meta.url), "utf8");
+  const start = source.indexOf("const STATE = {");
+  const state = source.slice(start, source.indexOf("\n        };", start));
+  const unhandled = UI.quantumBackgroundControls.flatMap(({ controls }) => controls.map(({ key }) => key)).filter((key) =>
+    !new RegExp(`\\b${key}\\s*:`).test(state)
+    && !source.includes(`STATE.${key} = `)
+    && !source.includes(`key === '${key}'`));
+  expect(unhandled).toEqual([]);
+});
+
+it("tints reaction lines, trails and light effects with the theme instead of fixed preset colours", () => {
+  const source = readFileSync(new URL("../src/components/artwork/QuantumField/reference.html", import.meta.url), "utf8");
+  expect(source).not.toContain("FIELD_TYPES[STATE.field]?.c1");
+  expect(source).not.toContain("setHSL(Math.random()");
+  expect(source).not.toMatch(/vec3\(0\.6, 0\.[78], 1\.0\)/);
+  const palette = source.slice(source.indexOf("key === 'palette'"));
+  for (const target of ["lensFlarePass.uniforms.uTint", "anamorphicPass.uniforms.uTint", "crawlerMaterial.uniforms.uColor", "trailSystem.trails.forEach"])
+    expect(palette).toContain(target);
+  expect(source).toContain("crawlerTarget.lerpColors(crawlerLow, crawlerHigh,");
+  // Theme reds and violets are lifted to the presets' luminance so the bloom still flashes on them.
+  const glow = new Function("color", "luminance", source.match(/function glowColor\(color, luminance\) \{([\s\S]*?)\n        \}/)![1]);
+  const ruby = { r: 1, g: 0.018, b: 0.07, multiplyScalar(k: number) { this.r *= k; this.g *= k; this.b *= k; return this; } };
+  glow(ruby, 0.75);
+  expect(0.2126 * ruby.r + 0.7152 * ruby.g + 0.0722 * ruby.b).toBeCloseTo(0.75, 2);
+  expect(ruby.g / ruby.r).toBeCloseTo(0.018, 3);
+  const green = { r: 0, g: 1, b: 0.25, multiplyScalar: ruby.multiplyScalar };
+  glow(green, 0.5);
+  expect(green.g).toBe(1);
+});
+
+it("offers the particle count and full screen in the field settings tab", () => {
+  vi.stubGlobal("IS_REACT_ACT_ENVIRONMENT", true);
+  vi.stubGlobal("window", { addEventListener: vi.fn(), removeEventListener: vi.fn(), setTimeout, clearTimeout });
+  vi.stubGlobal("document", { addEventListener: vi.fn(), removeEventListener: vi.fn() });
+  let tree!: ReturnType<typeof create>;
+  act(() => { tree = create(createElement(QuantumFieldExample), { createNodeMock: nodeMock }); });
+  try {
+    const scene = () => tree.root.findByProps({ "data-ad-component": "QuantumBackground" }).parent!;
+    const toggle = (label: string, on: boolean) => act(() => tree.root.findAllByType(Switch).find((node) => node.props.label === label)!.props.onValueChange(on));
+    expect(tree.root.findAllByType(Slider).filter((node) => node.props.label === "Количество частиц")).toHaveLength(0);
+    toggle("Своё количество частиц", true);
+    const count = tree.root.findAllByType(Slider).find((node) => node.props.label === "Количество частиц")!;
+    act(() => count.props.onValueChange(30_000));
+    expect(scene().props.particleCount).toBe(30_000);
+    toggle("Своё количество частиц", false);
+    expect(scene().props.particleCount).toBeUndefined();
+    toggle("На весь экран", true);
+    expect(scene().props.fullscreen).toBe(true);
+  } finally {
+    act(() => tree.unmount());
+    vi.unstubAllGlobals();
+  }
+});
+
+it("lets the host feed a spectrum the scene cannot hear itself", () => {
+  vi.stubGlobal("IS_REACT_ACT_ENVIRONMENT", true);
+  let receive!: (event: MessageEvent) => void;
+  vi.stubGlobal("window", { setTimeout, clearTimeout, addEventListener: (_type: string, listener: typeof receive) => { receive = listener; }, removeEventListener: vi.fn() });
+  const postMessage = vi.fn();
+  const contentWindow = { postMessage };
+  const spectrum = [0.8, 0.5, 0.2];
+  let tree!: ReturnType<typeof create>;
+  act(() => { tree = create(createElement(UI.QuantumBackground, { spectrum }), { createNodeMock: ({ type }) => type === "iframe" ? { contentWindow } : nodeMock() }); });
+  try {
+    act(() => receive({ source: contentWindow, data: { type: "ad-qf-ready" } } as unknown as MessageEvent));
+    expect(postMessage).toHaveBeenCalledWith({ type: "ad-qf-control", key: "spectrum", value: { bands: [0.8, 0.5, 0.2], range: [40, 12000] } }, "*");
+    act(() => tree.update(createElement(UI.QuantumBackground, { spectrum: [0.1, 0.9], spectrumRange: [20, 16000] })));
+    expect(postMessage).toHaveBeenLastCalledWith({ type: "ad-qf-control", key: "spectrum", value: { bands: [0.1, 0.9], range: [20, 16000] } }, "*");
+    act(() => tree.update(createElement(UI.QuantumBackground)));
+    expect(postMessage).toHaveBeenLastCalledWith({ type: "ad-qf-control", key: "spectrum", value: { bands: null, range: [40, 12000] } }, "*");
+  } finally {
+    act(() => tree.unmount());
+    vi.unstubAllGlobals();
+  }
+  const source = readFileSync(new URL("../src/components/artwork/QuantumField/reference.html", import.meta.url), "utf8");
+  expect(source).toContain("else if (key === 'spectrum') EXTERNAL.set(value?.bands, value?.range);");
+  // Its own file or microphone wins while playing; otherwise the host's spectrum drives every "is there sound" check.
+  expect(source).toContain("this.externalActive = !own && EXTERNAL.fresh();");
+  expect(source).toContain("const activeAudio = AUDIO.mode === 'mic' || AUDIO.isPlaying || AUDIO.externalActive;");
+  // The log-spaced bands become an analyser-like frequency array: low bins follow the first band, high ones the last.
+  const block = source.slice(source.indexOf("const EXTERNAL = {"), source.indexOf("const AUDIO = {"));
+  const external = new Function(`${block.replace("const EXTERNAL", "var EXTERNAL")}; return EXTERNAL;`)();
+  external.set([1, 0, 0, 0, 0.5], [40, 12000]);
+  for (let i = 0; i < 40; i++) external.fill();
+  const bin = (hz: number) => external.data[Math.floor(hz / 24000 * 2048)];
+  expect(bin(30)).toBeGreaterThan(240);
+  expect(bin(500)).toBeLessThan(40);
+  expect(bin(11000)).toBeGreaterThan(100);
+  external.set(null);
+  expect(external.fresh()).toBe(false);
 });

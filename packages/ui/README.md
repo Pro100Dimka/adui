@@ -25,7 +25,7 @@ import "@neo-ui-kit/react/styles.css";
 To test repository changes before publishing, run `npm run package` from the repository root and install the resulting archive in a separate application:
 
 ```bash
-npm install /path/to/adui/release/neo-ui-kit-react-1.0.3.tgz
+npm install /path/to/adui/release/neo-ui-kit-react-1.1.0.tgz
 ```
 
 Maintainers publish new versions from `Pro100Dimka/adui` using the `release.yml` GitHub Actions workflow, a matching `v<version>` tag, and the `npm-publication` environment. npm trusts its OIDC identity; no `NPM_TOKEN` is required. The workflow checks the project and packed consumer before publishing the tested archive. Published `1.0.0` cannot be overwritten: code and README changes in npm require a new package version. See the [repository release instructions](https://github.com/Pro100Dimka/adui#npm-пакет).
@@ -182,6 +182,15 @@ import { ThemeProvider, useMotion } from "@neo-ui-kit/react/core";
 
 Canvas-rendered volume knob. Drag near the edge to rotate, drag from the center to move linearly, click the outer scale to jump. Wheel and arrow keys change the value, Shift gives a fine step, PageUp/PageDown change by 10, Home/End set 0/100, Escape cancels a drag, double-click resets. `onValueChange` fires while adjusting, `onValueCommit` after the gesture. `readOnly` turns it into a gauge.
 
+## 1.1.0 release notes
+
+- **`QuantumBackground` is configured through props.** Every scene setting (`field`, `sensitivity`, `density`, `bloom`, …) is an optional prop with defaults in `quantumBackgroundDefaults`; `quantumBackgroundControls` describes them for building a settings panel. **The component no longer draws its own control panel** — build one next to it (the documentation page shows how) and drive audio through the ref (`QuantumBackgroundHandle`) with `onTransportChange` / `onWaveformChange`.
+- New `QuantumBackground` props: `spectrum` / `spectrumRange` (sound from the host app), `particleCount`, `fieldSize`, `fullscreen` / `onFullscreenChange`, and `children` laid over the scene.
+- Reaction lines, particle trails and lens/anamorphic light take the theme's colours at the presets' brightness, so the bloom still flashes in any theme.
+- The field fills the scene edge to edge in full screen; the running reaction lights toggle and every documented setting reaches the renderer.
+- New `resolveTokens` resolves many theme tokens with one style recalculation; `resolveToken` and the `ThemeEditor` use it.
+- Dialog, Card and Spotlight pointer lights no longer restyle everything inside them on each pointer move.
+
 ## 1.0.3 release notes
 
 - Point the npm Homepage link directly to the documentation overview.
@@ -223,15 +232,39 @@ Repository evidence, browser runners, before/after measurements and coverage lim
 
 ## QuantumBackground
 
-`QuantumBackground` is the complete Quantum Fields visualizer inside an iframe. A compact, transparent field sits above the kit's `FilePicker`, externally controlled `AudioPlayer`, tooltip-labelled microphone/screenshot/fullscreen actions, field selector, and sensitivity control. The selected song name appears on the file button; playback and seeking use the visualizer's single audio source. Other controls live in a closed-by-default “Тонкая настройка” section below the field. It follows the nearest `ThemeProvider` palette. This experience includes MIT-licensed upstream code and CDN-loaded Three.js modules; the upstream notice is shipped as `UPSTREAM-LICENSE.txt`. It is not mounted in overview-card previews.
+`QuantumBackground` is the complete Quantum Fields visualizer inside an iframe. It renders only the scene: every visual and audio-reaction setting is an optional prop, so one component serves a hero background, a music page or a configurable studio. It follows the nearest `ThemeProvider` palette: particles, connection lines, the running reaction lights, particle trails and the lens-flare/anamorphic tints all take the theme's colours, whichever `field` is chosen. This experience includes MIT-licensed upstream code and CDN-loaded Three.js modules; the upstream notice is shipped as `UPSTREAM-LICENSE.txt`. It is not mounted in overview-card previews.
 
 ```tsx
 import { QuantumBackground, ThemeProvider } from "@neo-ui-kit/react";
 import "@neo-ui-kit/react/styles.css";
 
 <ThemeProvider theme="violet">
-  <QuantumBackground />
+  <QuantumBackground field="Neutrino" bloom={0.8} connectionsEnabled={false} interactive={false} style={{ height: "100vh" }}>
+    <h1>Over the field</h1>
+  </QuantumBackground>
 </ThemeProvider>
 ```
 
-`QuantumBackgroundProps` accepts div attributes and an optional `particleBudget` cap. Leave the cap unset for the original adaptive particle count. `QuantumFieldExperience` and `QuantumFieldExperienceProps` remain compatible aliases. The separate lightweight `QuantumField` primitive documented above keeps its original props and rendering; it is not an alias of the full background.
+Settings (`QuantumBackgroundSettings`): `field` (one of `quantumBackgroundFields`), `sensitivity`, `density`, `timeScale`, `paused`, `interactive`, nebula, connection, crawler, particle-trail, lens-flare, depth-of-field, camera-shake, bloom, trails, chromatic, anamorphic, god-ray, grain, vortex, pulse, bass-gate, onset, audio-camera, terrain-height and adaptive-quality values. Unset props use `quantumBackgroundDefaults`; only props that change are sent to the scene. `quantumBackgroundControls` lists each setting's group, label, range, step and the switch it depends on, for building your own settings panel next to the component. `particleCount` sets how many particles are drawn across both layers (0 to `quantumBackgroundMaxParticles`, 85 000); leave it unset to follow `density`. Adaptive quality may draw fewer, so turn `adaptiveQualityEnabled` off when the exact count matters. `particleBudget` is an upper cap on top of either. `fieldSize` is the share of the scene the field spans (0.78 by default, 1 reaches the edges). `fullscreen` makes the scene cover the whole viewport above the page, and the field then runs edge to edge (`quantumBackgroundFullscreenFieldSize`, 1.1) unless `fieldSize` is set (in the browser's top layer, so no ancestor's `overflow`, `transform` or `z-index` clips it, and the iframe keeps running); Escape calls `onFullscreenChange(false)`, so keep it controlled. `children` are laid over the scene, e.g. a close button while full screen. This differs from `ref.toggleFullscreen()`, which uses the browser's Fullscreen API and needs a click.
+
+`spectrum` feeds sound the scene cannot hear itself — a native audio engine, a WebRTC call, a server stream: band levels 0–1 from low to high frequencies, log-spaced across `spectrumRange` (default `[40, 12000]` Hz), any band count. Pass a new array whenever the levels change (10–60 times a second); bands, beats, reaction lines and flashes follow it exactly as they follow a playing song. A file or microphone started from the ref takes over while it plays; `spectrum={undefined}` returns the scene to silence.
+
+```tsx
+const [bands, setBands] = useState<number[]>();
+useEffect(() => engine.onSpectrum(setBands), []); // e.g. 18 bands from 40 Hz to 12 kHz
+<QuantumBackground spectrum={bands} spectrumRange={[40, 12000]} />
+```
+
+Audio is a one-off action rather than a setting, so it is on the ref (`QuantumBackgroundHandle`): `loadFile(file)`, `togglePlayback()`, `seek(seconds)`, `toggleMicrophone()`, `screenshot()` and `toggleFullscreen()`. `onTransportChange` reports `{ mode, playing, current, duration, track }`, and `onWaveformChange` reports the peaks of a loaded file, so a kit `FilePicker`, `AudioPlayer` and `IconButton`s can drive it:
+
+```tsx
+const scene = useRef<QuantumBackgroundHandle>(null);
+const [transport, setTransport] = useState<QuantumBackgroundTransport>();
+
+<QuantumBackground ref={scene} field={field} sensitivity={sensitivity} onTransportChange={setTransport} />
+<FilePicker variant="button" accept="audio/*" onFiles={([file]) => file && scene.current?.loadFile(file)} />
+<AudioPlayer playing={transport?.playing} position={transport?.current} duration={transport?.duration}
+  onPlayingChange={() => scene.current?.togglePlayback()} onTimeChange={(s) => scene.current?.seek(s)} />
+```
+
+The documentation page builds exactly such a panel (song, player, microphone, snapshot, fullscreen, field and sensitivity, plus a closed “Тонкая настройка” section) outside the component. `QuantumFieldExperience`, `QuantumFieldExperienceProps` and `quantumFieldExperienceControls` remain compatible aliases; note that `QuantumFieldExperience` no longer renders its own control panel. The separate lightweight `QuantumField` primitive documented above keeps its original props and rendering; it is not an alias of the full background.

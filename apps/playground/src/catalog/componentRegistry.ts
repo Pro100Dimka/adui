@@ -41,7 +41,7 @@ export const additionalDocumentation: Record<string, CatalogMeta & { source: str
   },
   QuantumBackground: {
     name: "QuantumBackground", category: "motion", wide: true,
-    description: "Полный аудиовизуализатор Quantum Fields (MIT) в изолированном iframe; интерактивная сцена с управлением звуком и режимами.",
+    description: "Полный аудиовизуализатор Quantum Fields (MIT) в изолированном iframe. Все настройки сцены — пропсы, звук и снимки управляются через ref; панель настроек собирается рядом из компонентов кита.",
     source: "/artwork/QuantumField/QuantumFieldExperience.tsx", example: "/artwork/QuantumField/example.tsx",
     load: () => import("../../../../packages/ui/src/components/artwork/QuantumField/example"),
   },

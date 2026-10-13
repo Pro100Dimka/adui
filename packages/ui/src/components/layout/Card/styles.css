@@ -19,6 +19,9 @@
 }
 /* Pointer spotlight: a soft ruby light under the cursor, faded in on hover. */
 .ad-card::after {
+  /* The pointer position is not inherited by default: the light reads it from its own card. */
+  --ad-spot-x: inherit;
+  --ad-spot-y: inherit;
   content: "";
   position: absolute;
   inset: 0;

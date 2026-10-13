@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Grid, resolveToken } from "@neo-ui-kit/react";
+import { Grid, resolveTokens } from "@neo-ui-kit/react";
 import type * as Monaco from "monaco-editor";
 
 /**
@@ -75,9 +75,17 @@ function loadMonaco(): Promise<typeof Monaco> {
   return ready;
 }
 
+/** Starts loading the editor ahead of time (e.g. when the pointer reaches the button that opens it). */
+export const preloadCodeEditor = () => void loadMonaco();
+
 /** The page's theme colours as Monaco colours, so the editor looks like the rest of the docs. */
 function defineTheme(monaco: typeof Monaco, scope: Element) {
-  const c = (token: string) => resolveToken(scope, token).slice(1);
+  // One batched lookup: resolving tokens one by one recalculated the whole page's styles each time.
+  const colors = resolveTokens(scope, [
+    "pink", "secondary-100", "warning", "neutral-500", "info", "secondary", "secondary-200",
+    "primary-900", "neutral-600", "primary-700", "neutral-900", "primary-800",
+  ]);
+  const c = (token: string) => colors[token]!.slice(1);
   monaco.editor.defineTheme("neo", {
     base: "vs-dark",
     inherit: true,
@@ -110,6 +118,19 @@ function defineTheme(monaco: typeof Monaco, scope: Element) {
 let modelCount = 0;
 
 /**
+ * Resolves once the window around the editor has finished opening and the page is idle. Creating
+ * Monaco blocks the main thread for about a quarter of a second; started at once, it froze the
+ * dialog's opening animation. Until then the plain text area already shows the code.
+ */
+async function settled(node: Element) {
+  const opening = node.closest("dialog")?.getAnimations?.() ?? [];
+  await Promise.allSettled(opening.map((animation) => animation.finished));
+  await new Promise<void>((resolve) =>
+    typeof requestIdleCallback === "function" ? requestIdleCallback(() => resolve(), { timeout: 500 }) : setTimeout(resolve, 0),
+  );
+}
+
+/**
  * A code editor with real IntelliSense for the library: component and prop completion with their
  * docs, union values, hover info and type errors. Until it loads, a plain text area stands in.
  */
@@ -131,7 +152,7 @@ export function CodeEditor({
   useEffect(() => {
     let disposed = false;
     let model: Monaco.editor.ITextModel | undefined;
-    void loadMonaco().then((monaco) => {
+    void Promise.all([loadMonaco(), host.current ? settled(host.current) : undefined]).then(([monaco]) => {
       const node = host.current;
       if (disposed || !node) return;
       defineTheme(monaco, node);

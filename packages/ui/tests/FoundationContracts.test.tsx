@@ -235,7 +235,7 @@ describe("public component documentation", () => {
     const html = renderToStaticMarkup(<QuantumFieldExample />);
     expect(html).not.toContain('data-ad-component="QuantumField"');
     expect(html).toContain("<iframe");
-    expect(html).toContain("ad-qf-controls");
+    expect(html).toContain("qb-panel");
     expect(html).toContain("Quantum Background visualizer");
   });
 });
