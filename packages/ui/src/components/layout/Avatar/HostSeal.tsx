@@ -58,6 +58,8 @@ interface Layer {
   nodes: VectorNode[];
   /** Turns per second; absent for a static layer. */
   spin?: number;
+  /** The person's photo: a layer of its own, so the theme's hue never tints a face. */
+  photo?: true;
 }
 
 const isOrbit = (node: VectorNode) => node.props?.["data-host-orbit"] !== undefined;
@@ -78,11 +80,15 @@ const toLayers = (seal: VectorNode): Layer[] => {
   const layers: Layer[] = [];
   const paint = (node: VectorNode) => {
     const top = layers[layers.length - 1];
-    if (top && top.spin === undefined) top.nodes.push(node);
+    if (top && top.spin === undefined && !top.photo) top.nodes.push(node);
     else layers.push({ nodes: [node] });
   };
   for (const child of seal.children ?? []) {
     if (typeof child === "string") continue;
+    if (child.props?.className === "host-emblem__photo") {
+      layers.push({ nodes: [child], photo: true });
+      continue;
+    }
     if (isOrbit(child)) {
       layers.push({ nodes: [still(child)], spin: spinOf(child) });
       continue;
@@ -116,6 +122,7 @@ export function HostSeal({ photo, name }: { photo?: string; name?: string }) {
           ...root,
           key: i,
           "data-host-spin": layer.spin,
+          "data-host-photo": layer.photo ? "" : undefined,
           style: layer.spin === undefined ? undefined : {
             animationDuration: `${1 / Math.abs(layer.spin)}s`,
             animationDirection: layer.spin < 0 ? "reverse" : "normal",

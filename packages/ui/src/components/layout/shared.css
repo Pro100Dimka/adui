@@ -73,7 +73,7 @@
   transform: rotate(180deg);
 }
 
-/* Vector artwork is drawn in ruby; it turns to the theme hue. */
-:is(.ad-illustration, .ad-brand-mark, .ad-host-seal) svg {
+/* Vector artwork is drawn in ruby; it turns to the theme hue. A person's photo keeps its colours. */
+:is(.ad-illustration, .ad-brand-mark, .ad-host-seal) svg:not([data-host-photo]) {
   filter: hue-rotate(var(--ad-hue-shift, 0deg));
 }

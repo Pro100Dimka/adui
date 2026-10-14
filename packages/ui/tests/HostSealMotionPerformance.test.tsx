@@ -25,3 +25,17 @@ it("composites the host rings at their original periods without a per-frame Java
   expect(css).toContain("@media (prefers-reduced-motion: reduce)");
   expect(css).toContain(':root:not([data-ad-motion="on"]) .ad-host-seal > svg[data-host-spin]');
 });
+
+it("keeps a person's photo out of the theme's hue shift while the rings follow it", () => {
+  const photo = "data:image/webp;base64,cGhvdG8=";
+  const html = renderToStaticMarkup(createElement(HostSeal, { photo, name: "Дмитрий" }));
+  const layers = [...html.matchAll(/<svg[^>]*>.*?<\/svg>/gs)].map(([layer]) => layer);
+  const withPhoto = layers.filter((layer) => layer.includes(photo));
+  expect(withPhoto).toHaveLength(1);
+  expect(withPhoto[0]).toMatch(/^<svg[^>]*data-host-photo=""/);
+  // The face is still clipped to its circle, defined in the bottom drawing.
+  expect(withPhoto[0]).toContain("hostv2-face-clip");
+  expect(layers.filter((layer) => /^<svg[^>]*data-host-photo/.test(layer))).toHaveLength(1);
+  const css = readFileSync("src/components/layout/shared.css", "utf8");
+  expect(css).toContain(":is(.ad-illustration, .ad-brand-mark, .ad-host-seal) svg:not([data-host-photo])");
+});
