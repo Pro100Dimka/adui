@@ -1,0 +1,1 @@
+import{j as a,g as e,h as t}from"./index-B8q7dLAB.js";function r(){return a.jsx(e,{labelledBy:"tab-audio",children:a.jsx(t,{variant:"body-sm",tone:"muted",children:"Драйвер, задержка и мониторинг голоса."})})}export{r as default};

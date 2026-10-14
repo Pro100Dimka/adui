@@ -973,15 +973,19 @@ it("reports a complete runnable example that passes the panel values as props", 
   act(() => { tree = create(createElement(ExampleCodeContext.Provider, { value: (next: string) => { code = next; } }, createElement(QuantumFieldExample)), { createNodeMock: nodeMock }); });
   try {
     expect(code).toContain("export default function Example()");
-    expect(code).toContain("field={field}");
-    expect(code).toContain("sensitivity={sensitivity}");
-    expect(code).toContain("bloom={0.3}");
+    // Every setting reaches the scene as a prop of its own.
+    for (const key of Object.keys(UI.quantumBackgroundDefaults)) expect(code).toContain(`${key}={settings.${key}}`);
+    // The fine-tuning block of this page is part of the example, built from the kit's controls.
+    expect(code).toContain('<CollapsibleSection title="Тонкая настройка"');
+    expect(code).toContain("quantumBackgroundControls");
+    expect(code).toContain('label="Своё количество частиц"');
     expect(code).toContain("scene.current?.loadFile(file)");
     act(() => tree.root.findByProps({ label: "Тип поля" }).props.onValueChange("Photon (EM)"));
     act(() => tree.root.findAllByType(Tabs)[0]!.props.onValueChange("environment"));
     act(() => tree.root.findAllByType(Switch).find((node) => node.props.label === "Сеть связей")!.props.onValueChange(false));
-    expect(code).toContain('useState<QuantumBackgroundField>("Photon (EM)")');
-    expect(code).toContain("connectionsEnabled={false}");
+    // What was changed on the panel starts the example's settings.
+    expect(code).toContain('field: "Photon (EM)",');
+    expect(code).toContain("connectionsEnabled: false,");
   } finally {
     act(() => tree.unmount());
     vi.unstubAllGlobals();

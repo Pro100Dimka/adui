@@ -8,46 +8,69 @@ const detailed = [{ ...groups[0]!, controls: groups[0]!.controls.slice(2) }, ...
 const tabs = detailed.map(({ id, label }) => ({ value: id, label }));
 const emptyTransport: QuantumBackgroundTransport = { mode: null, playing: false, current: 0, duration: 0, track: "" };
 
-/** Settings always printed in the code, so the props are visible before anything is changed. */
-const shownProps: readonly (keyof QuantumBackgroundSettings)[] = ["density", "fieldSize", "timeScale", "bloom", "trails", "nebulaEnabled", "connectionsEnabled", "interactive"];
-
 /** How many particles the scene draws for a density when `particleCount` is not set. */
 const densityParticles = (density: number) => Math.floor(250_000 * Math.min(density, 0.14)) + 50_000;
 
-const prop = (key: string, value: unknown) =>
-  value === true ? key : typeof value === "string" ? `${key}="${value}"` : `${key}={${value}}`;
+const literal = (value: unknown) => (typeof value === "string" ? `"${value}"` : String(value));
 
-/** A complete, runnable component: the field and sensitivity are wired to the panel, the rest are plain props. */
-function quantumBackgroundCode(settings: Partial<QuantumBackgroundSettings>, particleCount: number) {
-  const value = (key: keyof QuantumBackgroundSettings) => settings[key] ?? U.quantumBackgroundDefaults[key];
-  const keys = [...shownProps, ...(Object.keys(settings) as (keyof QuantumBackgroundSettings)[])
-    .filter((key) => key !== "field" && key !== "sensitivity" && !shownProps.includes(key))];
+/**
+ * A complete, runnable component with the same panel as this page: the field and sensitivity,
+ * then "Тонкая настройка" with a tab per group, built from `quantumBackgroundControls`. Every
+ * setting is a prop of the scene; what was changed here is in `initial`.
+ */
+function quantumBackgroundCode(settings: Partial<QuantumBackgroundSettings>, particleCount: number | undefined) {
+  const keys = Object.keys(U.quantumBackgroundDefaults) as (keyof QuantumBackgroundSettings)[];
+  const changed = (Object.keys(settings) as (keyof QuantumBackgroundSettings)[])
+    .map((key) => `  ${key}: ${literal(settings[key])},`);
   return `import { useRef, useState } from "react";
 import {
-  AudioPlayer, FilePicker, Grid, IconButton, QuantumBackground, Select, Slider, Stack,
-  quantumBackgroundFields, quantumBackgroundMaxParticles,
-  type QuantumBackgroundField, type QuantumBackgroundHandle, type QuantumBackgroundTransport,
+  AudioPlayer, CollapsibleSection, FilePicker, Grid, IconButton, QuantumBackground, Select, Slider, Stack, Switch, Tabs,
+  quantumBackgroundControls, quantumBackgroundDefaults, quantumBackgroundMaxParticles,
+  type QuantumBackgroundControl, type QuantumBackgroundHandle, type QuantumBackgroundSettings,
+  type QuantumBackgroundTransport,
 } from "@neo-ui-kit/react";
+
+/** The kit's defaults with what was changed on the panel. */
+const initial: QuantumBackgroundSettings = {
+${["  ...quantumBackgroundDefaults,", ...changed].join("\n")}
+};
+const [main, ...detailed] = quantumBackgroundControls;
+// "Тип поля" and "Чувствительность" stay in view; the rest of "Поле" opens with the other tabs.
+const essentials = main.controls.slice(0, 2);
+const tabs = [{ ...main, controls: main.controls.slice(2) }, ...detailed];
 
 export default function Example() {
   const scene = useRef<QuantumBackgroundHandle>(null);
-  const [field, setField] = useState<QuantumBackgroundField>("${value("field")}");
-  const [sensitivity, setSensitivity] = useState(${value("sensitivity")});
-  const [particleCount, setParticleCount] = useState(${particleCount});
+  const [settings, setSettings] = useState(initial);
+  const [particleCount, setParticleCount] = useState<number | undefined>(${particleCount ?? "undefined"});
   const [fullscreen, setFullscreen] = useState(false);
+  const [tab, setTab] = useState(tabs[0].id);
   const [transport, setTransport] = useState<QuantumBackgroundTransport>();
   const [waveform, setWaveform] = useState<number[]>();
+  const set = (key: keyof QuantumBackgroundSettings, value: string | number | boolean) =>
+    setSettings((current) => ({ ...current, [key]: value }));
+
+  // One control of the panel: a list, a switch or a slider, as the setting describes itself.
+  const control = (item: QuantumBackgroundControl) => {
+    const value = settings[item.key];
+    if (item.options)
+      return <Select key={item.key} label={item.label} options={[...item.options]} value={String(value)}
+        onValueChange={(next) => next && set(item.key, next)} />;
+    if (typeof value === "boolean")
+      return <Switch key={item.key} label={item.label} checked={value} onValueChange={(next) => set(item.key, next)} />;
+    return <Slider key={item.key} label={item.label} min={item.min} max={item.max} step={item.step} value={Number(value)}
+      onValueChange={(next) => set(item.key, next)} />;
+  };
+  const group = tabs.find(({ id }) => id === tab) ?? tabs[0];
 
   return (
     <Stack gap={3} style={{ width: "100%" }}>
       <QuantumBackground
         ref={scene}
-        field={field}
-        sensitivity={sensitivity}
+${keys.map((key) => `        ${key}={settings.${key}}`).join("\n")}
         particleCount={particleCount}
         fullscreen={fullscreen}
         onFullscreenChange={setFullscreen}
-${keys.map((key) => `        ${prop(key, value(key))}`).join("\n")}
         onTransportChange={setTransport}
         onWaveformChange={setWaveform}
       >
@@ -69,13 +92,26 @@ ${keys.map((key) => `        ${prop(key, value(key))}`).join("\n")}
         points={waveform} disabled={transport?.mode !== "file"} showVolume={false}
         onPlayingChange={() => scene.current?.togglePlayback()} onTimeChange={(seconds) => scene.current?.seek(seconds)} />
       <Grid columns="repeat(auto-fit, minmax(12rem, 1fr))" gap={4} align="end">
-        <Select label="Тип поля" options={[...quantumBackgroundFields]} value={field}
-          onValueChange={(next) => next && setField(next as QuantumBackgroundField)} />
-        <Slider label="Чувствительность" min={0.1} max={3} step={0.01} value={sensitivity}
-          onValueChange={setSensitivity} />
-        <Slider label="Частицы" min={0} max={quantumBackgroundMaxParticles} step={1000} value={particleCount}
-          onValueChange={setParticleCount} />
+        {essentials.map(control)}
       </Grid>
+      <CollapsibleSection title="Тонкая настройка" description="Среда, камера, эффекты и реакция на звук" icon="settings">
+        {/* Seven tabs scroll sideways in a narrow column instead of widening the page. */}
+        <div style={{ overflowX: "auto", contain: "inline-size" }}>
+          <Tabs label="Тонкая настройка" items={tabs.map(({ id, label }) => ({ value: id, label }))} value={tab} onValueChange={setTab} />
+        </div>
+        <Grid columns="repeat(auto-fit, minmax(12rem, 1fr))" gap={4} align="end">
+          {group.controls.filter(({ enabledBy }) => !enabledBy || settings[enabledBy] === true).map(control)}
+          {group.id === main.id && <>
+            <Switch label="Своё количество частиц" checked={particleCount !== undefined}
+              onValueChange={(on) => setParticleCount(on ? ${particleCount ?? densityParticles(settings.density ?? U.quantumBackgroundDefaults.density)} : undefined)} />
+            {particleCount !== undefined && (
+              <Slider label="Количество частиц" min={0} max={quantumBackgroundMaxParticles} step={1000} value={particleCount}
+                onValueChange={setParticleCount} />
+            )}
+            <Switch label="На весь экран" checked={fullscreen} onValueChange={setFullscreen} />
+          </>}
+        </Grid>
+      </CollapsibleSection>
     </Stack>
   );
 }`;
@@ -93,7 +129,7 @@ export default function QuantumBackgroundExample() {
   const [particleCount, setParticleCount] = useState<number>();
   const [fullscreen, setFullscreen] = useState(false);
   const shownCount = particleCount ?? densityParticles(settings.density ?? U.quantumBackgroundDefaults.density);
-  const code = quantumBackgroundCode(settings, shownCount);
+  const code = quantumBackgroundCode(settings, particleCount);
   useEffect(() => { report?.(code); }, [report, code]);
   if (preview) return <U.QuantumField paused quality="low" />;
 
