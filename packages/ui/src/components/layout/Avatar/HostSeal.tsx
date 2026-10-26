@@ -2,7 +2,7 @@ import { createElement, useMemo, useRef, type ReactElement } from "react";
 import { useSvgId, vectorElement } from "../../../core/artwork";
 import type { VectorNode } from "../../../core/base";
 import { usePauseOffscreen } from "../../../core/motion/hooks";
-import { illustrations } from "../shared";
+import { host } from "../../../artwork/illustrations.json";
 
 /** The seal's face circle; a photo is clipped to it and drawn under the rings and label. */
 const facePhoto = (src: string): VectorNode => ({
@@ -111,7 +111,7 @@ export function HostSeal({ photo, name }: { photo?: string; name?: string }) {
   const prefix = `svg-${useSvgId()}-`;
   usePauseOffscreen(ref);
   const layers = useMemo(() => {
-    const seal = withPerson(illustrations.host, photo, name);
+    const seal = withPerson(host, photo, name);
     const root = (vectorElement({ tag: "svg", props: seal.props }, prefix) as ReactElement<Record<string, unknown>>).props;
     // Gradients and filters live once, in the bottom drawing (it opens with <defs>); the
     // layers above refer to them by id.
