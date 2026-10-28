@@ -1,0 +1,1 @@
+import{j as i,P as s,s as n,U as o,a as e}from"./index-Q2EOEdmy.js";function r(){return i.jsx(s,{knobs:{animation:{options:o.loaderAnimations,value:"orbit"},size:{options:n,value:"md"}},code:a=>e("Loader",{animation:a.animation,size:a.size}),children:a=>i.jsx(o.Loader,{animation:a.animation,size:a.size})})}export{r as default};

@@ -385,6 +385,9 @@
             field: 'Gluon (Strong)',
             density: CONFIG.initialDensity,
             fieldSize: 0.78,
+            particleDepth: 0,
+            particleScale: 1,
+            particleSharpness: 0,
             sensitivity: 1.1,
             trails: 0.66144,
             bloom: 0.3,
@@ -803,12 +806,38 @@
         // Every field type shares one screen-fitted footprint; switching presets never reallocates particles.
         // uFieldFill: share of the viewport the field spans; above 1.0 it runs past the edges.
         const shapeFunction = `
-uniform float uFieldFill;
-vec3 shapedPosition(vec3 seed) {
+uniform float uFieldFill, uParticleDepth, uParticleScale;
+float particleProximity(vec3 seed) {
+    // Most points stay distant; only a small share enters the foreground.
+    return pow(seed.z, 4.0);
+}
+float particleTime(float time, float proximity) {
+    return time * mix(1.0, 0.25 + proximity * 1.35, uParticleDepth);
+}
+float particleProjection(float proximity) {
+    return 1.0 - mix(-100.0, 125.0, proximity) * uParticleDepth / ${CONFIG.defaultZoom.toFixed(1)};
+}
+vec3 shapedPosition(vec3 seed, float proximity, float time) {
     vec2 plane = seed.xy * 2.0 - 1.0;
-    return vec3(plane.x * uViewportAspect * uViewportHalfHeight * uFieldFill,
-                plane.y * uViewportHalfHeight * uFieldFill,
-                (seed.z - 0.5) * 12.0);
+    plane += vec2(sin(time * 0.16 + seed.x * 6.28), cos(time * 0.12 + seed.y * 6.28))
+        * mix(0.006, 0.045, proximity) * uParticleDepth;
+    float projection = particleProjection(proximity);
+    // Compensate the footprint for perspective, so nearby points also fill the viewport.
+    return vec3(plane * vec2(uViewportAspect, 1.0) * uViewportHalfHeight * uFieldFill * projection,
+                (seed.z - 0.5) * 12.0 + mix(-100.0, 125.0, proximity) * uParticleDepth);
+}
+float particleEdge(vec3 position, float proximity) {
+    vec2 extent = vec2(uViewportAspect, 1.0) * uViewportHalfHeight * uFieldFill * 1.05 * particleProjection(proximity);
+    return 1.0 - smoothstep(0.92, 1.05, max(abs(position.x) / extent.x, abs(position.y) / extent.y));
+}`;
+
+        const particleLight = `
+uniform float uParticleSharpness;
+vec4 crispParticle(vec3 tint, float radius, float alpha) {
+    float core = 1.0 - smoothstep(0.05, 0.2, radius);
+    float halo = exp(-radius * radius * 45.0) * 0.22;
+    float edge = 1.0 - smoothstep(0.42, 0.5, radius);
+    return vec4(mix(tint, vec3(1.0), core * 0.65), clamp(alpha * (core + halo) * edge, 0.0, 1.0));
 }`;
 
         // --- PARTICLE VERTEX SHADER ---
@@ -884,7 +913,9 @@ vec3 curl(float x, float y, float z) {
 ${shapeFunction}
 
 void main() {
-    float t = uTime * (1.0 + uMid * 0.5);
+    float proximity = particleProximity(aRandom);
+    float depthTime = particleTime(uTime, proximity);
+    float t = depthTime * (1.0 + uMid * 0.5);
     vec3 noisePos = position * 0.035 + aRandom;
     float layerMod = 1.0 + aLayer * 0.5;
 
@@ -893,14 +924,14 @@ void main() {
     vec3 flow3 = curl(noisePos.x * uNoiseScale * 0.5 - t*0.05, noisePos.y * uNoiseScale * 0.5, noisePos.z * uNoiseScale * 0.5) * 0.6 * uLowMid;
     vec3 flow = flow1 + flow2 * uHigh + flow3;
 
-    vec3 newPos = shapedPosition(aRandom) + (flow * uCurlStrength * layerMod * (1.0 + uSpectralFlux * 2.5));
+    vec3 newPos = shapedPosition(aRandom, proximity, depthTime) + (flow * uCurlStrength * layerMod * (1.0 + uSpectralFlux * 2.5));
 
     float vortexAngle = uVortexStrength * uBass * 0.45 * (0.75 + aRandom.z * 0.5);
     float cosA = cos(vortexAngle), sinA = sin(vortexAngle);
     vec2 rotated = vec2(newPos.x * cosA - newPos.z * sinA, newPos.x * sinA + newPos.z * cosA);
     newPos.xz = mix(newPos.xz, rotated, uBass * uVortexStrength);
 
-    float yVortex = sin(newPos.y * 0.1 + uTime) * uMid * uVortexStrength * 2.0;
+    float yVortex = sin(newPos.y * 0.1 + depthTime) * uMid * uVortexStrength * 2.0;
     newPos.x += cos(newPos.y * 0.15) * yVortex;
     newPos.z += sin(newPos.y * 0.15) * yVortex;
 
@@ -916,7 +947,7 @@ void main() {
         + smoothstep(0.3, 0.8, uBass) * 6.0
         + uOnsetEnergy * 8.0) * (0.6 + aRandom.z * 0.4);
     newPos.z += bassDepth;
-    float fieldWave = sin(aRandom.x * 11.0 - uTime * 0.8 + sin(aRandom.y * 7.0 + uTime * 0.35));
+    float fieldWave = sin(aRandom.x * 11.0 - depthTime * 0.8 + sin(aRandom.y * 7.0 + depthTime * 0.35));
     newPos.z += fieldWave * (1.8 + uBass * 2.4 + uBeatEnergy * 1.6);
 
     // Waveform relief moves toward the camera while retaining the shared rectangular footprint.
@@ -935,9 +966,10 @@ void main() {
 
     float size = uSizeBase * (0.85 + uBass * 0.5 + uBeatEnergy * 0.5) * (1.0 + (uZoomFactor - 1.0) * 0.3);
     size *= 1.0 + sin(uTime * 10.0 + aPhase * 6.28) * uHigh * 0.35;
-    vGlint = smoothstep(0.985, 0.998, aRandom.z) * (0.7 + 0.3 * sin(uTime * 3.0 + aPhase * 6.28)) * (0.75 + uHigh * 0.15 + uOnsetEnergy * 0.1);
-    size *= 0.85 + vGlint * 2.1;
-    gl_PointSize = clamp(max(size * uPixelRatio * (90.0 / -mvPosition.z) * layerMod, vGlint * 4.5 * uPixelRatio), 0.5, 120.0);
+    vGlint = smoothstep(mix(0.985, 0.993, uParticleDepth), mix(0.998, 0.999, uParticleDepth), aRandom.z) * (0.7 + 0.3 * sin(uTime * 3.0 + aPhase * 6.28)) * (0.75 + uHigh * 0.15 + uOnsetEnergy * 0.1);
+    size *= 0.85 + vGlint * mix(2.1, 0.7, uParticleDepth);
+    size = max(size * uPixelRatio * (90.0 / -mvPosition.z) * layerMod, vGlint * 4.5 * uPixelRatio);
+    gl_PointSize = clamp(size * uParticleScale * mix(1.0, 0.7 + proximity * 1.8, uParticleDepth), 0.5, 120.0);
 
     float colorMix = smoothstep(0.0, 2.8, length(flow) + uHighMid * 3.0);
     vec3 baseColor = mix(uColor1, uColor2, colorMix);
@@ -949,16 +981,18 @@ void main() {
 
     vRimLight = pow(1.0 - max(0.0, dot(normalize(-mvPosition.xyz), normalize(newPos))), 3.0);
     vEnergy = energyLevel;
-    vDepth = clamp(-mvPosition.z / 120.0, 0.0, 1.0);
+    vDepth = mix(clamp(-mvPosition.z / 120.0, 0.0, 1.0), 1.0 - proximity, uParticleDepth);
 
-    float alpha = 1.0 - smoothstep(0.92, 1.05, max(abs(newPos.x) / (uViewportAspect * uViewportHalfHeight * uFieldFill * 1.05), abs(newPos.y) / (uViewportHalfHeight * uFieldFill * 1.05)));
+    float alpha = particleEdge(newPos, proximity);
     float sparkle = 1.0 + (aRandom.x > 0.8 ? sin(uTime * 20.0 + aRandom.y * 150.0) * uHigh * 2.5 : 0.0);
-    vAlpha = alpha * sparkle * (0.7 + uMid * 0.35) * layerMod;
+    vAlpha = alpha * sparkle * (0.7 + uMid * 0.35) * layerMod * mix(1.0, 0.5 + proximity * 0.5, uParticleDepth);
 }`;
 
         const fragmentShader = `
 varying vec3 vColor;
 varying float vAlpha, vEnergy, vDepth, vRimLight, vGlint;
+
+${particleLight}
 
 void main() {
     vec2 xy = gl_PointCoord.xy - vec2(0.5);
@@ -975,7 +1009,7 @@ void main() {
     finalColor = mix(finalColor, vec3(0.02, 0.03, 0.05), vDepth * 0.4);
 
     float finalAlpha = clamp(vAlpha * (glow * 0.85 + halo * 0.55 + pow(1.0 - r * 2.0, 2.5) * 0.55 + glint * 0.9), 0.0, 1.0);
-    gl_FragColor = vec4(finalColor, finalAlpha);
+    gl_FragColor = mix(vec4(finalColor, finalAlpha), crispParticle(vColor, r, vAlpha), uParticleSharpness);
 }`;
 
         // ═══════ POST-PROCESSING SHADERS ═══════
@@ -1386,9 +1420,16 @@ void main() {
         };
 
         const def = FIELD_TYPES[STATE.field];
+        // Both particle layers share the same controls and light profile.
+        const particleUniforms = {
+            uParticleDepth: { value: STATE.particleDepth },
+            uParticleScale: { value: STATE.particleScale },
+            uParticleSharpness: { value: STATE.particleSharpness }
+        };
         const material = new THREE.ShaderMaterial({
             vertexShader, fragmentShader,
             uniforms: {
+                ...particleUniforms,
                 uTime: { value: 0 },
                 uPixelRatio: { value: STATE.pixelRatio },
                 uSizeBase: { value: def.sz },
@@ -1483,7 +1524,9 @@ ${shapeFunction}
 
 void main() {
     // Secondary particles run at a slower timescale — they are the atmosphere, not the core
-    float t = uTime * 0.45;
+    float proximity = particleProximity(instanceRandom) * 0.22;
+    float depthTime = particleTime(uTime, proximity);
+    float t = depthTime * 0.45;
 
     // Multi-scale noise flow — low freqs drive large drift, high freqs add fine turbulence
     vec3 noisePos = instancePosition * 0.035 + instanceRandom;
@@ -1503,7 +1546,7 @@ void main() {
 
     // Orbital drift — vortex-aware, modulated by bass
     float orbitSpeed = 0.12 + instanceRandom.x * 0.15 + uBass * 0.08;
-    float angle = uTime * orbitSpeed + instancePhase;
+    float angle = depthTime * orbitSpeed + instancePhase;
     float orbitRadius = length(instancePosition.xz) * (1.0 + uSubBass * 0.25);
     // Vortex coupling — secondary shell rotates with the main field vortex
     float vortexInfluence = uVortexStrength * uBass * 0.4;
@@ -1514,7 +1557,7 @@ void main() {
         sin(vAngle) * orbitRadius - instancePosition.z
     ) * 0.07;
 
-    vec3 newPos = shapedPosition(instanceRandom) + offset + orbit;
+    vec3 newPos = shapedPosition(instanceRandom, proximity, depthTime) + offset + orbit;
 
     // Transients and sub-bass move the atmosphere in depth, not away from the centre.
     newPos.z += uOnsetEnergy * 14.0 * (0.6 + instanceRandom.z * 0.4);
@@ -1528,7 +1571,7 @@ void main() {
     float sparkle = 1.0 + (instanceRandom.x > 0.85 ? sin(uTime * 15.0 + instanceRandom.y * 200.0) * uUltraHigh * 3.0 : 0.0);
     float swell = 1.0 + uSubBass * 0.6 + uLowMid * 0.3;
     float size = (1.1 + uBeatEnergy * 0.7) * swell * sparkle;
-    gl_PointSize = clamp(size * uPixelRatio * (55.0 / -mvPosition.z), 0.5, 55.0);
+    gl_PointSize = clamp(size * uPixelRatio * (55.0 / -mvPosition.z) * uParticleScale, 0.5, 55.0);
 
     // Colour: spectral centroid shifts hue, highMid brightens toward white
     float centroidMix = clamp(uSpectralCentroid * 2.2 + uHighMid * 0.4, 0.0, 1.0);
@@ -1539,8 +1582,8 @@ void main() {
     vColor = mix(vColor, vec3(1.0), uBeatEnergy * 0.25);
 
     // Alpha: outer shell fades at edge, mid-frequency presence sustains visibility
-    float edgeFade = 1.0 - smoothstep(0.92, 1.05, max(abs(newPos.x) / (uViewportAspect * uViewportHalfHeight * uFieldFill * 1.05), abs(newPos.y) / (uViewportHalfHeight * uFieldFill * 1.05)));
-    vAlpha = edgeFade * (0.45 + uMid * 0.35 + uLowMid * 0.2) * sparkle;
+    float edgeFade = particleEdge(newPos, proximity);
+    vAlpha = edgeFade * (0.45 + uMid * 0.35 + uLowMid * 0.2) * sparkle * mix(1.0, 0.6, uParticleDepth);
 
     vEnergy = uBeatEnergy * 0.4 + uHighMid * 0.3 + uOnsetEnergy * 0.3;
     vDepth = clamp(-mvPosition.z / 160.0, 0.0, 1.0);
@@ -1552,6 +1595,8 @@ varying vec3 vColor;
 varying float vAlpha;
 varying float vEnergy;
 varying float vDepth;
+
+${particleLight}
 
 void main() {
     vec2 xy = gl_PointCoord.xy - vec2(0.5);
@@ -1568,7 +1613,7 @@ void main() {
     finalColor = mix(finalColor, vec3(0.02, 0.03, 0.06), vDepth * 0.35);
 
     float finalAlpha = clamp(vAlpha * (glow * 0.65 + softGlow + core * 0.35), 0.0, 1.0);
-    gl_FragColor = vec4(finalColor, finalAlpha);
+    gl_FragColor = mix(vec4(finalColor, finalAlpha), crispParticle(vColor, r, vAlpha), uParticleSharpness);
 }
 `;
 
@@ -1609,6 +1654,7 @@ void main() {
             vertexShader: secondaryVertexShader,
             fragmentShader: secondaryFragmentShader,
             uniforms: {
+                ...particleUniforms,
                 uTime:             { value: 0 },
                 uPixelRatio:       { value: STATE.pixelRatio },
                 uSubBass:          { value: 0 },
@@ -1646,10 +1692,16 @@ void main() {
         function fieldParticlePosition(index, target) {
             const halfHeight = material.uniforms.uViewportHalfHeight.value * STATE.fieldSize;
             const halfWidth = halfHeight * material.uniforms.uViewportAspect.value;
+            const x = particleSeeds.getX(index), y = particleSeeds.getY(index), z = particleSeeds.getZ(index);
+            const proximity = z ** 4, depth = particleUniforms.uParticleDepth.value;
+            const offset = (-100 + proximity * 225) * depth;
+            const projection = 1 - offset / CONFIG.defaultZoom;
+            const time = material.uniforms.uTime.value * (1 + (proximity * 1.35 - 0.75) * depth);
+            const drift = (0.006 + proximity * 0.039) * depth;
             return target.set(
-                (particleSeeds.getX(index) * 2 - 1) * halfWidth,
-                (particleSeeds.getY(index) * 2 - 1) * halfHeight,
-                (particleSeeds.getZ(index) - 0.5) * 12
+                (x * 2 - 1 + Math.sin(time * 0.16 + x * 6.28) * drift) * halfWidth * projection,
+                (y * 2 - 1 + Math.cos(time * 0.12 + y * 6.28) * drift) * halfHeight * projection,
+                (z - 0.5) * 12 + offset
             );
         }
 
@@ -1803,8 +1855,8 @@ void main() {
         refreshTrackedParticles();
         let lastConnectionState = null;
 
-        function shouldRebuildConnections(activeAudio, current, previous, idleElapsed) {
-            return activeAudio || idleElapsed >= 2 || !previous || current.some((value, index) => value !== previous[index]);
+        function shouldRebuildConnections(moving, current, previous, idleElapsed) {
+            return moving || idleElapsed >= 2 || !previous || current.some((value, index) => value !== previous[index]);
         }
 
         function updateConnections(threshold, bassBoost, highMid, mid, forceRefresh = false) {
@@ -2433,14 +2485,15 @@ void main() {
             connectionMesh.visible = STATE.connectionsEnabled;
             if (STATE.connectionsEnabled) {
                 const activeAudio = AUDIO.mode === 'mic' || AUDIO.isPlaying || AUDIO.externalActive;
+                const moving = activeAudio || particleUniforms.uParticleDepth.value > 0;
                 const connectionState = [
                     STATE.field, STATE.connectionThreshold, geometry.drawRange.count,
                     material.uniforms.uViewportAspect.value, material.uniforms.uViewportHalfHeight.value, STATE.fieldSize,
-                    STATE.qualityLevel, activeAudio
+                    STATE.qualityLevel, activeAudio, particleUniforms.uParticleDepth.value
                 ];
                 connectionElapsed = Math.min(1 / 20, connectionElapsed + dt);
                 idleConnectionElapsed = Math.min(2, idleConnectionElapsed + dt);
-                if (connectionElapsed >= 1 / 20 && shouldRebuildConnections(activeAudio, connectionState, lastConnectionState, idleConnectionElapsed)) {
+                if (connectionElapsed >= 1 / 20 && shouldRebuildConnections(moving, connectionState, lastConnectionState, idleConnectionElapsed)) {
                     const refreshSelection = !lastConnectionState || connectionState[2] !== lastConnectionState[2]
                         || connectionState[6] !== lastConnectionState[6] || (!activeAudio && idleConnectionElapsed >= 2);
                     updateConnections(
@@ -2536,6 +2589,9 @@ void main() {
         let pausedFromKit = false;
         let requestedTimeScale = STATE.timeScale;
         const sideEffects = {
+            particleDepth: value => particleUniforms.uParticleDepth.value = THREE.MathUtils.clamp(value, 0, 1),
+            particleScale: value => particleUniforms.uParticleScale.value = THREE.MathUtils.clamp(value, 0.5, 3),
+            particleSharpness: value => particleUniforms.uParticleSharpness.value = THREE.MathUtils.clamp(value, 0, 1),
             trails: value => afterimagePass.uniforms['damp'].value = value,
             chromaticAberration: value => { chromaticPass.uniforms.uIntensity.value = value; chromaticPass.enabled = value > 0; },
             filmGrain: value => { grainPass.uniforms.uIntensity.value = value; grainPass.enabled = value > 0; },

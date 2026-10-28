@@ -13,6 +13,10 @@ import { FilePicker } from "../../controls/FilePicker/FilePicker";
 import { PeoplePicker } from "../../controls/PeoplePicker/PeoplePicker";
 import { Slider } from "../../controls/Slider/Slider";
 import { TagInput } from "../../controls/TagInput/TagInput";
+import { ThemePicker } from "../../controls/ThemePicker/ThemePicker";
+import { ToggleButton } from "../../controls/ToggleButton/ToggleButton";
+import { SegmentedControl } from "../../controls/SegmentedControl/SegmentedControl";
+import { Tabs } from "../../controls/Tabs/Tabs";
 import { RotaryKnob } from "../../media/RotaryKnob/RotaryKnob";
 import { useFormContext, type FormApi } from "../Form/Form";
 export type FieldKind =
@@ -29,17 +33,24 @@ export type FieldKind =
   | "people"
   | "slider"
   | "rotary"
-  | "tags";
-export interface FormFieldDefinition<
+  | "tags"
+  | "theme"
+  | "toggle"
+  | "segmented"
+  | "tabs"
+  | "custom";
+export type FormFieldDefinition<
   T extends Record<string, unknown> = Record<string, unknown>,
-> {
+> = {
   name: string;
-  kind?: FieldKind;
   label?: ReactNode;
   span?: GridResponsive<number | "full">;
   showWhen?: (values: T) => boolean;
   props?: Record<string, unknown>;
-}
+} & (
+  | { kind: "custom"; render: (field: ReturnType<FormApi<T>["field"]>, form: FormApi<T>) => ReactNode }
+  | { kind?: Exclude<FieldKind, "custom">; render?: never }
+);
 // Registry entries accept different value/callback shapes; bindings below adapt each kind.
 // Erasure is confined to this component lookup, rather than weakening FormApi values.
 export type FieldRegistry = Record<string, ComponentType<any>>;
@@ -58,6 +69,10 @@ export const defaultFieldRegistry: FieldRegistry = {
   slider: Slider,
   rotary: RotaryKnob,
   tags: TagInput,
+  theme: ThemePicker,
+  toggle: ToggleButton,
+  segmented: SegmentedControl,
+  tabs: Tabs,
 };
 const bindings: Record<"checked" | "file" | "rotary" | "value", (field: ReturnType<FormApi<Record<string, unknown>>["field"]>, kind: FieldKind) => object> = {
   checked: (field) => ({ checked: Boolean(field.value), onValueChange: field.onValueChange }),
@@ -79,7 +94,7 @@ const bindings: Record<"checked" | "file" | "rotary" | "value", (field: ReturnTy
   },
 };
 const bindingKind: Partial<Record<FieldKind, keyof typeof bindings>> = {
-  checkbox: "checked", switch: "checked", file: "file", rotary: "rotary",
+  checkbox: "checked", switch: "checked", toggle: "checked", file: "file", rotary: "rotary",
 };
 export interface FormFieldsProps<T extends Record<string, unknown>> {
   fields: readonly FormFieldDefinition<T>[];
@@ -118,6 +133,11 @@ function Slot<T extends Record<string, unknown>>({
   form: FormApi<T>;
   registry: FieldRegistry;
 }) {
+  if (field.kind === "custom") return (
+    <Grid span={field.span ?? "full"} className="ad-form-field" data-custom="">
+      {field.render(form.field(field.name), form)}
+    </Grid>
+  );
   const kind = field.kind ?? "text",
     Component = registry[kind] ?? registry.text,
     props = bindings[bindingKind[kind] ?? "value"](form.field(field.name), kind);
@@ -129,6 +149,7 @@ function Slot<T extends Record<string, unknown>>({
 }
 const StableSlot = /* @__PURE__ */ memo(Slot, (previous, next) => {
   if (previous.field !== next.field || previous.registry !== next.registry) return false;
+  if (next.field.kind === "custom") return previous.form === next.form;
   const before = previous.form.field(previous.field.name);
   const after = next.form.field(next.field.name);
   return Object.is(before.value, after.value) && before.error === after.error && before.touched === after.touched;

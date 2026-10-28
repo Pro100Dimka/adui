@@ -1,0 +1,1 @@
+import{j as r,S as i,h as e,N as s}from"./index-Q2EOEdmy.js";function t(){return r.jsxs(i,{children:[r.jsx(e,{children:"Аудио"}),r.jsx(s,{}),r.jsxs(i,{direction:"row",align:"center",children:[r.jsx(e,{children:"Вход"}),r.jsx(s,{vertical:!0}),r.jsx(e,{children:"Выход"})]})]})}export{t as default};

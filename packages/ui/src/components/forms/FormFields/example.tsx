@@ -1,4 +1,4 @@
-import { Button, Stack, type PickerPerson } from "@neo-ui-kit/react";
+import { Button, Stack, TextField, type PickerPerson } from "@neo-ui-kit/react";
 import {
   Form,
   FormFields,
@@ -21,6 +21,11 @@ type Values = {
   tags: string[];
   confirmed: boolean;
   monitor: boolean;
+  theme: string;
+  pinned: boolean;
+  view: string;
+  section: string;
+  nickname: string;
 };
 
 const column = { base: "full", sm: 6, lg: 4 } as const;
@@ -66,6 +71,16 @@ const fields: FormFieldDefinition<Values>[] = [
     span: column,
   },
   { name: "notes", kind: "textarea", label: "Заметки", span: "full" },
+  { name: "theme", kind: "theme", label: "Тема", span: "full" },
+  { name: "pinned", kind: "toggle", label: "Закрепить", span: column },
+  { name: "view", kind: "segmented", label: "Вид", span: column,
+    props: { items: [{ value: "list", label: "Список" }, { value: "grid", label: "Плитка" }] } },
+  { name: "section", kind: "tabs", label: "Раздел", span: column,
+    props: { items: [{ value: "profile", label: "Профиль" }, { value: "audio", label: "Аудио" }] } },
+  { name: "nickname", kind: "custom", span: "full",
+    render: (field, form) => <TextField label={`Позывной (${form.values.name})`}
+      value={String(field.value ?? "")} onValueChange={field.onValueChange}
+      onBlur={field.onBlur} error={field.touched ? field.error : undefined} /> },
 ];
 
 export default function FormFieldsExample() {
@@ -85,6 +100,11 @@ export default function FormFieldsExample() {
       tags: [],
       confirmed: false,
       monitor: true,
+      theme: "ruby",
+      pinned: false,
+      view: "list",
+      section: "profile",
+      nickname: "DJ",
     },
   });
   return (

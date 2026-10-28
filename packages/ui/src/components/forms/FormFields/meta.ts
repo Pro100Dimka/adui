@@ -1,7 +1,7 @@
 export default {
   name: "FormFields",
   description:
-    "Declarative field schema renderer with registry, conditional visibility and responsive Grid spans.",
+    "Поля формы из схемы: ThemePicker, переключатели, вкладки и custom render со значением поля и состоянием формы. Условия видимости и адаптивные колонки Grid.",
   category: "fields",
   wide: true,
 };

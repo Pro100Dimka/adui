@@ -25,7 +25,7 @@ import "@neo-ui-kit/react/styles.css";
 To test repository changes before publishing, run `npm run package` from the repository root and install the resulting archive in a separate application:
 
 ```bash
-npm install /path/to/adui/release/neo-ui-kit-react-1.2.3.tgz
+npm install /path/to/adui/release/neo-ui-kit-react-1.3.0.tgz
 ```
 
 Maintainers publish new versions from `Pro100Dimka/adui` using the `release.yml` GitHub Actions workflow, a matching `v<version>` tag, and the `npm-publication` environment. npm trusts its OIDC identity; no `NPM_TOKEN` is required. The workflow checks the project and packed consumer before publishing the tested archive. Published `1.0.0` cannot be overwritten: code and README changes in npm require a new package version. See the [repository release instructions](https://github.com/Pro100Dimka/adui#npm-пакет).
@@ -178,9 +178,55 @@ import { Form, FormFields, useForm } from "@neo-ui-kit/react/forms";
 import { ThemeProvider, useMotion } from "@neo-ui-kit/react/core";
 ```
 
+## ThemePicker and declarative fields
+
+`ThemePicker` renders compact built-in swatches, or a gallery when `options` are supplied. Each option has `value`, `label`, optional `image` (foreground), `background` (full-card backdrop), `color` and `description`. Foreground pictures keep the same contained size when selected; captions and their accent lines sit below the picture. The selected card has a check mark and glow. Arrow keys, Home and End select a theme; `disabled` blocks selection.
+
+```tsx
+import { ThemePicker } from "@neo-ui-kit/react";
+
+<ThemePicker value={theme} onValueChange={setTheme} options={[
+  { value: "dark", label: "Dark", image: "/themes/dark-icon.webp",
+    background: "/themes/dark-background.webp", color: "#ff244c" },
+  { value: "light", label: "Light", image: "/themes/light-icon.webp",
+    background: "/themes/light-background.webp", color: "#f3d38f" },
+]} />
+```
+
+`FormFields` binds each `name` (including dotted paths) to the nearest `Form`. Supported kinds: `text`, `number`, `textarea`, `select`, `autocomplete`, `checkbox`, `switch`, `color`, `date`, `file`, `people`, `slider`, `rotary`, `tags`, `theme`, `toggle`, `segmented`, `tabs` and `custom`. `theme` uses `ThemePicker`; `toggle` uses `ToggleButton`; `segmented` uses `SegmentedControl`. Pass the control's options through `props`. Initial values and resets come from the form, so set them in `initialValues` rather than `props.defaultValue`.
+
+For `kind: "custom"`, `render(field, form)` is required and returns your component. `field` supplies `value`, `onValueChange`, `onBlur`, `error` and `touched`; `form` is the typed `FormApi`. The renderer updates when any form value changes. It owns its label, value conversion and validation display. `span` and `showWhen` also work for custom fields; no registry entry is needed.
+
+```tsx
+import { TextField, type FormFieldDefinition } from "@neo-ui-kit/react";
+import { Form, FormFields, useForm } from "@neo-ui-kit/react/forms";
+
+type Values = { theme: string; nickname: string };
+const fields: FormFieldDefinition<Values>[] = [
+  { name: "theme", kind: "theme", label: "Theme" },
+  { name: "nickname", kind: "custom", render: (field, form) => (
+    <TextField label={`Nickname (${form.values.theme})`}
+      value={String(field.value ?? "")} onValueChange={field.onValueChange}
+      onBlur={field.onBlur} error={field.touched ? field.error : undefined} />
+  ) },
+];
+
+function Preferences() {
+  const form = useForm<Values>({ initialValues: { theme: "ruby", nickname: "DJ" } });
+  return <Form form={form}><FormFields fields={fields} /></Form>;
+}
+```
+
 ## RotaryKnob
 
 Canvas-rendered volume knob. Drag near the edge to rotate, drag from the center to move linearly, click the outer scale to jump. Wheel and arrow keys change the value, Shift gives a fine step, PageUp/PageDown change by 10, Home/End set 0/100, Escape cancels a drag, double-click resets. `onValueChange` fires while adjusting, `onValueCommit` after the gesture. `readOnly` turns it into a gauge.
+
+## 1.3.0 release notes
+
+- ThemePicker gallery cards accept separate backgrounds and keep selected/unselected pictures at the same size, with readable captions and theme-coloured accent lines.
+- FormFields adds `theme`, `toggle`, `segmented`, `tabs` and a typed `custom` renderer. Existing kinds and registries remain supported.
+- QuantumBackground adds `particleDepth`, `particleScale` and `particleSharpness` to control particle depth, size and crispness. Defaults preserve the previous appearance.
+- The documentation includes interactive gallery and custom-field examples.
 
 ## 1.2.3 release notes
 
@@ -259,6 +305,8 @@ import "@neo-ui-kit/react/styles.css";
 ```
 
 Settings (`QuantumBackgroundSettings`): `field` (one of `quantumBackgroundFields`), `sensitivity`, `density`, `timeScale`, `paused`, `interactive`, nebula, connection, crawler, particle-trail, lens-flare, depth-of-field, camera-shake, bloom, trails, chromatic, anamorphic, god-ray, grain, vortex, pulse, bass-gate, onset, audio-camera, terrain-height and adaptive-quality values. Unset props use `quantumBackgroundDefaults`; only props that change are sent to the scene. `quantumBackgroundControls` lists each setting's group, label, range, step and the switch it depends on, for building your own settings panel next to the component. `particleCount` sets how many particles are drawn across both layers (0 to `quantumBackgroundMaxParticles`, 85 000); leave it unset to follow `density`. Adaptive quality may draw fewer, so turn `adaptiveQualityEnabled` off when the exact count matters. `particleBudget` is an upper cap on top of either. `fieldSize` is the share of the scene the field spans (0.78 by default, 1 reaches the edges). `fullscreen` makes the scene cover the whole viewport above the page, and the field then runs edge to edge (`quantumBackgroundFullscreenFieldSize`, 1.1) unless `fieldSize` is set (in the browser's top layer, so no ancestor's `overflow`, `transform` or `z-index` clips it, and the iframe keeps running); Escape calls `onFullscreenChange(false)`, so keep it controlled. `children` are laid over the scene, e.g. a close button while full screen. This differs from `ref.toggleFullscreen()`, which uses the browser's Fullscreen API and needs a click.
+
+`particleDepth` (0–1, default 0) separates particles into depth: rare foreground lights are larger and move faster, while the secondary layer stays farther away. `particleScale` (0.5–3, default 1) changes their size independently of the field footprint. `particleSharpness` (0–1, default 0) blends toward a crisp white core with a compact coloured halo. These controls share the existing particle buffers and preserve the original appearance at their defaults. For a clear foreground over an image, try `particleDepth={1} particleScale={1.5} particleSharpness={1}` with `dofEnabled={false} bloom={0} trails={0}`.
 
 `threeUrl` points the scene at your own copy of three.js 0.182 instead of unpkg (for example `threeUrl="./vendor/three/"` with `build/three.module.js` and `examples/jsm/` served there); with it the scene makes no network requests at all. Only the scene's import map changes, so a strict CSP pins the same script hashes everywhere.
 

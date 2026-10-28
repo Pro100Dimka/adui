@@ -17,6 +17,8 @@ export interface ThemePickerOption<V extends string = string> {
   description?: string;
   /** Picture of the theme (with transparency); the chosen one gets a moving shine. */
   image?: string;
+  /** Optional full-card backdrop, kept separate from the foreground picture. */
+  background?: string;
   /** The theme's own colour for the card's edge and glow. */
   color?: string;
 }
@@ -69,11 +71,14 @@ export function ThemePicker<V extends string = ThemeName>(p: ThemePickerProps<V>
         </Button>;
         return (
           <button key={option.value} type="button" className="ad-theme-card" aria-label={option.label} {...radio}
-            style={option.color ? ({ "--ad-theme-card": option.color } as CSSProperties) : undefined}>
+            style={{ "--ad-theme-card": option.color } as CSSProperties}>
+            {option.background && <img className="ad-theme-card-background" src={option.background} alt="" loading="lazy" draggable={false} />}
             <span className="ad-theme-card-preview">
-              {option.image && (chosen
-                ? <ImageShine src={option.image} glow={false} />
-                : <img src={option.image} alt="" loading="lazy" />)}
+              <span className="ad-theme-card-image">
+                {option.image && (chosen
+                  ? <ImageShine src={option.image} glow={false} />
+                  : <img src={option.image} alt="" loading="lazy" draggable={false} />)}
+              </span>
             </span>
             <span className="ad-theme-card-caption">
               <strong>{option.label}</strong>

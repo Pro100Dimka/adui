@@ -54,6 +54,7 @@
 /* Gallery: one picture card per theme, edged and lit in that theme's colour. */
 .ad-theme-picker[data-gallery] {
   display: grid;
+  width: 100%;
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 10rem), 1fr));
   gap: var(--ad-space-3);
 }
@@ -63,16 +64,30 @@
   isolation: isolate;
   display: grid;
   grid-template-rows: minmax(0, 1fr) auto;
+  min-width: 0;
   aspect-ratio: 5 / 4;
   padding: 0;
   overflow: hidden;
   border: 0.0625rem solid rgb(from var(--ad-theme-card) r g b / 0.38);
   border-radius: 0.8rem;
   background: linear-gradient(135deg, var(--ad-neutral-900), var(--ad-neutral-950));
-  color: var(--ad-text);
+  color: #fff;
   font: inherit;
   cursor: pointer;
   transition: filter 0.18s, box-shadow 0.18s, border-color 0.18s;
+}
+.ad-theme-card-background {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+}
+.ad-theme-card:focus-visible {
+  outline: 0.125rem solid var(--ad-theme-card);
+  outline-offset: 0.2rem;
 }
 .ad-theme-card:hover {
   filter: brightness(1.13);
@@ -88,28 +103,48 @@
     0 0 1rem rgb(from var(--ad-theme-card) r g b / 0.28);
 }
 .ad-theme-card-preview {
+  position: relative;
   display: grid;
   place-items: center;
   min-height: 0;
-  padding: var(--ad-space-2);
+  margin: 4% 12% 0.2rem;
   background: radial-gradient(ellipse at 50% 76%, rgb(from var(--ad-theme-card) r g b / 0.18), transparent 72%);
 }
-.ad-theme-card-preview > :is(img, svg, .ad-image-shine) {
-  width: auto;
-  max-width: 100%;
+.ad-theme-card-image {
+  position: absolute;
+  inset: 0;
+}
+.ad-theme-card-image > :is(img, .ad-image-shine) {
+  width: 100%;
   height: 100%;
-  aspect-ratio: 1;
+  aspect-ratio: auto;
   object-fit: contain;
 }
 .ad-theme-card-caption {
   display: grid;
   justify-items: center;
-  gap: 0.15rem;
-  padding: var(--ad-space-2);
-  background: linear-gradient(180deg, transparent, var(--ad-neutral-950));
+  gap: 0.1rem;
+  padding: 0 0.5rem 0.35rem;
+  text-align: center;
+  text-shadow: 0 0.125rem 0.4rem #000;
+  background: linear-gradient(180deg, transparent, #000b);
+}
+.ad-theme-card-caption > strong {
+  font-size: 1em;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+.ad-theme-card-caption::after {
+  content: "";
+  width: 20%;
+  height: 0.125rem;
+  margin-top: 0.15rem;
+  border-radius: 1rem;
+  background: var(--ad-theme-card);
+  box-shadow: 0 0 0.7rem var(--ad-theme-card);
 }
 .ad-theme-card-caption > span {
-  color: var(--ad-muted);
+  color: #fffd;
   font-size: var(--ad-font-size-caption);
   text-align: center;
 }

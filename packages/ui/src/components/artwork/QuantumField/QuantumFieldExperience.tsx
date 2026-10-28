@@ -21,6 +21,12 @@ export interface QuantumBackgroundSettings {
   density: number;
   /** Share of the scene the field spans: 1 reaches the edges, above 1 runs past them. */
   fieldSize: number;
+  /** 0 keeps the original plane; 1 separates near and far particles in space and speed. */
+  particleDepth: number;
+  /** Multiplies particle size without changing the field's footprint, 0.5–3. */
+  particleScale: number;
+  /** 0 keeps the original glow; 1 uses a crisp light core and a compact halo. */
+  particleSharpness: number;
   timeScale: number;
   nebulaEnabled: boolean;
   nebulaIntensity: number;
@@ -79,6 +85,9 @@ export const quantumBackgroundControls: readonly { id: string; label: string; co
     { key: "density", label: "Плотность", value: 0.043, min: 0.017, max: 0.14, step: 0.001 },
     { key: "timeScale", label: "Скорость", value: 1, min: 0, max: 3, step: 0.01 },
     { key: "fieldSize", label: "Размер поля", value: 0.78, min: 0.3, max: 1.2, step: 0.01 },
+    { key: "particleDepth", label: "Глубина частиц", value: 0, min: 0, max: 1, step: 0.01 },
+    { key: "particleScale", label: "Размер частиц", value: 1, min: 0.5, max: 3, step: 0.01 },
+    { key: "particleSharpness", label: "Чёткость частиц", value: 0, min: 0, max: 1, step: 0.01 },
   ] },
   { id: "environment", label: "Среда", controls: [
     { key: "nebulaEnabled", label: "Туманность", value: false },

@@ -1,1 +1,0 @@
-import{j as i,P as r,U as l,a as s}from"./index-B8q7dLAB.js";function n(){return i.jsx(r,{stretch:!0,knobs:{lines:{value:3,min:1,max:4},circle:{value:!0}},code:e=>s("Shimmer",{lines:e.lines===3?void 0:e.lines,circle:e.circle}),children:e=>i.jsx(l.Shimmer,{lines:e.lines,circle:e.circle})})}export{n as default};
