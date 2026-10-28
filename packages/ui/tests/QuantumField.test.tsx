@@ -179,16 +179,16 @@ it("keeps seven field presets while sharing the responsive particle geometry", (
   const source = readFileSync(new URL("../src/components/artwork/QuantumField/reference.html", import.meta.url), "utf8");
   const presets = source.match(/const FIELD_TYPES = \{([\s\S]*?)\n        \};/)?.[1] ?? "";
   expect([...presets.matchAll(/'[^']+': \{/g)]).toHaveLength(7);
-  expect(source).toContain("vec3 shapedPosition(vec3 seed)");
-  expect(source).toContain("vec3 newPos = shapedPosition(aRandom)");
-  expect(source).toContain("vec3 newPos = shapedPosition(instanceRandom)");
+  expect(source).toContain("vec3 shapedPosition(vec3 seed, float proximity, float time)");
+  expect(source).toContain("vec3 newPos = shapedPosition(aRandom, proximity, depthTime)");
+  expect(source).toContain("vec3 newPos = shapedPosition(instanceRandom, proximity, depthTime)");
 });
 
 it("fits every field to the viewport aspect on resize", () => {
   const source = readFileSync(new URL("../src/components/artwork/QuantumField/reference.html", import.meta.url), "utf8");
   expect(quantumFieldExperienceControls[0]?.controls[0]).toMatchObject({ value: "Gluon (Strong)" });
   expect(source).toContain("seed.xy * 2.0 - 1.0");
-  expect(source).toContain("uViewportAspect * uViewportHalfHeight");
+  expect(source).toContain("plane * vec2(uViewportAspect, 1.0) * uViewportHalfHeight * uFieldFill * projection");
   expect(source).toContain("uViewportAspect.value = window.innerWidth / window.innerHeight");
   expect(source).toContain("controls.autoRotate = false;");
 });
@@ -229,7 +229,7 @@ it("adds sparse theme-coloured glints and a field-wide depth wave without extra 
   const source = readFileSync(new URL("../src/components/artwork/QuantumField/reference.html", import.meta.url), "utf8");
   expect(source).toContain("float fieldWave = sin(");
   expect(source).toContain("newPos.z += fieldWave *");
-  expect(source).toContain("vGlint = smoothstep(0.985, 0.998, aRandom.z)");
+  expect(source).toContain("vGlint = smoothstep(mix(0.985, 0.993, uParticleDepth), mix(0.998, 0.999, uParticleDepth), aRandom.z)");
   expect(source).toContain("max(size * uPixelRatio * (90.0 / -mvPosition.z) * layerMod, vGlint * 4.5 * uPixelRatio)");
   expect(source).toContain("float glint =");
   expect(source).toContain("finalColor += vColor * vRimLight");
@@ -361,11 +361,11 @@ it("reduces connection search work when adaptive quality drops", () => {
   expect(source).toContain("i < trackedParticles.length && connIdx < dynamicMax");
 });
 
-it("rebuilds the connection network only for active audio or changed idle settings", () => {
+it("rebuilds the connection network for audio, moving depth particles or changed idle settings", () => {
   const source = readFileSync(new URL("../src/components/artwork/QuantumField/reference.html", import.meta.url), "utf8");
-  const body = source.match(/function shouldRebuildConnections\(activeAudio, current, previous, idleElapsed\) \{([\s\S]*?)\n        \}/)?.[1];
+  const body = source.match(/function shouldRebuildConnections\(moving, current, previous, idleElapsed\) \{([\s\S]*?)\n        \}/)?.[1];
   expect(body).toBeTruthy();
-  const shouldRebuild = new Function("activeAudio", "current", "previous", "idleElapsed", body!);
+  const shouldRebuild = new Function("moving", "current", "previous", "idleElapsed", body!);
   const state = ["Gluon (Strong)", 20, 10_750, 1.7, 90, 1, false];
   expect(shouldRebuild(false, state, state, 0)).toBe(false);
   expect(shouldRebuild(false, state, null, 0)).toBe(true);
@@ -377,14 +377,15 @@ it("rebuilds the connection network only for active audio or changed idle settin
   const render = source.split("// Update particle connections")[1]?.split("// Update crawlers")[0] ?? "";
   expect(render).toContain("AUDIO.mode === 'mic' || AUDIO.isPlaying");
   expect(render).toContain("lastConnectionState = null");
-  expect(render).toContain("shouldRebuildConnections(activeAudio, connectionState, lastConnectionState, idleConnectionElapsed)");
+  expect(render).toContain("const moving = activeAudio || particleUniforms.uParticleDepth.value > 0;");
+  expect(render).toContain("shouldRebuildConnections(moving, connectionState, lastConnectionState, idleConnectionElapsed)");
 });
 
 it("keeps the idle connection network alive with a slow two-second refresh", () => {
   const source = readFileSync(new URL("../src/components/artwork/QuantumField/reference.html", import.meta.url), "utf8");
-  const body = source.match(/function shouldRebuildConnections\(activeAudio, current, previous, idleElapsed\) \{([\s\S]*?)\n        \}/)?.[1];
+  const body = source.match(/function shouldRebuildConnections\(moving, current, previous, idleElapsed\) \{([\s\S]*?)\n        \}/)?.[1];
   expect(body).toBeTruthy();
-  const shouldRebuild = new Function("activeAudio", "current", "previous", "idleElapsed", body!);
+  const shouldRebuild = new Function("moving", "current", "previous", "idleElapsed", body!);
   const state = ["Gluon (Strong)", 20, 10_750, 1.7, 90, 1, false];
   expect(shouldRebuild(false, state, state, 1.99)).toBe(false);
   expect(shouldRebuild(false, state, state, 2)).toBe(true);
@@ -1073,7 +1074,7 @@ it("fills the screen edge to edge while fullscreen unless fieldSize is given", (
   }
   const source = readFileSync(new URL("../src/components/artwork/QuantumField/reference.html", import.meta.url), "utf8");
   expect(source).not.toMatch(/uViewportHalfHeight(?:\.value)? \* 0\.78/);
-  expect(source).toContain("plane.y * uViewportHalfHeight * uFieldFill");
+  expect(source).toContain("plane * vec2(uViewportAspect, 1.0) * uViewportHalfHeight * uFieldFill * projection");
   expect(source).toContain("fieldSize: value => { material.uniforms.uFieldFill.value = value;");
 });
 

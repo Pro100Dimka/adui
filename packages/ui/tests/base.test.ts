@@ -552,7 +552,7 @@ describe("FormFields", () => {
   it("registers every standalone field control", () => {
     expect(Object.keys(defaultFieldRegistry).sort()).toEqual([
       "autocomplete", "checkbox", "color", "date", "file", "number", "people",
-      "rotary", "select", "slider", "switch", "tags", "text", "textarea",
+      "rotary", "segmented", "select", "slider", "switch", "tabs", "tags", "text", "textarea", "theme", "toggle",
     ]);
   });
 

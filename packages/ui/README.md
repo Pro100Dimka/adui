@@ -25,7 +25,7 @@ import "@neo-ui-kit/react/styles.css";
 To test repository changes before publishing, run `npm run package` from the repository root and install the resulting archive in a separate application:
 
 ```bash
-npm install /path/to/adui/release/neo-ui-kit-react-1.3.0.tgz
+npm install /path/to/adui/release/neo-ui-kit-react-1.3.1.tgz
 ```
 
 Maintainers publish new versions from `Pro100Dimka/adui` using the `release.yml` GitHub Actions workflow, a matching `v<version>` tag, and the `npm-publication` environment. npm trusts its OIDC identity; no `NPM_TOKEN` is required. The workflow checks the project and packed consumer before publishing the tested archive. Published `1.0.0` cannot be overwritten: code and README changes in npm require a new package version. See the [repository release instructions](https://github.com/Pro100Dimka/adui#npm-пакет).
@@ -221,12 +221,13 @@ function Preferences() {
 
 Canvas-rendered volume knob. Drag near the edge to rotate, drag from the center to move linearly, click the outer scale to jump. Wheel and arrow keys change the value, Shift gives a fine step, PageUp/PageDown change by 10, Home/End set 0/100, Escape cancels a drag, double-click resets. `onValueChange` fires while adjusting, `onValueCommit` after the gesture. `readOnly` turns it into a gauge.
 
-## 1.3.0 release notes
+## 1.3.1 release notes
 
 - ThemePicker gallery cards accept separate backgrounds and keep selected/unselected pictures at the same size, with readable captions and theme-coloured accent lines.
 - FormFields adds `theme`, `toggle`, `segmented`, `tabs` and a typed `custom` renderer. Existing kinds and registries remain supported.
 - QuantumBackground adds `particleDepth`, `particleScale` and `particleSharpness` to control particle depth, size and crispness. Defaults preserve the previous appearance.
 - The documentation includes interactive gallery and custom-field examples.
+- Updated English/Ukrainian catalog descriptions and existing release checks for the expanded fields and particle controls. Version 1.3.0 was not published to npm.
 
 ## 1.2.3 release notes
 

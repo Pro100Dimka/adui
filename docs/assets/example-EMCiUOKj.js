@@ -1,0 +1,1 @@
+import{j as a,S as e,h as r,aj as s}from"./index-D5rHjDwF.js";function n(){return a.jsxs(e,{gap:1,children:[a.jsx(r,{variant:"label",children:"Задержка сети, мс"}),a.jsx(s,{label:"Задержка сети",values:[18,22,19,31,44,26,24,21,38,27,23,20]})]})}export{n as default};

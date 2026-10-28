@@ -1,0 +1,1 @@
+import{j as a,S as t,a0 as e}from"./index-D5rHjDwF.js";function s(){return a.jsxs(t,{gap:2,children:[a.jsx(e,{variant:"eyebrow",children:"NEO UI"}),a.jsx(e,{as:"h3",variant:"title",children:"Настройки комнаты"}),a.jsx(e,{children:"Основной текст интерфейса"}),a.jsx(e,{variant:"muted",children:"Вспомогательная подпись"})]})}export{s as default};
