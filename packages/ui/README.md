@@ -25,12 +25,18 @@ import "@neo-ui-kit/react/styles.css";
 To test repository changes before publishing, run `npm run package` from the repository root and install the resulting archive in a separate application:
 
 ```bash
-npm install /path/to/adui/release/neo-ui-kit-react-1.3.1.tgz
+npm install /path/to/adui/release/neo-ui-kit-react-1.3.2.tgz
 ```
 
 Maintainers publish new versions from `Pro100Dimka/adui` using the `release.yml` GitHub Actions workflow, a matching `v<version>` tag, and the `npm-publication` environment. npm trusts its OIDC identity; no `NPM_TOKEN` is required. The workflow checks the project and packed consumer before publishing the tested archive. Published `1.0.0` cannot be overwritten: code and README changes in npm require a new package version. See the [repository release instructions](https://github.com/Pro100Dimka/adui#npm-пакет).
 
 ## Theme
+
+Decorations inside `data-ad-paused` or `data-ad-offscreen` boundaries retain their
+phase while paused. After changing either attribute yourself, call `refreshMotion()`
+(imported from `@neo-ui-kit/react`) after the DOM update.
+This refreshes both CSS and scripted decorations on the next shared frame.
+`usePauseOffscreen` handles its own notifications.
 
 Two colours build the whole palette (a primary scale, a secondary scale and tinted neutrals):
 
@@ -220,6 +226,20 @@ function Preferences() {
 ## RotaryKnob
 
 Canvas-rendered volume knob. Drag near the edge to rotate, drag from the center to move linearly, click the outer scale to jump. Wheel and arrow keys change the value, Shift gives a fine step, PageUp/PageDown change by 10, Home/End set 0/100, Escape cancels a drag, double-click resets. `onValueChange` fires while adjusting, `onValueCommit` after the gesture. `readOnly` turns it into a gauge.
+
+## 1.3.2 release notes
+
+- Waveform updates only its moving layers and pauses invisible sparks and fully clipped sheen.
+- RotaryKnob completes all canvas layers after StrictMode restarts, avoids duplicate pending renders of the same size, and waits for square canvas dimensions before drawing its feedback ring.
+- Scripted decorations respect pause/offscreen boundaries. `refreshMotion()` batches boundary changes without checking ancestors on every frame.
+- FormFields helper selectors avoid invalidating unrelated descendants while keeping the same layout.
+- Playground code windows can expand to the full browser viewport. The editor and preview resize together without resetting the draft.
+
+Standalone profiling on an RTX 3060, Electron 42.11.8, at 1920×1050 with CPU ×4
+showed 36.9 → 58.9 FPS over 45 seconds for 20 cards combining a waveform, knob,
+and animated border. This is a measured scenario, not a guarantee of 60 FPS for
+every application. CPU ×16/×32 and software compositing still have substantial
+slowdowns; changing rasterization alone did not remove them.
 
 ## 1.3.1 release notes
 

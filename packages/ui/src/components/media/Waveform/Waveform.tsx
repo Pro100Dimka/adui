@@ -174,8 +174,6 @@ export function Waveform({
       style={
         {
           ...p.style,
-          "--ad-wave-played": `${progress * 100}%`,
-          "--ad-wave-progress": progress,
           "--ad-wave-hover": hover === null ? undefined : `${hover * 100}%`,
           ...(color ? { "--ad-wave-color": color } : {}),
         } as React.CSSProperties
@@ -216,7 +214,7 @@ export function Waveform({
         seek(clamp(next, 0, duration));
       }}
     >
-      <span className="ad-waveform-floor" aria-hidden />
+      <span className="ad-waveform-floor" style={{ transform: `scaleX(${progress})` }} aria-hidden />
       {/* The track itself never repaints during playback: everything that follows the position
           is a layer moved or stretched by transform over these still pictures. */}
       <svg
@@ -268,30 +266,30 @@ export function Waveform({
       {/* Played: the ruby light seen through the track's shape, stretched up to the position
           (so it still builds up along the played part and peaks at the cursor). */}
       <span className="ad-waveform-layer ad-waveform-bloom" style={{ maskImage: masks.bloom, WebkitMaskImage: masks.bloom }} aria-hidden>
-        <i />
+        <i style={{ transform: `scaleX(${progress})` }} />
       </span>
       <span className="ad-waveform-layer ad-waveform-lit" style={{ maskImage: masks.peaks, WebkitMaskImage: masks.peaks }} aria-hidden>
-        <i />
+        <i style={{ transform: `scaleX(${progress})` }} />
       </span>
       <span className="ad-waveform-layer ad-waveform-lit ad-waveform-lit-core" style={{ maskImage: masks.core, WebkitMaskImage: masks.core }} aria-hidden>
-        <i />
+        <i style={{ transform: `scaleX(${progress})` }} />
       </span>
-      <span className="ad-waveform-layer ad-waveform-sheen-clip" style={{ maskImage: masks.peaks, WebkitMaskImage: masks.peaks }} aria-hidden>
-        <span className="ad-waveform-window">
-          <span className="ad-waveform-window-inner">
+      <span className="ad-waveform-layer ad-waveform-sheen-clip" data-ad-paused={progress === 0 ? "" : undefined} style={{ maskImage: masks.peaks, WebkitMaskImage: masks.peaks }} aria-hidden>
+        <span className="ad-waveform-window" style={{ transform: `translateX(calc(${progress * 100}% - 100%))` }}>
+          <span className="ad-waveform-window-inner" style={{ transform: `translateX(calc(100% - ${progress * 100}%))` }}>
             <i className="ad-waveform-sheen" />
           </span>
         </span>
       </span>
       <span className="ad-waveform-layer ad-waveform-depth" style={{ maskImage: masks.peaks, WebkitMaskImage: masks.peaks }} aria-hidden />
       <span className="ad-waveform-layer ad-waveform-shade" style={{ maskImage: masks.peaks, WebkitMaskImage: masks.peaks }} aria-hidden>
-        <span className="ad-waveform-follow">
+        <span className="ad-waveform-follow" style={{ transform: `translateX(${progress * 100}%)` }}>
           <i className="ad-waveform-spot" />
         </span>
       </span>
-      <span className="ad-waveform-follow" aria-hidden>
+      <span className="ad-waveform-follow" style={{ transform: `translateX(${progress * 100}%)` }} aria-hidden>
         <span className="ad-waveform-cursor">
-          <span className="ad-waveform-sparks">
+          <span className="ad-waveform-sparks" data-ad-paused={playing ? undefined : ""}>
             {Array.from({ length: 8 }, (_, i) => (
               <i key={i} />
             ))}

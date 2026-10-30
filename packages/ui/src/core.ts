@@ -15,7 +15,7 @@ export {
   useSmoothWheel,
   useTabShape,
 } from "./core/motion/hooks";
-export { getMotionStats, setMotionFrameRate, subscribeTick } from "./core/motion-engine.js";
+export { getMotionStats, refreshMotion, setMotionFrameRate, subscribeTick } from "./core/motion-engine.js";
 
 export { LocaleProvider, addMessages, getLocale, plural, setLocale, tr, translate, useLocale, useTr } from "./core/i18n";
 export type { Locale, LocaleProviderProps, Messages } from "./core/i18n";

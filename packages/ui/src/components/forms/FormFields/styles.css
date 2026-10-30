@@ -47,7 +47,8 @@
     align-self: start;
     margin-block-start: calc(var(--ad-space-1) * 1.5);
   }
-  .ad-form-field > :has(> .ad-field) > :not(.ad-field) {
+  .ad-form-field > * > .ad-field ~ :not(.ad-field),
+  .ad-form-field > * > :not(.ad-field):has(~ .ad-field) {
     grid-row: 4;
   }
 }

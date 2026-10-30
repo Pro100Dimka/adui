@@ -169,7 +169,7 @@ export { WaveDecoration } from "./components/media/WaveDecoration/WaveDecoration
 export { Waveform } from "./components/media/Waveform/Waveform";
 export { useWaveformPeaks } from "./components/media/Waveform/useWaveformPeaks";
 export * from "./components/media/shared";
-export { getMotionStats, setMotionFrameRate, subscribeTick } from "./core/motion-engine.js";
+export { getMotionStats, refreshMotion, setMotionFrameRate, subscribeTick } from "./core/motion-engine.js";
 export {
   Router,
   useRouter,

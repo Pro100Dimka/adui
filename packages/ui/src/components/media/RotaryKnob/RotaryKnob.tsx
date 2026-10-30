@@ -116,6 +116,7 @@ export const RotaryKnob = (p: RotaryKnobProps) => {
     let latestHover: { x: number; y: number } | null = null;
     let previousFrame = 0;
     let disposed = false;
+    let renderingSize = 0;
 
     async function render() {
       if (disposed || !painted) return;
@@ -126,7 +127,8 @@ export const RotaryKnob = (p: RotaryKnobProps) => {
           cssSize * Math.max(2, Math.min(devicePixelRatio || 1, 2.5)),
         ),
       );
-      if (!size || (canvas.width === size && canvas.height === size)) return;
+      if (!size || renderingSize === size || [canvas, rotor, feedback].every(layer => layer.width === size && layer.height === size)) return;
+      renderingSize = size;
       canvas.width = canvas.height = size;
       const center = size / 2;
       const radius = size * 0.445;
@@ -286,6 +288,7 @@ export const RotaryKnob = (p: RotaryKnobProps) => {
         },
       });
       if (disposed || canvas.width !== size || canvas.height !== size) return;
+      renderingSize = 0;
       ctx.drawImage(picture, 0, 0);
 
       rotor.width = rotor.height = size;
@@ -886,6 +889,8 @@ export const RotaryKnob = (p: RotaryKnobProps) => {
       />
       <canvas
         className="knob__surface knob__feedback"
+        width={0}
+        height={0}
         aria-hidden="true"
         ref={feedbackRef}
       />

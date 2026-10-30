@@ -43,6 +43,7 @@ const pendingTargets = new Set();
 let active = [];
 let lastScan = -Infinity;
 let needsScan = false;
+let boundariesChanged = false;
 /* Plain listeners on the same clock (playback positions, meters): they run whether or not
    motion is on, but share its frames instead of asking for their own. */
 const tickers = new Set();
@@ -97,6 +98,17 @@ function scan(now, animations = pendingAnimations) {
 }
 function tick(now) {
   raf = null;
+  if (boundariesChanged) {
+    // Boundary notifications share one scan; steady frames never walk ancestors.
+    boundariesChanged = false;
+    for (const scope of preferenceScopes) {
+      const runnable = scope.enabled && !scope.root.closest?.("[data-ad-offscreen], [data-ad-paused]");
+      if (runnable === running.has(scope)) continue;
+      scope.previous = null;
+      if (runnable) running.add(scope);
+      else running.delete(scope);
+    }
+  }
   if (needsScan || now - lastScan > 400) scan(now);
   // Border geometry can flush layout. Spread visible mount/resize work across frames.
   // Unseen borders keep their pending measurement without forcing it.
@@ -149,6 +161,7 @@ export function refreshMotion() {
   // A route can detach dozens of offscreen boundaries in one React commit.
   // Scan once on the shared frame, not once per boundary while the old DOM exists.
   needsScan = true;
+  boundariesChanged = true;
   schedule();
 }
 const wake = () => {
@@ -267,7 +280,7 @@ U.createMotion = (root = document) => {
       this.previous = null;
       const target = root.dataset ? root : root.host || document.documentElement;
       target.dataset.adMotion = enabled ? "on" : "off";
-      if (this.enabled) running.add(this);
+      if (this.enabled && !root.closest?.("[data-ad-offscreen], [data-ad-paused]")) running.add(this);
       else running.delete(this);
       schedule();
       return this.enabled;

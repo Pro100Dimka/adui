@@ -1,4 +1,4 @@
-import { useTr } from "@neo-ui-kit/react";
+import { tr } from "@neo-ui-kit/react";
 import { Suspense, lazy, useEffect, useState } from "react";
 import { CopyButton } from "./CopyButton";
 import { DocsExampleBoundary } from "./DocsExampleBoundary";
@@ -98,11 +98,11 @@ function withImports(code: string, name: string, path: string) {
 }
 
 export function ComponentDocsPage({ item }: { item: CatalogMeta }) {
-  const tr = useTr();
   const category = getCategoryForItem(item);
   const LiveExample = getExample(item.name);
   const [liveCode, setLiveCode] = useState<string>();
   const [modal, setModal] = useState<"example" | "api" | "source">();
+  const [expanded, setExpanded] = useState(false);
   const [sources, setSources] =
     useState<Awaited<ReturnType<typeof loadSources>>>();
   useEffect(() => {
@@ -365,13 +365,21 @@ export function ComponentDocsPage({ item }: { item: CatalogMeta }) {
       </Card>
 
       {modal && <Dialog
-        className={`docs-code-dialog ${modal === "example" ? "docs-code-dialog--live" : ""}`}
+        className={`docs-code-dialog ${modal === "example" ? "docs-code-dialog--live" : ""} ${expanded ? "docs-code-dialog--expanded" : ""}`}
         open
-        onOpenChange={(open) => !open && setModal(undefined)}
+        onOpenChange={(open) => {
+          if (!open) {
+            setModal(undefined);
+            setExpanded(false);
+          }
+        }}
         title={`${item.name} — ${modal ? codeViews[modal].title : ""}`}
         cancelLabel={false}
         confirmLabel={tr("Готово")}
       >
+        <Button className="docs-code-expand" size="sm" variant="ghost" aria-pressed={expanded} onClick={() => setExpanded(!expanded)}>
+          {tr(expanded ? "Обычный размер" : "На весь экран")}
+        </Button>
         {modal === "example" ? (
           sources ? <Suspense fallback={null}><LiveEditor name={item.name} original={codeViews.example.code} wide={item.wide} /></Suspense>
             : <Typography variant="body-sm" tone="muted">{tr("Загрузка…")}</Typography>
