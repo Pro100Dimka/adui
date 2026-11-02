@@ -72,6 +72,42 @@ function cssLoop() {
   return { node, animation };
 }
 
+it("lets full-rate CSS loops run independently and holds them while hidden", () => {
+  const { node, animation } = cssLoop();
+  animation.play.mockImplementation(() => { animation.playState = "running"; });
+  engine.setMotionFrameRate(60);
+  events.get("animationstart")!({ animationName: animation.animationName, target: node } as unknown as Event);
+  flushFrame();
+  expect(animation.pause).not.toHaveBeenCalled();
+  expect(engine.getMotionStats().scheduled).toBe(false);
+  animation.currentTime = 125;
+  document.hidden = true;
+  events.get("visibilitychange")!(new Event("visibilitychange"));
+  expect(animation.pause).toHaveBeenCalledOnce();
+  document.hidden = false;
+  events.get("visibilitychange")!(new Event("visibilitychange"));
+  flushFrame();
+  expect(animation.play).toHaveBeenCalledOnce();
+  expect(animation.currentTime).toBe(125);
+});
+
+it("preserves CSS loop position when changing between native and stepped clocks", () => {
+  const { node, animation } = cssLoop();
+  animation.play.mockImplementation(() => { animation.playState = "running"; });
+  engine.setMotionFrameRate(60);
+  events.get("animationstart")!({ animationName: animation.animationName, target: node } as unknown as Event);
+  flushFrame();
+  animation.currentTime = 250;
+  engine.setMotionFrameRate(30);
+  flushFrame();
+  expect(animation.playState).toBe("paused");
+  expect(animation.currentTime).toBe(250);
+  engine.setMotionFrameRate(60);
+  flushFrame();
+  expect(animation.playState).toBe("running");
+  expect(animation.currentTime).toBe(250);
+});
+
 afterEach(() => {
   vi.restoreAllMocks();
   vi.useRealTimers();

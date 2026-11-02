@@ -3,6 +3,7 @@ import {
   createResizeObserver,
   reducedMotionQuery,
 } from "./environment";
+import { createBorderWorker, setBorderFrameRate } from "./border-worker.js";
 /* Shared SVG effect engine retained from the approved DOM library.
    React owns attachment / detachment through useLayoutEffect. No component DOM is built here. */
 let uid = 0;
@@ -21,21 +22,28 @@ let raf = null,
   timer = null,
   last = 0;
 
-/* The motion clock. Every looping decoration of the library (glows, glints, comets, border
-   lights) is stepped here, together with the scripted ones, 30 times a second and all at once.
-   The page then composes 30 frames a second instead of 60 — half the work for the GPU (or the
-   CPU on machines without one) — and nothing moves between ticks to ask for extra frames.
-   One-off motion (entrances, hovers, menus) is left to the browser at full rate; anything out
-   of view (inside [data-ad-offscreen]) is not touched at all. */
+/* Scripted motion shares one clock. At reduced rates it also steps CSS loops; at full rate
+   the browser runs those independently. Border pixels use a worker when supported.
+   One-off motion stays native, and hidden effects pause until visible again. */
 /* 30 frames a second by default; machines with few cores or little memory get 20, which halves
    their work again while every effect keeps moving the same way. */
 const weakDevice =
   typeof navigator !== "undefined" &&
   ((navigator.hardwareConcurrency || 8) <= 4 || (navigator.deviceMemory || 8) <= 4);
 let FRAME = 1000 / (weakDevice ? 20 : 30);
+setBorderFrameRate(1000 / FRAME);
 /** Frames per second of the motion clock (default 30); fewer is lighter, 60 is the screen's rate. */
 U.setMotionFrameRate = (fps) => {
   FRAME = 1000 / Math.max(1, Math.min(120, fps));
+  setBorderFrameRate(1000 / FRAME);
+  const now = performance.now();
+  for (const animation of looping) {
+    animation.__adStart = now - (animation.currentTime || 0);
+    if (FRAME > 1000 / 60) animation.pause();
+  }
+  if (timer !== null) clearTimeout(timer);
+  timer = null;
+  refreshMotion();
 };
 const looping = new Set();
 const pendingAnimations = new Set();
@@ -70,7 +78,7 @@ function scan(now, animations = pendingAnimations) {
   for (const animation of animations)
     if (!looping.has(animation) && animation.playState === "running" && isLoop(animation)) {
       animation.__adStart = now - (animation.currentTime || 0);
-      animation.pause();
+      if (FRAME > 1000 / 60) animation.pause();
       looping.add(animation);
     }
   pendingAnimations.clear();
@@ -86,6 +94,7 @@ function scan(now, animations = pendingAnimations) {
     const hidden = document.hidden || target.closest("[data-ad-offscreen], [data-ad-paused]");
     if (hidden) {
       // Resume where it stopped once back in view.
+      if (FRAME <= 1000 / 60 && animation.playState === "running") animation.pause();
       animation.__adHeld = true;
       continue;
     }
@@ -93,6 +102,7 @@ function scan(now, animations = pendingAnimations) {
       animation.__adStart = now - (animation.currentTime || 0);
       animation.__adHeld = false;
     }
+    if (FRAME <= 1000 / 60 && animation.playState === "paused") animation.play();
     active.push(animation);
   }
 }
@@ -124,7 +134,8 @@ function tick(now) {
     item.sync();
   }
   if (now - last >= FRAME - 6) {
-    for (const animation of active) animation.currentTime = now - animation.__adStart;
+    if (FRAME > 1000 / 60)
+      for (const animation of active) animation.currentTime = now - animation.__adStart;
     for (const scope of running) scope.tick(now);
     for (const listener of tickers) listener(now);
     last = now;
@@ -139,7 +150,7 @@ function tick(now) {
   }
 }
 function hasVisibleWork() {
-  if (needsScan || tickers.size || active.length) return true;
+  if (needsScan || tickers.size || (active.length && FRAME > 1000 / 60)) return true;
   for (const item of measurements)
     if (item.element.isConnected && item.element._adInView !== false) return true;
   for (const scope of running)
@@ -398,10 +409,8 @@ const ringMask = (w, h, d, strokes) => {
       `<g fill='none' stroke='#000' stroke-linecap='round' stroke-linejoin='round'>${paths}</g></svg>`,
   )}")`;
 };
-/* The early-release border: two broad lights travel the edge at different speeds, each with a
-   soft aura and a fine bright core. The rings are still mask pictures, painted once per size;
-   each light is a soft spot under them that only moves. A frame of the border is then four
-   transforms on the compositor: nothing is repainted and nothing is re-blurred. */
+/* Two lights travel the edge at different speeds, each with a soft aura and bright core.
+   Static ring masks are reused by the worker and the original CSS fallback. */
 U.attachBorder = (element, { shell = false, round = false, scope, defer = false } = {}) => {
   if (borders.has(element)) return borders.get(element);
   defer &&= !!scope;
@@ -448,7 +457,7 @@ U.attachBorder = (element, { shell = false, round = false, scope, defer = false 
     patchedPosition: false, previousInlinePosition,
   };
   item.paint = (time) => {
-    if (!item.length) return;
+    if (!item.length || item.worker?.ready) return;
     if (item.previousTime !== null)
       item.elapsed += Math.min(0.1, Math.max(0, time - item.previousTime));
     item.previousTime = time;
@@ -508,6 +517,10 @@ U.attachBorder = (element, { shell = false, round = false, scope, defer = false 
       }
     }
     item.paint(scope?.time || 0);
+    if (scope) {
+      item.worker ??= createBorderWorker(item);
+      item.worker?.update();
+    }
   };
   const queueMeasurement = () => {
     if (item.destroyed) return;
@@ -524,6 +537,7 @@ U.attachBorder = (element, { shell = false, round = false, scope, defer = false 
     measurements.delete(item);
     unsubscribe?.();
     item.observer.disconnect();
+    item.worker?.dispose();
     overlay.remove();
     if (item.patchedPosition) element.style.position = item.previousInlinePosition;
     borders.delete(element);
