@@ -65,7 +65,7 @@ function scan(now, animations = pendingAnimations) {
   needsScan = false;
   // Native discovery can flush layout; read each event target once per shared frame.
   for (const target of pendingTargets)
-    for (const animation of target.getAnimations?.() || []) pendingAnimations.add(animation);
+    for (const animation of target.getAnimations?.({ subtree: true }) || []) pendingAnimations.add(animation);
   pendingTargets.clear();
   for (const animation of animations)
     if (!looping.has(animation) && animation.playState === "running" && isLoop(animation)) {

@@ -660,3 +660,15 @@ it("leaves wheel input with an inner interactive canvas that already consumed it
     expect(element.scrollTop).toBe(0);
   } finally { act(() => tree.unmount()); }
 });
+
+it("discovers pseudo-element loops through the event target's subtree animations", async () => {
+  const { node, animation } = cssLoop();
+  node.getAnimations.mockImplementation((options?: GetAnimationsOptions) => options?.subtree ? [animation] : []);
+  events.get("animationstart")!({ animationName: animation.animationName, target: node } as unknown as Event);
+  flushFrame();
+  expect(node.getAnimations).toHaveBeenCalledWith({ subtree: true });
+  expect(animation.pause).toHaveBeenCalledOnce();
+  await vi.advanceTimersByTimeAsync(40);
+  flushFrame();
+  expect(animation.currentTime).toBe(40);
+});
