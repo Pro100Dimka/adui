@@ -1,6 +1,7 @@
 import { act, create } from "react-test-renderer";
 import { afterEach, beforeEach, expect, it, vi } from "vitest";
 import { PianoKeyboard } from "../src/components/media/PianoKeyboard/PianoKeyboard";
+import { MelodyRoll } from "../src/components/media/MelodyRoll/MelodyRoll";
 import { Waveform } from "../src/components/media/Waveform/Waveform";
 import { Marquee } from "../src/components/effects/Marquee/Marquee";
 import { Sparkline } from "../src/components/media/Sparkline/Sparkline";
@@ -12,6 +13,18 @@ beforeEach(() => {
   vi.stubGlobal("window", { setTimeout, clearTimeout });
 });
 afterEach(() => { vi.useRealTimers(); vi.unstubAllGlobals(); });
+
+it("keeps the moving seconds grid local while preserving its phase through seeks and zoom", () => {
+  let tree!: ReturnType<typeof create>;
+  act(() => { tree = create(<MelodyRoll position={2.5} window={8} />); });
+  try {
+    for (const [position, span, shift] of [[2.5, 8, -6.25], [5.75, 8, -9.375], [5.75, 4, -18.75]]) {
+      act(() => tree.update(<MelodyRoll position={position} window={span} />));
+      expect(tree.root.findByProps({ role: "img" }).props.style["--ad-roll-shift"]).toBeUndefined();
+      expect(tree.root.findByProps({ className: "ad-melody-roll-seconds" }).props.style["--ad-roll-shift"]).toBe(`${shift}cqw`);
+    }
+  } finally { act(() => tree.unmount()); }
+});
 
 it("activates piano keys through the native click used by keyboard and assistive input, once", () => {
   const onKeyPress = vi.fn();

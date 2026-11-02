@@ -129,7 +129,6 @@ export const MelodyRoll = ({
           "--ad-roll-level": clamp(level, 0, 1),
           "--ad-roll-accuracy": clamp(accuracy, 0, 1),
           "--ad-roll-second": `${100 / span}cqw`,
-          "--ad-roll-shift": `${(-(((from % 1) + 1) % 1) / span) * 100}cqw`,
         } as CSSProperties
       }
     >
@@ -143,7 +142,7 @@ export const MelodyRoll = ({
         onKeyPress={onKeyPress}
       />
       <div className="ad-melody-roll-lane" aria-hidden="true">
-        <span className="ad-melody-roll-seconds" />
+        <span className="ad-melody-roll-seconds" style={{ "--ad-roll-shift": `${(-(((from % 1) + 1) % 1) / span) * 100}cqw` } as CSSProperties} />
         {/* The notes sit on a strip in song time that slides under the playhead: playback moves
             one layer instead of laying out and repainting every note on every tick. */}
         <div className="ad-melody-roll-strip" style={{ transform: `translateX(${((-from / span) * 100).toFixed(3)}%)` }}>
