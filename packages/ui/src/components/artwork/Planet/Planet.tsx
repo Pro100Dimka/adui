@@ -27,7 +27,7 @@ const planet: Painting = {
         const pixel = (y * width + x) * 4;
         if (radial > 1.12) continue;
         const light = clamp01(0.48 - dx * 0.8 - dy * 0.3, 0.08, 1.2);
-        if (radial > 1) {
+        if (edge <= -0.5) {
           const alpha = Math.exp(-(radial - 1) * 88) * 0.58 * light;
           image.data[pixel] = 255;
           image.data[pixel + 1] = 40;
@@ -35,7 +35,7 @@ const planet: Painting = {
           image.data[pixel + 3] = 255 * alpha;
           continue;
         }
-        const z = Math.sqrt(1 - dx * dx - dy * dy);
+        const z = Math.sqrt(Math.max(0, 1 - dx * dx - dy * dy));
         const terrainNoise = fbm(dx * 18 + z * 7, dy * 21 + z * 5, 6);
         const crust = Math.pow(
           1 -
@@ -51,10 +51,20 @@ const planet: Painting = {
         const bloom = Math.exp(-Math.max(0, edge) / (15 * scale)) * light;
         const shade = clamp01(0.48 - dx * 0.78 - z * 0.55, 0.07, 0.95);
         const terrain = (10 + 61 * ridge + 26 * terrainNoise) * shade;
-        image.data[pixel] = terrain + rim * 239 + bloom * 75;
-        image.data[pixel + 1] = terrain * 0.14 + rim * 165 + bloom * 8;
-        image.data[pixel + 2] = terrain * 0.34 + rim * 183 + bloom * 25;
-        image.data[pixel + 3] = 255;
+        // Blend the surface and atmosphere by the rim's subpixel coverage.
+        const coverage = clamp01(edge + 0.5);
+        const alpha = coverage === 1
+          ? 1
+          : coverage + (1 - coverage) * Math.exp(-Math.max(0, radial - 1) * 88) * 0.58 * light;
+        const surface = coverage / alpha;
+        const atmosphere = 1 - surface;
+        image.data[pixel] =
+          (terrain + rim * 239 + bloom * 75) * surface + 255 * atmosphere;
+        image.data[pixel + 1] =
+          (terrain * 0.14 + rim * 165 + bloom * 8) * surface + 40 * atmosphere;
+        image.data[pixel + 2] =
+          (terrain * 0.34 + rim * 183 + bloom * 25) * surface + 82 * atmosphere;
+        image.data[pixel + 3] = 255 * alpha;
       }
   },
 };
