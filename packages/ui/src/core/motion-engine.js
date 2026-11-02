@@ -4,6 +4,7 @@ import {
   reducedMotionQuery,
 } from "./environment";
 import { createBorderWorker, setBorderFrameRate } from "./border-worker.js";
+import { setNeonFrameRate } from "../components/artwork/NeonWaves/neon-renderer.js";
 /* Shared SVG effect engine retained from the approved DOM library.
    React owns attachment / detachment through useLayoutEffect. No component DOM is built here. */
 let uid = 0;
@@ -32,10 +33,12 @@ const weakDevice =
   ((navigator.hardwareConcurrency || 8) <= 4 || (navigator.deviceMemory || 8) <= 4);
 let FRAME = 1000 / (weakDevice ? 20 : 30);
 setBorderFrameRate(1000 / FRAME);
+setNeonFrameRate(1000 / FRAME);
 /** Frames per second of the motion clock (default 30); fewer is lighter, 60 is the screen's rate. */
 U.setMotionFrameRate = (fps) => {
   FRAME = 1000 / Math.max(1, Math.min(120, fps));
   setBorderFrameRate(1000 / FRAME);
+  setNeonFrameRate(1000 / FRAME);
   const now = performance.now();
   for (const animation of looping) {
     animation.__adStart = now - (animation.currentTime || 0);
