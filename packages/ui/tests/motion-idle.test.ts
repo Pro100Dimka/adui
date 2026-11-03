@@ -14,7 +14,7 @@ let document: {
 
 beforeEach(async () => {
   vi.useFakeTimers();
-  // Keep the shared fixture at 30 fps regardless of the test runner's CPU count.
+  // Exercise the explicit low-rate mode independently of the default cadence.
   vi.stubGlobal("navigator", { hardwareConcurrency: 8, deviceMemory: 8 });
   frames = new Map();
   observers = [];
@@ -46,6 +46,8 @@ beforeEach(async () => {
   });
   vi.resetModules();
   engine = await import("../src/core/motion-engine.js");
+  engine.setMotionFrameRate(30);
+  flushFrame();
 });
 
 function flushFrame(now = performance.now()) {
@@ -123,13 +125,14 @@ it.each([
   vi.stubGlobal("navigator", { hardwareConcurrency, deviceMemory });
   vi.resetModules();
   engine = await import("../src/core/motion-engine.js");
+  engine.setMotionFrameRate(fps);
   const { node, animation } = cssLoop();
   await vi.advanceTimersByTimeAsync(100);
   events.get("animationstart")!({ animationName: animation.animationName, target: node } as unknown as Event);
   flushFrame();
   expect(animation.pause).toHaveBeenCalledOnce();
 
-  // The timer wakes just before the next hardware-dependent frame is due.
+  // Explicit low-rate mode sleeps between frames.
   const period = 1000 / fps;
   await vi.advanceTimersByTimeAsync(Math.floor(period) - 5);
   expect(frames.size).toBe(0);
@@ -145,6 +148,26 @@ it.each([
   flushFrame();
   expect(engine.getMotionStats().scheduled).toBe(false);
   expect(vi.getTimerCount()).toBe(0);
+});
+
+it.each([2, 4, 8])("defaults to native CSS and uninterrupted animation frames on %i cores", async (hardwareConcurrency) => {
+  vi.stubGlobal("navigator", { hardwareConcurrency, deviceMemory: 4 });
+  vi.resetModules();
+  engine = await import("../src/core/motion-engine.js");
+  const { node, animation } = cssLoop();
+  events.get("animationstart")!({ animationName: animation.animationName, target: node } as unknown as Event);
+  flushFrame(100);
+  expect(animation.pause).not.toHaveBeenCalled();
+  const listener = vi.fn();
+  const unsubscribe = engine.subscribeTick(listener);
+  for (let frame = 1; frame <= 60; frame++) {
+    flushFrame(100 + frame * 1000 / 60);
+    expect(frames.size).toBe(1);
+    expect(vi.getTimerCount()).toBe(0);
+  }
+  expect(listener).toHaveBeenCalledTimes(60);
+  unsubscribe();
+  expect(engine.getMotionStats().scheduled).toBe(false);
 });
 
 function borderFixture() {
@@ -372,8 +395,8 @@ it("adopts loops that were already mounted when the package loads", async () => 
   document.getAnimations.mockReturnValue([animation]);
   vi.resetModules();
   engine = await import("../src/core/motion-engine.js");
-  expect(animation.pause).toHaveBeenCalledOnce();
-  expect(engine.getMotionStats().scheduled).toBe(true);
+  expect(animation.pause).not.toHaveBeenCalled();
+  expect(engine.getMotionStats().scheduled).toBe(false);
 });
 
 it("resumes CSS light from its held position after a browser tab was hidden", async () => {

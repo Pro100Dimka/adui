@@ -27,6 +27,8 @@ import {
 } from "../src/components/artwork/QuantumField/QuantumField";
 
 const nodeMock = () => ({ getBoundingClientRect: () => ({}) });
+// These controller tests provide iframe/canvas stubs; neon contours are covered in the browser.
+vi.mock("../src/components/effects/AnimatedBorder/AnimatedBorder", () => ({ AnimatedBorder: () => null }));
 
 it("exports QuantumBackground as the full scene while keeping the previous imports compatible", () => {
   expect(UI).toHaveProperty("QuantumBackground", QuantumFieldExperience);

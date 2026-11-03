@@ -43,6 +43,8 @@ packages/ui/src/components/<категория>/<Component>/
 
 ## Проверка
 
+Измеренные оптимизации DataTable и редактора, методика benchmark и ограничения описаны в [отчёте производительности](evidence/performance-report.md).
+
 ```bash
 npm run check
 ```
@@ -70,7 +72,7 @@ npm run package
 Установить полученный архив в отдельное приложение (путь задаётся относительно приложения):
 
 ```bash
-npm install /path/to/adui/release/neo-ui-kit-react-1.3.8.tgz react react-dom
+npm install /path/to/adui/release/neo-ui-kit-react-1.3.9.tgz react react-dom
 ```
 
 Подготовка новой версии:

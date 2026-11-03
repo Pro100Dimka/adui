@@ -26,15 +26,11 @@ let raf = null,
 /* Scripted motion shares one clock. At reduced rates it also steps CSS loops; at full rate
    the browser runs those independently. Border pixels use a worker when supported.
    One-off motion stays native, and hidden effects pause until visible again. */
-/* 30 frames a second by default; machines with few cores or little memory get 20, which halves
-   their work again while every effect keeps moving the same way. */
-const weakDevice =
-  typeof navigator !== "undefined" &&
-  ((navigator.hardwareConcurrency || 8) <= 4 || (navigator.deviceMemory || 8) <= 4);
-let FRAME = 1000 / (weakDevice ? 20 : 30);
+/* Follow display frames by default; consumers can explicitly choose a lower animation rate. */
+let FRAME = 1000 / 60;
 setBorderFrameRate(1000 / FRAME);
 setNeonFrameRate(1000 / FRAME);
-/** Frames per second of the motion clock (default 30); fewer is lighter, 60 is the screen's rate. */
+/** Frames per second of the motion clock (default 60); lower rates explicitly trade smoothness for work. */
 U.setMotionFrameRate = (fps) => {
   FRAME = 1000 / Math.max(1, Math.min(120, fps));
   setBorderFrameRate(1000 / FRAME);
@@ -143,10 +139,10 @@ function tick(now) {
     for (const listener of tickers) listener(now);
     last = now;
   }
-  // Sleep until the next tick is due instead of asking for every screen refresh: a request
-  // for an animation frame makes the browser prepare a frame even when nothing changes.
+  // At reduced rates, sleep until the next tick is due instead of requesting unused frames.
   if (hasVisibleWork() && !document.hidden) {
-    timer = setTimeout(() => {
+    if (FRAME <= 1000 / 60) schedule();
+    else timer = setTimeout(() => {
       timer = null;
       schedule();
     }, Math.max(0, FRAME - (performance.now() - now) - 4));

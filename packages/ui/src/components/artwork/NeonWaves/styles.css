@@ -1,4 +1,4 @@
-/* Styles owned by NeonWaves: the strands move by script; the stars twinkle on their own and the comets are moved by script. */
+/* Worker canvas draws the decoration; these elements also provide the main-thread fallback. */
 .ad-neon-waves {
   position: relative;
   display: block;
@@ -22,11 +22,24 @@
   border-radius: 50%;
   background: var(--ad-pink);
   translate: -50% -50%;
+}
+.ad-neon-waves-stars,
+.ad-neon-waves-stars-floor {
+  position: absolute;
+  inset: 0;
+}
+.ad-neon-waves-stars {
   animation: ad-neon-twinkle 4s ease-in-out infinite;
 }
+.ad-neon-waves[data-ad-neon-rendered] :is(.ad-neon-waves-stars, .ad-neon-waves-stars-floor) {
+  display: none;
+}
 @keyframes ad-neon-twinkle {
+  0%, 100% {
+    opacity: 1;
+  }
   50% {
-    opacity: 0.05;
+    opacity: 0;
   }
 }
 /* A comet is a short bright dash with a glow. Its glow is drawn once on its own layer; the

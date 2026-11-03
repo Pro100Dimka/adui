@@ -30,11 +30,17 @@ export default defineConfig({
   plugins: [{
     name: "sandbox-dev-runtime",
     configureServer(server) {
+      let runtime: Promise<string> | undefined;
+      server.watcher.on("all", () => { runtime = undefined; });
       server.middlewares.use("/sandbox-runtime.js", async (_request, response, next) => {
         try {
           response.setHeader("Content-Type", "text/javascript; charset=utf-8");
           response.setHeader("Cache-Control", "no-store");
-          response.end(await buildSandboxRuntime());
+          runtime ??= buildSandboxRuntime().catch((error) => {
+            runtime = undefined;
+            throw error;
+          });
+          response.end(await runtime);
         } catch (error) {
           next(error);
         }

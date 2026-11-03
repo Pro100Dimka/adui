@@ -1,5 +1,5 @@
 import { useTr } from "../../../core/i18n";
-import { useRef, type CSSProperties, type WheelEvent } from "react";
+import { useMemo, useRef, type CSSProperties, type WheelEvent } from "react";
 import { clamp, mark, useControllable, type CommonProps } from "../../../core/base";
 import { PianoKeyboard } from "../PianoKeyboard/PianoKeyboard";
 
@@ -86,14 +86,32 @@ export const MelodyRoll = ({
 }: MelodyRollProps) => {
   const tr = useTr();
   const [span, setSpan] = useControllable(windowProp, defaultWindow, onWindowChange);
-  const pitches = notes.map((note) => note.pitch);
-  const low = minPitch ?? Math.min(...pitches, 60) - 2;
-  const high = Math.max(low + 4, maxPitch ?? Math.max(...pitches, 64) + 2);
+  const indexed = useMemo(() => {
+    let low = 60, high = 64;
+    const blocks: { start: number; end: number; notes: readonly MelodyNote[] }[] = [];
+    // Preserve input order and overlapping notes; skip whole blocks outside the viewport.
+    for (let i = 0; i < notes.length; i += 128) {
+      const block = notes.slice(i, i + 128);
+      let start = Infinity, end = -Infinity;
+      for (const note of block) {
+        low = Math.min(low, note.pitch);
+        high = Math.max(high, note.pitch);
+        start = Math.min(start, note.start);
+        end = Math.max(end, note.end);
+      }
+      blocks.push({ start, end, notes: block });
+    }
+    return { low: low - 2, high: high + 2, blocks };
+  }, [notes]);
+  const low = minPitch ?? indexed.low;
+  const high = Math.max(low + 4, maxPitch ?? indexed.high);
   const rows = high - low + 1;
   const from = position - span * lead;
+  const origin = Math.floor(from / span) * span;
   const x = (seconds: number) => ((seconds - from) / span) * 100;
   const y = (pitch: number) => ((high - pitch) / rows) * 100;
-  const visible = notes.filter((note) => note.end >= from && note.start <= from + span);
+  const visible = indexed.blocks.filter(block => block.end >= from && block.start <= from + span)
+    .flatMap(block => block.notes.filter(note => note.end >= from && note.start <= from + span));
 
   // The voice trail: recent pitches, dropped on silence and when playback jumps back.
   const trail = useRef<{ t: number; pitch?: number }[]>([]);
@@ -126,8 +144,6 @@ export const MelodyRoll = ({
           ...p.style,
           "--ad-roll-rows": rows,
           "--ad-roll-beat": clamp(beat, 0, 1),
-          "--ad-roll-level": clamp(level, 0, 1),
-          "--ad-roll-accuracy": clamp(accuracy, 0, 1),
           "--ad-roll-second": `${100 / span}cqw`,
         } as CSSProperties
       }
@@ -145,7 +161,7 @@ export const MelodyRoll = ({
         <span className="ad-melody-roll-seconds" style={{ "--ad-roll-shift": `${(-(((from % 1) + 1) % 1) / span) * 100}cqw` } as CSSProperties} />
         {/* The notes sit on a strip in song time that slides under the playhead: playback moves
             one layer instead of laying out and repainting every note on every tick. */}
-        <div className="ad-melody-roll-strip" style={{ transform: `translateX(${((-from / span) * 100).toFixed(3)}%)` }}>
+        <div className="ad-melody-roll-strip" style={{ transform: `translateX(${(((origin - from) / span) * 100).toFixed(3)}%)` }}>
         {visible.map((note) => (
           <span
             key={note.id}
@@ -154,7 +170,7 @@ export const MelodyRoll = ({
             data-now={(position >= note.start && position <= note.end) || undefined}
             data-past={position > note.end || undefined}
             style={{
-              left: `${(note.start / span) * 100}%`,
+              left: `${((note.start - origin) / span) * 100}%`,
               width: `${Math.max(0.6, ((note.end - note.start) / span) * 100)}%`,
               top: `${y(note.pitch)}%`,
             }}
@@ -163,19 +179,19 @@ export const MelodyRoll = ({
           </span>
         ))}
         </div>
-        <svg className="ad-melody-trail" viewBox="0 0 100 100" preserveAspectRatio="none">
+        <svg className="ad-melody-trail" viewBox="0 0 100 100" preserveAspectRatio="none" style={{ "--ad-roll-accuracy": clamp(accuracy, 0, 1) } as CSSProperties}>
           {segments.flatMap((d, i) => [
             <path key={`${i}-wide`} data-halo="wide" d={d} vectorEffect="non-scaling-stroke" />,
             <path key={`${i}-near`} data-halo="near" d={d} vectorEffect="non-scaling-stroke" />,
             <path key={i} d={d} vectorEffect="non-scaling-stroke" />,
           ])}
         </svg>
-        <span className="ad-melody-playhead" style={{ left: `${lead * 100}%` }} />
+        <span className="ad-melody-playhead" style={{ left: `${lead * 100}%`, "--ad-roll-beat": clamp(beat, 0, 1) } as CSSProperties} />
         {livePitch !== undefined && (
           <span
             className="ad-melody-voice"
             data-hit={hit || undefined}
-            style={{ left: `${lead * 100}%`, top: `${((high - livePitch + 0.5) / rows) * 100}%` }}
+            style={{ left: `${lead * 100}%`, top: `${((high - livePitch + 0.5) / rows) * 100}%`, "--ad-roll-level": clamp(level, 0, 1), "--ad-roll-accuracy": clamp(accuracy, 0, 1) } as CSSProperties}
           />
         )}
       </div>

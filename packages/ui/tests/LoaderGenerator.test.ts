@@ -1,4 +1,7 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
+
+// The image-processing fixture only implements canvas APIs, not decorative DOM effects.
+vi.mock("../src/components/effects/AnimatedBorder/AnimatedBorder", () => ({ AnimatedBorder: () => null }));
 import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { act, create } from "react-test-renderer";

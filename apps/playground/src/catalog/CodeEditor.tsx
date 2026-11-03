@@ -1,20 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import { Grid, resolveTokens } from "@neo-ui-kit/react";
 import type * as Monaco from "monaco-editor";
+import { loadSources } from "./componentRegistry";
 
 /**
  * The library's own sources and React's types, handed to the editor's TypeScript service so it
  * knows every component, prop, value and doc comment. Loaded only when an editor opens.
  */
-const librarySources = import.meta.glob<string>(
-  [
-    "../../../../packages/ui/src/**/*.{ts,tsx}",
-    "!../../../../packages/ui/src/**/example.tsx",
-    "!../../../../packages/ui/src/**/meta.ts",
-    "!../../../../packages/ui/src/dev/**",
-  ],
-  { query: "?raw", import: "default" },
-);
 const reactTypes = import.meta.glob<string>(
   [
     "../../../../node_modules/@types/react/index.d.ts",
@@ -63,7 +55,7 @@ function loadMonaco(): Promise<typeof Monaco> {
     ts.typescriptDefaults.setEagerModelSync(true);
 
     const [library, react] = await Promise.all([
-      Promise.all(Object.entries(librarySources).map(async ([path, load]) => [path, await load()] as const)),
+      loadSources().then((module) => module.librarySources),
       Promise.all(Object.entries(reactTypes).map(async ([path, load]) => [path, await load()] as const)),
     ]);
     for (const [path, text] of library)

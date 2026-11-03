@@ -202,7 +202,8 @@ export function QuantumField({
     };
     const draw = (now: number) => {
       if (!visible.current && now !== 0) return;
-      if (now && now - frame.current.last < 1000 / FPS[tier]) return;
+      // GPU work follows display frames; keep the CPU fallback's budget and tolerate timestamp rounding.
+      if (now && now - frame.current.last < (renderer ? 1000 / 60 - 0.5 : 1000 / FPS[tier])) return;
       if (now) {
         const elapsed = frame.current.last ? Math.min(60, Math.max(0, now - frame.current.last)) : 0;
         frame.current.last = now;

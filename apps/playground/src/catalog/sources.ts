@@ -10,6 +10,9 @@ const sources = Object.entries(
   }),
 );
 
+// Share the already loaded source bundle with IntelliSense instead of fetching each file again.
+export const librarySources = sources.filter(([path]) => !/\/(?:example\.tsx|meta\.ts)$|\/dev\//.test(path));
+
 const sourceEntry = (name: string, file = `${name}.tsx`) =>
   sources.find(([path]) => path.endsWith(additionalDocumentation[name]?.[file === "example.tsx" ? "example" : "source"] ?? `/${name}/${file}`));
 export const getExampleSource = (name: string) =>

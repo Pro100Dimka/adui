@@ -42,9 +42,9 @@ export function getMotionStats(): {
   callbacks: number;
 };
 
-/** Frames per second of the motion clock that steps every looping decoration (default 30). */
+/** Target frames per second of the shared motion clock (default 60, limited by the display). */
 export function setMotionFrameRate(fps: number): void;
-/** Calls the listener on every tick of the motion clock (30 a second); returns the unsubscribe. */
+/** Calls the listener on every tick of the motion clock; returns the unsubscribe. */
 export function subscribeTick(listener: (now: number) => void): () => void;
 /** Requests a shared-frame visibility refresh after an offscreen boundary changes. */
 export function refreshMotion(): void;

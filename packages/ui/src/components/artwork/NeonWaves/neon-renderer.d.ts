@@ -23,6 +23,7 @@ interface NeonOptions {
   shape: "ridge" | "twist";
   comets: number;
   time: number;
+  dots?: readonly { x: number; y: number; r: number; o: number }[];
 }
 export function createNeonGeometry(): NeonGeometry;
 export const neonGeometry: NeonGeometry;

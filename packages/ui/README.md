@@ -4,6 +4,13 @@ Migration: replace `@ad-voice/ui` with `@neo-ui-kit/react` in dependencies and i
 
 NEO UI — React + TypeScript UI kit: glass/ruby surfaces, animated neon borders, fields, tabs, dialogs, audio controls and a melody editor.
 
+## 1.3.9
+
+- Rounded field variants share the existing neon outline; outlined and underlined fields have transparent backgrounds, and filled fields have no animated border.
+- Faster DataTable sorting, cached playground runtime builds and shared editor sources.
+- The shared motion clock defaults to 60 FPS; NeonWaves stars render in the existing worker where supported, with hidden effects paused.
+- MelodyRoll indexes note blocks and limits style invalidation while retaining its effects. Stable 60 FPS under CPU ×8/×16 throttling is **not achieved**; the latest full diagnostic measured about 35.4/6.3 FPS. See the [performance report](https://github.com/Pro100Dimka/adui/blob/main/evidence/performance-report.md) for scenarios and limitations.
+
 ## Install
 
 Live docs: https://pro100dimka.github.io/adui/#/components/overview
@@ -25,7 +32,7 @@ import "@neo-ui-kit/react/styles.css";
 To test repository changes before publishing, run `npm run package` from the repository root and install the resulting archive in a separate application:
 
 ```bash
-npm install /path/to/adui/release/neo-ui-kit-react-1.3.8.tgz
+npm install /path/to/adui/release/neo-ui-kit-react-1.3.9.tgz
 ```
 
 Maintainers publish new versions from `Pro100Dimka/adui` using the `release.yml` GitHub Actions workflow, a matching `v<version>` tag, and the `npm-publication` environment. npm trusts its OIDC identity; no `NPM_TOKEN` is required. The workflow checks the project and packed consumer before publishing the tested archive. Published `1.0.0` cannot be overwritten: code and README changes in npm require a new package version. See the [repository release instructions](https://github.com/Pro100Dimka/adui#npm-пакет).
@@ -67,6 +74,10 @@ export function SettingsCard() {
 ```
 
 Fields that declare `value` / `defaultValue` support controlled and uncontrolled values; checkboxes and switches use `checked` / `defaultChecked`. Dialog supports `open` / `defaultOpen` and `onOpenChange`; Popover requires controlled `open`. See each component's API for its supported state and event names; a change callback reports a user action, while the owner applies the new controlled value.
+
+`InputBase` provides the shared field appearance: `variant="outlined"` has a rounded, glowing outline and a transparent background; `filled` has a glass-like fill with a soft accent highlight and a static thin border; `underlined` has only a glowing bottom line and no background. Outlined and underlined use the shared `AnimatedBorder`, including its motion and offscreen controls; filled has no animated border. Colours follow the active theme. Outlined and underlined fields remain transparent on hover, focus and when read-only. TextField, Select, Autocomplete, NumberField, TextArea, TagInput and PeoplePicker share the same radius at each size, including fields with wrapped chips. Existing adornments and floating labels are supported.
+
+Rounded field variants use `--ad-radius-pill`, so floating labels and taller chip rows keep the capsule shape instead of retaining a radius calculated from the shorter base height.
 
 The package ships ESM only. Import styles once and wrap the UI in `ThemeProvider`; no playground CSS or router is required. `@neo-ui-kit/react/core`, `/forms`, `/editor`, and `/router` share the same provider contexts with the root entry.
 
@@ -164,6 +175,10 @@ For an unpaginated large dataset use `virtualize maxHeight={480}`. The table mou
 
 ## Responsiveness
 
+The shared animation clock defaults to 60 fps, including border and wave workers. At full rate it follows browser animation frames without an extra timer; `setMotionFrameRate(30)` remains available when an application explicitly prefers less decorative work. Hidden/offscreen work still pauses. The rate is a scheduling target, not a minimum guaranteed on every device or screen.
+
+NeonWaves draws stars in its existing wave worker, preserving their positions, sizes and easing. Browsers without worker canvas support share nine CSS twinkle phases instead; the entire decoration pauses offscreen. QuantumField's WebGL renderer targets 60 fps; its CPU canvas fallback retains the 24/30 fps quality limits to protect the UI thread. The separate QuantumBackground visualizer keeps its own adaptive-quality controls. CPU ×8/×16 measurements and remaining limits are recorded in [the performance report](../../evidence/performance-report.md).
+
 The package pauses decorative work outside the viewport and in hidden tabs. Its shared motion clock stops when no visible work remains; consumers do not need a separate animation scheduler. Playback updates are isolated from transport and volume controls. Audio analysis and loader image processing yield between short CPU work slices, and unmounting cancels stale results. Processed loader images are capped at 2048px on the longest side; turning background removal off restores the original upload.
 
 Router updates are immediate by default. Opt into native snapshot transitions with `transition` only when their temporary interruption of pointer interaction suits your screen; normal CSS entrances do not require it.
@@ -171,6 +186,8 @@ Router updates are immediate by default. Opt into native snapshot transitions wi
 Animated border geometry is initialized and resized in small batches on the shared clock, only while visible. Light positions use the cached contour instead of querying SVG geometry on every frame. Offscreen borders keep their light position without measuring layout or advancing the effect.
 
 Keep `rows`, `columns`, `options`, and `initialValues` immutable: replace them when their contents change. Stable references allow expensive derived results to be reused across selection, navigation, and other local UI changes. Do not memoize every prop automatically.
+
+MelodyRoll also expects an immutable `notes` array: keep its reference stable during playback and replace it after editing notes. It caches pitch bounds and time bounds for blocks of 128 notes, skipping blocks outside the visible window. Input order and overlapping notes are preserved; heavily interleaved unsorted data can still require a full scan. The moving strip uses nearby time coordinates instead of ever-growing song offsets. Beat, voice level and accuracy updates are scoped to the elements that use them, avoiding restyling the whole keyboard and note strip. These changes preserve the existing glow, transitions, lyrics, seeking and wheel zoom; CPU ×8/×16 stress results are in the performance report.
 
 For large tables, use `pageSize` or opt into `virtualize` to bound mounted rows. Virtualization bounds rendering, not the cost of client-side sorting/filtering: use the manual server contracts for datasets that are too large to process locally. Open Select/Autocomplete lists are not virtualized: filter very large datasets before supplying options. `PeoplePicker.onSearch(query, signal)` receives an optional `AbortSignal`; forward it to your data client to cancel superseded requests. Expensive custom renderers, validators, and aggregates still need their own work budget.
 

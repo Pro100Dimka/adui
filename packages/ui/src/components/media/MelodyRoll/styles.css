@@ -1,5 +1,10 @@
 /* Styles owned by MelodyRoll: a dark glass lane with a semitone and seconds grid; notes glide in,
    flash green when sung right; the playhead and lane breathe with the music. */
+@property --ad-roll-beat {
+  syntax: "<number>";
+  inherits: false;
+  initial-value: 0;
+}
 .ad-melody-roll {
   --ad-roll-keys: clamp(2.75rem, 8%, 4.5rem);
   position: relative;
@@ -20,6 +25,7 @@
    notes moving over it. */
 .ad-melody-roll::before,
 .ad-melody-roll::after {
+  --ad-roll-beat: inherit;
   content: "";
   position: absolute;
   inset: 0;
@@ -156,6 +162,7 @@
 }
 /* The playhead flares on the beat: a wider glow, drawn once, faded in. */
 .ad-melody-playhead::after {
+  --ad-roll-beat: inherit;
   content: "";
   position: absolute;
   inset: 0;

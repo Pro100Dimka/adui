@@ -1,6 +1,6 @@
 export default {
   name: "InputBase",
   description:
-    "Низкоуровневая база всех полей: общий material, focus, размеры и adornments.",
+    "Общая база полей: outlined — прозрачное поле со светящейся округлой обводкой; filled — заливка с бликом; underlined — только нижняя линия без фона. Размеры, focus и adornments общие для всех вариантов.",
   category: "fields",
 };

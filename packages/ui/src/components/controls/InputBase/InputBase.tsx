@@ -1,6 +1,7 @@
 import { forwardRef, type MouseEventHandler, type ReactNode, type Ref } from "react";
 import { mark, type CommonProps } from "../../../core/base";
 import type { InputVariant } from "../shared";
+import { AnimatedBorder } from "../../effects/AnimatedBorder/AnimatedBorder";
 
 export interface InputBaseProps extends CommonProps {
   startAdornment?: ReactNode;
@@ -47,6 +48,7 @@ export const InputBase = /* @__PURE__ */ forwardRef<HTMLDivElement, InputBasePro
     data-filled={filled || undefined}
     onClick={onClick}
   >
+    {variant !== "filled" && !disabled && !readOnly && <AnimatedBorder className="ad-input-border" />}
     {startAdornment && (
       <span className="ad-input-adornment" data-position="start">
         {startAdornment}

@@ -10,6 +10,20 @@ import { PeoplePicker, type PickerPerson } from "../src/components/controls/Peop
 
 let tree: ReactTestRenderer | undefined;
 
+it("resolves sorting columns once instead of scanning them for every row comparison", () => {
+  let keyReads = 0;
+  const columns = Array.from({ length: 40 }, (_, index) => ({
+    get key() { keyReads++; return `c${index}`; },
+    title: `Column ${index}`,
+    filter: false as const,
+  }));
+  const rows = Array.from({ length: 2000 }, (_, index) => ({ id: String(index), c39: index * 7919 % 2000 }));
+  act(() => { tree = create(<DataTable columns={columns} rows={rows} pageSize={10} defaultSort={{ key: "c39", direction: "asc" }} />); });
+  expect(tree!.root.findAllByType("td").filter(cell => cell.props["data-label"] === "Column 39").map(cell => cell.children.join("")))
+    .toEqual(Array.from({ length: 10 }, (_, index) => String(index)));
+  expect(keyReads).toBeLessThan(80_000);
+});
+
 beforeEach(() => vi.stubGlobal("IS_REACT_ACT_ENVIRONMENT", true));
 afterEach(() => {
   act(() => tree?.unmount());

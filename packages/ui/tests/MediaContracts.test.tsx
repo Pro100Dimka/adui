@@ -14,6 +14,33 @@ beforeEach(() => {
 });
 afterEach(() => { vi.useRealTimers(); vi.unstubAllGlobals(); });
 
+it("does not rescan the whole melody during playback and refreshes replaced notes", () => {
+  const start = vi.fn((i: number) => i * 0.25);
+  const notes = Array.from({ length: 10000 }, (_, i) => ({ id: String(i), get start() { return start(i); }, end: i * 0.25 + 0.2, pitch: 60 + i % 12 }));
+  let tree!: ReturnType<typeof create>;
+  act(() => { tree = create(<MelodyRoll notes={notes} position={100} />); });
+  try {
+    start.mockClear();
+    act(() => tree.update(<MelodyRoll notes={notes} position={100.1} />));
+    expect(start.mock.calls.length).toBeLessThan(512);
+    for (const position of [100.1, 32, 32.01, -1]) {
+      act(() => tree.update(<MelodyRoll notes={notes} position={position} window={8} />));
+      const shift = Number(tree.root.findByProps({ className: "ad-melody-roll-strip" }).props.style.transform.match(/[-\d.]+/)[0]);
+      const visible = notes.filter(note => note.end >= position - 2 && note.start <= position + 6);
+      const rendered = tree.root.findAllByProps({ className: "ad-melody-note" });
+      expect(rendered).toHaveLength(visible.length);
+      rendered.forEach((note, i) => expect(parseFloat(note.props.style.left) + shift).toBeCloseTo((visible[i].start - position + 2) / 8 * 100, 2));
+    }
+    const replacement = [
+      { id: "late", start: 8, end: 9, pitch: 64, lyric: "late" },
+      { id: "long", start: -20, end: 20, pitch: 60, lyric: "long" },
+      { id: "edge", start: 0, end: 2, pitch: 62, lyric: "edge" },
+    ];
+    act(() => tree.update(<MelodyRoll notes={replacement} position={4} window={8} showLyrics />));
+    expect(tree.root.findAllByProps({ className: "ad-melody-note" }).map(note => note.findAllByType("span").at(-1)!.children.join(""))).toEqual(["late", "long", "edge"]);
+  } finally { act(() => tree.unmount()); }
+});
+
 it("keeps the moving seconds grid local while preserving its phase through seeks and zoom", () => {
   let tree!: ReturnType<typeof create>;
   act(() => { tree = create(<MelodyRoll position={2.5} window={8} />); });

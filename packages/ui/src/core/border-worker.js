@@ -1,7 +1,7 @@
 /* Border pixels have their own clock; React and CSS layout never carry their frame traffic. */
 function renderBorders() {
   const scenes = new Map();
-  let frame = null, fps = 30, last = -Infinity;
+  let frame = null, fps = 60, last = -Infinity;
   const release = (scene) => {
     for (const layer of scene.layers) {
       layer.mask.close();
@@ -74,7 +74,7 @@ function renderBorders() {
   };
 }
 
-let worker = null, workerUrl = null, serial = 0, unavailable = false, frameRate = 30;
+let worker = null, workerUrl = null, serial = 0, unavailable = false, frameRate = 60;
 const clients = new Map();
 const visibilityChanged = () => { for (const client of clients.values()) client.visibility(); };
 const resized = () => { for (const client of clients.values()) client.update(); };

@@ -202,7 +202,7 @@ function renderNeon(createGeometry) {
   const geometry = createGeometry(),
     scenes = new Map();
   let frame = null,
-    fps = 30,
+    fps = 60,
     last = -Infinity;
   function draw(scene) {
     const { ctx, width, height, padX, padY, sx, sy, options, time, gradient } =
@@ -298,6 +298,28 @@ function renderNeon(createGeometry) {
       );
       ctx.restore();
     }
+    // CSS ease-in-out: invert its x curve once for each of the nine shared phases.
+    const phases = scene.twinkle ??= new Float32Array(9);
+    for (let phase = 0; phase < (options.dots?.length ? 9 : 0); phase++) {
+      const cycle = (time + phase * 0.45) % 4;
+      const x = cycle < 2 ? cycle / 2 : (4 - cycle) / 2;
+      let low = 0, high = 1;
+      for (let step = 0; step < 20; step++) {
+        const t = (low + high) / 2;
+        const at = 3 * (1 - t) ** 2 * t * 0.42 + 3 * (1 - t) * t * t * 0.58 + t ** 3;
+        if (at < x) low = t;
+        else high = t;
+      }
+      const t = (low + high) / 2;
+      phases[phase] = 1 - (3 * t * t - 2 * t ** 3);
+    }
+    ctx.fillStyle = scene.starColor;
+    for (const [i, dot] of (options.dots ?? []).entries()) {
+      ctx.globalAlpha = 0.05 + (dot.o - 0.05) * phases[i % 9];
+      ctx.beginPath();
+      ctx.arc(dot.x * sx, dot.y * sy, Math.max(1, dot.r * 3) / 2, 0, Math.PI * 2);
+      ctx.fill();
+    }
     ctx.globalAlpha = 1;
   }
   function schedule() {
@@ -372,7 +394,7 @@ let thread = null,
   url = null,
   serial = 0,
   unavailable = false,
-  frameRate = 30;
+  frameRate = 60;
 const clients = new Map();
 const visibilityChanged = () => {
   for (const client of clients.values()) client.visibility();
@@ -453,6 +475,7 @@ export function createNeonRenderer(root, svg, initial) {
   };
   const hideOriginal = () => {
     if (!renderer.ready) return;
+    root.setAttribute("data-ad-neon-rendered", "");
     svg.style.visibility = "hidden";
     const node = root.querySelector(".ad-neon-waves-comets");
     if (node !== comets) {
@@ -522,6 +545,7 @@ export function createNeonRenderer(root, svg, initial) {
     intersection.disconnect();
     tokens.disconnect();
     svg.style.visibility = originalVisibility;
+    root.removeAttribute("data-ad-neon-rendered");
     if (comets) comets.style.visibility = cometVisibility;
     canvas.remove();
     clients.delete(id);
@@ -573,6 +597,7 @@ export function createNeonRenderer(root, svg, initial) {
         stops,
         shadows,
         color: style?.backgroundColor,
+        starColor: getComputedStyle(root.querySelector(".ad-neon-waves-star") ?? root).backgroundColor,
         options: { ...options, comets: comet ? options.comets : 0 },
       };
       const key = JSON.stringify(config);

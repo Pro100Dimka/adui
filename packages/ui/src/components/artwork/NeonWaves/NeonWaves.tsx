@@ -75,14 +75,14 @@ export function NeonWaves({
 
   useEffect(() => {
     if (!rootRef.current || !ref.current) return;
-    renderer.current = createNeonRenderer(rootRef.current, ref.current, { strands, phase, shape, comets, time: lastTime.current });
+    renderer.current = createNeonRenderer(rootRef.current, ref.current, { strands, phase, shape, comets, dots, time: lastTime.current });
     return () => { renderer.current?.dispose(); renderer.current = null; };
   }, []);
   useEffect(() => {
-    renderer.current?.update({ strands, phase, shape, comets, time: lastTime.current });
-  }, [strands, phase, shape, comets, motion]);
+    renderer.current?.update({ strands, phase, shape, comets, dots, time: lastTime.current });
+  }, [strands, phase, shape, comets, dots, motion]);
 
-  usePauseOffscreen(ref);
+  usePauseOffscreen(rootRef);
   const paint = (time: number) => {
     lastTime.current = time;
     if (renderer.current?.ready) return;
@@ -131,6 +131,13 @@ export function NeonWaves({
   painter.current = paint;
   useDecoration(ref, paint);
 
+  const star = (d: typeof dots[number], i: number, opacity: number) => (
+    <i key={i} className="ad-neon-waves-star" style={{
+      left: `${(d.x / W) * 100}%`, top: `${(d.y / H) * 100}%`,
+      width: `${Math.max(1, d.r * 3)}px`, opacity,
+    }} />
+  );
+
   return (
     <span {...mark("NeonWaves", p)} ref={rootRef} aria-hidden="true">
     <svg
@@ -168,21 +175,16 @@ export function NeonWaves({
         ))}
       </span>
     )}
-      {/* Stars are page elements over the drawing, not part of it: their twinkle fades on the
-          GPU and never redraws the strands. */}
-      {dots.map((d, i) => (
-        <i
-          key={i}
-          className="ad-neon-waves-star"
-          style={{
-            left: `${(d.x / W) * 100}%`,
-            top: `${(d.y / H) * 100}%`,
-            width: `${Math.max(1, d.r * 3)}px`,
-            opacity: d.o,
-            animationDelay: `${-(i % 9) * 0.45}s`,
-          }}
-        />
-      ))}
+      {/* A constant 0.05 floor plus a fading overlay preserves each star's opacity exactly:
+          0.05 + 0.95 * ((opacity - 0.05) / 0.95) * phase. Only nine groups animate. */}
+      {dots.length > 0 && <>
+        <span className="ad-neon-waves-stars-floor">{dots.map((d, i) => star(d, i, 0.05))}</span>
+        {Array.from({ length: 9 }, (_, phase) => (
+          <span key={phase} className="ad-neon-waves-stars" style={{ animationDelay: `${-phase * 0.45}s` }}>
+            {dots.map((d, i) => i % 9 === phase ? star(d, i, (d.o - 0.05) / 0.95) : null)}
+          </span>
+        ))}
+      </>}
     </span>
   );
 }

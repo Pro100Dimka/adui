@@ -396,19 +396,20 @@ export function DataTable<T extends DataTableRow = DataTableRow>({
         activeFilters.every((column) => passes(filters[column.key]!, cellValue(column, row))),
     );
   }, [keyed, cols, query, activeFilters, filters, manualFiltering]);
-  const sorted = useMemo(() => sorting.length && !manualSorting
-      ? [...found].sort((a, b) => {
-          for (const sort of sorting) {
-            const column = cols.find((column) => column.key === sort.key)!;
-            const x = cellValue(column, a.row), y = cellValue(column, b.row);
-            const order = typeof x === "number" && typeof y === "number"
-              ? (Number.isNaN(x) ? Number.isNaN(y) ? 0 : 1 : Number.isNaN(y) ? -1 : x - y)
-              : compareText(String(x), String(y));
-            if (order) return sort.direction === "asc" ? order : -order;
-          }
-          return a.index - b.index;
-        })
-      : found,
+  const sorted = useMemo(() => {
+      if (!sorting.length || manualSorting) return found;
+      const rules = sorting.map((sort) => ({ column: cols.find((column) => column.key === sort.key)!, direction: sort.direction }));
+      return [...found].sort((a, b) => {
+        for (const { column, direction } of rules) {
+          const x = cellValue(column, a.row), y = cellValue(column, b.row);
+          const order = typeof x === "number" && typeof y === "number"
+            ? (Number.isNaN(x) ? Number.isNaN(y) ? 0 : 1 : Number.isNaN(y) ? -1 : x - y)
+            : compareText(String(x), String(y));
+          if (order) return direction === "asc" ? order : -order;
+        }
+        return a.index - b.index;
+      });
+    },
     [found, sorting, cols, manualSorting],
   );
   // Grouping keeps the sort inside each group; groups follow in the order of their values.
