@@ -1,7 +1,8 @@
 import { useTr } from "../../../core/i18n";
-import { useMemo, useRef, type CSSProperties, type WheelEvent } from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState, type CSSProperties, type WheelEvent } from "react";
 import { clamp, mark, useControllable, type CommonProps } from "../../../core/base";
 import { PianoKeyboard } from "../PianoKeyboard/PianoKeyboard";
+import { createMelodyGlow } from "./melody-glow.js";
 
 export interface MelodyNote {
   id: string;
@@ -85,6 +86,9 @@ export const MelodyRoll = ({
   ...p
 }: MelodyRollProps) => {
   const tr = useTr();
+  const root = useRef<HTMLDivElement>(null);
+  const glow = useRef<ReturnType<typeof createMelodyGlow>>(null);
+  const [glowReady, setGlowReady] = useState(false);
   const [span, setSpan] = useControllable(windowProp, defaultWindow, onWindowChange);
   const indexed = useMemo(() => {
     let low = 60, high = 64;
@@ -109,17 +113,46 @@ export const MelodyRoll = ({
   const from = position - span * lead;
   const origin = Math.floor(from / span) * span;
   const x = (seconds: number) => ((seconds - from) / span) * 100;
-  const y = (pitch: number) => ((high - pitch) / rows) * 100;
-  const visible = indexed.blocks.filter(block => block.end >= from && block.start <= from + span)
-    .flatMap(block => block.notes.filter(note => note.end >= from && note.start <= from + span));
+  const rangeStart = glowReady ? origin : from;
+  const rangeEnd = glowReady ? origin + span * 2 : from + span;
+  const visible = useMemo(() => indexed.blocks.filter(block => block.end >= rangeStart && block.start <= rangeEnd)
+    .flatMap(block => block.notes.filter(note => note.end >= rangeStart && note.start <= rangeEnd)), [indexed, rangeStart, rangeEnd]);
+  // Keep the note elements unchanged until their visibility, playback phase or hit changes.
+  const phases = glowReady ? "" : visible.map(note => note.end < from || note.start > from + span ? 'x' : position >= note.start && position <= note.end ? 'n' : position > note.end ? 'p' : '-').join('');
+  const hits = hitIds?.size ? visible.map(note => hitIds.has(note.id) ? 'h' : '-').join('') : '';
+  const glowState = { beat: clamp(beat, 0, 1), pitch: livePitch, high, rows, lead, accuracy: clamp(accuracy, 0, 1), level: clamp(level, 0, 1), hit, position, span, notes: visible, hits, showLyrics };
+  useEffect(() => {
+    if (!root.current) return;
+    glow.current = createMelodyGlow(root.current, { ...glowState, trail: trail.current }, setGlowReady);
+    return () => { glow.current?.dispose(); glow.current = null; };
+  }, []);
+  useLayoutEffect(() => { glow.current?.update(glowState); }, [beat, livePitch, high, rows, lead, accuracy, level, hit, position, span, visible, hits, showLyrics]);
+  const nativeHits = glowReady ? "" : hits;
+  const noteElements = useMemo(() => glowReady ? undefined : visible.map((note, i) => {
+    const hidden = phases[i] === 'x';
+    return (
+      <span key={note.id} className="ad-melody-note" data-hit={(!hidden && nativeHits[i] === 'h') || undefined}
+        data-now={phases[i] === 'n' || undefined} data-past={phases[i] === 'p' || undefined}
+        style={{
+          visibility: hidden ? 'hidden' : undefined,
+          left: `${((note.start - origin) / span) * 100}%`,
+          width: `${Math.max(0.6, ((note.end - note.start) / span) * 100)}%`,
+          top: `${((high - note.pitch) / rows) * 100}%`,
+        }}>
+        {showLyrics && note.lyric && <span>{note.lyric}</span>}
+      </span>
+    );
+  }), [glowReady, visible, phases, nativeHits, showLyrics, origin, span, high, rows]);
 
   // The voice trail: recent pitches, dropped on silence and when playback jumps back.
   const trail = useRef<{ t: number; pitch?: number }[]>([]);
   if (trail.current.at(-1)?.t !== position) {
-    const kept = trail.current.filter((point) => point.t > position - TRAIL && point.t < position);
-    trail.current = [...kept, { t: position, pitch: livePitch }];
+    if (position < (trail.current.at(-1)?.t ?? position)) trail.current = trail.current.filter(point => point.t < position);
+    const expired = trail.current.findIndex(point => point.t > position - TRAIL);
+    trail.current.splice(0, expired < 0 ? trail.current.length : expired);
+    trail.current.push({ t: position, pitch: livePitch });
   }
-  const segments = trail.current.reduce<string[]>((paths, point, i, all) => {
+  const segments = glowReady ? [] : trail.current.reduce<string[]>((paths, point, i, all) => {
     if (point.pitch === undefined) return paths;
     const joined = i > 0 && all[i - 1]?.pitch !== undefined;
     const at = `${x(point.t).toFixed(2)},${(((high - point.pitch + 0.5) / rows) * 100).toFixed(2)}`;
@@ -133,61 +166,37 @@ export const MelodyRoll = ({
     setSpan(clamp(span * (event.deltaY > 0 ? 1.12 : 1 / 1.12), 2, 20));
   };
 
-  return (
-    <div
-      {...mark("MelodyRoll", p)}
-      role="img"
-      aria-label={label ?? tr("Мелодия")}
-      onWheel={zoom}
-      style={
-        {
-          ...p.style,
-          "--ad-roll-rows": rows,
-          "--ad-roll-beat": clamp(beat, 0, 1),
-          "--ad-roll-second": `${100 / span}cqw`,
-        } as CSSProperties
-      }
-    >
+  // Playback updates the worker; keep the native surface unchanged between structural edits.
+  const nativeState = glowReady ? null : glowState;
+  const content = useMemo(() => (
+      <div className="ad-melody-roll-content">
       <PianoKeyboard
         className="ad-melody-roll-keys"
         minMidi={low}
         maxMidi={high}
-        activeMidi={livePitch === undefined ? undefined : Math.round(livePitch)}
-        hit={hit}
+        activeMidi={glowReady || livePitch === undefined ? undefined : Math.round(livePitch)}
+        hit={!glowReady && hit}
         labels={rows > 30 ? "octaves" : "all"}
         onKeyPress={onKeyPress}
       />
       <div className="ad-melody-roll-lane" aria-hidden="true">
-        <span className="ad-melody-roll-seconds" style={{ "--ad-roll-shift": `${(-(((from % 1) + 1) % 1) / span) * 100}cqw` } as CSSProperties} />
+        <span className="ad-melody-roll-seconds" style={glowReady ? undefined : { "--ad-roll-shift": `${(-(((from % 1) + 1) % 1) / span) * 100}cqw` } as CSSProperties} />
         {/* The notes sit on a strip in song time that slides under the playhead: playback moves
             one layer instead of laying out and repainting every note on every tick. */}
-        <div className="ad-melody-roll-strip" style={{ transform: `translateX(${(((origin - from) / span) * 100).toFixed(3)}%)` }}>
-        {visible.map((note) => (
-          <span
-            key={note.id}
-            className="ad-melody-note"
-            data-hit={hitIds?.has(note.id) || undefined}
-            data-now={(position >= note.start && position <= note.end) || undefined}
-            data-past={position > note.end || undefined}
-            style={{
-              left: `${((note.start - origin) / span) * 100}%`,
-              width: `${Math.max(0.6, ((note.end - note.start) / span) * 100)}%`,
-              top: `${y(note.pitch)}%`,
-            }}
-          >
-            {showLyrics && note.lyric && <span>{note.lyric}</span>}
-          </span>
-        ))}
+        <div className="ad-melody-roll-strip" style={glowReady ? undefined : { transform: `translateX(${(((origin - from) / span) * 100).toFixed(3)}%)` }}>
+        {noteElements}
         </div>
-        <svg className="ad-melody-trail" viewBox="0 0 100 100" preserveAspectRatio="none" style={{ "--ad-roll-accuracy": clamp(accuracy, 0, 1) } as CSSProperties}>
+        {!glowReady && <svg className="ad-melody-trail" viewBox="0 0 100 100" preserveAspectRatio="none" style={{ "--ad-roll-accuracy": clamp(accuracy, 0, 1) } as CSSProperties}>
           {segments.flatMap((d, i) => [
             <path key={`${i}-wide`} data-halo="wide" d={d} vectorEffect="non-scaling-stroke" />,
             <path key={`${i}-near`} data-halo="near" d={d} vectorEffect="non-scaling-stroke" />,
             <path key={i} d={d} vectorEffect="non-scaling-stroke" />,
           ])}
-        </svg>
-        <span className="ad-melody-playhead" style={{ left: `${lead * 100}%`, "--ad-roll-beat": clamp(beat, 0, 1) } as CSSProperties} />
-        {livePitch !== undefined && (
+        </svg>}
+        <span className="ad-melody-playhead" style={{ left: `${lead * 100}%` }}>
+          <span className="ad-melody-playhead-light" style={{ opacity: glowReady ? 0 : clamp(beat, 0, 1) }} />
+        </span>
+        {!glowReady && livePitch !== undefined && (
           <span
             className="ad-melody-voice"
             data-hit={hit || undefined}
@@ -195,6 +204,27 @@ export const MelodyRoll = ({
           />
         )}
       </div>
+      </div>
+  ), [glowReady, noteElements, low, high, rows, onKeyPress, lead, nativeState]);
+
+  return (
+    <div
+      {...mark("MelodyRoll", p)}
+      ref={root}
+      role="img"
+      aria-label={label ?? tr("Мелодия")}
+      onWheel={zoom}
+      style={
+        {
+          ...p.style,
+          "--ad-roll-rows": rows,
+          "--ad-roll-beat": glowReady ? 0 : clamp(beat, 0, 1),
+          "--ad-roll-second": `${100 / span}cqw`,
+        } as CSSProperties
+      }
+    >
+      <span className="ad-melody-roll-light" aria-hidden="true" style={{ opacity: glowReady ? 0 : clamp(beat, 0, 1) }} />
+      {content}
     </div>
   );
 };

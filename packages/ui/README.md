@@ -4,6 +4,12 @@ Migration: replace `@ad-voice/ui` with `@neo-ui-kit/react` in dependencies and i
 
 NEO UI — React + TypeScript UI kit: glass/ruby surfaces, animated neon borders, fields, tabs, dialogs, audio controls and a melody editor.
 
+## 1.3.10
+
+- MelodyRoll renders notes, lyrics, key effects and voice effects in a shared worker while keeping native keyboard input and focus.
+- Bounded sprite caches and stable DOM reduce playback work; CSS/SVG fallback remains available.
+- CPU ×8 measurements are near 60 FPS; ×16 page updates measured 49.5–59.8 FPS while worker rendering stayed near 60. Stable 60 FPS for the complete scene is not yet established. See the [performance report](https://github.com/Pro100Dimka/adui/blob/main/evidence/performance-report.md).
+
 ## 1.3.9
 
 - Rounded field variants share the existing neon outline; outlined and underlined fields have transparent backgrounds, and filled fields have no animated border.
@@ -32,7 +38,7 @@ import "@neo-ui-kit/react/styles.css";
 To test repository changes before publishing, run `npm run package` from the repository root and install the resulting archive in a separate application:
 
 ```bash
-npm install /path/to/adui/release/neo-ui-kit-react-1.3.9.tgz
+npm install /path/to/adui/release/neo-ui-kit-react-1.3.10.tgz
 ```
 
 Maintainers publish new versions from `Pro100Dimka/adui` using the `release.yml` GitHub Actions workflow, a matching `v<version>` tag, and the `npm-publication` environment. npm trusts its OIDC identity; no `NPM_TOKEN` is required. The workflow checks the project and packed consumer before publishing the tested archive. Published `1.0.0` cannot be overwritten: code and README changes in npm require a new package version. See the [repository release instructions](https://github.com/Pro100Dimka/adui#npm-пакет).
@@ -188,6 +194,8 @@ Animated border geometry is initialized and resized in small batches on the shar
 Keep `rows`, `columns`, `options`, and `initialValues` immutable: replace them when their contents change. Stable references allow expensive derived results to be reused across selection, navigation, and other local UI changes. Do not memoize every prop automatically.
 
 MelodyRoll also expects an immutable `notes` array: keep its reference stable during playback and replace it after editing notes. It caches pitch bounds and time bounds for blocks of 128 notes, skipping blocks outside the visible window. Input order and overlapping notes are preserved; heavily interleaved unsorted data can still require a full scan. The moving strip uses nearby time coordinates instead of ever-growing song offsets. Beat, voice level and accuracy updates are scoped to the elements that use them, avoiding restyling the whole keyboard and note strip. These changes preserve the existing glow, transitions, lyrics, seeking and wheel zoom; CPU ×8/×16 stress results are in the performance report.
+
+Version 1.3.10 renders notes, lyrics, key effects, beat glow, voice marker and the three-layer voice trail through a shared OffscreenCanvas worker. Two adjacent note windows bound the data sent to it; unchanged note batches are not resent on each tick. Native keyboard buttons retain pointer input, keyboard activation and focus. CSS supplies colours, shadows, timing and text geometry; readable webfont sources are loaded into the worker before handoff. Note sprites are cached (512 base sprites; filtered sprites limited to 8 × 1024² physical pixels), and structural DOM stays unchanged during playback. CSS/SVG remains active until readiness and returns on failure, unavailable APIs/CSP, or unsupported styles/font sources. Hidden/paused scenes stop drawing; the last unmount terminates the worker. Canvas and CSS antialiasing differ slightly. In repeated 30-second runs, page updates reached about 59.9–60 FPS at CPU ×8 and 49.5–59.5 FPS at ×16; the worker drawing loop stayed near 60 FPS. Stable 60 FPS for the complete scene is **not yet established**. See the [performance report](https://github.com/Pro100Dimka/adui/blob/main/evidence/performance-report.md) for measurements and limits.
 
 For large tables, use `pageSize` or opt into `virtualize` to bound mounted rows. Virtualization bounds rendering, not the cost of client-side sorting/filtering: use the manual server contracts for datasets that are too large to process locally. Open Select/Autocomplete lists are not virtualized: filter very large datasets before supplying options. `PeoplePicker.onSearch(query, signal)` receives an optional `AbortSignal`; forward it to your data client to cancel superseded requests. Expensive custom renderers, validators, and aggregates still need their own work budget.
 

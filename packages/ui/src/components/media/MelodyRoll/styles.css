@@ -9,11 +9,10 @@
   --ad-roll-keys: clamp(2.75rem, 8%, 4.5rem);
   position: relative;
   display: grid;
-  grid-template-columns: var(--ad-roll-keys) minmax(0, 1fr);
   width: 100%;
   height: 100%;
   min-height: 8rem;
-  overflow: hidden;
+  overflow: visible;
   isolation: isolate;
   /* Room for the hairline edge that the glass layer below draws. */
   padding: 0.0625rem;
@@ -21,11 +20,66 @@
   box-shadow: 0 0 calc(var(--ad-roll-beat) * 1.6rem) rgb(from var(--ad-primary) r g b / 0.25);
   transition: box-shadow 0.12s;
 }
+.ad-melody-roll-content {
+  display: grid;
+  grid-template-columns: var(--ad-roll-keys) minmax(0, 1fr);
+  width: calc(100% + 0.125rem);
+  height: calc(100% + 0.125rem);
+  margin: -0.0625rem;
+  padding: 0.0625rem;
+  min-height: 0;
+  overflow: hidden;
+  border-radius: inherit;
+}
+.ad-melody-glow {
+  position: absolute;
+  pointer-events: none;
+  z-index: -1;
+}
+.ad-melody-voice-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 3;
+  pointer-events: none;
+}
+.ad-melody-note-canvas, .ad-melody-key-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.ad-melody-key-canvas { z-index: -1; }
+.ad-melody-roll[data-ad-foreground] .ad-melody-roll-seconds { visibility: hidden; }
+.ad-melody-roll-keys { isolation: isolate; }
+.ad-melody-roll[data-ad-foreground] .ad-melody-note:not([data-render-probe]) {
+  visibility: hidden;
+  transition: none;
+  animation: none;
+}
+.ad-melody-roll[data-ad-foreground] .ad-melody-roll-keys:not([data-render-probe]) > .ad-piano-key {
+  background: transparent;
+  box-shadow: none;
+  color: transparent;
+  border-color: transparent;
+  filter: none;
+  translate: none;
+  transition: none;
+  animation: none;
+}
+.ad-melody-roll[data-ad-glow] {
+  box-shadow: none;
+  transition: none;
+}
+.ad-melody-roll[data-ad-glow] :is(.ad-melody-roll-light, .ad-melody-playhead-light, .ad-melody-voice, svg.ad-melody-trail) {
+  visibility: hidden;
+}
 /* The glass: its own still layer, so the frosted backdrop is never redrawn by the beat or by the
    notes moving over it. */
 .ad-melody-roll::before,
-.ad-melody-roll::after {
-  --ad-roll-beat: inherit;
+.ad-melody-roll-light {
   content: "";
   position: absolute;
   inset: 0;
@@ -42,10 +96,9 @@
   backdrop-filter: blur(0.5rem);
 }
 /* The beat: a brighter edge and a warmer light over the glass, faded in with the music. */
-.ad-melody-roll::after {
+.ad-melody-roll-light {
   border-color: rgb(from var(--ad-primary) r g b / 0.35);
   background: radial-gradient(80% 120% at 25% 50%, rgb(from var(--ad-primary) r g b / 0.12), transparent 70%);
-  opacity: var(--ad-roll-beat);
   transition: opacity 0.12s;
   will-change: opacity;
 }
@@ -161,15 +214,13 @@
     0 0 1rem var(--ad-primary);
 }
 /* The playhead flares on the beat: a wider glow, drawn once, faded in. */
-.ad-melody-playhead::after {
-  --ad-roll-beat: inherit;
+.ad-melody-playhead-light {
   content: "";
   position: absolute;
   inset: 0;
   box-shadow:
     0 0 1.6rem #fff,
     0 0 2.6rem var(--ad-primary);
-  opacity: var(--ad-roll-beat);
   will-change: opacity;
 }
 /* The singer's voice: grows with loudness, greens with accuracy. */

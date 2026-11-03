@@ -7,12 +7,155 @@ import { Marquee } from "../src/components/effects/Marquee/Marquee";
 import { Sparkline } from "../src/components/media/Sparkline/Sparkline";
 import { Tilt } from "../src/components/effects/Tilt/Tilt";
 import { Shimmer } from "../src/components/effects/Shimmer/Shimmer";
+import * as melodyGlow from "../src/components/media/MelodyRoll/melody-glow.js";
+import { readFileSync } from "node:fs";
 
 beforeEach(() => {
   vi.stubGlobal("IS_REACT_ACT_ENVIRONMENT", true);
   vi.stubGlobal("window", { setTimeout, clearTimeout });
 });
-afterEach(() => { vi.useRealTimers(); vi.unstubAllGlobals(); });
+afterEach(() => { vi.useRealTimers(); vi.unstubAllGlobals(); vi.restoreAllMocks(); });
+
+it("hands bounded note windows and mutable hits to the worker and restores native notes on failure", () => {
+  const update = vi.fn(), dispose = vi.fn();
+  let ready!: (value: boolean) => void;
+  vi.spyOn(melodyGlow, "createMelodyGlow").mockImplementation((_root, _state, onReady) => {
+    ready = onReady; ready(true);
+    return { update, dispose };
+  });
+  const notes = Array.from({ length: 128 }, (_, i) => ({ id: String(i), start: i * 0.25, end: i * 0.25 + 0.2, pitch: 60, lyric: String(i) }));
+  const hitIds = new Set<string>();
+  let tree!: ReturnType<typeof create>;
+  act(() => { tree = create(<MelodyRoll notes={notes} position={10} hitIds={hitIds} showLyrics />, { createNodeMock: () => ({}) }); });
+  try {
+    expect(tree.root.findAllByProps({ className: "ad-melody-note" })).toHaveLength(0);
+    const original = update.mock.lastCall![0].notes;
+    act(() => tree.update(<MelodyRoll notes={notes} position={10.01} hitIds={hitIds} showLyrics />));
+    expect(update.mock.lastCall![0].notes).toBe(original);
+    hitIds.add("40");
+    act(() => tree.update(<MelodyRoll notes={notes} position={10.01} hitIds={hitIds} showLyrics />));
+    const sent = update.mock.lastCall![0];
+    expect(sent.hits[sent.notes.findIndex((note: { id: string }) => note.id === "40")]).toBe("h");
+    for (const [position, span] of [[10.1, 8], [18.01, 8], [2, 4], [-1, 8]]) {
+      act(() => tree.update(<MelodyRoll notes={notes} position={position} window={span} showLyrics />));
+      const sent = update.mock.lastCall![0];
+      const inside = (note: { start: number; end: number }) => note.end >= position - span * 0.25 && note.start <= position + span * 0.75;
+      expect(sent.notes.filter(inside)).toEqual(notes.filter(inside));
+      expect(sent.notes.length).toBeLessThanOrEqual(span * 8 + 2);
+      expect(tree.root.findAllByProps({ className: "ad-melody-note" })).toHaveLength(0);
+    }
+    act(() => ready(false));
+    expect(tree.root.findAllByProps({ className: "ad-melody-note" })).toHaveLength(notes.filter(note => note.end >= -3 && note.start <= 5).length);
+    expect(tree.root.findAllByType("svg")).toHaveLength(1);
+  } finally { act(() => tree.unmount()); }
+  expect(dispose).toHaveBeenCalledOnce();
+});
+
+it("preserves CSS easing, independent voice transitions, trail gaps and worker pause/cleanup", async () => {
+  let now = 0;
+  const frames: Array<(time: number) => void> = [];
+  const context = () => ({
+    ...Object.fromEntries(["setTransform", "save", "restore", "beginPath", "rect", "roundRect", "clip", "fill", "fillRect", "fillText", "drawImage", "translate", "scale"].map(name => [name, vi.fn()])),
+    clearRect: vi.fn(), arc: vi.fn(), stroke: vi.fn(), shadowBlur: 0, filter: "none",
+    getTransform: () => ({ a: 1 }), measureText: () => ({ fontBoundingBoxAscent: 9, fontBoundingBoxDescent: 2 }),
+    createLinearGradient: () => ({ addColorStop() {} }),
+    createRadialGradient: () => ({ addColorStop() {} }),
+  });
+  class Canvas { ctx = context(); constructor(public width: number, public height: number) {} getContext() { return this.ctx; } }
+  const root = context(), voice = context(), trail = context();
+  class Path {
+    points: Array<[string, number, number]> = [];
+    moveTo(x: number, y: number) { this.points.push(["M", x, y]); }
+    lineTo(x: number, y: number) { this.points.push(["L", x, y]); }
+  }
+  const source = readFileSync(new URL("../src/components/media/MelodyRoll/melody-glow.js", import.meta.url), "utf8");
+  const posted = vi.fn();
+  const receive = new Function("performance", "requestAnimationFrame", "postMessage", "Path2D", "OffscreenCanvas", `let onmessage; ${source.slice(0, source.indexOf("let thread ="))}; renderGlow(); return data => onmessage({data});`)(
+    { timeOrigin: 0, now: () => now }, (frame: (time: number) => void) => { frames.push(frame); return 1; }, posted, Path, Canvas,
+  );
+  let state = { beat: 0, pitch: 60 as number | undefined, high: 72, rows: 16, lead: 0.25, level: 0, accuracy: 0, hit: false, position: 0, span: 8 };
+  const config = { type: "configure", id: 1, state, visible: true, time: 0, width: 1000, height: 400, laneWidth: 1000, laneHeight: 400, pad: 40, radius: [16, 16, 16, 16], blur: 20, color: "#ff244c40", dpr: 1, duration: 120,
+    canvas: { getContext: () => root }, voiceCanvas: { getContext: () => voice }, trailCanvas: { getContext: () => trail },
+    lightColors: ["#ff244c20", "transparent"], lightBorder: "#ff244c55", lightWidth: 1, headWidth: 2, headShadows: [],
+    voiceStyle: { size: [16, 32], color: ["#fff", "#2ee886"], hitColor: "#4dffa0", borderColor: "#fff", border: 2, shadows: [[], []], duration: 80, hitDuration: 420 },
+    trailStyle: [10.4, 6.4, 2.4].map(width => ({ width, color: ["#fff", "#3dff91"], opacity: 0.75 })),
+  };
+  receive(config);
+  const step = (time: number) => { now = time; frames.shift()?.(time); };
+  const update = (change: Partial<typeof state>) => { state = { ...state, ...change }; receive({ type: "state", id: 1, state, time: now }); };
+  update({ beat: 1, pitch: 64, level: 1, position: 1 });
+  step(40);
+  expect(voice.arc.mock.calls.at(-2)?.[1]).toBeCloseTo(262.5, 4); // Linear top at half of 80 ms.
+  expect(voice.arc.mock.calls.at(-2)?.[2]).toBeCloseTo(14.4192, 3); // CSS ease(0.5) = 0.802403.
+  step(60);
+  expect(root.shadowBlur).toBeCloseTo(16.0481, 3); // Half of the 120 ms blur transition.
+  update({ beat: 0 });
+  step(80);
+  expect(voice.arc.mock.calls.at(-2)?.[1]).toBeCloseTo(212.5, 4);
+  expect(voice.arc.mock.calls.at(-2)?.[2]).toBe(16); // Unrelated beat updates must not restart size/top.
+  update({ pitch: undefined, position: 2 });
+  voice.arc.mockClear();
+  step(100);
+  expect(voice.arc).not.toHaveBeenCalled();
+  update({ pitch: 65, position: 2.5 });
+  trail.stroke.mockClear();
+  step(120);
+  expect(trail.stroke).toHaveBeenCalledTimes(6); // Three layers for each of two disconnected segments.
+  expect(trail.stroke.mock.calls[0][0].points.map((point: [string, number, number]) => point[0])).toEqual(["M", "L"]);
+  expect(trail.stroke.mock.calls[3][0].points.map((point: [string, number, number]) => point[0])).toEqual(["M"]);
+  update({ position: -1 });
+  trail.stroke.mockClear();
+  step(140);
+  expect(trail.stroke).toHaveBeenCalledTimes(3);
+  expect(trail.stroke.mock.calls[0][0].points).toHaveLength(1);
+  update({ hit: true });
+  step(329); // 45% of the 420 ms hit animation, after the update at 140 ms.
+  expect(voice.arc.mock.calls.at(-2)?.[2]).toBeCloseTo(21.6, 4);
+  step(560);
+  expect(voice.arc.mock.calls.at(-2)?.[2]).toBe(16);
+  receive({ type: "visible", id: 1, visible: false });
+  root.clearRect.mockClear();
+  step(580);
+  expect(root.clearRect).not.toHaveBeenCalled();
+  expect(frames).toHaveLength(0);
+  receive({ type: "remove", id: 1 });
+  update({ beat: 1 });
+  expect(frames).toHaveLength(0);
+
+  const notes = context(), keys = context();
+  const shadow = { kind: "drop-shadow", color: "#0f0", x: 0, y: 0, blur: 3, spread: 0, inset: false };
+  const surface = { color: "#fff", backgroundColor: "#f00", gradient: [], shadows: [], radius: [8, 8, 8, 8], borders: Array.from({ length: 4 }, () => ({ width: 0, color: "#000" })), filter: [] };
+  const text = { font: "10px sans-serif", color: "#fff", letterSpacing: "0px", baseline: 10, offset: 2, padding: 2, textShadows: [] };
+  now = 600;
+  receive({ ...config, id: 2, time: now, state: { ...state, position: 100.75, pitch: 64, hit: false, hits: "--", showLyrics: true, notes: [
+    { id: "later", start: 100.5, end: 103, pitch: 64, lyric: "B" },
+    { id: "earlier", start: 100, end: 102, pitch: 64, lyric: "A" },
+  ] }, noteCanvas: { getContext: () => notes }, keyCanvas: { getContext: () => keys }, foreground: {
+    fonts: [], grid: { color: "#fff1", width: 1 }, keyWidth: 72, keyHeight: 400,
+    note: { base: surface, current: { ...surface, filter: [{ kind: "brightness", value: 1.3 }, shadow] }, hit: { ...surface, filter: [shadow, shadow] }, peakFilter: [{ kind: "brightness", value: 1.9 }, shadow], filterPad: 18,
+      text, height: 19, filterDuration: 200, opacityDuration: 300, pastOpacity: 0.45, hitDuration: 620 },
+    keys: [{ midi: 64, top: 0, width: 72, height: 25, label: "E4", text, base: surface, active: surface, hit: { ...surface, color: "#0f0" }, pressed: surface, duration: 180, pressDuration: 120, pressShift: -2, hitDuration: 900, hitIterations: Infinity, pad: 4 }],
+  } });
+  expect(notes.drawImage).toHaveBeenCalledTimes(2);
+  expect(notes.drawImage.mock.calls[0][1]).toBeGreaterThan(notes.drawImage.mock.calls[1][1]); // Input order, including overlapping notes.
+  receive({ type: "state", id: 2, time: now, state: { hits: "hh", hit: true } });
+  notes.drawImage.mockClear();
+  step(600 + 620 * 0.28);
+  const peak = notes.drawImage.mock.calls[0];
+  expect(peak[4]).toBeCloseTo(peak[0].height * 1.6, 5); // Scale applies to the filtered image, including its glow.
+  expect(peak[0].ctx.filter).toContain("brightness(1.9)");
+  step(1050);
+  expect(Number(keys.filter.slice(11, -1))).toBeCloseTo(1.25, 8);
+  receive({ type: "keys", id: 2, time: now, pressed: [64] });
+  step(1170);
+  expect(keys.drawImage.mock.calls.at(-1)?.[5]).toBe(-6); // Native press translation and shadow padding.
+  receive({ type: "visible", id: 2, visible: false });
+  notes.clearRect.mockClear(); step(1190);
+  expect(notes.clearRect).not.toHaveBeenCalled();
+  expect(frames).toHaveLength(0);
+  await receive({ ...config, id: 3, canvas: { getContext() { throw new Error("Canvas unavailable"); } } });
+  expect(posted).toHaveBeenLastCalledWith({ id: 3, failed: true });
+});
 
 it("does not rescan the whole melody during playback and refreshes replaced notes", () => {
   const start = vi.fn((i: number) => i * 0.25);

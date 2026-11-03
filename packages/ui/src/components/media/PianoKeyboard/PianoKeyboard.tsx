@@ -69,6 +69,7 @@ export const PianoKeyboard = /* @__PURE__ */ memo(function PianoKeyboard({
   const key = (midi: number, top: number, size: number, black: boolean) => {
     const props = {
       className: "ad-piano-key",
+      "data-midi": midi,
       "data-black": black || undefined,
       "data-active": midi === activeMidi || undefined,
       "data-hit": (midi === activeMidi && hit) || undefined,
