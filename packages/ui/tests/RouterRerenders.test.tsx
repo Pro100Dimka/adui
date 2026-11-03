@@ -5,7 +5,7 @@ import RouterExample from "../src/components/navigation/Router/example";
 import { LocaleProvider } from "@neo-ui-kit/react";
 import { useMotion, useReducedMotion } from "../src/core/providers/context";
 
-afterEach(() => vi.unstubAllGlobals());
+afterEach(() => { vi.unstubAllGlobals(); vi.restoreAllMocks(); });
 
 it("translates the Router example with the selected documentation locale", () => {
   vi.stubGlobal("IS_REACT_ACT_ENVIRONMENT", true);
@@ -41,6 +41,44 @@ it("documents a usable Router with interactive home and dynamic room routes", ()
 });
 
 describe("Router render stability", () => {
+  it.each([
+    ["AbortError", "debug"],
+    ["TimeoutError", "debug"],
+    ["InvalidStateError", "error"],
+  ] as const)("keeps navigation usable and reports animation result %s", async (name, level) => {
+    const location = { hash: "#/", pathname: "/" };
+    let hashChange = () => {};
+    const skipped = new DOMException("Animation skipped", name);
+    const diagnostic = vi.spyOn(console, level).mockImplementation(() => {});
+    vi.stubGlobal("IS_REACT_ACT_ENVIRONMENT", true);
+    vi.stubGlobal("location", location);
+    vi.stubGlobal("document", {
+      documentElement: { dataset: { adMotion: "on" } },
+      startViewTransition: (update: () => void) => {
+        update();
+        return { ready: Promise.reject(skipped) };
+      },
+    });
+    vi.stubGlobal("window", {
+      addEventListener: (_event: string, listener: () => void) => { hashChange = listener; },
+      removeEventListener() {},
+    });
+    const routes = ["/", "/a", "/b"].map((path) => ({ path, element: <span>{path}</span> }));
+    let tree!: ReactTestRenderer;
+    act(() => { tree = create(<Router transition routes={routes} />); });
+    diagnostic.mockClear();
+    try {
+      for (const path of ["/a", "/b"]) {
+        await act(async () => { location.hash = `#${path}`; hashChange(); });
+        expect(tree.root.findByType("span").children).toEqual([path]);
+      }
+      expect(diagnostic).toHaveBeenCalledTimes(2);
+      expect(diagnostic).toHaveBeenCalledWith(
+        level === "debug" ? "Route animation skipped" : "Route animation failed", skipped,
+      );
+    } finally { act(() => tree.unmount()); }
+  });
+
   it.each(["hash", "history"] as const)("updates %s routes immediately without native snapshots by default", (mode) => {
     const updates: Array<() => void> = [];
     const location = { hash: "#/", pathname: "/" };
@@ -77,7 +115,7 @@ describe("Router render stability", () => {
   it("applies a changed transition preference to the location subscription", () => {
     const location = { hash: "#/", pathname: "/" };
     let hashChange = () => {};
-    const transition = vi.fn((update: () => void) => update());
+    const transition = vi.fn((update: () => void) => { update(); return { ready: Promise.resolve() }; });
     vi.stubGlobal("IS_REACT_ACT_ENVIRONMENT", true);
     vi.stubGlobal("location", location);
     vi.stubGlobal("document", { documentElement: { dataset: { adMotion: "on" } }, startViewTransition: transition });
@@ -104,7 +142,7 @@ describe("Router render stability", () => {
     const documentElement = { dataset: { adMotion: "on" } };
     vi.stubGlobal("IS_REACT_ACT_ENVIRONMENT", true);
     vi.stubGlobal("location", location);
-    vi.stubGlobal("document", { documentElement, startViewTransition: (update: () => void) => { updates.push(update); } });
+    vi.stubGlobal("document", { documentElement, startViewTransition: (update: () => void) => { updates.push(update); return { ready: Promise.resolve() }; } });
     vi.stubGlobal("window", { addEventListener() {}, removeEventListener() {} });
     vi.stubGlobal("history", {
       pushState: (_state: unknown, _title: string, path: string) => { location.pathname = path; },
@@ -133,7 +171,7 @@ describe("Router render stability", () => {
     vi.stubGlobal("location", location);
     vi.stubGlobal("document", {
       documentElement: { dataset: { adMotion: "on" } },
-      startViewTransition: (update: () => void) => { updates.push(update); },
+      startViewTransition: (update: () => void) => { updates.push(update); return { ready: Promise.resolve() }; },
     });
     vi.stubGlobal("window", {
       addEventListener: (_event: string, listener: () => void) => { hashChange = listener; },
@@ -158,7 +196,7 @@ describe("Router render stability", () => {
     let subscriptions = 0;
     const documentElement = { dataset: { adMotion: "on" } };
     const location = { hash: "#/probe", pathname: "/probe" };
-    const transition = vi.fn((update: () => void) => update());
+    const transition = vi.fn((update: () => void) => { update(); return { ready: Promise.resolve() }; });
     vi.stubGlobal("IS_REACT_ACT_ENVIRONMENT", true);
     vi.stubGlobal("location", location);
     vi.stubGlobal("document", { documentElement, startViewTransition: transition });

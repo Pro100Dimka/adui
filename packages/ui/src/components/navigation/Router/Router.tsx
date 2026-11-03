@@ -43,10 +43,16 @@ const Context = createContext<RouterValue | null>(null),
   },
   current = (m: "hash" | "history") =>
     clean(m === "hash" ? location.hash.slice(1) || "/" : location.pathname);
-const morph = (update: () => void, transition: boolean) =>
-  transition && motionEnabled() && "startViewTransition" in document
-    ? void document.startViewTransition(() => flushSync(update))
-    : update();
+const morph = (update: () => void, transition: boolean) => {
+  if (!transition || !motionEnabled() || !("startViewTransition" in document)) {
+    update();
+    return;
+  }
+  void document.startViewTransition(() => flushSync(update)).ready.catch((error: unknown) => {
+    const skipped = error instanceof DOMException && ["AbortError", "TimeoutError"].includes(error.name);
+    console[skipped ? "debug" : "error"](skipped ? "Route animation skipped" : "Route animation failed", error);
+  });
+};
 function matchPath(pattern: string, pathname: string) {
   const p = clean(pattern).split("/").filter(Boolean),
     v = clean(pathname).split("/").filter(Boolean),
