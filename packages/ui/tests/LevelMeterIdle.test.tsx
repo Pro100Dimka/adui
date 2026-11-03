@@ -30,6 +30,12 @@ it("keeps a silent meter off the shared frame clock until it receives a level", 
   expect(clock.subscribe).not.toHaveBeenCalled();
   act(() => { tree.update(<LevelMeter value={35} />); });
   expect(clock.listeners.size).toBe(1);
+  const start = performance.now();
+  for (const tick of clock.listeners) tick(start + 1);
+  expect(clock.listeners.size).toBe(1);
+  const silentPath = path.setAttribute.mock.calls.find(([name]) => name === "d")?.[1];
+  for (const tick of clock.listeners) tick(start + 40);
+  expect(path.setAttribute.mock.calls.filter(([name]) => name === "d").at(-1)?.[1]).not.toBe(silentPath);
   act(() => tree.unmount());
   expect(clock.listeners.size).toBe(0);
 });

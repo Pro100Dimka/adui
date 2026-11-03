@@ -96,7 +96,7 @@ export function LevelMeter({
         samples.push(envelope);
         shape.setAttribute("d", wavePath(samples));
       }
-      if (!analyser && envelope === 0 && samples.every((sample) => sample === 0)) {
+      if (!analyser && input === 0 && envelope === 0 && samples.every((sample) => sample === 0)) {
         shape.setAttribute("transform", "translate(0 0)");
         stop?.();
         stop = undefined;
