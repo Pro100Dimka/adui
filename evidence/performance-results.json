@@ -6705,5 +6705,567 @@
       "Canvas and CSS antialiasing differ; screenshots are not pixel-identical",
       "Stable 60 FPS for the complete scene is not established"
     ]
+  },
+  "melodyPitchStyleInvalidation": {
+    "vocal-app-before": {
+      "commit": "c4b6e6f050fbddeb60261ccb7033c959405c8c7b",
+      "width": 1440,
+      "dpr": 1,
+      "reducedMotion": false,
+      "failWorker": false,
+      "verifyCleanup": false,
+      "baselineFiles": [
+        "styles.css",
+        "MelodyRoll.tsx",
+        "melody-glow.js"
+      ],
+      "browser": "156.0.8078.80",
+      "baseline": false,
+      "melodyBaseline": false,
+      "melodyNotes": 10000,
+      "melodyInput": "vocal",
+      "melodyProps": {
+        "beat": 0
+      },
+      "sequence": [],
+      "noWorker": false,
+      "extraCss": ".ad.ad-melody-roll { --ad-roll-beat:0!important; box-shadow:inset 0 1px 0 #ffffff12,0 0 calc(var(--show-roll-glow,0) * 41.6px) rgb(255 46 138 / calc(var(--show-roll-glow,0) * .28)); transition:none; } .ad-melody-note[data-hit] { animation:none; }",
+      "directShift": false,
+      "trace": false,
+      "cpuOnly": false,
+      "results": [
+        {
+          "throttle": 8,
+          "emulated": true,
+          "mode": "melody",
+          "fps": "default",
+          "elapsed": 5266.299999999999,
+          "frames": 8,
+          "displayFps": 1.5190931014184534,
+          "rendererFrames": 9,
+          "rendererFps": 1.7089797390957602,
+          "frameP95": 833.2999999999993,
+          "frameP99": 833.2999999999993,
+          "frameMax": 833.2999999999993,
+          "motionTicks": 9,
+          "motionFps": 1.5190931014184534,
+          "motionP95": 833.2999999999993,
+          "worker": {
+            "frames": 414,
+            "elapsed": 8064.60000000149,
+            "fps": 51.335466111142956,
+            "p95": 16.80000000000109,
+            "p99": 183.29999999999927,
+            "max": 333.2999999999993
+          },
+          "glowReady": {
+            "ready": true,
+            "configurations": 25,
+            "svg": 0,
+            "voices": 0
+          },
+          "waitedForGlow": true,
+          "mainThreadMs": 7777.595999999999,
+          "scriptMs": 1936.187,
+          "layoutMs": 1207.48,
+          "styleMs": 4250.879000000001,
+          "heapBytes": 4622144
+        },
+        {
+          "throttle": 16,
+          "emulated": true,
+          "mode": "melody",
+          "fps": "default",
+          "elapsed": 6949.5999999999985,
+          "frames": 3,
+          "displayFps": 0.431679521123518,
+          "rendererFrames": 3,
+          "rendererFps": 0.431679521123518,
+          "frameP95": 2599.9000000000015,
+          "frameP99": 2599.9000000000015,
+          "frameMax": 2599.9000000000015,
+          "motionTicks": 4,
+          "motionFps": 0.431679521123518,
+          "motionP95": 2599.9000000000015,
+          "worker": {
+            "frames": 531,
+            "elapsed": 13841.60000000149,
+            "fps": 38.36261703848853,
+            "p95": 16.799999999999272,
+            "p99": 33.400000000001455,
+            "max": 1766.6000000000058
+          },
+          "glowReady": {
+            "ready": true,
+            "configurations": 19,
+            "svg": 0,
+            "voices": 0
+          },
+          "waitedForGlow": true,
+          "mainThreadMs": 13990.093,
+          "scriptMs": 3481.6889999999994,
+          "layoutMs": 2282.629,
+          "styleMs": 7440.580000000001,
+          "heapBytes": 5736096
+        }
+      ],
+      "errors": [],
+      "pauseGlow": false,
+      "melodyReference": "E:\\CodexTemp\\adui-pitch-freeze",
+      "melodyHits": false,
+      "melodyStyleTick": true,
+      "melodySources": {
+        "MelodyRoll.tsx": "9f434c9207b738a131601127bc469e4ceaa21836daf47e93c467e5ae84e36eee",
+        "styles.css": "a23adb78542770c942bc647235ebb6a4bb0b8754e9a9852564958d5e6b1a7afa",
+        "melody-glow.js": "7deab8516f9e1c574710cdbdb0cda94077cf48660966e75a258318a544d65ec5"
+      },
+      "glowDetails": {
+        "changes": [
+          ".note.hitDuration",
+          ".note.peakFilter.0.kind",
+          ".note.peakFilter.0.color",
+          ".note.peakFilter.0.x",
+          ".note.peakFilter.0.y",
+          ".note.peakFilter.0.blur",
+          ".note.peakFilter.0.spread",
+          ".note.peakFilter.0.inset",
+          ".note.peakFilter.1.color",
+          ".note.peakFilter.1.blur"
+        ],
+        "styleReads": 2646,
+        "styleReadStack": "Error\n    at window.getComputedStyle (<anonymous>:19:95)\n    at configure (http://127.0.0.1:57701/budget.js:18751:23)\n    at MutationObserver.<anonymous> (http://127.0.0.1:57701/budget.js:18641:110)"
+      }
+    },
+    "vocal-app-after": {
+      "commit": "c4b6e6f050fbddeb60261ccb7033c959405c8c7b",
+      "width": 1440,
+      "dpr": 1,
+      "reducedMotion": false,
+      "failWorker": false,
+      "verifyCleanup": false,
+      "baselineFiles": [],
+      "browser": "156.0.8078.80",
+      "baseline": false,
+      "melodyBaseline": false,
+      "melodyNotes": 10000,
+      "melodyInput": "vocal",
+      "melodyProps": {
+        "beat": 0
+      },
+      "sequence": [],
+      "noWorker": false,
+      "extraCss": "@property --show-roll-glow { syntax:\"<number>\"; inherits:false; initial-value:0; } .ad.ad-melody-roll { --ad-roll-beat:0!important; box-shadow:inset 0 1px 0 #ffffff12,0 0 calc(var(--show-roll-glow,0) * 41.6px) rgb(255 46 138 / calc(var(--show-roll-glow,0) * .28)); transition:none; } .ad-melody-note[data-hit] { animation:none; }",
+      "directShift": false,
+      "trace": false,
+      "cpuOnly": false,
+      "results": [
+        {
+          "throttle": 1,
+          "emulated": false,
+          "mode": "melody",
+          "fps": "default",
+          "elapsed": 10016,
+          "frames": 601,
+          "displayFps": 60.003993610223645,
+          "rendererFrames": 601,
+          "rendererFps": 60.003993610223645,
+          "frameP95": 16.899999999999636,
+          "frameP99": 17,
+          "frameMax": 17.199999999999818,
+          "motionTicks": 602,
+          "motionFps": 60.003993610223645,
+          "motionP95": 16.899999999999636,
+          "worker": {
+            "frames": 602,
+            "elapsed": 10032.900000002235,
+            "fps": 60.002591474037004,
+            "p95": 16.899999999999636,
+            "p99": 17,
+            "max": 17.100000000000364
+          },
+          "glowReady": {
+            "ready": true,
+            "configurations": 3,
+            "svg": 0,
+            "voices": 0
+          },
+          "waitedForGlow": true,
+          "mainThreadMs": 1709.5639999999999,
+          "scriptMs": 425.845,
+          "layoutMs": 0,
+          "styleMs": 677.778,
+          "heapBytes": 5975988
+        },
+        {
+          "throttle": 8,
+          "emulated": true,
+          "mode": "melody",
+          "fps": "default",
+          "elapsed": 10016.2,
+          "frames": 593,
+          "displayFps": 59.20408937521215,
+          "rendererFrames": 594,
+          "rendererFps": 59.30392763722769,
+          "frameP95": 16.799999999999272,
+          "frameP99": 33.30000000000109,
+          "frameMax": 33.600000000000364,
+          "motionTicks": 594,
+          "motionFps": 59.20408937521215,
+          "motionP95": 16.799999999999272,
+          "worker": {
+            "frames": 605,
+            "elapsed": 10091.900000002235,
+            "fps": 59.94906806447408,
+            "p95": 16.800000000000182,
+            "p99": 16.80000000000109,
+            "max": 16.899999999999636
+          },
+          "glowReady": {
+            "ready": true,
+            "configurations": 3,
+            "svg": 0,
+            "voices": 0
+          },
+          "waitedForGlow": true,
+          "mainThreadMs": 8889.664,
+          "scriptMs": 2223.155,
+          "layoutMs": 0.8009999999999962,
+          "styleMs": 3609.13,
+          "heapBytes": 5964848
+        },
+        {
+          "throttle": 16,
+          "emulated": true,
+          "mode": "melody",
+          "fps": "default",
+          "elapsed": 10033,
+          "frames": 168,
+          "displayFps": 16.744742350244195,
+          "rendererFrames": 169,
+          "rendererFps": 16.844413435662315,
+          "frameP95": 100.09999999999854,
+          "frameP99": 133.20000000000073,
+          "frameMax": 133.29999999999927,
+          "motionTicks": 169,
+          "motionFps": 16.744742350244195,
+          "motionP95": 100.09999999999854,
+          "worker": {
+            "frames": 635,
+            "elapsed": 10580.70000000298,
+            "fps": 60.014932849416496,
+            "p95": 16.799999999999272,
+            "p99": 16.80000000000291,
+            "max": 16.899999999997817
+          },
+          "glowReady": {
+            "ready": true,
+            "configurations": 2,
+            "svg": 0,
+            "voices": 0
+          },
+          "waitedForGlow": true,
+          "mainThreadMs": 11106.537,
+          "scriptMs": 3309.4090000000006,
+          "layoutMs": 0,
+          "styleMs": 3133.4180000000006,
+          "heapBytes": 6360376
+        }
+      ],
+      "errors": [],
+      "pauseGlow": false,
+      "melodyReference": null,
+      "melodyHits": false,
+      "melodyStyleTick": true,
+      "melodySources": {
+        "MelodyRoll.tsx": "9f434c9207b738a131601127bc469e4ceaa21836daf47e93c467e5ae84e36eee",
+        "styles.css": "a23adb78542770c942bc647235ebb6a4bb0b8754e9a9852564958d5e6b1a7afa",
+        "melody-glow.js": "8759cc03ee7e167e9db15df04c9fbb890563ae1edd14ac470b53fa504f64c3ea"
+      },
+      "glowDetails": {
+        "changes": [
+          ".note.hitDuration",
+          ".note.peakFilter.0.kind",
+          ".note.peakFilter.0.color",
+          ".note.peakFilter.0.x",
+          ".note.peakFilter.0.y",
+          ".note.peakFilter.0.blur",
+          ".note.peakFilter.0.spread",
+          ".note.peakFilter.0.inset",
+          ".note.peakFilter.1.color",
+          ".note.peakFilter.1.blur"
+        ],
+        "styleReads": 0
+      }
+    },
+    "vocal-default-after": {
+      "commit": "c4b6e6f050fbddeb60261ccb7033c959405c8c7b",
+      "width": 1440,
+      "dpr": 1,
+      "reducedMotion": false,
+      "failWorker": false,
+      "verifyCleanup": false,
+      "baselineFiles": [],
+      "browser": "156.0.8078.80",
+      "baseline": false,
+      "melodyBaseline": false,
+      "melodyNotes": 10000,
+      "melodyInput": "vocal",
+      "melodyProps": {},
+      "sequence": [],
+      "noWorker": false,
+      "extraCss": "",
+      "directShift": false,
+      "trace": false,
+      "cpuOnly": false,
+      "results": [
+        {
+          "throttle": 1,
+          "emulated": false,
+          "mode": "melody",
+          "fps": "default",
+          "elapsed": 10016.5,
+          "frames": 601,
+          "displayFps": 60.000998352718014,
+          "rendererFrames": 601,
+          "rendererFps": 60.000998352718014,
+          "frameP95": 16.899999999999636,
+          "frameP99": 17,
+          "frameMax": 17.19999999999891,
+          "motionTicks": 602,
+          "motionFps": 60.000998352718014,
+          "motionP95": 16.899999999999636,
+          "worker": {
+            "frames": 603,
+            "elapsed": 10040.60000000149,
+            "fps": 60.05617194190691,
+            "p95": 16.899999999999636,
+            "p99": 17,
+            "max": 17.200000000000728
+          },
+          "glowReady": {
+            "ready": true,
+            "configurations": 1,
+            "svg": 0,
+            "voices": 0
+          },
+          "waitedForGlow": true,
+          "mainThreadMs": 445.347,
+          "scriptMs": 220.181,
+          "layoutMs": 0,
+          "styleMs": 0,
+          "heapBytes": 5051768
+        },
+        {
+          "throttle": 8,
+          "emulated": true,
+          "mode": "melody",
+          "fps": "default",
+          "elapsed": 10016.2,
+          "frames": 598,
+          "displayFps": 59.703280685289826,
+          "rendererFrames": 598,
+          "rendererFps": 59.703280685289826,
+          "frameP95": 16.799999999999272,
+          "frameP99": 16.80000000000291,
+          "frameMax": 50,
+          "motionTicks": 599,
+          "motionFps": 59.703280685289826,
+          "motionP95": 16.799999999999272,
+          "worker": {
+            "frames": 603,
+            "elapsed": 10049.70000000298,
+            "fps": 60.00179109822395,
+            "p95": 16.800000000000182,
+            "p99": 16.899999999999636,
+            "max": 17
+          },
+          "glowReady": {
+            "ready": true,
+            "configurations": 1,
+            "svg": 0,
+            "voices": 0
+          },
+          "waitedForGlow": true,
+          "mainThreadMs": 3841.4460000000013,
+          "scriptMs": 1960.5909999999994,
+          "layoutMs": 0,
+          "styleMs": 0,
+          "heapBytes": 5911644
+        },
+        {
+          "throttle": 16,
+          "emulated": true,
+          "mode": "melody",
+          "fps": "default",
+          "elapsed": 10016.299999999996,
+          "frames": 591,
+          "displayFps": 59.00382376725939,
+          "rendererFrames": 592,
+          "rendererFps": 59.103661032517024,
+          "frameP95": 16.80000000000291,
+          "frameP99": 33.39999999999418,
+          "frameMax": 33.5,
+          "motionTicks": 592,
+          "motionFps": 59.00382376725939,
+          "motionP95": 16.80000000000291,
+          "worker": {
+            "frames": 611,
+            "elapsed": 10169,
+            "fps": 60.08457075425312,
+            "p95": 16.799999999999272,
+            "p99": 16.80000000000291,
+            "max": 17
+          },
+          "glowReady": {
+            "ready": true,
+            "configurations": 1,
+            "svg": 0,
+            "voices": 0
+          },
+          "waitedForGlow": true,
+          "mainThreadMs": 8828.033000000001,
+          "scriptMs": 4462.27,
+          "layoutMs": 0,
+          "styleMs": 0,
+          "heapBytes": 6222148
+        }
+      ],
+      "errors": [],
+      "pauseGlow": false,
+      "melodyReference": null,
+      "melodyHits": false,
+      "melodyStyleTick": false,
+      "melodySources": {
+        "MelodyRoll.tsx": "9f434c9207b738a131601127bc469e4ceaa21836daf47e93c467e5ae84e36eee",
+        "styles.css": "a23adb78542770c942bc647235ebb6a4bb0b8754e9a9852564958d5e6b1a7afa",
+        "melody-glow.js": "69b486fad93f8626900674bb8157a8614dfeb2e144ebc299a12c258386b20f1a"
+      }
+    },
+    "style-contract": {
+      "commit": "c4b6e6f050fbddeb60261ccb7033c959405c8c7b",
+      "width": 1440,
+      "dpr": 1,
+      "reducedMotion": false,
+      "failWorker": false,
+      "verifyCleanup": true,
+      "baselineFiles": [],
+      "browser": "156.0.8078.80",
+      "baseline": false,
+      "melodyBaseline": false,
+      "melodyNotes": 10000,
+      "melodyInput": "none",
+      "melodyProps": {},
+      "sequence": [],
+      "noWorker": false,
+      "extraCss": "",
+      "directShift": false,
+      "trace": false,
+      "cpuOnly": false,
+      "results": [
+        {
+          "throttle": 1,
+          "emulated": false,
+          "mode": "melody",
+          "fps": "default",
+          "elapsed": 300.0999999999999,
+          "frames": 18,
+          "displayFps": 59.980006664445206,
+          "rendererFrames": 18,
+          "rendererFps": 59.980006664445206,
+          "frameP95": 16.90000000000009,
+          "frameP99": 16.90000000000009,
+          "frameMax": 16.90000000000009,
+          "motionTicks": 19,
+          "motionFps": 59.980006664445206,
+          "motionP95": 16.90000000000009,
+          "glowReady": {
+            "ready": true,
+            "configurations": 1,
+            "svg": 0,
+            "voices": 0
+          },
+          "waitedForGlow": true,
+          "mainThreadMs": 13.448000000000015,
+          "scriptMs": 7.192999999999991,
+          "layoutMs": 0,
+          "styleMs": 0,
+          "heapBytes": 5855264,
+          "interaction": {
+            "keyboard": {
+              "presses": [
+                72
+              ],
+              "focused": true
+            },
+            "shifted": {
+              "first": "84",
+              "ready": true,
+              "canvases": 5,
+              "notes": 0
+            },
+            "afterResize": {
+              "ready": true,
+              "canvasWidth": 696,
+              "laneWidth": 696
+            }
+          },
+          "cleanup": {
+            "canvases": 0,
+            "terminatedWorkers": 1
+          }
+        }
+      ],
+      "errors": [],
+      "pauseGlow": false,
+      "melodyReference": null,
+      "melodyHits": false,
+      "melodyStyleTick": false,
+      "melodySources": {
+        "MelodyRoll.tsx": "9f434c9207b738a131601127bc469e4ceaa21836daf47e93c467e5ae84e36eee",
+        "styles.css": "a23adb78542770c942bc647235ebb6a4bb0b8754e9a9852564958d5e6b1a7afa",
+        "melody-glow.js": "387c5c3c73bfcd6212b0c389af41da668c64d20b5f7f452a6a84105198ac263f"
+      }
+    },
+    "style-regression-red": {
+      "commit": "c4b6e6f050fbddeb60261ccb7033c959405c8c7b",
+      "width": 1440,
+      "dpr": 1,
+      "reducedMotion": false,
+      "failWorker": false,
+      "verifyCleanup": false,
+      "baselineFiles": [
+        "styles.css",
+        "MelodyRoll.tsx",
+        "melody-glow.js"
+      ],
+      "browser": "156.0.8078.80",
+      "baseline": false,
+      "melodyBaseline": false,
+      "melodyNotes": 10000,
+      "melodyInput": "all",
+      "melodyProps": {},
+      "sequence": [],
+      "noWorker": false,
+      "extraCss": "",
+      "directShift": false,
+      "trace": false,
+      "cpuOnly": false,
+      "results": [],
+      "errors": [],
+      "pauseGlow": false,
+      "melodyReference": "E:\\CodexTemp\\adui-pitch-freeze",
+      "melodyHits": false,
+      "melodyStyleTick": true,
+      "melodySources": {
+        "MelodyRoll.tsx": "9f434c9207b738a131601127bc469e4ceaa21836daf47e93c467e5ae84e36eee",
+        "styles.css": "a23adb78542770c942bc647235ebb6a4bb0b8754e9a9852564958d5e6b1a7afa",
+        "melody-glow.js": "7deab8516f9e1c574710cdbdb0cda94077cf48660966e75a258318a544d65ec5"
+      },
+      "glowDetails": {
+        "changes": [],
+        "styleReads": 9072,
+        "styleReadStack": "Error\n    at window.getComputedStyle (<anonymous>:19:95)\n    at configure (http://127.0.0.1:55280/budget.js:18751:23)\n    at MutationObserver.<anonymous> (http://127.0.0.1:55280/budget.js:18641:110)"
+      }
+    }
   }
 }

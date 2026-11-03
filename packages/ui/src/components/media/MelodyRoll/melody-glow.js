@@ -500,15 +500,81 @@ export function createMelodyGlow(root, initialState, onReady) {
   for (const layer of [canvas, voiceCanvas, trailCanvas, noteCanvas, keyCanvas]) layer.setAttribute('aria-hidden', 'true');
   let state = initialState, disposed = false, transferred = false, inView = true, revision = 0, signature = '';
   const visible = () => inView && !document.hidden && !root.closest('[data-ad-paused], [data-ad-offscreen]');
-  const visibility = () => worker.postMessage({ type: 'visible', id, visible: visible() });
+  let lastVisible;
+  const visibility = () => {
+    const next = visible();
+    if (next === lastVisible) return;
+    lastVisible = next;
+    worker.postMessage({ type: 'visible', id, visible: next });
+  };
   const resize = new ResizeObserver(configure);
   const intersection = new IntersectionObserver(([entry]) => { inView = entry.isIntersecting; visibility(); });
+  let variableUses, variableSheets = [], nativeShadowChanged = false;
+  const readVariableUses = () => {
+    const uses = new Map();
+    const declarations = (style, selector) => {
+      for (const property of style) for (const [, variable] of style.getPropertyValue(property).matchAll(/var\(\s*(--[\w-]+)/g)) {
+        if (!uses.has(variable)) uses.set(variable, []);
+        uses.get(variable).push({ property, selector });
+      }
+    };
+    const visit = rules => {
+      for (const rule of rules) {
+        if (rule.selectorText?.includes('[style') || rule.conditionText?.includes('style(')) throw new Error('Style-dependent selectors require full measurement');
+        if (rule.style) declarations(rule.style, rule.selectorText);
+        if (rule.styleSheet) visit(rule.styleSheet.cssRules);
+        else if (rule.cssRules) visit(rule.cssRules);
+      }
+    };
+    variableSheets = [...document.styleSheets, ...(document.adoptedStyleSheets ?? [])];
+    for (const sheet of variableSheets) visit(sheet.cssRules);
+    for (let node = root; node; node = node.parentElement) declarations(node.style, node === root ? null : undefined);
+    return uses;
+  };
+  const affectsRendering = records => {
+    const changed = new Set();
+    for (const record of records) {
+      if (['data-ad-paused', 'data-ad-offscreen'].includes(record.attributeName)) continue;
+      if (record.attributeName !== 'style') return true;
+      const old = document.createElement('div').style; old.cssText = record.oldValue ?? '';
+      const current = record.target.style;
+      for (const property of new Set([...old, ...current])) {
+        if (old.getPropertyValue(property) === current.getPropertyValue(property) && old.getPropertyPriority(property) === current.getPropertyPriority(property)) continue;
+        // These transformations are applied to the canvas by the browser, not drawn inside it.
+        if (['opacity', 'transform', 'translate', 'rotate', 'scale', 'z-index'].includes(property)) continue;
+        if (!property.startsWith('--')) return true;
+        changed.add(property);
+        if (current.getPropertyValue(property).includes('var(')) variableUses = undefined;
+      }
+    }
+    if (!changed.size) return false;
+    try {
+      const sheets = [...document.styleSheets, ...(document.adoptedStyleSheets ?? [])];
+      if (sheets.length !== variableSheets.length || sheets.some((sheet, i) => sheet !== variableSheets[i])) variableUses = undefined;
+      variableUses ??= readVariableUses();
+      // Follow aliases conservatively, including variables referenced outside this component.
+      for (const variable of changed) for (const use of variableUses.get(variable) ?? []) {
+        if (use.property.startsWith('--')) { changed.add(use.property); continue; }
+        // An idle beat draws no worker shadow; native root shadows update through CSS.
+        if (use.property === 'box-shadow' && state.beat === 0 &&
+            (use.selector === null || (use.selector && !use.selector.includes(',') && root.matches(use.selector) && !root.querySelector(use.selector)))) { nativeShadowChanged = true; continue; }
+        return true;
+      }
+      return false;
+    } catch { return true; } // Unreadable/cross-origin CSS keeps the full compatibility path.
+  };
   const tokens = new MutationObserver(records => {
     visibility();
-    if (records.some(record => !['data-ad-paused', 'data-ad-offscreen'].includes(record.attributeName))) configure();
+    if (affectsRendering(records)) configure();
   });
+  const stylesheets = new MutationObserver(records => {
+    variableUses = undefined;
+    if (records.some(record => record.target.nodeName === 'STYLE' || record.target.parentElement?.nodeName === 'STYLE' ||
+      [...record.addedNodes, ...record.removedNodes].some(node => node.nodeType === 1 && node.matches('style,link[rel="stylesheet"]')))) configure();
+  });
+  if (document.head) stylesheets.observe(document.head, { childList: true, subtree: true, characterData: true });
   for (let node = root; node; node = node.parentElement)
-    tokens.observe(node, { attributes: true, attributeFilter: ['style', 'class', 'data-ad-theme', 'data-ad-color-scheme', 'data-ad-motion', 'data-ad-paused', 'data-ad-offscreen'] });
+    tokens.observe(node, { attributes: true, attributeOldValue: true, attributeFilter: ['style', 'class', 'data-ad-theme', 'data-ad-color-scheme', 'data-ad-motion', 'data-ad-paused', 'data-ad-offscreen'] });
   resize.observe(root);
   resize.observe(lane);
   intersection.observe(root);
@@ -587,6 +653,7 @@ export function createMelodyGlow(root, initialState, onReady) {
   };
   function configure() {
     if (disposed || !root.clientWidth || !root.clientHeight) return;
+    variableUses = undefined;
     const temporary = [];
     try {
       const probe = document.createElement('div');
@@ -745,7 +812,7 @@ export function createMelodyGlow(root, initialState, onReady) {
   function dispose() {
     if (disposed) return;
     disposed = true;
-    resize.disconnect(); intersection.disconnect(); tokens.disconnect(); keyObserver.disconnect();
+    resize.disconnect(); intersection.disconnect(); tokens.disconnect(); stylesheets.disconnect(); keyObserver.disconnect();
     keyboard.removeEventListener('pointerover', keysChanged); keyboard.removeEventListener('pointerout', keysChanged);
     document.removeEventListener('visibilitychange', visibility);
     window.removeEventListener('resize', configure);
@@ -766,7 +833,7 @@ export function createMelodyGlow(root, initialState, onReady) {
     }
   }
   const renderer = {
-    update(next) { if (!disposed) { const sent = { ...next }; if (next.notes === state.notes) delete sent.notes; if (next.hits === state.hits) delete sent.hits; state = next; worker.postMessage({ type: 'state', id, state: sent, time: performance.timeOrigin + performance.now() }); } },
+    update(next) { if (!disposed) { const sent = { ...next }; if (next.notes === state.notes) delete sent.notes; if (next.hits === state.hits) delete sent.hits; state = next; if (nativeShadowChanged && next.beat > 0) { nativeShadowChanged = false; configure(); } worker.postMessage({ type: 'state', id, state: sent, time: performance.timeOrigin + performance.now() }); } },
     ready(data) { if (!disposed && data.revision === revision) { canvas.style.visibility = voiceCanvas.style.visibility = trailCanvas.style.visibility = noteCanvas.style.visibility = keyCanvas.style.visibility = ''; root.setAttribute('data-ad-glow', ''); root.setAttribute('data-ad-foreground', ''); onReady(true); } },
     dispose,
   };

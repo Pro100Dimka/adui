@@ -33,9 +33,11 @@ const built = await build({ stdin: { contents: `
     useEffect(()=>subscribeTick(now=>setTime(now/1000)),[]);
     useLayoutEffect(()=>{window.rendererFrames++;});
     const input = ${JSON.stringify(process.env.FRAME_MELODY_INPUT ?? 'all')};
-    const t = key => ['all',key].includes(input) ? time : 0;
+    const t = key => ['all','vocal',key].includes(input) ? time : 0;
+    const pitch = input === 'vocal' ? (Math.floor(time*5)%13 === 0 ? undefined : 66+Math.sin(Math.floor(time*50)/50*22)*3) : 66+Math.sin(t('voice')*2)*3;
     const {silent,...props} = {...${process.env.FRAME_MELODY_PROPS ?? '{}'},...overrides};
-    return <MelodyRoll notes={melodyNotes} hitIds={melodyHits} onKeyPress={${!!process.env.FRAME_VERIFY_MELODY} ? melodyPress : undefined} position={100+t('position')} accuracy={.5+Math.sin(t('accuracy'))*.5} level={.5+Math.sin(t('level')*3)*.4} beat={.5+Math.cos(t('beat')*4)*.5} showLyrics style={{height:400,gridColumn:'1 / -1'}} {...props} livePitch={silent?undefined:props.livePitch??66+Math.sin(t('voice')*2)*3}/>;
+    if (${!!process.env.FRAME_MELODY_STYLE_TICK}) props.style = {...props.style,height:400,gridColumn:'1 / -1','--show-roll-glow':(.5+Math.sin(time*3)*.5).toFixed(3)};
+    return <MelodyRoll notes={melodyNotes} hitIds={melodyHits} onKeyPress={${!!process.env.FRAME_VERIFY_MELODY} ? melodyPress : undefined} position={100+t('position')} accuracy={.5+Math.sin(t('accuracy'))*.5} level={.5+Math.sin(t('level')*3)*.4} beat={.5+Math.cos(t('beat')*4)*.5} hit={input === 'vocal' && Math.sin(time*4)>.3} showLyrics style={{height:400,gridColumn:'1 / -1'}} {...props} livePitch={silent?undefined:props.livePitch??pitch}/>;
   }
   const view = createRoot(document.getElementById('root'));
   window.unmountDemo = () => view.unmount();
@@ -79,6 +81,7 @@ try {
   report.pauseGlow = !!process.env.FRAME_PAUSE_GLOW;
   report.melodyReference = process.env.FRAME_MELODY_REFERENCE ?? null;
   report.melodyHits = !!process.env.FRAME_MELODY_HITS;
+  report.melodyStyleTick = !!process.env.FRAME_MELODY_STYLE_TICK;
   report.melodySources = melodySources;
   await page.addInitScript(({cpuOnly,noWorker,pauseGlow,details,workerFrames,freezeHits}) => {
     if (workerFrames || freezeHits) {
@@ -221,6 +224,7 @@ try {
     }
     const glowReady = mode === 'melody' ? await page.locator('.ad-melody-roll').evaluate(node => ({ready:node.hasAttribute('data-ad-glow'),configurations:window.glowConfigurations,svg:node.querySelectorAll('svg').length,voices:node.querySelectorAll('.ad-melody-voice').length})) : undefined;
     if (process.env.FRAME_GLOW_DETAILS) report.glowDetails = await page.evaluate(() => ({foreground:window.glowForeground, changes:window.glowConfigurationChanges, styleReads:window.styleReads, styleReadStack:window.styleReadStack}));
+    if (process.env.FRAME_VERIFY_STYLE_TICK && report.glowDetails?.styleReads > sample.rendererFrames * 2 + 10) throw new Error('Decorative style updates repeatedly measured the whole melody');
     if (process.env.FRAME_SCREENSHOT_PREFIX) {
       if (process.env.FRAME_FREEZE_HITS !== undefined) {
         const phase = Number(process.env.FRAME_FREEZE_HITS);
@@ -253,8 +257,17 @@ try {
       const shifted = await page.locator('.ad-melody-roll').evaluate(node => ({first:node.querySelector('.ad-piano-key').dataset.midi,ready:node.hasAttribute('data-ad-foreground'),canvases:node.querySelectorAll('canvas').length,notes:node.querySelectorAll('.ad-melody-note').length}));
       if (shifted.first !== '84') throw new Error('Keyboard range did not update');
       await page.setViewportSize({width:800,height:1000});
-      await page.evaluate(() => document.querySelector('.ad-melody-roll').style.setProperty('--ad-primary','#398cff'));
+      await page.evaluate(() => {
+        const root = document.querySelector('.ad-melody-roll');
+        root.style.setProperty('--ad-primary','var(--pitch-theme)');
+        root.style.setProperty('--pitch-theme','#398cff');
+      });
       await page.waitForTimeout(300);
+      const beforeTheme = await page.evaluate(() => window.glowConfigurations);
+      await page.evaluate(() => document.querySelector('.ad-melody-roll').style.setProperty('--pitch-theme','#08ddcc'));
+      await page.waitForTimeout(300);
+      const afterTheme = await page.evaluate(() => window.glowConfigurations);
+      if (shifted.ready && afterTheme <= beforeTheme) throw new Error('CSS variable alias change did not reach the renderer');
       report.results.at(-1).interaction = {keyboard,shifted,afterResize:await page.locator('.ad-melody-roll').evaluate(node=>({ready:node.hasAttribute('data-ad-foreground'),canvasWidth:node.querySelector('.ad-melody-note-canvas')?.width,laneWidth:node.querySelector('.ad-melody-roll-lane').clientWidth}))};
       await page.evaluate(() => window.unmountDemo());
       await page.waitForTimeout(100);
