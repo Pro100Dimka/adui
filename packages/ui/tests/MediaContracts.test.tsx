@@ -149,8 +149,23 @@ it("preserves CSS easing, independent voice transitions, trail gaps and worker p
   receive({ type: "keys", id: 2, time: now, pressed: [64] });
   step(1170);
   expect(keys.drawImage.mock.calls.at(-1)?.[5]).toBe(-6); // Native press translation and shadow padding.
+  voice.clearRect.mockClear(); trail.clearRect.mockClear();
+  receive({ type: "state", id: 2, time: now, state: { pitch: undefined, hit: false, beat: 0, position: 105 } });
+  receive({ type: "keys", id: 2, time: now, pressed: [] });
+  step(1390);
+  expect(voice.clearRect).toHaveBeenCalledOnce();
+  expect(trail.clearRect).toHaveBeenCalledOnce();
+  for (const ctx of [root, voice, trail, keys, notes]) ctx.clearRect.mockClear();
+  receive({ type: "state", id: 2, time: now, state: { beat: 0, position: 105.1 } });
+  step(1410);
+  for (const ctx of [root, voice, trail, keys]) expect(ctx.clearRect).not.toHaveBeenCalled();
+  expect(notes.clearRect).toHaveBeenCalledOnce();
+  receive({ type: "keys", id: 2, time: now, pressed: [], hovered: 64 });
+  step(1430);
+  expect(keys.clearRect).toHaveBeenCalledOnce();
+  expect(keys.filter).toBe("brightness(1.08)");
   receive({ type: "visible", id: 2, visible: false });
-  notes.clearRect.mockClear(); step(1190);
+  notes.clearRect.mockClear(); step(1450);
   expect(notes.clearRect).not.toHaveBeenCalled();
   expect(frames).toHaveLength(0);
   await receive({ ...config, id: 3, canvas: { getContext() { throw new Error("Canvas unavailable"); } } });

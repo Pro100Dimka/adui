@@ -135,6 +135,7 @@ function renderGlow() {
     scene.noteStates = kept;
     scene.keyStates ??= new Map();
     const keyStates = new Map();
+    let keysUntil = 0;
     for (const key of style.keys) {
       const previous = scene.keyStates.get(key.midi);
       const active = state.pitch !== undefined && key.midi === Math.round(state.pitch);
@@ -142,17 +143,19 @@ function renderGlow() {
       const pressed = scene.pressed?.includes(key.midi);
       const variant = hit ? 'hit' : active ? 'active' : pressed ? 'pressed' : 'base';
       const target = key[variant];
+      if (previous?.variant !== variant) scene.keysDirty = true;
       const item = { key, target, hit, variant, buffer: previous?.buffer,
         color: transition(previous?.color, target.color, now, key.duration, ctx),
         shadows: transition(previous?.shadows, target.shadows, now, key.duration, ctx),
         shift: transition(previous?.shift, pressed ? key.pressShift : 0, now, key.pressDuration),
         hitStart: hit && !previous?.hit ? (previous ? now : scene.keyTimes?.[key.midi] ?? now) : previous?.hitStart ?? now };
       keyStates.set(key.midi, item);
-      until = Math.max(until, ...['color', 'shadows', 'shift'].map(name => item[name].start + item[name].duration), hit && key.hitDuration > 0 ? item.hitStart + key.hitDuration * key.hitIterations : 0);
+      keysUntil = Math.max(keysUntil, ...['color', 'shadows', 'shift'].map(name => item[name].start + item[name].duration), hit && key.hitDuration > 0 ? item.hitStart + key.hitDuration * key.hitIterations : 0);
     }
     scene.keyStates = keyStates;
     scene.noteTimes = scene.keyTimes = undefined;
-    scene.foregroundUntil = until;
+    scene.keysUntil = keysUntil;
+    scene.foregroundUntil = Math.max(until, keysUntil);
   }
   function drawForeground(scene, now) {
     if (!scene.foreground) return;
@@ -218,6 +221,10 @@ function renderGlow() {
       const y = top - offsetY;
       ctx.drawImage(painted, x - padding / dpr, top + height / 2 + (y - padding / dpr - top - height / 2) * scale, painted.width / dpr, painted.height / dpr * scale); ctx.restore();
     }
+    const keysAnimating = now < scene.keysUntil;
+    if (!scene.keysDirty && !scene.keysAnimating && !keysAnimating) return;
+    scene.keysDirty = false;
+    scene.keysAnimating = keysAnimating;
     keyCtx.clearRect(0, 0, style.keyWidth, style.keyHeight);
     scene.keySprites ??= new Map();
     for (const item of scene.keyStates.values()) {
@@ -265,7 +272,11 @@ function renderGlow() {
   }
   function drawVoice(scene, now) {
     const { voiceCtx: ctx, laneWidth, laneHeight, state, voiceStyle: style, dpr } = scene;
+    const active = state.pitch !== undefined || state.beat > 0;
+    if (!active && !scene.voicePainted) return;
+    scene.voicePainted = active;
     ctx.clearRect(0, 0, laneWidth, laneHeight);
+    if (!active) return;
     ctx.save();
     const head = state.lead * laneWidth - scene.headWidth / 2;
     const offset = laneWidth + 200;
@@ -308,7 +319,11 @@ function renderGlow() {
   }
   function drawTrail(scene) {
     const { trailCtx: ctx, laneWidth, laneHeight, state, trailStyle } = scene;
+    const active = scene.trail.some(point => point.pitch !== undefined);
+    if (!active && !scene.trailPainted) return;
+    scene.trailPainted = active;
     ctx.clearRect(0, 0, laneWidth, laneHeight);
+    if (!active) return;
     const paths = [];
     let path = null;
     for (const point of scene.trail) {
@@ -329,8 +344,9 @@ function renderGlow() {
   }
   function draw(scene, now) {
     const { ctx, width, height, pad, radius, blur, color, dpr } = scene;
-    ctx.clearRect(0, 0, width + pad * 2, height + pad * 2);
     const amount = value(scene, now);
+    if (amount > 0 || scene.glowPainted) ctx.clearRect(0, 0, width + pad * 2, height + pad * 2);
+    scene.glowPainted = amount > 0;
     if (amount > 0) {
       ctx.save();
       // Outer shadows do not paint over the translucent glass inside the border box.
@@ -414,6 +430,7 @@ function renderGlow() {
           scene.keyCanvas.width = Math.ceil(data.foreground.keyWidth * data.dpr); scene.keyCanvas.height = Math.ceil(data.foreground.keyHeight * data.dpr);
           scene.noteCtx = scene.noteCanvas.getContext('2d'); scene.keyCtx = scene.keyCanvas.getContext('2d');
           scene.noteCtx.setTransform(data.dpr, 0, 0, data.dpr, 0, 0); scene.keyCtx.setTransform(data.dpr, 0, 0, data.dpr, 0, 0);
+          scene.keysDirty = true;
           scene.sprites?.clear(); scene.keySprites?.clear(); scene.filteredSprites?.clear(); scene.filteredPixels = 0;
           for (const item of scene.noteStates?.values() ?? []) item.buffer = undefined;
           for (const item of scene.keyStates?.values() ?? []) item.buffer = undefined;
@@ -445,6 +462,7 @@ function renderGlow() {
         retargetVoice(scene, now, previous);
         retargetForeground(scene, now);
       } else if (scene && data.type === 'keys') {
+        scene.keysDirty = true;
         scene.pressed = data.pressed; scene.hovered = data.hovered;
         retargetForeground(scene, now);
       } else if (scene && data.type === 'visible') scene.visible = data.visible;

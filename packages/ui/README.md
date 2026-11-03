@@ -4,6 +4,10 @@ Migration: replace `@ad-voice/ui` with `@neo-ui-kit/react` in dependencies and i
 
 NEO UI — React + TypeScript UI kit: glass/ruby surfaces, animated neon borders, fields, tabs, dialogs, audio controls and a melody editor.
 
+## 1.3.13
+
+MelodyRoll skips repainting empty glow/voice/trail layers and a settled keyboard. A disappearing voice still clears its last frame, and keyboard hover, press and hit transitions retain their final frame. See the [performance report](https://github.com/Pro100Dimka/adui/blob/main/evidence/performance-report.md) for karaoke measurements and remaining limits under CPU ×16.
+
 ## 1.3.12
 
 - MelodyRoll avoids repeated full style measurements for unrelated animated CSS variables and native root shadows while its beat is idle. Theme aliases still trigger reconfiguration.
@@ -47,7 +51,7 @@ import "@neo-ui-kit/react/styles.css";
 To test repository changes before publishing, run `npm run package` from the repository root and install the resulting archive in a separate application:
 
 ```bash
-npm install /path/to/adui/release/neo-ui-kit-react-1.3.12.tgz
+npm install /path/to/adui/release/neo-ui-kit-react-1.3.13.tgz
 ```
 
 Maintainers publish new versions from `Pro100Dimka/adui` using the `release.yml` GitHub Actions workflow, a matching `v<version>` tag, and the `npm-publication` environment. npm trusts its OIDC identity; no `NPM_TOKEN` is required. The workflow checks the project and packed consumer before publishing the tested archive. Published `1.0.0` cannot be overwritten: code and README changes in npm require a new package version. See the [repository release instructions](https://github.com/Pro100Dimka/adui#npm-пакет).
