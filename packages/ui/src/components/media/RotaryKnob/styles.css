@@ -76,6 +76,13 @@
   user-select: none;
   -webkit-user-select: none;
 }
+.ad-rotary-knob .knob__raster {
+  position: absolute;
+  pointer-events: none;
+}
+.ad-rotary-knob[data-rasterized] .knob__surface {
+  visibility: hidden;
+}
 .ad-rotary-knob .knob__control:active,
 .ad-rotary-knob.is-dragging .knob__control {
   cursor: grabbing;

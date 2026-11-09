@@ -21,6 +21,7 @@ export const RotaryKnob = (p: RotaryKnobProps) => {
   const baseRef = useRef<HTMLCanvasElement>(null);
   const feedbackRef = useRef<HTMLCanvasElement>(null);
   const rotorRef = useRef<HTMLCanvasElement>(null);
+  const rasterRef = useRef<HTMLCanvasElement>(null);
   const controlRef = useRef<HTMLDivElement>(null);
   const readoutRef = useRef<HTMLDivElement>(null);
   const controllerRef = useRef<(RotaryKnobController & { commit(): void }) | null>(null);
@@ -117,6 +118,57 @@ export const RotaryKnob = (p: RotaryKnobProps) => {
     let previousFrame = 0;
     let disposed = false;
     let renderingSize = 0;
+    let rasterTimer = 0;
+    const raster = rasterRef.current;
+    const rasterContext = paintable ? raster?.getContext("2d") : null;
+
+    // Keep the exact canvas filters, but evaluate them once while the control rests.
+    // Interactive transforms and hover transitions continue to use the live layers.
+    function invalidateRaster() {
+      clearTimeout(rasterTimer);
+      if (!rasterContext || !("filter" in rasterContext) || !raster) return;
+      raster.hidden = true;
+      delete root.dataset.rasterized;
+      if (!disposed) rasterTimer = window.setTimeout(cacheRaster, 500);
+    }
+
+    function cacheRaster() {
+      if (!raster || !rasterContext || disposed || renderingSize || drag ||
+        animationFrame || root.matches(":hover") || !canvas.width) return;
+      const size = parseFloat(getComputedStyle(root).width);
+      if (!size) return;
+      const ratio = devicePixelRatio || 1;
+      const padding = Math.ceil(parseFloat(getComputedStyle(root).fontSize) * 8);
+      const extent = size + padding * 2;
+      raster.width = raster.height = Math.ceil(extent * ratio);
+      Object.assign(raster.style, {
+        left: `${-padding}px`, top: `${-padding}px`,
+        width: `${raster.width / ratio}px`, height: `${raster.height / ratio}px`,
+      });
+      const turned = document.createElement("canvas");
+      turned.width = turned.height = Math.ceil(size * ratio);
+      const turning = turned.getContext("2d");
+      if (!turning) return;
+      turning.translate(size * ratio / 2, size * ratio / 2);
+      turning.rotate((valueAngle(visualValue) - initialAngle) / degrees);
+      turning.drawImage(rotor, -size * ratio / 2, -size * ratio / 2,
+        size * ratio, size * ratio);
+      for (const [source, element] of [
+        [canvas, canvas], [feedback, feedback], [turned, rotor.parentElement],
+      ] as const) {
+        if (!element) return;
+        rasterContext.filter = getComputedStyle(element).filter.replace(
+          /(-?[\d.]+)px/g, (_, pixels: string) => `${Number(pixels) * ratio}px`,
+        );
+        rasterContext.drawImage(source, 0, 0,
+          source === turned ? size * ratio : source.width,
+          source === turned ? size * ratio : source.height,
+          padding * ratio, padding * ratio, size * ratio, size * ratio);
+      }
+      rasterContext.filter = "none";
+      raster.hidden = false;
+      root.dataset.rasterized = "true";
+    }
 
     async function render() {
       if (disposed || !painted) return;
@@ -129,6 +181,7 @@ export const RotaryKnob = (p: RotaryKnobProps) => {
       );
       if (!size || renderingSize === size || [canvas, rotor, feedback].every(layer => layer.width === size && layer.height === size)) return;
       renderingSize = size;
+      invalidateRaster();
       canvas.width = canvas.height = size;
       const center = size / 2;
       const radius = size * 0.445;
@@ -433,6 +486,7 @@ export const RotaryKnob = (p: RotaryKnobProps) => {
 
     function paintFeedback() {
       if (!painted || !feedback.width || disposed) return;
+      invalidateRaster();
       const scale = feedback.width * 0.445;
       const start = (startAngle - 90) / degrees;
       const end = (valueAngle(visualValue) - 90) / degrees;
@@ -797,6 +851,14 @@ export const RotaryKnob = (p: RotaryKnobProps) => {
     root.addEventListener("pointerleave", resetHover, {
       signal: listeners.signal,
     });
+    for (const event of ["pointerenter", "pointerleave"])
+      root.addEventListener(event, invalidateRaster, { signal: listeners.signal });
+    const tokens = typeof MutationObserver === "undefined" ? null
+      : new MutationObserver(invalidateRaster);
+    for (let node: HTMLElement | null = root; node; node = node.parentElement)
+      tokens?.observe(node, { attributes: true,
+        attributeFilter: ["style", "class", "data-ad-theme", "data-ad-color-scheme"],
+      });
     window.addEventListener("blur", () => finishDrag(true), {
       signal: listeners.signal,
     });
@@ -834,6 +896,8 @@ export const RotaryKnob = (p: RotaryKnobProps) => {
       finishDrag();
       listeners.abort();
       observer.disconnect();
+      tokens?.disconnect();
+      clearTimeout(rasterTimer);
       clearTimeout(renderTimer);
       cancelAnimationFrame(animationFrame);
       cancelAnimationFrame(hoverFrame);
@@ -897,6 +961,7 @@ export const RotaryKnob = (p: RotaryKnobProps) => {
       <span className="knob__surface knob__rotor-frame" aria-hidden="true">
         <canvas className="knob__rotor" ref={rotorRef} />
       </span>
+      <canvas className="knob__raster" ref={rasterRef} hidden aria-hidden="true" />
       <span className="knob__sheen" aria-hidden="true" />
       <div
         ref={controlRef}
