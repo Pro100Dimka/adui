@@ -141,10 +141,14 @@ export const RotaryKnob = (p: RotaryKnobProps) => {
       const padding = Math.ceil(parseFloat(getComputedStyle(root).fontSize) * 8);
       const extent = size + padding * 2;
       raster.width = raster.height = Math.ceil(extent * ratio);
-      Object.assign(raster.style, {
-        left: `${-padding}px`, top: `${-padding}px`,
-        width: `${raster.width / ratio}px`, height: `${raster.height / ratio}px`,
-      });
+      const viewport = raster.closest("svg");
+      const frame = raster.parentElement;
+      if (!viewport || !frame) return;
+      viewport.setAttribute("viewBox", `0 0 ${size} ${size}`);
+      for (const [name, value] of Object.entries({
+        x: -padding, y: -padding,
+        width: raster.width / ratio, height: raster.height / ratio,
+      })) frame.setAttribute(name, String(value));
       const turned = document.createElement("canvas");
       turned.width = turned.height = Math.ceil(size * ratio);
       const turning = turned.getContext("2d");
@@ -961,7 +965,11 @@ export const RotaryKnob = (p: RotaryKnobProps) => {
       <span className="knob__surface knob__rotor-frame" aria-hidden="true">
         <canvas className="knob__rotor" ref={rotorRef} />
       </span>
-      <canvas className="knob__raster" ref={rasterRef} hidden aria-hidden="true" />
+      <svg className="knob__raster" aria-hidden="true">
+        <foreignObject>
+          <canvas ref={rasterRef} hidden />
+        </foreignObject>
+      </svg>
       <span className="knob__sheen" aria-hidden="true" />
       <div
         ref={controlRef}

@@ -114,6 +114,7 @@
 }
 /* Neon edge: the blade's own background is the edge, a glint runs along it. */
 .ad-tabs-blade {
+  overflow: clip;
   position: absolute;
   inset: 0;
   isolation: isolate;
