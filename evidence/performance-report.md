@@ -346,3 +346,12 @@ SSR-разметка старого и нового компонентов со�
 Контрольное сравнение растров использует пять размеров/масштабов и шесть положений огней. При DPR 1 и 2 изображения совпали побитно. При DPR 1,25 максимальное различие alpha — 1/255; RGB с учётом alpha — менее 2/255. Сохранены округление исходной маски и порядок смешивания пересекающихся огней. Это контроль алгоритма, а не утверждение побитного совпадения всех возможных конфигураций.
 
 Проверка интеграции в A&D Voice выполняется только после публикации пакета.
+
+
+## AnimatedBorder: shared GPU pipeline (2026-11-09)
+
+The same HP laptop was measured on AC power, with the user's background applications left running. A standalone production UI kit scene contained 19 animated borders. In Electron 42, steady GPU 3D utilization decreased from approximately 54.5-54.9% to 40.3-40.9%. The new path measured 60.02 main-thread rAF FPS in a 10-second steady sample, p95 16.9 ms, p99 17.1 ms, maximum 19.1 ms. Worker instrumentation counted 1140 draws per second for 19 scenes, corresponding to 60 updates per scene. These measurements do not establish presented-frame timing or 60 FPS throughout a consuming application.
+
+The pipeline uploads the existing masks and radial textures once per scene revision and composes the two lights and both layers in one pass. Scissor rectangles avoid shading the remaining surface. Five size/DPR combinations and six light positions were compared with Canvas 2D: maximum alpha difference 2/255 and alpha-weighted color difference below 2.72/255. This is not bit-exact equivalence. Scissored and full-surface GPU output matched exactly across the same matrix.
+
+Manual Electron checks covered unavailable WebGPU (Canvas 2D remained active) and device loss (all 19 worker canvases were removed and all 38 original SVG layers restored). Initial scene loading still produced long frames; steady-state results must not be presented as cold-open performance. Integration is checked only after publishing the package.

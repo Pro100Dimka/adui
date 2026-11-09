@@ -1,14 +1,154 @@
 /* Border pixels have their own clock; React and CSS layout never carry their frame traffic. */
 function renderBorders() {
+  async function createGpuPainter() {
+    if (!navigator.gpu) return null;
+    const adapter = await navigator.gpu.requestAdapter();
+    if (!adapter) return null;
+    const device = await adapter.requestDevice();
+    const format = navigator.gpu.getPreferredCanvasFormat();
+    const shader = device.createShaderModule({ code: `
+      struct Uniforms { size: vec4f, canvas: vec4f, lights: vec4f, padding: vec4f };
+      @group(0) @binding(0) var<uniform> u: Uniforms;
+      @group(0) @binding(1) var linearSampler: sampler;
+      @group(0) @binding(2) var mask0: texture_2d<f32>;
+      @group(0) @binding(3) var glow0: texture_2d<f32>;
+      @group(0) @binding(4) var mask1: texture_2d<f32>;
+      @group(0) @binding(5) var glow1: texture_2d<f32>;
+      @vertex fn vertex(@builtin(vertex_index) i: u32) -> @builtin(position) vec4f {
+        let positions = array<vec2f, 3>(vec2f(-1,-1), vec2f(3,-1), vec2f(-1,3));
+        return vec4f(positions[i], 0, 1);
+      }
+      fn spot(p: vec2f, origin: vec2f, texture: texture_2d<f32>) -> vec4f {
+        let uv = (p - origin) / (u.size.w * 2);
+        if (any(uv < vec2f(0)) || any(uv > vec2f(1))) { return vec4f(0); }
+        return textureSampleLevel(texture, linearSampler, uv, 0);
+      }
+      fn layer(p: vec2f, mask: texture_2d<f32>, glow: texture_2d<f32>) -> vec4f {
+        let alpha = textureSampleLevel(mask, linearSampler, p / u.size.xy, 0).a;
+        if (alpha == 0) { return vec4f(0); }
+        let first = spot(p, u.lights.xy, glow);
+        let second = spot(p, u.lights.zw, glow);
+        return (second + first * (1 - second.a)) * alpha;
+      }
+      fn filtered(q: vec2f, mask: texture_2d<f32>, glow: texture_2d<f32>) -> vec4f {
+        let base = floor(q - vec2f(.5)) + vec2f(.5);
+        let f = fract(q - vec2f(.5));
+        let a = layer(base / u.size.z, mask, glow);
+        let b = layer((base + vec2f(1,0)) / u.size.z, mask, glow);
+        let c = layer((base + vec2f(0,1)) / u.size.z, mask, glow);
+        let d = layer((base + vec2f(1,1)) / u.size.z, mask, glow);
+        return mix(mix(a,b,f.x),mix(c,d,f.x),f.y);
+      }
+      @fragment fn fragment(@builtin(position) p: vec4f) -> @location(0) vec4f {
+        let q = p.xy * u.canvas.xy / (u.size.xy * u.size.z);
+        let aura = filtered(q, mask0, glow0) * u.canvas.z;
+        let core = filtered(q, mask1, glow1) * u.canvas.w;
+        return core + aura * (1-core.a);
+      }
+    ` });
+    let pipeline;
+    try {
+      pipeline = await device.createRenderPipelineAsync({
+        layout: "auto",
+        vertex: { module: shader, entryPoint: "vertex" },
+        fragment: { module: shader, entryPoint: "fragment", targets: [{ format }] },
+        primitive: { topology: "triangle-list" }
+      });
+    } catch (error) {
+      device.destroy();
+      throw error;
+    }
+    const sampler = device.createSampler({ magFilter: "linear", minFilter: "linear" });
+    device.addEventListener("uncapturederror", (event) => {
+      throw event.error;
+    });
+    device.lost.then((info) => {
+      setTimeout(() => {
+        throw new Error(info.message || "Border GPU device lost");
+      });
+    });
+    return (scene) => {
+      const context = scene.canvas.getContext("webgpu");
+      context.configure({ device, format, alphaMode: "premultiplied" });
+      const textures = scene.layers.flatMap((layer) => [layer.mask, layer.texture]).map((image) => {
+        const texture = device.createTexture({
+          size: [image.width, image.height],
+          format: "rgba8unorm",
+          usage: GPUTextureUsage.TEXTURE_BINDING | GPUTextureUsage.COPY_DST | GPUTextureUsage.RENDER_ATTACHMENT
+        });
+        device.queue.copyExternalImageToTexture({ source: image }, { texture, premultipliedAlpha: true }, [image.width, image.height]);
+        return texture;
+      });
+      const buffer = device.createBuffer({ size: 64, usage: GPUBufferUsage.UNIFORM | GPUBufferUsage.COPY_DST });
+      const values = new Float32Array(16);
+      values.set([
+        scene.width,
+        scene.height,
+        scene.dpr,
+        scene.radius,
+        scene.canvas.width,
+        scene.canvas.height,
+        scene.layers[0].opacity,
+        scene.layers[1].opacity
+      ]);
+      const bindGroup = device.createBindGroup({ layout: pipeline.getBindGroupLayout(0), entries: [
+        { binding: 0, resource: { buffer } },
+        { binding: 1, resource: sampler },
+        ...textures.map((texture, index) => ({ binding: index + 2, resource: texture.createView() }))
+      ] });
+      return {
+        draw(current) {
+          current.lights.forEach((light, index) => {
+            const at = (light.phase + current.elapsed * light.speed / current.length) % 1 * 1024;
+            const lo = Math.floor(at), hi = (lo + 1) % 1024, weight = at - lo;
+            for (let axis = 0; axis < 2; axis++) values[8 + index * 2 + axis] = current.points[lo * 2 + axis] * (1 - weight) + current.points[hi * 2 + axis] * weight - current.radius + 16;
+          });
+          device.queue.writeBuffer(buffer, 0, values);
+          const encoder = device.createCommandEncoder();
+          const pass = encoder.beginRenderPass({ colorAttachments: [{
+            view: context.getCurrentTexture().createView(),
+            loadOp: "clear",
+            storeOp: "store",
+            clearValue: [0, 0, 0, 0]
+          }] });
+          pass.setPipeline(pipeline);
+          pass.setBindGroup(0, bindGroup);
+          for (let i = 0; i < 2; i++) {
+            const sx = current.width * current.dpr / current.canvas.width, sy = current.height * current.dpr / current.canvas.height;
+            const x = Math.max(0, Math.floor((values[8 + i * 2] * current.dpr - 2) * sx));
+            const y = Math.max(0, Math.floor((values[9 + i * 2] * current.dpr - 2) * sy));
+            const r = Math.min(current.canvas.width, Math.ceil(((values[8 + i * 2] + current.radius * 2) * current.dpr + 2) * sx));
+            const b = Math.min(current.canvas.height, Math.ceil(((values[9 + i * 2] + current.radius * 2) * current.dpr + 2) * sy));
+            if (r > x && b > y) {
+              pass.setScissorRect(x, y, r - x, b - y);
+              pass.draw(3);
+            }
+          }
+          pass.end();
+          device.queue.submit([encoder.finish()]);
+        },
+        dispose() {
+          context.unconfigure();
+          buffer.destroy();
+          textures.forEach((texture) => texture.destroy());
+        }
+      };
+    };
+  }
+  let gpu;
+  const pending = [];
+  onmessage = event => pending.push(event);
   const scenes = new Map();
   let frame = null, fps = 60, last = -Infinity;
   const release = (scene) => {
+    scene.gpu?.dispose();
     for (const layer of scene.layers) {
       layer.mask.close();
       layer.texture.close();
     }
   };
   const draw = (scene) => {
+    if (scene.gpu) { scene.gpu.draw(scene); return; }
     const { ctx, width, height, points, length, radius, dpr } = scene;
     const lights = scene.lights.map((light) => {
       const index = ((light.phase + scene.elapsed * light.speed / length) % 1) * 1024;
@@ -67,7 +207,7 @@ function renderBorders() {
     }
     schedule();
   }
-  onmessage = ({ data }) => {
+  const receive = ({ data }) => {
     const scene = scenes.get(data.id);
     if (data.type === "rate") fps = data.fps;
     else if (data.type === "remove") {
@@ -80,15 +220,18 @@ function renderBorders() {
       const next = { ...data, canvas: scene?.canvas ?? data.canvas, elapsed: scene?.elapsed ?? data.elapsed, previous: null };
       next.canvas.width = Math.ceil(data.width * data.dpr);
       next.canvas.height = Math.ceil(data.height * data.dpr);
-      next.ctx = next.canvas.getContext("2d");
-      next.ctx.setTransform(data.dpr, 0, 0, data.dpr, 0, 0);
-      for (const layer of next.layers) {
-        layer.buffer = new OffscreenCanvas(
-          Math.min(next.canvas.width, Math.ceil(next.radius * 4 * data.dpr) + 4),
-          Math.min(next.canvas.height, Math.ceil(next.radius * 4 * data.dpr) + 4),
-        );
-        layer.ctx = layer.buffer.getContext("2d");
-        layer.ctx.setTransform(data.dpr, 0, 0, data.dpr, 0, 0);
+      if (gpu) next.gpu = gpu(next);
+      else {
+        next.ctx = next.canvas.getContext("2d");
+        next.ctx.setTransform(data.dpr, 0, 0, data.dpr, 0, 0);
+        for (const layer of next.layers) {
+          layer.buffer = new OffscreenCanvas(
+            Math.min(next.canvas.width, Math.ceil(next.radius * 4 * data.dpr) + 4),
+            Math.min(next.canvas.height, Math.ceil(next.radius * 4 * data.dpr) + 4),
+          );
+          layer.ctx = layer.buffer.getContext("2d");
+          layer.ctx.setTransform(data.dpr, 0, 0, data.dpr, 0, 0);
+        }
       }
       scenes.set(data.id, next);
       draw(next);
@@ -96,6 +239,14 @@ function renderBorders() {
     }
     schedule();
   };
+  createGpuPainter().catch(error => {
+    console.warn("Border GPU initialization failed; using Canvas 2D", error);
+    return null;
+  }).then(value => {
+    gpu = value;
+    onmessage = receive;
+    pending.splice(0).forEach(receive);
+  }).catch(error => { setTimeout(() => { throw error; }); });
 }
 
 let worker = null, workerUrl = null, serial = 0, unavailable = false, frameRate = 60;

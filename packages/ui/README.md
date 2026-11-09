@@ -4,6 +4,10 @@ Migration: replace `@ad-voice/ui` with `@neo-ui-kit/react` in dependencies and i
 
 NEO UI — React + TypeScript UI kit: glass/ruby surfaces, animated neon borders, fields, tabs, dialogs, audio controls and a melody editor.
 
+## 1.3.15
+
+Animated borders use a shared WebGPU pipeline when available, combining the existing masks and glow textures in one pass. Rendering is limited to the moving lights. Canvas 2D and SVG remain fallback paths; speeds, colors and effects are retained. See the performance report for laptop measurements and pixel-comparison limits.
+
 ## 1.3.14
 
 Animated borders composite their moving lights in bounded buffers instead of repainting full-size intermediate surfaces. The same masks, glow textures, speeds and overlapping-light composition are preserved.
@@ -61,7 +65,7 @@ import "@neo-ui-kit/react/styles.css";
 To test repository changes before publishing, run `npm run package` from the repository root and install the resulting archive in a separate application:
 
 ```bash
-npm install /path/to/adui/release/neo-ui-kit-react-1.3.14.tgz
+npm install /path/to/adui/release/neo-ui-kit-react-1.3.15.tgz
 ```
 
 Maintainers publish new versions from `Pro100Dimka/adui` using the `release.yml` GitHub Actions workflow, a matching `v<version>` tag, and the `npm-publication` environment. npm trusts its OIDC identity; no `NPM_TOKEN` is required. The workflow checks the project and packed consumer before publishing the tested archive. Published `1.0.0` cannot be overwritten: code and README changes in npm require a new package version. See the [repository release instructions](https://github.com/Pro100Dimka/adui#npm-пакет).
