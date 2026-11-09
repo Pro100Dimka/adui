@@ -12,12 +12,13 @@ if (!output) throw new Error("Pass the output JSON path");
 const require = createRequire(import.meta.url);
 const { chromium } = require(process.env.PLAYWRIGHT_PATH ?? "C:/Users/YOJIK/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright");
 const baselineFiles = [];
+let meterReferenceLoaded = false;
 const melodySources = Object.fromEntries(['MelodyRoll.tsx','styles.css','melody-glow.js'].map(name => [name, createHash('sha256').update(readFileSync(resolve(process.env.FRAME_MELODY_REFERENCE ?? 'packages/ui/src/components/media/MelodyRoll', name))).digest('hex')]));
 const built = await build({ stdin: { contents: `
   import {createRoot} from 'react-dom/client';
   import {useEffect, useLayoutEffect, useState} from 'react';
-  import {ThemeProvider, AnimatedBorder, TextField, NeonWaves, LevelMeter, QuantumField, MelodyRoll, setMotionFrameRate, subscribeTick} from './packages/ui/src/index';
-  import './packages/ui/src/styles.css';
+  import {ThemeProvider, AnimatedBorder, TextField, NeonWaves, LevelMeter, QuantumField, MelodyRoll, setMotionFrameRate, subscribeTick} from './packages/ui/${process.env.FRAME_DIST ? "dist/index.js" : "src/index"}';
+  import './packages/ui/${process.env.FRAME_DIST ? "dist" : "src"}/styles.css';
   ${process.env.FRAME_KARAOKE_ROOT ? `import {RollFxRenderer} from '${process.env.FRAME_KARAOKE_ROOT.replaceAll('\\','/')}/src/features/karaoke/show/rollFxRenderer';
   import {ShowEngine} from '${process.env.FRAME_KARAOKE_ROOT.replaceAll('\\','/')}/src/features/karaoke/show/showEngine';` : ''}
 
@@ -83,6 +84,11 @@ const built = await build({ stdin: { contents: `
     if (${!!process.env.FRAME_MELODY_STYLE_TICK && !process.env.FRAME_KARAOKE_ROOT}) props.style = {...props.style,height:400,gridColumn:'1 / -1','--show-roll-glow':(.5+Math.sin(time*3)*.5).toFixed(3)};
     return <MelodyRoll notes={melodyNotes} hitIds={window.karaokeHits ?? melodyHits} onKeyPress={${!!process.env.FRAME_VERIFY_MELODY} ? melodyPress : undefined} position={100+t('position')} accuracy={.5+Math.sin(t('accuracy'))*.5} level={.5+Math.sin(t('level')*3)*.4} beat={.5+Math.cos(t('beat')*4)*.5} hit={input === 'vocal' && Math.sin(time*4)>.3} showLyrics style={{height:400,gridColumn:'1 / -1'}} {...props} livePitch={silent?undefined:props.livePitch??pitch}/>;
   }
+  function MeterScenario() {
+    const [level,setLevel] = useState(.5);
+    useEffect(()=>${!!process.env.FRAME_METER_DYNAMIC} ? subscribeTick(now=>setLevel(50+45*Math.sin(now/200))) : undefined,[]);
+    return <LevelMeter value={level}/>;
+  }
   const view = createRoot(document.getElementById('root'));
   window.unmountDemo = () => view.unmount();
   view.render(<ThemeProvider><main style={{padding:20,display:'grid',gridTemplateColumns:mode==='borders'?'repeat(10,96px)':'repeat(3,1fr)',gap:12}}>
@@ -91,10 +97,15 @@ const built = await build({ stdin: { contents: `
       : mode==='borders'
       ? <AnimatedBorder key={i} style={{height:48,borderRadius:24}}/>
       : mode==='inputs'?<TextField key={i} label={'Field '+i} labelPlacement="floating" defaultValue="Value"/>
-      : <div key={i}>{mode !== 'meter' && <NeonWaves style={{height:120}}/>}{mode !== 'waves' && <LevelMeter value={0.5}/>}</div>)}
+      : <div key={i}>{mode !== 'meter' && <NeonWaves style={{height:120}}/>}{mode !== 'waves' && <MeterScenario/>}</div>)}
   </main></ThemeProvider>);
 `, loader: "tsx", resolveDir: resolve(".") }, bundle: true, write: false, outfile: "budget.js", format: "iife", jsx: "automatic", define: { "process.env.NODE_ENV": '"production"', ...(process.env.FRAME_KARAOKE_ROOT ? {"import.meta.url":"location.href","import.meta.env.DEV":"false"} : {}) }, loader: { ".html": "text", ".woff2": "dataurl" }, logLevel: "silent",
-  plugins: [...(process.env.FRAME_KARAOKE_REFERENCE ? [{name:'karaoke-reference',setup(plugin){
+  plugins: [...(process.env.FRAME_METER_REFERENCE ? [{name:'meter-reference',setup(plugin){
+    plugin.onLoad({filter:/LevelMeter\.tsx$/},args=>{
+      meterReferenceLoaded = true;
+      return {contents:readFileSync(process.env.FRAME_METER_REFERENCE,'utf8'),loader:'tsx',resolveDir:resolve(args.path,'..')};
+    });
+  }}] : []), ...(process.env.FRAME_KARAOKE_REFERENCE ? [{name:'karaoke-reference',setup(plugin){
     plugin.onLoad({filter:/(rollFxRenderer|performanceTracker)\.ts$/},args=>{
       const name = args.path.split(/[\\/]/).at(-1).replace('.ts','-before.ts');
       baselineFiles.push(name);
@@ -110,6 +121,7 @@ const built = await build({ stdin: { contents: `
     plugin.onLoad({filter:process.env.FRAME_MELODY_BASELINE ? /MelodyRoll[\\/](MelodyRoll\.tsx|styles\.css)$/ : /(motion-engine|border-worker|neon-renderer)\.js$|NeonWaves[\\/](NeonWaves\.tsx|styles\.css)$|QuantumField[\\/]QuantumField\.tsx$/},args=>{baselineFiles.push(args.path); return {contents:execFileSync("git",["show",`HEAD:${args.path.slice(resolve('.').length+1).replaceAll('\\','/')}`],{encoding:"utf8"}),loader:args.path.endsWith('.tsx')?'tsx':args.path.endsWith('.css')?'css':'js',resolveDir:resolve(args.path,"..")};});
   }}] : [])],
 });
+if (process.env.FRAME_METER_REFERENCE && !meterReferenceLoaded) throw new Error('LevelMeter reference was not loaded');
 if (process.env.FRAME_KARAOKE_REFERENCE && baselineFiles.filter(name=>name.endsWith('-before.ts')).length !== 2) throw new Error('Karaoke reference files were not loaded');
 if (process.env.FRAME_MELODY_BASELINE && baselineFiles.length !== 2) throw new Error(`Expected two MelodyRoll baseline files, loaded ${baselineFiles.length}`);
 if (process.env.FRAME_MELODY_REFERENCE && baselineFiles.filter(name=>!name.endsWith('-before.ts')).length !== 3) throw new Error(`Expected three MelodyRoll reference files, loaded ${baselineFiles.length}`);
@@ -137,6 +149,8 @@ await new Promise(resolve => server.listen(0, "127.0.0.1", resolve));
 const browser = await chromium.launch({ channel: "chrome", headless: true });
 const report = { commit:execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim(), width:Number(process.env.FRAME_WIDTH ?? 1440), dpr:Number(process.env.FRAME_DPR ?? 1), reducedMotion:!!process.env.FRAME_REDUCED_MOTION, failWorker:!!process.env.FRAME_FAIL_WORKER, verifyCleanup:!!process.env.FRAME_VERIFY_MELODY, baselineFiles, browser: browser.version(), baseline:!!process.env.FRAME_BASELINE, melodyBaseline:!!process.env.FRAME_MELODY_BASELINE, melodyNotes:Number(process.env.FRAME_NOTES ?? 10000), melodyInput:process.env.FRAME_MELODY_INPUT ?? 'all', melodyProps:JSON.parse(process.env.FRAME_MELODY_PROPS ?? '{}'), sequence:JSON.parse(process.env.FRAME_MELODY_SEQUENCE ?? '[]'), noWorker:!!process.env.FRAME_NO_WORKER, extraCss:process.env.FRAME_EXTRA_CSS ?? '', directShift:!!process.env.FRAME_DIRECT_SHIFT, trace:!!process.env.FRAME_TRACE, cpuOnly:!!process.env.FRAME_CPU_ONLY, results: [], errors: [] };
 try {
+  report.distribution = !!process.env.FRAME_DIST;
+  report.meter = {dynamic:!!process.env.FRAME_METER_DYNAMIC,reference:meterReferenceLoaded,sourceSha256:createHash('sha256').update(readFileSync(process.env.FRAME_METER_REFERENCE ?? 'packages/ui/src/components/media/LevelMeter/LevelMeter.tsx')).digest('hex')};
   const page = await browser.newPage({ viewport: { width: Number(process.env.FRAME_WIDTH ?? 1440), height: 1000 }, deviceScaleFactor:Number(process.env.FRAME_DPR ?? 1), reducedMotion: process.env.FRAME_REDUCED_MOTION ? 'reduce' : 'no-preference' });
   page.setDefaultTimeout(30000);
   page.on("pageerror", error => report.errors.push(error.message));
@@ -160,6 +174,11 @@ try {
             ...parts,
             ';const receive = onmessage; onmessage = event => { if (event.data.__freeze !== undefined) frozenTime = event.data.__freeze - performance.timeOrigin; else if (event.data.__frames) { const now = performance.now(); if (event.data.__frames === "start") { sampledFrames = []; sampledClears = 0; sampledStart = now; sampling = true; postMessage({__frames:"start"}); } else { sampling = false; postMessage({__frames:"stop", frames:sampledFrames, clears:sampledClears, elapsed:now-sampledStart}); } } else receive(event); };',
           ];
+          else if (workerFrames && parts?.some(part => typeof part === 'string' && part.includes('function renderMeters('))) parts = [
+            'let sampling=false, sampledStart=0, sampledFrames=[], sampledCounts={};const nativePost=postMessage;postMessage=(data,...args)=>{if(sampling&&data.ack&&data.completed?.length){sampledFrames.push(performance.now());for(const item of data.completed)sampledCounts[item.id]=(sampledCounts[item.id]||0)+1;}nativePost(data,...args);};',
+            ...parts,
+            ';const receive=onmessage;onmessage=event=>{if(event.data.__frames){const now=performance.now();if(event.data.__frames==="start"){sampledStart=now;sampledFrames=[];sampledCounts={};sampling=true;postMessage({__frames:"start"});}else{sampling=false;postMessage({__frames:"stop",frames:sampledFrames,counts:sampledCounts,elapsed:now-sampledStart});}}else receive(event);};',
+          ];
           super(parts, options);
         }
       };
@@ -176,6 +195,7 @@ try {
     window.rollFrames = 0;
     const post = Worker.prototype.postMessage;
     Worker.prototype.postMessage = function(message, ...args) {
+      if (message?.frames) window.meterWorker = this;
       if (pauseGlow && message && ['configure','visible'].includes(message.type)) message = {...message, visible:false};
       if (message?.type === 'configure' && message?.voiceStyle) {
         window.glowConfigurations++; window.melodyWorker = this;
@@ -259,8 +279,8 @@ try {
     if (process.env.FRAME_KARAOKE_ROOT && !process.env.FRAME_KARAOKE_NATIVE) await sampleRoll('start');
     const before = Object.fromEntries((await cdp.send("Performance.getMetrics")).metrics.map(m => [m.name, m.value]));
     const sampleWorker = action => page.evaluate(action => new Promise((resolve,reject) => {
-      if (!window.melodyWorker || !document.querySelector('.ad-melody-roll[data-ad-glow]')) return resolve(null);
-      const worker = window.melodyWorker;
+      const worker = window.meterWorker ?? window.melodyWorker;
+      if (!worker || !document.querySelector('.ad-melody-roll[data-ad-glow],.ad-level-meter[data-ad-canvas]')) return resolve(null);
       const timeout = setTimeout(() => { worker.removeEventListener('message',listener); reject(new Error('Worker frame sampling timed out')); },10000);
       const listener = ({data}) => { if (data.__frames === action) { clearTimeout(timeout); worker.removeEventListener('message',listener); resolve(data); } };
       worker.addEventListener('message',listener); worker.postMessage({__frames:action});
@@ -300,6 +320,7 @@ try {
       if (worker) {
         const gaps = worker.frames.slice(1).map((time,i)=>time-worker.frames[i]).sort((a,b)=>a-b);
         sample.worker = {frames:worker.frames.length,clears:worker.clears,elapsed:worker.elapsed,fps:worker.frames.length*1000/worker.elapsed,p95:gaps[Math.ceil(gaps.length*.95)-1],p99:gaps[Math.ceil(gaps.length*.99)-1],max:gaps.at(-1)};
+        if(worker.counts) sample.worker.sceneFps=Object.values(worker.counts).map(count=>count*1000/worker.elapsed);
       }
     }
     if (process.env.FRAME_VERIFY_IDLE_LAYERS && sample.worker?.clears > sample.worker.frames * 1.1 + 5) throw new Error('Idle melody layers were repainted');
@@ -312,6 +333,10 @@ try {
       console.log(JSON.stringify([...totals].sort((a,b)=>b[1]-a[1]).slice(0,25)));
     }
     const glowReady = mode === 'melody' ? await page.locator('.ad-melody-roll').evaluate(node => ({ready:node.hasAttribute('data-ad-glow'),configurations:window.glowConfigurations,svg:node.querySelectorAll('svg').length,voices:node.querySelectorAll('.ad-melody-voice').length})) : undefined;
+    if(mode==='meter') {
+      sample.meterCanvases=await page.locator('.ad-level-meter[data-ad-canvas]').count();
+      if(process.env.FRAME_WORKER_FRAMES && !process.env.FRAME_METER_REFERENCE && !process.env.FRAME_NO_WORKER && sample.worker?.sceneFps?.length!==6) throw new Error('Expected six painted meter scenes');
+    }
     if (process.env.FRAME_GLOW_DETAILS) report.glowDetails = await page.evaluate(() => ({foreground:window.glowForeground, changes:window.glowConfigurationChanges, styleReads:window.styleReads, styleReadStack:window.styleReadStack}));
     if (process.env.FRAME_VERIFY_STYLE_TICK && report.glowDetails?.styleReads > sample.rendererFrames * 2 + 10) throw new Error('Decorative style updates repeatedly measured the whole melody');
     if (process.env.FRAME_SCREENSHOT_PREFIX) {

@@ -9,23 +9,44 @@ function renderBorders() {
     }
   };
   const draw = (scene) => {
-    const { ctx, width, height, points, length, radius } = scene;
+    const { ctx, width, height, points, length, radius, dpr } = scene;
+    const lights = scene.lights.map((light) => {
+      const index = ((light.phase + scene.elapsed * light.speed / length) % 1) * 1024;
+      const lo = Math.floor(index), hi = (lo + 1) % 1024, weight = index - lo;
+      return {
+        x: points[lo * 2] * (1 - weight) + points[hi * 2] * weight - radius + 16,
+        y: points[lo * 2 + 1] * (1 - weight) + points[hi * 2 + 1] * weight - radius + 16,
+      };
+    });
+    const regions = lights.map(({ x, y }) => ({
+      x: Math.max(0, Math.floor(x * dpr - 1) / dpr),
+      y: Math.max(0, Math.floor(y * dpr - 1) / dpr),
+      right: Math.min(scene.canvas.width, Math.ceil((x + radius * 2) * dpr + 1)) / dpr,
+      bottom: Math.min(scene.canvas.height, Math.ceil((y + radius * 2) * dpr + 1)) / dpr,
+    }));
+    // Composite overlapping lights together before applying the ring mask.
+    const [first, second] = regions;
+    if (second && first.x < second.right && second.x < first.right &&
+        first.y < second.bottom && second.y < first.bottom) {
+      regions.splice(0, 2, { x: Math.min(first.x, second.x), y: Math.min(first.y, second.y),
+        right: Math.max(first.right, second.right), bottom: Math.max(first.bottom, second.bottom) });
+    }
     ctx.clearRect(0, 0, width, height);
     for (const layer of scene.layers) {
       const paint = layer.ctx;
-      paint.globalCompositeOperation = "source-over";
-      paint.clearRect(0, 0, width, height);
-      for (const light of scene.lights) {
-        const index = ((light.phase + scene.elapsed * light.speed / length) % 1) * 1024;
-        const lo = Math.floor(index), hi = (lo + 1) % 1024, weight = index - lo;
-        const x = points[lo * 2] * (1 - weight) + points[hi * 2] * weight;
-        const y = points[lo * 2 + 1] * (1 - weight) + points[hi * 2 + 1] * weight;
-        paint.drawImage(layer.texture, x - radius + 16, y - radius + 16, radius * 2, radius * 2);
-      }
-      paint.globalCompositeOperation = "destination-in";
-      paint.drawImage(layer.mask, 0, 0, width, height);
       ctx.globalAlpha = layer.opacity;
-      ctx.drawImage(layer.buffer, 0, 0, width, height);
+      for (const { x, y, right, bottom } of regions) {
+        const w = right - x, h = bottom - y;
+        paint.globalCompositeOperation = "source-over";
+        paint.clearRect(0, 0, layer.buffer.width / dpr, layer.buffer.height / dpr);
+        for (const light of lights)
+          paint.drawImage(layer.texture, light.x - x, light.y - y, radius * 2, radius * 2);
+        paint.globalCompositeOperation = "destination-in";
+        paint.drawImage(layer.mask, x * layer.mask.width / width, y * layer.mask.height / height,
+          w * layer.mask.width / width, h * layer.mask.height / height, 0, 0, w, h);
+        const scaleX = width * dpr / scene.canvas.width, scaleY = height * dpr / scene.canvas.height;
+        ctx.drawImage(layer.buffer, 0, 0, w * dpr, h * dpr, x * scaleX, y * scaleY, w * scaleX, h * scaleY);
+      }
     }
     ctx.globalAlpha = 1;
   };
@@ -62,7 +83,10 @@ function renderBorders() {
       next.ctx = next.canvas.getContext("2d");
       next.ctx.setTransform(data.dpr, 0, 0, data.dpr, 0, 0);
       for (const layer of next.layers) {
-        layer.buffer = new OffscreenCanvas(next.canvas.width, next.canvas.height);
+        layer.buffer = new OffscreenCanvas(
+          Math.min(next.canvas.width, Math.ceil(next.radius * 4 * data.dpr) + 4),
+          Math.min(next.canvas.height, Math.ceil(next.radius * 4 * data.dpr) + 4),
+        );
         layer.ctx = layer.buffer.getContext("2d");
         layer.ctx.setTransform(data.dpr, 0, 0, data.dpr, 0, 0);
       }
