@@ -55,12 +55,13 @@ it("keeps the pointer light from restyling everything inside a dialog, card or s
   const base = css("theme/base.css");
   for (const name of ["--ad-spot-x", "--ad-spot-y"])
     expect(base).toMatch(new RegExp(`@property ${name}\\s*\\{[^}]*syntax:\\s*"\\*";[^}]*inherits:\\s*false`, "s"));
-  // The dialog paints the light in its own background, not in the inherited material variable.
+  // Moving the light does not invalidate the dialog surface or its descendants.
   const dialog = css("components/feedback/Dialog/styles.css");
-  expect(dialog).toMatch(/\.ad\.ad-dialog\[data-ad-material\]\s*\{\s*background:\s*radial-gradient\(26rem circle at var\(--ad-spot-x/);
+  expect(dialog).toMatch(/\.ad\.ad-dialog\[data-ad-material\]\s*\{\s*background:\s*var\(--ad-surface-dialog\)/);
+  expect(dialog).toMatch(/\.ad-dialog-spotlight\s*\{[^}]*pointer-events:\s*none;[^}]*transform:\s*translate3d\(var\(--ad-spot-x/s);
   expect(dialog).not.toMatch(/--ad-material-bg:[^;]*--ad-spot-x/s);
   // Pseudo-element lights read the position from their own surface explicitly.
-  expect(css("components/layout/Card/styles.css")).toMatch(/\.ad-card::after\s*\{[^}]*--ad-spot-x:\s*inherit;[^}]*--ad-spot-y:\s*inherit;/s);
+  expect(css("components/layout/Card/styles.css")).toMatch(/\.ad-card-light::before\s*\{[^}]*--ad-spot-x:\s*inherit;[^}]*--ad-spot-y:\s*inherit;/s);
   expect(css("components/effects/Spotlight/styles.css")).toMatch(/\.ad-spotlight::after\s*\{[^}]*--ad-spot-x:\s*inherit;[^}]*--ad-spot-y:\s*inherit;/s);
 });
 

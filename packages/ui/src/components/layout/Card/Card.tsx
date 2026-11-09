@@ -18,6 +18,7 @@ export const Card = ({
   ...p
 }: CardProps) => {
   const ref = useRef<HTMLElement>(null);
+  const spotlight = useRef<HTMLSpanElement>(null);
   useBorder(ref, border, shell);
   usePauseOffscreen(ref);
   return createElement(
@@ -33,12 +34,14 @@ export const Card = ({
       "data-ad-padding": padding,
       // A soft light follows the pointer across the surface.
       onPointerMove: (event: React.PointerEvent<HTMLElement>) => {
+        const style = spotlight.current?.style;
+        if (!style) return;
         const box = event.currentTarget.getBoundingClientRect();
-        event.currentTarget.style.setProperty(
+        style.setProperty(
           "--ad-spot-x",
           `${event.clientX - box.left}px`,
         );
-        event.currentTarget.style.setProperty(
+        style.setProperty(
           "--ad-spot-y",
           `${event.clientY - box.top}px`,
         );
@@ -56,5 +59,6 @@ export const Card = ({
       />
     ),
     children,
+    createElement("span", { ref: spotlight, className: "ad-card-light", "aria-hidden": true }),
   );
 };

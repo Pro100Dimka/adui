@@ -25,6 +25,7 @@ export const Dialog = (p: DialogProps) => {
     [pending, setPending] = useState(false),
     [error, setError] = useState<string>();
   const ref = useRef<HTMLDialogElement>(null),
+    spotlight = useRef<HTMLSpanElement>(null),
     confirmation = useRef(0),
     confirming = useRef(false),
     // Where the press began: a click closes the window only when it both starts and ends outside it.
@@ -75,13 +76,15 @@ export const Dialog = (p: DialogProps) => {
       }}
       onPointerMove={(e) => {
         // A soft light follows the pointer across the window.
+        const style = spotlight.current?.style;
+        if (!style) return;
         const box = e.currentTarget.getBoundingClientRect();
-        e.currentTarget.style.setProperty("--ad-spot-x", `${e.clientX - box.left}px`);
-        e.currentTarget.style.setProperty("--ad-spot-y", `${e.clientY - box.top}px`);
+        style.setProperty("--ad-spot-x", `${e.clientX - box.left}px`);
+        style.setProperty("--ad-spot-y", `${e.clientY - box.top}px`);
       }}
-      onPointerLeave={(e) => {
-        e.currentTarget.style.removeProperty("--ad-spot-x");
-        e.currentTarget.style.removeProperty("--ad-spot-y");
+      onPointerLeave={() => {
+        spotlight.current?.style.removeProperty("--ad-spot-x");
+        spotlight.current?.style.removeProperty("--ad-spot-y");
       }}
       aria-describedby={p.description ? descId : undefined}
       onCancel={(e) => {
@@ -89,6 +92,7 @@ export const Dialog = (p: DialogProps) => {
         if (!pending) setOpen(false);
       }}
     >
+      <span ref={spotlight} className="ad-dialog-spotlight" aria-hidden="true" />
       {p.art && (
         <div className="ad-dialog-art" aria-hidden="true">
           {p.art}

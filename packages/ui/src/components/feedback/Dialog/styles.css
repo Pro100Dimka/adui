@@ -19,9 +19,18 @@ html:has(.ad-dialog[open]) {
 }
 /* Pointer light: a soft glow under the cursor, painted over the window's own surface. */
 .ad.ad-dialog[data-ad-material] {
-  background:
-    radial-gradient(26rem circle at var(--ad-spot-x, -40rem) var(--ad-spot-y, -40rem), rgb(from var(--ad-primary) r g b / 0.11), transparent 60%),
-    var(--ad-surface-dialog);
+  background: var(--ad-surface-dialog);
+}
+.ad-dialog-spotlight {
+  position: absolute;
+  left: -26rem;
+  top: -26rem;
+  width: 52rem;
+  height: 52rem;
+  z-index: -2;
+  pointer-events: none;
+  background: radial-gradient(26rem circle, rgb(from var(--ad-primary) r g b / 0.11), transparent 60%);
+  transform: translate3d(var(--ad-spot-x, -40rem), var(--ad-spot-y, -40rem), 0);
 }
 .ad-dialog > .ad-header {
   flex-wrap: nowrap;

@@ -18,23 +18,31 @@
   margin-bottom: var(--ad-space-3);
 }
 /* Pointer spotlight: a soft ruby light under the cursor, faded in on hover. */
-.ad-card::after {
-  /* The pointer position is not inherited by default: the light reads it from its own card. */
-  --ad-spot-x: inherit;
-  --ad-spot-y: inherit;
-  content: "";
+.ad-card-light {
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  background: radial-gradient(
-    22rem circle at var(--ad-spot-x, 50%) var(--ad-spot-y, 0%),
-    rgb(from var(--ad-primary) r g b / 0.08),
-    transparent 60%
-  );
+  overflow: hidden;
   opacity: 0;
   transition: opacity 0.35s;
   pointer-events: none;
 }
-.ad-card:hover::after {
+.ad-card-light::before {
+  --ad-spot-x: inherit;
+  --ad-spot-y: inherit;
+  content: "";
+  position: absolute;
+  width: 44rem;
+  height: 44rem;
+  left: var(--ad-spot-x, 50%);
+  top: var(--ad-spot-y, 0%);
+  transform: translate3d(-50%, -50%, 0);
+  background: radial-gradient(
+    22rem circle,
+    rgb(from var(--ad-primary) r g b / 0.08),
+    transparent 60%
+  );
+}
+.ad-card:hover > .ad-card-light {
   opacity: 1;
 }
