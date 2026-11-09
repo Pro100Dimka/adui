@@ -65,7 +65,7 @@ import "@neo-ui-kit/react/styles.css";
 To test repository changes before publishing, run `npm run package` from the repository root and install the resulting archive in a separate application:
 
 ```bash
-npm install /path/to/adui/release/neo-ui-kit-react-1.3.18.tgz
+npm install /path/to/adui/release/neo-ui-kit-react-1.4.0.tgz
 ```
 
 Maintainers publish new versions from `Pro100Dimka/adui` using the `release.yml` GitHub Actions workflow, a matching `v<version>` tag, and the `npm-publication` environment. npm trusts its OIDC identity; no `NPM_TOKEN` is required. The workflow checks the project and packed consumer before publishing the tested archive. Published `1.0.0` cannot be overwritten: code and README changes in npm require a new package version. See the [repository release instructions](https://github.com/Pro100Dimka/adui#npm-пакет).
@@ -404,3 +404,24 @@ const [transport, setTransport] = useState<QuantumBackgroundTransport>();
 ```
 
 The documentation page builds exactly such a panel (song, player, microphone, snapshot, fullscreen, field and sensitivity, plus a closed “Тонкая настройка” section) outside the component. `QuantumFieldExperience`, `QuantumFieldExperienceProps` and `quantumFieldExperienceControls` remain compatible aliases; note that `QuantumFieldExperience` no longer renders its own control panel. The separate lightweight `QuantumField` primitive documented above keeps its original props and rendering; it is not an alias of the full background.
+
+
+### Viewport sizes
+
+Responsive Grid, Stack and FormFields layout uses the available window width in CSS pixels:
+
+| Name | Window width |
+| --- | --- |
+| xs | Below 768 px |
+| sm | 768 to 1023 px |
+| md | 1024 to 1919 px |
+| lg | 1920 to 2559 px |
+| xlg | 2560 px and above |
+
+Values carry forward until the next specified breakpoint. `base` remains an alias for `xs`, and `xl` for `xlg`; explicit canonical keys take priority. Nested layouts resolve their own values independently.
+
+```tsx
+<Grid columns={{ xs: 1, sm: 2, md: 3, lg: 4, xlg: 5 }} gap={3} />
+```
+
+Control `size` selects physical geometry (`xs`, `sm`, `md`, `lg`, `xlg`); it does not limit a component to a particular screen. Explicit compact controls remain compact on large displays. Numeric and CSS-length dimensions remain supported by Icon and Loader. Card padding also includes `xs` and `xlg`.

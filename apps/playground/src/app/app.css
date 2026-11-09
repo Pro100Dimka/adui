@@ -111,7 +111,7 @@ a {
 .docs-sidebar > .docs-sidebar-foot {
   display: none;
 }
-@media (min-width: 56.25rem) {
+@media (min-width: 1024px) {
   #app {
     height: 100dvh;
   }
@@ -512,12 +512,12 @@ html[data-ad-color-mode="light"] .docs-hero-backdrop {
   flex: 1;
   min-width: 0;
 }
-@media (max-width: 74.99rem) {
+@media (width < 1920px) {
   .docs-overview-hero .ad-wave-decoration {
     display: none;
   }
 }
-@media (max-width: 39.99rem) {
+@media (width < 768px) {
   .site-brand .ad-typography[data-ad-variant="eyebrow"],
   .site-tools > .ad-badge {
     display: none;

@@ -401,8 +401,8 @@ describe("LoaderGenerator", () => {
     expect(loaderGeneratorAnimations).toContain("palette");
   });
 
-  it("uses the shared four-step size scale", () => {
-    expect(loaderSizes).toEqual({ xs: 4.5, sm: 6.5, md: 9, lg: 12 });
+  it("uses the shared five-step size scale", () => {
+    expect(loaderSizes).toEqual({ xs: 4.5, sm: 6.5, md: 9, lg: 12, xlg: 16 });
   });
 
   it("renders a compact settings toolbar without the generated-code panel", () => {

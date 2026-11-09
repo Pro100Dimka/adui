@@ -2,11 +2,11 @@ import { Card, Grid } from "@neo-ui-kit/react";
 
 export default function GridExample() {
   return (
-    <Grid columns={{ base: 1, md: 12 }} gap={3}>
-      <Grid span={{ base: "full", md: 8 }}>
+    <Grid columns={{ xs: 1, md: 12 }} gap={3}>
+      <Grid span={{ xs: "full", md: 8 }}>
         <Card title="Основная область" description="8 из 12 колонок" />
       </Grid>
-      <Grid span={{ base: "full", md: 4 }}>
+      <Grid span={{ xs: "full", md: 4 }}>
         <Card title="Сбоку" description="4 из 12" />
       </Grid>
       <Grid span="full">

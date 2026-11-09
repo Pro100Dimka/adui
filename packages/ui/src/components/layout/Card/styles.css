@@ -48,3 +48,6 @@
 .ad-card:hover > .ad-card-light {
   opacity: 1;
 }
+
+.ad-card[data-ad-padding="xs"] { padding: var(--ad-space-1); }
+.ad-card[data-ad-padding="xlg"] { padding: var(--ad-space-8); }

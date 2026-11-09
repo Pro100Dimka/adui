@@ -5,7 +5,7 @@ import { tr, useTr } from "../../../core/i18n";
 
 export const loaderAnimations = ["spin", "pulse", "breathe", "bounce", "flip", "orbit", "wave", "glow", "fill", "shine", "wobble", "radar", "palette"] as const;
 export type LoaderAnimation = (typeof loaderAnimations)[number];
-const loaderSizes: Record<string, string> = { xs: "2rem", sm: "3rem", md: "4rem", lg: "6rem" };
+const loaderSizes: Record<string, string> = { xs: "2rem", sm: "3rem", md: "4rem", lg: "6rem", xlg: "8rem" };
 
 /** Names of the animations for pickers, in the library's language. */
 export const loaderAnimationLabel = (animation: LoaderAnimation, translate = tr) =>
@@ -31,7 +31,7 @@ export interface LoaderProps extends Omit<CommonProps, "size"> {
   /** The picture that moves: a logo, an icon, any image (transparent PNG/SVG/WebP look best). */
   src?: string;
   animation?: LoaderAnimation;
-  /** xs/sm/md/lg, a CSS length, or pixels converted to rem at the 16px design baseline. */
+  /** xs/sm/md/lg/xlg, a CSS length, or pixels converted to rem at the 16px design baseline. */
   size?: number | string;
   /** Speed multiplier: 2 is twice as fast. */
   speed?: number;

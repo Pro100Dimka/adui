@@ -1,3 +1,4 @@
+import { responsiveVars } from "../src/core/responsive";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { useState } from "react";
 import { act, create, type ReactTestRenderer } from "react-test-renderer";
@@ -136,5 +137,19 @@ describe("layout and navigation identity", () => {
     act(() => { tree = create(<Router mode="hash" routes={routes} />); });
     act(() => tree!.update(<Router mode="history" routes={routes} />));
     expect(tree!.toJSON()).toBe("History view");
+  });
+});
+
+it("carries the nearest viewport value through xs to xlg and preserves legacy aliases", () => {
+  const sizes = { xs: 1, sm: 2, md: 3, lg: 4, xlg: 5 };
+  expect(responsiveVars("columns", sizes)).toMatchObject({
+    "--ad-columns": "1", "--ad-columns-sm": "2", "--ad-columns-md": "3",
+    "--ad-columns-lg": "4", "--ad-columns-xlg": "5",
+  });
+  expect(responsiveVars("columns", { base: 1, md: 3, xl: 5 })).toMatchObject({
+    "--ad-columns": "1", "--ad-columns-sm": "1", "--ad-columns-lg": "3", "--ad-columns-xlg": "5",
+  });
+  expect(responsiveVars("columns", { base: 1, xs: 2, xl: 3, xlg: 4 })).toMatchObject({
+    "--ad-columns": "2", "--ad-columns-sm": "2", "--ad-columns-xlg": "4",
   });
 });

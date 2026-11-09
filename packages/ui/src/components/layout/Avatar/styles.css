@@ -164,3 +164,6 @@
   background: var(--ad-neutral-600, #555);
   box-shadow: none;
 }
+
+.ad-avatar[data-ad-size="xlg"] { --ad-avatar: 5rem; }
+.ad-avatar[data-variant="host"][data-ad-size="xlg"] { --ad-avatar: 10rem; }

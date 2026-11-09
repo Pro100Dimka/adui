@@ -13,7 +13,7 @@ export type Material =
   | "ghost"
   | "danger";
 export type Variant = "primary" | "secondary" | "ghost" | "danger";
-export type ControlSize = "xs" | "sm" | "md" | "lg";
+export type ControlSize = "xs" | "sm" | "md" | "lg" | "xlg";
 export type LegacySize = "small" | "medium" | "large";
 export type Size = ControlSize | LegacySize;
 export type Tone =

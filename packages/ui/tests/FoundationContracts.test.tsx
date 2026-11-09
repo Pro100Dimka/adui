@@ -36,15 +36,15 @@ it("preserves a caller's typography alignment when the align prop is omitted", (
 });
 
 describe("documentation sizing controls", () => {
-  it.each([["Icon", IconExample], ["Loader", LoaderExample], ["SvgAsset", SvgAssetExample]] as const)("uses the four named size choices on %s", (_name, Example) => {
+  it.each([["Icon", IconExample], ["Loader", LoaderExample], ["SvgAsset", SvgAssetExample]] as const)("uses the five named size choices on %s", (_name, Example) => {
     act(() => { tree = create(<Example />); });
     const picker = tree!.root.findAllByType(SegmentedControl).find(control => control.props.label === "Размер");
-    expect(picker?.props.items.map((item: { value: string }) => item.value)).toEqual(["xs", "sm", "md", "lg"]);
+    expect(picker?.props.items.map((item: { value: string }) => item.value)).toEqual(["xs", "sm", "md", "lg", "xlg"]);
   });
 
   it.each([
     ["xs", "1rem", "2rem"], ["sm", "1.25rem", "3rem"],
-    ["md", "1.5rem", "4rem"], ["lg", "2rem", "6rem"],
+    ["md", "1.5rem", "4rem"], ["lg", "2rem", "6rem"], ["xlg", "2.5rem", "8rem"],
   ])("resolves %s to valid Icon and Loader geometry", (size, icon, loader) => {
     expect(renderToStaticMarkup(<Icon size={size} />)).toContain(`--ad-icon-size:${icon}`);
     expect(renderToStaticMarkup(<Loader size={size} />)).toContain(`--ad-loader-size:${loader}`);

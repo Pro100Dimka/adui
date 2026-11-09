@@ -136,3 +136,5 @@
 .ad-slider-field:has(.ad-slider:disabled) .ad-field-label {
   opacity: 0.5;
 }
+
+.ad-slider[data-ad-size="xlg"] { --ad-slider-track: 0.75rem; --ad-slider-thumb: 1.5rem; }

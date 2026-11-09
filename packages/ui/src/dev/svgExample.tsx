@@ -1,7 +1,7 @@
 import type { VectorNode } from "../index";
 import { Playground, U, jsx, sizes } from "./exampleHelpers";
 
-const widths = { xs: "2rem", sm: "3rem", md: "4rem", lg: "6rem" };
+const widths = { xs: "2rem", sm: "3rem", md: "4rem", lg: "6rem", xlg: "8rem" };
 
 const node: VectorNode = {
   tag: "svg",

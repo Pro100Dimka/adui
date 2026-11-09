@@ -40,7 +40,7 @@ export interface CardProps extends CommonProps, Omit<HeaderProps, "as"> {
   as?: "section" | "div" | "article";
   border?: boolean;
   shell?: boolean;
-  padding?: "none" | "sm" | "md" | "lg";
+  padding?: "none" | "xs" | "sm" | "md" | "lg" | "xlg";
   material?: Material;
 }
 export interface AvatarProps extends CommonProps {

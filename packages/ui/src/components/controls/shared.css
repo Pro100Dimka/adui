@@ -120,6 +120,30 @@
   --ad-size-pad-x: 0.95rem;
   --ad-size-gap: 0.72rem;
 }
+:is(
+  .ad-button,
+  .ad-icon-button,
+  .ad-toggle-button,
+  .ad-split-button,
+  .ad-input-base,
+  .ad-text-field-shell,
+  .ad-text-area,
+  .ad-number-field,
+  .ad-select,
+  .ad-switch,
+  .ad-checkbox,
+  .ad-slider,
+  .ad-file-picker,
+  .ad-tabs,
+  .ad-tab,
+  .ad-segmented-control
+)[data-ad-size="xlg"] {
+  --ad-size-h: 3.5rem;
+  --ad-size-font: 1.0625rem;
+  --ad-size-radius: 1rem;
+  --ad-size-pad-x: 1.125rem;
+  --ad-size-gap: 0.85rem;
+}
 
 @keyframes ad-btn-breathe {
   50% {

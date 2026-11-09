@@ -33,7 +33,7 @@ export interface LoaderGeneratorProps extends CommonProps {
 export const loaderGeneratorAnimations = loaderAnimations.filter(
   (animation) => animation !== "orbit" && animation !== "radar",
 );
-export const loaderSizes = { xs: 4.5, sm: 6.5, md: 9, lg: 12 } as const;
+export const loaderSizes = { xs: 4.5, sm: 6.5, md: 9, lg: 12, xlg: 16 } as const;
 type LoaderSize = keyof typeof loaderSizes;
 
 export const loaderRenderKey = ({ animation }: Pick<LoaderSettings, "animation">) => animation;

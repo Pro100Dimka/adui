@@ -305,7 +305,7 @@ export function Compare({
   );
 }
 
-export const sizes = ["xs", "sm", "md", "lg"] as const;
+export const sizes = ["xs", "sm", "md", "lg", "xlg"] as const;
 export const buttonVariants = [
   "primary",
   "secondary",

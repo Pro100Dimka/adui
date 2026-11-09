@@ -61,7 +61,7 @@ export const RotaryKnob = (p: RotaryKnobProps) => {
   resetRef.current = p.resetValue === undefined ? undefined : toPosition(p.resetValue);
   const diameter =
     p.diameter ??
-    { xs: 84, sm: 124, md: 220, lg: 320 }[normalizeSize(p.size) ?? "md"];
+    { xs: 84, sm: 124, md: 220, lg: 320, xlg: 400 }[normalizeSize(p.size) ?? "md"];
 
   useLayoutEffect(() => {
     const root = rootRef.current!;

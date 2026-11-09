@@ -2,7 +2,7 @@ import React from "react";
 import { mark } from "../../../core/base";
 import { SvgAsset } from "../../../core/artwork";
 import { icons, type IconProps } from "../shared";
-const iconSizes: Record<string, string> = { xs: "1rem", sm: "1.25rem", md: "1.5rem", lg: "2rem" };
+const iconSizes: Record<string, string> = { xs: "1rem", sm: "1.25rem", md: "1.5rem", lg: "2rem", xlg: "2.5rem" };
 /** Without `size` the icon takes --ad-icon-size from CSS, so buttons and fields can size it. */
 export const Icon = ({
   name = "music",

@@ -15,7 +15,7 @@
 .ad-stack__divider {
   display: contents;
 }
-@media (min-width: 40rem) {
+@media (min-width: 768px) {
   .ad-stack {
     flex-direction: var(--ad-stack-direction-sm);
     gap: var(--ad-stack-gap-sm);
@@ -24,7 +24,7 @@
     flex-wrap: var(--ad-stack-wrap-sm);
   }
 }
-@media (min-width: 56.25rem) {
+@media (min-width: 1024px) {
   .ad-stack {
     flex-direction: var(--ad-stack-direction-md);
     gap: var(--ad-stack-gap-md);
@@ -33,7 +33,7 @@
     flex-wrap: var(--ad-stack-wrap-md);
   }
 }
-@media (min-width: 75rem) {
+@media (min-width: 1920px) {
   .ad-stack {
     flex-direction: var(--ad-stack-direction-lg);
     gap: var(--ad-stack-gap-lg);
@@ -42,12 +42,12 @@
     flex-wrap: var(--ad-stack-wrap-lg);
   }
 }
-@media (min-width: 96rem) {
+@media (min-width: 2560px) {
   .ad-stack {
-    flex-direction: var(--ad-stack-direction-xl);
-    gap: var(--ad-stack-gap-xl);
-    align-items: var(--ad-stack-align-xl);
-    justify-content: var(--ad-stack-justify-xl);
-    flex-wrap: var(--ad-stack-wrap-xl);
+    flex-direction: var(--ad-stack-direction-xlg);
+    gap: var(--ad-stack-gap-xlg);
+    align-items: var(--ad-stack-align-xlg);
+    justify-content: var(--ad-stack-justify-xlg);
+    flex-wrap: var(--ad-stack-wrap-xlg);
   }
 }
