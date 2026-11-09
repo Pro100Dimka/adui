@@ -59,6 +59,7 @@ export const Card = ({
       />
     ),
     children,
-    createElement("span", { ref: spotlight, className: "ad-card-light", "aria-hidden": true }),
+    createElement("span", { className: "ad-card-light", "aria-hidden": true },
+      createElement("span", { ref: spotlight, className: "ad-card-spotlight" })),
   );
 };

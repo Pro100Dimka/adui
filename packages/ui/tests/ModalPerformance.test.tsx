@@ -61,7 +61,7 @@ it("keeps the pointer light from restyling everything inside a dialog, card or s
   expect(dialog).toMatch(/\.ad-dialog-spotlight\s*\{[^}]*pointer-events:\s*none;[^}]*transform:\s*translate3d\(var\(--ad-spot-x/s);
   expect(dialog).not.toMatch(/--ad-material-bg:[^;]*--ad-spot-x/s);
   // Pseudo-element lights read the position from their own surface explicitly.
-  expect(css("components/layout/Card/styles.css")).toMatch(/\.ad-card-light::before\s*\{[^}]*--ad-spot-x:\s*inherit;[^}]*--ad-spot-y:\s*inherit;/s);
+  expect(css("components/layout/Card/styles.css")).toMatch(/\.ad-card-spotlight\s*\{[^}]*transform:\s*translate3d\(var\(--ad-spot-x/s);
   expect(css("components/effects/Spotlight/styles.css")).toMatch(/\.ad-spotlight::after\s*\{[^}]*--ad-spot-x:\s*inherit;[^}]*--ad-spot-y:\s*inherit;/s);
 });
 

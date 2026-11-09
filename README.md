@@ -72,7 +72,7 @@ npm run package
 Установить полученный архив в отдельное приложение (путь задаётся относительно приложения):
 
 ```bash
-npm install /path/to/adui/release/neo-ui-kit-react-1.3.16.tgz react react-dom
+npm install /path/to/adui/release/neo-ui-kit-react-1.3.17.tgz react react-dom
 ```
 
 Подготовка новой версии:

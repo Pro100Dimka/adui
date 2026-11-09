@@ -27,16 +27,18 @@
   transition: opacity 0.35s;
   pointer-events: none;
 }
-.ad-card-light::before {
-  --ad-spot-x: inherit;
-  --ad-spot-y: inherit;
+.ad-card-spotlight {
+  position: absolute;
+  inset: 0;
+  transform: translate3d(var(--ad-spot-x, 50%), var(--ad-spot-y, 0%), 0);
+}
+.ad-card-spotlight::before {
   content: "";
   position: absolute;
   width: 44rem;
   height: 44rem;
-  left: var(--ad-spot-x, 50%);
-  top: var(--ad-spot-y, 0%);
-  transform: translate3d(-50%, -50%, 0);
+  left: -22rem;
+  top: -22rem;
   background: radial-gradient(
     22rem circle,
     rgb(from var(--ad-primary) r g b / 0.08),
