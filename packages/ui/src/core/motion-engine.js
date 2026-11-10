@@ -70,8 +70,17 @@ const isLoop = (animation) => {
 function scan(now, animations = pendingAnimations) {
   lastScan = now;
   needsScan = false;
-  // Native discovery can flush layout; read each event target once per shared frame.
-  for (const target of pendingTargets)
+  // A subtree scan already discovers animations on pending descendants.
+  const roots = new Set(pendingTargets);
+  for (const target of pendingTargets) {
+    for (let parent = target.parentElement; parent; parent = parent.parentElement) {
+      if (pendingTargets.has(parent)) {
+        roots.delete(target);
+        break;
+      }
+    }
+  }
+  for (const target of roots)
     for (const animation of target.getAnimations?.({ subtree: true }) || []) pendingAnimations.add(animation);
   pendingTargets.clear();
   for (const animation of animations)

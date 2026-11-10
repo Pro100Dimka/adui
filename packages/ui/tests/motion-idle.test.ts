@@ -731,3 +731,17 @@ it("discovers pseudo-element loops through the event target's subtree animations
   flushFrame();
   expect(animation.currentTime).toBe(40);
 });
+
+it("scans nested animation event targets only through their pending ancestor", () => {
+  const parent = cssLoop();
+  const child = cssLoop();
+  Object.assign(child.node, { parentElement: parent.node });
+  parent.node.getAnimations.mockReturnValue([parent.animation, child.animation]);
+  for (const target of [child.node, parent.node])
+    events.get("animationstart")!({ animationName: "ad-loader-pulse", target } as unknown as Event);
+  flushFrame();
+  expect(parent.node.getAnimations).toHaveBeenCalledOnce();
+  expect(child.node.getAnimations).not.toHaveBeenCalled();
+  expect(parent.animation.pause).toHaveBeenCalledOnce();
+  expect(child.animation.pause).toHaveBeenCalledOnce();
+});
