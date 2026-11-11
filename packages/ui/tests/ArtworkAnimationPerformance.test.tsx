@@ -55,6 +55,7 @@ it("keeps spectrum bars moving without repeatedly searching every SVG bar and la
   const bars = Array.from({ length: 23 }, () => ({
     querySelectorAll: vi.fn(() => [0, 1, 2].map((grow) => ({
       dataset: { grow: String(grow) },
+      style: { transform: "" },
       setAttribute: vi.fn(),
     }))),
   }));
@@ -67,7 +68,13 @@ it("keeps spectrum bars moving without repeatedly searching every SVG bar and la
   });
   for (const time of [0, 0.1, 0.2]) painters[0]!(time);
   expect(querySelectorAll).toHaveBeenCalledTimes(1);
-  for (const bar of bars) expect(bar.querySelectorAll).toHaveBeenCalledTimes(1);
+  for (const bar of bars) {
+    expect(bar.querySelectorAll).toHaveBeenCalledTimes(1);
+    for (const rect of bar.querySelectorAll.mock.results[0]!.value) {
+      expect(rect.style.transform).toContain("scaleY(");
+      expect(rect.setAttribute).not.toHaveBeenCalled();
+    }
+  }
   act(() => tree.unmount());
 });
 

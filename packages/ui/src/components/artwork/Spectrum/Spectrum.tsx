@@ -81,8 +81,7 @@ function Bars(p: CommonProps) {
       const height = barHeight(i, time);
       rects.forEach((rect) => {
         const grow = Number(rect.dataset.grow ?? 0);
-        rect.setAttribute("y", (134 - height - grow).toFixed(2));
-        rect.setAttribute("height", (height + grow).toFixed(2));
+        rect.style.transform = `scaleY(${((height + grow) / 100).toFixed(4)})`;
       });
     });
   });
@@ -118,7 +117,7 @@ function Bars(p: CommonProps) {
                 key={grow}
                 data-grow={grow}
                 x={x - grow}
-                y="40"
+                y="34"
                 width={2.8 + grow * 2}
                 height="100"
                 rx={1.3 + grow}
@@ -126,7 +125,7 @@ function Bars(p: CommonProps) {
                 opacity={halo * opacity}
               />
             ))}
-            <rect x={x} y="40" width="2.8" height="100" rx="1.3" fill={`url(#${id}-bar)`} opacity={opacity} />
+            <rect x={x} y="34" width="2.8" height="100" rx="1.3" fill={`url(#${id}-bar)`} opacity={opacity} />
           </g>
         );
       })}

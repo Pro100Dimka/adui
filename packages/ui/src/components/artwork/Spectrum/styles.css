@@ -11,6 +11,10 @@
   max-width: 12rem;
   aspect-ratio: 163 / 140;
 }
+.ad-spectrum[data-variant="bars"] rect {
+  transform-origin: 0 134px;
+  will-change: transform;
+}
 .ad-spectrum[data-variant="segmented"] {
   position: relative;
   overflow: hidden;
