@@ -365,7 +365,7 @@ export function createBorderWorker(item) {
   }
   async function update() {
     const dpr = devicePixelRatio || 1;
-    const width = item.overlay.clientWidth + 32, height = item.overlay.clientHeight + 32;
+    const width = item.width + 32, height = item.height + 32;
     const radius = item.lights[0].radius;
     const styles = groups.map((group) => ({
       mask: group.style.maskImage,

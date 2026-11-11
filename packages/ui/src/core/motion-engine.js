@@ -128,9 +128,11 @@ function tick(now) {
     }
   }
   if (needsScan || now - lastScan > 400) scan(now);
-  // Border geometry can flush layout. Spread visible mount/resize work across frames.
+  // Read each batch before writing borders, so adjacent items share one layout flush.
+  // Spread visible mount/resize measurements across frames.
   // Unseen borders keep their pending measurement without forcing it.
   const deadline = performance.now() + 8;
+  const updates = [];
   for (const item of measurements) {
     if (!item.element.isConnected) {
       measurements.delete(item);
@@ -139,8 +141,9 @@ function tick(now) {
     if (item.element._adInView === false) continue;
     if (performance.now() >= deadline) break;
     measurements.delete(item);
-    item.sync();
+    updates.push(item.measure());
   }
+  for (const update of updates) update?.();
   if (now - last >= FRAME - 6) {
     if (FRAME > 1000 / 60)
       for (const animation of active) animation.currentTime = now - animation.__adStart;
@@ -477,7 +480,7 @@ U.attachBorder = (element, { shell = false, round = false, scope, defer = false 
       for (const spot of light.spots) spot.style.transform = transform;
     }
   };
-  item.sync = () => {
+  item.measure = () => {
     const computed = getComputedStyle(element);
     const sides = ["Top", "Right", "Bottom", "Left"];
     const borderWidths = sides.map((side) => parseFloat(computed[`border${side}Width`]) || 0);
@@ -490,10 +493,7 @@ U.attachBorder = (element, { shell = false, round = false, scope, defer = false 
         : element[fallback];
     });
     if (!w || !h) return;
-    if (computed.position === "static") {
-      item.patchedPosition = true;
-      element.style.position = "relative";
-    }
+    const patchPosition = computed.position === "static";
     const corners = ["TopLeft", "TopRight", "BottomRight", "BottomLeft"].map((corner) => {
       const values = (computed[`border${corner}Radius`] || computed.borderTopLeftRadius).split(/\s+/);
       return [w, h].map((size, axis) => {
@@ -503,35 +503,44 @@ U.attachBorder = (element, { shell = false, round = false, scope, defer = false 
     });
     const geometry = `${w},${h},${corners},${borderWidths}`;
     if (item.geometry === geometry) return;
-    item.geometry = geometry;
-    overlay.style.inset = borderWidths.map((width) => `${-width}px`).join(" ");
-    overlay.style.width = `calc(100% + ${borderWidths[1] + borderWidths[3]}px)`;
-    overlay.style.height = `calc(100% + ${borderWidths[0] + borderWidths[2]}px)`;
-    item.contour = U.roundedPath(w, h, corners);
-    const { d } = item.contour;
-    edge.setAttribute("viewBox", `0 0 ${w} ${h}`);
-    path.setAttribute("d", d);
-    for (const [node, strokes] of [[aura, AURA], [core, [[shell ? 1.9 : 1.35, 1]]]]) {
-      const mask = ringMask(w, h, d, strokes);
-      node.style.maskImage = mask;
-      node.style.webkitMaskImage = mask;
-    }
-    item.length = item.contour.length;
-    radius = round ? 28 : Math.min(260, Math.max(42, item.length * 0.153));
-    for (const light of lights) {
-      light.radius = radius;
-      for (const spot of light.spots) {
-        spot.style.width = `${radius * 2}px`;
-        spot.style.height = `${radius * 2}px`;
+    return () => {
+      if (patchPosition) {
+        item.patchedPosition = true;
+        element.style.position = "relative";
       }
-    }
-    item.paint(scope?.time || 0);
-    if (scope) {
-      item.worker ??= createBorderWorker(item);
-      item.worker?.update();
-    }
-    if (!item.worker) overlay.setAttribute("data-ready", "");
+      item.geometry = geometry;
+      item.width = Math.round(w);
+      item.height = Math.round(h);
+      overlay.style.inset = borderWidths.map((width) => `${-width}px`).join(" ");
+      overlay.style.width = `calc(100% + ${borderWidths[1] + borderWidths[3]}px)`;
+      overlay.style.height = `calc(100% + ${borderWidths[0] + borderWidths[2]}px)`;
+      item.contour = U.roundedPath(w, h, corners);
+      const { d } = item.contour;
+      edge.setAttribute("viewBox", `0 0 ${w} ${h}`);
+      path.setAttribute("d", d);
+      for (const [node, strokes] of [[aura, AURA], [core, [[shell ? 1.9 : 1.35, 1]]]]) {
+        const mask = ringMask(w, h, d, strokes);
+        node.style.maskImage = mask;
+        node.style.webkitMaskImage = mask;
+      }
+      item.length = item.contour.length;
+      radius = round ? 28 : Math.min(260, Math.max(42, item.length * 0.153));
+      for (const light of lights) {
+        light.radius = radius;
+        for (const spot of light.spots) {
+          spot.style.width = `${radius * 2}px`;
+          spot.style.height = `${radius * 2}px`;
+        }
+      }
+      item.paint(scope?.time || 0);
+      if (scope) {
+        item.worker ??= createBorderWorker(item);
+        item.worker?.update();
+      }
+      if (!item.worker) overlay.setAttribute("data-ready", "");
+    };
   };
+  item.sync = () => item.measure()?.();
   const queueMeasurement = () => {
     if (item.destroyed) return;
     measurements.add(item);

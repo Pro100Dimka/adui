@@ -173,6 +173,7 @@ it.each([2, 4, 8])("defaults to native CSS and uninterrupted animation frames on
 function borderFixture() {
   const geometry = {
     size: vi.fn(),
+    write: vi.fn(),
     style: vi.fn(() => ({ position: "static", borderTopLeftRadius: "12px" })),
     length: vi.fn(() => 400),
   };
@@ -181,7 +182,7 @@ function borderFixture() {
     tagName: tag,
     style: {},
     attributes: new Map(),
-    setAttribute(name: string, value: string) { this.attributes.set(name, value); },
+    setAttribute(name: string, value: string) { geometry.write(); this.attributes.set(name, value); },
     append() {},
     remove() {},
     getTotalLength: geometry.length,
@@ -268,13 +269,18 @@ it("spreads visible border geometry across the shared frame budget", () => {
   let elapsed = 0;
   vi.spyOn(performance, "now").mockImplementation(() => elapsed);
   const readStyle = geometry.style.getMockImplementation()!;
-  geometry.style.mockImplementation(() => { elapsed += 4; return readStyle(); });
+  geometry.style.mockImplementation(() => {
+    expect(geometry.write).not.toHaveBeenCalled();
+    elapsed += 4;
+    return readStyle();
+  });
   const borders = Array.from({ length: 95 }, () => {
     const node = host();
     const scope = engine.createMotion(document as unknown as Document);
     return { node, scope, border: engine.attachBorder(node, { scope, defer: true }) };
   });
   geometry.style.mockClear();
+  geometry.write.mockClear();
   elapsed = 0;
   borders.forEach(({ node }, index) => observe(node, true, index));
   flushFrame();
@@ -294,6 +300,8 @@ it("initializes a visible deferred border even when motion is disabled", () => {
   observe(node, true);
   flushFrame();
   expect(border.length).toBeGreaterThan(0);
+  expect(border.width).toBe(160);
+  expect(border.height).toBe(240);
   expect(border.overlay.attributes.get("data-ready")).toBe("");
   expect(geometry.length).not.toHaveBeenCalled();
   expect(engine.getMotionStats().scheduled).toBe(false);
