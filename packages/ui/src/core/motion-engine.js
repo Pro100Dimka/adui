@@ -530,6 +530,7 @@ U.attachBorder = (element, { shell = false, round = false, scope, defer = false 
       item.worker ??= createBorderWorker(item);
       item.worker?.update();
     }
+    if (!item.worker) overlay.setAttribute("data-ready", "");
   };
   const queueMeasurement = () => {
     if (item.destroyed) return;

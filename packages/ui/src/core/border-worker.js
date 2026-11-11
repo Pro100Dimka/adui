@@ -334,6 +334,7 @@ export function createBorderWorker(item) {
       since = performance.now();
       renderer.ready = true;
       groups.forEach((group) => { group.style.visibility = "hidden"; });
+      item.overlay.setAttribute("data-ready", "");
       canvas.style.visibility = "";
       visibility();
     },
@@ -351,6 +352,7 @@ export function createBorderWorker(item) {
     observer.disconnect();
     tokens.disconnect();
     groups.forEach((group, index) => { group.style.visibility = originalVisibility[index]; });
+    item.overlay.setAttribute("data-ready", "");
     canvas.remove();
     clients.delete(id);
     if (worker === thread) thread.postMessage({ type: "remove", id });

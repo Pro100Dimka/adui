@@ -290,9 +290,11 @@ it("initializes a visible deferred border even when motion is disabled", () => {
   scope.set(false);
   const border = engine.attachBorder(node, { scope, defer: true });
   expect(geometry.length).not.toHaveBeenCalled();
+  expect(border.overlay.attributes.has("data-ready")).toBe(false);
   observe(node, true);
   flushFrame();
   expect(border.length).toBeGreaterThan(0);
+  expect(border.overlay.attributes.get("data-ready")).toBe("");
   expect(geometry.length).not.toHaveBeenCalled();
   expect(engine.getMotionStats().scheduled).toBe(false);
   border.destroy();
