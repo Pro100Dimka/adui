@@ -44,7 +44,8 @@ export function Tabs<V extends string = string>(p: TabsProps<V>) {
         "--ad-tabs-x": `${tab.offsetLeft}px`,
         "--ad-tabs-w": `${tab.offsetWidth}px`,
       });
-    update();
+    // The initial observer delivery measures after layout, without flushing the new panel here.
+    if (typeof ResizeObserver === "undefined") update();
     const observer = createResizeObserver(update);
     observer.observe(tab);
     if (tab.parentElement) observer.observe(tab.parentElement);

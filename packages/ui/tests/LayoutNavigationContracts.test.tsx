@@ -25,6 +25,35 @@ afterEach(() => {
 });
 
 describe("dynamic tab accessibility", () => {
+  it("measures the indicator after layout instead of during tab commits", () => {
+    let resize!: () => void;
+    vi.stubGlobal("ResizeObserver", class {
+      constructor(callback: () => void) { resize = callback; }
+      observe() {}
+      disconnect() {}
+    });
+    vi.stubGlobal("window", { ...window, setTimeout, clearTimeout });
+    const read = vi.fn();
+    const items = [{ value: "a", id: "a", label: "A" }, { value: "b", id: "b", label: "B" }];
+    act(() => {
+      tree = create(<Tabs value="a" items={items} />, {
+        createNodeMock: ({ type, props }) => type === "button" ? {
+          parentElement: {},
+          get offsetLeft() { read(); return props.id === "b" ? 200 : 0; },
+          get offsetWidth() { read(); return 200; },
+        } : null,
+      });
+    });
+    expect(read).not.toHaveBeenCalled();
+    act(() => resize());
+    expect(tree!.root.findByProps({ className: "ad-tabs-indicator" }).props.style["--ad-tabs-x"]).toBe("0px");
+    read.mockClear();
+    act(() => tree!.update(<Tabs value="b" items={items} />));
+    expect(read).not.toHaveBeenCalled();
+    act(() => resize());
+    expect(tree!.root.findByProps({ className: "ad-tabs-indicator" }).props.style["--ad-tabs-x"]).toBe("200px");
+  });
+
   it("starts from the first enabled tab instead of an unfocusable disabled item", () => {
     act(() => { tree = create(<Tabs items={[{ value: "a", label: "A", disabled: true }, { value: "b", label: "B" }]} />); });
     expect(tree!.root.findAllByType("button").map(button => button.props["aria-selected"])).toEqual([false, true]);
