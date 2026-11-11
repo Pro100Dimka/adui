@@ -80,7 +80,12 @@ function scan(now, animations = pendingAnimations) {
       }
     }
   }
-  for (const target of roots)
+  // Sibling animation starts share a style update instead of flushing once per target.
+  const targets = [...roots];
+  let common = targets[0];
+  while (common && targets.some((target) => target !== common && !common.contains?.(target)))
+    common = common.parentElement;
+  for (const target of common ? [common] : targets)
     for (const animation of target.getAnimations?.({ subtree: true }) || []) pendingAnimations.add(animation);
   pendingTargets.clear();
   for (const animation of animations)

@@ -745,6 +745,25 @@ it("discovers pseudo-element loops through the event target's subtree animations
   expect(animation.currentTime).toBe(40);
 });
 
+it("scans sibling animation starts once through their common container", () => {
+  const first = cssLoop();
+  const second = cssLoop();
+  const parent = {
+    contains: (node: typeof first.node) => [first.node, second.node].includes(node),
+    getAnimations: vi.fn(() => [first.animation, second.animation]),
+  };
+  for (const target of [first.node, second.node]) {
+    Object.assign(target, { parentElement: parent });
+    events.get("animationstart")!({ animationName: "ad-loader-pulse", target } as unknown as Event);
+  }
+  flushFrame();
+  expect(parent.getAnimations).toHaveBeenCalledExactlyOnceWith({ subtree: true });
+  expect(first.node.getAnimations).not.toHaveBeenCalled();
+  expect(second.node.getAnimations).not.toHaveBeenCalled();
+  expect(first.animation.pause).toHaveBeenCalledOnce();
+  expect(second.animation.pause).toHaveBeenCalledOnce();
+});
+
 it("scans nested animation event targets only through their pending ancestor", () => {
   const parent = cssLoop();
   const child = cssLoop();
