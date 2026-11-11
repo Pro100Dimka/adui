@@ -11,7 +11,7 @@
   max-width: 12rem;
   aspect-ratio: 163 / 140;
 }
-.ad-spectrum[data-variant="bars"] rect {
+.ad-spectrum[data-variant="bars"] [data-bar] {
   transform-origin: 0 134px;
   will-change: transform;
 }

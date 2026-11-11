@@ -70,19 +70,14 @@ function Segmented(p: CommonProps) {
 /** Smooth glowing bars in a bell shape; the glow is two faint wider bars behind each one. */
 function Bars(p: CommonProps) {
   const ref = useRef<SVGSVGElement>(null);
-  const layers = useRef<SVGRectElement[][] | null>(null);
+  const bars = useRef<SVGGElement[] | null>(null);
   const id = useSvgId();
   usePauseOffscreen(ref);
   useDecoration(ref, (time) => {
     if (!ref.current) return;
-    layers.current ??= Array.from(ref.current.querySelectorAll<SVGGElement>("[data-bar]"),
-      (bar) => Array.from(bar.querySelectorAll<SVGRectElement>("rect")));
-    layers.current.forEach((rects, i) => {
-      const height = barHeight(i, time);
-      rects.forEach((rect) => {
-        const grow = Number(rect.dataset.grow ?? 0);
-        rect.style.transform = `scaleY(${((height + grow) / 100).toFixed(4)})`;
-      });
+    bars.current ??= Array.from(ref.current.querySelectorAll<SVGGElement>("[data-bar]"));
+    bars.current.forEach((bar, i) => {
+      bar.style.transform = `scaleY(${(barHeight(i, time) / 100).toFixed(4)})`;
     });
   });
   return (
@@ -115,11 +110,10 @@ function Bars(p: CommonProps) {
             {HALO.map(([grow, halo]) => (
               <rect
                 key={grow}
-                data-grow={grow}
                 x={x - grow}
-                y="34"
+                y={34 - grow}
                 width={2.8 + grow * 2}
-                height="100"
+                height={100 + grow}
                 rx={1.3 + grow}
                 fill={`url(#${id}-halo)`}
                 opacity={halo * opacity}
