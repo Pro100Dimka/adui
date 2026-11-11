@@ -267,17 +267,19 @@ it("spreads visible border geometry across the shared frame budget", () => {
   const { geometry, host } = borderFixture();
   let elapsed = 0;
   vi.spyOn(performance, "now").mockImplementation(() => elapsed);
-  geometry.length.mockImplementation(() => { elapsed += 4; return 400; });
+  const readStyle = geometry.style.getMockImplementation()!;
+  geometry.style.mockImplementation(() => { elapsed += 4; return readStyle(); });
   const borders = Array.from({ length: 95 }, () => {
     const node = host();
     const scope = engine.createMotion(document as unknown as Document);
     return { node, scope, border: engine.attachBorder(node, { scope, defer: true }) };
   });
-  geometry.length.mockClear();
+  geometry.style.mockClear();
   elapsed = 0;
   borders.forEach(({ node }, index) => observe(node, true, index));
   flushFrame();
-  expect(geometry.length).toHaveBeenCalledTimes(2);
+  expect(geometry.style).toHaveBeenCalledTimes(2);
+  expect(geometry.length).not.toHaveBeenCalled();
   for (const { scope, border } of borders) { border.destroy(); scope.dispose(); }
 });
 
@@ -290,7 +292,8 @@ it("initializes a visible deferred border even when motion is disabled", () => {
   expect(geometry.length).not.toHaveBeenCalled();
   observe(node, true);
   flushFrame();
-  expect(geometry.length).toHaveBeenCalledOnce();
+  expect(border.length).toBeGreaterThan(0);
+  expect(geometry.length).not.toHaveBeenCalled();
   expect(engine.getMotionStats().scheduled).toBe(false);
   border.destroy();
   scope.dispose();

@@ -379,6 +379,7 @@ U.roundedPath = (w, h, corners) => {
   const length = segments.reduce((total, segment) => total + segment.length, 0);
   return {
     d,
+    length,
     point(fraction) {
       let distance = fraction * length;
       for (const segment of segments) {
@@ -515,7 +516,7 @@ U.attachBorder = (element, { shell = false, round = false, scope, defer = false 
       node.style.maskImage = mask;
       node.style.webkitMaskImage = mask;
     }
-    item.length = path.getTotalLength();
+    item.length = item.contour.length;
     radius = round ? 28 : Math.min(260, Math.max(42, item.length * 0.153));
     for (const light of lights) {
       light.radius = radius;

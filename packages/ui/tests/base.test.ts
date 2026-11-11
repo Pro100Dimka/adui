@@ -711,7 +711,7 @@ describe("AnimatedBorder", () => {
     native.mockClear();
     for (let frame = 1; frame <= 100; frame++) border.paint(frame / 30);
     expect(native).not.toHaveBeenCalled();
-    expect(border.path.getTotalLength).toHaveBeenCalledOnce();
+    expect(border.path.getTotalLength).not.toHaveBeenCalled();
     border.elapsed = 0;
     border.previousTime = null;
     for (const [fraction, x, y] of points) {
@@ -730,8 +730,8 @@ describe("AnimatedBorder", () => {
   });
 
   it("restores the early-release pair of broad luminous orbits as still rings lit by moving spots", () => {
-    let perimeter = 400;
-    stubBorderDocument(() => perimeter);
+    const perimeter = 2 * (200 + 100 - 4 * 18) + 2 * Math.PI * 17.35;
+    stubBorderDocument();
     const host = Object.assign(borderNode("section"), { offsetWidth: 200, offsetHeight: 100 });
     vi.stubGlobal("getComputedStyle", () => ({ position: "relative", borderTopLeftRadius: "18px" }));
     const unsubscribe = vi.fn();
@@ -771,19 +771,19 @@ describe("AnimatedBorder", () => {
     expect(border.lights[0].spots[0].style.transform).not.toBe(border.lights[1].spots[0].style.transform);
     const moved = border.lights[0].spots[0].style.transform;
     const lap = perimeter / border.lights[0].speed;
-    for (let step = 1; step <= 32; step++) add.mock.calls[0][1](1 + step * lap / 32);
+    const steps = Math.ceil(lap * 60);
+    for (let step = 1; step <= steps; step++) add.mock.calls[0][1](1 + step * lap / steps);
     expect(border.lights[0].spots[0].style.transform).toBe(moved);
     const beforePause = border.elapsed;
     add.mock.calls[0][1](1004.7);
     expect(border.elapsed - beforePause).toBeCloseTo(0.1);
     expect(border.lights.map((light: any) => light.speed)).toEqual([125, 86]);
-    for (const light of border.lights) expect(light.radius).toBeCloseTo(61.2);
-    perimeter = 1200;
+    for (const light of border.lights) expect(light.radius).toBeCloseTo(perimeter * 0.153);
     host.offsetWidth = 600;
     border.sync();
     for (const light of border.lights) {
-      expect(light.radius).toBeCloseTo(183.6);
-      for (const spot of light.spots) expect(parseFloat(spot.style.width)).toBeCloseTo(367.2);
+      expect(light.radius).toBeCloseTo((perimeter + 800) * 0.153);
+      for (const spot of light.spots) expect(parseFloat(spot.style.width)).toBeCloseTo((perimeter + 800) * 0.306);
     }
     const other = Object.assign(borderNode("section"), { offsetWidth: 200, offsetHeight: 100 });
     const second = attachBorder(other as any, { scope: { add } as any }) as any;

@@ -51,11 +51,16 @@ it("resolves percentage radii against each axis so the lights follow an ellipse"
 
 it("keeps cached contour and masks for unchanged resize notifications, then updates on resize", () => {
   const frame = border();
+  const initialLength = frame.length;
+  const contour = frame.contour;
   for (let count = 0; count < 30; count++) resize([], {} as ResizeObserver);
-  expect(length).toHaveBeenCalledOnce();
+  expect(frame.contour).toBe(contour);
+  expect(initialLength).toBeCloseTo(2 * (160 + 240 - 4 * 12) + 2 * Math.PI * 11.35, 5);
   width = 240;
   resize([], {} as ResizeObserver);
-  expect(length).toHaveBeenCalledTimes(2);
+  expect(frame.contour).not.toBe(contour);
+  expect(frame.length).toBeCloseTo(initialLength + 160, 5);
+  expect(length).not.toHaveBeenCalled();
   frame.destroy();
 });
 
