@@ -17,7 +17,7 @@ const melodySources = Object.fromEntries(['MelodyRoll.tsx','styles.css','melody-
 const built = await build({ stdin: { contents: `
   import {createRoot} from 'react-dom/client';
   import {useEffect, useLayoutEffect, useState} from 'react';
-  import {ThemeProvider, AnimatedBorder, IconButton, Badge, TextField, NeonWaves, LevelMeter, QuantumField, MelodyRoll, setMotionFrameRate, subscribeTick} from './packages/ui/${process.env.FRAME_DIST ? "dist/index.js" : "src/index"}';
+  import {ThemeProvider, AnimatedBorder, IconButton, Badge, Dialog, Spectrum, TextField, NeonWaves, LevelMeter, QuantumField, MelodyRoll, setMotionFrameRate, subscribeTick} from './packages/ui/${process.env.FRAME_DIST ? "dist/index.js" : "src/index"}';
   import './packages/ui/${process.env.FRAME_DIST ? "dist" : "src"}/styles.css';
   ${process.env.FRAME_KARAOKE_ROOT ? `import {RollFxRenderer} from '${process.env.FRAME_KARAOKE_ROOT.replaceAll('\\','/')}/src/features/karaoke/show/rollFxRenderer';
   import {ShowEngine} from '${process.env.FRAME_KARAOKE_ROOT.replaceAll('\\','/')}/src/features/karaoke/show/showEngine';` : ''}
@@ -91,9 +91,15 @@ const built = await build({ stdin: { contents: `
     return <LevelMeter value={level}/>;
   }
   const view = createRoot(document.getElementById('root'));
+  function DialogScenario() {
+    const [open,setOpen]=useState(false),[nested,setNested]=useState(false);
+    return <><IconButton label="Open dialog" icon="settings" style={{position:"fixed",right:20,top:20,zIndex:5}} onClick={()=>setOpen(true)}/><Dialog open={open} onOpenChange={setOpen} title="Dialog performance"><IconButton label="Open nested dialog" icon="settings" onClick={()=>setNested(true)}/><Dialog open={nested} onOpenChange={setNested} title="Nested performance">Nested content</Dialog></Dialog></>;
+  }
   window.unmountDemo = () => view.unmount();
   view.render(<ThemeProvider><>
+  {${!!process.env.FRAME_MODAL} && <DialogScenario/>}
   {${!!process.env.FRAME_BORDER_WAVES} && <NeonWaves shape="twist" strands={18} comets={2} stars={false} phase={2.6} style={{position:'fixed',bottom:'10%',left:'-10%',width:'120%',height:'34%',opacity:.9,transform:'rotate(-4deg)',pointerEvents:'none'}}/>}
+  {${!!process.env.FRAME_BORDER_SPECTRUM} && <Spectrum variant="bars" data-ad-paused={${!!process.env.FRAME_FREEZE_SPECTRUM} ? "" : undefined} style={{position:"fixed",right:20,bottom:20,height:96,width:112}}/>}
   <main style={{padding:20,display:'grid',gridTemplateColumns:mode==='borders'?'repeat(${Number(process.env.FRAME_BORDER_COLUMNS ?? 10)},${Number(process.env.FRAME_BORDER_WIDTH ?? 96)}px)':'repeat(3,1fr)',gap:12}}>
     {mode==='melody'?<MelodyScenario/>:Array.from({length:mode==='quantum'?1:mode==='borders'?${Number(process.env.FRAME_BORDER_COUNT ?? 90)}:mode==='inputs'?30:6},(_,i)=>mode==='quantum'
       ? <QuantumField key={i} style={{height:500,gridColumn:'1 / -1'}}/>
@@ -121,7 +127,7 @@ const built = await build({ stdin: { contents: `
       return {contents:readFileSync(resolve(process.env.FRAME_MELODY_REFERENCE,name),'utf8'),loader:name.endsWith('.tsx')?'tsx':name.endsWith('.css')?'css':'js',resolveDir:resolve(args.path,'..')};
     });
   }}] : (process.env.FRAME_BASELINE || process.env.FRAME_MELODY_BASELINE) ? [{name:"baseline-motion",setup(plugin){
-    plugin.onLoad({filter:process.env.FRAME_MELODY_BASELINE ? /MelodyRoll[\\/](MelodyRoll\.tsx|styles\.css)$/ : /(motion-engine|border-worker|neon-renderer)\.js$|NeonWaves[\\/](NeonWaves\.tsx|styles\.css)$|QuantumField[\\/]QuantumField\.tsx$|controls[\\/]shared\.(tsx|css)$/},args=>{baselineFiles.push(args.path); return {contents:execFileSync("git",["show",`HEAD:${args.path.slice(resolve('.').length+1).replaceAll('\\','/')}`],{encoding:"utf8"}),loader:args.path.endsWith('.tsx')?'tsx':args.path.endsWith('.css')?'css':'js',resolveDir:resolve(args.path,"..")};});
+    plugin.onLoad({filter:process.env.FRAME_MELODY_BASELINE ? /MelodyRoll[\\/](MelodyRoll\.tsx|styles\.css)$/ : /(motion-engine|border-worker|neon-renderer)\.js$|NeonWaves[\\/](NeonWaves\.tsx|styles\.css)$|QuantumField[\\/](QuantumField|QuantumFieldExperience)\.tsx$|feedback[\\/]Dialog[\\/]Dialog\.tsx$|controls[\\/]shared\.(tsx|css)$|Spectrum[\\/](Spectrum\.tsx|styles\.css)$/},args=>{baselineFiles.push(args.path); return {contents:execFileSync("git",["show",`HEAD:${args.path.slice(resolve('.').length+1).replaceAll('\\','/')}`],{encoding:"utf8"}),loader:args.path.endsWith('.tsx')?'tsx':args.path.endsWith('.css')?'css':'js',resolveDir:resolve(args.path,"..")};});
   }}] : [])],
 });
 if (process.env.FRAME_METER_REFERENCE && !meterReferenceLoaded) throw new Error('LevelMeter reference was not loaded');
@@ -157,11 +163,12 @@ const report = { commit:execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'
 try {
   report.distribution = !!process.env.FRAME_DIST;
   report.meter = {dynamic:!!process.env.FRAME_METER_DYNAMIC,reference:meterReferenceLoaded,sourceSha256:createHash('sha256').update(readFileSync(process.env.FRAME_METER_REFERENCE ?? 'packages/ui/src/components/media/LevelMeter/LevelMeter.tsx')).digest('hex')};
-  page = await browser.newPage({ viewport: { width: Number(process.env.FRAME_WIDTH ?? 1440), height: Number(process.env.FRAME_HEIGHT ?? 1000) }, deviceScaleFactor:Number(process.env.FRAME_DPR ?? 1), reducedMotion: process.env.FRAME_REDUCED_MOTION ? 'reduce' : 'no-preference' });
+  page = process.env.FRAME_EXISTING_PAGE ? browser.contexts().flatMap(context => context.pages())[0] : await browser.newPage({ viewport: { width: Number(process.env.FRAME_WIDTH ?? 1440), height: Number(process.env.FRAME_HEIGHT ?? 1000) }, deviceScaleFactor:Number(process.env.FRAME_DPR ?? 1), reducedMotion: process.env.FRAME_REDUCED_MOTION ? 'reduce' : 'no-preference' });
   if (process.env.FRAME_CDP) await page.bringToFront();
   page.setDefaultTimeout(30000);
   page.on("pageerror", error => report.errors.push(error.message));
   const cdp = await page.context().newCDPSession(page);
+  if (process.env.FRAME_EXISTING_PAGE) await cdp.send('Emulation.setDeviceMetricsOverride',{width:Number(process.env.FRAME_WIDTH ?? 1440),height:Number(process.env.FRAME_HEIGHT ?? 1000),deviceScaleFactor:Number(process.env.FRAME_DPR ?? 1),mobile:false});
   let traceEvents = [];
   cdp.on('Tracing.dataCollected', ({value}) => traceEvents.push(...value));
   report.karaoke = {root:process.env.FRAME_KARAOKE_ROOT ?? null,native:!!process.env.FRAME_KARAOKE_NATIVE,reference:process.env.FRAME_KARAOKE_REFERENCE ?? null};

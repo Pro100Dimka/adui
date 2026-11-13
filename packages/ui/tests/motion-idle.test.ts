@@ -74,6 +74,48 @@ function cssLoop() {
   return { node, animation };
 }
 
+it("holds covered branches until the last nested dialog closes without removing an existing pause", () => {
+  interface Node {
+    isConnected: boolean;
+    parentElement: Node | null;
+    children: Node[];
+    attributes: Map<string, string>;
+    hasAttribute(name: string): boolean;
+    setAttribute(name: string, value: string): void;
+    removeAttribute(name: string): void;
+  }
+  const node = (parent: Node | null = null): Node => {
+    const attributes = new Map<string, string>();
+    const value: Node = {
+      isConnected: true, parentElement: parent, children: [], attributes,
+      hasAttribute: (name) => attributes.has(name),
+      setAttribute: (name, value) => { attributes.set(name, value); },
+      removeAttribute: (name) => { attributes.delete(name); },
+    };
+    parent?.children.push(value);
+    return value;
+  };
+  const body = node(), background = node(body), page = node(body), content = node(page);
+  const existing = node(body), outer = node(page), outerContent = node(outer), inner = node(outer);
+  Object.assign(document, { body });
+  existing.setAttribute("data-ad-paused", "owner");
+  const resumeOuter = engine.pauseBehindDialog(outer as unknown as HTMLDialogElement);
+  expect(background.hasAttribute("data-ad-paused")).toBe(true);
+  expect(content.hasAttribute("data-ad-paused")).toBe(true);
+  expect(outer.hasAttribute("data-ad-paused")).toBe(false);
+  expect(outerContent.hasAttribute("data-ad-paused")).toBe(false);
+  const resumeInner = engine.pauseBehindDialog(inner as unknown as HTMLDialogElement);
+  expect(outerContent.hasAttribute("data-ad-paused")).toBe(true);
+  expect(inner.hasAttribute("data-ad-paused")).toBe(false);
+  resumeOuter();
+  expect(background.hasAttribute("data-ad-paused")).toBe(true);
+  expect(outerContent.hasAttribute("data-ad-paused")).toBe(true);
+  resumeInner();
+  for (const value of [background, page, content, outer, outerContent, inner])
+    expect(value.hasAttribute("data-ad-paused")).toBe(false);
+  expect(existing.attributes.get("data-ad-paused")).toBe("owner");
+});
+
 it("lets full-rate CSS loops run independently and holds them while hidden", () => {
   const { node, animation } = cssLoop();
   animation.play.mockImplementation(() => { animation.playState = "running"; });

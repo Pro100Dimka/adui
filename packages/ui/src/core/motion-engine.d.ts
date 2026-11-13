@@ -19,6 +19,7 @@ export interface BorderEffect {
 export function createMotion(
   root?: Document | ShadowRoot | Element,
 ): MotionScope;
+export function pauseBehindDialog(node: HTMLDialogElement): () => void;
 export function attachBorder(
   element: HTMLElement,
   options: {

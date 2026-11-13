@@ -191,6 +191,30 @@ export function refreshMotion() {
   boundariesChanged = true;
   schedule();
 }
+const modalRoots = new Set();
+const modalPaused = new Set();
+function refreshModalPause() {
+  for (const node of modalPaused) node.removeAttribute("data-ad-paused");
+  modalPaused.clear();
+  const top = [...modalRoots].findLast((node) => node.isConnected);
+  for (let branch = top; branch?.parentElement && branch !== document.body; branch = branch.parentElement) {
+    for (const sibling of branch.parentElement.children) {
+      if (sibling === branch || sibling.hasAttribute("data-ad-paused")) continue;
+      sibling.setAttribute("data-ad-paused", "");
+      modalPaused.add(sibling);
+    }
+  }
+  refreshMotion();
+}
+/** Hold the covered scene while the top dialog is open; nested dialogs share ownership. */
+export function pauseBehindDialog(node) {
+  modalRoots.add(node);
+  refreshModalPause();
+  return () => {
+    modalRoots.delete(node);
+    refreshModalPause();
+  };
+}
 const wake = () => {
   for (const s of running) s.previous = null;
   // Hold CSS clocks once before sleeping, not for every hidden boundary cleanup.

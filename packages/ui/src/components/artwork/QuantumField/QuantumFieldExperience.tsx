@@ -309,11 +309,17 @@ export const QuantumBackground = /* @__PURE__ */ forwardRef<QuantumBackgroundHan
   }, [fullscreen]);
   useEffect(() => {
     if (!ready || !root.current || typeof IntersectionObserver === "undefined") return;
+    const node = root.current;
+    let inView = false;
+    const visibility = () => send("visible", inView && !node.closest("[data-ad-paused], [data-ad-offscreen]"));
     const observer = new IntersectionObserver(([entry]) => {
-      if (entry) send("visible", entry.isIntersecting);
+      if (entry) { inView = entry.isIntersecting; visibility(); }
     }, { rootMargin: "0px" });
-    observer.observe(root.current);
-    return () => observer.disconnect();
+    const boundaries = new MutationObserver(visibility);
+    for (let parent: HTMLElement | null = node; parent; parent = parent.parentElement)
+      boundaries.observe(parent, { attributes: true, attributeFilter: ["data-ad-paused", "data-ad-offscreen"] });
+    observer.observe(node);
+    return () => { observer.disconnect(); boundaries.disconnect(); };
   }, [ready]);
   useEffect(() => {
     if (!ready) return;

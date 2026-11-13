@@ -473,7 +473,7 @@ it("idles offscreen rendering and limits network rebuilds to 20 Hz", () => {
   const source = readFileSync(new URL("../src/components/artwork/QuantumField/reference.html", import.meta.url), "utf8");
   const host = readFileSync(new URL("../src/components/artwork/QuantumField/QuantumFieldExperience.tsx", import.meta.url), "utf8");
   expect(host).toContain("new IntersectionObserver");
-  expect(host).toContain('send("visible", entry.isIntersecting)');
+  expect(host).toContain('inView = entry.isIntersecting; visibility()');
   expect(source).toContain("if (!renderVisible || document.hidden)");
   expect(source).toContain("else if (key === 'visible') {");
   expect(source).toContain("if (renderVisible) startFrames();");
@@ -483,7 +483,53 @@ it("idles offscreen rendering and limits network rebuilds to 20 Hz", () => {
 it("uses the preload margin only for mounting, not for keeping offscreen WebGL frames alive", () => {
   const host = readFileSync(new URL("../src/components/artwork/QuantumField/QuantumFieldExperience.tsx", import.meta.url), "utf8");
   expect(host).toMatch(/setMounted\(true\)[\s\S]*?rootMargin: "120px"/);
-  expect(host).toMatch(/send\("visible", entry\.isIntersecting\)[\s\S]*?rootMargin: "0px"/);
+  expect(host).toMatch(/inView = entry\.isIntersecting[\s\S]*?rootMargin: "0px"/);
+});
+
+it("holds the WebGL scene behind a dialog and resumes only while it is in view", () => {
+  vi.stubGlobal("IS_REACT_ACT_ENVIRONMENT", true);
+  let receive!: (event: MessageEvent) => void;
+  vi.stubGlobal("window", { setTimeout, clearTimeout, addEventListener: (name: string, listener: typeof receive) => { if (name === "message") receive = listener; }, removeEventListener: vi.fn() });
+  const intersections: IntersectionObserverCallback[] = [];
+  const mutations: MutationCallback[] = [];
+  const disconnected = vi.fn();
+  vi.stubGlobal("IntersectionObserver", class {
+    constructor(callback: IntersectionObserverCallback) { intersections.push(callback); }
+    observe() {}
+    disconnect = disconnected;
+  });
+  vi.stubGlobal("MutationObserver", class {
+    constructor(callback: MutationCallback) { mutations.push(callback); }
+    observe() {}
+    disconnect = disconnected;
+  });
+  let paused = false;
+  const root = { ...nodeMock(), parentElement: null, closest: () => paused ? root : null };
+  const contentWindow = { postMessage: vi.fn() };
+  let tree!: ReturnType<typeof create>;
+  act(() => { tree = create(createElement(UI.QuantumBackground), { createNodeMock: ({ type }) => type === "iframe" ? { contentWindow } : root }); });
+  try {
+    act(() => intersections[0]!([{ isIntersecting: true } as IntersectionObserverEntry], {} as IntersectionObserver));
+    act(() => receive({ source: contentWindow, data: { type: "ad-qf-ready" } } as unknown as MessageEvent));
+    const visible = (value: boolean) => act(() => intersections.at(-1)!([{ isIntersecting: value } as IntersectionObserverEntry], {} as IntersectionObserver));
+    const changed = () => act(() => mutations.at(-1)?.([], {} as MutationObserver));
+    const last = () => contentWindow.postMessage.mock.lastCall?.[0];
+    visible(true);
+    expect(last()).toEqual({ type: "ad-qf-control", key: "visible", value: true });
+    paused = true;
+    changed();
+    expect(last()).toEqual({ type: "ad-qf-control", key: "visible", value: false });
+    paused = false;
+    changed();
+    expect(last()).toEqual({ type: "ad-qf-control", key: "visible", value: true });
+    visible(false);
+    changed();
+    expect(last()).toEqual({ type: "ad-qf-control", key: "visible", value: false });
+  } finally {
+    act(() => tree.unmount());
+    vi.unstubAllGlobals();
+  }
+  expect(disconnected).toHaveBeenCalledTimes(3);
 });
 
 it("does not keep a hidden GUI FPS listener running on every animation frame", () => {

@@ -1,6 +1,7 @@
 import { useTr } from "../../../core/i18n";
 import { useId, useLayoutEffect, useRef, useState } from "react";
 import { mark, useControllable } from "../../../core/base";
+import { pauseBehindDialog } from "../../../core/motion-engine.js";
 import { Button } from "../../controls/Button/Button";
 import { IconButton } from "../../controls/IconButton/IconButton";
 import { Header } from "../../layout/Header/Header";
@@ -51,9 +52,11 @@ export const Dialog = (p: DialogProps) => {
       if (modal) d.close();
       else d.removeAttribute("open");
     }
+    const resume = open ? pauseBehindDialog(d) : undefined;
     return () => {
       if (d.open && modal) d.close();
       else d.removeAttribute("open");
+      resume?.();
       // React may detach the dialog before native close() can restore its remembered focus.
       if (opener?.isConnected && (document.activeElement === document.body || d.contains(document.activeElement)))
         opener.focus();
@@ -89,6 +92,7 @@ export const Dialog = (p: DialogProps) => {
       aria-describedby={p.description ? descId : undefined}
       onCancel={(e) => {
         e.preventDefault();
+        e.stopPropagation();
         if (!pending) setOpen(false);
       }}
     >
