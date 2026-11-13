@@ -14,9 +14,19 @@ function renderBorders() {
       @group(0) @binding(3) var glow0: texture_2d<f32>;
       @group(0) @binding(4) var mask1: texture_2d<f32>;
       @group(0) @binding(5) var glow1: texture_2d<f32>;
+      @group(0) @binding(6) var<storage, read> contour: array<vec2f, 1024>;
+      // Cover the 25px mask stroke and its antialiasing, without shading the empty interior.
       @vertex fn vertex(@builtin(vertex_index) i: u32) -> @builtin(position) vec4f {
-        let positions = array<vec2f, 3>(vec2f(-1,-1), vec2f(3,-1), vec2f(-1,3));
-        return vec4f(positions[i], 0, 1);
+        let at = (i / 2) % 1024;
+        let before = normalize(contour[at] - contour[(at + 1023) % 1024]);
+        let after = normalize(contour[(at + 1) % 1024] - contour[at]);
+        let first = vec2f(before.y, -before.x);
+        let second = vec2f(after.y, -after.x);
+        let normal = normalize(first + second);
+        let miter = normal / max(dot(normal, second), 0.5);
+        let side = select(-16.0, 16.0, i % 2 == 0);
+        let p = (contour[at] + vec2f(16) + miter * side) / u.size.xy;
+        return vec4f(p.x * 2 - 1, 1 - p.y * 2, 0, 1);
       }
       fn spot(p: vec2f, origin: vec2f, texture: texture_2d<f32>) -> vec4f {
         let uv = (p - origin) / (u.size.w * 2);
@@ -52,7 +62,7 @@ function renderBorders() {
         layout: "auto",
         vertex: { module: shader, entryPoint: "vertex" },
         fragment: { module: shader, entryPoint: "fragment", targets: [{ format }] },
-        primitive: { topology: "triangle-list" }
+        primitive: { topology: "triangle-strip" }
       });
     } catch (error) {
       device.destroy();
@@ -67,7 +77,7 @@ function renderBorders() {
         throw new Error(info.message || "Border GPU device lost");
       });
     });
-    return (scene) => {
+    const painter = (scene) => {
       const context = scene.canvas.getContext("webgpu");
       context.configure({ device, format, alphaMode: "premultiplied" });
       const textures = scene.layers.flatMap((layer) => [layer.mask, layer.texture]).map((image) => {
@@ -80,6 +90,8 @@ function renderBorders() {
         return texture;
       });
       const buffer = device.createBuffer({ size: 64, usage: GPUBufferUsage.UNIFORM | GPUBufferUsage.COPY_DST });
+      const contour = device.createBuffer({ size: scene.points.byteLength, usage: GPUBufferUsage.STORAGE | GPUBufferUsage.COPY_DST });
+      device.queue.writeBuffer(contour, 0, scene.points);
       const values = new Float32Array(16);
       values.set([
         scene.width,
@@ -94,7 +106,8 @@ function renderBorders() {
       const bindGroup = device.createBindGroup({ layout: pipeline.getBindGroupLayout(0), entries: [
         { binding: 0, resource: { buffer } },
         { binding: 1, resource: sampler },
-        ...textures.map((texture, index) => ({ binding: index + 2, resource: texture.createView() }))
+        ...textures.map((texture, index) => ({ binding: index + 2, resource: texture.createView() })),
+        { binding: 6, resource: { buffer: contour } }
       ] });
       return {
         draw(current) {
@@ -121,19 +134,22 @@ function renderBorders() {
             const b = Math.min(current.canvas.height, Math.ceil(((values[9 + i * 2] + current.radius * 2) * current.dpr + 2) * sy));
             if (r > x && b > y) {
               pass.setScissorRect(x, y, r - x, b - y);
-              pass.draw(3);
+              pass.draw(2050);
             }
           }
           pass.end();
-          device.queue.submit([encoder.finish()]);
+          return encoder.finish();
         },
         dispose() {
           context.unconfigure();
           buffer.destroy();
+          contour.destroy();
           textures.forEach((texture) => texture.destroy());
         }
       };
     };
+    painter.submit = commands => device.queue.submit(commands);
+    return painter;
   }
   let gpu;
   const pending = [];
@@ -148,7 +164,7 @@ function renderBorders() {
     }
   };
   const draw = (scene) => {
-    if (scene.gpu) { scene.gpu.draw(scene); return; }
+    if (scene.gpu) return scene.gpu.draw(scene);
     const { ctx, width, height, points, length, radius, dpr } = scene;
     const lights = scene.lights.map((light) => {
       const index = ((light.phase + scene.elapsed * light.speed / length) % 1) * 1024;
@@ -197,12 +213,15 @@ function renderBorders() {
   function tick(now) {
     frame = null;
     if (now - last >= 1000 / fps - 0.5) {
+      const commands = [];
       for (const scene of scenes.values()) {
         if (!scene.visible) continue;
         if (scene.previous !== null) scene.elapsed += Math.min(0.1, Math.max(0, (now - scene.previous) / 1000));
         scene.previous = now;
-        draw(scene);
+        const command = draw(scene);
+        if (command) commands.push(command);
       }
+      if (commands.length) gpu.submit(commands);
       last = now;
     }
     schedule();
@@ -234,7 +253,8 @@ function renderBorders() {
         }
       }
       scenes.set(data.id, next);
-      draw(next);
+      const command = draw(next);
+      if (command) gpu.submit([command]);
       postMessage({ id: data.id, elapsed: next.elapsed, revision: data.revision });
     }
     schedule();

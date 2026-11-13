@@ -27,6 +27,7 @@ const built = await build({ stdin: { contents: `
   window.ticks = [];
   window.stopTick = subscribeTick(time => window.ticks.push(time));
   const mode = query.get('mode');
+  const borderStyles = ${JSON.stringify(JSON.parse(process.env.FRAME_BORDER_STYLES ?? '[{}]'))};
   const melodyNotes = mode === 'melody' ? Array.from({length:${Number(process.env.FRAME_NOTES ?? 10000)}},(_,i)=>({id:String(i),start:i*.25,end:i*.25+.2,pitch:60+i%12,lyric:'la'})) : [];
   const melodyHits = ${!!process.env.FRAME_MELODY_HITS} ? new Set(melodyNotes.map(note=>note.id)) : undefined;
   const melodyPress = midi => (window.pressedKeys ??= []).push(midi);
@@ -91,11 +92,11 @@ const built = await build({ stdin: { contents: `
   }
   const view = createRoot(document.getElementById('root'));
   window.unmountDemo = () => view.unmount();
-  view.render(<ThemeProvider><main style={{padding:20,display:'grid',gridTemplateColumns:mode==='borders'?'repeat(10,96px)':'repeat(3,1fr)',gap:12}}>
-    {mode==='melody'?<MelodyScenario/>:Array.from({length:mode==='quantum'?1:mode==='borders'?90:mode==='inputs'?30:6},(_,i)=>mode==='quantum'
+  view.render(<ThemeProvider><main style={{padding:20,display:'grid',gridTemplateColumns:mode==='borders'?'repeat(${Number(process.env.FRAME_BORDER_COLUMNS ?? 10)},${Number(process.env.FRAME_BORDER_WIDTH ?? 96)}px)':'repeat(3,1fr)',gap:12}}>
+    {mode==='melody'?<MelodyScenario/>:Array.from({length:mode==='quantum'?1:mode==='borders'?${Number(process.env.FRAME_BORDER_COUNT ?? 90)}:mode==='inputs'?30:6},(_,i)=>mode==='quantum'
       ? <QuantumField key={i} style={{height:500,gridColumn:'1 / -1'}}/>
       : mode==='borders'
-      ? <AnimatedBorder key={i} style={{height:48,borderRadius:24}}/>
+      ? <AnimatedBorder key={i} style={{height:${Number(process.env.FRAME_BORDER_HEIGHT ?? 48)},borderRadius:24,...borderStyles[i%borderStyles.length]}}/>
       : mode==='inputs'?<TextField key={i} label={'Field '+i} labelPlacement="floating" defaultValue="Value"/>
       : <div key={i}>{mode !== 'meter' && <NeonWaves style={{height:120}}/>}{mode !== 'waves' && <MeterScenario/>}</div>)}
   </main></ThemeProvider>);
@@ -145,13 +146,16 @@ const server = createServer((request, response) => {
   response.setHeader("Content-Type", path.endsWith(".css") ? "text/css" : (path.endsWith(".js") || path.endsWith(".ts")) ? "text/javascript" : "text/html");
   response.end(files.get(path) ?? '<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="/budget.css"><style>body{margin:0;background:#090406}</style></head><body><div id="root"></div><script src="/budget.js"></script></body></html>');
 });
-await new Promise(resolve => server.listen(0, "127.0.0.1", resolve));
-const browser = await chromium.launch({ channel: "chrome", headless: true });
+await new Promise(resolve => server.listen(Number(process.env.FRAME_PORT ?? 0), "127.0.0.1", resolve));
+const browser = process.env.FRAME_CDP
+  ? await chromium.connectOverCDP(process.env.FRAME_CDP)
+  : await chromium.launch({ channel: "chrome", headless: true });
 const report = { commit:execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim(), width:Number(process.env.FRAME_WIDTH ?? 1440), dpr:Number(process.env.FRAME_DPR ?? 1), reducedMotion:!!process.env.FRAME_REDUCED_MOTION, failWorker:!!process.env.FRAME_FAIL_WORKER, verifyCleanup:!!process.env.FRAME_VERIFY_MELODY, baselineFiles, browser: browser.version(), baseline:!!process.env.FRAME_BASELINE, melodyBaseline:!!process.env.FRAME_MELODY_BASELINE, melodyNotes:Number(process.env.FRAME_NOTES ?? 10000), melodyInput:process.env.FRAME_MELODY_INPUT ?? 'all', melodyProps:JSON.parse(process.env.FRAME_MELODY_PROPS ?? '{}'), sequence:JSON.parse(process.env.FRAME_MELODY_SEQUENCE ?? '[]'), noWorker:!!process.env.FRAME_NO_WORKER, extraCss:process.env.FRAME_EXTRA_CSS ?? '', directShift:!!process.env.FRAME_DIRECT_SHIFT, trace:!!process.env.FRAME_TRACE, cpuOnly:!!process.env.FRAME_CPU_ONLY, results: [], errors: [] };
 try {
   report.distribution = !!process.env.FRAME_DIST;
   report.meter = {dynamic:!!process.env.FRAME_METER_DYNAMIC,reference:meterReferenceLoaded,sourceSha256:createHash('sha256').update(readFileSync(process.env.FRAME_METER_REFERENCE ?? 'packages/ui/src/components/media/LevelMeter/LevelMeter.tsx')).digest('hex')};
-  const page = await browser.newPage({ viewport: { width: Number(process.env.FRAME_WIDTH ?? 1440), height: 1000 }, deviceScaleFactor:Number(process.env.FRAME_DPR ?? 1), reducedMotion: process.env.FRAME_REDUCED_MOTION ? 'reduce' : 'no-preference' });
+  const page = await browser.newPage({ viewport: { width: Number(process.env.FRAME_WIDTH ?? 1440), height: Number(process.env.FRAME_HEIGHT ?? 1000) }, deviceScaleFactor:Number(process.env.FRAME_DPR ?? 1), reducedMotion: process.env.FRAME_REDUCED_MOTION ? 'reduce' : 'no-preference' });
+  if (process.env.FRAME_CDP) await page.bringToFront();
   page.setDefaultTimeout(30000);
   page.on("pageerror", error => report.errors.push(error.message));
   const cdp = await page.context().newCDPSession(page);
@@ -164,12 +168,16 @@ try {
   report.melodyHits = !!process.env.FRAME_MELODY_HITS;
   report.melodyStyleTick = !!process.env.FRAME_MELODY_STYLE_TICK;
   report.melodySources = melodySources;
-  await page.addInitScript(({cpuOnly,noWorker,pauseGlow,details,workerFrames,freezeHits}) => {
-    if (workerFrames || freezeHits) {
+  await page.addInitScript(({cpuOnly,noWorker,pauseGlow,details,workerFrames,freezeHits,freezeBorder}) => {
+    if (workerFrames || freezeHits || freezeBorder) {
       const NativeBlob = Blob;
       window.Blob = class extends NativeBlob {
         constructor(parts, options) {
-          if (parts?.some(part => typeof part === 'string' && part.includes('function renderGlow('))) parts = [
+          if (freezeBorder && parts?.some(part => typeof part === 'string' && part.includes('function renderBorders('))) parts = [
+            'const nativeFrame=requestAnimationFrame;requestAnimationFrame=callback=>nativeFrame(()=>callback(0));addEventListener("message",event=>{if(event.data.type==="update"&&event.data.layers)event.data.elapsed=0;},true);',
+            ...parts,
+          ];
+          else if (parts?.some(part => typeof part === 'string' && part.includes('function renderGlow('))) parts = [
             'const nativeFrame = requestAnimationFrame; let sampledFrames = [], sampling = false, sampledStart = 0, frozenTime, sampledClears = 0; const nativeClear = OffscreenCanvasRenderingContext2D.prototype.clearRect; OffscreenCanvasRenderingContext2D.prototype.clearRect = function(...args) { if (sampling) sampledClears++; return nativeClear.apply(this,args); }; requestAnimationFrame = callback => nativeFrame(time => { if (sampling) sampledFrames.push(time); callback(frozenTime ?? time); });',
             ...parts,
             ';const receive = onmessage; onmessage = event => { if (event.data.__freeze !== undefined) frozenTime = event.data.__freeze - performance.timeOrigin; else if (event.data.__frames) { const now = performance.now(); if (event.data.__frames === "start") { sampledFrames = []; sampledClears = 0; sampledStart = now; sampling = true; postMessage({__frames:"start"}); } else { sampling = false; postMessage({__frames:"stop", frames:sampledFrames, clears:sampledClears, elapsed:now-sampledStart}); } } else receive(event); };',
@@ -222,7 +230,7 @@ try {
       const get = HTMLCanvasElement.prototype.getContext;
       HTMLCanvasElement.prototype.getContext = function(kind,...args) {return ['webgl','webgl2','experimental-webgl'].includes(kind)?null:get.call(this,kind,...args);};
     }
-  },{cpuOnly:!!process.env.FRAME_CPU_ONLY,noWorker:!!process.env.FRAME_NO_WORKER,pauseGlow:report.pauseGlow,details:!!process.env.FRAME_GLOW_DETAILS,workerFrames:!!process.env.FRAME_WORKER_FRAMES,freezeHits:process.env.FRAME_FREEZE_HITS !== undefined});
+  },{cpuOnly:!!process.env.FRAME_CPU_ONLY,noWorker:!!process.env.FRAME_NO_WORKER,pauseGlow:report.pauseGlow,details:!!process.env.FRAME_GLOW_DETAILS,workerFrames:!!process.env.FRAME_WORKER_FRAMES,freezeHits:process.env.FRAME_FREEZE_HITS !== undefined,freezeBorder:!!process.env.FRAME_FREEZE_BORDER});
   if (process.env.FRAME_CSS_METER) await page.addInitScript(() => {
     const set = SVGElement.prototype.setAttribute;
     SVGElement.prototype.setAttribute = function(name, value) {
@@ -442,6 +450,7 @@ try {
       return snapshots;
     });
     const {stars,...summary} = report.results.at(-1);
+    if (process.env.FRAME_CAPTURE_BORDER) await page.screenshot({path:output+'.png'});
     console.log(JSON.stringify(summary));
   }
 } finally { await browser.close(); await new Promise(resolve=>server.close(resolve)); await writeFile(output, JSON.stringify(report,null,2)); }
