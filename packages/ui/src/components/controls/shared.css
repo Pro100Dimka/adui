@@ -594,10 +594,18 @@
   overflow: hidden;
   pointer-events: none;
 }
-.ad-button-fx::before {
-  content: "";
+.ad-button-plasma {
   position: absolute;
   inset: -40% -10% -40% 30%;
+  opacity: 0;
+  transition: opacity 0.4s;
+  will-change: transform;
+}
+.ad-button-plasma::before {
+  /* Cache the filtered texture independently of its moving parent. */
+  content: "";
+  position: absolute;
+  inset: 0;
   background:
     radial-gradient(circle at 72% 30%, #fff 0 1.2%, transparent 2.6%),
     radial-gradient(circle at 86% 68%, var(--ad-secondary-100) 0 1.4%, transparent 3.2%),
@@ -611,9 +619,6 @@
     radial-gradient(ellipse at 80% 50%, rgb(from var(--ad-secondary) r g b / 0.44), transparent 65%);
   mask-image: linear-gradient(90deg, transparent, #000 40%);
   filter: saturate(1.35);
-  opacity: 0;
-  transition: opacity 0.4s;
-  will-change: transform;
 }
 /* The breath: a faint light over the face that swells and settles. */
 .ad-button-fx::after {
@@ -654,8 +659,8 @@
   );
   will-change: transform;
 }
-:is(.ad-button, .ad-icon-button):is([data-ad-variant="primary"], [data-ad-variant="danger"]) > .ad-button-fx::before,
-.ad-toggle-button[aria-pressed="true"] > .ad-button-fx::before {
+:is(.ad-button, .ad-icon-button):is([data-ad-variant="primary"], [data-ad-variant="danger"]) > .ad-button-fx > .ad-button-plasma,
+.ad-toggle-button[aria-pressed="true"] > .ad-button-fx > .ad-button-plasma {
   opacity: 0.85;
   animation: ad-btn-plasma 7s ease-in-out infinite alternate;
 }
@@ -671,7 +676,7 @@
 .ad-toggle-button[aria-pressed="true"] > .ad-button-orbit::before {
   animation: ad-btn-orbit 4.5s linear infinite;
 }
-:is(.ad-button, .ad-icon-button, .ad-toggle-button):hover:not(:disabled) > .ad-button-fx::before {
+:is(.ad-button, .ad-icon-button, .ad-toggle-button):hover:not(:disabled) > .ad-button-fx > .ad-button-plasma {
   opacity: 0.9;
   animation: ad-btn-plasma 7s ease-in-out infinite alternate;
 }
@@ -685,12 +690,14 @@
   display: none;
 }
 /* Icon-only buttons are small: the plasma centres on them instead of the right side. */
-.ad-icon-button > .ad-button-fx::before {
+.ad-icon-button > .ad-button-fx > .ad-button-plasma {
   inset: -30%;
+}
+.ad-icon-button .ad-button-plasma::before {
   mask-image: radial-gradient(closest-side, #000 40%, transparent);
 }
 /* Ghost buttons stay subtle: only the comet, no plasma. */
-:is(.ad-button, .ad-icon-button)[data-ad-variant="ghost"] > .ad-button-fx::before {
+:is(.ad-button, .ad-icon-button)[data-ad-variant="ghost"] > .ad-button-fx > .ad-button-plasma {
   display: none;
 }
 @keyframes ad-btn-plasma {

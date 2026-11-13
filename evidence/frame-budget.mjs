@@ -17,7 +17,7 @@ const melodySources = Object.fromEntries(['MelodyRoll.tsx','styles.css','melody-
 const built = await build({ stdin: { contents: `
   import {createRoot} from 'react-dom/client';
   import {useEffect, useLayoutEffect, useState} from 'react';
-  import {ThemeProvider, AnimatedBorder, TextField, NeonWaves, LevelMeter, QuantumField, MelodyRoll, setMotionFrameRate, subscribeTick} from './packages/ui/${process.env.FRAME_DIST ? "dist/index.js" : "src/index"}';
+  import {ThemeProvider, AnimatedBorder, IconButton, Badge, TextField, NeonWaves, LevelMeter, QuantumField, MelodyRoll, setMotionFrameRate, subscribeTick} from './packages/ui/${process.env.FRAME_DIST ? "dist/index.js" : "src/index"}';
   import './packages/ui/${process.env.FRAME_DIST ? "dist" : "src"}/styles.css';
   ${process.env.FRAME_KARAOKE_ROOT ? `import {RollFxRenderer} from '${process.env.FRAME_KARAOKE_ROOT.replaceAll('\\','/')}/src/features/karaoke/show/rollFxRenderer';
   import {ShowEngine} from '${process.env.FRAME_KARAOKE_ROOT.replaceAll('\\','/')}/src/features/karaoke/show/showEngine';` : ''}
@@ -92,14 +92,16 @@ const built = await build({ stdin: { contents: `
   }
   const view = createRoot(document.getElementById('root'));
   window.unmountDemo = () => view.unmount();
-  view.render(<ThemeProvider><main style={{padding:20,display:'grid',gridTemplateColumns:mode==='borders'?'repeat(${Number(process.env.FRAME_BORDER_COLUMNS ?? 10)},${Number(process.env.FRAME_BORDER_WIDTH ?? 96)}px)':'repeat(3,1fr)',gap:12}}>
+  view.render(<ThemeProvider><>
+  {${!!process.env.FRAME_BORDER_WAVES} && <NeonWaves shape="twist" strands={18} comets={2} stars={false} phase={2.6} style={{position:'fixed',bottom:'10%',left:'-10%',width:'120%',height:'34%',opacity:.9,transform:'rotate(-4deg)',pointerEvents:'none'}}/>}
+  <main style={{padding:20,display:'grid',gridTemplateColumns:mode==='borders'?'repeat(${Number(process.env.FRAME_BORDER_COLUMNS ?? 10)},${Number(process.env.FRAME_BORDER_WIDTH ?? 96)}px)':'repeat(3,1fr)',gap:12}}>
     {mode==='melody'?<MelodyScenario/>:Array.from({length:mode==='quantum'?1:mode==='borders'?${Number(process.env.FRAME_BORDER_COUNT ?? 90)}:mode==='inputs'?30:6},(_,i)=>mode==='quantum'
       ? <QuantumField key={i} style={{height:500,gridColumn:'1 / -1'}}/>
       : mode==='borders'
-      ? <AnimatedBorder key={i} style={{height:${Number(process.env.FRAME_BORDER_HEIGHT ?? 48)},borderRadius:24,...borderStyles[i%borderStyles.length]}}/>
+      ? <AnimatedBorder key={i} style={{height:${Number(process.env.FRAME_BORDER_HEIGHT ?? 48)},borderRadius:24,...borderStyles[i%borderStyles.length]}}>{${!!process.env.FRAME_BORDER_CONTROLS} && <div style={{padding:20,display:'flex',gap:12}}><Badge tone='success'>Ready</Badge>{Array.from({length:3},(_,j)=><IconButton key={j} icon='play' label={'Play '+j} variant='primary'/>)}</div>}</AnimatedBorder>
       : mode==='inputs'?<TextField key={i} label={'Field '+i} labelPlacement="floating" defaultValue="Value"/>
       : <div key={i}>{mode !== 'meter' && <NeonWaves style={{height:120}}/>}{mode !== 'waves' && <MeterScenario/>}</div>)}
-  </main></ThemeProvider>);
+  </main></></ThemeProvider>);
 `, loader: "tsx", resolveDir: resolve(".") }, bundle: true, write: false, outfile: "budget.js", format: "iife", jsx: "automatic", define: { "process.env.NODE_ENV": '"production"', ...(process.env.FRAME_KARAOKE_ROOT ? {"import.meta.url":"location.href","import.meta.env.DEV":"false"} : {}) }, loader: { ".html": "text", ".woff2": "dataurl" }, logLevel: "silent",
   plugins: [...(process.env.FRAME_METER_REFERENCE ? [{name:'meter-reference',setup(plugin){
     plugin.onLoad({filter:/LevelMeter\.tsx$/},args=>{
@@ -119,7 +121,7 @@ const built = await build({ stdin: { contents: `
       return {contents:readFileSync(resolve(process.env.FRAME_MELODY_REFERENCE,name),'utf8'),loader:name.endsWith('.tsx')?'tsx':name.endsWith('.css')?'css':'js',resolveDir:resolve(args.path,'..')};
     });
   }}] : (process.env.FRAME_BASELINE || process.env.FRAME_MELODY_BASELINE) ? [{name:"baseline-motion",setup(plugin){
-    plugin.onLoad({filter:process.env.FRAME_MELODY_BASELINE ? /MelodyRoll[\\/](MelodyRoll\.tsx|styles\.css)$/ : /(motion-engine|border-worker|neon-renderer)\.js$|NeonWaves[\\/](NeonWaves\.tsx|styles\.css)$|QuantumField[\\/]QuantumField\.tsx$/},args=>{baselineFiles.push(args.path); return {contents:execFileSync("git",["show",`HEAD:${args.path.slice(resolve('.').length+1).replaceAll('\\','/')}`],{encoding:"utf8"}),loader:args.path.endsWith('.tsx')?'tsx':args.path.endsWith('.css')?'css':'js',resolveDir:resolve(args.path,"..")};});
+    plugin.onLoad({filter:process.env.FRAME_MELODY_BASELINE ? /MelodyRoll[\\/](MelodyRoll\.tsx|styles\.css)$/ : /(motion-engine|border-worker|neon-renderer)\.js$|NeonWaves[\\/](NeonWaves\.tsx|styles\.css)$|QuantumField[\\/]QuantumField\.tsx$|controls[\\/]shared\.(tsx|css)$/},args=>{baselineFiles.push(args.path); return {contents:execFileSync("git",["show",`HEAD:${args.path.slice(resolve('.').length+1).replaceAll('\\','/')}`],{encoding:"utf8"}),loader:args.path.endsWith('.tsx')?'tsx':args.path.endsWith('.css')?'css':'js',resolveDir:resolve(args.path,"..")};});
   }}] : [])],
 });
 if (process.env.FRAME_METER_REFERENCE && !meterReferenceLoaded) throw new Error('LevelMeter reference was not loaded');
@@ -150,11 +152,12 @@ await new Promise(resolve => server.listen(Number(process.env.FRAME_PORT ?? 0), 
 const browser = process.env.FRAME_CDP
   ? await chromium.connectOverCDP(process.env.FRAME_CDP)
   : await chromium.launch({ channel: "chrome", headless: true });
+let page;
 const report = { commit:execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim(), width:Number(process.env.FRAME_WIDTH ?? 1440), dpr:Number(process.env.FRAME_DPR ?? 1), reducedMotion:!!process.env.FRAME_REDUCED_MOTION, failWorker:!!process.env.FRAME_FAIL_WORKER, verifyCleanup:!!process.env.FRAME_VERIFY_MELODY, baselineFiles, browser: browser.version(), baseline:!!process.env.FRAME_BASELINE, melodyBaseline:!!process.env.FRAME_MELODY_BASELINE, melodyNotes:Number(process.env.FRAME_NOTES ?? 10000), melodyInput:process.env.FRAME_MELODY_INPUT ?? 'all', melodyProps:JSON.parse(process.env.FRAME_MELODY_PROPS ?? '{}'), sequence:JSON.parse(process.env.FRAME_MELODY_SEQUENCE ?? '[]'), noWorker:!!process.env.FRAME_NO_WORKER, extraCss:process.env.FRAME_EXTRA_CSS ?? '', directShift:!!process.env.FRAME_DIRECT_SHIFT, trace:!!process.env.FRAME_TRACE, cpuOnly:!!process.env.FRAME_CPU_ONLY, results: [], errors: [] };
 try {
   report.distribution = !!process.env.FRAME_DIST;
   report.meter = {dynamic:!!process.env.FRAME_METER_DYNAMIC,reference:meterReferenceLoaded,sourceSha256:createHash('sha256').update(readFileSync(process.env.FRAME_METER_REFERENCE ?? 'packages/ui/src/components/media/LevelMeter/LevelMeter.tsx')).digest('hex')};
-  const page = await browser.newPage({ viewport: { width: Number(process.env.FRAME_WIDTH ?? 1440), height: Number(process.env.FRAME_HEIGHT ?? 1000) }, deviceScaleFactor:Number(process.env.FRAME_DPR ?? 1), reducedMotion: process.env.FRAME_REDUCED_MOTION ? 'reduce' : 'no-preference' });
+  page = await browser.newPage({ viewport: { width: Number(process.env.FRAME_WIDTH ?? 1440), height: Number(process.env.FRAME_HEIGHT ?? 1000) }, deviceScaleFactor:Number(process.env.FRAME_DPR ?? 1), reducedMotion: process.env.FRAME_REDUCED_MOTION ? 'reduce' : 'no-preference' });
   if (process.env.FRAME_CDP) await page.bringToFront();
   page.setDefaultTimeout(30000);
   page.on("pageerror", error => report.errors.push(error.message));
@@ -175,6 +178,10 @@ try {
         constructor(parts, options) {
           if (freezeBorder && parts?.some(part => typeof part === 'string' && part.includes('function renderBorders('))) parts = [
             'const nativeFrame=requestAnimationFrame;requestAnimationFrame=callback=>nativeFrame(()=>callback(0));addEventListener("message",event=>{if(event.data.type==="update"&&event.data.layers)event.data.elapsed=0;},true);',
+            ...parts,
+          ];
+          else if (workerFrames && parts?.some(part => typeof part === 'string' && part.includes('function renderBorders('))) parts = [
+            'let sampling=false, sampledStart=0, sampledFrames=[], sampledBuffers=0, sampledPasses=0; if(typeof GPUQueue!=="undefined"){const submit=GPUQueue.prototype.submit;GPUQueue.prototype.submit=function(commands){if(sampling){sampledFrames.push(performance.now());sampledBuffers+=commands.length;}return submit.call(this,commands);};const end=GPURenderPassEncoder.prototype.end;GPURenderPassEncoder.prototype.end=function(){if(sampling)sampledPasses++;return end.call(this);};}addEventListener("message",event=>{if(!event.data.__frames)return;event.stopImmediatePropagation();const now=performance.now();if(event.data.__frames==="start"){sampledStart=now;sampledFrames=[];sampledBuffers=sampledPasses=0;sampling=true;postMessage({__frames:"start"});}else{sampling=false;postMessage({__frames:"stop",frames:sampledFrames,buffers:sampledBuffers,passes:sampledPasses,elapsed:now-sampledStart});}},true);',
             ...parts,
           ];
           else if (parts?.some(part => typeof part === 'string' && part.includes('function renderGlow('))) parts = [
@@ -204,6 +211,7 @@ try {
     const post = Worker.prototype.postMessage;
     Worker.prototype.postMessage = function(message, ...args) {
       if (message?.frames) window.meterWorker = this;
+      if (message?.type === 'update' && message?.lights && message?.points) window.borderWorker = this;
       if (pauseGlow && message && ['configure','visible'].includes(message.type)) message = {...message, visible:false};
       if (message?.type === 'configure' && message?.voiceStyle) {
         window.glowConfigurations++; window.melodyWorker = this;
@@ -239,6 +247,7 @@ try {
     };
   });
   await cdp.send("Performance.enable");
+  if (process.env.FRAME_TRACE_ANIMATIONS) await cdp.send('Tracing.start',{categories:'blink.animations,devtools.timeline',transferMode:'ReportEvents'});
   for (let repeat = 0; repeat < Number(process.env.FRAME_REPEATS ?? 1); repeat++) for (const throttle of (process.env.FRAME_THROTTLES ?? "1,4,6,8,16").split(",").map(Number)) for (const mode of (process.env.FRAME_MODES ?? "borders,inputs,media").split(",")) for (const fps of (process.env.FRAME_RATES ?? "default,60").split(",")) {
     await cdp.send("Emulation.setCPUThrottlingRate", { rate: throttle });
     await page.goto(`http://127.0.0.1:${server.address().port}/?mode=${mode}${fps === "default" ? "" : "&fps=60"}`);
@@ -247,7 +256,7 @@ try {
     // Compare steady playback, not the initial CSS-to-worker handoff under CPU throttling.
     const waitedForGlow = mode === 'melody' && !report.melodyBaseline && !report.noWorker;
     if (waitedForGlow) await page.waitForFunction(() => document.querySelector('.ad-melody-roll')?.hasAttribute('data-ad-glow'));
-    await page.waitForTimeout(1200);
+    await page.waitForTimeout(Number(process.env.FRAME_SETTLE_MS ?? 1200));
     for (const state of report.sequence) {
       await page.evaluate(state => window.updateMelody(state), state);
       await page.waitForTimeout(150);
@@ -264,7 +273,7 @@ try {
     if (process.env.FRAME_KARAOKE_ROOT) {
       await page.evaluate(native => { if (native) window.Worker = undefined; window.initKaraoke();
       }, !!process.env.FRAME_KARAOKE_NATIVE);
-      await page.waitForTimeout(1200);
+      await page.waitForTimeout(Number(process.env.FRAME_SETTLE_MS ?? 1200));
     }
     if (process.env.FRAME_DIRECT_SHIFT) await page.evaluate(() => {
       const set = CSSStyleDeclaration.prototype.setProperty;
@@ -277,7 +286,7 @@ try {
     if (process.env.FRAME_CSS_METER) await page.addStyleTag({content:'.ad-level-meter-wave { will-change: transform; }'});
     if (process.env.FRAME_PROMOTE_STARS) await page.addStyleTag({content:'.ad-neon-waves-stars { will-change: opacity; }'});
     if (process.env.FRAME_PROFILE) { await cdp.send("Profiler.enable"); await cdp.send("Profiler.start"); }
-    if (process.env.FRAME_TRACE) { traceEvents = []; await cdp.send('Tracing.start',{categories:'devtools.timeline,disabled-by-default-devtools.timeline,blink',transferMode:'ReportEvents'}); }
+    if (process.env.FRAME_TRACE && !process.env.FRAME_TRACE_ANIMATIONS) { traceEvents = []; await cdp.send('Tracing.start',{categories:'devtools.timeline,disabled-by-default-devtools.timeline,blink',transferMode:'ReportEvents'}); }
     const sampleRoll = action => page.evaluate(action => new Promise((resolve,reject)=>{
       const worker=window.karaokeRenderer.worker;
       const listener=event=>{if(event.data.__rollFrames===action){event.stopImmediatePropagation();clearTimeout(timeout);worker.removeEventListener('message',listener,true);resolve(event.data);}};
@@ -287,8 +296,8 @@ try {
     if (process.env.FRAME_KARAOKE_ROOT && !process.env.FRAME_KARAOKE_NATIVE) await sampleRoll('start');
     const before = Object.fromEntries((await cdp.send("Performance.getMetrics")).metrics.map(m => [m.name, m.value]));
     const sampleWorker = action => page.evaluate(action => new Promise((resolve,reject) => {
-      const worker = window.meterWorker ?? window.melodyWorker;
-      if (!worker || !document.querySelector('.ad-melody-roll[data-ad-glow],.ad-level-meter[data-ad-canvas]')) return resolve(null);
+      const worker = window.meterWorker ?? window.melodyWorker ?? window.borderWorker;
+      if (!worker || !document.querySelector('.ad-melody-roll[data-ad-glow],.ad-level-meter[data-ad-canvas],.ad-border[data-ready]')) return resolve(null);
       const timeout = setTimeout(() => { worker.removeEventListener('message',listener); reject(new Error('Worker frame sampling timed out')); },10000);
       const listener = ({data}) => { if (data.__frames === action) { clearTimeout(timeout); worker.removeEventListener('message',listener); resolve(data); } };
       worker.addEventListener('message',listener); worker.postMessage({__frames:action});
@@ -329,10 +338,11 @@ try {
         const gaps = worker.frames.slice(1).map((time,i)=>time-worker.frames[i]).sort((a,b)=>a-b);
         sample.worker = {frames:worker.frames.length,clears:worker.clears,elapsed:worker.elapsed,fps:worker.frames.length*1000/worker.elapsed,p95:gaps[Math.ceil(gaps.length*.95)-1],p99:gaps[Math.ceil(gaps.length*.99)-1],max:gaps.at(-1)};
         if(worker.counts) sample.worker.sceneFps=Object.values(worker.counts).map(count=>count*1000/worker.elapsed);
+        if(worker.buffers !== undefined) Object.assign(sample.worker,{commandBuffers:worker.buffers,renderPasses:worker.passes});
       }
     }
     if (process.env.FRAME_VERIFY_IDLE_LAYERS && sample.worker?.clears > sample.worker.frames * 1.1 + 5) throw new Error('Idle melody layers were repainted');
-    if (process.env.FRAME_TRACE) {
+    if (process.env.FRAME_TRACE || process.env.FRAME_TRACE_ANIMATIONS) {
       const complete = new Promise(resolve=>cdp.once('Tracing.tracingComplete',resolve));
       await cdp.send('Tracing.end'); await complete;
       await writeFile(output+'.trace.json',JSON.stringify(traceEvents));
@@ -365,7 +375,7 @@ try {
         },phase);
         await page.waitForTimeout(100);
       }
-      if (process.env.FRAME_FREEZE_HITS === undefined) await page.evaluate(() => { for (const animation of document.getAnimations()) if (animation.effect?.getTiming().iterations === Infinity) { animation.pause(); animation.currentTime = 0; } });
+      if (process.env.FRAME_FREEZE_HITS === undefined) await page.evaluate(time => { document.body.setAttribute("data-ad-paused", ""); for (const animation of document.getAnimations()) if (animation.effect?.getTiming().iterations === Infinity) { animation.pause(); animation.currentTime = time; } }, Number(process.env.FRAME_FREEZE_MOTION_MS ?? 0));
       await page.screenshot({path:`${process.env.FRAME_SCREENSHOT_PREFIX}-${repeat}-${throttle}-${mode}.png`});
     }
     report.results.push({throttle,emulated:throttle!==1,mode,fps,...sample,glowReady,waitedForGlow,mainThreadMs:(after.TaskDuration-before.TaskDuration)*1000,scriptMs:(after.ScriptDuration-before.ScriptDuration)*1000,layoutMs:(after.LayoutDuration-before.LayoutDuration)*1000,styleMs:(after.RecalcStyleDuration-before.RecalcStyleDuration)*1000,heapBytes:after.JSHeapUsedSize});
@@ -453,5 +463,6 @@ try {
     if (process.env.FRAME_CAPTURE_BORDER) await page.screenshot({path:output+'.png'});
     console.log(JSON.stringify(summary));
   }
-} finally { await browser.close(); await new Promise(resolve=>server.close(resolve)); await writeFile(output, JSON.stringify(report,null,2)); }
+  if (process.env.FRAME_HOLD_MS) await page.waitForTimeout(Math.min(60000, Number(process.env.FRAME_HOLD_MS)));
+} finally { await page?.close(); await browser.close(); await new Promise(resolve=>server.close(resolve)); await writeFile(output, JSON.stringify(report,null,2)); }
 if(report.errors.length) throw new Error(report.errors.join("\n"));
