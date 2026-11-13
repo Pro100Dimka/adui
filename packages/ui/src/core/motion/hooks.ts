@@ -13,8 +13,9 @@ import { useMotion } from "../providers/context";
 export function useDecoration(
   ref: React.RefObject<Element | null>,
   paint: (time: number) => void,
+  decorative = false,
 ) {
-  const enabled = useMotion();
+  const enabled = useMotion(decorative);
   const painter = useRef(paint);
   painter.current = paint;
   const scope = useRef<ReturnType<typeof createMotion> | null>(null);

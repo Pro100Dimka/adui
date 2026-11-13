@@ -3,6 +3,7 @@ import { mark } from "../../../core/base";
 import { useBorder, usePauseOffscreen } from "../../../core/motion/hooks";
 import { Header } from "../Header/Header";
 import type { CardProps } from "../shared";
+import { decorativeMotionEnabled } from "../../../core/providers/context";
 export const Card = ({
   as = "section",
   border = false,
@@ -34,6 +35,7 @@ export const Card = ({
       "data-ad-padding": padding,
       // A soft light follows the pointer across the surface.
       onPointerMove: (event: React.PointerEvent<HTMLElement>) => {
+        if (!decorativeMotionEnabled()) return;
         const style = spotlight.current?.style;
         if (!style) return;
         const box = event.currentTarget.getBoundingClientRect();

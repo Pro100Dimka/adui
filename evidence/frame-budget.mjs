@@ -17,13 +17,15 @@ const melodySources = Object.fromEntries(['MelodyRoll.tsx','styles.css','melody-
 const built = await build({ stdin: { contents: `
   import {createRoot} from 'react-dom/client';
   import {useEffect, useLayoutEffect, useState} from 'react';
-  import {ThemeProvider, AnimatedBorder, IconButton, Badge, Dialog, Spectrum, TextField, NeonWaves, LevelMeter, QuantumField, MelodyRoll, setMotionFrameRate, subscribeTick} from './packages/ui/${process.env.FRAME_DIST ? "dist/index.js" : "src/index"}';
+  import {ThemeProvider, AnimatedBorder, IconButton, Badge, Dialog, Spectrum, TextField, NeonWaves, LevelMeter, QuantumField, MelodyRoll, setMotionFrameRate, setDecorationLevel, subscribeTick} from './packages/ui/${process.env.FRAME_DIST ? "dist/index.js" : "src/index"}';
   import './packages/ui/${process.env.FRAME_DIST ? "dist" : "src"}/styles.css';
   ${process.env.FRAME_KARAOKE_ROOT ? `import {RollFxRenderer} from '${process.env.FRAME_KARAOKE_ROOT.replaceAll('\\','/')}/src/features/karaoke/show/rollFxRenderer';
   import {ShowEngine} from '${process.env.FRAME_KARAOKE_ROOT.replaceAll('\\','/')}/src/features/karaoke/show/showEngine';` : ''}
 
   const query = new URLSearchParams(location.search);
   if(query.has('fps')) setMotionFrameRate(Number(query.get('fps')));
+  if (${!!process.env.FRAME_LIGHT}) setDecorationLevel("light");
+  window.setDecorationLevel = setDecorationLevel;
   window.ticks = [];
   window.stopTick = subscribeTick(time => window.ticks.push(time));
   const mode = query.get('mode');

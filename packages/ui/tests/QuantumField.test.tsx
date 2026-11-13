@@ -402,7 +402,7 @@ it("caps both particle layers with the public budget while adaptive quality can 
   const html = renderToStaticMarkup(createElement(QuantumFieldExperience, { particleBudget: 6_000 }));
   expect(html).toContain('data-particle-budget="6000"');
   const source = readFileSync(new URL("../src/components/artwork/QuantumField/reference.html", import.meta.url), "utf8");
-  const body = source.match(/applyQuality\(\) \{([\s\S]*?)\n            \}\n        \};/)?.[1];
+  const body = source.match(/applyQuality\(\) \{([\s\S]*?)\r?\n            \}\r?\n        \};/)?.[1];
   expect(body).toBeTruthy();
   const apply = new Function("CONFIG", "STATE", "particleBudget", "geometry", "secondaryGeometry", "renderer", "composer", "material", "secondaryMaterial", "particleCount", "mainCapacity", body!);
   const config = { maxParticles: 250_000, maxDensity: 0.14, secondaryParticles: 50_000 };
@@ -433,7 +433,7 @@ it("caps both particle layers with the public budget while adaptive quality can 
 
 it("never raises the pixel ratio above the full-screen pixel cap on 8K screens", () => {
   const source = readFileSync(new URL("../src/components/artwork/QuantumField/reference.html", import.meta.url), "utf8");
-  const body = source.match(/applyQuality\(\) \{([\s\S]*?)\n            \}\n        \};/)?.[1];
+  const body = source.match(/applyQuality\(\) \{([\s\S]*?)\r?\n            \}\r?\n        \};/)?.[1];
   expect(body).toBeTruthy();
   const apply = new Function("CONFIG", "STATE", "particleBudget", "geometry", "secondaryGeometry", "renderer", "composer", "material", "secondaryMaterial", "particleCount", "mainCapacity", body!);
   const setPixelRatio = vi.fn();

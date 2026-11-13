@@ -57,3 +57,33 @@
     inset 0 0.0625rem 0.125rem rgb(from var(--ad-text) r g b / 0.08),
     0 0.1875rem 0.4375rem rgb(from var(--ad-primary) r g b / 0.12);
 }
+
+/* Light decoration removes ambient raster/compositing work, keeping entrances,
+   focus, pressed feedback, moving borders and wave renderers unchanged. */
+:root[data-ad-decorations="light"] :is(
+  .ad-glow-text, .ad-image-shine-picture, .ad-stat-tile-spark,
+  .ad-badge-dot, .ad-tabs-blade-edge,
+  .ad-server-art *
+),
+:root[data-ad-decorations="light"] :is(.ad-badge, .ad-icon, .ad-tabs-indicator, .ad-tabs-blade)::after {
+  animation: none;
+  will-change: auto;
+}
+:root[data-ad-decorations="light"] :is(
+  .ad-image-shine-glow, .ad-image-shine-sweep, .ad-button-fx, .ad-button-orbit,
+  .ad-card-light
+),
+:root[data-ad-decorations="light"] :is(.ad-button, .ad-icon-button, .ad-toggle-button)::after {
+  display: none;
+}
+:root[data-ad-decorations="light"] :is(.ad-button, .ad-icon-button, .ad-toggle-button) {
+  filter: none;
+  transition: transform 0.22s, opacity 0.22s;
+}
+:root[data-ad-decorations="light"] :is(.ad-button, .ad-icon-button, .ad-toggle-button)::before {
+  background: linear-gradient(180deg, #ffffff2f, transparent 36%);
+  filter: none;
+}
+:root[data-ad-decorations="light"] :is(.ad-button, .ad-icon-button, .ad-toggle-button):hover {
+  box-shadow: none;
+}

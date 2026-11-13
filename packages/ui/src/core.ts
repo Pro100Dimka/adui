@@ -6,7 +6,7 @@ export type {
   ThemeName,
   ThemeProviderProps,
 } from "./components/foundation/ThemeProvider/ThemeProvider";
-export { useReducedMotion, useMotion } from "./core/providers/context";
+export { useReducedMotion, useMotion, setDecorationLevel } from "./core/providers/context";
 export {
   useBorder,
   usePauseOffscreen,

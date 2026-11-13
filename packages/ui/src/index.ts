@@ -1,7 +1,7 @@
 export { copyText } from "./core/base";
 export * from "./core/base";
 export * from "./core/artwork";
-export { useReducedMotion, useMotion } from "./core/providers/context";
+export { useReducedMotion, useMotion, setDecorationLevel } from "./core/providers/context";
 export {
   useBorder,
   usePauseOffscreen,

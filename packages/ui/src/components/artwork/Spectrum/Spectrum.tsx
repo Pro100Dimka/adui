@@ -47,7 +47,7 @@ function Segmented(p: CommonProps) {
       column.style.transform = `translateY(${hidden.toFixed(2)}%)`;
       (column.firstElementChild as HTMLElement | null)?.style.setProperty("transform", `translateY(${(-hidden).toFixed(2)}%)`);
     });
-  });
+  }, true);
   return (
     <div {...mark("Spectrum", p)} ref={ref} data-variant="segmented" aria-hidden="true">
       {Array.from({ length: COLUMNS }, (_, i) => (
@@ -79,7 +79,7 @@ function Bars(p: CommonProps) {
     bars.current.forEach((bar, i) => {
       bar.style.transform = `scaleY(${(barHeight(i, time) / 100).toFixed(4)})`;
     });
-  });
+  }, true);
   return (
     <svg
       {...mark("Spectrum", p)}

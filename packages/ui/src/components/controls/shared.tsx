@@ -15,6 +15,7 @@ import {
 import { Icon } from "../layout/Icon/Icon";
 import type { MenuProps } from "../feedback/shared";
 import { variantMaterial } from "./internal";
+import { decorativeMotionEnabled } from "../../core/providers/context";
 
 export interface ButtonProps
   extends
@@ -45,6 +46,10 @@ export function buttonView(p: ButtonProps, name = "Button") {
   } = p;
   const { size: _s, tone: _t, material: _m, ...dom } = rest;
   const trackLight: React.PointerEventHandler<HTMLButtonElement> = (event) => {
+    if (!decorativeMotionEnabled()) {
+      onPointerMove?.(event);
+      return;
+    }
     const rect = event.currentTarget.getBoundingClientRect();
     event.currentTarget.style.setProperty(
       "--ad-button-x",

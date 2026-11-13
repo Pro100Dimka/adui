@@ -12,7 +12,7 @@ const subscribe = (subscriber: () => void) => {
     media.addEventListener("change", notify);
     if (typeof document !== "undefined" && typeof MutationObserver !== "undefined") {
       observer = new MutationObserver(notify);
-      observer.observe(document.documentElement, { attributes: true, attributeFilter: ["data-ad-motion"] });
+      observer.observe(document.documentElement, { attributes: true, attributeFilter: ["data-ad-motion", "data-ad-decorations"] });
     }
   }
   return () => {
@@ -34,6 +34,12 @@ export function motionEnabled() {
   const setting = typeof document === "undefined" ? undefined : document.documentElement.dataset.adMotion;
   return setting === "on" || (setting !== "off" && !reducedMotion());
 }
-export function useMotion() {
-  return useSyncExternalStore(subscribe, motionEnabled, () => true);
+/** Light decoration keeps borders, waves and interaction motion while removing ambient loops. */
+export function setDecorationLevel(level: "full" | "light") {
+  if (typeof document !== "undefined") document.documentElement.dataset.adDecorations = level;
+}
+export const decorativeMotionEnabled = () => motionEnabled() &&
+  (typeof document === "undefined" || document.documentElement.dataset.adDecorations !== "light");
+export function useMotion(decorative = false) {
+  return useSyncExternalStore(subscribe, decorative ? decorativeMotionEnabled : motionEnabled, () => true);
 }

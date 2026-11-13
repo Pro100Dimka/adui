@@ -1,3 +1,4 @@
+import { useMotion } from "../src/core/providers/context";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { renderToStaticMarkup } from "react-dom/server";
 import { act, create, type ReactTestRenderer } from "react-test-renderer";
@@ -238,4 +239,27 @@ describe("public component documentation", () => {
     expect(html).toContain("qb-panel");
     expect(html).toContain("Quantum Background visualizer");
   });
+});
+
+
+it("light decorations preserve essential motion and restore decorative motion when changed", () => {
+  const dataset: Record<string, string> = { adDecorations: "light" };
+  let notify!: () => void;
+  vi.stubGlobal("document", { documentElement: { dataset } });
+  vi.stubGlobal("MutationObserver", class {
+    constructor(callback: () => void) { notify = callback; }
+    observe() {}
+    disconnect() {}
+  });
+  let state: boolean[] = [];
+  function Probe() {
+    state = [useMotion(), useMotion(true)];
+    return null;
+  }
+  act(() => { tree = create(<Probe />); });
+  expect(state).toEqual([true, false]);
+  act(() => { dataset.adDecorations = "full"; notify(); });
+  expect(state).toEqual([true, true]);
+  act(() => { dataset.adMotion = "off"; notify(); });
+  expect(state).toEqual([false, false]);
 });
