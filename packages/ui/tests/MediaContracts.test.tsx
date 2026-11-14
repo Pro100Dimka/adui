@@ -168,6 +168,14 @@ it("preserves CSS easing, independent voice transitions, trail gaps and worker p
   notes.clearRect.mockClear(); step(1450);
   expect(notes.clearRect).not.toHaveBeenCalled();
   expect(frames).toHaveLength(0);
+  notes.drawImage.mockClear();
+  receive({ type: "state", id: 2, time: now, state: { position: 101.5 }, paint: true });
+  expect(notes.drawImage).toHaveBeenCalledTimes(2);
+  expect(frames).toHaveLength(0);
+  notes.clearRect.mockClear();
+  receive({ type: "state", id: 2, time: now, state: { position: 101.6 } });
+  expect(notes.clearRect).not.toHaveBeenCalled();
+  expect(frames).toHaveLength(0);
   await receive({ ...config, id: 3, canvas: { getContext() { throw new Error("Canvas unavailable"); } } });
   expect(posted).toHaveBeenLastCalledWith({ id: 3, failed: true });
 });

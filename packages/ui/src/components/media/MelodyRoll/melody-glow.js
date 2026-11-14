@@ -461,6 +461,7 @@ function renderGlow() {
         updateTrail(scene);
         retargetVoice(scene, now, previous);
         retargetForeground(scene, now);
+        if (data.paint && !scene.loading) draw(scene, now);
       } else if (scene && data.type === 'keys') {
         scene.keysDirty = true;
         scene.pressed = data.pressed; scene.hovered = data.hovered;
@@ -851,7 +852,17 @@ export function createMelodyGlow(root, initialState, onReady) {
     }
   }
   const renderer = {
-    update(next) { if (!disposed) { const sent = { ...next }; if (next.notes === state.notes) delete sent.notes; if (next.hits === state.hits) delete sent.hits; state = next; if (nativeShadowChanged && next.beat > 0) { nativeShadowChanged = false; configure(); } worker.postMessage({ type: 'state', id, state: sent, time: performance.timeOrigin + performance.now() }); } },
+    update(next) {
+      if (disposed) return;
+      const sent = { ...next };
+      const paint = lastVisible === false && next.position !== state.position &&
+        inView && !document.hidden && !root.closest('[hidden], [data-ad-offscreen]');
+      if (next.notes === state.notes) delete sent.notes;
+      if (next.hits === state.hits) delete sent.hits;
+      state = next;
+      if (nativeShadowChanged && next.beat > 0) { nativeShadowChanged = false; configure(); }
+      worker.postMessage({ type: 'state', id, state: sent, paint, time: performance.timeOrigin + performance.now() });
+    },
     ready(data) { if (!disposed && data.revision === revision) { canvas.style.visibility = voiceCanvas.style.visibility = trailCanvas.style.visibility = noteCanvas.style.visibility = keyCanvas.style.visibility = ''; root.setAttribute('data-ad-glow', ''); root.setAttribute('data-ad-foreground', ''); onReady(true); } },
     dispose,
   };
