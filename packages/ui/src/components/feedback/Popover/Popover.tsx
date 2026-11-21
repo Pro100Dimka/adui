@@ -15,12 +15,13 @@ export const Popover = (p: PopoverProps) => {
   useLayoutEffect(() => {
     const node = ref.current;
     if (!node || !p.open) return;
+    const host = node.ownerDocument.defaultView ?? window;
     const position = () => {
       const { align, matchAnchorWidth } = latest.current;
       const target = p.anchorRef?.current?.getBoundingClientRect();
       const gap = 8;
-      const viewport = window.visualViewport;
-      const width = viewport?.width ?? innerWidth, height = viewport?.height ?? innerHeight;
+      const viewport = host.visualViewport;
+      const width = viewport?.width ?? host.innerWidth, height = viewport?.height ?? host.innerHeight;
       const x = viewport?.offsetLeft ?? 0, y = viewport?.offsetTop ?? 0;
       node.style.setProperty("--ad-popover-available-width", cssRem(width - gap * 2));
       node.style.setProperty("--ad-popover-available-height", cssRem(height - gap * 2));
@@ -68,7 +69,7 @@ export const Popover = (p: PopoverProps) => {
     let frame = 0;
     const schedulePosition = () => {
       if (frame) return;
-      frame = requestAnimationFrame(() => { frame = 0; position(); });
+      frame = host.requestAnimationFrame(() => { frame = 0; position(); });
     };
     if (p.autoFocus !== false)
       (
@@ -100,21 +101,21 @@ export const Popover = (p: PopoverProps) => {
     if (p.anchorRef?.current) observer.observe(p.anchorRef.current);
     document.addEventListener("pointerdown", dismiss);
     document.addEventListener("keydown", key);
-    window.addEventListener("resize", schedulePosition);
-    window.addEventListener("scroll", schedulePosition, true);
-    window.visualViewport?.addEventListener("resize", schedulePosition);
-    window.visualViewport?.addEventListener("scroll", schedulePosition);
+    host.addEventListener("resize", schedulePosition);
+    host.addEventListener("scroll", schedulePosition, true);
+    host.visualViewport?.addEventListener("resize", schedulePosition);
+    host.visualViewport?.addEventListener("scroll", schedulePosition);
     return () => {
       layers.splice(layers.indexOf(node), 1);
       reposition.current = undefined;
       observer.disconnect();
-      if (frame) cancelAnimationFrame(frame);
+      if (frame) host.cancelAnimationFrame(frame);
       document.removeEventListener("pointerdown", dismiss);
       document.removeEventListener("keydown", key);
-      window.removeEventListener("resize", schedulePosition);
-      window.removeEventListener("scroll", schedulePosition, true);
-      window.visualViewport?.removeEventListener("resize", schedulePosition);
-      window.visualViewport?.removeEventListener("scroll", schedulePosition);
+      host.removeEventListener("resize", schedulePosition);
+      host.removeEventListener("scroll", schedulePosition, true);
+      host.visualViewport?.removeEventListener("resize", schedulePosition);
+      host.visualViewport?.removeEventListener("scroll", schedulePosition);
       if (document.activeElement && node.contains(document.activeElement) && p.anchorRef?.current?.isConnected)
         p.anchorRef.current.focus();
       if (supports && node.matches(":popover-open")) node.hidePopover();

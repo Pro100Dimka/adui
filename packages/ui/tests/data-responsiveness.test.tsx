@@ -54,6 +54,8 @@ describe("popover positioning", () => {
     });
     vi.stubGlobal("requestAnimationFrame", vi.fn((callback: FrameRequestCallback) => { frames.set(1, callback); return 1; }));
     vi.stubGlobal("cancelAnimationFrame", vi.fn((id: number) => frames.delete(id)));
+    Object.assign(window, { innerWidth: 1280, innerHeight: 720, requestAnimationFrame, cancelAnimationFrame });
+    Object.assign(node, { ownerDocument: { defaultView: window } });
     act(() => { tree = create(<Popover open anchorRef={{ current: anchor }} autoFocus={false}>Menu</Popover>, {
       createNodeMock: (element) => element.props.popover ? node : null,
     }); });

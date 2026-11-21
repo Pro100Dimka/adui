@@ -21,6 +21,7 @@ it("keeps the default MessageBar warning tone and its icon consistent", () => {
 });
 const rect = (left = 100, top = 100, width = 160, height = 40) => ({ left, top, width, height, right: left + width, bottom: top + height });
 const node = (box = rect()) => ({
+  ownerDocument: doc,
   getBoundingClientRect: vi.fn(() => box),
   style: { left: "", top: "", minWidth: "", setProperty: vi.fn(), removeProperty: vi.fn() },
   dataset: {}, querySelector: vi.fn(() => null), contains: vi.fn(() => false),
@@ -40,6 +41,8 @@ beforeEach(() => {
   vi.stubGlobal("getComputedStyle", () => ({ fontSize: "16px" }));
   vi.stubGlobal("requestAnimationFrame", (callback: FrameRequestCallback) => { const id = frames.size + 1; frames.set(id, callback); return id; });
   vi.stubGlobal("cancelAnimationFrame", (id: number) => frames.delete(id));
+  Object.assign(win, { innerWidth: 800, innerHeight: 600, requestAnimationFrame, cancelAnimationFrame });
+  Object.assign(doc, { defaultView: win });
   vi.stubGlobal("ResizeObserver", class { constructor(callback: ResizeObserverCallback) { resizeCallbacks.push(callback); } observe() {} disconnect() {} });
 });
 afterEach(() => {
@@ -105,6 +108,35 @@ describe("layer ownership", () => {
     const panel = node(rect(0, 0, 200, 80));
     act(() => { tree = create(<Popover open anchorRef={anchorRef} />, { createNodeMock: () => panel }); });
     expect(Number.parseFloat(panel.style.top) * 16 + 80).toBeLessThanOrEqual(392);
+  });
+
+  it.each([false, true])("fits a detached window and follows its viewport events (visual viewport: %s)", (visual) => {
+    const childFrames = new Map<number, FrameRequestCallback>();
+    const viewport = Object.assign(new EventTarget(), { width: 360, height: 220, offsetLeft: 0, offsetTop: 0 });
+    const host = Object.assign(new EventTarget(), {
+      innerWidth: 360, innerHeight: 220,
+      visualViewport: visual ? viewport : undefined,
+      requestAnimationFrame: (callback: FrameRequestCallback) => { childFrames.set(1, callback); return 1; },
+      cancelAnimationFrame: (id: number) => childFrames.delete(id),
+    });
+    const panel = Object.assign(node(rect(0, 0, 200, 160)), { ownerDocument: { defaultView: host } });
+    const anchorRef = { current: node(rect(300, 180, 40, 24)) as unknown as HTMLElement };
+    act(() => { tree = create(<Popover open anchorRef={anchorRef} autoFocus={false} />, { createNodeMock: () => panel }); });
+    expect(panel.style.top).toBe("0.75rem");
+    expect(panel.style.setProperty).toHaveBeenCalledWith("--ad-popover-available-height", "12.75rem");
+    const observed = visual ? viewport : host;
+    Object.assign(observed, visual ? { width: 300 } : { innerWidth: 300 });
+    act(() => observed.dispatchEvent(new Event("resize")));
+    expect(childFrames.size).toBe(1);
+    expect(frames.size).toBe(0);
+    act(() => { childFrames.get(1)?.(16); childFrames.clear(); });
+    expect(Number.parseFloat(panel.style.left) * 16 + 200).toBeLessThanOrEqual(292);
+    act(() => observed.dispatchEvent(new Event("scroll")));
+    expect(childFrames.size).toBe(1);
+    act(() => tree!.unmount()); tree = undefined;
+    expect(childFrames.size).toBe(0);
+    act(() => observed.dispatchEvent(new Event("resize")));
+    expect(childFrames.size).toBe(0);
   });
 
   it("positions by untransformed dimensions while the entry animation scales the panel", () => {
