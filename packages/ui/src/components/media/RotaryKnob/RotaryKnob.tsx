@@ -95,7 +95,7 @@ export const RotaryKnob = (p: RotaryKnobProps) => {
     const degrees = 180 / Math.PI;
     const reducedMotion = reducedMotionQuery();
     const listeners = new AbortController();
-    let value = defaultValue;
+    let value = controlledPosition.current ?? defaultValue;
     let requestedValue = value;
     let visualValue = value;
     let drag: null | {

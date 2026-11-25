@@ -1,4 +1,5 @@
 import { act, create } from "react-test-renderer";
+import { Suspense } from "react";
 import { afterEach, beforeEach, expect, it, vi } from "vitest";
 import { RotaryKnob } from "../src/components/media/RotaryKnob/RotaryKnob";
 
@@ -34,6 +35,24 @@ function nodes() {
   };
 }
 const input = { preventDefault() {}, key: "ArrowRight", button: 0, isPrimary: true, pointerId: 1, clientX: 50, clientY: 50 };
+
+it("restores the current controlled value after a suspended view resumes", () => {
+  const fixture = nodes();
+  let tree!: ReturnType<typeof create>;
+  const pending = new Promise<void>(() => {});
+  function Content({ suspended }: { suspended: boolean }) {
+    if (suspended) throw pending;
+    return null;
+  }
+  const view = (suspended: boolean, value: number) =>
+    <Suspense fallback={null}><RotaryKnob value={value} min={0} max={1} /><Content suspended={suspended} /></Suspense>;
+  act(() => { tree = create(view(false, 0), fixture); });
+  act(() => tree.update(view(false, 1)));
+  act(() => tree.update(view(true, 1)));
+  act(() => tree.update(view(false, 1)));
+  expect(fixture.attributes.get("aria-valuenow")).toBe("1");
+  act(() => tree.unmount());
+});
 
 it("keeps the knob operable by keyboard when its optional readout is hidden", () => {
   const fixture = nodes(), onValueChange = vi.fn();
